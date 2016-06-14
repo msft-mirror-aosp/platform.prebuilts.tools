@@ -1,5 +1,7 @@
 LOCAL_PATH:= $(call my-dir)
 
+###########################################
+
 # trove prebuilt. Module stem is chosen so it can be used as a static library.
 
 include $(CLEAR_VARS)
@@ -13,3 +15,16 @@ LOCAL_BUILT_MODULE_STEM := javalib.jar
 LOCAL_MODULE_SUFFIX := $(COMMON_JAVA_PACKAGE_SUFFIX)
 
 include $(BUILD_PREBUILT)
+
+###########################################
+
+# com.squareup.haha prebuilt.
+
+include $(CLEAR_VARS)
+
+LOCAL_PREBUILT_STATIC_JAVA_LIBRARIES := \
+    squareup-haha-prebuilt:repository/com/squareup/haha/haha/2.0.2/haha-2.0.2.jar
+
+include $(BUILD_MULTI_PREBUILT)
+
+###########################################
