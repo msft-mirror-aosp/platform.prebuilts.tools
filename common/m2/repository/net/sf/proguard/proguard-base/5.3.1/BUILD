@@ -2,6 +2,6 @@
 
 java_import(
     name = "jar",
-    jars = ["google-api-services-storage-v1-rev82-1.22.0.jar"],
+    jars = ["proguard-base-5.3.1.jar"],
     visibility = ["//visibility:public"],
 )

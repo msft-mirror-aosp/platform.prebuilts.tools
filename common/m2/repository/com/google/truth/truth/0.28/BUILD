@@ -3,6 +3,5 @@
 java_import(
     name = "jar",
     jars = ["truth-0.28.jar"],
-    tags = ["managed"],
     visibility = ["//visibility:public"],
 )
