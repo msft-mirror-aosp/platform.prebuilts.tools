@@ -2,6 +2,6 @@
 
 java_import(
     name = "jar",
-    jars = ["google-api-services-storage-v1-rev82-1.22.0.jar"],
+    jars = ["mockito-core-2.2.5.jar"],
     visibility = ["//visibility:public"],
 )

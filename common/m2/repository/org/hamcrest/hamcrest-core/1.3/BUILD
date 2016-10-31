@@ -3,6 +3,5 @@
 java_import(
     name = "jar",
     jars = ["hamcrest-core-1.3.jar"],
-    tags = ["managed"],
     visibility = ["//visibility:public"],
 )

@@ -2,6 +2,6 @@
 
 java_import(
     name = "jar",
-    jars = ["google-api-services-storage-v1-rev82-1.22.0.jar"],
+    jars = ["org.jacoco.agent-0.7.7.201606060606.jar"],
     visibility = ["//visibility:public"],
 )

@@ -3,6 +3,5 @@
 java_import(
     name = "jar",
     jars = ["junit-4.12.jar"],
-    tags = ["managed"],
     visibility = ["//visibility:public"],
 )
