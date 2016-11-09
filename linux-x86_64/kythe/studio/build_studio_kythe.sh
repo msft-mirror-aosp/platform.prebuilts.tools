@@ -59,7 +59,7 @@ if [ -n "${GSBUCKET}" ]; then
   TIMESTAMP=$(date +'%s')
   "${GSUTIL}" -m cp "${OUT_ENTRIES}/*" "${GSBUCKET}/${TIMESTAMP}/"
   LATEST_FILE="$(mktemp)"
-  echo ${TIMESTAMP}>"${LATEST_FILE}"
+  echo "str_var <name:'kythe_index_version' value:'${TIMESTAMP}'>">"${LATEST_FILE}"
   "${GSUTIL}" cp "${LATEST_FILE}" "${GSBUCKET}/latest.txt"
   rm "${LATEST_FILE}"
 fi
