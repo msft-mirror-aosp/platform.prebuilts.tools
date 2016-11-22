@@ -3,4 +3,3 @@ java_import(
     jars = ["jasmin.jar"],
     visibility = ["//visibility:public"],
 )
-

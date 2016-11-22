@@ -2,8 +2,8 @@ load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom")
 
 maven_java_import(
     name = "uast-145.597.3",
-    pom = ":uast-145.597.3.pom",
     jars = ["uast-145.597.3.jar"],
+    pom = ":uast-145.597.3.pom",
     visibility = ["//visibility:public"],
 )
 
@@ -16,8 +16,8 @@ maven_pom(
 
 maven_java_import(
     name = "uast-162.2228.14",
-    pom = ":uast-162.2228.14.pom",
     jars = ["uast-162.2228.14.jar"],
+    pom = ":uast-162.2228.14.pom",
     visibility = ["//visibility:public"],
 )
 
