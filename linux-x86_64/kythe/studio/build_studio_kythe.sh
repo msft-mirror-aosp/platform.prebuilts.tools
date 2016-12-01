@@ -25,7 +25,10 @@ fi
 OUT_ENTRIES="${OUT}/entries"
 mkdir -p "${OUT_ENTRIES}"
 
-TARGETS="$(cat tools/base/bazel/build_targets)"
+TARGETS="$(cat tools/base/bazel/targets)"
+
+# ensure no stale .kindex file exist
+tools/base/bazel/bazel clean
 
 # Build all targets and run the kythe extractor via extra_actions.
 # ignore failures in the build as Kythe will do statistical analysis
