@@ -3,13 +3,13 @@ load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom")
 
 maven_java_import(
     name = "jar",
-    jars = ["log4j-1.2.12.jar"],
+    jars = ["junit-4.11.jar"],
     pom = ":pom",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
     name = "pom",
-    source = "log4j-1.2.12.pom",
+    source = "junit-4.11.pom",
     visibility = ["//visibility:public"],
 )

@@ -3,13 +3,14 @@ load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom")
 
 maven_java_import(
     name = "jar",
-    jars = ["log4j-1.2.12.jar"],
+    jars = ["proguard-base-5.3.2.jar"],
     pom = ":pom",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
     name = "pom",
-    source = "log4j-1.2.12.pom",
+    parent = "//prebuilts/tools/common/m2/repository/net/sf/proguard/proguard-parent/5.3.2:pom",
+    source = "proguard-base-5.3.2.pom",
     visibility = ["//visibility:public"],
 )

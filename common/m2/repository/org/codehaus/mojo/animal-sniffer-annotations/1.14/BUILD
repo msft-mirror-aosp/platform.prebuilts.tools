@@ -3,13 +3,14 @@ load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom")
 
 maven_java_import(
     name = "jar",
-    jars = ["log4j-1.2.12.jar"],
+    jars = ["animal-sniffer-annotations-1.14.jar"],
     pom = ":pom",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
     name = "pom",
-    source = "log4j-1.2.12.pom",
+    parent = "//prebuilts/tools/common/m2/repository/org/codehaus/mojo/animal-sniffer-parent/1.14:pom",
+    source = "animal-sniffer-annotations-1.14.pom",
     visibility = ["//visibility:public"],
 )

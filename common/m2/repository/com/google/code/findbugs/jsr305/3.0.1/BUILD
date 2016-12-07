@@ -3,13 +3,14 @@ load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom")
 
 maven_java_import(
     name = "jar",
-    jars = ["log4j-1.2.12.jar"],
+    jars = ["jsr305-3.0.1.jar"],
     pom = ":pom",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
     name = "pom",
-    source = "log4j-1.2.12.pom",
+    parent = "//prebuilts/tools/common/m2/repository/org/sonatype/oss/oss-parent/7:pom",
+    source = "jsr305-3.0.1.pom",
     visibility = ["//visibility:public"],
 )

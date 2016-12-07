@@ -3,13 +3,14 @@ load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom")
 
 maven_java_import(
     name = "jar",
-    jars = ["log4j-1.2.12.jar"],
+    jars = ["auto-value-1.0.jar"],
     pom = ":pom",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
     name = "pom",
-    source = "log4j-1.2.12.pom",
+    parent = "//prebuilts/tools/common/m2/repository/com/google/auto/auto-parent/2:pom",
+    source = "auto-value-1.0.pom",
     visibility = ["//visibility:public"],
 )

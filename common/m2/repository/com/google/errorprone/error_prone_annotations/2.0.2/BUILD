@@ -3,13 +3,14 @@ load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom")
 
 maven_java_import(
     name = "jar",
-    jars = ["log4j-1.2.12.jar"],
+    jars = ["error_prone_annotations-2.0.2.jar"],
     pom = ":pom",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
     name = "pom",
-    source = "log4j-1.2.12.pom",
+    parent = "//prebuilts/tools/common/m2/repository/com/google/errorprone/error_prone_parent/2.0.2:pom",
+    source = "error_prone_annotations-2.0.2.pom",
     visibility = ["//visibility:public"],
 )
