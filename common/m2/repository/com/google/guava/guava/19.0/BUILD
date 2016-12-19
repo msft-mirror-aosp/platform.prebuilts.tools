@@ -4,6 +4,7 @@ load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom")
 maven_java_import(
     name = "jar",
     jars = ["guava-19.0.jar"],
+    srcjar = "guava-19.0-sources.jar",
     pom = ":pom",
     visibility = ["//visibility:public"],
 )
