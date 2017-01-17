@@ -3,15 +3,14 @@ load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom", "maven_aa
 
 maven_java_import(
     name = "jar",
-    jars = ["guava-19.0.jar"],
+    jars = ["guava-20.0.jar"],
     pom = ":pom",
-    srcjar = "guava-19.0-sources.jar",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
     name = "pom",
-    parent = "//prebuilts/tools/common/m2/repository/com/google/guava/guava-parent/19.0:pom",
-    source = "guava-19.0.pom",
+    parent = "//prebuilts/tools/common/m2/repository/com/google/guava/guava-parent/20.0:pom",
+    source = "guava-20.0.pom",
     visibility = ["//visibility:public"],
 )

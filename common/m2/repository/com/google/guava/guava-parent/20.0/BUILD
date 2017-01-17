@@ -3,6 +3,7 @@ load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom", "maven_aa
 
 maven_pom(
     name = "pom",
-    source = "flattr4j-2.12.pom",
+    parent = "//prebuilts/tools/common/m2/repository/org/sonatype/oss/oss-parent/7:pom",
+    source = "guava-parent-20.0.pom",
     visibility = ["//visibility:public"],
 )
