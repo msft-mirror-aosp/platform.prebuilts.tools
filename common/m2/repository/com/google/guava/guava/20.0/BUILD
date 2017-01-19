@@ -5,6 +5,7 @@ maven_java_import(
     name = "jar",
     jars = ["guava-20.0.jar"],
     pom = ":pom",
+    srcjar = "guava-20.0-sources.jar",
     visibility = ["//visibility:public"],
 )
 
