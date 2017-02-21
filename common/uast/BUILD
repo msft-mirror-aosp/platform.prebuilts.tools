@@ -1,29 +1,27 @@
 load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom")
+load("//tools/base/bazel:utils.bzl", "java_jarjar")
+
+java_jarjar(
+    name = "uast-171.2455.10-all",
+    rules = "no_rules.txt",
+    srcs = [
+        ":1.0/uast-common-1.0.jar",
+        ":1.0/uast-java-1.0.jar",
+    ],
+)
 
 maven_java_import(
-    name = "uast-145.597.3",
-    jars = ["uast-145.597.3.jar"],
-    pom = ":uast-145.597.3.pom",
+    name = "uast-171.2455.10",
+    jars = [
+        ":uast-171.2455.10-all",
+    ],
+    pom = ":uast-171.2455.10.pom",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
-    name = "uast-145.597.3.pom",
-    artifact = "uast",
-    group = "com.android.tools.external.com-intellij",
-    version = "145.597.3",
-)
-
-maven_java_import(
-    name = "uast-162.2228.14",
-    jars = ["uast-162.2228.14.jar"],
-    pom = ":uast-162.2228.14.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "uast-162.2228.14.pom",
+    name = "uast-171.2455.10.pom",
     artifact = "uast",
     group = "com.android.tools.external.intellij",
-    version = "162.2228.14",
+    version = "171.2455.10",
 )

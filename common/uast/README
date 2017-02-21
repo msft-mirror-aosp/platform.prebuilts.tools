@@ -1,7 +1,17 @@
-This library is a subset of IntelliJ IDEA's PSI API, extracted
-via the psi extration tool in tools/base/misc/psi-extractor/.
+UAST
+----
+Check out UAST from https://github.com/JetBrains/uast
 
-This jar is extracted into the tools/base/lint/libs/uast
-library, which is a Java library packaged along with the
-rest of the tools libraries such that they can be published
-and signed using Gradle's machinery.
+To generate UAST:
+./gradlew clean assemble sourceJar
+
+Then copy into prebuilts/tools/common/uast these libraries:
+cp \
+   uast-common/build/libs/uast-common-1.0.jar \
+   uast-java/build/libs/uast-java-1.0.jar \
+   uast-common/build/libs/uast-common-1.0-sources.jar \
+   uast-java/build/libs/uast-java-1.0-sources.jar \
+   $TOOLS_ROOT/prebuilts/tools/common/uast
+
+The current versions were built from the head at
+951b7e299a6eb604599ef5c8e5521bcbf5345ea6
