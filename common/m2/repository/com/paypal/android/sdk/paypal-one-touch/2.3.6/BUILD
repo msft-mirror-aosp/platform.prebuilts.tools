@@ -3,13 +3,13 @@ load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom", "maven_aa
 
 maven_aar(
     name = "aar",
-    aar = "yearclass-1.0.1.aar",
+    aar = "paypal-one-touch-2.3.6.aar",
     pom = ":pom",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
     name = "pom",
-    source = "yearclass-1.0.1.pom",
+    source = "paypal-one-touch-2.3.6.pom",
     visibility = ["//visibility:public"],
 )
