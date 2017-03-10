@@ -3,13 +3,13 @@ load("//tools/base/bazel:utils.bzl", "java_jarjar")
 
 java_jarjar(
     name = "intellij-core-171.2455.10-all",
-    rules = "no_rules.txt",
     srcs = [
-        ":171.2455.10/intellij-core.jar",
-        ":171.2455.10/picocontainer.jar",
         ":171.2455.10/annotations.jar",
         ":171.2455.10/asm-all.jar",
+        ":171.2455.10/intellij-core.jar",
+        ":171.2455.10/picocontainer.jar",
     ],
+    rules = "no_rules.txt",
 )
 
 maven_java_import(

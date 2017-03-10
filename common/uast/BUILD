@@ -3,11 +3,11 @@ load("//tools/base/bazel:utils.bzl", "java_jarjar")
 
 java_jarjar(
     name = "uast-171.2455.10-all",
-    rules = "no_rules.txt",
     srcs = [
         ":1.0/uast-common-1.0.jar",
         ":1.0/uast-java-1.0.jar",
     ],
+    rules = "no_rules.txt",
 )
 
 maven_java_import(
