@@ -25,3 +25,17 @@ maven_pom(
     group = "com.android.tools.external.intellij",
     version = "171.2455.10",
 )
+
+java_import(
+    name = "1.0/uast-common-1.0",
+    jars = ["1.0/uast-common-1.0.jar"],
+    tags = ["managed"],
+    visibility = ["//visibility:public"],
+)
+
+java_import(
+    name = "1.0/uast-java-1.0",
+    jars = ["1.0/uast-java-1.0.jar"],
+    tags = ["managed"],
+    visibility = ["//visibility:public"],
+)
