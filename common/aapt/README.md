@@ -2,7 +2,7 @@
 
 ## `jni/` : AAPT2 jni integration.
 
-Build: 3886095.
+Build: 3903065.
 
 |  Platform  |          Target          |                Artifacts                |
 | ---------- | ------------------------ | --------------------------------------- |
