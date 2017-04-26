@@ -26,31 +26,6 @@ maven_pom(
     version = "171.4249.32",
 )
 
-java_jarjar(
-    name = "uast-171.3780.107-all",
-    srcs = [
-        ":1.0/uast-common-1.0.jar",
-        ":1.0/uast-java-1.0.jar",
-    ],
-    rules = "no_rules.txt",
-)
-
-maven_java_import(
-    name = "uast-171.3780.107",
-    jars = [
-        ":uast-171.3780.107-all",
-    ],
-    pom = ":uast-171.3780.107.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "uast-171.3780.107.pom",
-    artifact = "uast",
-    group = "com.android.tools.external.intellij",
-    version = "171.3780.107",
-)
-
 java_import(
     name = "1.0/uast-common-1.0",
     jars = ["1.0/uast-common-1.0.jar"],
