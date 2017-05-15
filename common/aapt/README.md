@@ -2,8 +2,8 @@
 
 ## `jni/` : AAPT2 jni integration.
 
-Windows64: Build: 3960433.
-Other platforms: Build: 3993052.
+Mac: Build: 4004490.
+Other platforms: Build: 4006121.
 
 |  Platform  |          Target          |                Artifacts                |
 | ---------- | ------------------------ | --------------------------------------- |
