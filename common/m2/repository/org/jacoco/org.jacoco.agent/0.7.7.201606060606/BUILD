@@ -5,6 +5,7 @@ maven_java_import(
     name = "jar",
     jars = ["org.jacoco.agent-0.7.7.201606060606.jar"],
     pom = ":pom",
+    classifiers = ["runtime"],
     visibility = ["//visibility:public"],
 )
 
