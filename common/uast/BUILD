@@ -23,7 +23,7 @@ maven_pom(
     name = "uast-171.4249.32.pom",
     artifact = "uast",
     group = "com.android.tools.external.intellij",
-    version = "171.4249.32",
+    source = "//tools/buildSrc/base:build_version",
 )
 
 java_import(
