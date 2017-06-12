@@ -25,5 +25,5 @@ maven_pom(
     name = "intellij-core-171.4249.32.pom",
     artifact = "intellij-core",
     group = "com.android.tools.external.intellij",
-    version = "171.4249.32",
+    source = "//tools/buildSrc/base:build_version",
 )
