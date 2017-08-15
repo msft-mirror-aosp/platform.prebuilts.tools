@@ -677,6 +677,8 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --compiler=
 --config=
 --conlyopt=
+--convert_lipo_to_thinlto
+--noconvert_lipo_to_thinlto
 --copt=
 --coverage_report_generator=label
 --coverage_support=label
@@ -735,8 +737,6 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --experimental_persistent_javac
 --experimental_proto_extra_actions
 --noexperimental_proto_extra_actions
---experimental_prune_more_modules
---noexperimental_prune_more_modules
 --experimental_remote_platform_override=
 --experimental_remote_retry
 --noexperimental_remote_retry
@@ -748,8 +748,6 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --experimental_sandbox_base=
 --experimental_skip_static_outputs
 --noexperimental_skip_static_outputs
---experimental_skip_unused_modules
---noexperimental_skip_unused_modules
 --experimental_skyframe_native_filesets
 --noexperimental_skyframe_native_filesets
 --experimental_stl=label
@@ -944,8 +942,6 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --sandbox_writable_path=
 --save_temps
 --nosave_temps
---send_transitive_header_module_srcs
---nosend_transitive_header_module_srcs
 --share_native_deps
 --noshare_native_deps
 --shell_executable=path
@@ -1002,6 +998,8 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --tls_enabled
 --notls_enabled
 --tool_tag=
+--toolchain_resolution_debug
+--notoolchain_resolution_debug
 --translations={auto,yes,no}
 --notranslations
 --tvos_cpus=
@@ -1179,6 +1177,8 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --compiler=
 --config=
 --conlyopt=
+--convert_lipo_to_thinlto
+--noconvert_lipo_to_thinlto
 --copt=
 --coverage_report_generator=label
 --coverage_support=label
@@ -1237,8 +1237,6 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --experimental_persistent_javac
 --experimental_proto_extra_actions
 --noexperimental_proto_extra_actions
---experimental_prune_more_modules
---noexperimental_prune_more_modules
 --experimental_remote_platform_override=
 --experimental_remote_retry
 --noexperimental_remote_retry
@@ -1250,8 +1248,6 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --experimental_sandbox_base=
 --experimental_skip_static_outputs
 --noexperimental_skip_static_outputs
---experimental_skip_unused_modules
---noexperimental_skip_unused_modules
 --experimental_skyframe_native_filesets
 --noexperimental_skyframe_native_filesets
 --experimental_stl=label
@@ -1448,8 +1444,6 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --sandbox_writable_path=
 --save_temps
 --nosave_temps
---send_transitive_header_module_srcs
---nosend_transitive_header_module_srcs
 --share_native_deps
 --noshare_native_deps
 --shell_executable=path
@@ -1506,6 +1500,8 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --tls_enabled
 --notls_enabled
 --tool_tag=
+--toolchain_resolution_debug
+--notoolchain_resolution_debug
 --translations={auto,yes,no}
 --notranslations
 --tvos_cpus=
@@ -1619,6 +1615,8 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --compiler=
 --config=
 --conlyopt=
+--convert_lipo_to_thinlto
+--noconvert_lipo_to_thinlto
 --copt=
 --coverage_report_generator=label
 --coverage_support=label
@@ -1677,8 +1675,6 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --experimental_persistent_javac
 --experimental_proto_extra_actions
 --noexperimental_proto_extra_actions
---experimental_prune_more_modules
---noexperimental_prune_more_modules
 --experimental_remote_platform_override=
 --experimental_remote_retry
 --noexperimental_remote_retry
@@ -1690,8 +1686,6 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --experimental_sandbox_base=
 --experimental_skip_static_outputs
 --noexperimental_skip_static_outputs
---experimental_skip_unused_modules
---noexperimental_skip_unused_modules
 --experimental_skyframe_native_filesets
 --noexperimental_skyframe_native_filesets
 --experimental_stl=label
@@ -1886,8 +1880,6 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --sandbox_writable_path=
 --save_temps
 --nosave_temps
---send_transitive_header_module_srcs
---nosend_transitive_header_module_srcs
 --share_native_deps
 --noshare_native_deps
 --shell_executable=path
@@ -1946,6 +1938,8 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --tls_enabled
 --notls_enabled
 --tool_tag=
+--toolchain_resolution_debug
+--notoolchain_resolution_debug
 --translations={auto,yes,no}
 --notranslations
 --tvos_cpus=
@@ -2281,6 +2275,8 @@ BAZEL_COMMAND_INFO_FLAGS="
 --compiler=
 --config=
 --conlyopt=
+--convert_lipo_to_thinlto
+--noconvert_lipo_to_thinlto
 --copt=
 --coverage_report_generator=label
 --coverage_support=label
@@ -2339,8 +2335,6 @@ BAZEL_COMMAND_INFO_FLAGS="
 --experimental_persistent_javac
 --experimental_proto_extra_actions
 --noexperimental_proto_extra_actions
---experimental_prune_more_modules
---noexperimental_prune_more_modules
 --experimental_remote_platform_override=
 --experimental_remote_retry
 --noexperimental_remote_retry
@@ -2352,8 +2346,6 @@ BAZEL_COMMAND_INFO_FLAGS="
 --experimental_sandbox_base=
 --experimental_skip_static_outputs
 --noexperimental_skip_static_outputs
---experimental_skip_unused_modules
---noexperimental_skip_unused_modules
 --experimental_skyframe_native_filesets
 --noexperimental_skyframe_native_filesets
 --experimental_stl=label
@@ -2548,8 +2540,6 @@ BAZEL_COMMAND_INFO_FLAGS="
 --sandbox_writable_path=
 --save_temps
 --nosave_temps
---send_transitive_header_module_srcs
---nosend_transitive_header_module_srcs
 --share_native_deps
 --noshare_native_deps
 --shell_executable=path
@@ -2608,6 +2598,8 @@ BAZEL_COMMAND_INFO_FLAGS="
 --tls_enabled
 --notls_enabled
 --tool_tag=
+--toolchain_resolution_debug
+--notoolchain_resolution_debug
 --translations={auto,yes,no}
 --notranslations
 --tvos_cpus=
@@ -2781,6 +2773,8 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --compiler=
 --config=
 --conlyopt=
+--convert_lipo_to_thinlto
+--noconvert_lipo_to_thinlto
 --copt=
 --coverage_report_generator=label
 --coverage_support=label
@@ -2840,8 +2834,6 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --experimental_persistent_javac
 --experimental_proto_extra_actions
 --noexperimental_proto_extra_actions
---experimental_prune_more_modules
---noexperimental_prune_more_modules
 --experimental_remote_platform_override=
 --experimental_remote_retry
 --noexperimental_remote_retry
@@ -2853,8 +2845,6 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --experimental_sandbox_base=
 --experimental_skip_static_outputs
 --noexperimental_skip_static_outputs
---experimental_skip_unused_modules
---noexperimental_skip_unused_modules
 --experimental_skyframe_native_filesets
 --noexperimental_skyframe_native_filesets
 --experimental_stl=label
@@ -3052,8 +3042,6 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --sandbox_writable_path=
 --save_temps
 --nosave_temps
---send_transitive_header_module_srcs
---nosend_transitive_header_module_srcs
 --share_native_deps
 --noshare_native_deps
 --shell_executable=path
@@ -3114,6 +3102,8 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --tls_enabled
 --notls_enabled
 --tool_tag=
+--toolchain_resolution_debug
+--notoolchain_resolution_debug
 --translations={auto,yes,no}
 --notranslations
 --tvos_cpus=
@@ -3347,6 +3337,8 @@ BAZEL_COMMAND_RUN_FLAGS="
 --compiler=
 --config=
 --conlyopt=
+--convert_lipo_to_thinlto
+--noconvert_lipo_to_thinlto
 --copt=
 --coverage_report_generator=label
 --coverage_support=label
@@ -3405,8 +3397,6 @@ BAZEL_COMMAND_RUN_FLAGS="
 --experimental_persistent_javac
 --experimental_proto_extra_actions
 --noexperimental_proto_extra_actions
---experimental_prune_more_modules
---noexperimental_prune_more_modules
 --experimental_remote_platform_override=
 --experimental_remote_retry
 --noexperimental_remote_retry
@@ -3418,8 +3408,6 @@ BAZEL_COMMAND_RUN_FLAGS="
 --experimental_sandbox_base=
 --experimental_skip_static_outputs
 --noexperimental_skip_static_outputs
---experimental_skip_unused_modules
---noexperimental_skip_unused_modules
 --experimental_skyframe_native_filesets
 --noexperimental_skyframe_native_filesets
 --experimental_stl=label
@@ -3615,8 +3603,6 @@ BAZEL_COMMAND_RUN_FLAGS="
 --save_temps
 --nosave_temps
 --script_path=path
---send_transitive_header_module_srcs
---nosend_transitive_header_module_srcs
 --share_native_deps
 --noshare_native_deps
 --shell_executable=path
@@ -3673,6 +3659,8 @@ BAZEL_COMMAND_RUN_FLAGS="
 --tls_enabled
 --notls_enabled
 --tool_tag=
+--toolchain_resolution_debug
+--notoolchain_resolution_debug
 --translations={auto,yes,no}
 --notranslations
 --tvos_cpus=
@@ -3844,6 +3832,8 @@ BAZEL_COMMAND_TEST_FLAGS="
 --compiler=
 --config=
 --conlyopt=
+--convert_lipo_to_thinlto
+--noconvert_lipo_to_thinlto
 --copt=
 --coverage_report_generator=label
 --coverage_support=label
@@ -3902,8 +3892,6 @@ BAZEL_COMMAND_TEST_FLAGS="
 --experimental_persistent_javac
 --experimental_proto_extra_actions
 --noexperimental_proto_extra_actions
---experimental_prune_more_modules
---noexperimental_prune_more_modules
 --experimental_remote_platform_override=
 --experimental_remote_retry
 --noexperimental_remote_retry
@@ -3915,8 +3903,6 @@ BAZEL_COMMAND_TEST_FLAGS="
 --experimental_sandbox_base=
 --experimental_skip_static_outputs
 --noexperimental_skip_static_outputs
---experimental_skip_unused_modules
---noexperimental_skip_unused_modules
 --experimental_skyframe_native_filesets
 --noexperimental_skyframe_native_filesets
 --experimental_stl=label
@@ -4111,8 +4097,6 @@ BAZEL_COMMAND_TEST_FLAGS="
 --sandbox_writable_path=
 --save_temps
 --nosave_temps
---send_transitive_header_module_srcs
---nosend_transitive_header_module_srcs
 --share_native_deps
 --noshare_native_deps
 --shell_executable=path
@@ -4171,6 +4155,8 @@ BAZEL_COMMAND_TEST_FLAGS="
 --tls_enabled
 --notls_enabled
 --tool_tag=
+--toolchain_resolution_debug
+--notoolchain_resolution_debug
 --translations={auto,yes,no}
 --notranslations
 --tvos_cpus=
