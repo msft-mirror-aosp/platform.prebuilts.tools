@@ -18,15 +18,12 @@ include $(BUILD_PREBUILT)
 
 ###########################################
 
-# net.bytebuddy prebuilt.
-# org.mockito prebuilt.
-# org.objenesis prebuilt.
-# com.squareup.haha prebuilt.
-# com.google.truth prebuilt.
-
 include $(CLEAR_VARS)
 
 LOCAL_PREBUILT_STATIC_JAVA_LIBRARIES := \
+    asm-commons-prebuilt-jar:repository/org/ow2/asm/asm-commons/5.0.1/asm-commons-5.0.1.jar \
+    asm-tree-prebuilt-jar:repository/org/ow2/asm/asm-tree/5.0.1/asm-tree-5.0.1.jar \
+    asm-prebuilt-jar:repository/org/ow2/asm/asm/5.0.1/asm-5.0.1.jar \
     byte-buddy-prebuilt-jar:repository/net/bytebuddy/byte-buddy/1.6.5/byte-buddy-1.6.5.jar \
     mockito2-prebuilt-jar:repository/org/mockito/mockito-core/2.7.6/mockito-core-2.7.6.jar \
     objenesis-prebuilt-jar:repository/org/objenesis/objenesis/2.5/objenesis-2.5.jar \
