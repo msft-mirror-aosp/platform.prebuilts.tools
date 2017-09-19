@@ -20,6 +20,7 @@ filegroup(
         include = [
             "framework/*.jar",
             "framework/x86_64/*",
+            "lib64/*",
         ],
     ),
     visibility = ["//visibility:public"],
