@@ -1,0 +1,40 @@
+IntelliJ Core, UAST and Kotlin
+------------------------------
+
+Originally, we just downloaded snapshots of intellij-core itself from
+https://www.jetbrains.com/intellij-repository/releases, like this:
+https://www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/idea/intellij-core/171.4249.32/intellij-core-171.4249.32.zip
+
+The version number here, 171.3780.107, matches the IDE used in Studio,
+defined in tools/adt/idea/adt-branding/src/idea/AndroidStudioApplicationInfo.xml;
+  <build number="__BUILD_NUMBER__" date="__BUILD_DATE__" apiVersion="AI-171.3780.107"/>
+
+However, when we added Kotlin support, it turns out that the Kotlin
+compiler itself includes large portions of intellij-core (though thanks
+to shrinking it was sometimes only partial classes). Since we need
+the Kotlin compiler, we just turn off shrinking in the compiler build
+and then drop in the compiler jar (which contains all of intellij-core).
+
+
+Updating
+--------
+
+First, checkk out a copy of the Kotlin git repository:
+$ git checkout https://github.com/JetBrains/kotlin
+
+Then make sure the patch to KotlinCoreEnvironment.kt from
+fb82b72dc1892d377ccf98511d56ecce219c8098 (in https://github.com/JetBrains/kotlin/commits/rr/yan)
+has been applied. (It is also a patch included in this directory, as kotlin-compiler-patch.diff.)
+
+Next, build the Kotlin repository:
+$ ant -f update_dependencies.xml
+$ ./gradlew dist
+$ cd plugins/uast-kotlin && gradle jar
+
+Finally, back in this prebuilt directory, run the update.xml script,
+pointing back to the Kotlin repository:
+ant -f update.xml -Dkotlin_src_dir=/path/to/kotlin/repo
+
+The packaging script will extract code and update the intellij-core and uast prebuilts
+in this directory. It performs a number of steps to do that, such as unbundling the
+trove classes, replacing a platform icons class, etc.

@@ -1,0 +1,164 @@
+<!-- Update intellij-core and uast libraries from a built Kotlin distribution.
+     Consult README for more details. -->
+<project xmlns:if="ant:if" xmlns:unless="ant:unless" name="Kotlin" default="dist">
+    <fail message="Property &quot;kotlin_src_dir&quot; needs to be set" unless="kotlin_src_dir"/>
+
+    <property name="output" value="${basedir}/temp"/>
+    <property name="kotlin-dist" value="${kotlin_src_dir}/dist"/>
+    <property name="idea.sdk" value="${kotlin_src_dir}/ideaSDK"/>
+
+    <loadfile
+            property="build-version"
+            srcFile="${kotlin_src_dir}/dependencies/version.txt"
+            failonerror="true"/>
+    <echo message="Assembling intellij-core, UAST and Kotlin version ${build-version}"/>
+
+
+    <property name="dist-uast" value="${basedir}/uast"/>
+    <property name="dist-intellij-core" value="${basedir}/intellij-core"/>
+    <property name="dist-kotlin-compiler" value="${basedir}/kotlin-compiler"/>
+
+    <target name="dist" depends="clean,uast,intellij-core"/>
+
+    <target name="clean">
+        <delete dir="${dist-uast}"/>
+        <delete dir="${dist-intellij-core}"/>
+        <delete dir="${dist-kotlin-compiler}"/>
+        <delete dir="${temp}"/>
+    </target>
+
+    <macrodef name="cleandir">
+        <attribute name="dir"/>
+
+        <sequential>
+            <echo message="Cleaning @{dir}"/>
+            <delete dir="@{dir}" failonerror="false"/>
+            <mkdir dir="@{dir}"/>
+        </sequential>
+    </macrodef>
+
+    <target name="uast">
+        <echo message="Building uast artifacts into ${dist-uast}"/>
+        <delete dir="${temp}"/>
+        <mkdir dir="${temp}"/>
+        <unzip src="${idea.sdk}/lib/openapi.jar" dest="${temp}/classes/uast-common">
+            <patternset>
+                <include name="org/jetbrains/uast/**/*.class"/>
+                <include name="META-INF/uast-common.kotlin_module"/>
+            </patternset>
+        </unzip>
+
+        <jar destfile="${dist-uast}/uast-common.jar">
+            <fileset dir="${temp}/classes/uast-common"/>
+        </jar>
+
+        <unzip src="${idea.sdk}/lib/idea.jar" dest="${temp}/classes/uast-java">
+            <patternset>
+                <include name="org/jetbrains/uast/java/**/*.class"/>
+            </patternset>
+        </unzip>
+
+        <jar destfile="${dist-uast}/uast-java.jar">
+            <fileset dir="${temp}/classes/uast-java"/>
+        </jar>
+
+        <unzip src="${idea.sdk}/sources/sources.jar" dest="${temp}/classes/uast-common-sources">
+            <patternset>
+                <include name="org/jetbrains/uast/**/*.java"/>
+                <include name="org/jetbrains/uast/**/*.kt"/>
+                <!-- Included in uast-java -->
+                <exclude name="org/jetbrains/uast/java/**/*"/>
+            </patternset>
+        </unzip>
+
+        <jar jarfile="${dist-uast}/uast-common-sources.jar">
+            <fileset dir="${temp}/classes/uast-common-sources"/>
+        </jar>
+
+        <unzip src="${idea.sdk}/sources/sources.jar" dest="${temp}/classes/uast-java-sources">
+            <patternset>
+                <include name="org/jetbrains/uast/java/**/*.java"/>
+                <include name="org/jetbrains/uast/java/**/*.kt"/>
+            </patternset>
+        </unzip>
+
+        <jar jarfile="${dist-uast}/uast-java-sources.jar">
+            <fileset dir="${temp}/classes/uast-java-sources"/>
+        </jar>
+
+        <copy todir="${dist-uast}" includeemptydirs="false">
+            <fileset dir="${kotlin_src_dir}/plugins/uast-kotlin/build/libs" includes="**/*.jar"/>
+            <globmapper from="*.jar" to="uast-kotlin.jar"/>
+        </copy>
+
+        <jar jarfile="${dist-uast}/uast-kotlin-sources.jar">
+            <fileset dir="${kotlin_src_dir}/plugins/uast-kotlin/src"/>
+        </jar>
+
+        <delete dir="${temp}"/>
+    </target>
+
+    <target name="intellij-core">
+        <delete dir="${temp}"/>
+        <mkdir dir="${temp}"/>
+        <echo message="Building intellij-core artifacts into ${dist-intellij-core} from ${idea.sdk}"/>
+        <cleandir dir="${temp}/classes/core"/>
+        <unzip src="${kotlin-dist}/kotlinc/lib/kotlin-compiler.jar" dest="${temp}/classes/core">
+            <patternset>
+                <!-- Separate dependency: don't pack it in here -->
+                <exclude name="gnu/trove/**/*"/>
+                <exclude name="trove4j_changes.txt"/>
+
+                <!-- Separate dependency for Guava -->
+                <exclude name="com/google/common/**/*" />
+                <exclude name="META-INF/maven/com.google.guava/**/*" />
+
+                <!-- We don't need Kotlin JavaScript support in lint -->
+                <exclude name="com/google/gwt/dev/js//**/*" />
+            </patternset>
+        </unzip>
+
+        <unzip src="${kotlin-dist}/kotlinc/lib/kotlin-script-runtime.jar"
+               dest="${temp}/classes/core"/>
+
+        <!--
+            Workaround for https://youtrack.jetbrains.com/issue/IDEA-178656
+            UAST: Some UAST classes require PlatformIcons to be present
+            We can't just copy the relevant icons because class initializer
+            attempts to load everything. Instead supply a hacked PlatformIcons.class
+            which provides a tiny subset of stubs. The source for the hacked
+            class is included in the jar, so only package the .class files within.
+         -->
+        <unzip src="${basedir}/platform-icons.jar" dest="${temp}/classes/core">
+            <patternset>
+                <include name="**/*"/>
+            </patternset>
+        </unzip>
+
+        <jar jarfile="${dist-intellij-core}/intellij-core.jar">
+            <fileset dir="${temp}/classes/core">
+                <!-- Keep kotlin out of this jar; packaged below (keep lists in sync) -->
+                <exclude name="kotlin/**/*" />
+                <exclude name="kotlinx/**/*" />
+                <exclude name="META-INF/*kotlin_module" />
+                <exclude name="org/jetbrains/kotlin/**/*" />
+                <exclude name="org/jetbrains/jps/model/**/*" />
+                <exclude name="kotlinManifest.properties" />
+            </fileset>
+        </jar>
+
+        <jar jarfile="${dist-kotlin-compiler}/kotlin-compiler.jar">
+            <fileset dir="${temp}/classes/core">
+                <include name="kotlin/**/*" />
+                <include name="kotlinx/**/*" />
+                <include name="META-INF/*kotlin_module" />
+                <include name="org/jetbrains/kotlin/**/*" />
+                <include name="org/jetbrains/jps/model/**/*" />
+                <include name="kotlinManifest.properties" />
+            </fileset>
+        </jar>
+
+        <delete dir="${temp}"/>
+    </target>
+</project>
+
