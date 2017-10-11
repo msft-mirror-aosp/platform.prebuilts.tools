@@ -540,6 +540,7 @@ BAZEL_COMMAND_ANALYZE_PROFILE_FLAGS="
 --bes_backend=
 --bes_best_effort
 --nobes_best_effort
+--bes_keywords=
 --bes_lifecycle_events
 --nobes_lifecycle_events
 --bes_timeout=
@@ -664,6 +665,7 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --bes_backend=
 --bes_best_effort
 --nobes_best_effort
+--bes_keywords=
 --bes_lifecycle_events
 --nobes_lifecycle_events
 --bes_timeout=
@@ -735,6 +737,7 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --embed_label=
 --enable_apple_binary_native_protos
 --noenable_apple_binary_native_protos
+--enabled_toolchain_types=
 --experimental_action_listener=
 --experimental_android_library_exports_manifest_default
 --noexperimental_android_library_exports_manifest_default
@@ -757,6 +760,9 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --noexperimental_j2objc_header_map
 --experimental_link_compile_output_separately
 --noexperimental_link_compile_output_separately
+--experimental_local_disk_cache
+--noexperimental_local_disk_cache
+--experimental_local_disk_cache_path=path
 --experimental_multi_cpu=
 --experimental_multi_threaded_digest
 --noexperimental_multi_threaded_digest
@@ -782,6 +788,7 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --experimental_remote_retry_start_delay_millis=
 --experimental_remote_spawn_cache
 --noexperimental_remote_spawn_cache
+--experimental_repository_cache=path
 --experimental_sandbox_base=
 --experimental_skip_static_outputs
 --noexperimental_skip_static_outputs
@@ -790,6 +797,8 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --experimental_stl=label
 --experimental_strict_action_env
 --noexperimental_strict_action_env
+--experimental_toolchain_id_in_output_directory
+--noexperimental_toolchain_id_in_output_directory
 --experimental_ui
 --noexperimental_ui
 --experimental_ui_actions_shown=
@@ -932,7 +941,6 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --per_file_copt=
 --platform_suffix=
 --plugin=
---plugin_copt=
 --process_headers_in_dependencies
 --noprocess_headers_in_dependencies
 --profile=path
@@ -1001,8 +1009,6 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --spawn_strategy=
 --stamp
 --nostamp
---start_end_lib
---nostart_end_lib
 --strategy=
 --strict_filesets
 --nostrict_filesets
@@ -1087,6 +1093,7 @@ BAZEL_COMMAND_CANONICALIZE_FLAGS_FLAGS="
 --bes_backend=
 --bes_best_effort
 --nobes_best_effort
+--bes_keywords=
 --bes_lifecycle_events
 --nobes_lifecycle_events
 --bes_timeout=
@@ -1201,6 +1208,7 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --bes_backend=
 --bes_best_effort
 --nobes_best_effort
+--bes_keywords=
 --bes_lifecycle_events
 --nobes_lifecycle_events
 --bes_timeout=
@@ -1273,6 +1281,7 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --embed_label=
 --enable_apple_binary_native_protos
 --noenable_apple_binary_native_protos
+--enabled_toolchain_types=
 --experimental_action_listener=
 --experimental_android_library_exports_manifest_default
 --noexperimental_android_library_exports_manifest_default
@@ -1295,6 +1304,9 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --noexperimental_j2objc_header_map
 --experimental_link_compile_output_separately
 --noexperimental_link_compile_output_separately
+--experimental_local_disk_cache
+--noexperimental_local_disk_cache
+--experimental_local_disk_cache_path=path
 --experimental_multi_cpu=
 --experimental_multi_threaded_digest
 --noexperimental_multi_threaded_digest
@@ -1320,6 +1332,7 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --experimental_remote_retry_start_delay_millis=
 --experimental_remote_spawn_cache
 --noexperimental_remote_spawn_cache
+--experimental_repository_cache=path
 --experimental_sandbox_base=
 --experimental_skip_static_outputs
 --noexperimental_skip_static_outputs
@@ -1328,6 +1341,8 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --experimental_stl=label
 --experimental_strict_action_env
 --noexperimental_strict_action_env
+--experimental_toolchain_id_in_output_directory
+--noexperimental_toolchain_id_in_output_directory
 --experimental_ui
 --noexperimental_ui
 --experimental_ui_actions_shown=
@@ -1472,7 +1487,6 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --per_file_copt=
 --platform_suffix=
 --plugin=
---plugin_copt=
 --process_headers_in_dependencies
 --noprocess_headers_in_dependencies
 --profile=path
@@ -1541,8 +1555,6 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --spawn_strategy=
 --stamp
 --nostamp
---start_end_lib
---nostart_end_lib
 --strategy=
 --strict_filesets
 --nostrict_filesets
@@ -1649,6 +1661,7 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --bes_backend=
 --bes_best_effort
 --nobes_best_effort
+--bes_keywords=
 --bes_lifecycle_events
 --nobes_lifecycle_events
 --bes_timeout=
@@ -1720,6 +1733,7 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --embed_label=
 --enable_apple_binary_native_protos
 --noenable_apple_binary_native_protos
+--enabled_toolchain_types=
 --experimental_action_listener=
 --experimental_android_library_exports_manifest_default
 --noexperimental_android_library_exports_manifest_default
@@ -1742,6 +1756,9 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --noexperimental_j2objc_header_map
 --experimental_link_compile_output_separately
 --noexperimental_link_compile_output_separately
+--experimental_local_disk_cache
+--noexperimental_local_disk_cache
+--experimental_local_disk_cache_path=path
 --experimental_multi_cpu=
 --experimental_multi_threaded_digest
 --noexperimental_multi_threaded_digest
@@ -1767,6 +1784,7 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --experimental_remote_retry_start_delay_millis=
 --experimental_remote_spawn_cache
 --noexperimental_remote_spawn_cache
+--experimental_repository_cache=path
 --experimental_sandbox_base=
 --experimental_skip_static_outputs
 --noexperimental_skip_static_outputs
@@ -1775,6 +1793,8 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --experimental_stl=label
 --experimental_strict_action_env
 --noexperimental_strict_action_env
+--experimental_toolchain_id_in_output_directory
+--noexperimental_toolchain_id_in_output_directory
 --experimental_ui
 --noexperimental_ui
 --experimental_ui_actions_shown=
@@ -1917,7 +1937,6 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --per_file_copt=
 --platform_suffix=
 --plugin=
---plugin_copt=
 --process_headers_in_dependencies
 --noprocess_headers_in_dependencies
 --profile=path
@@ -1986,8 +2005,6 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --spawn_strategy=
 --stamp
 --nostamp
---start_end_lib
---nostart_end_lib
 --strategy=
 --strict_filesets
 --nostrict_filesets
@@ -2078,6 +2095,7 @@ BAZEL_COMMAND_DUMP_FLAGS="
 --bes_backend=
 --bes_best_effort
 --nobes_best_effort
+--bes_keywords=
 --bes_lifecycle_events
 --nobes_lifecycle_events
 --bes_timeout=
@@ -2172,6 +2190,7 @@ BAZEL_COMMAND_FETCH_FLAGS="
 --bes_backend=
 --bes_best_effort
 --nobes_best_effort
+--bes_keywords=
 --bes_lifecycle_events
 --nobes_lifecycle_events
 --bes_timeout=
@@ -2193,6 +2212,7 @@ BAZEL_COMMAND_FETCH_FLAGS="
 --experimental_multi_threaded_digest
 --noexperimental_multi_threaded_digest
 --experimental_oom_more_eagerly_threshold=
+--experimental_repository_cache=path
 --experimental_ui
 --noexperimental_ui
 --experimental_ui_actions_shown=
@@ -2268,6 +2288,7 @@ BAZEL_COMMAND_HELP_FLAGS="
 --bes_backend=
 --bes_best_effort
 --nobes_best_effort
+--bes_keywords=
 --bes_lifecycle_events
 --nobes_lifecycle_events
 --bes_timeout=
@@ -2341,6 +2362,8 @@ BAZEL_COMMAND_HELP_FLAGS="
 --tls_enabled
 --notls_enabled
 --tool_tag=
+--use_new_category_enum
+--nouse_new_category_enum
 --watchfs
 --nowatchfs
 "
@@ -2379,6 +2402,7 @@ BAZEL_COMMAND_INFO_FLAGS="
 --bes_backend=
 --bes_best_effort
 --nobes_best_effort
+--bes_keywords=
 --bes_lifecycle_events
 --nobes_lifecycle_events
 --bes_timeout=
@@ -2450,6 +2474,7 @@ BAZEL_COMMAND_INFO_FLAGS="
 --embed_label=
 --enable_apple_binary_native_protos
 --noenable_apple_binary_native_protos
+--enabled_toolchain_types=
 --experimental_action_listener=
 --experimental_android_library_exports_manifest_default
 --noexperimental_android_library_exports_manifest_default
@@ -2472,6 +2497,9 @@ BAZEL_COMMAND_INFO_FLAGS="
 --noexperimental_j2objc_header_map
 --experimental_link_compile_output_separately
 --noexperimental_link_compile_output_separately
+--experimental_local_disk_cache
+--noexperimental_local_disk_cache
+--experimental_local_disk_cache_path=path
 --experimental_multi_cpu=
 --experimental_multi_threaded_digest
 --noexperimental_multi_threaded_digest
@@ -2497,6 +2525,7 @@ BAZEL_COMMAND_INFO_FLAGS="
 --experimental_remote_retry_start_delay_millis=
 --experimental_remote_spawn_cache
 --noexperimental_remote_spawn_cache
+--experimental_repository_cache=path
 --experimental_sandbox_base=
 --experimental_skip_static_outputs
 --noexperimental_skip_static_outputs
@@ -2505,6 +2534,8 @@ BAZEL_COMMAND_INFO_FLAGS="
 --experimental_stl=label
 --experimental_strict_action_env
 --noexperimental_strict_action_env
+--experimental_toolchain_id_in_output_directory
+--noexperimental_toolchain_id_in_output_directory
 --experimental_ui
 --noexperimental_ui
 --experimental_ui_actions_shown=
@@ -2647,7 +2678,6 @@ BAZEL_COMMAND_INFO_FLAGS="
 --per_file_copt=
 --platform_suffix=
 --plugin=
---plugin_copt=
 --process_headers_in_dependencies
 --noprocess_headers_in_dependencies
 --profile=path
@@ -2718,8 +2748,6 @@ BAZEL_COMMAND_INFO_FLAGS="
 --spawn_strategy=
 --stamp
 --nostamp
---start_end_lib
---nostart_end_lib
 --strategy=
 --strict_filesets
 --nostrict_filesets
@@ -2804,6 +2832,7 @@ BAZEL_COMMAND_LICENSE_FLAGS="
 --bes_backend=
 --bes_best_effort
 --nobes_best_effort
+--bes_keywords=
 --bes_lifecycle_events
 --nobes_lifecycle_events
 --bes_timeout=
@@ -2915,6 +2944,7 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --bes_backend=
 --bes_best_effort
 --nobes_best_effort
+--bes_keywords=
 --bes_lifecycle_events
 --nobes_lifecycle_events
 --bes_timeout=
@@ -2987,6 +3017,7 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --embed_label=
 --enable_apple_binary_native_protos
 --noenable_apple_binary_native_protos
+--enabled_toolchain_types=
 --experimental_action_listener=
 --experimental_android_library_exports_manifest_default
 --noexperimental_android_library_exports_manifest_default
@@ -3009,6 +3040,9 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --noexperimental_j2objc_header_map
 --experimental_link_compile_output_separately
 --noexperimental_link_compile_output_separately
+--experimental_local_disk_cache
+--noexperimental_local_disk_cache
+--experimental_local_disk_cache_path=path
 --experimental_multi_cpu=
 --experimental_multi_threaded_digest
 --noexperimental_multi_threaded_digest
@@ -3034,6 +3068,7 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --experimental_remote_retry_start_delay_millis=
 --experimental_remote_spawn_cache
 --noexperimental_remote_spawn_cache
+--experimental_repository_cache=path
 --experimental_sandbox_base=
 --experimental_skip_static_outputs
 --noexperimental_skip_static_outputs
@@ -3042,6 +3077,8 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --experimental_stl=label
 --experimental_strict_action_env
 --noexperimental_strict_action_env
+--experimental_toolchain_id_in_output_directory
+--noexperimental_toolchain_id_in_output_directory
 --experimental_ui
 --noexperimental_ui
 --experimental_ui_actions_shown=
@@ -3187,7 +3224,6 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --per_file_copt=
 --platform_suffix=
 --plugin=
---plugin_copt=
 --process_headers_in_dependencies
 --noprocess_headers_in_dependencies
 --profile=path
@@ -3260,8 +3296,6 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --nostamp
 --start={no,cold,warm,debug}
 --start_app
---start_end_lib
---nostart_end_lib
 --strategy=
 --strict_filesets
 --nostrict_filesets
@@ -3368,6 +3402,7 @@ BAZEL_COMMAND_PRINT_ACTION_FLAGS="
 --bes_backend=
 --bes_best_effort
 --nobes_best_effort
+--bes_keywords=
 --bes_lifecycle_events
 --nobes_lifecycle_events
 --bes_timeout=
@@ -3439,6 +3474,7 @@ BAZEL_COMMAND_PRINT_ACTION_FLAGS="
 --embed_label=
 --enable_apple_binary_native_protos
 --noenable_apple_binary_native_protos
+--enabled_toolchain_types=
 --experimental_action_listener=
 --experimental_android_library_exports_manifest_default
 --noexperimental_android_library_exports_manifest_default
@@ -3461,6 +3497,9 @@ BAZEL_COMMAND_PRINT_ACTION_FLAGS="
 --noexperimental_j2objc_header_map
 --experimental_link_compile_output_separately
 --noexperimental_link_compile_output_separately
+--experimental_local_disk_cache
+--noexperimental_local_disk_cache
+--experimental_local_disk_cache_path=path
 --experimental_multi_cpu=
 --experimental_multi_threaded_digest
 --noexperimental_multi_threaded_digest
@@ -3486,6 +3525,7 @@ BAZEL_COMMAND_PRINT_ACTION_FLAGS="
 --experimental_remote_retry_start_delay_millis=
 --experimental_remote_spawn_cache
 --noexperimental_remote_spawn_cache
+--experimental_repository_cache=path
 --experimental_sandbox_base=
 --experimental_skip_static_outputs
 --noexperimental_skip_static_outputs
@@ -3494,6 +3534,8 @@ BAZEL_COMMAND_PRINT_ACTION_FLAGS="
 --experimental_stl=label
 --experimental_strict_action_env
 --noexperimental_strict_action_env
+--experimental_toolchain_id_in_output_directory
+--noexperimental_toolchain_id_in_output_directory
 --experimental_ui
 --noexperimental_ui
 --experimental_ui_actions_shown=
@@ -3636,7 +3678,6 @@ BAZEL_COMMAND_PRINT_ACTION_FLAGS="
 --per_file_copt=
 --platform_suffix=
 --plugin=
---plugin_copt=
 --print_action_mnemonics=
 --process_headers_in_dependencies
 --noprocess_headers_in_dependencies
@@ -3706,8 +3747,6 @@ BAZEL_COMMAND_PRINT_ACTION_FLAGS="
 --spawn_strategy=
 --stamp
 --nostamp
---start_end_lib
---nostart_end_lib
 --strategy=
 --strict_filesets
 --nostrict_filesets
@@ -3794,6 +3833,7 @@ BAZEL_COMMAND_QUERY_FLAGS="
 --bes_backend=
 --bes_best_effort
 --nobes_best_effort
+--bes_keywords=
 --bes_lifecycle_events
 --nobes_lifecycle_events
 --bes_timeout=
@@ -3815,6 +3855,7 @@ BAZEL_COMMAND_QUERY_FLAGS="
 --experimental_multi_threaded_digest
 --noexperimental_multi_threaded_digest
 --experimental_oom_more_eagerly_threshold=
+--experimental_repository_cache=path
 --experimental_ui
 --noexperimental_ui
 --experimental_ui_actions_shown=
@@ -3938,6 +3979,7 @@ BAZEL_COMMAND_RUN_FLAGS="
 --bes_backend=
 --bes_best_effort
 --nobes_best_effort
+--bes_keywords=
 --bes_lifecycle_events
 --nobes_lifecycle_events
 --bes_timeout=
@@ -4009,6 +4051,7 @@ BAZEL_COMMAND_RUN_FLAGS="
 --embed_label=
 --enable_apple_binary_native_protos
 --noenable_apple_binary_native_protos
+--enabled_toolchain_types=
 --experimental_action_listener=
 --experimental_android_library_exports_manifest_default
 --noexperimental_android_library_exports_manifest_default
@@ -4031,6 +4074,9 @@ BAZEL_COMMAND_RUN_FLAGS="
 --noexperimental_j2objc_header_map
 --experimental_link_compile_output_separately
 --noexperimental_link_compile_output_separately
+--experimental_local_disk_cache
+--noexperimental_local_disk_cache
+--experimental_local_disk_cache_path=path
 --experimental_multi_cpu=
 --experimental_multi_threaded_digest
 --noexperimental_multi_threaded_digest
@@ -4056,6 +4102,7 @@ BAZEL_COMMAND_RUN_FLAGS="
 --experimental_remote_retry_start_delay_millis=
 --experimental_remote_spawn_cache
 --noexperimental_remote_spawn_cache
+--experimental_repository_cache=path
 --experimental_sandbox_base=
 --experimental_skip_static_outputs
 --noexperimental_skip_static_outputs
@@ -4064,6 +4111,8 @@ BAZEL_COMMAND_RUN_FLAGS="
 --experimental_stl=label
 --experimental_strict_action_env
 --noexperimental_strict_action_env
+--experimental_toolchain_id_in_output_directory
+--noexperimental_toolchain_id_in_output_directory
 --experimental_ui
 --noexperimental_ui
 --experimental_ui_actions_shown=
@@ -4206,7 +4255,6 @@ BAZEL_COMMAND_RUN_FLAGS="
 --per_file_copt=
 --platform_suffix=
 --plugin=
---plugin_copt=
 --process_headers_in_dependencies
 --noprocess_headers_in_dependencies
 --profile=path
@@ -4276,8 +4324,6 @@ BAZEL_COMMAND_RUN_FLAGS="
 --spawn_strategy=
 --stamp
 --nostamp
---start_end_lib
---nostart_end_lib
 --strategy=
 --strict_filesets
 --nostrict_filesets
@@ -4362,6 +4408,7 @@ BAZEL_COMMAND_SHUTDOWN_FLAGS="
 --bes_backend=
 --bes_best_effort
 --nobes_best_effort
+--bes_keywords=
 --bes_lifecycle_events
 --nobes_lifecycle_events
 --bes_timeout=
@@ -4471,6 +4518,7 @@ BAZEL_COMMAND_TEST_FLAGS="
 --bes_backend=
 --bes_best_effort
 --nobes_best_effort
+--bes_keywords=
 --bes_lifecycle_events
 --nobes_lifecycle_events
 --bes_timeout=
@@ -4542,6 +4590,7 @@ BAZEL_COMMAND_TEST_FLAGS="
 --embed_label=
 --enable_apple_binary_native_protos
 --noenable_apple_binary_native_protos
+--enabled_toolchain_types=
 --experimental_action_listener=
 --experimental_android_library_exports_manifest_default
 --noexperimental_android_library_exports_manifest_default
@@ -4564,6 +4613,9 @@ BAZEL_COMMAND_TEST_FLAGS="
 --noexperimental_j2objc_header_map
 --experimental_link_compile_output_separately
 --noexperimental_link_compile_output_separately
+--experimental_local_disk_cache
+--noexperimental_local_disk_cache
+--experimental_local_disk_cache_path=path
 --experimental_multi_cpu=
 --experimental_multi_threaded_digest
 --noexperimental_multi_threaded_digest
@@ -4589,6 +4641,7 @@ BAZEL_COMMAND_TEST_FLAGS="
 --experimental_remote_retry_start_delay_millis=
 --experimental_remote_spawn_cache
 --noexperimental_remote_spawn_cache
+--experimental_repository_cache=path
 --experimental_sandbox_base=
 --experimental_skip_static_outputs
 --noexperimental_skip_static_outputs
@@ -4597,6 +4650,8 @@ BAZEL_COMMAND_TEST_FLAGS="
 --experimental_stl=label
 --experimental_strict_action_env
 --noexperimental_strict_action_env
+--experimental_toolchain_id_in_output_directory
+--noexperimental_toolchain_id_in_output_directory
 --experimental_ui
 --noexperimental_ui
 --experimental_ui_actions_shown=
@@ -4739,7 +4794,6 @@ BAZEL_COMMAND_TEST_FLAGS="
 --per_file_copt=
 --platform_suffix=
 --plugin=
---plugin_copt=
 --process_headers_in_dependencies
 --noprocess_headers_in_dependencies
 --profile=path
@@ -4808,8 +4862,6 @@ BAZEL_COMMAND_TEST_FLAGS="
 --spawn_strategy=
 --stamp
 --nostamp
---start_end_lib
---nostart_end_lib
 --strategy=
 --strict_filesets
 --nostrict_filesets
@@ -4898,6 +4950,7 @@ BAZEL_COMMAND_VERSION_FLAGS="
 --bes_backend=
 --bes_best_effort
 --nobes_best_effort
+--bes_keywords=
 --bes_lifecycle_events
 --nobes_lifecycle_events
 --bes_timeout=
