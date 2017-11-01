@@ -25,7 +25,10 @@ fi
 OUT_ENTRIES="${OUT}/entries"
 mkdir -p "${OUT_ENTRIES}"
 
-TARGETS="$(cat tools/base/bazel/build_targets)"
+TARGETS="$(cat tools/base/bazel/targets)"
+
+# ensure no stale .kindex file exist
+tools/base/bazel/bazel clean
 
 # Build all targets and run the kythe extractor via extra_actions.
 # ignore failures in the build as Kythe will do statistical analysis
@@ -59,7 +62,7 @@ if [ -n "${GSBUCKET}" ]; then
   TIMESTAMP=$(date +'%s')
   "${GSUTIL}" -m cp "${OUT_ENTRIES}/*" "${GSBUCKET}/${TIMESTAMP}/"
   LATEST_FILE="$(mktemp)"
-  echo ${TIMESTAMP}>"${LATEST_FILE}"
+  echo "str_var <name:'kythe_index_version' value:'${TIMESTAMP}'>">"${LATEST_FILE}"
   "${GSUTIL}" cp "${LATEST_FILE}" "${GSBUCKET}/latest.txt"
   rm "${LATEST_FILE}"
 fi
