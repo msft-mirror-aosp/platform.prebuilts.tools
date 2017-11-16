@@ -22,6 +22,10 @@ Updating
 First, checkk out a copy of the Kotlin git repository:
 $ git checkout https://github.com/JetBrains/kotlin
 
+Then switch to a compatible patch branch; right now that means
+from master, do a
+$ git merge origin/master_173
+
 Then make sure the patch to KotlinCoreEnvironment.kt from
 fb82b72dc1892d377ccf98511d56ecce219c8098 (in https://github.com/JetBrains/kotlin/commits/rr/yan)
 has been applied. (It is also a patch included in this directory, as kotlin-compiler-patch.diff.)

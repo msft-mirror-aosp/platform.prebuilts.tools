@@ -14,6 +14,7 @@
     <echo message="Assembling intellij-core, UAST and Kotlin version ${build-version}"/>
 
 
+    <property name="temp" value="${basedir}/temp"/>
     <property name="dist-uast" value="${basedir}/uast"/>
     <property name="dist-intellij-core" value="${basedir}/intellij-core"/>
     <property name="dist-kotlin-compiler" value="${basedir}/kotlin-compiler"/>
@@ -21,9 +22,12 @@
     <target name="dist" depends="clean,uast,intellij-core"/>
 
     <target name="clean">
-        <delete dir="${dist-uast}"/>
-        <delete dir="${dist-intellij-core}"/>
-        <delete dir="${dist-kotlin-compiler}"/>
+		<delete>
+		    <fileset dir="${basedir}">
+		        <include name="**/*.jar"/>
+		        <exclude name="platform-icons.jar"/>
+		    </fileset>
+		</delete>
         <delete dir="${temp}"/>
     </target>
 
@@ -155,6 +159,66 @@
                 <include name="org/jetbrains/kotlin/**/*" />
                 <include name="org/jetbrains/jps/model/**/*" />
                 <include name="kotlinManifest.properties" />
+            </fileset>
+        </jar>
+
+		<!-- TODO IntelliJ sources
+        <unzip src="${idea.sdk}/sources/sources.jar" dest="${temp}/classes/uast-java-sources">
+            <patternset>
+                <include name="org/jetbrains/uast/java/**/*.java"/>
+                <include name="org/jetbrains/uast/java/**/*.kt"/>
+            </patternset>
+        </unzip>
+
+        <jar jarfile="${dist-uast}/uast-java-sources.jar">
+            <fileset dir="${temp}/classes/uast-java-sources"/>
+        </jar>
+		-->
+
+        <jar jarfile="${dist-kotlin-compiler}/kotlin-compiler-sources.jar">
+            <fileset dir="${kotlin_src_dir}/compiler/frontend/src">
+                <include name="**/*.java" />
+                <include name="**/*.kt" />
+            </fileset>
+            <fileset dir="${kotlin_src_dir}/compiler/frontend.java/src">
+                <include name="**/*.java" />
+                <include name="**/*.kt" />
+            </fileset>
+            <fileset dir="${kotlin_src_dir}/compiler/frontend.script/src">
+                <include name="**/*.java" />
+                <include name="**/*.kt" />
+            </fileset>
+            <fileset dir="${kotlin_src_dir}/compiler/light-classes/src">
+                <include name="**/*.java" />
+                <include name="**/*.kt" />
+            </fileset>
+            <fileset dir="${kotlin_src_dir}/compiler/util/src">
+                <include name="**/*.java" />
+                <include name="**/*.kt" />
+            </fileset>
+            <fileset dir="${kotlin_src_dir}/compiler/builtins-serializer/src">
+                <include name="**/*.java" />
+                <include name="**/*.kt" />
+            </fileset>
+            <fileset dir="${kotlin_src_dir}/compiler/cli/src">
+                <include name="**/*.java" />
+                <include name="**/*.kt" />
+            </fileset>
+            <fileset dir="${kotlin_src_dir}/compiler/container/src">
+                <include name="**/*.java" />
+                <include name="**/*.kt" />
+            </fileset>
+            <fileset dir="${kotlin_src_dir}/compiler/preloader/src">
+                <include name="**/*.java" />
+                <include name="**/*.kt" />
+            </fileset>
+            <fileset dir="${kotlin_src_dir}/compiler/resolution/src">
+                <include name="**/*.java" />
+                <include name="**/*.kt" />
+            </fileset>
+            <fileset dir="${kotlin_src_dir}/compiler/serialization/src">
+                <include name="**/*.java" />
+                <include name="**/*.kt" />
             </fileset>
         </jar>
 
