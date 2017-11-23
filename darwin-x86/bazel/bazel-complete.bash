@@ -586,8 +586,6 @@ BAZEL_COMMAND_ANALYZE_PROFILE_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
---incompatible_descriptive_string_representations
---noincompatible_descriptive_string_representations
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
 --incompatible_disallow_dict_plus
@@ -660,6 +658,7 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --auth_enabled
 --noauth_enabled
 --auth_scope=
+--auto_cpu_environment_group=label
 --autofdo_lipo_data
 --noautofdo_lipo_data
 --bes_backend=
@@ -695,8 +694,6 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --cc_proto_library_header_suffixes=
 --cc_proto_library_source_suffixes=
 --check_constraint=
---check_fileset_dependencies_recursively
---nocheck_fileset_dependencies_recursively
 --check_licenses
 --nocheck_licenses
 --check_tests_up_to_date
@@ -738,6 +735,8 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --enable_apple_binary_native_protos
 --noenable_apple_binary_native_protos
 --enabled_toolchain_types=
+--enforce_constraints
+--noenforce_constraints
 --experimental_action_listener=
 --experimental_android_library_exports_manifest_default
 --noexperimental_android_library_exports_manifest_default
@@ -797,8 +796,6 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --experimental_stl=label
 --experimental_strict_action_env
 --noexperimental_strict_action_env
---experimental_toolchain_id_in_output_directory
---noexperimental_toolchain_id_in_output_directory
 --experimental_ui
 --noexperimental_ui
 --experimental_ui_actions_shown=
@@ -829,9 +826,6 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --genrule_strategy=
 --glibc=
 --grte_top=label
---hazelcast_client_config=
---hazelcast_node=
---hazelcast_standalone_listen_port=
 --host_copt=
 --host_cpu=
 --host_crosstool_top=label
@@ -840,7 +834,7 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --host_grte_top=label
 --host_java_launcher=label
 --host_java_toolchain=label
---host_javabase=
+--host_javabase=label
 --ignore_unsupported_sandboxing
 --noignore_unsupported_sandboxing
 --incompatible_bzl_disallow_load_after_statement
@@ -851,8 +845,6 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
---incompatible_descriptive_string_representations
---noincompatible_descriptive_string_representations
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
 --incompatible_disallow_dict_plus
@@ -896,7 +888,7 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --nojava_header_compilation
 --java_launcher=label
 --java_toolchain=label
---javabase=
+--javabase=label
 --javacopt=
 --jobs=
 --jvmopt=
@@ -1131,8 +1123,6 @@ BAZEL_COMMAND_CANONICALIZE_FLAGS_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
---incompatible_descriptive_string_representations
---noincompatible_descriptive_string_representations
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
 --incompatible_disallow_dict_plus
@@ -1203,6 +1193,7 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --auth_enabled
 --noauth_enabled
 --auth_scope=
+--auto_cpu_environment_group=label
 --autofdo_lipo_data
 --noautofdo_lipo_data
 --bes_backend=
@@ -1238,8 +1229,6 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --cc_proto_library_header_suffixes=
 --cc_proto_library_source_suffixes=
 --check_constraint=
---check_fileset_dependencies_recursively
---nocheck_fileset_dependencies_recursively
 --check_licenses
 --nocheck_licenses
 --check_tests_up_to_date
@@ -1282,6 +1271,8 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --enable_apple_binary_native_protos
 --noenable_apple_binary_native_protos
 --enabled_toolchain_types=
+--enforce_constraints
+--noenforce_constraints
 --experimental_action_listener=
 --experimental_android_library_exports_manifest_default
 --noexperimental_android_library_exports_manifest_default
@@ -1341,8 +1332,6 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --experimental_stl=label
 --experimental_strict_action_env
 --noexperimental_strict_action_env
---experimental_toolchain_id_in_output_directory
---noexperimental_toolchain_id_in_output_directory
 --experimental_ui
 --noexperimental_ui
 --experimental_ui_actions_shown=
@@ -1375,9 +1364,6 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --genrule_strategy=
 --glibc=
 --grte_top=label
---hazelcast_client_config=
---hazelcast_node=
---hazelcast_standalone_listen_port=
 --host_copt=
 --host_cpu=
 --host_crosstool_top=label
@@ -1386,7 +1372,7 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --host_grte_top=label
 --host_java_launcher=label
 --host_java_toolchain=label
---host_javabase=
+--host_javabase=label
 --ignore_unsupported_sandboxing
 --noignore_unsupported_sandboxing
 --incompatible_bzl_disallow_load_after_statement
@@ -1397,8 +1383,6 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
---incompatible_descriptive_string_representations
---noincompatible_descriptive_string_representations
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
 --incompatible_disallow_dict_plus
@@ -1442,7 +1426,7 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --nojava_header_compilation
 --java_launcher=label
 --java_toolchain=label
---javabase=
+--javabase=label
 --javacopt=
 --jobs=
 --jvmopt=
@@ -1656,6 +1640,7 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --auth_enabled
 --noauth_enabled
 --auth_scope=
+--auto_cpu_environment_group=label
 --autofdo_lipo_data
 --noautofdo_lipo_data
 --bes_backend=
@@ -1691,8 +1676,6 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --cc_proto_library_header_suffixes=
 --cc_proto_library_source_suffixes=
 --check_constraint=
---check_fileset_dependencies_recursively
---nocheck_fileset_dependencies_recursively
 --check_licenses
 --nocheck_licenses
 --check_tests_up_to_date
@@ -1734,6 +1717,8 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --enable_apple_binary_native_protos
 --noenable_apple_binary_native_protos
 --enabled_toolchain_types=
+--enforce_constraints
+--noenforce_constraints
 --experimental_action_listener=
 --experimental_android_library_exports_manifest_default
 --noexperimental_android_library_exports_manifest_default
@@ -1793,8 +1778,6 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --experimental_stl=label
 --experimental_strict_action_env
 --noexperimental_strict_action_env
---experimental_toolchain_id_in_output_directory
---noexperimental_toolchain_id_in_output_directory
 --experimental_ui
 --noexperimental_ui
 --experimental_ui_actions_shown=
@@ -1825,9 +1808,6 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --genrule_strategy=
 --glibc=
 --grte_top=label
---hazelcast_client_config=
---hazelcast_node=
---hazelcast_standalone_listen_port=
 --host_copt=
 --host_cpu=
 --host_crosstool_top=label
@@ -1836,7 +1816,7 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --host_grte_top=label
 --host_java_launcher=label
 --host_java_toolchain=label
---host_javabase=
+--host_javabase=label
 --ignore_unsupported_sandboxing
 --noignore_unsupported_sandboxing
 --incompatible_bzl_disallow_load_after_statement
@@ -1847,8 +1827,6 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
---incompatible_descriptive_string_representations
---noincompatible_descriptive_string_representations
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
 --incompatible_disallow_dict_plus
@@ -1892,7 +1870,7 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --nojava_header_compilation
 --java_launcher=label
 --java_toolchain=label
---javabase=
+--javabase=label
 --javacopt=
 --jobs=
 --jvmopt=
@@ -2130,8 +2108,6 @@ BAZEL_COMMAND_DUMP_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
---incompatible_descriptive_string_representations
---noincompatible_descriptive_string_representations
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
 --incompatible_disallow_dict_plus
@@ -2159,6 +2135,8 @@ BAZEL_COMMAND_DUMP_FLAGS="
 --project_id=
 --rule_classes
 --norule_classes
+--rules
+--norules
 --show_progress
 --noshow_progress
 --show_progress_rate_limit=
@@ -2167,6 +2145,7 @@ BAZEL_COMMAND_DUMP_FLAGS="
 --show_timestamps
 --noshow_timestamps
 --skyframe={off,summary,detailed}
+--skylark_memory=
 --tls_certificate=
 --tls_enabled
 --notls_enabled
@@ -2227,8 +2206,6 @@ BAZEL_COMMAND_FETCH_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
---incompatible_descriptive_string_representations
---noincompatible_descriptive_string_representations
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
 --incompatible_disallow_dict_plus
@@ -2324,8 +2301,6 @@ BAZEL_COMMAND_HELP_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
---incompatible_descriptive_string_representations
---noincompatible_descriptive_string_representations
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
 --incompatible_disallow_dict_plus
@@ -2397,6 +2372,7 @@ BAZEL_COMMAND_INFO_FLAGS="
 --auth_enabled
 --noauth_enabled
 --auth_scope=
+--auto_cpu_environment_group=label
 --autofdo_lipo_data
 --noautofdo_lipo_data
 --bes_backend=
@@ -2432,8 +2408,6 @@ BAZEL_COMMAND_INFO_FLAGS="
 --cc_proto_library_header_suffixes=
 --cc_proto_library_source_suffixes=
 --check_constraint=
---check_fileset_dependencies_recursively
---nocheck_fileset_dependencies_recursively
 --check_licenses
 --nocheck_licenses
 --check_tests_up_to_date
@@ -2475,6 +2449,8 @@ BAZEL_COMMAND_INFO_FLAGS="
 --enable_apple_binary_native_protos
 --noenable_apple_binary_native_protos
 --enabled_toolchain_types=
+--enforce_constraints
+--noenforce_constraints
 --experimental_action_listener=
 --experimental_android_library_exports_manifest_default
 --noexperimental_android_library_exports_manifest_default
@@ -2534,8 +2510,6 @@ BAZEL_COMMAND_INFO_FLAGS="
 --experimental_stl=label
 --experimental_strict_action_env
 --noexperimental_strict_action_env
---experimental_toolchain_id_in_output_directory
---noexperimental_toolchain_id_in_output_directory
 --experimental_ui
 --noexperimental_ui
 --experimental_ui_actions_shown=
@@ -2566,9 +2540,6 @@ BAZEL_COMMAND_INFO_FLAGS="
 --genrule_strategy=
 --glibc=
 --grte_top=label
---hazelcast_client_config=
---hazelcast_node=
---hazelcast_standalone_listen_port=
 --host_copt=
 --host_cpu=
 --host_crosstool_top=label
@@ -2577,7 +2548,7 @@ BAZEL_COMMAND_INFO_FLAGS="
 --host_grte_top=label
 --host_java_launcher=label
 --host_java_toolchain=label
---host_javabase=
+--host_javabase=label
 --ignore_unsupported_sandboxing
 --noignore_unsupported_sandboxing
 --incompatible_bzl_disallow_load_after_statement
@@ -2588,8 +2559,6 @@ BAZEL_COMMAND_INFO_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
---incompatible_descriptive_string_representations
---noincompatible_descriptive_string_representations
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
 --incompatible_disallow_dict_plus
@@ -2633,7 +2602,7 @@ BAZEL_COMMAND_INFO_FLAGS="
 --nojava_header_compilation
 --java_launcher=label
 --java_toolchain=label
---javabase=
+--javabase=label
 --javacopt=
 --jobs=
 --jvmopt=
@@ -2867,8 +2836,6 @@ BAZEL_COMMAND_LICENSE_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
---incompatible_descriptive_string_representations
---noincompatible_descriptive_string_representations
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
 --incompatible_disallow_dict_plus
@@ -2939,6 +2906,7 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --auth_enabled
 --noauth_enabled
 --auth_scope=
+--auto_cpu_environment_group=label
 --autofdo_lipo_data
 --noautofdo_lipo_data
 --bes_backend=
@@ -2974,8 +2942,6 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --cc_proto_library_header_suffixes=
 --cc_proto_library_source_suffixes=
 --check_constraint=
---check_fileset_dependencies_recursively
---nocheck_fileset_dependencies_recursively
 --check_licenses
 --nocheck_licenses
 --check_tests_up_to_date
@@ -3018,6 +2984,8 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --enable_apple_binary_native_protos
 --noenable_apple_binary_native_protos
 --enabled_toolchain_types=
+--enforce_constraints
+--noenforce_constraints
 --experimental_action_listener=
 --experimental_android_library_exports_manifest_default
 --noexperimental_android_library_exports_manifest_default
@@ -3077,8 +3045,6 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --experimental_stl=label
 --experimental_strict_action_env
 --noexperimental_strict_action_env
---experimental_toolchain_id_in_output_directory
---noexperimental_toolchain_id_in_output_directory
 --experimental_ui
 --noexperimental_ui
 --experimental_ui_actions_shown=
@@ -3109,9 +3075,6 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --genrule_strategy=
 --glibc=
 --grte_top=label
---hazelcast_client_config=
---hazelcast_node=
---hazelcast_standalone_listen_port=
 --host_copt=
 --host_cpu=
 --host_crosstool_top=label
@@ -3120,7 +3083,7 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --host_grte_top=label
 --host_java_launcher=label
 --host_java_toolchain=label
---host_javabase=
+--host_javabase=label
 --ignore_unsupported_sandboxing
 --noignore_unsupported_sandboxing
 --incompatible_bzl_disallow_load_after_statement
@@ -3131,8 +3094,6 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
---incompatible_descriptive_string_representations
---noincompatible_descriptive_string_representations
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
 --incompatible_disallow_dict_plus
@@ -3179,7 +3140,7 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --nojava_header_compilation
 --java_launcher=label
 --java_toolchain=label
---javabase=
+--javabase=label
 --javacopt=
 --jobs=
 --jvmopt=
@@ -3397,6 +3358,7 @@ BAZEL_COMMAND_PRINT_ACTION_FLAGS="
 --auth_enabled
 --noauth_enabled
 --auth_scope=
+--auto_cpu_environment_group=label
 --autofdo_lipo_data
 --noautofdo_lipo_data
 --bes_backend=
@@ -3432,8 +3394,6 @@ BAZEL_COMMAND_PRINT_ACTION_FLAGS="
 --cc_proto_library_header_suffixes=
 --cc_proto_library_source_suffixes=
 --check_constraint=
---check_fileset_dependencies_recursively
---nocheck_fileset_dependencies_recursively
 --check_licenses
 --nocheck_licenses
 --check_tests_up_to_date
@@ -3475,6 +3435,8 @@ BAZEL_COMMAND_PRINT_ACTION_FLAGS="
 --enable_apple_binary_native_protos
 --noenable_apple_binary_native_protos
 --enabled_toolchain_types=
+--enforce_constraints
+--noenforce_constraints
 --experimental_action_listener=
 --experimental_android_library_exports_manifest_default
 --noexperimental_android_library_exports_manifest_default
@@ -3534,8 +3496,6 @@ BAZEL_COMMAND_PRINT_ACTION_FLAGS="
 --experimental_stl=label
 --experimental_strict_action_env
 --noexperimental_strict_action_env
---experimental_toolchain_id_in_output_directory
---noexperimental_toolchain_id_in_output_directory
 --experimental_ui
 --noexperimental_ui
 --experimental_ui_actions_shown=
@@ -3566,9 +3526,6 @@ BAZEL_COMMAND_PRINT_ACTION_FLAGS="
 --genrule_strategy=
 --glibc=
 --grte_top=label
---hazelcast_client_config=
---hazelcast_node=
---hazelcast_standalone_listen_port=
 --host_copt=
 --host_cpu=
 --host_crosstool_top=label
@@ -3577,7 +3534,7 @@ BAZEL_COMMAND_PRINT_ACTION_FLAGS="
 --host_grte_top=label
 --host_java_launcher=label
 --host_java_toolchain=label
---host_javabase=
+--host_javabase=label
 --ignore_unsupported_sandboxing
 --noignore_unsupported_sandboxing
 --incompatible_bzl_disallow_load_after_statement
@@ -3588,8 +3545,6 @@ BAZEL_COMMAND_PRINT_ACTION_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
---incompatible_descriptive_string_representations
---noincompatible_descriptive_string_representations
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
 --incompatible_disallow_dict_plus
@@ -3633,7 +3588,7 @@ BAZEL_COMMAND_PRINT_ACTION_FLAGS="
 --nojava_header_compilation
 --java_launcher=label
 --java_toolchain=label
---javabase=
+--javabase=label
 --javacopt=
 --jobs=
 --jvmopt=
@@ -3877,8 +3832,6 @@ BAZEL_COMMAND_QUERY_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
---incompatible_descriptive_string_representations
---noincompatible_descriptive_string_representations
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
 --incompatible_disallow_dict_plus
@@ -3974,6 +3927,7 @@ BAZEL_COMMAND_RUN_FLAGS="
 --auth_enabled
 --noauth_enabled
 --auth_scope=
+--auto_cpu_environment_group=label
 --autofdo_lipo_data
 --noautofdo_lipo_data
 --bes_backend=
@@ -4009,8 +3963,6 @@ BAZEL_COMMAND_RUN_FLAGS="
 --cc_proto_library_header_suffixes=
 --cc_proto_library_source_suffixes=
 --check_constraint=
---check_fileset_dependencies_recursively
---nocheck_fileset_dependencies_recursively
 --check_licenses
 --nocheck_licenses
 --check_tests_up_to_date
@@ -4052,6 +4004,8 @@ BAZEL_COMMAND_RUN_FLAGS="
 --enable_apple_binary_native_protos
 --noenable_apple_binary_native_protos
 --enabled_toolchain_types=
+--enforce_constraints
+--noenforce_constraints
 --experimental_action_listener=
 --experimental_android_library_exports_manifest_default
 --noexperimental_android_library_exports_manifest_default
@@ -4111,8 +4065,6 @@ BAZEL_COMMAND_RUN_FLAGS="
 --experimental_stl=label
 --experimental_strict_action_env
 --noexperimental_strict_action_env
---experimental_toolchain_id_in_output_directory
---noexperimental_toolchain_id_in_output_directory
 --experimental_ui
 --noexperimental_ui
 --experimental_ui_actions_shown=
@@ -4143,9 +4095,6 @@ BAZEL_COMMAND_RUN_FLAGS="
 --genrule_strategy=
 --glibc=
 --grte_top=label
---hazelcast_client_config=
---hazelcast_node=
---hazelcast_standalone_listen_port=
 --host_copt=
 --host_cpu=
 --host_crosstool_top=label
@@ -4154,7 +4103,7 @@ BAZEL_COMMAND_RUN_FLAGS="
 --host_grte_top=label
 --host_java_launcher=label
 --host_java_toolchain=label
---host_javabase=
+--host_javabase=label
 --ignore_unsupported_sandboxing
 --noignore_unsupported_sandboxing
 --incompatible_bzl_disallow_load_after_statement
@@ -4165,8 +4114,6 @@ BAZEL_COMMAND_RUN_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
---incompatible_descriptive_string_representations
---noincompatible_descriptive_string_representations
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
 --incompatible_disallow_dict_plus
@@ -4210,7 +4157,7 @@ BAZEL_COMMAND_RUN_FLAGS="
 --nojava_header_compilation
 --java_launcher=label
 --java_toolchain=label
---javabase=
+--javabase=label
 --javacopt=
 --jobs=
 --jvmopt=
@@ -4444,8 +4391,6 @@ BAZEL_COMMAND_SHUTDOWN_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
---incompatible_descriptive_string_representations
---noincompatible_descriptive_string_representations
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
 --incompatible_disallow_dict_plus
@@ -4513,6 +4458,7 @@ BAZEL_COMMAND_TEST_FLAGS="
 --auth_enabled
 --noauth_enabled
 --auth_scope=
+--auto_cpu_environment_group=label
 --autofdo_lipo_data
 --noautofdo_lipo_data
 --bes_backend=
@@ -4548,8 +4494,6 @@ BAZEL_COMMAND_TEST_FLAGS="
 --cc_proto_library_header_suffixes=
 --cc_proto_library_source_suffixes=
 --check_constraint=
---check_fileset_dependencies_recursively
---nocheck_fileset_dependencies_recursively
 --check_licenses
 --nocheck_licenses
 --check_tests_up_to_date
@@ -4591,6 +4535,8 @@ BAZEL_COMMAND_TEST_FLAGS="
 --enable_apple_binary_native_protos
 --noenable_apple_binary_native_protos
 --enabled_toolchain_types=
+--enforce_constraints
+--noenforce_constraints
 --experimental_action_listener=
 --experimental_android_library_exports_manifest_default
 --noexperimental_android_library_exports_manifest_default
@@ -4650,8 +4596,6 @@ BAZEL_COMMAND_TEST_FLAGS="
 --experimental_stl=label
 --experimental_strict_action_env
 --noexperimental_strict_action_env
---experimental_toolchain_id_in_output_directory
---noexperimental_toolchain_id_in_output_directory
 --experimental_ui
 --noexperimental_ui
 --experimental_ui_actions_shown=
@@ -4682,9 +4626,6 @@ BAZEL_COMMAND_TEST_FLAGS="
 --genrule_strategy=
 --glibc=
 --grte_top=label
---hazelcast_client_config=
---hazelcast_node=
---hazelcast_standalone_listen_port=
 --host_copt=
 --host_cpu=
 --host_crosstool_top=label
@@ -4693,7 +4634,7 @@ BAZEL_COMMAND_TEST_FLAGS="
 --host_grte_top=label
 --host_java_launcher=label
 --host_java_toolchain=label
---host_javabase=
+--host_javabase=label
 --ignore_unsupported_sandboxing
 --noignore_unsupported_sandboxing
 --incompatible_bzl_disallow_load_after_statement
@@ -4704,8 +4645,6 @@ BAZEL_COMMAND_TEST_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
---incompatible_descriptive_string_representations
---noincompatible_descriptive_string_representations
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
 --incompatible_disallow_dict_plus
@@ -4749,7 +4688,7 @@ BAZEL_COMMAND_TEST_FLAGS="
 --nojava_header_compilation
 --java_launcher=label
 --java_toolchain=label
---javabase=
+--javabase=label
 --javacopt=
 --jobs=
 --jvmopt=
@@ -4985,8 +4924,6 @@ BAZEL_COMMAND_VERSION_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
---incompatible_descriptive_string_representations
---noincompatible_descriptive_string_representations
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
 --incompatible_disallow_dict_plus
