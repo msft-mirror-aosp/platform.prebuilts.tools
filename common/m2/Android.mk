@@ -63,3 +63,21 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     guava
 
 include $(BUILD_STATIC_JAVA_LIBRARY)
+
+include $(CLEAR_VARS)
+
+LOCAL_PREBUILT_JAVA_LIBRARIES := \
+    truth-prebuilt-host-jar:repository/com/google/truth/truth/0.28/truth-0.28.jar
+
+include $(BUILD_HOST_PREBUILT)
+
+include $(CLEAR_VARS)
+
+LOCAL_MODULE := truth-host-prebuilt
+
+LOCAL_STATIC_JAVA_LIBRARIES := \
+    truth-prebuilt-host-jar \
+    guavalib
+
+include $(BUILD_HOST_JAVA_LIBRARY)
+
