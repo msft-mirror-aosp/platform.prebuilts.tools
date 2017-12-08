@@ -3,13 +3,13 @@ load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom", "maven_aa
 
 maven_aar(
     name = "aar",
-    aar = "cardview-v7-26.0.2.aar",
+    aar = "wearable-2.1.0.aar",
     pom = ":pom",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
     name = "pom",
-    source = "cardview-v7-26.0.2.pom",
+    source = "wearable-2.1.0.pom",
     visibility = ["//visibility:public"],
 )
