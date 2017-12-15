@@ -17,3 +17,5 @@ java_import(
     tags = ["managed"],
     visibility = ["//visibility:public"],
 )
+
+exports_files(["Kotlin/kotlinc/build.txt"])
