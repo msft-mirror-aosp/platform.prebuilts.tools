@@ -3,6 +3,7 @@ load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom", "maven_aa
 
 maven_java_import(
     name = "jar",
+    classifiers = ["runtime"],
     jars = ["org.jacoco.agent-0.7.9.jar"],
     pom = ":pom",
     visibility = ["//visibility:public"],

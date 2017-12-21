@@ -28,3 +28,9 @@ java_import(
     jars = ["Kotlin/kotlinc/lib/kotlin-compiler.jar"],
     visibility = ["//visibility:public"],
 )
+
+filegroup(
+    name = "kotlin_plugin",
+    srcs = glob(["Kotlin/**"]),
+    visibility = ["//visibility:public"],
+)
