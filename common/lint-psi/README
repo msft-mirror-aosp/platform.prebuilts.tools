@@ -19,16 +19,18 @@ and then drop in the compiler jar (which contains all of intellij-core).
 Updating
 --------
 
-First, checkk out a copy of the Kotlin git repository:
+First, check out a copy of the Kotlin git repository:
 $ git checkout https://github.com/JetBrains/kotlin
+(or to start a new branch, git checkout -t origin/master -b my-master)
 
 Then switch to a compatible patch branch; right now that means
 from master, do a
 $ git merge origin/master_173
 
-Then make sure the patch to KotlinCoreEnvironment.kt from
-fb82b72dc1892d377ccf98511d56ecce219c8098 (in https://github.com/JetBrains/kotlin/commits/rr/yan)
-has been applied. (It is also a patch included in this directory, as kotlin-compiler-patch.diff.)
+Then make sure to apply some extra patches to work around bugs
+and to add some special methods used by lint:
+$ git apply /path/to/kotlin-compiler-patch.diff (which is located in
+this directory).
 
 Next, build the Kotlin repository:
 $ ant -f update_dependencies.xml

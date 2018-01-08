@@ -113,8 +113,37 @@ index af75bdf1cbd..f7a21012c24 100644
          private fun registerProjectServicesForCLI(@Suppress("UNUSED_PARAMETER") projectEnvironment: JavaCoreProjectEnvironment) {
              /**
               * Note that Kapt may restart code analysis process, and CLI services should be aware of that.
+diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
+index 124dc4805cf..76c61b9a17a 100644
+--- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
++++ b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
+@@ -83,7 +83,23 @@ abstract class KotlinAbstractUElement(private val givenParent: UElement?) : UEle
+             return false
+         }
+ 
+-        return this.psi == other.psi
++        if (this.psi == other.psi) {
++            if (this.psi == null) {
++                // Two UElements can be different but both have null PSI fields; in that case,
++                // do a deeper check
++                if (this === other) { // same instance: always equal
++                    return true
++                }
++                if (this.javaClass !== other.javaClass) { // different types: never equal
++                    return false
++                }
++                return this.asSourceString() == other.asSourceString() // source code equality
++            }
++            return true
++        } else {
++            return false
++        }
++
+     }
+ 
+     override fun hashCode() = psi?.hashCode() ?: 0
 diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUClass.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUClass.kt
-index 1ef5b7deeda..b41763a76a4 100644
+index 1ef5b7deeda..939185743fb 100644
 --- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUClass.kt
 +++ b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUClass.kt
 @@ -143,10 +143,22 @@ class KotlinConstructorUMethod(
@@ -140,6 +169,15 @@ index 1ef5b7deeda..b41763a76a4 100644
      override val javaPsi = psi
  
      override val sourcePsi = psi.kotlinOrigin
+@@ -156,7 +168,7 @@ class KotlinUAnonymousClass(
+         psi: PsiAnonymousClass,
+         givenParent: UElement?
+ ) : AbstractKotlinUClass(givenParent), UAnonymousClass, PsiAnonymousClass by psi {
+-    
++
+     override val psi: PsiAnonymousClass = unwrap<UAnonymousClass, PsiAnonymousClass>(psi)
+ 
+     override val javaPsi: PsiAnonymousClass = psi
 @@ -175,7 +187,7 @@ class KotlinUAnonymousClass(
  
      override val uastAnchor: UElement?
