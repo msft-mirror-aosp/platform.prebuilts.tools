@@ -45,6 +45,20 @@ $(foreach p,$(prebuilts),\
 prebuilts :=
 
 ###########################################
+
+include $(CLEAR_VARS)
+
+LOCAL_PREBUILT_JAVA_LIBRARIES := \
+    asm-analysis-prebuilt-host-jar:repository/org/ow2/asm/asm-analysis/6.0/asm-analysis-6.0.jar \
+    asm-commons-prebuilt-host-jar:repository/org/ow2/asm/asm-commons/6.0/asm-commons-6.0.jar \
+    asm-prebuilt-host-jar:repository/org/ow2/asm/asm/6.0/asm-6.0.jar \
+    asm-tree-prebuilt-host-jar:repository/org/ow2/asm/asm-tree/6.0/asm-tree-6.0.jar \
+    asm-util-prebuilt-host-jar:repository/org/ow2/asm/asm-util/6.0/asm-util-6.0.jar \
+    truth-prebuilt-host-jar:repository/com/google/truth/truth/0.28/truth-0.28.jar
+
+include $(BUILD_HOST_PREBUILT)
+
+###########################################
 # org.mockito prebuilt for Robolectric
 ###########################################
 
@@ -74,13 +88,6 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
 
 LOCAL_SDK_VERSION := current
 include $(BUILD_STATIC_JAVA_LIBRARY)
-
-include $(CLEAR_VARS)
-
-LOCAL_PREBUILT_JAVA_LIBRARIES := \
-    truth-prebuilt-host-jar:repository/com/google/truth/truth/0.28/truth-0.28.jar
-
-include $(BUILD_HOST_PREBUILT)
 
 include $(CLEAR_VARS)
 
