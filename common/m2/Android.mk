@@ -17,10 +17,7 @@ LOCAL_MODULE_SUFFIX := $(COMMON_JAVA_PACKAGE_SUFFIX)
 include $(BUILD_PREBUILT)
 
 ###########################################
-
-include $(CLEAR_VARS)
-
-LOCAL_PREBUILT_STATIC_JAVA_LIBRARIES := \
+prebuilts := \
     asm-commons-prebuilt-jar:repository/org/ow2/asm/asm-commons/5.0.1/asm-commons-5.0.1.jar \
     asm-tree-prebuilt-jar:repository/org/ow2/asm/asm-tree/5.0.1/asm-tree-5.0.1.jar \
     asm-prebuilt-jar:repository/org/ow2/asm/asm/5.0.1/asm-5.0.1.jar \
@@ -30,7 +27,22 @@ LOCAL_PREBUILT_STATIC_JAVA_LIBRARIES := \
     squareup-haha-prebuilt:repository/com/squareup/haha/haha/2.0.2/haha-2.0.2.jar \
     truth-prebuilt-jar:repository/com/google/truth/truth/0.28/truth-0.28.jar
 
-include $(BUILD_MULTI_PREBUILT)
+define define-prebuilt
+  $(eval tw := $(subst :, ,$(strip $(1)))) \
+  $(eval include $(CLEAR_VARS)) \
+  $(eval LOCAL_MODULE := $(word 1,$(tw))) \
+  $(eval LOCAL_MODULE_TAGS := optional) \
+  $(eval LOCAL_MODULE_CLASS := JAVA_LIBRARIES) \
+  $(eval LOCAL_SRC_FILES := $(word 2,$(tw))) \
+  $(eval LOCAL_UNINSTALLABLE_MODULE := true) \
+  $(eval LOCAL_SDK_VERSION := current) \
+  $(eval include $(BUILD_PREBUILT))
+endef
+
+$(foreach p,$(prebuilts),\
+  $(call define-prebuilt,$(p)))
+
+prebuilts :=
 
 ###########################################
 # org.mockito prebuilt for Robolectric
@@ -45,6 +57,7 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     mockito2-prebuilt-jar \
     objenesis-prebuilt-jar
 
+LOCAL_SDK_VERSION := current
 include $(BUILD_STATIC_JAVA_LIBRARY)
 
 ###########################################
@@ -59,6 +72,7 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     truth-prebuilt-jar \
     guava
 
+LOCAL_SDK_VERSION := current
 include $(BUILD_STATIC_JAVA_LIBRARY)
 
 include $(CLEAR_VARS)
