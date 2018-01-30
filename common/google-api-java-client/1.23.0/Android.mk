@@ -19,7 +19,7 @@ LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
 LOCAL_PREBUILT_STATIC_JAVA_LIBRARIES := \
-    google-api-java-client-min-repackaged-1.20.0:google-api-java-client-min-repackaged-1.20.0.jar
+    google-api-java-client-min-repackaged:google-api-java-client-min-repackaged-1.23.0.jar
 
 include $(BUILD_HOST_PREBUILT)
 
