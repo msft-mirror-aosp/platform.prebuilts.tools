@@ -537,10 +537,6 @@ BAZEL_COMMAND_ANALYZE_PROFILE_FLAGS="
 --noallow_undefined_configs
 --announce_rc
 --noannounce_rc
---auth_credentials=
---auth_enabled
---noauth_enabled
---auth_scope=
 --bes_backend=
 --bes_best_effort
 --nobes_best_effort
@@ -575,6 +571,10 @@ BAZEL_COMMAND_ANALYZE_PROFILE_FLAGS="
 --experimental_ui_limit_console_output=
 --force_experimental_external_repositories
 --noforce_experimental_external_repositories
+--google_auth_scopes=
+--google_credentials=
+--google_default_credentials
+--nogoogle_default_credentials
 --html
 --nohtml
 --html_details
@@ -590,8 +590,12 @@ BAZEL_COMMAND_ANALYZE_PROFILE_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
+--incompatible_depset_union
+--noincompatible_depset_union
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
+--incompatible_disable_glob_tracking
+--noincompatible_disable_glob_tracking
 --incompatible_disallow_dict_plus
 --noincompatible_disallow_dict_plus
 --incompatible_disallow_keyword_only_args
@@ -600,8 +604,6 @@ BAZEL_COMMAND_ANALYZE_PROFILE_FLAGS="
 --noincompatible_disallow_toplevel_if_statement
 --incompatible_disallow_uncalled_set_constructor
 --noincompatible_disallow_uncalled_set_constructor
---incompatible_list_plus_equals_inplace
---noincompatible_list_plus_equals_inplace
 --incompatible_load_argument_is_label
 --noincompatible_load_argument_is_label
 --incompatible_new_actions_api
@@ -663,10 +665,6 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --noapple_generate_dsym
 --apple_sdk=label
 --aspects=
---auth_credentials=
---auth_enabled
---noauth_enabled
---auth_scope=
 --auto_cpu_environment_group=label
 --autofdo_lipo_data
 --noautofdo_lipo_data
@@ -750,6 +748,8 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --enabled_toolchain_types=
 --enforce_constraints
 --noenforce_constraints
+--expand_test_suites
+--noexpand_test_suites
 --experimental_action_listener=
 --experimental_allow_android_library_deps_without_srcs
 --noexperimental_allow_android_library_deps_without_srcs
@@ -781,6 +781,8 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --noexperimental_interleave_loading_and_analysis
 --experimental_j2objc_header_map
 --noexperimental_j2objc_header_map
+--experimental_java_coverage
+--noexperimental_java_coverage
 --experimental_link_compile_output_separately
 --noexperimental_link_compile_output_separately
 --experimental_local_disk_cache
@@ -831,6 +833,7 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --explicit_jre_deps
 --noexplicit_jre_deps
 --extra_entitlements=label
+--extra_toolchains=
 --fat_apk_cpu=
 --fdo_instrument=path
 --fdo_optimize=
@@ -846,6 +849,10 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --force_python={py2,py3,py2and3,py2only,py3only}
 --genrule_strategy=
 --glibc=
+--google_auth_scopes=
+--google_credentials=
+--google_default_credentials
+--nogoogle_default_credentials
 --grte_top=label
 --host_copt=
 --host_cpu=
@@ -856,6 +863,7 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --host_java_launcher=label
 --host_java_toolchain=label
 --host_javabase=label
+--host_platform=label
 --ignore_unsupported_sandboxing
 --noignore_unsupported_sandboxing
 --incompatible_bzl_disallow_load_after_statement
@@ -866,8 +874,12 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
+--incompatible_depset_union
+--noincompatible_depset_union
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
+--incompatible_disable_glob_tracking
+--noincompatible_disable_glob_tracking
 --incompatible_disallow_dict_plus
 --noincompatible_disallow_dict_plus
 --incompatible_disallow_keyword_only_args
@@ -876,8 +888,6 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --noincompatible_disallow_toplevel_if_statement
 --incompatible_disallow_uncalled_set_constructor
 --noincompatible_disallow_uncalled_set_constructor
---incompatible_list_plus_equals_inplace
---noincompatible_list_plus_equals_inplace
 --incompatible_load_argument_is_label
 --noincompatible_load_argument_is_label
 --incompatible_new_actions_api
@@ -917,8 +927,6 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --jvmopt=
 --keep_going
 --nokeep_going
---keep_incrementality_data
---nokeep_incrementality_data
 --legacy_external_runfiles
 --nolegacy_external_runfiles
 --legacy_whole_archive
@@ -957,6 +965,7 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --noparse_headers_verifies_modules
 --per_file_copt=
 --platform_suffix=
+--platforms=
 --plugin=
 --process_headers_in_dependencies
 --noprocess_headers_in_dependencies
@@ -982,10 +991,10 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --noremote_accept_cached
 --remote_cache=
 --remote_executor=
+--remote_http_cache=
 --remote_instance_name=
 --remote_local_fallback
 --noremote_local_fallback
---remote_rest_cache=
 --remote_rest_cache_pool_size=
 --remote_timeout=
 --remote_upload_local_results
@@ -1064,6 +1073,9 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --tool_tag=
 --toolchain_resolution_debug
 --notoolchain_resolution_debug
+--toolchain_resolution_override=
+--track_incremental_state
+--notrack_incremental_state
 --translations={auto,yes,no}
 --notranslations
 --tvos_cpus=
@@ -1095,7 +1107,6 @@ BAZEL_COMMAND_BUILD_FLAGS="
 --worker_verbose
 --noworker_verbose
 --workspace_status_command=path
---xcode_toolchain=
 --xcode_version=
 --xcode_version_config=label
 "
@@ -1105,10 +1116,6 @@ BAZEL_COMMAND_CANONICALIZE_FLAGS_FLAGS="
 --noallow_undefined_configs
 --announce_rc
 --noannounce_rc
---auth_credentials=
---auth_enabled
---noauth_enabled
---auth_scope=
 --bes_backend=
 --bes_best_effort
 --nobes_best_effort
@@ -1142,6 +1149,10 @@ BAZEL_COMMAND_CANONICALIZE_FLAGS_FLAGS="
 --for_command=
 --force_experimental_external_repositories
 --noforce_experimental_external_repositories
+--google_auth_scopes=
+--google_credentials=
+--google_default_credentials
+--nogoogle_default_credentials
 --incompatible_bzl_disallow_load_after_statement
 --noincompatible_bzl_disallow_load_after_statement
 --incompatible_checked_arithmetic
@@ -1150,8 +1161,12 @@ BAZEL_COMMAND_CANONICALIZE_FLAGS_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
+--incompatible_depset_union
+--noincompatible_depset_union
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
+--incompatible_disable_glob_tracking
+--noincompatible_disable_glob_tracking
 --incompatible_disallow_dict_plus
 --noincompatible_disallow_dict_plus
 --incompatible_disallow_keyword_only_args
@@ -1160,8 +1175,6 @@ BAZEL_COMMAND_CANONICALIZE_FLAGS_FLAGS="
 --noincompatible_disallow_toplevel_if_statement
 --incompatible_disallow_uncalled_set_constructor
 --noincompatible_disallow_uncalled_set_constructor
---incompatible_list_plus_equals_inplace
---noincompatible_list_plus_equals_inplace
 --incompatible_load_argument_is_label
 --noincompatible_load_argument_is_label
 --incompatible_new_actions_api
@@ -1222,10 +1235,6 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --aspects=
 --async
 --noasync
---auth_credentials=
---auth_enabled
---noauth_enabled
---auth_scope=
 --auto_cpu_environment_group=label
 --autofdo_lipo_data
 --noautofdo_lipo_data
@@ -1309,6 +1318,8 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --enabled_toolchain_types=
 --enforce_constraints
 --noenforce_constraints
+--expand_test_suites
+--noexpand_test_suites
 --experimental_action_listener=
 --experimental_allow_android_library_deps_without_srcs
 --noexperimental_allow_android_library_deps_without_srcs
@@ -1340,6 +1351,8 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --noexperimental_interleave_loading_and_analysis
 --experimental_j2objc_header_map
 --noexperimental_j2objc_header_map
+--experimental_java_coverage
+--noexperimental_java_coverage
 --experimental_link_compile_output_separately
 --noexperimental_link_compile_output_separately
 --experimental_local_disk_cache
@@ -1393,6 +1406,7 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --noexpunge
 --expunge_async
 --extra_entitlements=label
+--extra_toolchains=
 --fat_apk_cpu=
 --fdo_instrument=path
 --fdo_optimize=
@@ -1408,6 +1422,10 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --force_python={py2,py3,py2and3,py2only,py3only}
 --genrule_strategy=
 --glibc=
+--google_auth_scopes=
+--google_credentials=
+--google_default_credentials
+--nogoogle_default_credentials
 --grte_top=label
 --host_copt=
 --host_cpu=
@@ -1418,6 +1436,7 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --host_java_launcher=label
 --host_java_toolchain=label
 --host_javabase=label
+--host_platform=label
 --ignore_unsupported_sandboxing
 --noignore_unsupported_sandboxing
 --incompatible_bzl_disallow_load_after_statement
@@ -1428,8 +1447,12 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
+--incompatible_depset_union
+--noincompatible_depset_union
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
+--incompatible_disable_glob_tracking
+--noincompatible_disable_glob_tracking
 --incompatible_disallow_dict_plus
 --noincompatible_disallow_dict_plus
 --incompatible_disallow_keyword_only_args
@@ -1438,8 +1461,6 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --noincompatible_disallow_toplevel_if_statement
 --incompatible_disallow_uncalled_set_constructor
 --noincompatible_disallow_uncalled_set_constructor
---incompatible_list_plus_equals_inplace
---noincompatible_list_plus_equals_inplace
 --incompatible_load_argument_is_label
 --noincompatible_load_argument_is_label
 --incompatible_new_actions_api
@@ -1479,8 +1500,6 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --jvmopt=
 --keep_going
 --nokeep_going
---keep_incrementality_data
---nokeep_incrementality_data
 --legacy_external_runfiles
 --nolegacy_external_runfiles
 --legacy_whole_archive
@@ -1519,6 +1538,7 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --noparse_headers_verifies_modules
 --per_file_copt=
 --platform_suffix=
+--platforms=
 --plugin=
 --process_headers_in_dependencies
 --noprocess_headers_in_dependencies
@@ -1544,10 +1564,10 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --noremote_accept_cached
 --remote_cache=
 --remote_executor=
+--remote_http_cache=
 --remote_instance_name=
 --remote_local_fallback
 --noremote_local_fallback
---remote_rest_cache=
 --remote_rest_cache_pool_size=
 --remote_timeout=
 --remote_upload_local_results
@@ -1626,6 +1646,9 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --tool_tag=
 --toolchain_resolution_debug
 --notoolchain_resolution_debug
+--toolchain_resolution_override=
+--track_incremental_state
+--notrack_incremental_state
 --translations={auto,yes,no}
 --notranslations
 --tvos_cpus=
@@ -1657,7 +1680,6 @@ BAZEL_COMMAND_CLEAN_FLAGS="
 --worker_verbose
 --noworker_verbose
 --workspace_status_command=path
---xcode_toolchain=
 --xcode_version=
 --xcode_version_config=label
 "
@@ -1690,10 +1712,6 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --noapple_generate_dsym
 --apple_sdk=label
 --aspects=
---auth_credentials=
---auth_enabled
---noauth_enabled
---auth_scope=
 --auto_cpu_environment_group=label
 --autofdo_lipo_data
 --noautofdo_lipo_data
@@ -1777,6 +1795,8 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --enabled_toolchain_types=
 --enforce_constraints
 --noenforce_constraints
+--expand_test_suites
+--noexpand_test_suites
 --experimental_action_listener=
 --experimental_allow_android_library_deps_without_srcs
 --noexperimental_allow_android_library_deps_without_srcs
@@ -1808,6 +1828,8 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --noexperimental_interleave_loading_and_analysis
 --experimental_j2objc_header_map
 --noexperimental_j2objc_header_map
+--experimental_java_coverage
+--noexperimental_java_coverage
 --experimental_link_compile_output_separately
 --noexperimental_link_compile_output_separately
 --experimental_local_disk_cache
@@ -1858,6 +1880,7 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --explicit_jre_deps
 --noexplicit_jre_deps
 --extra_entitlements=label
+--extra_toolchains=
 --fat_apk_cpu=
 --fdo_instrument=path
 --fdo_optimize=
@@ -1873,6 +1896,10 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --force_python={py2,py3,py2and3,py2only,py3only}
 --genrule_strategy=
 --glibc=
+--google_auth_scopes=
+--google_credentials=
+--google_default_credentials
+--nogoogle_default_credentials
 --grte_top=label
 --host_copt=
 --host_cpu=
@@ -1883,6 +1910,7 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --host_java_launcher=label
 --host_java_toolchain=label
 --host_javabase=label
+--host_platform=label
 --ignore_unsupported_sandboxing
 --noignore_unsupported_sandboxing
 --incompatible_bzl_disallow_load_after_statement
@@ -1893,8 +1921,12 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
+--incompatible_depset_union
+--noincompatible_depset_union
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
+--incompatible_disable_glob_tracking
+--noincompatible_disable_glob_tracking
 --incompatible_disallow_dict_plus
 --noincompatible_disallow_dict_plus
 --incompatible_disallow_keyword_only_args
@@ -1903,8 +1935,6 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --noincompatible_disallow_toplevel_if_statement
 --incompatible_disallow_uncalled_set_constructor
 --noincompatible_disallow_uncalled_set_constructor
---incompatible_list_plus_equals_inplace
---noincompatible_list_plus_equals_inplace
 --incompatible_load_argument_is_label
 --noincompatible_load_argument_is_label
 --incompatible_new_actions_api
@@ -1944,8 +1974,6 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --jvmopt=
 --keep_going
 --nokeep_going
---keep_incrementality_data
---nokeep_incrementality_data
 --legacy_external_runfiles
 --nolegacy_external_runfiles
 --legacy_whole_archive
@@ -1984,6 +2012,7 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --noparse_headers_verifies_modules
 --per_file_copt=
 --platform_suffix=
+--platforms=
 --plugin=
 --process_headers_in_dependencies
 --noprocess_headers_in_dependencies
@@ -2009,10 +2038,10 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --noremote_accept_cached
 --remote_cache=
 --remote_executor=
+--remote_http_cache=
 --remote_instance_name=
 --remote_local_fallback
 --noremote_local_fallback
---remote_rest_cache=
 --remote_rest_cache_pool_size=
 --remote_timeout=
 --remote_upload_local_results
@@ -2093,6 +2122,9 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --tool_tag=
 --toolchain_resolution_debug
 --notoolchain_resolution_debug
+--toolchain_resolution_override=
+--track_incremental_state
+--notrack_incremental_state
 --translations={auto,yes,no}
 --notranslations
 --tvos_cpus=
@@ -2126,7 +2158,6 @@ BAZEL_COMMAND_COVERAGE_FLAGS="
 --worker_verbose
 --noworker_verbose
 --workspace_status_command=path
---xcode_toolchain=
 --xcode_version=
 --xcode_version_config=label
 "
@@ -2138,10 +2169,6 @@ BAZEL_COMMAND_DUMP_FLAGS="
 --noallow_undefined_configs
 --announce_rc
 --noannounce_rc
---auth_credentials=
---auth_enabled
---noauth_enabled
---auth_scope=
 --bes_backend=
 --bes_best_effort
 --nobes_best_effort
@@ -2172,6 +2199,10 @@ BAZEL_COMMAND_DUMP_FLAGS="
 --experimental_ui_limit_console_output=
 --force_experimental_external_repositories
 --noforce_experimental_external_repositories
+--google_auth_scopes=
+--google_credentials=
+--google_default_credentials
+--nogoogle_default_credentials
 --incompatible_bzl_disallow_load_after_statement
 --noincompatible_bzl_disallow_load_after_statement
 --incompatible_checked_arithmetic
@@ -2180,8 +2211,12 @@ BAZEL_COMMAND_DUMP_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
+--incompatible_depset_union
+--noincompatible_depset_union
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
+--incompatible_disable_glob_tracking
+--noincompatible_disable_glob_tracking
 --incompatible_disallow_dict_plus
 --noincompatible_disallow_dict_plus
 --incompatible_disallow_keyword_only_args
@@ -2190,8 +2225,6 @@ BAZEL_COMMAND_DUMP_FLAGS="
 --noincompatible_disallow_toplevel_if_statement
 --incompatible_disallow_uncalled_set_constructor
 --noincompatible_disallow_uncalled_set_constructor
---incompatible_list_plus_equals_inplace
---noincompatible_list_plus_equals_inplace
 --incompatible_load_argument_is_label
 --noincompatible_load_argument_is_label
 --incompatible_new_actions_api
@@ -2236,10 +2269,6 @@ BAZEL_COMMAND_FETCH_FLAGS="
 --noallow_undefined_configs
 --announce_rc
 --noannounce_rc
---auth_credentials=
---auth_enabled
---noauth_enabled
---auth_scope=
 --bes_backend=
 --bes_best_effort
 --nobes_best_effort
@@ -2272,6 +2301,10 @@ BAZEL_COMMAND_FETCH_FLAGS="
 --experimental_ui_limit_console_output=
 --force_experimental_external_repositories
 --noforce_experimental_external_repositories
+--google_auth_scopes=
+--google_credentials=
+--google_default_credentials
+--nogoogle_default_credentials
 --incompatible_bzl_disallow_load_after_statement
 --noincompatible_bzl_disallow_load_after_statement
 --incompatible_checked_arithmetic
@@ -2280,8 +2313,12 @@ BAZEL_COMMAND_FETCH_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
+--incompatible_depset_union
+--noincompatible_depset_union
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
+--incompatible_disable_glob_tracking
+--noincompatible_disable_glob_tracking
 --incompatible_disallow_dict_plus
 --noincompatible_disallow_dict_plus
 --incompatible_disallow_keyword_only_args
@@ -2290,8 +2327,6 @@ BAZEL_COMMAND_FETCH_FLAGS="
 --noincompatible_disallow_toplevel_if_statement
 --incompatible_disallow_uncalled_set_constructor
 --noincompatible_disallow_uncalled_set_constructor
---incompatible_list_plus_equals_inplace
---noincompatible_list_plus_equals_inplace
 --incompatible_load_argument_is_label
 --noincompatible_load_argument_is_label
 --incompatible_new_actions_api
@@ -2334,10 +2369,6 @@ BAZEL_COMMAND_HELP_FLAGS="
 --noallow_undefined_configs
 --announce_rc
 --noannounce_rc
---auth_credentials=
---auth_enabled
---noauth_enabled
---auth_scope=
 --bes_backend=
 --bes_best_effort
 --nobes_best_effort
@@ -2368,6 +2399,10 @@ BAZEL_COMMAND_HELP_FLAGS="
 --experimental_ui_limit_console_output=
 --force_experimental_external_repositories
 --noforce_experimental_external_repositories
+--google_auth_scopes=
+--google_credentials=
+--google_default_credentials
+--nogoogle_default_credentials
 --help_verbosity={long,medium,short}
 --incompatible_bzl_disallow_load_after_statement
 --noincompatible_bzl_disallow_load_after_statement
@@ -2377,8 +2412,12 @@ BAZEL_COMMAND_HELP_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
+--incompatible_depset_union
+--noincompatible_depset_union
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
+--incompatible_disable_glob_tracking
+--noincompatible_disable_glob_tracking
 --incompatible_disallow_dict_plus
 --noincompatible_disallow_dict_plus
 --incompatible_disallow_keyword_only_args
@@ -2387,8 +2426,6 @@ BAZEL_COMMAND_HELP_FLAGS="
 --noincompatible_disallow_toplevel_if_statement
 --incompatible_disallow_uncalled_set_constructor
 --noincompatible_disallow_uncalled_set_constructor
---incompatible_list_plus_equals_inplace
---noincompatible_list_plus_equals_inplace
 --incompatible_load_argument_is_label
 --noincompatible_load_argument_is_label
 --incompatible_new_actions_api
@@ -2449,10 +2486,6 @@ BAZEL_COMMAND_INFO_FLAGS="
 --noapple_generate_dsym
 --apple_sdk=label
 --aspects=
---auth_credentials=
---auth_enabled
---noauth_enabled
---auth_scope=
 --auto_cpu_environment_group=label
 --autofdo_lipo_data
 --noautofdo_lipo_data
@@ -2536,6 +2569,8 @@ BAZEL_COMMAND_INFO_FLAGS="
 --enabled_toolchain_types=
 --enforce_constraints
 --noenforce_constraints
+--expand_test_suites
+--noexpand_test_suites
 --experimental_action_listener=
 --experimental_allow_android_library_deps_without_srcs
 --noexperimental_allow_android_library_deps_without_srcs
@@ -2567,6 +2602,8 @@ BAZEL_COMMAND_INFO_FLAGS="
 --noexperimental_interleave_loading_and_analysis
 --experimental_j2objc_header_map
 --noexperimental_j2objc_header_map
+--experimental_java_coverage
+--noexperimental_java_coverage
 --experimental_link_compile_output_separately
 --noexperimental_link_compile_output_separately
 --experimental_local_disk_cache
@@ -2617,6 +2654,7 @@ BAZEL_COMMAND_INFO_FLAGS="
 --explicit_jre_deps
 --noexplicit_jre_deps
 --extra_entitlements=label
+--extra_toolchains=
 --fat_apk_cpu=
 --fdo_instrument=path
 --fdo_optimize=
@@ -2632,6 +2670,10 @@ BAZEL_COMMAND_INFO_FLAGS="
 --force_python={py2,py3,py2and3,py2only,py3only}
 --genrule_strategy=
 --glibc=
+--google_auth_scopes=
+--google_credentials=
+--google_default_credentials
+--nogoogle_default_credentials
 --grte_top=label
 --host_copt=
 --host_cpu=
@@ -2642,6 +2684,7 @@ BAZEL_COMMAND_INFO_FLAGS="
 --host_java_launcher=label
 --host_java_toolchain=label
 --host_javabase=label
+--host_platform=label
 --ignore_unsupported_sandboxing
 --noignore_unsupported_sandboxing
 --incompatible_bzl_disallow_load_after_statement
@@ -2652,8 +2695,12 @@ BAZEL_COMMAND_INFO_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
+--incompatible_depset_union
+--noincompatible_depset_union
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
+--incompatible_disable_glob_tracking
+--noincompatible_disable_glob_tracking
 --incompatible_disallow_dict_plus
 --noincompatible_disallow_dict_plus
 --incompatible_disallow_keyword_only_args
@@ -2662,8 +2709,6 @@ BAZEL_COMMAND_INFO_FLAGS="
 --noincompatible_disallow_toplevel_if_statement
 --incompatible_disallow_uncalled_set_constructor
 --noincompatible_disallow_uncalled_set_constructor
---incompatible_list_plus_equals_inplace
---noincompatible_list_plus_equals_inplace
 --incompatible_load_argument_is_label
 --noincompatible_load_argument_is_label
 --incompatible_new_actions_api
@@ -2703,8 +2748,6 @@ BAZEL_COMMAND_INFO_FLAGS="
 --jvmopt=
 --keep_going
 --nokeep_going
---keep_incrementality_data
---nokeep_incrementality_data
 --legacy_external_runfiles
 --nolegacy_external_runfiles
 --legacy_whole_archive
@@ -2743,6 +2786,7 @@ BAZEL_COMMAND_INFO_FLAGS="
 --noparse_headers_verifies_modules
 --per_file_copt=
 --platform_suffix=
+--platforms=
 --plugin=
 --process_headers_in_dependencies
 --noprocess_headers_in_dependencies
@@ -2768,10 +2812,10 @@ BAZEL_COMMAND_INFO_FLAGS="
 --noremote_accept_cached
 --remote_cache=
 --remote_executor=
+--remote_http_cache=
 --remote_instance_name=
 --remote_local_fallback
 --noremote_local_fallback
---remote_rest_cache=
 --remote_rest_cache_pool_size=
 --remote_timeout=
 --remote_upload_local_results
@@ -2852,6 +2896,9 @@ BAZEL_COMMAND_INFO_FLAGS="
 --tool_tag=
 --toolchain_resolution_debug
 --notoolchain_resolution_debug
+--toolchain_resolution_override=
+--track_incremental_state
+--notrack_incremental_state
 --translations={auto,yes,no}
 --notranslations
 --tvos_cpus=
@@ -2883,7 +2930,6 @@ BAZEL_COMMAND_INFO_FLAGS="
 --worker_verbose
 --noworker_verbose
 --workspace_status_command=path
---xcode_toolchain=
 --xcode_version=
 --xcode_version_config=label
 "
@@ -2893,10 +2939,6 @@ BAZEL_COMMAND_LICENSE_FLAGS="
 --noallow_undefined_configs
 --announce_rc
 --noannounce_rc
---auth_credentials=
---auth_enabled
---noauth_enabled
---auth_scope=
 --bes_backend=
 --bes_best_effort
 --nobes_best_effort
@@ -2927,6 +2969,10 @@ BAZEL_COMMAND_LICENSE_FLAGS="
 --experimental_ui_limit_console_output=
 --force_experimental_external_repositories
 --noforce_experimental_external_repositories
+--google_auth_scopes=
+--google_credentials=
+--google_default_credentials
+--nogoogle_default_credentials
 --incompatible_bzl_disallow_load_after_statement
 --noincompatible_bzl_disallow_load_after_statement
 --incompatible_checked_arithmetic
@@ -2935,8 +2981,12 @@ BAZEL_COMMAND_LICENSE_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
+--incompatible_depset_union
+--noincompatible_depset_union
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
+--incompatible_disable_glob_tracking
+--noincompatible_disable_glob_tracking
 --incompatible_disallow_dict_plus
 --noincompatible_disallow_dict_plus
 --incompatible_disallow_keyword_only_args
@@ -2945,8 +2995,6 @@ BAZEL_COMMAND_LICENSE_FLAGS="
 --noincompatible_disallow_toplevel_if_statement
 --incompatible_disallow_uncalled_set_constructor
 --noincompatible_disallow_uncalled_set_constructor
---incompatible_list_plus_equals_inplace
---noincompatible_list_plus_equals_inplace
 --incompatible_load_argument_is_label
 --noincompatible_load_argument_is_label
 --incompatible_new_actions_api
@@ -3005,10 +3053,6 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --noapple_generate_dsym
 --apple_sdk=label
 --aspects=
---auth_credentials=
---auth_enabled
---noauth_enabled
---auth_scope=
 --auto_cpu_environment_group=label
 --autofdo_lipo_data
 --noautofdo_lipo_data
@@ -3094,6 +3138,8 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --enabled_toolchain_types=
 --enforce_constraints
 --noenforce_constraints
+--expand_test_suites
+--noexpand_test_suites
 --experimental_action_listener=
 --experimental_allow_android_library_deps_without_srcs
 --noexperimental_allow_android_library_deps_without_srcs
@@ -3125,6 +3171,8 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --noexperimental_interleave_loading_and_analysis
 --experimental_j2objc_header_map
 --noexperimental_j2objc_header_map
+--experimental_java_coverage
+--noexperimental_java_coverage
 --experimental_link_compile_output_separately
 --noexperimental_link_compile_output_separately
 --experimental_local_disk_cache
@@ -3175,6 +3223,7 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --explicit_jre_deps
 --noexplicit_jre_deps
 --extra_entitlements=label
+--extra_toolchains=
 --fat_apk_cpu=
 --fdo_instrument=path
 --fdo_optimize=
@@ -3190,6 +3239,10 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --force_python={py2,py3,py2and3,py2only,py3only}
 --genrule_strategy=
 --glibc=
+--google_auth_scopes=
+--google_credentials=
+--google_default_credentials
+--nogoogle_default_credentials
 --grte_top=label
 --host_copt=
 --host_cpu=
@@ -3200,6 +3253,7 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --host_java_launcher=label
 --host_java_toolchain=label
 --host_javabase=label
+--host_platform=label
 --ignore_unsupported_sandboxing
 --noignore_unsupported_sandboxing
 --incompatible_bzl_disallow_load_after_statement
@@ -3210,8 +3264,12 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
+--incompatible_depset_union
+--noincompatible_depset_union
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
+--incompatible_disable_glob_tracking
+--noincompatible_disable_glob_tracking
 --incompatible_disallow_dict_plus
 --noincompatible_disallow_dict_plus
 --incompatible_disallow_keyword_only_args
@@ -3220,8 +3278,6 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --noincompatible_disallow_toplevel_if_statement
 --incompatible_disallow_uncalled_set_constructor
 --noincompatible_disallow_uncalled_set_constructor
---incompatible_list_plus_equals_inplace
---noincompatible_list_plus_equals_inplace
 --incompatible_load_argument_is_label
 --noincompatible_load_argument_is_label
 --incompatible_new_actions_api
@@ -3264,8 +3320,6 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --jvmopt=
 --keep_going
 --nokeep_going
---keep_incrementality_data
---nokeep_incrementality_data
 --legacy_external_runfiles
 --nolegacy_external_runfiles
 --legacy_whole_archive
@@ -3305,6 +3359,7 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --noparse_headers_verifies_modules
 --per_file_copt=
 --platform_suffix=
+--platforms=
 --plugin=
 --process_headers_in_dependencies
 --noprocess_headers_in_dependencies
@@ -3330,10 +3385,10 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --noremote_accept_cached
 --remote_cache=
 --remote_executor=
+--remote_http_cache=
 --remote_instance_name=
 --remote_local_fallback
 --noremote_local_fallback
---remote_rest_cache=
 --remote_rest_cache_pool_size=
 --remote_timeout=
 --remote_upload_local_results
@@ -3416,6 +3471,9 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --tool_tag=
 --toolchain_resolution_debug
 --notoolchain_resolution_debug
+--toolchain_resolution_override=
+--track_incremental_state
+--notrack_incremental_state
 --translations={auto,yes,no}
 --notranslations
 --tvos_cpus=
@@ -3447,7 +3505,6 @@ BAZEL_COMMAND_MOBILE_INSTALL_FLAGS="
 --worker_verbose
 --noworker_verbose
 --workspace_status_command=path
---xcode_toolchain=
 --xcode_version=
 --xcode_version_config=label
 "
@@ -3480,10 +3537,6 @@ BAZEL_COMMAND_PRINT_ACTION_FLAGS="
 --noapple_generate_dsym
 --apple_sdk=label
 --aspects=
---auth_credentials=
---auth_enabled
---noauth_enabled
---auth_scope=
 --auto_cpu_environment_group=label
 --autofdo_lipo_data
 --noautofdo_lipo_data
@@ -3567,6 +3620,8 @@ BAZEL_COMMAND_PRINT_ACTION_FLAGS="
 --enabled_toolchain_types=
 --enforce_constraints
 --noenforce_constraints
+--expand_test_suites
+--noexpand_test_suites
 --experimental_action_listener=
 --experimental_allow_android_library_deps_without_srcs
 --noexperimental_allow_android_library_deps_without_srcs
@@ -3598,6 +3653,8 @@ BAZEL_COMMAND_PRINT_ACTION_FLAGS="
 --noexperimental_interleave_loading_and_analysis
 --experimental_j2objc_header_map
 --noexperimental_j2objc_header_map
+--experimental_java_coverage
+--noexperimental_java_coverage
 --experimental_link_compile_output_separately
 --noexperimental_link_compile_output_separately
 --experimental_local_disk_cache
@@ -3648,6 +3705,7 @@ BAZEL_COMMAND_PRINT_ACTION_FLAGS="
 --explicit_jre_deps
 --noexplicit_jre_deps
 --extra_entitlements=label
+--extra_toolchains=
 --fat_apk_cpu=
 --fdo_instrument=path
 --fdo_optimize=
@@ -3663,6 +3721,10 @@ BAZEL_COMMAND_PRINT_ACTION_FLAGS="
 --force_python={py2,py3,py2and3,py2only,py3only}
 --genrule_strategy=
 --glibc=
+--google_auth_scopes=
+--google_credentials=
+--google_default_credentials
+--nogoogle_default_credentials
 --grte_top=label
 --host_copt=
 --host_cpu=
@@ -3673,6 +3735,7 @@ BAZEL_COMMAND_PRINT_ACTION_FLAGS="
 --host_java_launcher=label
 --host_java_toolchain=label
 --host_javabase=label
+--host_platform=label
 --ignore_unsupported_sandboxing
 --noignore_unsupported_sandboxing
 --incompatible_bzl_disallow_load_after_statement
@@ -3683,8 +3746,12 @@ BAZEL_COMMAND_PRINT_ACTION_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
+--incompatible_depset_union
+--noincompatible_depset_union
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
+--incompatible_disable_glob_tracking
+--noincompatible_disable_glob_tracking
 --incompatible_disallow_dict_plus
 --noincompatible_disallow_dict_plus
 --incompatible_disallow_keyword_only_args
@@ -3693,8 +3760,6 @@ BAZEL_COMMAND_PRINT_ACTION_FLAGS="
 --noincompatible_disallow_toplevel_if_statement
 --incompatible_disallow_uncalled_set_constructor
 --noincompatible_disallow_uncalled_set_constructor
---incompatible_list_plus_equals_inplace
---noincompatible_list_plus_equals_inplace
 --incompatible_load_argument_is_label
 --noincompatible_load_argument_is_label
 --incompatible_new_actions_api
@@ -3734,8 +3799,6 @@ BAZEL_COMMAND_PRINT_ACTION_FLAGS="
 --jvmopt=
 --keep_going
 --nokeep_going
---keep_incrementality_data
---nokeep_incrementality_data
 --legacy_external_runfiles
 --nolegacy_external_runfiles
 --legacy_whole_archive
@@ -3774,6 +3837,7 @@ BAZEL_COMMAND_PRINT_ACTION_FLAGS="
 --noparse_headers_verifies_modules
 --per_file_copt=
 --platform_suffix=
+--platforms=
 --plugin=
 --print_action_mnemonics=
 --process_headers_in_dependencies
@@ -3800,10 +3864,10 @@ BAZEL_COMMAND_PRINT_ACTION_FLAGS="
 --noremote_accept_cached
 --remote_cache=
 --remote_executor=
+--remote_http_cache=
 --remote_instance_name=
 --remote_local_fallback
 --noremote_local_fallback
---remote_rest_cache=
 --remote_rest_cache_pool_size=
 --remote_timeout=
 --remote_upload_local_results
@@ -3882,6 +3946,9 @@ BAZEL_COMMAND_PRINT_ACTION_FLAGS="
 --tool_tag=
 --toolchain_resolution_debug
 --notoolchain_resolution_debug
+--toolchain_resolution_override=
+--track_incremental_state
+--notrack_incremental_state
 --translations={auto,yes,no}
 --notranslations
 --tvos_cpus=
@@ -3913,7 +3980,6 @@ BAZEL_COMMAND_PRINT_ACTION_FLAGS="
 --worker_verbose
 --noworker_verbose
 --workspace_status_command=path
---xcode_toolchain=
 --xcode_version=
 --xcode_version_config=label
 "
@@ -3925,10 +3991,6 @@ BAZEL_COMMAND_QUERY_FLAGS="
 --announce_rc
 --noannounce_rc
 --aspect_deps={off,conservative,precise}
---auth_credentials=
---auth_enabled
---noauth_enabled
---auth_scope=
 --bes_backend=
 --bes_best_effort
 --nobes_best_effort
@@ -3961,6 +4023,10 @@ BAZEL_COMMAND_QUERY_FLAGS="
 --experimental_ui_limit_console_output=
 --force_experimental_external_repositories
 --noforce_experimental_external_repositories
+--google_auth_scopes=
+--google_credentials=
+--google_default_credentials
+--nogoogle_default_credentials
 --graph:factored
 --nograph:factored
 --graph:node_limit=
@@ -3976,8 +4042,12 @@ BAZEL_COMMAND_QUERY_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
+--incompatible_depset_union
+--noincompatible_depset_union
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
+--incompatible_disable_glob_tracking
+--noincompatible_disable_glob_tracking
 --incompatible_disallow_dict_plus
 --noincompatible_disallow_dict_plus
 --incompatible_disallow_keyword_only_args
@@ -3986,8 +4056,6 @@ BAZEL_COMMAND_QUERY_FLAGS="
 --noincompatible_disallow_toplevel_if_statement
 --incompatible_disallow_uncalled_set_constructor
 --noincompatible_disallow_uncalled_set_constructor
---incompatible_list_plus_equals_inplace
---noincompatible_list_plus_equals_inplace
 --incompatible_load_argument_is_label
 --noincompatible_load_argument_is_label
 --incompatible_new_actions_api
@@ -4015,6 +4083,8 @@ BAZEL_COMMAND_QUERY_FLAGS="
 --project_id=
 --proto:default_values
 --noproto:default_values
+--proto:flatten_selects
+--noproto:flatten_selects
 --query_file=
 --relative_locations
 --norelative_locations
@@ -4072,10 +4142,6 @@ BAZEL_COMMAND_RUN_FLAGS="
 --noapple_generate_dsym
 --apple_sdk=label
 --aspects=
---auth_credentials=
---auth_enabled
---noauth_enabled
---auth_scope=
 --auto_cpu_environment_group=label
 --autofdo_lipo_data
 --noautofdo_lipo_data
@@ -4159,6 +4225,8 @@ BAZEL_COMMAND_RUN_FLAGS="
 --enabled_toolchain_types=
 --enforce_constraints
 --noenforce_constraints
+--expand_test_suites
+--noexpand_test_suites
 --experimental_action_listener=
 --experimental_allow_android_library_deps_without_srcs
 --noexperimental_allow_android_library_deps_without_srcs
@@ -4190,6 +4258,8 @@ BAZEL_COMMAND_RUN_FLAGS="
 --noexperimental_interleave_loading_and_analysis
 --experimental_j2objc_header_map
 --noexperimental_j2objc_header_map
+--experimental_java_coverage
+--noexperimental_java_coverage
 --experimental_link_compile_output_separately
 --noexperimental_link_compile_output_separately
 --experimental_local_disk_cache
@@ -4240,6 +4310,7 @@ BAZEL_COMMAND_RUN_FLAGS="
 --explicit_jre_deps
 --noexplicit_jre_deps
 --extra_entitlements=label
+--extra_toolchains=
 --fat_apk_cpu=
 --fdo_instrument=path
 --fdo_optimize=
@@ -4255,6 +4326,10 @@ BAZEL_COMMAND_RUN_FLAGS="
 --force_python={py2,py3,py2and3,py2only,py3only}
 --genrule_strategy=
 --glibc=
+--google_auth_scopes=
+--google_credentials=
+--google_default_credentials
+--nogoogle_default_credentials
 --grte_top=label
 --host_copt=
 --host_cpu=
@@ -4265,6 +4340,7 @@ BAZEL_COMMAND_RUN_FLAGS="
 --host_java_launcher=label
 --host_java_toolchain=label
 --host_javabase=label
+--host_platform=label
 --ignore_unsupported_sandboxing
 --noignore_unsupported_sandboxing
 --incompatible_bzl_disallow_load_after_statement
@@ -4275,8 +4351,12 @@ BAZEL_COMMAND_RUN_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
+--incompatible_depset_union
+--noincompatible_depset_union
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
+--incompatible_disable_glob_tracking
+--noincompatible_disable_glob_tracking
 --incompatible_disallow_dict_plus
 --noincompatible_disallow_dict_plus
 --incompatible_disallow_keyword_only_args
@@ -4285,8 +4365,6 @@ BAZEL_COMMAND_RUN_FLAGS="
 --noincompatible_disallow_toplevel_if_statement
 --incompatible_disallow_uncalled_set_constructor
 --noincompatible_disallow_uncalled_set_constructor
---incompatible_list_plus_equals_inplace
---noincompatible_list_plus_equals_inplace
 --incompatible_load_argument_is_label
 --noincompatible_load_argument_is_label
 --incompatible_new_actions_api
@@ -4326,8 +4404,6 @@ BAZEL_COMMAND_RUN_FLAGS="
 --jvmopt=
 --keep_going
 --nokeep_going
---keep_incrementality_data
---nokeep_incrementality_data
 --legacy_external_runfiles
 --nolegacy_external_runfiles
 --legacy_whole_archive
@@ -4366,6 +4442,7 @@ BAZEL_COMMAND_RUN_FLAGS="
 --noparse_headers_verifies_modules
 --per_file_copt=
 --platform_suffix=
+--platforms=
 --plugin=
 --process_headers_in_dependencies
 --noprocess_headers_in_dependencies
@@ -4391,10 +4468,10 @@ BAZEL_COMMAND_RUN_FLAGS="
 --noremote_accept_cached
 --remote_cache=
 --remote_executor=
+--remote_http_cache=
 --remote_instance_name=
 --remote_local_fallback
 --noremote_local_fallback
---remote_rest_cache=
 --remote_rest_cache_pool_size=
 --remote_timeout=
 --remote_upload_local_results
@@ -4474,6 +4551,9 @@ BAZEL_COMMAND_RUN_FLAGS="
 --tool_tag=
 --toolchain_resolution_debug
 --notoolchain_resolution_debug
+--toolchain_resolution_override=
+--track_incremental_state
+--notrack_incremental_state
 --translations={auto,yes,no}
 --notranslations
 --tvos_cpus=
@@ -4505,7 +4585,6 @@ BAZEL_COMMAND_RUN_FLAGS="
 --worker_verbose
 --noworker_verbose
 --workspace_status_command=path
---xcode_toolchain=
 --xcode_version=
 --xcode_version_config=label
 "
@@ -4515,10 +4594,6 @@ BAZEL_COMMAND_SHUTDOWN_FLAGS="
 --noallow_undefined_configs
 --announce_rc
 --noannounce_rc
---auth_credentials=
---auth_enabled
---noauth_enabled
---auth_scope=
 --bes_backend=
 --bes_best_effort
 --nobes_best_effort
@@ -4549,6 +4624,10 @@ BAZEL_COMMAND_SHUTDOWN_FLAGS="
 --experimental_ui_limit_console_output=
 --force_experimental_external_repositories
 --noforce_experimental_external_repositories
+--google_auth_scopes=
+--google_credentials=
+--google_default_credentials
+--nogoogle_default_credentials
 --iff_heap_size_greater_than=
 --incompatible_bzl_disallow_load_after_statement
 --noincompatible_bzl_disallow_load_after_statement
@@ -4558,8 +4637,12 @@ BAZEL_COMMAND_SHUTDOWN_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
+--incompatible_depset_union
+--noincompatible_depset_union
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
+--incompatible_disable_glob_tracking
+--noincompatible_disable_glob_tracking
 --incompatible_disallow_dict_plus
 --noincompatible_disallow_dict_plus
 --incompatible_disallow_keyword_only_args
@@ -4568,8 +4651,6 @@ BAZEL_COMMAND_SHUTDOWN_FLAGS="
 --noincompatible_disallow_toplevel_if_statement
 --incompatible_disallow_uncalled_set_constructor
 --noincompatible_disallow_uncalled_set_constructor
---incompatible_list_plus_equals_inplace
---noincompatible_list_plus_equals_inplace
 --incompatible_load_argument_is_label
 --noincompatible_load_argument_is_label
 --incompatible_new_actions_api
@@ -4626,10 +4707,6 @@ BAZEL_COMMAND_TEST_FLAGS="
 --noapple_generate_dsym
 --apple_sdk=label
 --aspects=
---auth_credentials=
---auth_enabled
---noauth_enabled
---auth_scope=
 --auto_cpu_environment_group=label
 --autofdo_lipo_data
 --noautofdo_lipo_data
@@ -4713,6 +4790,8 @@ BAZEL_COMMAND_TEST_FLAGS="
 --enabled_toolchain_types=
 --enforce_constraints
 --noenforce_constraints
+--expand_test_suites
+--noexpand_test_suites
 --experimental_action_listener=
 --experimental_allow_android_library_deps_without_srcs
 --noexperimental_allow_android_library_deps_without_srcs
@@ -4744,6 +4823,8 @@ BAZEL_COMMAND_TEST_FLAGS="
 --noexperimental_interleave_loading_and_analysis
 --experimental_j2objc_header_map
 --noexperimental_j2objc_header_map
+--experimental_java_coverage
+--noexperimental_java_coverage
 --experimental_link_compile_output_separately
 --noexperimental_link_compile_output_separately
 --experimental_local_disk_cache
@@ -4794,6 +4875,7 @@ BAZEL_COMMAND_TEST_FLAGS="
 --explicit_jre_deps
 --noexplicit_jre_deps
 --extra_entitlements=label
+--extra_toolchains=
 --fat_apk_cpu=
 --fdo_instrument=path
 --fdo_optimize=
@@ -4809,6 +4891,10 @@ BAZEL_COMMAND_TEST_FLAGS="
 --force_python={py2,py3,py2and3,py2only,py3only}
 --genrule_strategy=
 --glibc=
+--google_auth_scopes=
+--google_credentials=
+--google_default_credentials
+--nogoogle_default_credentials
 --grte_top=label
 --host_copt=
 --host_cpu=
@@ -4819,6 +4905,7 @@ BAZEL_COMMAND_TEST_FLAGS="
 --host_java_launcher=label
 --host_java_toolchain=label
 --host_javabase=label
+--host_platform=label
 --ignore_unsupported_sandboxing
 --noignore_unsupported_sandboxing
 --incompatible_bzl_disallow_load_after_statement
@@ -4829,8 +4916,12 @@ BAZEL_COMMAND_TEST_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
+--incompatible_depset_union
+--noincompatible_depset_union
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
+--incompatible_disable_glob_tracking
+--noincompatible_disable_glob_tracking
 --incompatible_disallow_dict_plus
 --noincompatible_disallow_dict_plus
 --incompatible_disallow_keyword_only_args
@@ -4839,8 +4930,6 @@ BAZEL_COMMAND_TEST_FLAGS="
 --noincompatible_disallow_toplevel_if_statement
 --incompatible_disallow_uncalled_set_constructor
 --noincompatible_disallow_uncalled_set_constructor
---incompatible_list_plus_equals_inplace
---noincompatible_list_plus_equals_inplace
 --incompatible_load_argument_is_label
 --noincompatible_load_argument_is_label
 --incompatible_new_actions_api
@@ -4880,8 +4969,6 @@ BAZEL_COMMAND_TEST_FLAGS="
 --jvmopt=
 --keep_going
 --nokeep_going
---keep_incrementality_data
---nokeep_incrementality_data
 --legacy_external_runfiles
 --nolegacy_external_runfiles
 --legacy_whole_archive
@@ -4920,6 +5007,7 @@ BAZEL_COMMAND_TEST_FLAGS="
 --noparse_headers_verifies_modules
 --per_file_copt=
 --platform_suffix=
+--platforms=
 --plugin=
 --process_headers_in_dependencies
 --noprocess_headers_in_dependencies
@@ -4945,10 +5033,10 @@ BAZEL_COMMAND_TEST_FLAGS="
 --noremote_accept_cached
 --remote_cache=
 --remote_executor=
+--remote_http_cache=
 --remote_instance_name=
 --remote_local_fallback
 --noremote_local_fallback
---remote_rest_cache=
 --remote_rest_cache_pool_size=
 --remote_timeout=
 --remote_upload_local_results
@@ -5029,6 +5117,9 @@ BAZEL_COMMAND_TEST_FLAGS="
 --tool_tag=
 --toolchain_resolution_debug
 --notoolchain_resolution_debug
+--toolchain_resolution_override=
+--track_incremental_state
+--notrack_incremental_state
 --translations={auto,yes,no}
 --notranslations
 --tvos_cpus=
@@ -5062,7 +5153,6 @@ BAZEL_COMMAND_TEST_FLAGS="
 --worker_verbose
 --noworker_verbose
 --workspace_status_command=path
---xcode_toolchain=
 --xcode_version=
 --xcode_version_config=label
 "
@@ -5072,10 +5162,6 @@ BAZEL_COMMAND_VERSION_FLAGS="
 --noallow_undefined_configs
 --announce_rc
 --noannounce_rc
---auth_credentials=
---auth_enabled
---noauth_enabled
---auth_scope=
 --bes_backend=
 --bes_best_effort
 --nobes_best_effort
@@ -5106,6 +5192,10 @@ BAZEL_COMMAND_VERSION_FLAGS="
 --experimental_ui_limit_console_output=
 --force_experimental_external_repositories
 --noforce_experimental_external_repositories
+--google_auth_scopes=
+--google_credentials=
+--google_default_credentials
+--nogoogle_default_credentials
 --incompatible_bzl_disallow_load_after_statement
 --noincompatible_bzl_disallow_load_after_statement
 --incompatible_checked_arithmetic
@@ -5114,8 +5204,12 @@ BAZEL_COMMAND_VERSION_FLAGS="
 --noincompatible_comprehension_variables_do_not_leak
 --incompatible_depset_is_not_iterable
 --noincompatible_depset_is_not_iterable
+--incompatible_depset_union
+--noincompatible_depset_union
 --incompatible_dict_literal_has_no_duplicates
 --noincompatible_dict_literal_has_no_duplicates
+--incompatible_disable_glob_tracking
+--noincompatible_disable_glob_tracking
 --incompatible_disallow_dict_plus
 --noincompatible_disallow_dict_plus
 --incompatible_disallow_keyword_only_args
@@ -5124,8 +5218,6 @@ BAZEL_COMMAND_VERSION_FLAGS="
 --noincompatible_disallow_toplevel_if_statement
 --incompatible_disallow_uncalled_set_constructor
 --noincompatible_disallow_uncalled_set_constructor
---incompatible_list_plus_equals_inplace
---noincompatible_list_plus_equals_inplace
 --incompatible_load_argument_is_label
 --noincompatible_load_argument_is_label
 --incompatible_new_actions_api
