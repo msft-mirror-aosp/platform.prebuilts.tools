@@ -3,14 +3,14 @@ load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom", "maven_aa
 
 maven_java_import(
     name = "jar",
-    jars = ["truth-0.24.jar"],
+    jars = ["truth-0.34.jar"],
     pom = ":pom",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
     name = "pom",
-    parent = "//prebuilts/tools/common/m2/repository/com/google/truth/truth-parent/0.24:pom",
-    source = "truth-0.24.pom",
+    parent = "//prebuilts/tools/common/m2/repository/com/google/truth/truth-parent/0.34:pom",
+    source = "truth-0.34.pom",
     visibility = ["//visibility:public"],
 )
