@@ -9,3 +9,9 @@ filegroup(
     srcs = glob(["*/bazel/**"]),
     visibility = ["//visibility:public"],
 )
+
+filegroup(
+    name = "lldb",
+    srcs = glob(["*/lldb/**"]),
+    visibility = ["//visibility:public"],
+)
