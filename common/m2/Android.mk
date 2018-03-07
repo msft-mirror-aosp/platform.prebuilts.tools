@@ -54,6 +54,7 @@ LOCAL_PREBUILT_JAVA_LIBRARIES := \
     asm-prebuilt-host-jar:repository/org/ow2/asm/asm/6.0/asm-6.0.jar \
     asm-tree-prebuilt-host-jar:repository/org/ow2/asm/asm-tree/6.0/asm-tree-6.0.jar \
     asm-util-prebuilt-host-jar:repository/org/ow2/asm/asm-util/6.0/asm-util-6.0.jar \
+    guava-prebuilt-host-jar:repository/com/google/guava/guava/23.5-jre/guava-23.5-jre.jar \
     gson-prebuilt-jar:repository/com/google/code/gson/gson/2.8.0/gson-2.8.0.jar \
     protobuf-java-prebuilt-jar:repository/com/google/protobuf/protobuf-java/3.0.2/protobuf-java-3.0.2.jar \
     protobuf-java-util-prebuilt-jar:repository/com/google/protobuf/protobuf-java-util/3.0.2/protobuf-java-util-3.0.2.jar \
