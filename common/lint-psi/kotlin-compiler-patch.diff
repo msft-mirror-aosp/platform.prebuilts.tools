@@ -1,16 +1,29 @@
+diff --git a/build.xml b/build.xml
+index 4cc8d1f9546..71a76d09f1f 100644
+--- a/build.xml
++++ b/build.xml
+@@ -3,7 +3,7 @@
+     <property file="resources/kotlinManifest.properties"/>
+ 
+     <!-- Set to false to disable proguard run on kotlin-compiler.jar. Speeds up the build -->
+-    <property name="shrink" value="true"/>
++    <property name="shrink" value="false"/>
+ 
+     <property name="max.heap.size.for.forked.jvm" value="1024m"/>
+ 
 diff --git a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
-index af75bdf1cbd..f7a21012c24 100644
+index 16695cd0fa9..3db4992dad3 100644
 --- a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
 +++ b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
-@@ -31,6 +31,7 @@ import com.intellij.lang.java.JavaParserDefinition
+@@ -29,6 +29,7 @@ import com.intellij.ide.plugins.PluginManagerCore
+ import com.intellij.lang.MetaLanguage
+ import com.intellij.lang.java.JavaParserDefinition
  import com.intellij.lang.jvm.facade.JvmElementProvider
- import com.intellij.lang.jvm.facade.JvmFacade
- import com.intellij.lang.jvm.facade.JvmFacadeImpl
 +import com.intellij.mock.MockProject
  import com.intellij.openapi.Disposable
  import com.intellij.openapi.application.TransactionGuard
  import com.intellij.openapi.application.TransactionGuardImpl
-@@ -130,17 +131,12 @@ class KotlinCoreEnvironment private constructor(
+@@ -129,17 +130,12 @@ class KotlinCoreEnvironment private constructor(
              with (project) {
                  registerService(CoreJavaFileManager::class.java, ServiceManager.getService(this, JavaFileManager::class.java) as CoreJavaFileManager)
  
@@ -30,7 +43,7 @@ index af75bdf1cbd..f7a21012c24 100644
                  area.getExtensionPoint(PsiElementFinder.EP_NAME).registerExtension(
                          PsiElementFinderImpl(this, ServiceManager.getService(this, JavaFileManager::class.java)))
              }
-@@ -165,15 +161,7 @@ class KotlinCoreEnvironment private constructor(
+@@ -164,15 +160,7 @@ class KotlinCoreEnvironment private constructor(
  
          val project = projectEnvironment.project
  
@@ -46,8 +59,8 @@ index af75bdf1cbd..f7a21012c24 100644
 +        registerPluginExtensionPoints(project)
  
          for (registrar in configuration.getList(ComponentRegistrar.PLUGIN_COMPONENT_REGISTRARS)) {
-             registrar.registerProjectComponents(project, configuration)
-@@ -548,7 +536,23 @@ class KotlinCoreEnvironment private constructor(
+             try {
+@@ -551,7 +539,23 @@ class KotlinCoreEnvironment private constructor(
              }
          }
  
@@ -72,7 +85,7 @@ index af75bdf1cbd..f7a21012c24 100644
              CoreApplicationEnvironment.registerExtensionPoint(area, PsiTreeChangePreprocessor.EP_NAME, PsiTreeChangePreprocessor::class.java)
              CoreApplicationEnvironment.registerExtensionPoint(area, PsiElementFinder.EP_NAME, PsiElementFinder::class.java)
              CoreApplicationEnvironment.registerExtensionPoint(area, JvmElementProvider.EP_NAME, JvmElementProvider::class.java)
-@@ -557,10 +561,16 @@ class KotlinCoreEnvironment private constructor(
+@@ -560,10 +564,16 @@ class KotlinCoreEnvironment private constructor(
          // made public for Upsource
          @JvmStatic
          fun registerProjectServices(projectEnvironment: JavaCoreProjectEnvironment, messageCollector: MessageCollector?) {
@@ -90,8 +103,8 @@ index af75bdf1cbd..f7a21012c24 100644
 +                registerService(ScriptDependenciesProvider::class.java, CliScriptDependenciesProvider(project, scriptDefinitionProvider))
                  registerService(KotlinJavaPsiFacade::class.java, KotlinJavaPsiFacade(this))
                  registerService(KtLightClassForFacade.FacadeStubCache::class.java, KtLightClassForFacade.FacadeStubCache(this))
-                 if (messageCollector != null) {
-@@ -569,6 +579,21 @@ class KotlinCoreEnvironment private constructor(
+                 registerService(ModuleAnnotationsResolver::class.java, CliModuleAnnotationsResolver())
+@@ -573,6 +583,20 @@ class KotlinCoreEnvironment private constructor(
              }
          }
  
@@ -109,15 +122,14 @@ index af75bdf1cbd..f7a21012c24 100644
 +            JsSyntheticTranslateExtension.registerExtensionPoint(project)
 +        }
 +
-+
          private fun registerProjectServicesForCLI(@Suppress("UNUSED_PARAMETER") projectEnvironment: JavaCoreProjectEnvironment) {
              /**
               * Note that Kapt may restart code analysis process, and CLI services should be aware of that.
 diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
-index 124dc4805cf..76c61b9a17a 100644
+index 8c4f0483de7..75a1cb07c79 100644
 --- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
 +++ b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
-@@ -83,7 +83,23 @@ abstract class KotlinAbstractUElement(private val givenParent: UElement?) : UEle
+@@ -115,7 +115,23 @@ abstract class KotlinAbstractUElement(private val givenParent: UElement?) : UEle
              return false
          }
  
@@ -142,66 +154,3 @@ index 124dc4805cf..76c61b9a17a 100644
      }
  
      override fun hashCode() = psi?.hashCode() ?: 0
-diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUClass.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUClass.kt
-index 1ef5b7deeda..939185743fb 100644
---- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUClass.kt
-+++ b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUClass.kt
-@@ -143,10 +143,22 @@ class KotlinConstructorUMethod(
-                 initializers.forEach {
-                     addIfNotNull(languagePlugin.convertOpt(it.body, uastParent))
-                 }
-+                bodyExpressions.forEach {
-+                    addIfNotNull(languagePlugin.convertOpt(it, uastParent))
-+                }
-             }
-         }
-     }
- 
-+    private val bodyExpressions: List<KtExpression>
-+        get() {
-+            val bodyExpression = (psi.kotlinOrigin as? KtFunction)?.bodyExpression ?: return emptyList()
-+            return when (bodyExpression) {
-+                is KtBlockExpression -> bodyExpression.statements
-+                else -> listOf(bodyExpression)
-+            }
-+        }
-+
-     override val javaPsi = psi
- 
-     override val sourcePsi = psi.kotlinOrigin
-@@ -156,7 +168,7 @@ class KotlinUAnonymousClass(
-         psi: PsiAnonymousClass,
-         givenParent: UElement?
- ) : AbstractKotlinUClass(givenParent), UAnonymousClass, PsiAnonymousClass by psi {
--    
-+
-     override val psi: PsiAnonymousClass = unwrap<UAnonymousClass, PsiAnonymousClass>(psi)
- 
-     override val javaPsi: PsiAnonymousClass = psi
-@@ -175,7 +187,7 @@ class KotlinUAnonymousClass(
- 
-     override val uastAnchor: UElement?
-         get() {
--            val ktClassOrObject = (psi.originalElement as? KtLightClass)?.kotlinOrigin as? KtObjectDeclaration ?: return null 
-+            val ktClassOrObject = (psi.originalElement as? KtLightClass)?.kotlinOrigin as? KtObjectDeclaration ?: return null
-             return UIdentifier(ktClassOrObject.getObjectKeyword(), this)
-         }
- 
-diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/expressions/KotlinUDeclarationsExpression.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/expressions/KotlinUDeclarationsExpression.kt
-index af143b057e6..30fa8e4566c 100644
---- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/expressions/KotlinUDeclarationsExpression.kt
-+++ b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/expressions/KotlinUDeclarationsExpression.kt
-@@ -28,8 +28,12 @@ open class KotlinUDeclarationsExpression(
-     override val sourcePsi: PsiElement?
-         get() = psiAnchor
- 
-+    // Fix/workaround for https://youtrack.jetbrains.com/issue/KT-21551
-+    //override val uastParent: UElement?
-+    //    get() = if (psiAnchor != null) doConvertParent(this, psiAnchor.parent) else super.uastParent
-+    private val _givenParent = givenParent
-     override val uastParent: UElement?
--        get() = if (psiAnchor != null) doConvertParent(this, psiAnchor.parent) else super.uastParent
-+        get() = _givenParent ?: if (psiAnchor != null) doConvertParent(this, psiAnchor.parent) else super.uastParent
- 
-     constructor(uastParent: UElement?) : this(null, uastParent)
- 

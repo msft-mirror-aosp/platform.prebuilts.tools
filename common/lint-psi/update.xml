@@ -45,7 +45,7 @@
         <echo message="Building uast artifacts into ${dist-uast}"/>
         <delete dir="${temp}"/>
         <mkdir dir="${temp}"/>
-        <unzip src="${idea.sdk}/lib/openapi.jar" dest="${temp}/classes/uast-common">
+        <unzip src="${idea.sdk}/lib/java-api.jar" dest="${temp}/classes/uast-common">
             <patternset>
                 <include name="org/jetbrains/uast/**/*.class"/>
                 <include name="META-INF/uast-common.kotlin_module"/>
@@ -56,9 +56,10 @@
             <fileset dir="${temp}/classes/uast-common"/>
         </jar>
 
-        <unzip src="${idea.sdk}/lib/idea.jar" dest="${temp}/classes/uast-java">
+        <unzip src="${idea.sdk}/lib/java-impl.jar" dest="${temp}/classes/uast-java">
             <patternset>
                 <include name="org/jetbrains/uast/java/**/*.class"/>
+                <include name="META-INF/uast-java.kotlin_module"/>
             </patternset>
         </unzip>
 

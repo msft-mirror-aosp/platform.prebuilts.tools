@@ -27,6 +27,16 @@ Then switch to a compatible patch branch; right now that means
 from master, do a
 $ git merge origin/master_173
 
+Currently:
+$ git checkout 1.2.30
+$ git merge origin/1.2.30_181
+
+The specific branch versions may change. Here 1.2.30 is the current
+active Kotlin stable branch, and 1.2.30_181 is the IntelliJ 181 (e.g. 2018.1)
+branch that it matches (this is relevant for the UAST library which is
+develope din the IntelliJ codebase, not in the Kotlin codebase.)
+
+
 Then make sure to apply some extra patches to work around bugs
 and to add some special methods used by lint:
 $ git apply /path/to/kotlin-compiler-patch.diff (which is located in
@@ -39,7 +49,7 @@ $ cd plugins/uast-kotlin && gradle jar
 
 Finally, back in this prebuilt directory, run the update.xml script,
 pointing back to the Kotlin repository:
-ant -f update.xml -Dkotlin_src_dir=/path/to/kotlin/repo
+ant -f update.xml -Dkotlin_src_dir=$MY_KOTLIN_REPO_ROOT
 
 The packaging script will extract code and update the intellij-core and uast prebuilts
 in this directory. It performs a number of steps to do that, such as unbundling the
