@@ -123,8 +123,10 @@ function stageRepo() {
 function announceCopy() {
   input=$1
   output=$2
-  echo copying "$input" to "$output"
-  cp -rT $input $output
+  if stat $input > /dev/null 2>/dev/null; then
+    echo copying "$input" to "$output"
+    cp -rT $input $output
+  fi
 }
 
 function export() {
