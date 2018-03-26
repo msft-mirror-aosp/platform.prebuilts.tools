@@ -8,7 +8,7 @@ mkdir -p $tempDir
 cd $tempDir
 
 function usage() {
-  echo "Usage: $0 filePathOfSupportLibRepoCheckout group:artifact:version [group:artifact:version...]
+  echo "Usage: $0 group:artifact:version [group:artifact:version...]
 
 This script downloads the specified artifacts copies them into the appropriate subdirectory of $destRepo/prebuilts/"
   exit 1
