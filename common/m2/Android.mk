@@ -56,6 +56,7 @@ LOCAL_PREBUILT_JAVA_LIBRARIES := \
     asm-util-prebuilt-host-jar:repository/org/ow2/asm/asm-util/6.0/asm-util-6.0.jar \
     guava-prebuilt-host-jar:repository/com/google/guava/guava/20.0/guava-20.0.jar \
     gson-prebuilt-jar:repository/com/google/code/gson/gson/2.8.0/gson-2.8.0.jar \
+    javapoet-prebuilt-jar:repository/com/squareup/javapoet/1.8.0/javapoet-1.8.0.jar \
     protobuf-java-prebuilt-jar:repository/com/google/protobuf/protobuf-java/3.0.2/protobuf-java-3.0.2.jar \
     protobuf-java-util-prebuilt-jar:repository/com/google/protobuf/protobuf-java-util/3.0.2/protobuf-java-util-3.0.2.jar \
     truth-prebuilt-host-jar:repository/com/google/truth/truth/0.28/truth-0.28.jar
