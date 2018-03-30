@@ -8,7 +8,7 @@ mkdir -p $tempDir
 cd $tempDir
 
 function usage() {
-  echo "Usage: $0 filePathOfSupportLibRepoCheckout group:artifact:version [group:artifact:version...]
+  echo "Usage: $0 group:artifact:version [group:artifact:version...]
 
 This script downloads the specified artifacts copies them into the appropriate subdirectory of $destRepo/prebuilts/"
   exit 1
@@ -123,8 +123,10 @@ function stageRepo() {
 function announceCopy() {
   input=$1
   output=$2
-  echo copying "$input" to "$output"
-  cp -rT $input $output
+  if stat $input > /dev/null 2>/dev/null; then
+    echo copying "$input" to "$output"
+    cp -rT $input $output
+  fi
 }
 
 function export() {
