@@ -31,6 +31,13 @@ function createPom() {
   <groupId>com.google.android.build</groupId>
   <artifactId>m2repository</artifactId>
   <version>1.0</version>
+  <repositories>
+    <repository>
+      <id>google</id>
+      <name>Google</name>
+      <url>https://maven.google.com</url>
+    </repository>
+  </repositories>
   <dependencies>
 '
 
