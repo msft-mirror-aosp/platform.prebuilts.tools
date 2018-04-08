@@ -24,6 +24,7 @@ prebuilts := \
     byte-buddy-prebuilt-jar:repository/net/bytebuddy/byte-buddy/1.6.5/byte-buddy-1.6.5.jar \
     mockito2-prebuilt-jar:repository/org/mockito/mockito-core/2.7.6/mockito-core-2.7.6.jar \
     objenesis-prebuilt-jar:repository/org/objenesis/objenesis/2.5/objenesis-2.5.jar \
+    gson-prebuilt-jar:repository/com/google/code/gson/gson/2.8.0/gson-2.8.0.jar \
     squareup-haha-prebuilt:repository/com/squareup/haha/haha/2.0.2/haha-2.0.2.jar \
     truth-prebuilt-jar:repository/com/google/truth/truth/0.28/truth-0.28.jar
 
