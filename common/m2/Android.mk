@@ -36,6 +36,15 @@ LOCAL_PREBUILT_STATIC_JAVA_LIBRARIES := \
 include $(BUILD_MULTI_PREBUILT)
 
 ###########################################
+
+include $(CLEAR_VARS)
+
+LOCAL_PREBUILT_JAVA_LIBRARIES := \
+    javapoet-prebuilt-jar:repository/com/squareup/javapoet/1.8.0/javapoet-1.8.0.jar \
+
+include $(BUILD_HOST_PREBUILT)
+
+###########################################
 # org.mockito prebuilt for Robolectric
 ###########################################
 
