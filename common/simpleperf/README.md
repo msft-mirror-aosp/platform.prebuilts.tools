@@ -1,8 +1,8 @@
 The Android simpleperf binaries should be placed in this directory under a specific subfolder according to their architecture:
-* **ARM**: armeabi-v7a/simpleperf (SHA1 _8bfb5a22a9bdd72d14dbca73abeeaa781c96f120_)
-* **ARM64**: arm64-v8a/simpleperf (SHA1 _73369b68383a614eb5ae1736fef0ea769c1de665_)
-* **x86**: x86/simpleperf (SHA1 _06527a2d1c863e01a8f0feb60987b0b7ab0a90ac_)
-* **x86\_64**: x86\_64/simpleperf (SHA1 _abebbd139706d1f45ef9f0fd70cc6aee274a6820_)
+* **ARM**: armeabi-v7a/simpleperf (SHA1 _b5a1ad4ddd34ee89c9c849cf6d4c67d534860ca0_)
+* **ARM64**: arm64-v8a/simpleperf (SHA1 _a19318d15e371ce4accc2ce9291623d454fb7d37_)
+* **x86**: x86/simpleperf (SHA1 _a806da7b84e1eadd32f2383f410a4a257c1ad851_)
+* **x86\_64**: x86\_64/simpleperf (SHA1 _dd77739b3e307bb450f579f386800cd3b776fcb8_)
 
 There are two ways of obtaining the binaries:
 
@@ -10,5 +10,5 @@ There are two ways of obtaining the binaries:
 
 2) [Download and build](https://source.android.com/source/initializing) the latest (or a specific) version of AOSP, then copy the simpleperf binaries generated as artifacts to this directory. Also, update the text on the bottom of this file mentioning the AOSP source tree built.
 
-Current binaries were obtained from AOSP tree [ea762e1b99827e276f6059caea18f2feaa843c60](https://android.googlesource.com/platform/prebuilts/simpleperf/+/70aaa31245c7d12b0e679ce8acfffba3de3d9d54).
+Current binaries were generated from AOSP source code (tree @ [5edcbb97e0eb453e33cfcf63cfdeba98c46859ed](https://android.googlesource.com/platform/system/extras/+/696377fe7516e1d540cb4b64ee025dc02ccf56b4/simpleperf/)).
 
