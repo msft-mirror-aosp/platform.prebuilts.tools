@@ -8,7 +8,7 @@ mkdir -p $tempDir
 cd $tempDir
 
 function usage() {
-  echo "Usage: $0 group:artifact:version [group:artifact:version...]
+  echo "Usage: $0 group:artifact:version[:classifier] [group:artifact:version[:classifier]...]
 
 This script downloads the specified artifacts copies them into the appropriate subdirectory of $destRepo/prebuilts/"
   exit 1
@@ -36,6 +36,11 @@ function createPom() {
       <id>google</id>
       <name>Google</name>
       <url>https://maven.google.com</url>
+    </repository>
+    <repository>
+      <id>jcenter</id>
+      <name>JCenter</name>
+      <url>https://jcenter.bintray.com</url>
     </repository>
   </repositories>
   <dependencies>
@@ -71,7 +76,14 @@ function createPom() {
 
   while [ "$1" != "" ]; do
     echo importing $1
-    dependencyText="$(echo $1 | sed 's|\([^:]*\):\([^:]*\):\([^:]*\)|\n    <dependency>\n      <groupId>\1</groupId>\n      <artifactId>\2</artifactId>\n      <version>\3</version>\n    </dependency>|')"
+    # determine whether a classifier is present
+    if echo "$1" | grep ":.*:.*:" > /dev/null; then
+      # classifier is present
+      dependencyText="$(echo $1 | sed 's|\([^:]*\):\([^:]*\):\([^:]*\):\([^:]*\)|\n    <dependency>\n      <groupId>\1</groupId>\n      <artifactId>\2</artifactId>\n      <version>\3</version>\n    <classifier>\4</classifier>\n    </dependency>|')"
+    else
+      # classifier is not present
+      dependencyText="$(echo $1 | sed 's|\([^:]*\):\([^:]*\):\([^:]*\)|\n    <dependency>\n      <groupId>\1</groupId>\n      <artifactId>\2</artifactId>\n      <version>\3</version>\n    </dependency>|')"
+    fi
     pomDependencies="${pomDependencies}${dependencyText}"
     shift
   done
@@ -140,6 +152,10 @@ function export() {
   echo exporting
   announceCopy $stageRepo/com/android $destAndroidRepo/com/android
   rm -rf $stageRepo/com/android
+
+  announceCopy $stageRepo/androidx $destAndroidRepo/androidx
+  rm -rf $stageRepo/androidx
+
   announceCopy $stageRepo $destThirdPartyRepo
   echo done exporting
 }
