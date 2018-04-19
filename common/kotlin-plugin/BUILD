@@ -4,10 +4,10 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
+# managed by go/iml_to_build
 java_import(
     name = "Kotlin/lib/kotlin-plugin",
     jars = ["Kotlin/lib/kotlin-plugin.jar"],
-    tags = ["managed"],
     visibility = ["//visibility:public"],
 )
 
