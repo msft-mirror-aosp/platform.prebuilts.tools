@@ -13,3 +13,10 @@ maven_pom(
     source = "play-services-location-11.8.0.pom",
     visibility = ["//visibility:public"],
 )
+
+maven_java_import(
+    name = "jar",
+    jars = ["play-services-location-11.8.0.jar"],
+    pom = ":pom",
+    visibility = ["//visibility:public"],
+)
