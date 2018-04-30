@@ -5,12 +5,21 @@
 
     <property name="output" value="${basedir}/temp"/>
     <property name="kotlin-dist" value="${kotlin_src_dir}/dist"/>
-    <property name="idea.sdk" value="${kotlin_src_dir}/ideaSDK"/>
 
+    <!--
     <loadfile
             property="build-version"
             srcFile="${kotlin_src_dir}/dependencies/version.txt"
             failonerror="true"/>
+    -->
+
+    <!-- Make sure we include META-INF/uast-common.kotlin_module -->
+    <property name="build-version" value="181.4203.6"/>
+
+    <property name="buildsrc.dir" value="${kotlin_src_dir}/buildSrc/prepare-deps/intellij-sdk/build/repo/kotlin.build.custom.deps/${build-version}"/>
+    <property name="idea.sdk" value="${buildsrc.dir}/intellij"/>
+    <property name="idea.sources" value="${buildsrc.dir}/sources/ideaIC-${build-version}-sources.jar"/>
+
     <echo message="Assembling intellij-core, UAST and Kotlin version ${build-version}"/>
 
 
@@ -48,7 +57,7 @@
         <unzip src="${idea.sdk}/lib/java-api.jar" dest="${temp}/classes/uast-common">
             <patternset>
                 <include name="org/jetbrains/uast/**/*.class"/>
-                <include name="META-INF/uast-common.kotlin_module"/>
+                <include name="META-INF/intellij.platform.uast.kotlin_module"/>
             </patternset>
         </unzip>
 
@@ -59,7 +68,7 @@
         <unzip src="${idea.sdk}/lib/java-impl.jar" dest="${temp}/classes/uast-java">
             <patternset>
                 <include name="org/jetbrains/uast/java/**/*.class"/>
-                <include name="META-INF/uast-java.kotlin_module"/>
+                <include name="META-INF/intellij.platform.uast.kotlin_module"/>
             </patternset>
         </unzip>
 
@@ -67,7 +76,7 @@
             <fileset dir="${temp}/classes/uast-java"/>
         </jar>
 
-        <unzip src="${idea.sdk}/sources/sources.jar" dest="${temp}/classes/uast-common-sources">
+        <unzip src="${idea.sources}" dest="${temp}/classes/uast-common-sources">
             <patternset>
                 <include name="org/jetbrains/uast/**/*.java"/>
                 <include name="org/jetbrains/uast/**/*.kt"/>
@@ -80,7 +89,7 @@
             <fileset dir="${temp}/classes/uast-common-sources"/>
         </jar>
 
-        <unzip src="${idea.sdk}/sources/sources.jar" dest="${temp}/classes/uast-java-sources">
+        <unzip src="${idea.sources}" dest="${temp}/classes/uast-java-sources">
             <patternset>
                 <include name="org/jetbrains/uast/java/**/*.java"/>
                 <include name="org/jetbrains/uast/java/**/*.kt"/>
