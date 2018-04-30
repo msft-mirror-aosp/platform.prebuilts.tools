@@ -2,24 +2,24 @@
 
 exports_files(glob(["kotlin-plugin*.zip"]))
 
+# managed by go/iml_to_build
 java_import(
     name = "Kotlin/kotlinc/lib/kotlin-runtime",
     jars = ["Kotlin/kotlinc/lib/kotlin-runtime.jar"],
-    tags = ["managed"],
     visibility = ["//visibility:public"],
 )
 
+# managed by go/iml_to_build
 java_import(
     name = "Kotlin/kotlinc/lib/kotlin-reflect",
     jars = ["Kotlin/kotlinc/lib/kotlin-reflect.jar"],
-    tags = ["managed"],
     visibility = ["//visibility:public"],
 )
 
+# managed by go/iml_to_build
 java_import(
     name = "Kotlin/kotlinc/lib/kotlin-test",
     jars = ["Kotlin/kotlinc/lib/kotlin-test.jar"],
-    tags = ["managed"],
     visibility = ["//visibility:public"],
 )
 
