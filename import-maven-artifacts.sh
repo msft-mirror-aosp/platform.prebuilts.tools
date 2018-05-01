@@ -148,7 +148,7 @@ function announceCopy() {
   fi
 }
 
-function export() {
+function exportArtifact() {
   echo exporting
   announceCopy $stageRepo/com/android $destAndroidRepo/com/android
   rm -rf $stageRepo/com/android
@@ -165,7 +165,7 @@ function main() {
   createPom "$@"
   downloadDependencies
   stageRepo
-  export
+  exportArtifact
 }
 
 main "$@"
