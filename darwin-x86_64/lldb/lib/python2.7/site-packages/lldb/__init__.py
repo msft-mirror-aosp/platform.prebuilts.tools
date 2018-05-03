@@ -4100,6 +4100,12 @@ class SBDebugger(_object):
 
     StateAsCString = staticmethod(StateAsCString)
 
+    def GetBuildConfiguration():
+        """GetBuildConfiguration() -> SBStructuredData"""
+        return _lldb.SBDebugger_GetBuildConfiguration()
+
+    GetBuildConfiguration = staticmethod(GetBuildConfiguration)
+
     def StateIsRunningState(state):
         """StateIsRunningState(lldb::StateType state) -> bool"""
         return _lldb.SBDebugger_StateIsRunningState(state)
@@ -4319,6 +4325,10 @@ def SBDebugger_GetVersionString():
 def SBDebugger_StateAsCString(state):
     """SBDebugger_StateAsCString(lldb::StateType state) -> char const *"""
     return _lldb.SBDebugger_StateAsCString(state)
+
+def SBDebugger_GetBuildConfiguration():
+    """SBDebugger_GetBuildConfiguration() -> SBStructuredData"""
+    return _lldb.SBDebugger_GetBuildConfiguration()
 
 def SBDebugger_StateIsRunningState(state):
     """SBDebugger_StateIsRunningState(lldb::StateType state) -> bool"""
@@ -10986,6 +10996,11 @@ class SBTarget(_object):
         return _lldb.SBTarget_SetLaunchInfo(self, launch_info)
 
 
+    def GetStatistics(self):
+        """GetStatistics(SBTarget self) -> SBStructuredData"""
+        return _lldb.SBTarget_GetStatistics(self)
+
+
     def __eq__(self, rhs):
         """__eq__(SBTarget self, SBTarget rhs) -> bool"""
         return _lldb.SBTarget___eq__(self, rhs)
@@ -11557,7 +11572,7 @@ class SBThread(_object):
 
         Get the description strings for this thread that match what the 
         lldb driver will present, using the thread-format (stop_format==false)
-        or thread-stop-format (stop_format = true). 
+        or thread-stop-format (stop_format = true).
         """
         return _lldb.SBThread_GetDescription(self, *args)
 
