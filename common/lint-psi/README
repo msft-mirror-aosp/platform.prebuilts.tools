@@ -28,8 +28,8 @@ from master, do a
 $ git merge origin/master_173
 
 Currently:
-$ git checkout 1.2.30
-$ git merge origin/1.2.30_181
+$ git checkout 1.2.40
+$ git merge origin/1.2.40_181
 
 The specific branch versions may change. Here 1.2.30 is the current
 active Kotlin stable branch, and 1.2.30_181 is the IntelliJ 181 (e.g. 2018.1)
@@ -43,7 +43,6 @@ $ git apply /path/to/kotlin-compiler-patch.diff (which is located in
 this directory).
 
 Next, build the Kotlin repository:
-$ ant -f update_dependencies.xml
 $ ./gradlew dist
 $ cd plugins/uast-kotlin && gradle jar
 

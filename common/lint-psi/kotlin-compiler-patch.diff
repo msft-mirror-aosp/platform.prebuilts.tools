@@ -1,18 +1,5 @@
-diff --git a/build.xml b/build.xml
-index 4cc8d1f9546..71a76d09f1f 100644
---- a/build.xml
-+++ b/build.xml
-@@ -3,7 +3,7 @@
-     <property file="resources/kotlinManifest.properties"/>
- 
-     <!-- Set to false to disable proguard run on kotlin-compiler.jar. Speeds up the build -->
--    <property name="shrink" value="true"/>
-+    <property name="shrink" value="false"/>
- 
-     <property name="max.heap.size.for.forked.jvm" value="1024m"/>
- 
 diff --git a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
-index 16695cd0fa9..3db4992dad3 100644
+index 8734c22d241..7b560e0f73d 100644
 --- a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
 +++ b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
 @@ -29,6 +29,7 @@ import com.intellij.ide.plugins.PluginManagerCore
@@ -23,27 +10,31 @@ index 16695cd0fa9..3db4992dad3 100644
  import com.intellij.openapi.Disposable
  import com.intellij.openapi.application.TransactionGuard
  import com.intellij.openapi.application.TransactionGuardImpl
-@@ -129,17 +130,12 @@ class KotlinCoreEnvironment private constructor(
+@@ -131,22 +132,10 @@ class KotlinCoreEnvironment private constructor(
              with (project) {
                  registerService(CoreJavaFileManager::class.java, ServiceManager.getService(this, JavaFileManager::class.java) as CoreJavaFileManager)
  
--                val cliLightClassGenerationSupport = CliLightClassGenerationSupport(this)
+-                val traceHolder = CliTraceHolder()
+-                val cliLightClassGenerationSupport = CliLightClassGenerationSupport(traceHolder)
+-                val kotlinAsJavaSupport = CliKotlinAsJavaSupport(this, traceHolder)
 -                registerService(LightClassGenerationSupport::class.java, cliLightClassGenerationSupport)
 -                registerService(CliLightClassGenerationSupport::class.java, cliLightClassGenerationSupport)
--                registerService(CodeAnalyzerInitializer::class.java, cliLightClassGenerationSupport)
--
-                 registerService(ExternalAnnotationsManager::class.java, MockExternalAnnotationsManager())
-                 registerService(InferredAnnotationsManager::class.java, MockInferredAnnotationsManager())
- 
--                val area = Extensions.getArea(this)
+-                registerService(KotlinAsJavaSupport::class.java, kotlinAsJavaSupport)
+-                registerService(CodeAnalyzerInitializer::class.java, traceHolder)
 +                registerKotlinLightClassSupport(project)
  
--                area.getExtensionPoint(PsiElementFinder.EP_NAME).registerExtension(JavaElementFinder(this, cliLightClassGenerationSupport))
-+                val area = Extensions.getArea(this)
-                 area.getExtensionPoint(PsiElementFinder.EP_NAME).registerExtension(
-                         PsiElementFinderImpl(this, ServiceManager.getService(this, JavaFileManager::class.java)))
+                 registerService(ExternalAnnotationsManager::class.java, MockExternalAnnotationsManager())
+                 registerService(InferredAnnotationsManager::class.java, MockInferredAnnotationsManager())
+-
+-                val area = Extensions.getArea(this)
+-
+-                area.getExtensionPoint(PsiElementFinder.EP_NAME).registerExtension(JavaElementFinder(this, kotlinAsJavaSupport))
+-                area.getExtensionPoint(PsiElementFinder.EP_NAME).registerExtension(
+-                        PsiElementFinderImpl(this, ServiceManager.getService(this, JavaFileManager::class.java)))
              }
-@@ -164,15 +160,7 @@ class KotlinCoreEnvironment private constructor(
+ 
+             super.registerJavaPsiFacade()
+@@ -169,15 +158,7 @@ class KotlinCoreEnvironment private constructor(
  
          val project = projectEnvironment.project
  
@@ -60,32 +51,36 @@ index 16695cd0fa9..3db4992dad3 100644
  
          for (registrar in configuration.getList(ComponentRegistrar.PLUGIN_COMPONENT_REGISTRARS)) {
              try {
-@@ -551,7 +539,23 @@ class KotlinCoreEnvironment private constructor(
+@@ -558,19 +539,43 @@ class KotlinCoreEnvironment private constructor(
              }
          }
  
 -        private fun registerProjectExtensionPoints(area: ExtensionsArea) {
-+        // made public for CLI Android Lint
-+        @JvmStatic
-+        fun registerKotlinLightClassSupport(project: MockProject) {
-+            with(project) {
-+                val cliLightClassGenerationSupport = CliLightClassGenerationSupport(this)
-+                registerService(LightClassGenerationSupport::class.java, cliLightClassGenerationSupport)
-+                registerService(CliLightClassGenerationSupport::class.java, cliLightClassGenerationSupport)
-+                registerService(CodeAnalyzerInitializer::class.java, cliLightClassGenerationSupport)
-+
-+                val area = Extensions.getArea(this)
-+                area.getExtensionPoint(PsiElementFinder.EP_NAME).registerExtension(JavaElementFinder(this, cliLightClassGenerationSupport))
-+            }
-+        }
-+
-+        // made public for CLI Android Lint
 +        @JvmStatic
 +        fun registerProjectExtensionPoints(area: ExtensionsArea) {
              CoreApplicationEnvironment.registerExtensionPoint(area, PsiTreeChangePreprocessor.EP_NAME, PsiTreeChangePreprocessor::class.java)
              CoreApplicationEnvironment.registerExtensionPoint(area, PsiElementFinder.EP_NAME, PsiElementFinder::class.java)
              CoreApplicationEnvironment.registerExtensionPoint(area, JvmElementProvider.EP_NAME, JvmElementProvider::class.java)
-@@ -560,10 +564,16 @@ class KotlinCoreEnvironment private constructor(
+         }
+ 
++        @JvmStatic
++        fun registerKotlinLightClassSupport(project: MockProject) {
++            with (project) {
++                val traceHolder = CliTraceHolder()
++                val cliLightClassGenerationSupport = CliLightClassGenerationSupport(traceHolder)
++                val kotlinAsJavaSupport = CliKotlinAsJavaSupport(this, traceHolder)
++                registerService(LightClassGenerationSupport::class.java, cliLightClassGenerationSupport)
++                registerService(CliLightClassGenerationSupport::class.java, cliLightClassGenerationSupport)
++                registerService(KotlinAsJavaSupport::class.java, kotlinAsJavaSupport)
++                registerService(CodeAnalyzerInitializer::class.java, traceHolder)
++
++                val area = Extensions.getArea(this)
++                area.getExtensionPoint(PsiElementFinder.EP_NAME).registerExtension(JavaElementFinder(this, kotlinAsJavaSupport))
++                area.getExtensionPoint(PsiElementFinder.EP_NAME).registerExtension(
++                    PsiElementFinderImpl(this, ServiceManager.getService(this, JavaFileManager::class.java)))
++            }
++        }
++
          // made public for Upsource
          @JvmStatic
          fun registerProjectServices(projectEnvironment: JavaCoreProjectEnvironment, messageCollector: MessageCollector?) {
@@ -94,9 +89,8 @@ index 16695cd0fa9..3db4992dad3 100644
 +        }
 +
 +        @JvmStatic
-+        @Suppress("MemberVisibilityCanPrivate") // made public for CLI Android Lint
 +        fun registerProjectServices(project: MockProject, messageCollector: MessageCollector?) {
-+            with(project) {
++            with (project) {
                  val scriptDefinitionProvider = CliScriptDefinitionProvider()
                  registerService(ScriptDefinitionProvider::class.java, scriptDefinitionProvider)
 -                registerService(ScriptDependenciesProvider::class.java, CliScriptDependenciesProvider(projectEnvironment.project, scriptDefinitionProvider))
@@ -104,7 +98,7 @@ index 16695cd0fa9..3db4992dad3 100644
                  registerService(KotlinJavaPsiFacade::class.java, KotlinJavaPsiFacade(this))
                  registerService(KtLightClassForFacade.FacadeStubCache::class.java, KtLightClassForFacade.FacadeStubCache(this))
                  registerService(ModuleAnnotationsResolver::class.java, CliModuleAnnotationsResolver())
-@@ -573,6 +583,20 @@ class KotlinCoreEnvironment private constructor(
+@@ -580,6 +585,20 @@ class KotlinCoreEnvironment private constructor(
              }
          }
  
