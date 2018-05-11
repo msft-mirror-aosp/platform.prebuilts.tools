@@ -3,14 +3,14 @@ load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom", "maven_aa
 
 maven_java_import(
     name = "jar",
-    jars = ["commons-imaging-1.0-RC.jar"],
+    jars = ["commons-imaging-1.0-RC-1.jar"],
     pom = ":pom",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
     name = "pom",
-    parent = "//prebuilts/tools/common/m2/repository/org/apache/commons/commons-parent/42:pom",
-    source = "commons-imaging-1.0-RC.pom",
+    parent = "//prebuilts/tools/common/m2/repository/org/apache/commons/commons-parent/43:pom",
+    source = "commons-imaging-1.0-RC-1.pom",
     visibility = ["//visibility:public"],
 )
