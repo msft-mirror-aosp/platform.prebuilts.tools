@@ -8,7 +8,7 @@ mkdir -p $tempDir
 cd $tempDir
 
 function usage() {
-  echo "Usage: $0 group:artifact:version[:classifier] [group:artifact:version[:classifier]...]
+  echo "Usage: $0 group:artifact:version[:classifier][@extension] [group:artifact:version[:classifier][@extension]...]
 
 This script downloads the specified artifacts copies them into the appropriate subdirectory of $destRepo/prebuilts/"
   exit 1
@@ -76,14 +76,16 @@ function createPom() {
 
   while [ "$1" != "" ]; do
     echo importing $1
-    # determine whether a classifier is present
-    if echo "$1" | grep ":.*:.*:" > /dev/null; then
-      # classifier is present
-      dependencyText="$(echo $1 | sed 's|\([^:]*\):\([^:]*\):\([^:]*\):\([^:]*\)|\n    <dependency>\n      <groupId>\1</groupId>\n      <artifactId>\2</artifactId>\n      <version>\3</version>\n    <classifier>\4</classifier>\n    </dependency>|')"
-    else
-      # classifier is not present
-      dependencyText="$(echo $1 | sed 's|\([^:]*\):\([^:]*\):\([^:]*\)|\n    <dependency>\n      <groupId>\1</groupId>\n      <artifactId>\2</artifactId>\n      <version>\3</version>\n    </dependency>|')"
-    fi
+    IFS=@ read -r dependency extension <<< $1
+    IFS=: read -ra FIELDS <<< ${dependency}
+    groupId="${FIELDS[0]}"
+    artifactId="${FIELDS[1]}"
+    version="${FIELDS[2]}"
+    classifier="${FIELDS[3]}"
+    dependencyText=$(echo -e "\n    <dependency>\n      <groupId>${groupId}</groupId>\n      <artifactId>${artifactId}</artifactId>\n      <version>${version}</version>")
+    [ $classifier ] && dependencyText+=$(echo -e "\n      <classifier>${classifier}</classifier>")
+    [ $extension ] && dependencyText+=$(echo -e "\n      <type>${extension}</type>")
+    dependencyText+=$(echo -e "\n    </dependency>")
     pomDependencies="${pomDependencies}${dependencyText}"
     shift
   done
