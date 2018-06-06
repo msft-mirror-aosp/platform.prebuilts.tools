@@ -88,3 +88,13 @@ java_library_host {
   name: "truth-host-prebuilt",
   static_libs: ["truth-prebuilt"],
 }
+
+java_import_host {
+    name: "metalava-tools-common-m2-deps",
+    jars: [
+        "repository/org/ow2/asm/asm/6.1.1/asm-6.1.1.jar",
+        "repository/org/ow2/asm/asm-tree/6.1.1/asm-tree-6.1.1.jar",
+        "repository/com/google/guava/guava/23.0/guava-23.0.jar",
+        "repository/org/jetbrains/trove4j/trove4j/20160824/trove4j-20160824.jar",
+    ],
+}
