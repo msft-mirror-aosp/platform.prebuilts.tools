@@ -3,13 +3,13 @@ load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom", "maven_aa
 
 maven_java_import(
     name = "jar",
-    jars = ["baksmali-2.2.1.jar"],
+    jars = ["util-2.2.3.jar"],
     pom = ":pom",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
     name = "pom",
-    source = "baksmali-2.2.1.pom",
+    source = "util-2.2.3.pom",
     visibility = ["//visibility:public"],
 )
