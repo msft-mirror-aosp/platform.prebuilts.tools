@@ -14,7 +14,7 @@
     -->
 
     <!-- Make sure we include META-INF/uast-common.kotlin_module -->
-    <property name="build-version" value="181.4203.6"/>
+    <property name="build-version" value="181.4892.42"/>
 
     <property name="buildsrc.dir" value="${kotlin_src_dir}/buildSrc/prepare-deps/intellij-sdk/build/repo/kotlin.build.custom.deps/${build-version}"/>
     <property name="idea.sdk" value="${buildsrc.dir}/intellij"/>
@@ -125,6 +125,7 @@
 
                 <!-- Separate dependency for Guava -->
                 <exclude name="com/google/common/**/*" />
+                <exclude name="com/google/thirdparty/publicsuffix/**/*" />
                 <exclude name="META-INF/maven/com.google.guava/**/*" />
 
                 <!-- We don't need Kotlin JavaScript support in lint -->
