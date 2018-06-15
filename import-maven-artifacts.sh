@@ -76,8 +76,8 @@ function createPom() {
 
   while [ "$1" != "" ]; do
     echo importing $1
-    IFS=@ read -r dependency extension <<< $1
-    IFS=: read -ra FIELDS <<< ${dependency}
+    IFS=@ read -r dependency extension <<< "$1"
+    IFS=: read -ra FIELDS <<< "${dependency}"
     groupId="${FIELDS[0]}"
     artifactId="${FIELDS[1]}"
     version="${FIELDS[2]}"
