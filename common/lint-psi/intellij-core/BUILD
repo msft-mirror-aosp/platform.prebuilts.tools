@@ -12,7 +12,7 @@ java_jarjar(
 maven_java_import(
     name = "intellij-core",
     jars = [
-        ":intellij-core-all",
+        ":intellij-core-all.jar",
     ],
     pom = ":intellij-core.pom",
     visibility = ["//visibility:public"],

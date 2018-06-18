@@ -14,7 +14,7 @@ java_jarjar(
 maven_java_import(
     name = "uast",
     jars = [
-        ":uast-all",
+        ":uast-all.jar",
     ],
     pom = ":uast.pom",
     visibility = ["//visibility:public"],

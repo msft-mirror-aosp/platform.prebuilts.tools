@@ -12,7 +12,7 @@ java_jarjar(
 maven_java_import(
     name = "kotlin-compiler",
     jars = [
-        ":kotlin-compiler-all",
+        ":kotlin-compiler-all.jar",
     ],
     pom = ":kotlin-compiler.pom",
     visibility = ["//visibility:public"],
