@@ -22,7 +22,37 @@ stageRepo=m2staged
 destAndroidRepo=$destRepo/prebuilts/gradle-plugin
 destThirdPartyRepo=$destRepo/prebuilts/tools/common/m2/repository
 
-function createPom() {
+
+# usage: downloadArtifacts "$group:$artifact:$version[:classifier][@extension]..."
+function downloadArtifacts() {
+  if [ "$1" == "" ]; then
+    usage
+  fi
+  echo downloading dependencies into $inputRepo
+  rm -rf $inputRepo
+  while [ "$1" != "" ]; do
+    echo importing $1
+    IFS=@ read -r dependency extension <<< "$1"
+    IFS=: read -ra FIELDS <<< "${dependency}"
+    groupId="${FIELDS[0]}"
+    artifactId="${FIELDS[1]}"
+    version="${FIELDS[2]}"
+    classifier="${FIELDS[3]}"
+
+    # download the actual artifact
+    downloadArtifact "$groupId" "$artifactId" "$version" "$classifier" "$extension"
+
+    # try to download the sources jar
+    downloadArtifact "$groupId" "$artifactId" "$version" "sources" "jar" || true
+
+    # go to next artifact
+    shift
+  done
+  echo done downloading dependencies
+}
+
+# usage: downloadArtifact "$group" "$artifact" "$version" "$classifier" "$extension"
+function downloadArtifact() {
   pomPath="$PWD/pom.xml"
   echo creating $pomPath
   pomPrefix='<?xml version="1.0" encoding="UTF-8"?>
@@ -72,40 +102,29 @@ function createPom() {
 </project>
 '
 
+
+  groupId="$1"
+  artifactId="$2"
+  version="$3"
+  classifier="$4"
+  extension="$5"
   pomDependencies=""
 
-  while [ "$1" != "" ]; do
-    echo importing $1
-    IFS=@ read -r dependency extension <<< "$1"
-    IFS=: read -ra FIELDS <<< "${dependency}"
-    groupId="${FIELDS[0]}"
-    artifactId="${FIELDS[1]}"
-    version="${FIELDS[2]}"
-    classifier="${FIELDS[3]}"
-    dependencyText=$(echo -e "\n    <dependency>\n      <groupId>${groupId}</groupId>\n      <artifactId>${artifactId}</artifactId>\n      <version>${version}</version>")
-    [ $classifier ] && dependencyText+=$(echo -e "\n      <classifier>${classifier}</classifier>")
-    [ $extension ] && dependencyText+=$(echo -e "\n      <type>${extension}</type>")
-    dependencyText+=$(echo -e "\n    </dependency>")
-    pomDependencies="${pomDependencies}${dependencyText}"
-    shift
-  done
 
-  if [ "${pomDependencies}" == "" ]; then
-    usage
-  fi
+  dependencyText=$(echo -e "\n    <dependency>\n      <groupId>${groupId}</groupId>\n      <artifactId>${artifactId}</artifactId>\n      <version>${version}</version>")
+  [ $classifier ] && dependencyText+=$(echo -e "\n      <classifier>${classifier}</classifier>")
+  [ $extension ] && dependencyText+=$(echo -e "\n      <type>${extension}</type>")
+  dependencyText+=$(echo -e "\n    </dependency>")
+
+
+  pomDependencies="${pomDependencies}${dependencyText}"
 
   echo "${pomPrefix}${pomDependencies}${pomSuffix}" > $pomPath
   echo done creating $pomPath
-}
 
-
-function downloadDependencies() {
-  echo downloading and/or copying dependencies to $inputRepo
-  rm -rf $inputRepo
-  mvn dependency:copy-dependencies
-  #mvn dependency:copy-dependencies -Dclassifier=javadoc
-  mvn dependency:copy-dependencies -Dclassifier=sources
-  echo done placing dependencies in $inputRepo
+  echo downloading one dependency into $inputRepo
+  mvn -f "$pomPath" dependency:copy-dependencies
+  echo done downloading one dependency into $inputRepo
 }
 
 # generates an appropriately formatted repository for merging into existing repositories,
@@ -164,8 +183,7 @@ function exportArtifact() {
 
 
 function main() {
-  createPom "$@"
-  downloadDependencies
+  downloadArtifacts "$@"
   stageRepo
   exportArtifact
 }
