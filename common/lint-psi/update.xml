@@ -13,7 +13,10 @@
             failonerror="true"/>
     -->
 
-    <!-- Make sure we include META-INF/uast-common.kotlin_module -->
+    <!-- Version of IntelliJ, where we pull UAST etc from. You can find
+         the value with the following (after building the Kotlin distro):
+         ls buildSrc/prepare-deps/intellij-sdk/build/repo/kotlin.build.custom.deps
+      -->
     <property name="build-version" value="181.4892.42"/>
 
     <property name="buildsrc.dir" value="${kotlin_src_dir}/buildSrc/prepare-deps/intellij-sdk/build/repo/kotlin.build.custom.deps/${build-version}"/>

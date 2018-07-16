@@ -1,46 +1,41 @@
-commit f7fc50c609bb13304ea61b871c13bfd7609af6bb
-Author: Tor Norbye <tnorbye@google.com>
-Date:   Wed Jun 13 19:51:28 2018 -0400
-
-    Changes for Kotlin UAST used by lint
-
 diff --git a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
-index d2cead9445c..b960d3009aa 100644
+index 0224737d4f2..513e43c7f43 100644
 --- a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
 +++ b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
-@@ -29,6 +29,7 @@ import com.intellij.ide.plugins.PluginManagerCore
+@@ -28,6 +28,7 @@ import com.intellij.ide.highlighter.JavaFileType
+ import com.intellij.ide.plugins.PluginManagerCore
  import com.intellij.lang.MetaLanguage
  import com.intellij.lang.java.JavaParserDefinition
- import com.intellij.lang.jvm.facade.JvmElementProvider
 +import com.intellij.mock.MockProject
  import com.intellij.openapi.Disposable
  import com.intellij.openapi.application.TransactionGuard
  import com.intellij.openapi.application.TransactionGuardImpl
-@@ -132,22 +133,10 @@ class KotlinCoreEnvironment private constructor(
-             with (project) {
-                 registerService(CoreJavaFileManager::class.java, ServiceManager.getService(this, JavaFileManager::class.java) as CoreJavaFileManager)
+@@ -133,23 +134,10 @@ class KotlinCoreEnvironment private constructor(
+                         ServiceManager.getService(this, JavaFileManager::class.java) as CoreJavaFileManager
+                     )
  
--                val traceHolder = CliTraceHolder()
--                val cliLightClassGenerationSupport = CliLightClassGenerationSupport(traceHolder)
--                val kotlinAsJavaSupport = CliKotlinAsJavaSupport(this, traceHolder)
--                registerService(LightClassGenerationSupport::class.java, cliLightClassGenerationSupport)
--                registerService(CliLightClassGenerationSupport::class.java, cliLightClassGenerationSupport)
--                registerService(KotlinAsJavaSupport::class.java, kotlinAsJavaSupport)
--                registerService(CodeAnalyzerInitializer::class.java, traceHolder)
-+                registerKotlinLightClassSupport(project)
+-                    val traceHolder = CliTraceHolder()
+-                    val cliLightClassGenerationSupport = CliLightClassGenerationSupport(traceHolder)
+-                    val kotlinAsJavaSupport = CliKotlinAsJavaSupport(this, traceHolder)
+-                    registerService(LightClassGenerationSupport::class.java, cliLightClassGenerationSupport)
+-                    registerService(CliLightClassGenerationSupport::class.java, cliLightClassGenerationSupport)
+-                    registerService(KotlinAsJavaSupport::class.java, kotlinAsJavaSupport)
+-                    registerService(CodeAnalyzerInitializer::class.java, traceHolder)
++                    registerKotlinLightClassSupport(project)
  
-                 registerService(ExternalAnnotationsManager::class.java, MockExternalAnnotationsManager())
-                 registerService(InferredAnnotationsManager::class.java, MockInferredAnnotationsManager())
+                     registerService(ExternalAnnotationsManager::class.java, MockExternalAnnotationsManager())
+                     registerService(InferredAnnotationsManager::class.java, MockInferredAnnotationsManager())
 -
--                val area = Extensions.getArea(this)
+-                    val area = Extensions.getArea(this)
 -
--                area.getExtensionPoint(PsiElementFinder.EP_NAME).registerExtension(JavaElementFinder(this, kotlinAsJavaSupport))
--                area.getExtensionPoint(PsiElementFinder.EP_NAME).registerExtension(
--                        PsiElementFinderImpl(this, ServiceManager.getService(this, JavaFileManager::class.java)))
-             }
+-                    area.getExtensionPoint(PsiElementFinder.EP_NAME).registerExtension(JavaElementFinder(this, kotlinAsJavaSupport))
+-                    area.getExtensionPoint(PsiElementFinder.EP_NAME).registerExtension(
+-                        PsiElementFinderImpl(this, ServiceManager.getService(this, JavaFileManager::class.java))
+-                    )
+                 }
  
-             super.registerJavaPsiFacade()
-@@ -170,16 +159,7 @@ class KotlinCoreEnvironment private constructor(
+                 super.registerJavaPsiFacade()
+@@ -172,16 +160,7 @@ class KotlinCoreEnvironment private constructor(
  
          val project = projectEnvironment.project
  
@@ -58,18 +53,21 @@ index d2cead9445c..b960d3009aa 100644
  
          for (registrar in configuration.getList(ComponentRegistrar.PLUGIN_COMPONENT_REGISTRARS)) {
              try {
-@@ -576,19 +556,43 @@ class KotlinCoreEnvironment private constructor(
+@@ -580,7 +559,8 @@ class KotlinCoreEnvironment private constructor(
              }
          }
  
 -        private fun registerProjectExtensionPoints(area: ExtensionsArea) {
 +        @JvmStatic
 +        fun registerProjectExtensionPoints(area: ExtensionsArea) {
-             CoreApplicationEnvironment.registerExtensionPoint(area, PsiTreeChangePreprocessor.EP_NAME, PsiTreeChangePreprocessor::class.java)
-             CoreApplicationEnvironment.registerExtensionPoint(area, PsiElementFinder.EP_NAME, PsiElementFinder::class.java)
-             CoreApplicationEnvironment.registerExtensionPoint(area, JvmElementProvider.EP_NAME, JvmElementProvider::class.java)
+             CoreApplicationEnvironment.registerExtensionPoint(
+                 area, PsiTreeChangePreprocessor.EP_NAME, PsiTreeChangePreprocessor::class.java
+             )
+@@ -589,15 +569,42 @@ class KotlinCoreEnvironment private constructor(
+             IdeaExtensionPoints.registerVersionSpecificProjectExtensionPoints(area)
          }
  
++        // made public for Android Lint
 +        @JvmStatic
 +        fun registerKotlinLightClassSupport(project: MockProject) {
 +            with (project) {
@@ -82,30 +80,35 @@ index d2cead9445c..b960d3009aa 100644
 +                registerService(CodeAnalyzerInitializer::class.java, traceHolder)
 +
 +                val area = Extensions.getArea(this)
++
 +                area.getExtensionPoint(PsiElementFinder.EP_NAME).registerExtension(JavaElementFinder(this, kotlinAsJavaSupport))
 +                area.getExtensionPoint(PsiElementFinder.EP_NAME).registerExtension(
-+                    PsiElementFinderImpl(this, ServiceManager.getService(this, JavaFileManager::class.java)))
++                   PsiElementFinderImpl(this, ServiceManager.getService(this, JavaFileManager::class.java))
++                )
 +            }
 +        }
 +
          // made public for Upsource
          @JvmStatic
          fun registerProjectServices(projectEnvironment: JavaCoreProjectEnvironment, messageCollector: MessageCollector?) {
--            with (projectEnvironment.project) {
+-            with(projectEnvironment.project) {
 +            registerProjectServices(projectEnvironment.project, messageCollector)
 +        }
 +
++        // made public for Android Lint
 +        @JvmStatic
 +        fun registerProjectServices(project: MockProject, messageCollector: MessageCollector?) {
 +            with (project) {
                  val scriptDefinitionProvider = CliScriptDefinitionProvider()
                  registerService(ScriptDefinitionProvider::class.java, scriptDefinitionProvider)
--                registerService(ScriptDependenciesProvider::class.java, CliScriptDependenciesProvider(projectEnvironment.project, scriptDefinitionProvider))
-+                registerService(ScriptDependenciesProvider::class.java, CliScriptDependenciesProvider(project, scriptDefinitionProvider))
+                 registerService(
+                     ScriptDependenciesProvider::class.java,
+-                    CliScriptDependenciesProvider(projectEnvironment.project, scriptDefinitionProvider)
++                    CliScriptDependenciesProvider(project, scriptDefinitionProvider)
+                 )
                  registerService(KotlinJavaPsiFacade::class.java, KotlinJavaPsiFacade(this))
                  registerService(KtLightClassForFacade.FacadeStubCache::class.java, KtLightClassForFacade.FacadeStubCache(this))
-                 registerService(ModuleAnnotationsResolver::class.java, CliModuleAnnotationsResolver())
-@@ -598,6 +602,21 @@ class KotlinCoreEnvironment private constructor(
+@@ -608,6 +615,21 @@ class KotlinCoreEnvironment private constructor(
              }
          }
  
@@ -128,7 +131,7 @@ index d2cead9445c..b960d3009aa 100644
              /**
               * Note that Kapt may restart code analysis process, and CLI services should be aware of that.
 diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
-index 3b2d33310e4..c22eba241bf 100644
+index 392872e9ce3..2d9c4092932 100644
 --- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
 +++ b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
 @@ -121,7 +121,23 @@ abstract class KotlinAbstractUElement(private val givenParent: UElement?) : Kotl
@@ -156,141 +159,3 @@ index 3b2d33310e4..c22eba241bf 100644
      }
  
      override fun hashCode() = psi?.hashCode() ?: 0
-diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinUastLanguagePlugin.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinUastLanguagePlugin.kt
-index 5c13c82824f..9c2817f1132 100644
---- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinUastLanguagePlugin.kt
-+++ b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinUastLanguagePlugin.kt
-@@ -17,6 +17,7 @@
- package org.jetbrains.uast.kotlin
- 
- import com.intellij.lang.Language
-+import com.intellij.openapi.components.ServiceManager
- import com.intellij.openapi.util.Key
- import com.intellij.psi.PsiElement
- import com.intellij.psi.PsiFile
-@@ -32,8 +33,6 @@ import org.jetbrains.kotlin.descriptors.ClassKind
- import org.jetbrains.kotlin.descriptors.ConstructorDescriptor
- import org.jetbrains.kotlin.descriptors.FunctionDescriptor
- import org.jetbrains.kotlin.idea.KotlinLanguage
--import org.jetbrains.kotlin.idea.project.TargetPlatformDetector
--import org.jetbrains.kotlin.idea.util.module
- import org.jetbrains.kotlin.lexer.KtTokens
- import org.jetbrains.kotlin.psi.*
- import org.jetbrains.kotlin.psi.psiUtil.getParentOfType
-@@ -47,9 +46,10 @@ import org.jetbrains.uast.kotlin.expressions.*
- import org.jetbrains.uast.kotlin.psi.UastKotlinPsiParameter
- import org.jetbrains.uast.kotlin.psi.UastKotlinPsiVariable
- 
--interface KotlinUastBindingContextProviderService {
-+interface KotlinUastResolveProviderService {
-     fun getBindingContext(element: KtElement): BindingContext
-     fun getTypeMapper(element: KtElement): KotlinTypeMapper?
-+    fun isJvmElement(psiElement: PsiElement): Boolean
- }
- 
- var PsiElement.destructuringDeclarationInitializer: Boolean? by UserDataProperty(Key.create("kotlin.uast.destructuringDeclarationInitializer"))
-@@ -64,14 +64,10 @@ class KotlinUastLanguagePlugin : UastLanguagePlugin {
-         return fileName.endsWith(".kt", false) || fileName.endsWith(".kts", false)
-     }
- 
--    private val PsiElement.isJvmElement
--        get() = try {
--            // Workaround for UAST used without full-fledged IDEA when ProjectFileIndex is not available
--            // If we can't get the module (or don't have one), act as if the current platform is JVM
--            val module = module
--            module == null || TargetPlatformDetector.getPlatform(module) is JvmPlatform
--        } catch (e: Exception) {
--            true
-+    private val PsiElement.isJvmElement: Boolean
-+        get() {
-+            val resolveProvider = ServiceManager.getService(project, KotlinUastResolveProviderService::class.java)
-+            return resolveProvider.isJvmElement(this)
-         }
- 
-     override fun convertElement(element: PsiElement, parent: UElement?, requiredType: Class<out UElement>?): UElement? {
-diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/CliKotlinUastBindingContextProviderService.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/CliKotlinUastResolveProviderService.kt
-similarity index 90%
-rename from plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/CliKotlinUastBindingContextProviderService.kt
-rename to plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/CliKotlinUastResolveProviderService.kt
-index 0f55a153d4a..95b2c59ab7f 100644
---- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/CliKotlinUastBindingContextProviderService.kt
-+++ b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/CliKotlinUastResolveProviderService.kt
-@@ -1,6 +1,7 @@
- package org.jetbrains.uast.kotlin.internal
- 
- import com.intellij.openapi.project.Project
-+import com.intellij.psi.PsiElement
- import org.jetbrains.kotlin.analyzer.AnalysisResult
- import org.jetbrains.kotlin.codegen.ClassBuilderMode
- import org.jetbrains.kotlin.codegen.state.IncompatibleClassTracker
-@@ -12,9 +13,9 @@ import org.jetbrains.kotlin.psi.KtFile
- import org.jetbrains.kotlin.resolve.BindingContext
- import org.jetbrains.kotlin.resolve.BindingTrace
- import org.jetbrains.kotlin.resolve.jvm.extensions.AnalysisHandlerExtension
--import org.jetbrains.uast.kotlin.KotlinUastBindingContextProviderService
-+import org.jetbrains.uast.kotlin.KotlinUastResolveProviderService
- 
--class CliKotlinUastBindingContextProviderService : KotlinUastBindingContextProviderService {
-+class CliKotlinUastResolveProviderService : KotlinUastResolveProviderService {
-     val Project.analysisCompletedHandler: UastAnalysisHandlerExtension?
-         get() = getExtensions(AnalysisHandlerExtension.extensionPointName)
-                 .filterIsInstance<UastAnalysisHandlerExtension>()
-@@ -27,6 +28,8 @@ class CliKotlinUastBindingContextProviderService : KotlinUastBindingContextProvi
-     override fun getTypeMapper(element: KtElement): KotlinTypeMapper? {
-         return element.project.analysisCompletedHandler?.getTypeMapper()
-     }
-+
-+    override fun isJvmElement(psiElement: PsiElement) = true
- }
- 
- class UastAnalysisHandlerExtension : AnalysisHandlerExtension {
-diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/kotlinInternalUastUtils.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/kotlinInternalUastUtils.kt
-index d3ce1ebbb00..a8a3978a517 100644
---- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/kotlinInternalUastUtils.kt
-+++ b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/kotlinInternalUastUtils.kt
-@@ -111,7 +111,7 @@ internal fun KotlinType.toPsiType(source: UElement, element: KtElement, boxed: B
-     if (this.containsLocalTypes()) return UastErrorType
- 
-     val project = element.project
--    val typeMapper = ServiceManager.getService(project, KotlinUastBindingContextProviderService::class.java)
-+    val typeMapper = ServiceManager.getService(project, KotlinUastResolveProviderService::class.java)
-             .getTypeMapper(element) ?: return UastErrorType
- 
-     val signatureWriter = BothSignatureWriter(BothSignatureWriter.Mode.TYPE)
-@@ -190,7 +190,7 @@ internal fun KtExpression.unwrapBlockOrParenthesis(): KtExpression {
- 
- internal fun KtElement.analyze(): BindingContext {
-     if(containingFile !is KtFile) return BindingContext.EMPTY // EA-114080, EA-113475
--    return ServiceManager.getService(project, KotlinUastBindingContextProviderService::class.java)
-+    return ServiceManager.getService(project, KotlinUastResolveProviderService::class.java)
-             ?.getBindingContext(this) ?: BindingContext.EMPTY
- }
- 
-diff --git a/plugins/uast-kotlin/tests/AbstractKotlinUastTest.kt b/plugins/uast-kotlin/tests/AbstractKotlinUastTest.kt
-index ad281f07c74..ab8b7b5cb9b 100644
---- a/plugins/uast-kotlin/tests/AbstractKotlinUastTest.kt
-+++ b/plugins/uast-kotlin/tests/AbstractKotlinUastTest.kt
-@@ -25,10 +25,10 @@ import org.jetbrains.kotlin.test.TestJdkKind
- import org.jetbrains.kotlin.test.testFramework.KtUsefulTestCase
- import org.jetbrains.uast.UastLanguagePlugin
- import org.jetbrains.uast.evaluation.UEvaluatorExtension
--import org.jetbrains.uast.kotlin.KotlinUastBindingContextProviderService
-+import org.jetbrains.uast.kotlin.KotlinUastResolveProviderService
- import org.jetbrains.uast.kotlin.KotlinUastLanguagePlugin
- import org.jetbrains.uast.kotlin.evaluation.KotlinEvaluatorExtension
--import org.jetbrains.uast.kotlin.internal.CliKotlinUastBindingContextProviderService
-+import org.jetbrains.uast.kotlin.internal.CliKotlinUastResolveProviderService
- import org.jetbrains.uast.kotlin.internal.UastAnalysisHandlerExtension
- import org.jetbrains.uast.test.env.AbstractCoreEnvironment
- import org.jetbrains.uast.test.env.AbstractUastTest
-@@ -72,8 +72,8 @@ abstract class AbstractKotlinUastTest : AbstractUastTest() {
-                 .registerExtension(KotlinEvaluatorExtension())
- 
-         project.registerService(
--                KotlinUastBindingContextProviderService::class.java,
--                CliKotlinUastBindingContextProviderService::class.java)
-+            KotlinUastResolveProviderService::class.java,
-+            CliKotlinUastResolveProviderService::class.java)
-     }
- 
-     override fun createEnvironment(source: File): AbstractCoreEnvironment {

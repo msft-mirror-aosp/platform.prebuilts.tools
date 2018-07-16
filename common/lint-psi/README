@@ -26,7 +26,7 @@ $ git checkout https://github.com/JetBrains/kotlin
 Then switch to a compatible patch branch.
 
 Currently:
-$ git checkout 1.2.50
+$ git checkout 1.2.60
 (right now that branch tracks the right IDEA branch that we want, 181,
 but in the future you may have to run the bunch tool;
 https://github.com/JetBrains/bunches/blob/master/ReadMe.md
@@ -37,15 +37,8 @@ and to add some special methods used by lint:
 $ git apply /path/to/kotlin-compiler-patch.diff (which is located in
 this directory).
 
-Also currently, revert this CL:
-d6405c8147ff26b4c1e3475cc2242f8dea4e669b
-
-Also currently, cherry-pick in this CL:
-5c8e4958dbd7982d95610ad8442ddd90a869bd05
-
 Next, build the Kotlin repository:
-$ ./gradlew dist
-$ cd plugins/uast-kotlin && gradle jar
+$ ./gradlew dist :plugins:uast-kotlin:jar
 
 Finally, back in this prebuilt directory, run the update.xml script,
 pointing back to the Kotlin repository:
