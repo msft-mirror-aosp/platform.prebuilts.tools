@@ -21,6 +21,8 @@ filegroup(
             "framework/*.jar",
             "framework/x86_64/*",
             "lib64/*",
+            "usr/**",
+            "bin/dalvikvm64",
         ],
     ),
     visibility = ["//visibility:public"],
