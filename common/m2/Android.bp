@@ -19,6 +19,13 @@ java_import {
 }
 
 java_import {
+  name: "gson-prebuilt-jar",
+  jars: ["repository/com/google/code/gson/gson/2.8.0/gson-2.8.0.jar"],
+  sdk_version: "current",
+  host_supported: true,
+}
+
+java_import {
   name: "mockito2-prebuilt-jar",
   jars: ["repository/org/mockito/mockito-core/2.7.6/mockito-core-2.7.6.jar"],
   sdk_version: "current",
@@ -87,4 +94,14 @@ java_library_static {
 java_library_host {
   name: "truth-host-prebuilt",
   static_libs: ["truth-prebuilt"],
+}
+
+java_import_host {
+    name: "metalava-tools-common-m2-deps",
+    jars: [
+        "repository/org/ow2/asm/asm/6.1.1/asm-6.1.1.jar",
+        "repository/org/ow2/asm/asm-tree/6.1.1/asm-tree-6.1.1.jar",
+        "repository/com/google/guava/guava/23.0/guava-23.0.jar",
+        "repository/org/jetbrains/trove4j/trove4j/20160824/trove4j-20160824.jar",
+    ],
 }
