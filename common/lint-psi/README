@@ -6,8 +6,7 @@ https://www.jetbrains.com/intellij-repository/releases, like this:
 https://www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/idea/intellij-core/171.4249.32/intellij-core-171.4249.32.zip
 
 The version number here, 171.3780.107, matches the IDE used in Studio,
-defined in tools/adt/idea/adt-branding/src/idea/AndroidStudioApplicationInfo.xml;
-  <build number="__BUILD_NUMBER__" date="__BUILD_DATE__" apiVersion="AI-171.3780.107"/>
+defined in tools/idea/build.txt
 
 However, when we added Kotlin support, it turns out that the Kotlin
 compiler itself includes large portions of intellij-core (though thanks
@@ -27,10 +26,11 @@ Then switch to a compatible patch branch.
 
 Currently:
 $ git checkout 1.2.60
-(right now that branch tracks the right IDEA branch that we want, 181,
-but in the future you may have to run the bunch tool;
-https://github.com/JetBrains/bunches/blob/master/ReadMe.md
 $ bunch switch . 182
+
+Verify that the file versions.gradle.kts has the line
+    extra["versions.intellijSdk"] = <version>
+and set <version> as necessary to match the one in tools/idea/build.txt
 
 Then make sure to apply some extra patches to work around bugs
 and to add some special methods used by lint:
@@ -40,8 +40,10 @@ this directory).
 Next, build the Kotlin repository:
 $ ./gradlew dist :plugins:uast-kotlin:jar
 
-Finally, back in this prebuilt directory, run the update.xml script,
-pointing back to the Kotlin repository:
+Then, back in this prebuilt directory, update the "build-version" property
+in update.xml to refer to the version in tools/idea/build.txt.
+
+Finally, run the update.xml script, pointing back to the Kotlin repository:
 ant -f update.xml -Dkotlin_src_dir=$MY_KOTLIN_REPO_ROOT
 
 The packaging script will extract code and update the intellij-core and uast prebuilts
