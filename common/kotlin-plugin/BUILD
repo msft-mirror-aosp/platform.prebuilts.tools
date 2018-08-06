@@ -11,4 +11,10 @@ java_import(
     visibility = ["//visibility:public"],
 )
 
+java_import(
+    name = "Kotlin/lib/jvm-ide",
+    jars = ["Kotlin/lib/jvm-ide.jar"],
+    visibility = ["//visibility:public"],
+)
+
 exports_files(["Kotlin/kotlinc/build.txt"])
