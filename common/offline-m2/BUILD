@@ -101,7 +101,7 @@ filegroup(
         "com/android/tools/analytics-library/protos/25.3.2/**",
         "com/android/tools/analytics-library/shared/25.3.2/**",
         "com/android/tools/analytics-library/tracker/25.3.2/**",
-        "com/android/tools/annotations/24.5.0/**",
+        "com/android/tools/annotations/25.3.2/**",
         "com/android/tools/build/builder/2.3.2/**",
         "com/android/tools/build/builder-model/2.3.2/**",
         "com/android/tools/build/builder-test-api/2.3.2/**",
