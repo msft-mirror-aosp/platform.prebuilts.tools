@@ -13,6 +13,27 @@
 // limitations under the License.
 
 java_import {
+  name: "asm-commons-prebuilt-jar",
+  jars: ["repository/org/ow2/asm/asm-commons/5.0.1/asm-commons-5.0.1.jar"],
+  sdk_version: "current",
+  // host_supported: true,  See version conflict comment below.
+}
+
+java_import {
+  name: "asm-prebuilt-jar",
+  jars: ["repository/org/ow2/asm/asm/5.0.1/asm-5.0.1.jar"],
+  sdk_version: "current",
+  // host_supported: true,  See version conflict comment below.
+}
+
+java_import {
+  name: "asm-tree-prebuilt-jar",
+  jars: ["repository/org/ow2/asm/asm-tree/5.0.1/asm-tree-5.0.1.jar"],
+  sdk_version: "current",
+  // host_supported: true,  See version conflict comment below.
+}
+
+java_import {
   name: "byte-buddy-prebuilt-jar",
   jars: ["repository/net/bytebuddy/byte-buddy/1.6.5/byte-buddy-1.6.5.jar"],
   sdk_version: "current",
@@ -49,11 +70,48 @@ java_import {
   host_supported: true,
 }
 
+// These versions differ. Consider updating and unifying.
+
+java_import_host {
+  name: "asm-commons-prebuilt-host-jar",
+  jars: ["repository/org/ow2/asm/asm-commons/6.0/asm-commons-6.0.jar"],
+}
+
+java_import_host {
+  name: "asm-prebuilt-host-jar",
+  jars: ["repository/org/ow2/asm/asm/6.0/asm-6.0.jar"],
+}
+
+java_import_host {
+  name: "asm-tree-prebuilt-host-jar",
+  jars: ["repository/org/ow2/asm/asm-tree/6.0/asm-tree-6.0.jar"],
+}
+
 // These are host-only prebuilts.
+
+java_import_host {
+  name: "asm-analysis-prebuilt-host-jar",
+  jars: ["repository/org/ow2/asm/asm-analysis/6.0/asm-analysis-6.0.jar"],
+}
+
+java_import_host {
+  name: "asm-util-prebuilt-host-jar",
+  jars: ["repository/org/ow2/asm/asm-util/6.0/asm-util-6.0.jar"],
+}
 
 java_import_host {
   name: "javapoet-prebuilt-jar",
   jars: ["repository/com/squareup/javapoet/1.8.0/javapoet-1.8.0.jar"],
+}
+
+java_import_host {
+  name: "protobuf-java-prebuilt-jar",
+  jars: ["repository/com/google/protobuf/protobuf-java/3.0.2/protobuf-java-3.0.2.jar"],
+}
+
+java_import_host {
+  name: "protobuf-java-util-prebuilt-jar",
+  jars: ["repository/com/google/protobuf/protobuf-java-util/3.0.2/protobuf-java-util-3.0.2.jar"],
 }
 
 java_import_host {
@@ -94,6 +152,15 @@ java_library_static {
 java_library_host {
   name: "truth-host-prebuilt",
   static_libs: ["truth-prebuilt"],
+}
+
+java_library_host {
+  name: "protobuf-java-host-prebuilt",
+  static_libs: [
+    "gson-prebuilt-jar",
+    "protobuf-java-prebuilt-jar",
+    "protobuf-java-util-prebuilt-jar",
+  ],
 }
 
 java_import_host {
