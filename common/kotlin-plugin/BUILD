@@ -7,7 +7,10 @@ filegroup(
 # managed by go/iml_to_build
 java_import(
     name = "Kotlin/lib/kotlin-plugin",
-    jars = ["Kotlin/lib/kotlin-plugin.jar"],
+    jars = [
+        "Kotlin/lib/kotlin-plugin.jar",
+        "Kotlin/lib/jvm-ide.jar",
+    ],
     visibility = ["//visibility:public"],
 )
 
