@@ -1,1 +1,1 @@
-exports_files(["verifier-all.jar"])
+exports_files(["verifier-cli-1.183-all.jar"])
