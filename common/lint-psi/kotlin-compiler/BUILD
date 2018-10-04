@@ -9,10 +9,11 @@ java_jarjar(
     rules = "no_rules.txt",
 )
 
-# managed by go/iml_to_build
 maven_java_import(
     name = "kotlin-compiler",
-    jars = ["kotlin-compiler.jar"],
+    jars = [
+        ":kotlin-compiler-all.jar",
+    ],
     pom = ":kotlin-compiler.pom",
     visibility = ["//visibility:public"],
 )
