@@ -204,3 +204,30 @@ java_import {
         "repository/com/squareup/javawriter/2.1.1/javawriter-2.1.1.jar",
     ],
 }
+
+java_import_host {
+    name: "dagger2-compiler-2.19-import",
+    jars: [
+        "repository/com/google/dagger/dagger-compiler/2.19/dagger-compiler-2.19.jar",
+        "repository/com/google/dagger/dagger-producers/2.19/dagger-producers-2.19.jar",
+        "repository/com/google/dagger/dagger-spi/2.19/dagger-spi-2.19.jar",
+        "repository/com/google/dagger/dagger/2.19/dagger-2.19.jar",
+        "repository/com/google/guava/guava/25.1-jre/guava-25.1-jre.jar",
+        "repository/com/squareup/javapoet/1.11.1/javapoet-1.11.1.jar",
+        "repository/com/google/dagger/dagger-google-java-format/1.6/google-java-format-1.6-all-deps.jar"
+    ],
+}
+
+java_import {
+    name: "dagger2-2.19",
+    jars: ["repository/com/google/dagger/dagger/2.19/dagger-2.19.jar"],
+    host_supported: true,
+}
+
+java_library_host {
+    name: "dagger2-compiler-2.19",
+    static_libs: [
+        "dagger2-compiler-2.19-import",
+        "jsr330",
+    ],
+}
