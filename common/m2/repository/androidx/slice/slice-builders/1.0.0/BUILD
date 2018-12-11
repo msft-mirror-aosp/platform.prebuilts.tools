@@ -3,13 +3,13 @@ load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom", "maven_aa
 
 maven_aar(
     name = "aar",
-    aar = "slices-view-1.0.0-alpha1.aar",
+    aar = "slice-builders-1.0.0.aar",
     pom = ":pom",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
     name = "pom",
-    source = "slices-view-1.0.0-alpha1.pom",
+    source = "slice-builders-1.0.0.pom",
     visibility = ["//visibility:public"],
 )
