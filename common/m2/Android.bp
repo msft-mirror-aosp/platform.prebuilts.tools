@@ -71,7 +71,7 @@ java_import {
 
 java_import {
   name: "truth-prebuilt-jar",
-  jars: ["repository/com/google/truth/truth/0.36/truth-0.36.jar"],
+  jars: ["repository/com/google/truth/truth/0.28/truth-0.28.jar"],
   sdk_version: "current",
   host_supported: true,
 }
@@ -103,11 +103,6 @@ java_import_host {
 java_import_host {
   name: "asm-util-prebuilt-host-jar",
   jars: ["repository/org/ow2/asm/asm-util/6.0/asm-util-6.0.jar"],
-}
-
-java_import_host {
-  name: "compile-testing-prebuilt-host-jar",
-  jars: ["repository/com/google/testing/compile/compile-testing/0.15/compile-testing-0.15.jar"],
 }
 
 java_import_host {
@@ -149,16 +144,6 @@ java_library_host {
 }
 
 // Combined libraries.
-
-// TODO (b/121375717): Move to a source module
-java_library_host {
-  name: "compile-testing-prebuilt",
-  static_libs: [
-    "compile-testing-prebuilt-host-jar",
-    "guava-prebuilt-host-jar",
-    "truth-prebuilt-jar",
-  ],
-}
 
 java_library_static {
   name: "mockito-robolectric-prebuilt",
