@@ -3,13 +3,14 @@ load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom", "maven_aa
 
 maven_java_import(
     name = "jar",
-    jars = ["gradle-tooling-api-5.1-milestone-1.jar"],
+    jars = ["miglayout-core-5.2.jar"],
     pom = ":pom",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
     name = "pom",
-    source = "gradle-tooling-api-5.1-milestone-1.pom",
+    parent = "//prebuilts/tools/common/m2/repository/com/miglayout/miglayout-parent/5.2:pom",
+    source = "miglayout-core-5.2.pom",
     visibility = ["//visibility:public"],
 )
