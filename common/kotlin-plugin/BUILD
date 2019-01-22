@@ -53,3 +53,10 @@ java_import(
     neverlink = 1,
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+java_import(
+    name = "Kotlin/lib/kapt3-idea",
+    jars = ["Kotlin/lib/kapt3-idea.jar"],
+    visibility = ["//visibility:public"],
+)
