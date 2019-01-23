@@ -224,10 +224,12 @@ java_import {
     host_supported: true,
 }
 
-java_library_host {
+java_plugin {
     name: "dagger2-compiler-2.19",
     static_libs: [
         "dagger2-compiler-2.19-import",
         "jsr330",
     ],
+    processor_class: "dagger.internal.codegen.ComponentProcessor",
+    generates_api: true,
 }
