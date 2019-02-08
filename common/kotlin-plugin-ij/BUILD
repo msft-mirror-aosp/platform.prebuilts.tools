@@ -32,13 +32,6 @@ java_import(
 
 # managed by go/iml_to_build
 java_import(
-    name = "Kotlin/kotlinc/lib/kotlin-test",
-    jars = ["Kotlin/kotlinc/lib/kotlin-test.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-java_import(
     name = "Kotlin/kotlinc/lib/mutability-annotations-compat",
     jars = ["Kotlin/kotlinc/lib/mutability-annotations-compat.jar"],
     visibility = ["//visibility:public"],
