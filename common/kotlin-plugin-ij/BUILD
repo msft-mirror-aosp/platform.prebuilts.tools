@@ -1,5 +1,3 @@
-# Kotlin plugin for IJ version kotlin-plugin-1.1.0-release-IJ2017.1-1/
-
 exports_files(glob(["kotlin-plugin*.zip"]))
 
 # managed by go/iml_to_build
