@@ -32,3 +32,12 @@ filegroup(
     srcs = glob(["Kotlin/**"]),
     visibility = ["//visibility:public"],
 )
+
+# This contains all JARs in the Kotlin plugin built for IntelliJ.
+# Targets which need to run IntelliJ with Kotlin enabled can simply
+# add this as a runtime dependency.
+java_import(
+    name = "kotlin-plugin-for-intellij",
+    jars = glob(["Kotlin/lib/**/*.jar"]),
+    visibility = ["//visibility:public"],
+)

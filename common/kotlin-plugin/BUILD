@@ -1,6 +1,17 @@
+# For historical and now technical debt reasons, this target is used as
+# a test data dependency rather than a runtime dependency, and we load
+# the Kotlin plugin at runtime using IntelliJ's plugin.path property.
 filegroup(
     name = "kotlin-plugin-for-studio",
     srcs = glob(["Kotlin/**"]),
+    visibility = ["//visibility:public"],
+)
+
+# This contains all JARs in the Kotlin plugin and is intended as a runtime
+# dependency for ASwB tests which need the Kotlin plugin enabled.
+java_import(
+    name = "kotlin-plugin-for-aswb",
+    jars = glob(["Kotlin/lib/**/*.jar"]),
     visibility = ["//visibility:public"],
 )
 
