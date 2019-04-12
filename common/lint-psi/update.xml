@@ -17,11 +17,11 @@
          the value with the following (after building the Kotlin distro):
          ls buildSrc/prepare-deps/intellij-sdk/build/repo/kotlin.build.custom.deps
       -->
-    <property name="build-version" value="191.4212.41"/>
+    <property name="build-version" value="191.6183-EAP-CANDIDATE-SNAPSHOT"/>
 
     <property name="buildsrc.dir" value="${kotlin_src_dir}/buildSrc/prepare-deps/intellij-sdk/build/repo/kotlin.build.custom.deps/${build-version}"/>
     <property name="idea.sdk" value="${buildsrc.dir}/intellij"/>
-    <property name="idea.sources" value="${buildsrc.dir}/sources/ideaIC-${build-version}-sources.jar"/>
+    <property name="idea.sources" value="${buildsrc.dir}/sources/intellij-${build-version}-sources.jar"/>
 
     <echo message="Assembling intellij-core, UAST and Kotlin version ${build-version}"/>
 
@@ -136,7 +136,20 @@
             </patternset>
         </unzip>
 
+        <!-- Kotlin script compiler plugin. -->
         <unzip src="${kotlin-dist}/kotlinc/lib/kotlin-script-runtime.jar"
+               dest="${temp}/classes/core"/>
+        <unzip src="${kotlin-dist}/kotlinc/lib/kotlin-scripting-compiler.jar"
+               dest="${temp}/classes/core"/>
+        <unzip src="${kotlin-dist}/kotlinc/lib/kotlin-scripting-common.jar"
+               dest="${temp}/classes/core"/>
+        <unzip src="${kotlin-dist}/kotlinc/lib/kotlin-scripting-impl.jar"
+               dest="${temp}/classes/core"/>
+        <unzip src="${kotlin-dist}/kotlinc/lib/kotlin-scripting-jvm.jar"
+               dest="${temp}/classes/core"/>
+
+        <!-- JetBrains annotations. -->
+        <unzip src="${kotlin-dist}/kotlinc/lib/annotations-13.0.jar"
                dest="${temp}/classes/core"/>
 
         <!--
