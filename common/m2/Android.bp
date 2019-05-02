@@ -40,6 +40,13 @@ java_import {
 }
 
 java_import {
+    name: "diffutils-prebuilt-jar",
+    jars: ["repository/com/googlecode/java-diff-utils/diffutils/1.3.0/diffutils-1.3.0.jar"],
+    sdk_version: "current",
+    host_supported: true,
+}
+
+java_import {
     name: "gson-prebuilt-jar",
     jars: ["repository/com/google/code/gson/gson/2.8.0/gson-2.8.0.jar"],
     sdk_version: "current",
@@ -165,6 +172,7 @@ java_library_static {
     name: "truth-prebuilt",
     static_libs: [
         "truth-prebuilt-jar",
+        "diffutils-prebuilt-jar",
         "guava",
     ],
     host_supported: true,
