@@ -77,3 +77,20 @@ java_library_host {
         "robolectric-sqlite4java-native",
     ],
 }
+
+////////////////////////////////////////////////////////////////////////////////
+// Additional versions of dependencies needed by AOSP
+// external/robolectric-shadows which are required for the master-gpl branch.
+// These can be removed once AOSP is updated with Q.
+////////////////////////////////////////////////////////////////////////////////
+
+java_import_host {
+    name: "robolectric-assertj-core-3.8.0",
+    jars: ["repository/org/assertj/assertj-core/3.8.0/assertj-core-3.8.0.jar"],
+}
+
+android_library_import {
+    name: "robolectric-monitor-1.0.2-alpha1",
+    aars: ["repository/com/android/support/test/monitor/1.0.2-alpha1/monitor-1.0.2-alpha1.aar"],
+    sdk_version: "current",
+}
