@@ -3,13 +3,13 @@ load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom", "maven_aa
 
 maven_java_import(
     name = "jar",
-    jars = ["androidthings-0.4-devpreview.jar"],
+    jars = ["androidthings-1.0.jar"],
     pom = ":pom",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
     name = "pom",
-    source = "androidthings-0.4-devpreview.pom",
+    source = "androidthings-1.0.pom",
     visibility = ["//visibility:public"],
 )
