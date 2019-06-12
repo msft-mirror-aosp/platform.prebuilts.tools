@@ -17,10 +17,10 @@
          the value with the following (after building the Kotlin distro):
          ls buildSrc/prepare-deps/intellij-sdk/build/repo/kotlin.build.custom.deps
       -->
-    <property name="build-version" value="191.6183-EAP-CANDIDATE-SNAPSHOT"/>
+    <property name="build-version" value="191.7479.19"/>
 
-    <property name="buildsrc.dir" value="${kotlin_src_dir}/buildSrc/prepare-deps/intellij-sdk/build/repo/kotlin.build.custom.deps/${build-version}"/>
-    <property name="idea.sdk" value="${buildsrc.dir}/intellij"/>
+    <property name="buildsrc.dir" value="${kotlin_src_dir}/dependencies/repo/kotlin.build"/>
+    <property name="idea.sdk" value="${buildsrc.dir}/ideaIC/${build-version}/artifacts"/>
     <property name="idea.sources" value="${buildsrc.dir}/sources/intellij-${build-version}-sources.jar"/>
 
     <echo message="Assembling intellij-core, UAST and Kotlin version ${build-version}"/>
@@ -141,9 +141,9 @@
                dest="${temp}/classes/core"/>
         <unzip src="${kotlin-dist}/kotlinc/lib/kotlin-scripting-compiler.jar"
                dest="${temp}/classes/core"/>
-        <unzip src="${kotlin-dist}/kotlinc/lib/kotlin-scripting-common.jar"
+        <unzip src="${kotlin-dist}/kotlinc/lib/kotlin-scripting-compiler-impl.jar"
                dest="${temp}/classes/core"/>
-        <unzip src="${kotlin-dist}/kotlinc/lib/kotlin-scripting-impl.jar"
+        <unzip src="${kotlin-dist}/kotlinc/lib/kotlin-scripting-common.jar"
                dest="${temp}/classes/core"/>
         <unzip src="${kotlin-dist}/kotlinc/lib/kotlin-scripting-jvm.jar"
                dest="${temp}/classes/core"/>
@@ -208,10 +208,6 @@
                 <include name="**/*.kt" />
             </fileset>
             <fileset dir="${kotlin_src_dir}/compiler/frontend.java/src">
-                <include name="**/*.java" />
-                <include name="**/*.kt" />
-            </fileset>
-            <fileset dir="${kotlin_src_dir}/compiler/frontend.script/src">
                 <include name="**/*.java" />
                 <include name="**/*.kt" />
             </fileset>
