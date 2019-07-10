@@ -1,12 +1,12 @@
 load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom")
-load("//tools/base/bazel:utils.bzl", "java_jarjar")
+load("//tools/base/bazel:utils.bzl", "singlejar")
 
-java_jarjar(
+singlejar(
     name = "intellij-core-all",
-    srcs = [
+    jar_name = "intellij-core-all.jar",
+    jars = [
         ":intellij-core.jar",
     ],
-    rules = "no_rules.txt",
 )
 
 maven_java_import(

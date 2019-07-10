@@ -1,12 +1,12 @@
 load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom")
-load("//tools/base/bazel:utils.bzl", "java_jarjar")
+load("//tools/base/bazel:utils.bzl", "singlejar")
 
-java_jarjar(
+singlejar(
     name = "kotlin-compiler-all",
-    srcs = [
-        ":kotlin-compiler.jar",
+    jar_name = "kotlin-compiler-all.jar",
+    jars = [
+        "kotlin-compiler.jar",
     ],
-    rules = "no_rules.txt",
 )
 
 maven_java_import(
