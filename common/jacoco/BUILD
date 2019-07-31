@@ -1,12 +1,12 @@
 java_import(
     name = "agent",
-    jars = ["jacoco-agent-0.8.3.jar"],
+    jars = ["jacoco-agent-0.8.4.jar"],
     visibility = ["//visibility:public"],
 )
 
 java_import(
     name = "cli-jar",
-    jars = ["jacoco-cli-0.8.3.jar"],
+    jars = ["jacoco-cli-0.8.4.jar"],
     visibility = ["//visibility:private"],
 )
 
