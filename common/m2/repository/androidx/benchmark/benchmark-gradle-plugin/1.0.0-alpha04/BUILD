@@ -3,13 +3,13 @@ load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom", "maven_aa
 
 maven_java_import(
     name = "jar",
-    jars = ["benchmark-gradle-plugin-1.0.0-alpha03.jar"],
+    jars = ["benchmark-gradle-plugin-1.0.0-alpha04.jar"],
     pom = ":pom",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
     name = "pom",
-    source = "benchmark-gradle-plugin-1.0.0-alpha03.pom",
+    source = "benchmark-gradle-plugin-1.0.0-alpha04.pom",
     visibility = ["//visibility:public"],
 )

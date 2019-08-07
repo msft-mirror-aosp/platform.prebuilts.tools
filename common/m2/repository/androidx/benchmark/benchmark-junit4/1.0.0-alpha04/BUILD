@@ -3,13 +3,13 @@ load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom", "maven_aa
 
 maven_aar(
     name = "aar",
-    aar = "benchmark-1.0.0-alpha03.aar",
+    aar = "benchmark-junit4-1.0.0-alpha04.aar",
     pom = ":pom",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
     name = "pom",
-    source = "benchmark-1.0.0-alpha03.pom",
+    source = "benchmark-junit4-1.0.0-alpha04.pom",
     visibility = ["//visibility:public"],
 )
