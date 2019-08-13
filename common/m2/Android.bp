@@ -137,6 +137,11 @@ java_import_host {
     jars: ["repository/net/java/dev/jna/jna/3.4.0/jna-3.4.0.jar"],
 }
 
+java_import_host {
+    name: "compile-testing-prebuilt",
+    jars: ["repository/com/google/testing/compile/compile-testing/0.15/compile-testing-0.15.jar"],
+}
+
 // Compatibility wrappers. TODO: Remove.
 
 java_library_host {
@@ -192,6 +197,25 @@ java_import {
         "repository/org/jetbrains/trove4j/trove4j/20160824/trove4j-20160824.jar",
         "repository/javax/xml/bind/jaxb-api/2.2.12-b140109.1041/jaxb-api-2.2.12-b140109.1041.jar",
     ],
+}
+
+java_import {
+  name: "dokka-tools-common-m2-deps",
+  host_supported: true,
+  jars: [
+    "repository/com/intellij/core-analysis/intellij-core-analysis.jar",
+    "repository/org/jetbrains/kotlin/kotlin-compiler/1.3.20/kotlin-compiler-1.3.20-dev-564.jar",
+    "repository/com/squareup/okhttp4/okhttp/4.0.0/okhttp-4.0.0-RC1.jar",
+    "repository/com/sampullara/cli/1.1.2/cli-parser-1.1.2.jar",
+    "repository/ru/yole/jkid/jkid-8fc7f12e1a.jar",
+    "repository/com/google/inject/guice/3.0/guice-3.0.jar",
+    "repository/org/jetbrains/kotlin/kotlin-ide-common/1.3.20/kotlin-ide-common.jar",
+    "repository/org/jetbrains/markdown/0.1.25/markdown-0.1.25.jar",
+    "repository/org/jsoup/jsoup/1.8.3/jsoup-1.8.3.jar",
+    "repository/kotlinx/html/jvm/0.6.8/kotlinx-html-jvm-0.6.8-google.jar",
+    "repository/org/jetbrains/kotlin/kotlin-script-runtime/1.3.20/kotlin-script-runtime-1.3.20-dev-564.jar",
+    "repository/org/jetbrains/kotlin/kotlin-reflect/1.3.20/kotlin-reflect-1.3.20-dev-564.jar",
+  ],
 }
 
 java_import {
