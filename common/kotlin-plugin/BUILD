@@ -14,36 +14,22 @@ exports_files(["Kotlin/kotlinc/build.txt"])
 
 # managed by go/iml_to_build
 java_import(
-    name = "Kotlin/lib/kotlin-plugin",
-    jars = ["Kotlin/lib/kotlin-plugin.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-java_import(
-    name = "Kotlin/lib/kotlin-gradle-tooling",
-    jars = ["Kotlin/lib/kotlin-gradle-tooling.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-java_import(
-    name = "Kotlin/lib/jps/kotlin-jps-plugin",
-    jars = ["Kotlin/lib/jps/kotlin-jps-plugin.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-java_import(
-    name = "Kotlin/lib/kapt3-idea",
-    jars = ["Kotlin/lib/kapt3-idea.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-java_import(
     name = "Kotlin/lib/allopen-ide-plugin",
     jars = ["Kotlin/lib/allopen-ide-plugin.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+java_import(
+    name = "Kotlin/lib/android-extensions-compiler",
+    jars = ["Kotlin/lib/android-extensions-compiler.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+java_import(
+    name = "Kotlin/lib/android-extensions-ide",
+    jars = ["Kotlin/lib/android-extensions-ide.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -77,6 +63,20 @@ java_import(
 
 # managed by go/iml_to_build
 java_import(
+    name = "Kotlin/lib/kapt3-idea",
+    jars = ["Kotlin/lib/kapt3-idea.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+java_import(
+    name = "Kotlin/lib/kotlin-allopen-compiler-plugin",
+    jars = ["Kotlin/lib/kotlin-allopen-compiler-plugin.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+java_import(
     name = "Kotlin/lib/kotlin-compiler-client-embeddable",
     jars = ["Kotlin/lib/kotlin-compiler-client-embeddable.jar"],
     visibility = ["//visibility:public"],
@@ -91,6 +91,41 @@ java_import(
 
 # managed by go/iml_to_build
 java_import(
+    name = "Kotlin/lib/kotlin-daemon-client-new",
+    jars = ["Kotlin/lib/kotlin-daemon-client-new.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+java_import(
+    name = "Kotlin/lib/kotlin-daemon",
+    jars = ["Kotlin/lib/kotlin-daemon.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+java_import(
+    name = "Kotlin/lib/kotlin-gradle-tooling",
+    jars = ["Kotlin/lib/kotlin-gradle-tooling.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+java_import(
+    name = "Kotlin/lib/kotlin-noarg-compiler-plugin",
+    jars = ["Kotlin/lib/kotlin-noarg-compiler-plugin.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+java_import(
+    name = "Kotlin/lib/kotlin-plugin",
+    jars = ["Kotlin/lib/kotlin-plugin.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+java_import(
     name = "Kotlin/lib/kotlin-reflect",
     jars = ["Kotlin/lib/kotlin-reflect.jar"],
     visibility = ["//visibility:public"],
@@ -98,15 +133,15 @@ java_import(
 
 # managed by go/iml_to_build
 java_import(
-    name = "Kotlin/lib/kotlin-script-runtime",
-    jars = ["Kotlin/lib/kotlin-script-runtime.jar"],
+    name = "Kotlin/lib/jps/kotlin-jps-plugin",
+    jars = ["Kotlin/lib/jps/kotlin-jps-plugin.jar"],
     visibility = ["//visibility:public"],
 )
 
 # managed by go/iml_to_build
 java_import(
-    name = "Kotlin/lib/kotlin-script-util",
-    jars = ["Kotlin/lib/kotlin-script-util.jar"],
+    name = "Kotlin/lib/kotlin-sam-with-receiver-compiler-plugin",
+    jars = ["Kotlin/lib/kotlin-sam-with-receiver-compiler-plugin.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -114,6 +149,13 @@ java_import(
 java_import(
     name = "Kotlin/lib/kotlin-scripting-common",
     jars = ["Kotlin/lib/kotlin-scripting-common.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+java_import(
+    name = "Kotlin/lib/kotlin-scripting-compiler-impl",
+    jars = ["Kotlin/lib/kotlin-scripting-compiler-impl.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -133,6 +175,34 @@ java_import(
 
 # managed by go/iml_to_build
 java_import(
+    name = "Kotlin/lib/kotlin-script-runtime",
+    jars = ["Kotlin/lib/kotlin-script-runtime.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+java_import(
+    name = "Kotlin/lib/kotlin-script-util",
+    jars = ["Kotlin/lib/kotlin-script-util.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+java_import(
+    name = "Kotlin/lib/kotlin-stdlib-common",
+    jars = ["Kotlin/lib/kotlin-stdlib-common.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+java_import(
+    name = "Kotlin/lib/kotlin-stdlib",
+    jars = ["Kotlin/lib/kotlin-stdlib.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+java_import(
     name = "Kotlin/lib/kotlin-stdlib-jdk7",
     jars = ["Kotlin/lib/kotlin-stdlib-jdk7.jar"],
     visibility = ["//visibility:public"],
@@ -147,22 +217,36 @@ java_import(
 
 # managed by go/iml_to_build
 java_import(
-    name = "Kotlin/lib/kotlin-stdlib",
-    jars = ["Kotlin/lib/kotlin-stdlib.jar"],
+    name = "Kotlin/lib/kotlin-util-io",
+    jars = ["Kotlin/lib/kotlin-util-io.jar"],
     visibility = ["//visibility:public"],
 )
 
 # managed by go/iml_to_build
 java_import(
-    name = "Kotlin/lib/kotlinx-coroutines-core-1.1.1",
-    jars = ["Kotlin/lib/kotlinx-coroutines-core-1.1.1.jar"],
+    name = "Kotlin/lib/kotlin-util-klib",
+    jars = ["Kotlin/lib/kotlin-util-klib.jar"],
     visibility = ["//visibility:public"],
 )
 
 # managed by go/iml_to_build
 java_import(
-    name = "Kotlin/lib/kotlinx-coroutines-jdk8-1.1.1",
-    jars = ["Kotlin/lib/kotlinx-coroutines-jdk8-1.1.1.jar"],
+    name = "Kotlin/lib/kotlinx-coroutines-core-1.2.1",
+    jars = ["Kotlin/lib/kotlinx-coroutines-core-1.2.1.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+java_import(
+    name = "Kotlin/lib/kotlinx-coroutines-jdk8-1.2.1",
+    jars = ["Kotlin/lib/kotlinx-coroutines-jdk8-1.2.1.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+java_import(
+    name = "Kotlin/lib/kotlinx-serialization-compiler-plugin",
+    jars = ["Kotlin/lib/kotlinx-serialization-compiler-plugin.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -184,33 +268,5 @@ java_import(
 java_import(
     name = "Kotlin/lib/sam-with-receiver-ide-plugin",
     jars = ["Kotlin/lib/sam-with-receiver-ide-plugin.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-java_import(
-    name = "Kotlin/lib/android-extensions-ide",
-    jars = ["Kotlin/lib/android-extensions-ide.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-java_import(
-    name = "Kotlin/lib/kotlin-scripting-compiler-impl",
-    jars = ["Kotlin/lib/kotlin-scripting-compiler-impl.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-java_import(
-    name = "Kotlin/lib/kotlin-stdlib-common",
-    jars = ["Kotlin/lib/kotlin-stdlib-common.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-java_import(
-    name = "Kotlin/lib/kotlinx-coroutines-core-common-1.1.1",
-    jars = ["Kotlin/lib/kotlinx-coroutines-core-common-1.1.1.jar"],
     visibility = ["//visibility:public"],
 )
