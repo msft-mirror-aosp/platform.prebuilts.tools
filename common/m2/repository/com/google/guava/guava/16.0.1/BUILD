@@ -3,14 +3,14 @@ load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom", "maven_aa
 
 maven_java_import(
     name = "jar",
-    jars = ["guice-4.0.jar"],
+    jars = ["guava-16.0.1.jar"],
     pom = ":pom",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
     name = "pom",
-    parent = "//prebuilts/tools/common/m2/repository/com/google/inject/guice-parent/4.0:pom",
-    source = "guice-4.0.pom",
+    parent = "//prebuilts/tools/common/m2/repository/com/google/guava/guava-parent/16.0.1:pom",
+    source = "guava-16.0.1.pom",
     visibility = ["//visibility:public"],
 )
