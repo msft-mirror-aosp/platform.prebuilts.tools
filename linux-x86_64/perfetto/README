@@ -1,0 +1,10 @@
+This folder contains prebuilts of Perfetto for use by developer tools in the AOSP tree.
+
+To generate the binaries in this folder, the following steps should be performed:
+1. Ensure that all shared_libs in Perfetto's Android.bp files are changed to static_libs
+2. Add the option static_executable: true to the Perfetto Android.bp file
+3. strip `binary` for all the binaries in this folder to reduce binary size.
+
+TODO(lalitm): upstream the shared_libs and static_executable options where it makes sense,
+figure out if we can strip during the build and script the building and copying (and
+possibly stripping).
