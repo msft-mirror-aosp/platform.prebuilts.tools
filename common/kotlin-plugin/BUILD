@@ -231,6 +231,13 @@ java_import(
 
 # managed by go/iml_to_build
 java_import(
+    name = "Kotlin/lib/kotlin-util-klib-metadata",
+    jars = ["Kotlin/lib/kotlin-util-klib-metadata.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+java_import(
     name = "Kotlin/lib/kotlinx-coroutines-core-1.2.1",
     jars = ["Kotlin/lib/kotlinx-coroutines-core-1.2.1.jar"],
     visibility = ["//visibility:public"],
