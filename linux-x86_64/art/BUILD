@@ -23,6 +23,7 @@ filegroup(
             "lib64/*",
             "usr/**",
             "bin/dalvikvm64",
+            "com.android.i18n/**",
         ],
     ),
     visibility = ["//visibility:public"],
