@@ -3,13 +3,13 @@ load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom", "maven_aa
 
 maven_java_import(
     name = "jar",
-    jars = ["inspection-1.0.0-20191017.131955-1.jar"],
+    jars = ["inspection-1.0.0-20191024.120903-1.jar"],
     pom = ":pom",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
     name = "pom",
-    source = "inspection-1.0.0-20191017.131955-1.jar",
+    source = "inspection-1.0.0-20191024.120903-1.pom",
     visibility = ["//visibility:public"],
 )
