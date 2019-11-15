@@ -3,13 +3,14 @@ load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom", "maven_aa
 
 maven_java_import(
     name = "jar",
-    jars = ["core-0.2.3.jar"],
+    jars = ["auto-value-annotations-1.2-update1.jar"],
     pom = ":pom",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
     name = "pom",
-    source = "core-0.2.3.pom",
+    parent = "//prebuilts/tools/common/m2/repository/org/sonatype/oss/oss-parent/7:pom",
+    source = "auto-value-annotations-1.2-update1.pom",
     visibility = ["//visibility:public"],
 )
