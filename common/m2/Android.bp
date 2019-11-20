@@ -273,4 +273,75 @@ java_plugin {
     generates_api: true,
 }
 
+java_import {
+    name: "kotlin-metadata",
+    jars: ["repository/me/eugeniomarletti/kotlin-metadata/1.2.1/kotlin-metadata-1.2.1.jar"],
+    host_supported: true,
+}
+
+java_import {
+    name: "auto-common",
+    jars: ["repository/com/google/auto/auto-common/0.10/auto-common-0.10.jar"],
+    host_supported: true,
+}
+
+java_import {
+    name: "antlr4",
+    jars: ["repository/org/antlr/antlr4/4.7.2/antlr4-4.7.2.jar"],
+    host_supported: true,
+}
+
+java_import {
+    name: "auto-value-annotations",
+    jars: ["repository/com/google/auto/value/auto-value-annotations/1.6.2/auto-value-annotations-1.6.2.jar"],
+    host_supported: true,
+}
+
+java_import {
+    name: "commons-codec",
+    jars: ["repository/commons-codec/commons-codec/1.10/commons-codec-1.10.jar"],
+    host_supported: true,
+}
+
+java_import {
+    name: "xerial-sqlite-jdbc",
+    jars: ["repository/org/xerial/sqlite-jdbc/3.28.0/sqlite-jdbc-3.28.0.jar"],
+    host_supported: true,
+}
+
+java_import {
+    name: "jetbrains-annotations",
+    jars: ["repository/org/jetbrains/annotations/13.0/annotations-13.0.jar"],
+    host_supported: true,
+}
+
+java_import {
+    name: "kotlinx-coroutines-core-nodeps",
+    jars: ["repository/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.3.0/kotlinx-coroutines-core-1.3.0.jar"],
+}
+
+java_library_static {
+    name: "kotlinx-coroutines-core",
+    static_libs: [
+        "kotlinx-coroutines-core-nodeps",
+        "kotlin-stdlib"
+    ],
+    sdk_version: "current",
+}
+
+java_import {
+    name: "kotlinx-coroutines-android-nodeps",
+    jars: ["repository/org/jetbrains/kotlinx/kotlinx-coroutines-android/1.3.0/kotlinx-coroutines-android-1.3.0.jar"],
+}
+
+java_library_static {
+    name: "kotlinx-coroutines-android",
+    static_libs: [
+        "kotlin-stdlib",
+        "kotlinx-coroutines-core",
+        "kotlinx-coroutines-android-nodeps"
+    ],
+    sdk_version: "current",
+}
+
 build = ["robolectric.bp"]
