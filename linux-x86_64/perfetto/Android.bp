@@ -5,3 +5,9 @@ cc_prebuilt_binary {
   device_supported: false,
 }
 
+filegroup {
+    name: "perfetto_artifacts",
+    srcs: ["trace_processor_shell",
+           "configs/trace_config_detailed.textproto",
+           "configs/long_trace_config.textproto"],
+}
