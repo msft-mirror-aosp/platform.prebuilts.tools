@@ -8,6 +8,13 @@ maven_java_import(
     visibility = ["//visibility:public"],
 )
 
+maven_java_import(
+    name = "no_aop.jar",
+    jars = ["guice-4.0-no_aop.jar"],
+    pom = ":pom",
+    visibility = ["//visibility:public"],
+)
+
 maven_pom(
     name = "pom",
     parent = "//prebuilts/tools/common/m2/repository/com/google/inject/guice-parent/4.0:pom",
