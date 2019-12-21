@@ -22,3 +22,8 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
+filegroup(
+    name = "clion",
+    srcs = glob(["clion/**"]),
+    visibility = ["//visibility:public"],
+)
