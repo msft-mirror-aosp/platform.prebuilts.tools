@@ -1,8 +1,42 @@
-diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
-index 7af3e07f69b..af062e43448 100644
---- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
-+++ b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
-@@ -125,7 +125,22 @@ abstract class KotlinAbstractUElement(private val givenParent: UElement?) : Kotl
+diff --git compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
+index 81343606c17..61074d15f58 100644
+--- compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
++++ compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
+@@ -502,7 +502,8 @@ class KotlinCoreEnvironment private constructor(
+             }
+         }
+ 
+-        private fun createApplicationEnvironment(
++        // made public for Android Lint
++        fun createApplicationEnvironment(
+             parentDisposable: Disposable, configuration: CompilerConfiguration, unitTestMode: Boolean
+         ): KotlinCoreApplicationEnvironment {
+             val applicationEnvironment = KotlinCoreApplicationEnvironment.create(parentDisposable, unitTestMode)
+@@ -595,7 +596,8 @@ class KotlinCoreEnvironment private constructor(
+             CandidateInterceptor.registerExtensionPoint(project)
+         }
+ 
+-        internal fun registerExtensionsFromPlugins(project: MockProject, configuration: CompilerConfiguration) {
++        // made public for Android Lint
++        fun registerExtensionsFromPlugins(project: MockProject, configuration: CompilerConfiguration) {
+             val messageCollector = configuration.get(CLIConfigurationKeys.MESSAGE_COLLECTOR_KEY)
+             for (registrar in configuration.getList(ComponentRegistrar.PLUGIN_COMPONENT_REGISTRARS)) {
+                 try {
+@@ -661,7 +663,8 @@ class KotlinCoreEnvironment private constructor(
+             }
+         }
+ 
+-        private fun registerProjectServicesForCLI(@Suppress("UNUSED_PARAMETER") projectEnvironment: JavaCoreProjectEnvironment) {
++        // made public for Android Lint
++        fun registerProjectServicesForCLI(@Suppress("UNUSED_PARAMETER") projectEnvironment: JavaCoreProjectEnvironment) {
+             /**
+              * Note that Kapt may restart code analysis process, and CLI services should be aware of that.
+              * Use PsiManager.getModificationTracker() to ensure that all the data you cached is still valid.
+diff --git plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
+index 02e71c48319..c20a2dd4033 100644
+--- plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
++++ plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
+@@ -143,7 +143,22 @@ abstract class KotlinAbstractUElement(private val givenParent: UElement?) : Kotl
              return false
          }
  
