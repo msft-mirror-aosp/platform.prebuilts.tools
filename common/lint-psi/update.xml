@@ -6,18 +6,8 @@
     <property name="output" value="${basedir}/temp"/>
     <property name="kotlin-dist" value="${kotlin_src_dir}/dist"/>
 
-    <!--
-    <loadfile
-            property="build-version"
-            srcFile="${kotlin_src_dir}/dependencies/version.txt"
-            failonerror="true"/>
-    -->
-
-    <!-- Version of IntelliJ, where we pull UAST etc from. You can find
-         the value in gradle/versions.properties; look for
-         versions.intellijSdk
-      -->
-    <property name="build-version" value="193.5233.102"/>
+    <loadproperties srcFile="${kotlin_src_dir}/gradle/versions.properties" />
+    <property name="build-version" value="${versions.intellijSdk}"/>
 
     <property name="buildsrc.dir" value="${kotlin_src_dir}/dependencies/repo/kotlin.build"/>
     <property name="idea.sdk" value="${buildsrc.dir}/ideaIC/${build-version}/artifacts/plugins/java"/>
@@ -38,6 +28,7 @@
 		    <fileset dir="${basedir}">
 		        <include name="**/*.jar"/>
 		        <exclude name="platform-icons.jar"/>
+		        <exclude name="inference-session.jar"/>
 		    </fileset>
 		</delete>
         <delete dir="${temp}"/>
@@ -166,6 +157,13 @@
             </patternset>
         </unzip>
 
+        <!-- Temporary patch for https://youtrack.jetbrains.com/issue/IDEA-230923 -->
+        <unzip src="${basedir}/inference-session.jar" dest="${temp}/classes/core">
+            <patternset>
+                <include name="**/*"/>
+            </patternset>
+        </unzip>
+
         <jar jarfile="${dist-intellij-core}/intellij-core.jar">
             <fileset dir="${temp}/classes/core">
                 <!-- Keep kotlin out of this jar; packaged below (keep lists in sync) -->
@@ -191,18 +189,26 @@
             </fileset>
         </jar>
 
-		<!-- TODO IntelliJ sources
-        <unzip src="${idea.sdk}/sources/sources.jar" dest="${temp}/classes/uast-java-sources">
+        <unzip src="${idea.sources}" dest="${temp}/classes/intellij-core-sources">
             <patternset>
-                <include name="org/jetbrains/uast/java/**/*.java"/>
-                <include name="org/jetbrains/uast/java/**/*.kt"/>
+                <include name="org/picocontainer/**/*"/>
+                <include name="com/intellij/**/*.java"/>
+                <include name="com/intellij/**/*.kt"/>
+                <exclude name="com/intellij/codeInsight/template/**"/>
+                <exclude name="com/intellij/codeInsight/editorActions/**"/>
+                <exclude name="com/intellij/codeInsight/intention/**"/>
+                <exclude name="com/intellij/openapi/externalSystem/**"/>
+                <exclude name="com/intellij/openapi/vcs/**"/>
+                <exclude name="com/intellij/vcs/**"/>
+                <exclude name="com/intellij/ide/actions/**"/>
+                <exclude name="com/intellij/ide/projectView/**"/>
             </patternset>
         </unzip>
 
-        <jar jarfile="${dist-uast}/uast-java-sources.jar">
-            <fileset dir="${temp}/classes/uast-java-sources"/>
+        <jar jarfile="${dist-intellij-core}/intellij-core-sources.jar">
+            <fileset dir="${temp}/classes/intellij-core-sources"/>
         </jar>
-		-->
+
 
         <jar jarfile="${dist-kotlin-compiler}/kotlin-compiler-sources.jar">
             <fileset dir="${kotlin_src_dir}/compiler/frontend/src">
@@ -229,6 +235,10 @@
                 <include name="**/*.java" />
                 <include name="**/*.kt" />
             </fileset>
+            <fileset dir="${kotlin_src_dir}/compiler/cli/cli-common/src">
+                <include name="**/*.java" />
+                <include name="**/*.kt" />
+            </fileset>
             <fileset dir="${kotlin_src_dir}/compiler/container/src">
                 <include name="**/*.java" />
                 <include name="**/*.kt" />
@@ -242,6 +252,10 @@
                 <include name="**/*.kt" />
             </fileset>
             <fileset dir="${kotlin_src_dir}/compiler/serialization/src">
+                <include name="**/*.java" />
+                <include name="**/*.kt" />
+            </fileset>
+            <fileset dir="${kotlin_src_dir}/compiler/psi/src">
                 <include name="**/*.java" />
                 <include name="**/*.kt" />
             </fileset>
