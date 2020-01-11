@@ -5,13 +5,13 @@ maven_java_import(
     name = "jar",
     classified_only = True,
     classifiers = ["all"],
-    jars = ["cli-1.0.0-alpha4.jar"],
+    jars = ["cli-1.0.0-alpha5.jar"],
     pom = ":pom",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
     name = "pom",
-    source = "cli-1.0.0-alpha4.pom",
+    source = "cli-1.0.0-alpha5.pom",
     visibility = ["//visibility:public"],
 )
