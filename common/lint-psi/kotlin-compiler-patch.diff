@@ -1,7 +1,7 @@
-diff --git compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
+diff --git a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
 index 81343606c17..61074d15f58 100644
---- compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
-+++ compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
+--- a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
++++ b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
 @@ -502,7 +502,8 @@ class KotlinCoreEnvironment private constructor(
              }
          }
@@ -32,11 +32,21 @@ index 81343606c17..61074d15f58 100644
              /**
               * Note that Kapt may restart code analysis process, and CLI services should be aware of that.
               * Use PsiManager.getModificationTracker() to ensure that all the data you cached is still valid.
-diff --git plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
-index 02e71c48319..c20a2dd4033 100644
---- plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
-+++ plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
-@@ -143,7 +143,22 @@ abstract class KotlinAbstractUElement(private val givenParent: UElement?) : Kotl
+diff --git a/gradle/versions.properties b/gradle/versions.properties
+index c4fc46a75df..8c8d0499861 100644
+--- a/gradle/versions.properties
++++ b/gradle/versions.properties
+@@ -1,4 +1,5 @@
+-versions.intellijSdk=193.5233.102
++versions.intellijSdk=193.6015-EAP-CANDIDATE-SNAPSHOT
+ versions.androidBuildTools=r23.0.1
+ versions.idea.NodeJS=181.3494.12
+ versions.jar.asm-all=7.0.1
+diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
+index 5f03a513dc4..1ccf4de2081 100644
+--- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
++++ b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
+@@ -145,7 +145,22 @@ abstract class KotlinAbstractUElement(private val givenParent: UElement?) : Kotl
              return false
          }
  
