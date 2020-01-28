@@ -239,3 +239,23 @@ java_plugin {
     processor_class: "dagger.internal.codegen.ComponentProcessor",
     generates_api: true,
 }
+
+java_import_host {
+    name: "car-androidx-room-compiler-tools-common-m2-deps",
+    jars: [
+        "repository/org/antlr/antlr4/4.5.3/antlr4-4.5.3.jar",
+        "repository/org/eclipse/tycho/tycho-bundles-external/0.18.1/eclipse/plugins/org.apache.commons.codec_1.4.0.v201209201156.jar",
+        "repository/com/google/auto/auto-common/0.9/auto-common-0.9.jar",
+        "repository/com/squareup/javapoet/1.8.0/javapoet-1.8.0.jar",
+        // TODO: remove this one?
+        "repository/org/jetbrains/annotations/13.0/annotations-13.0.jar",
+        "repository/me/eugeniomarletti/kotlin-metadata/1.2.1/kotlin-metadata-1.2.1.jar",
+        "repository/org/xerial/sqlite-jdbc/3.20.1/sqlite-jdbc-3.20.1.jar",
+        "repository/com/google/guava/guava/21.0/guava-21.0.jar",
+    ],
+    // Exclude signature files that cause the combined jar to be rejected.
+    exclude_files: [
+        "META-INF/ECLIPSE_.SF",
+        "META-INF/ECLIPSE_.RSA",
+    ],
+}
