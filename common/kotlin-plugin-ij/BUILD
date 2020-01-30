@@ -27,6 +27,12 @@ java_import(
     visibility = ["//visibility:public"],
 )
 
+java_import(
+    name = "Kotlin/kotlinc/lib/kotlin-reflect",
+    jars = ["Kotlin/kotlinc/lib/kotlin-reflect.jar"],
+    visibility = ["//visibility:public"],
+)
+
 filegroup(
     name = "kotlin_plugin",
     srcs = glob(["Kotlin/**"]),
