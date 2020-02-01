@@ -1,9 +1,9 @@
 load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom")
-load("//tools/base/bazel:utils.bzl", "singlejar")
+load("//tools/base/bazel:merge_archives.bzl", "merge_jars")
 
-singlejar(
+merge_jars(
     name = "kotlin-compiler-all",
-    jar_name = "kotlin-compiler-all.jar",
+    out = "kotlin-compiler-all.jar",
     jars = [
         "kotlin-compiler.jar",
     ],

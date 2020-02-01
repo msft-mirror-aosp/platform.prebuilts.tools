@@ -1,9 +1,9 @@
 load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom")
-load("//tools/base/bazel:utils.bzl", "singlejar")
+load("//tools/base/bazel:merge_archives.bzl", "merge_jars")
 
-singlejar(
+merge_jars(
     name = "intellij-core-all",
-    jar_name = "intellij-core-all.jar",
+    out = "intellij-core-all.jar",
     jars = [
         ":intellij-core.jar",
     ],
