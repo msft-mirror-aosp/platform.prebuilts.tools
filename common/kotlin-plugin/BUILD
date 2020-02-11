@@ -291,10 +291,3 @@ java_import(
     jars = ["Kotlin/lib/completion-ranking-kotlin-0.0.2.jar"],
     visibility = ["//visibility:public"],
 )
-
-# managed by go/iml_to_build
-java_import(
-    name = "Kotlin/lib/idea-gradle-tooling-api",
-    jars = ["Kotlin/lib/idea-gradle-tooling-api.jar"],
-    visibility = ["//visibility:public"],
-)
