@@ -6,3 +6,9 @@ app_inspection_proto(
     proto_file_name = "live_sql_protocol.proto",
     visibility = ["//visibility:public"],
 )
+
+filegroup(
+    name = "sqlite-inspection",
+    srcs = glob(["*/**"]),
+    visibility = ["//visibility:public"],
+)
