@@ -3,13 +3,13 @@ load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom", "maven_aa
 
 maven_java_import(
     name = "jar",
-    jars = ["jetifier-core-1.0.0-beta08.jar"],
+    jars = ["jetifier-core-1.0.0-beta09.jar"],
     pom = ":pom",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
     name = "pom",
-    source = "jetifier-core-1.0.0-beta08.pom",
+    source = "jetifier-core-1.0.0-beta09.pom",
     visibility = ["//visibility:public"],
 )
