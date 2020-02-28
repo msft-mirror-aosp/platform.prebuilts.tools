@@ -1,5 +1,5 @@
 diff --git a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
-index 81343606c17..61074d15f58 100644
+index 158a462c2e1..6578f0c649c 100644
 --- a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
 +++ b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
 @@ -502,7 +502,8 @@ class KotlinCoreEnvironment private constructor(
@@ -32,16 +32,6 @@ index 81343606c17..61074d15f58 100644
              /**
               * Note that Kapt may restart code analysis process, and CLI services should be aware of that.
               * Use PsiManager.getModificationTracker() to ensure that all the data you cached is still valid.
-diff --git a/gradle/versions.properties b/gradle/versions.properties
-index c4fc46a75df..8c8d0499861 100644
---- a/gradle/versions.properties
-+++ b/gradle/versions.properties
-@@ -1,4 +1,5 @@
--versions.intellijSdk=193.5233.102
-+versions.intellijSdk=193.6015-EAP-CANDIDATE-SNAPSHOT
- versions.androidBuildTools=r23.0.1
- versions.idea.NodeJS=181.3494.12
- versions.jar.asm-all=7.0.1
 diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
 index 5f03a513dc4..1ccf4de2081 100644
 --- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
@@ -70,3 +60,47 @@ index 5f03a513dc4..1ccf4de2081 100644
      }
  
      override fun hashCode() = psi?.hashCode() ?: 0
+diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinUastLanguagePlugin.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinUastLanguagePlugin.kt
+index 96f3dba346c..47099469df8 100644
+--- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinUastLanguagePlugin.kt
++++ b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinUastLanguagePlugin.kt
+@@ -406,6 +406,14 @@ internal object KotlinConverter {
+             else {
+                 expr<UDeclarationsExpression>(build(::createLocalFunctionDeclaration))
+             }
++            is KtAnnotatedExpression -> {
++                val base = expression.baseExpression
++                if (base != null) {
++                    convertExpression(base, givenParent, requiredType)
++                } else {
++                    expr<UExpression>(build(::UnknownKotlinExpression))
++                }
++            }
+ 
+             else -> expr<UExpression>(build(::UnknownKotlinExpression))
+         }}
+diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/expressions/ElvisExpression.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/expressions/ElvisExpression.kt
+index 9e2f4bf193c..62b07e16f25 100644
+--- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/expressions/ElvisExpression.kt
++++ b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/expressions/ElvisExpression.kt
+@@ -3,6 +3,7 @@ package org.jetbrains.uast.kotlin.expressions
+ import com.intellij.psi.PsiElement
+ import com.intellij.psi.PsiMethod
+ import com.intellij.psi.PsiType
++import org.jetbrains.kotlin.psi.KtAnnotatedExpression
+ import org.jetbrains.kotlin.psi.KtBinaryExpression
+ import org.jetbrains.kotlin.psi.KtExpression
+ import org.jetbrains.kotlin.resolve.BindingContext
+@@ -95,7 +96,11 @@ class KotlinUElvisExpression(
+     override val sourcePsi: PsiElement? = elvisExpression
+     override val psi: PsiElement? = sourcePsi
+     override val kind = KotlinSpecialExpressionKinds.ELVIS
+-    override val annotations: List<UAnnotation> = emptyList()
++    override val annotations: List<UAnnotation>
++        get() {
++            val annotatedExpression = sourcePsi?.parent as? KtAnnotatedExpression ?: return emptyList()
++            return annotatedExpression.annotationEntries.map { KotlinUAnnotation(it, this) }
++        }
+     override val expressions: List<UExpression> by lz {
+         createElvisExpressions(left, right, this, elvisExpression.parent)
+     }
