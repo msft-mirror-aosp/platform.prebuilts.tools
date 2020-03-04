@@ -1,3 +1,24 @@
+diff --git a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt
+index 0cceaca7f05..590a55e106b 100644
+--- a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt
++++ b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt
+@@ -40,6 +40,7 @@ import org.jetbrains.kotlin.name.FqName
+ import org.jetbrains.kotlin.resolve.jvm.KotlinCliJavaFileManager
+ import org.jetbrains.kotlin.util.PerformanceCounter
+ import org.jetbrains.kotlin.utils.addIfNotNull
++import org.jetbrains.kotlin.utils.getOrPutNullable
+ import java.util.*
+ 
+ // TODO: do not inherit from CoreJavaFileManager to avoid accidental usage of its methods which do not use caches/indices
+@@ -72,7 +73,7 @@ class KotlinCliJavaFileManagerImpl(private val myPsiManager: PsiManager) : CoreJ
+ 
+     private fun findVirtualFileForTopLevelClass(classId: ClassId, searchScope: GlobalSearchScope): VirtualFile? {
+         val relativeClassName = classId.relativeClassName.asString()
+-        return topLevelClassesCache.getOrPut(classId.packageFqName.child(classId.relativeClassName.pathSegments().first())) {
++        return topLevelClassesCache.getOrPutNullable(classId.packageFqName.child(classId.relativeClassName.pathSegments().first())) {  // KT-35614: getOrPut -> getOrPutNullable
+             index.findClass(classId) { dir, type ->
+                 findVirtualFileGivenPackage(dir, relativeClassName, type)
+             } ?: singleJavaFileRootsIndex.findJavaSourceClass(classId)
 diff --git a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
 index 158a462c2e1..6578f0c649c 100644
 --- a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
@@ -32,6 +53,23 @@ index 158a462c2e1..6578f0c649c 100644
              /**
               * Note that Kapt may restart code analysis process, and CLI services should be aware of that.
               * Use PsiManager.getModificationTracker() to ensure that all the data you cached is still valid.
+diff --git a/compiler/light-classes/src/org/jetbrains/kotlin/asJava/classes/KtLightClassForSourceDeclaration.kt b/compiler/light-classes/src/org/jetbrains/kotlin/asJava/classes/KtLightClassForSourceDeclaration.kt
+index ef8364eca42..38215be5392 100644
+--- a/compiler/light-classes/src/org/jetbrains/kotlin/asJava/classes/KtLightClassForSourceDeclaration.kt
++++ b/compiler/light-classes/src/org/jetbrains/kotlin/asJava/classes/KtLightClassForSourceDeclaration.kt
+@@ -275,7 +275,11 @@ abstract class KtLightClassForSourceDeclaration(
+         }
+ 
+         val thisDescriptor = getDescriptor()
+-        return qualifiedName != null && thisDescriptor != null && checkSuperTypeByFQName(thisDescriptor, qualifiedName, checkDeep)
++        return if (qualifiedName == null || thisDescriptor == null) {
++            super.isInheritor(baseClass, checkDeep)
++        } else {
++            checkSuperTypeByFQName(thisDescriptor, qualifiedName, checkDeep)
++        }
+     }
+ 
+     @Throws(IncorrectOperationException::class)
 diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
 index 5f03a513dc4..1ccf4de2081 100644
 --- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
