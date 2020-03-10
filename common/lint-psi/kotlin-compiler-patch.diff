@@ -117,6 +117,34 @@ index 96f3dba346c..47099469df8 100644
  
              else -> expr<UExpression>(build(::UnknownKotlinExpression))
          }}
+diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethod.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethod.kt
+index 3bd2399d3a9..0a5ad662a03 100644
+--- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethod.kt
++++ b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethod.kt
+@@ -177,6 +177,23 @@ private class UastFakeLightMethod(private val original: KtFunction, containingCl
+     }
+ 
+     override fun getParent(): PsiElement? = containingClass
++
++    override fun equals(other: Any?): Boolean {
++        if (this === other) return true
++        if (javaClass != other?.javaClass) return false
++
++        other as UastFakeLightMethod
++
++        if (original != other.original) return false
++
++        return true
++    }
++
++    override fun hashCode(): Int {
++        var result = super.hashCode()
++        result = 31 * result + original.hashCode()
++        return result
++    }
+ }
+ 
+ class KotlinUMethodWithFakeLightDelegate(val original: KtFunction, containingLightClass: PsiClass, givenParent: UElement?) :
 diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/expressions/ElvisExpression.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/expressions/ElvisExpression.kt
 index 9e2f4bf193c..62b07e16f25 100644
 --- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/expressions/ElvisExpression.kt
