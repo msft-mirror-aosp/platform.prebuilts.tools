@@ -1,10 +1,6 @@
 filegroup(
     name = "testData",
-    srcs = [
-        "mobilenet_metadata.tflite",
-        "mobilenet_quant_metadata.tflite",
-        "mobilenet_quant_no_metadata.tflite",
-    ],
+    srcs = glob(["*.tflite"]),
     visibility = [
         "//tools/adt/idea/mlkit:__pkg__",
         "//tools/base/build-system/integration-test/application:__pkg__",
