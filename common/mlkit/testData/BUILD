@@ -1,6 +1,6 @@
 filegroup(
     name = "testData",
-    srcs = glob(["*.tflite"]),
+    srcs = glob(["**/*"]),
     visibility = [
         "//tools/adt/idea/mlkit:__pkg__",
         "//tools/base/build-system/integration-test/application:__pkg__",
