@@ -1,4 +1,4 @@
-# Copyright (C) 2019 The Android Open Source Project
+# Copyright (C) 2020 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,8 +17,8 @@
 # Enable periodic flushing of the trace buffer into the output file.
 write_into_file: true
 
-# Writes the userspace buffer into the file every 2.5 seconds.
-file_write_period_ms: 2500
+# Writes the userspace buffer into the file every 1s.
+file_write_period_ms: 1000
 
 # See b/126487238 - we need to guarantee ordering of events.
 flush_period_ms: 30000
@@ -72,6 +72,7 @@ data_sources {
 
       atrace_categories: "am"
       atrace_categories: "dalvik"
+      atrace_categories: "binder_driver"
     }
   }
 }
@@ -82,7 +83,6 @@ data_sources {
     target_buffer: 1
     process_stats_config {
       proc_stats_poll_ms: 10000
-      proc_stats_cache_ttl_ms: 60000
     }
   }
 }
