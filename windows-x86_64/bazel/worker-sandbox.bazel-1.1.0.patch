@@ -1,0 +1,42 @@
+From ad8425ef4224541900fcdebb6adf859096feb8cd Mon Sep 17 00:00:00 2001
+From: Tom <tomrenn@google.com>
+Date: Fri, 3 Apr 2020 02:33:24 +0200
+Subject: [PATCH] Sandboxing, without deleting files.
+
+We simply never delete files in the existing worker sandbox.
+---
+ .../com/google/devtools/build/lib/worker/WorkerExecRoot.java | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/src/main/java/com/google/devtools/build/lib/worker/WorkerExecRoot.java b/src/main/java/com/google/devtools/build/lib/worker/WorkerExecRoot.java
+index 883631692f..89d4751f3d 100644
+--- a/src/main/java/com/google/devtools/build/lib/worker/WorkerExecRoot.java
++++ b/src/main/java/com/google/devtools/build/lib/worker/WorkerExecRoot.java
+@@ -54,7 +54,8 @@ final class WorkerExecRoot extends SymlinkedSandboxedSpawn {
+   @Override
+   public void createFileSystem() throws IOException {
+     workDir.createDirectoryAndParents();
+-    deleteExceptAllowedFiles(workDir, workerFiles);
++    // nope, not deleting files
++    //deleteExceptAllowedFiles(workDir, workerFiles);
+     super.createFileSystem();
+   }
+
+@@ -80,6 +81,7 @@ final class WorkerExecRoot extends SymlinkedSandboxedSpawn {
+     // All input files are relative to the execroot.
+     for (Map.Entry<PathFragment, Path> entry : inputs.getFiles().entrySet()) {
+       Path key = workDir.getRelative(entry.getKey());
++      if (key.exists()) continue;
+       FileStatus keyStat = key.statNullable(Symlinks.NOFOLLOW);
+       if (keyStat != null) {
+         if (keyStat.isSymbolicLink()
+@@ -99,6 +101,7 @@ final class WorkerExecRoot extends SymlinkedSandboxedSpawn {
+
+     for (Map.Entry<PathFragment, PathFragment> entry : inputs.getSymlinks().entrySet()) {
+       Path key = workDir.getRelative(entry.getKey());
++      if (key.exists()) continue;
+       FileStatus keyStat = key.statNullable(Symlinks.NOFOLLOW);
+       if (keyStat != null) {
+         // TODO(lberki): Why? Isn't this method supposed to be called on a fresh tree?
+--
+2.26.0.windows.1
