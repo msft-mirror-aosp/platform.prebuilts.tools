@@ -31,6 +31,19 @@ $ bunch switch 193
 (When switching to branch 201, delete the IDEA-230923.jar and
 KT-37200.jar patch jars.)
 
+Then cherry-pick these CLs from 1.4 back to 1.3.70:
+$ git cherry-pick f1d5570ca12e523722a7f2f95bf2a2eb797ccf9b (resolve conflicts, take the f1d5570ca12... version)
+$ git cherry-pick 2eb6f1988df4995d3ba74602a2b087e9c1c06d5c
+$ git cherry-pick 0ca67c1baced6f460c94cb2d3d554e522d738bde
+$ git cherry-pick c4bd1ce73c4b769d08696b3a3331429916e57099
+$ git cherry-pick 872b140500a19ef2e3738013a1d07f26be79c5ea
+
+Note that this will include some changes to uast-kotlin/testData
+that are not correct for 1.3.70 (for example, changes to
+literal string handling which shows up in the pretty
+printed ASTs; the kotlin-compiler-patch.diff reverts some
+of those changes.)
+
 Verify that the file gradle/versions.properties has the line
     versions.intellijSdk=<VERSION>
 and set <VERSION> to match the one in tools/idea/build.txt,
