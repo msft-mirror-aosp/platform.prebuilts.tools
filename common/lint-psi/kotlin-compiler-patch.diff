@@ -178,19 +178,18 @@ index 89cb7f7f247..44b74018a03 100644
          createElvisExpressions(left, right, this, elvisExpression.parent)
      }
 diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethod.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethod.kt
-index 2174b3f8fb8..cab7b72c1b2 100644
+index 2f582ed599b..97b12730c5f 100644
 --- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethod.kt
 +++ b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethod.kt
-@@ -9,7 +9,7 @@ import com.intellij.psi.*
- import com.intellij.psi.impl.light.LightMethodBuilder
- import com.intellij.psi.impl.light.LightModifierList
- import com.intellij.psi.impl.light.LightParameterListBuilder
--import com.intellij.psi.impl.light.LightTypeParameterBuilder
+@@ -7,6 +7,7 @@ package org.jetbrains.uast.kotlin.psi
+ 
+ import com.intellij.psi.*
+ import com.intellij.psi.impl.light.*
 +import org.jetbrains.kotlin.asJava.elements.KotlinLightTypeParameterBuilder
  import org.jetbrains.kotlin.asJava.elements.KotlinLightTypeParameterListBuilder
  import org.jetbrains.kotlin.descriptors.CallableDescriptor
- import org.jetbrains.kotlin.psi.KtFunction
-@@ -38,10 +38,13 @@ internal class UastFakeLightMethod(internal val original: KtFunction, containing
+ import org.jetbrains.kotlin.psi.KtClassOrObject
+@@ -37,10 +38,13 @@ internal class UastFakeLightMethod(internal val original: KtFunction, containing
          KotlinLightTypeParameterListBuilder(this).also { paramList ->
              for ((i, p) in original.typeParameters.withIndex()) {
                  paramList.addParameter(
@@ -203,9 +202,10 @@ index 2174b3f8fb8..cab7b72c1b2 100644
 -                        i
 +                        i,
 +                        p
-                     )
-                 )
-             }
+                     ).apply {
+                         p.extendsBound?.getType()
+                             ?.toPsiType(this@UastFakeLightMethod, original, false)
+
 diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/psi/UastKotlinPsiParameter.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/psi/UastKotlinPsiParameter.kt
 index 2b2861b8360..957fcead8ab 100644
 --- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/psi/UastKotlinPsiParameter.kt
