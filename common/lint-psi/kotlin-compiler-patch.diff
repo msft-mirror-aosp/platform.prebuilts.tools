@@ -73,7 +73,7 @@ index ef8364eca42..710c8bb5d6e 100644
  
      @Throws(IncorrectOperationException::class)
 diff --git a/compiler/light-classes/src/org/jetbrains/kotlin/asJava/elements/KotlinLightTypeParameterListBuilder.kt b/compiler/light-classes/src/org/jetbrains/kotlin/asJava/elements/KotlinLightTypeParameterListBuilder.kt
-index 34fd6e8efbf..4d7e7a2c208 100644
+index 34fd6e8efbf..2e90875eb6b 100644
 --- a/compiler/light-classes/src/org/jetbrains/kotlin/asJava/elements/KotlinLightTypeParameterListBuilder.kt
 +++ b/compiler/light-classes/src/org/jetbrains/kotlin/asJava/elements/KotlinLightTypeParameterListBuilder.kt
 @@ -20,9 +20,11 @@ import com.intellij.psi.PsiElement
@@ -88,18 +88,28 @@ index 34fd6e8efbf..4d7e7a2c208 100644
  
  class KotlinLightTypeParameterListBuilder(private val owner: PsiTypeParameterListOwner) :
      LightTypeParameterListBuilder(owner.manager, KotlinLanguage.INSTANCE) {
-@@ -40,3 +42,9 @@ class KotlinLightTypeParameterListBuilder(private val owner: PsiTypeParameterLis
+@@ -40,3 +42,8 @@ class KotlinLightTypeParameterListBuilder(private val owner: PsiTypeParameterLis
  
      override fun getText(): String? = ""
  }
 +
-+// Needed by metalava
-+class KotlinLightTypeParameterBuilder(
++open class KotlinLightTypeParameterBuilder(
 +    name: String, owner: PsiTypeParameterListOwner, index: Int,
 +    val sourcePsi: KtTypeParameter
 +) : LightTypeParameterBuilder(name, owner, index)
+\ No newline at end of file
+diff --git a/gradle/versions.properties b/gradle/versions.properties
+index 03c33f3084f..fa4bd9bdbcd 100644
+--- a/gradle/versions.properties
++++ b/gradle/versions.properties
+@@ -1,4 +1,4 @@
+-versions.intellijSdk=201.6487-EAP-CANDIDATE-SNAPSHOT
++versions.intellijSdk=201.7223.91
+ versions.androidBuildTools=r23.0.1
+ versions.idea.NodeJS=193.6494.7
+ versions.jar.asm-all=7.0.1
 diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
-index 21f705ad60e..e213b25fcb9 100644
+index 09e85475fe4..925878393bf 100644
 --- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
 +++ b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
 @@ -146,7 +146,23 @@ abstract class KotlinAbstractUElement(private val givenParent: UElement?) : Kotl
@@ -178,7 +188,7 @@ index 89cb7f7f247..44b74018a03 100644
          createElvisExpressions(left, right, this, elvisExpression.parent)
      }
 diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethod.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethod.kt
-index 2f582ed599b..97b12730c5f 100644
+index 8ea461638af..ca64b93685d 100644
 --- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethod.kt
 +++ b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethod.kt
 @@ -7,6 +7,7 @@ package org.jetbrains.uast.kotlin.psi
@@ -189,23 +199,20 @@ index 2f582ed599b..97b12730c5f 100644
  import org.jetbrains.kotlin.asJava.elements.KotlinLightTypeParameterListBuilder
  import org.jetbrains.kotlin.descriptors.CallableDescriptor
  import org.jetbrains.kotlin.psi.KtClassOrObject
-@@ -37,10 +38,13 @@ internal class UastFakeLightMethod(internal val original: KtFunction, containing
+@@ -27,10 +28,11 @@ internal class UastFakeLightMethod(original: KtFunction, containingClass: PsiCla
          KotlinLightTypeParameterListBuilder(this).also { paramList ->
              for ((i, p) in original.typeParameters.withIndex()) {
                  paramList.addParameter(
--                    LightTypeParameterBuilder(
-+                    // Needed by metalava
-+                    // LightTypeParameterBuilder(
-+                    KotlinLightTypeParameterBuilder(
+-                    object : LightTypeParameterBuilder(
++                    object : KotlinLightTypeParameterBuilder(
                          p.name ?: "__no_name__",
                          this,
 -                        i
 +                        i,
 +                        p
-                     ).apply {
-                         p.extendsBound?.getType()
-                             ?.toPsiType(this@UastFakeLightMethod, original, false)
-
+                     ) {
+                         private val myExtendsList by lazy {
+                             super.getExtendsList().apply {
 diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/psi/UastKotlinPsiParameter.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/psi/UastKotlinPsiParameter.kt
 index 2b2861b8360..957fcead8ab 100644
 --- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/psi/UastKotlinPsiParameter.kt
