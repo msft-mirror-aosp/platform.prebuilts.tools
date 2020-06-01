@@ -65,10 +65,7 @@ data_sources {
       # Old (kernel) LMK
       ftrace_events: "lowmemorykiller/lowmemory_kill"
 
-      # New (userspace) LMK
-      atrace_apps: "lmkd"
-      # Added for userspace annotation in the platform scenario test app
-      atrace_apps: "android.platform.test.scenario"
+      atrace_apps: "*"
 
       atrace_categories: "am"
       atrace_categories: "wm"
