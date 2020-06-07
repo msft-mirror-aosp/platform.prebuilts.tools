@@ -303,6 +303,11 @@ java_import {
     host_supported: true,
 }
 
+java_import_host {
+    name: "com.google.api.grpc_proto-google-common-protos-prebuilt-jar",
+    jars: ["repository/com/google/api/grpc/proto-google-common-protos/1.14.0/proto-google-common-protos-1.14.0.jar"],
+}
+
 java_import {
     name: "auto-factory-1.0-beta7",
     jars: ["repository/com/google/auto/factory/auto-factory/1.0-beta7/auto-factory-1.0-beta7.jar"],
@@ -373,6 +378,11 @@ java_import_host {
         "META-INF/ECLIPSE_.SF",
         "META-INF/ECLIPSE_.RSA",
     ],
+}
+
+java_import_host {
+    name: "javax-annotation-api-prebuilt-host-jar",
+    jars: ["repository/javax/annotation/javax.annotation-api/1.2/javax.annotation-api-1.2.jar"],
 }
 
 build = ["robolectric.bp"]
