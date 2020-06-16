@@ -28,8 +28,6 @@
 		    <fileset dir="${basedir}">
 		        <include name="**/*.jar"/>
 		        <exclude name="platform-icons.jar"/>
-		        <exclude name="IDEA-230923.jar"/>
-		        <exclude name="KT-37200.jar"/>
 		    </fileset>
 		</delete>
         <delete dir="${temp}"/>
@@ -157,30 +155,6 @@
                 <include name="**/*"/>
             </patternset>
         </unzip>
-
-        <!-- Temporary patch for https://youtrack.jetbrains.com/issue/IDEA-230923 -->
-        <unzip src="${basedir}/IDEA-230923.jar" dest="${temp}/classes/core">
-            <patternset>
-                <include name="**/*"/>
-            </patternset>
-        </unzip>
-
-        <!-- Temporary patch for https://youtrack.jetbrains.com/issue/KT-37200
-            It was created as follows from an IntelliJ CE source tree:
-            $ git checkout idea/193.6494.35
-            $ git show dc94a4a9c2e96dcb14ecabc516868fb8281bda76 > /tmp/patch
-            $ git apply /tmp/patch
-            $ ant
-            $ cd out/idea-ce/classes/production/intellij.java.psi.impl/
-            $ jar cvf kt37200.jar com/intellij/psi/impl/PsiClassImplUtil*
-        Currently disabled, since the fix did not work properly in Kotlin. There
-        is a workaround in lint instead.
-        <unzip src="${basedir}/KT-37200.jar" dest="${temp}/classes/core">
-            <patternset>
-                <include name="**/*"/>
-            </patternset>
-        </unzip>
-        -->
 
         <jar jarfile="${dist-intellij-core}/intellij-core.jar">
             <fileset dir="${temp}/classes/core">
