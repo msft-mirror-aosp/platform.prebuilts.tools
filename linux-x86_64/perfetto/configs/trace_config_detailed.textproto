@@ -49,12 +49,6 @@ data_sources {
       buffer_size_kb: 16384
       drain_period_ms: 250
 
-      # Store certain high-volume "sched" ftrace events in a denser format
-      # (falling back to the default format if not supported by the tracer).
-      compact_sched {
-        enabled: true
-      }
-
       # We need to do process tracking to ensure kernel ftrace events targeted at short-lived
       # threads are associated correctly
       ftrace_events: "task/task_newtask"
@@ -66,15 +60,13 @@ data_sources {
       ftrace_events: "rss_stat"
       ftrace_events: "ion_heap_shrink"
       ftrace_events: "ion_heap_grow"
+      ftrace_events: "ion/ion_stat"
       ftrace_events: "oom_score_adj_update"
 
       # Old (kernel) LMK
       ftrace_events: "lowmemorykiller/lowmemory_kill"
 
-      # New (userspace) LMK
-      atrace_apps: "lmkd"
-      # Added for userspace annotation in the platform scenario test app
-      atrace_apps: "android.platform.test.scenario"
+      atrace_apps: "*"
 
       atrace_categories: "am"
       atrace_categories: "wm"
