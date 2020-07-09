@@ -298,3 +298,10 @@ java_import(
     jars = ["Kotlin/lib/idea-gradle-tooling-api.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build [unb]
+java_import(
+    name = "Kotlin/lib/unb.kotlin-plugin",
+    jars = ["Kotlin/lib/kotlin-plugin.jar"],
+    visibility = ["//visibility:public"],
+)
