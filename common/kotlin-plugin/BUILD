@@ -303,5 +303,9 @@ java_import(
 java_import(
     name = "Kotlin/lib/unb.kotlin-plugin",
     jars = ["Kotlin/lib/kotlin-plugin.jar"],
+    tags = [
+        "manual",
+        "unb",
+    ],
     visibility = ["//visibility:public"],
 )
