@@ -14,3 +14,14 @@ maven_pom(
     source = "auto-value-annotations-1.6.2.pom",
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build [unb]
+filegroup(
+    name = "unb.auto-value-annotations_files",
+    srcs = ["auto-value-annotations-1.6.2.jar"],
+    tags = [
+        "manual",
+        "unb",
+    ],
+    visibility = ["//visibility:public"],
+)
