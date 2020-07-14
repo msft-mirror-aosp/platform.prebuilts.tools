@@ -42,6 +42,20 @@ java_import(
 
 # managed by go/iml_to_build
 java_import(
+    name = "Kotlin/lib/completion-ranking-kotlin-0.1.2",
+    jars = ["Kotlin/lib/completion-ranking-kotlin-0.1.2.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+java_import(
+    name = "Kotlin/lib/ide-common",
+    jars = ["Kotlin/lib/ide-common.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+java_import(
     name = "Kotlin/lib/javaslang-2.0.6",
     jars = ["Kotlin/lib/javaslang-2.0.6.jar"],
     visibility = ["//visibility:public"],
@@ -63,6 +77,13 @@ java_import(
 
 # managed by go/iml_to_build
 java_import(
+    name = "Kotlin/lib/jps/kotlin-jps-plugin",
+    jars = ["Kotlin/lib/jps/kotlin-jps-plugin.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+java_import(
     name = "Kotlin/lib/kapt3-idea",
     jars = ["Kotlin/lib/kapt3-idea.jar"],
     visibility = ["//visibility:public"],
@@ -79,6 +100,13 @@ java_import(
 java_import(
     name = "Kotlin/lib/kotlin-compiler-client-embeddable",
     jars = ["Kotlin/lib/kotlin-compiler-client-embeddable.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+java_import(
+    name = "Kotlin/lib/kotlin-coroutines-experimental-compat",
+    jars = ["Kotlin/lib/kotlin-coroutines-experimental-compat.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -128,13 +156,6 @@ java_import(
 java_import(
     name = "Kotlin/lib/kotlin-reflect",
     jars = ["Kotlin/lib/kotlin-reflect.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-java_import(
-    name = "Kotlin/lib/jps/kotlin-jps-plugin",
-    jars = ["Kotlin/lib/jps/kotlin-jps-plugin.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -238,15 +259,22 @@ java_import(
 
 # managed by go/iml_to_build
 java_import(
-    name = "Kotlin/lib/kotlinx-coroutines-core-1.2.1",
-    jars = ["Kotlin/lib/kotlinx-coroutines-core-1.2.1.jar"],
+    name = "Kotlin/lib/kotlinx-collections-immutable-jvm-0.3.1",
+    jars = ["Kotlin/lib/kotlinx-collections-immutable-jvm-0.3.1.jar"],
     visibility = ["//visibility:public"],
 )
 
 # managed by go/iml_to_build
 java_import(
-    name = "Kotlin/lib/kotlinx-coroutines-jdk8-1.2.1",
-    jars = ["Kotlin/lib/kotlinx-coroutines-jdk8-1.2.1.jar"],
+    name = "Kotlin/lib/kotlinx-coroutines-core-1.3.7",
+    jars = ["Kotlin/lib/kotlinx-coroutines-core-1.3.7.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+java_import(
+    name = "Kotlin/lib/kotlinx-coroutines-jdk8-1.3.7",
+    jars = ["Kotlin/lib/kotlinx-coroutines-jdk8-1.3.7.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -275,27 +303,6 @@ java_import(
 java_import(
     name = "Kotlin/lib/sam-with-receiver-ide-plugin",
     jars = ["Kotlin/lib/sam-with-receiver-ide-plugin.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-java_import(
-    name = "Kotlin/lib/ide-common",
-    jars = ["Kotlin/lib/ide-common.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-java_import(
-    name = "Kotlin/lib/completion-ranking-kotlin-0.0.2",
-    jars = ["Kotlin/lib/completion-ranking-kotlin-0.0.2.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-java_import(
-    name = "Kotlin/lib/idea-gradle-tooling-api",
-    jars = ["Kotlin/lib/idea-gradle-tooling-api.jar"],
     visibility = ["//visibility:public"],
 )
 
