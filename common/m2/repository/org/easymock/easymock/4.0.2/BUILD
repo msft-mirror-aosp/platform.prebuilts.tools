@@ -14,3 +14,14 @@ maven_pom(
     source = "easymock-4.0.2.pom",
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build [unb]
+filegroup(
+    name = "unb.easymock_files",
+    srcs = ["easymock-4.0.2.jar"],
+    tags = [
+        "manual",
+        "unb",
+    ],
+    visibility = ["//visibility:public"],
+)

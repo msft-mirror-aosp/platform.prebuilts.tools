@@ -14,3 +14,14 @@ maven_pom(
     source = "truth-java8-extension-0.42.pom",
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build [unb]
+filegroup(
+    name = "unb.truth-java8-extension_files",
+    srcs = ["truth-java8-extension-0.42.jar"],
+    tags = [
+        "manual",
+        "unb",
+    ],
+    visibility = ["//visibility:public"],
+)

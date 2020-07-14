@@ -13,3 +13,14 @@ maven_pom(
     source = "baksmali-2.2.4.pom",
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build [unb]
+filegroup(
+    name = "unb.baksmali_files",
+    srcs = ["baksmali-2.2.4.jar"],
+    tags = [
+        "manual",
+        "unb",
+    ],
+    visibility = ["//visibility:public"],
+)

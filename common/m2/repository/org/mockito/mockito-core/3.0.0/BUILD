@@ -13,3 +13,14 @@ maven_pom(
     source = "mockito-core-3.0.0.pom",
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build [unb]
+filegroup(
+    name = "unb.mockito_files",
+    srcs = ["mockito-core-3.0.0.jar"],
+    tags = [
+        "manual",
+        "unb",
+    ],
+    visibility = ["//visibility:public"],
+)
