@@ -21,9 +21,18 @@ index 0cceaca7f05..71bf58819ab 100644
                  findVirtualFileGivenPackage(dir, relativeClassName, type)
              } ?: singleJavaFileRootsIndex.findJavaSourceClass(classId)
 diff --git a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
-index 3331ae7610e..712b8f5609e 100644
+index 3331ae7610e..9685c42dd5b 100644
 --- a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
 +++ b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
+@@ -370,7 +370,7 @@ class KotlinCoreEnvironment private constructor(
+             is JvmModulePathRoot ->
+                 if (root.file.isFile) findJarRoot(root.file) else findExistingRoot(root, "Java module root")
+             is JavaSourceRoot ->
+-                findExistingRoot(root, "Java source root")
++                if (root.file.isFile) findJarRoot(root.file) else findExistingRoot(root, "Java source root")
+             else ->
+                 throw IllegalStateException("Unexpected root: $root")
+         }
 @@ -503,7 +503,8 @@ class KotlinCoreEnvironment private constructor(
              }
          }
@@ -138,7 +147,7 @@ index 09e85475fe4..925878393bf 100644
  
      override fun hashCode() = psi?.hashCode() ?: 0
 diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethod.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethod.kt
-index 3b6aedbb1bc..c394da2193e 100644
+index 7e5c84dabe0..fdbdc5d9cbd 100644
 --- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethod.kt
 +++ b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethod.kt
 @@ -16,6 +16,7 @@
@@ -149,7 +158,7 @@ index 3b6aedbb1bc..c394da2193e 100644
  import com.intellij.psi.*
  import org.jetbrains.kotlin.asJava.elements.*
  import org.jetbrains.kotlin.psi.*
-@@ -171,6 +172,11 @@ class KotlinUMethodWithFakeLightDelegate internal constructor(
+@@ -179,6 +180,11 @@ class KotlinUMethodWithFakeLightDelegate internal constructor(
      }
  
      override fun hashCode(): Int = original.hashCode()
@@ -188,7 +197,7 @@ index 89cb7f7f247..44b74018a03 100644
          createElvisExpressions(left, right, this, elvisExpression.parent)
      }
 diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethod.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethod.kt
-index 8ea461638af..ca64b93685d 100644
+index c099eb07009..257f50c64fc 100644
 --- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethod.kt
 +++ b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethod.kt
 @@ -7,6 +7,7 @@ package org.jetbrains.uast.kotlin.psi
@@ -199,7 +208,7 @@ index 8ea461638af..ca64b93685d 100644
  import org.jetbrains.kotlin.asJava.elements.KotlinLightTypeParameterListBuilder
  import org.jetbrains.kotlin.descriptors.CallableDescriptor
  import org.jetbrains.kotlin.psi.KtClassOrObject
-@@ -27,10 +28,11 @@ internal class UastFakeLightMethod(original: KtFunction, containingClass: PsiCla
+@@ -26,10 +27,11 @@ internal class UastFakeLightMethod(original: KtFunction, containingClass: PsiCla
          KotlinLightTypeParameterListBuilder(this).also { paramList ->
              for ((i, p) in original.typeParameters.withIndex()) {
                  paramList.addParameter(
