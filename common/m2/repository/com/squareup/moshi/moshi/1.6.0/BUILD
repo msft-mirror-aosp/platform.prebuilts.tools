@@ -14,14 +14,3 @@ maven_pom(
     source = "moshi-1.6.0.pom",
     visibility = ["//visibility:public"],
 )
-
-# managed by go/iml_to_build [unb]
-filegroup(
-    name = "unb.moshi_files",
-    srcs = ["moshi-1.6.0.jar"],
-    tags = [
-        "manual",
-        "unb",
-    ],
-    visibility = ["//visibility:public"],
-)

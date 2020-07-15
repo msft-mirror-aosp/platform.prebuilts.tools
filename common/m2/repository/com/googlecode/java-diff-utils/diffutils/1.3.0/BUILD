@@ -14,14 +14,3 @@ maven_pom(
     source = "diffutils-1.3.0.pom",
     visibility = ["//visibility:public"],
 )
-
-# managed by go/iml_to_build [unb]
-filegroup(
-    name = "unb.truth_files",
-    srcs = ["diffutils-1.3.0.jar"],
-    tags = [
-        "manual",
-        "unb",
-    ],
-    visibility = ["//visibility:public"],
-)

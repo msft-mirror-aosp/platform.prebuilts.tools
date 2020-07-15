@@ -14,25 +14,3 @@ maven_pom(
     source = "okio-1.14.0.pom",
     visibility = ["//visibility:public"],
 )
-
-# managed by go/iml_to_build [unb]
-java_import(
-    name = "unb.okio",
-    jars = ["okio-1.14.0.jar"],
-    tags = [
-        "manual",
-        "unb",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build [unb]
-filegroup(
-    name = "unb.moshi_files",
-    srcs = ["okio-1.14.0.jar"],
-    tags = [
-        "manual",
-        "unb",
-    ],
-    visibility = ["//visibility:public"],
-)

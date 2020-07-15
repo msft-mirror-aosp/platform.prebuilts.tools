@@ -14,14 +14,3 @@ maven_pom(
     source = "byte-buddy-agent-1.9.10.pom",
     visibility = ["//visibility:public"],
 )
-
-# managed by go/iml_to_build [unb]
-filegroup(
-    name = "unb.mockito_files",
-    srcs = ["byte-buddy-agent-1.9.10.jar"],
-    tags = [
-        "manual",
-        "unb",
-    ],
-    visibility = ["//visibility:public"],
-)

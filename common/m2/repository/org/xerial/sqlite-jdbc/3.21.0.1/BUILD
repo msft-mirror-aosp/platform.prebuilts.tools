@@ -14,14 +14,3 @@ maven_pom(
     source = "sqlite-jdbc-3.21.0.1.pom",
     visibility = ["//visibility:public"],
 )
-
-# managed by go/iml_to_build [unb]
-filegroup(
-    name = "unb.sqlite_files",
-    srcs = ["sqlite-jdbc-3.21.0.1.jar"],
-    tags = [
-        "manual",
-        "unb",
-    ],
-    visibility = ["//visibility:public"],
-)

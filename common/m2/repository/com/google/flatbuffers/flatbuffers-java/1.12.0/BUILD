@@ -13,14 +13,3 @@ maven_pom(
     source = "flatbuffers-java-1.12.0.pom",
     visibility = ["//visibility:public"],
 )
-
-# managed by go/iml_to_build [unb]
-java_import(
-    name = "unb.flatbuffers-java",
-    jars = ["flatbuffers-java-1.12.0.jar"],
-    tags = [
-        "manual",
-        "unb",
-    ],
-    visibility = ["//visibility:public"],
-)

@@ -14,14 +14,3 @@ maven_pom(
     source = "org.eclipse.elk.core-0.3.0.pom",
     visibility = ["//visibility:public"],
 )
-
-# managed by go/iml_to_build [unb]
-filegroup(
-    name = "unb.eclipse-layout-kernel_files",
-    srcs = ["org.eclipse.elk.core-0.3.0.jar"],
-    tags = [
-        "manual",
-        "unb",
-    ],
-    visibility = ["//visibility:public"],
-)

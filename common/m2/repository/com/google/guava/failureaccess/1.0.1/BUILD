@@ -14,14 +14,3 @@ maven_pom(
     source = "failureaccess-1.0.1.pom",
     visibility = ["//visibility:public"],
 )
-
-# managed by go/iml_to_build [unb]
-filegroup(
-    name = "unb.Guava_files",
-    srcs = ["failureaccess-1.0.1.jar"],
-    tags = [
-        "manual",
-        "unb",
-    ],
-    visibility = ["//visibility:public"],
-)

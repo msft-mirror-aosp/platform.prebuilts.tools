@@ -14,14 +14,3 @@ maven_pom(
     source = "compile-testing-0.16.pom",
     visibility = ["//visibility:public"],
 )
-
-# managed by go/iml_to_build [unb]
-filegroup(
-    name = "unb.compile-testing_files",
-    srcs = ["compile-testing-0.16.jar"],
-    tags = [
-        "manual",
-        "unb",
-    ],
-    visibility = ["//visibility:public"],
-)

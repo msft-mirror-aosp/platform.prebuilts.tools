@@ -13,14 +13,3 @@ maven_pom(
     source = "javax.inject-1.pom",
     visibility = ["//visibility:public"],
 )
-
-# managed by go/iml_to_build [unb]
-filegroup(
-    name = "unb.javax-inject_files",
-    srcs = ["javax.inject-1.jar"],
-    tags = [
-        "manual",
-        "unb",
-    ],
-    visibility = ["//visibility:public"],
-)

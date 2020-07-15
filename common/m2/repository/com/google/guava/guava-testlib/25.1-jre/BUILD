@@ -14,14 +14,3 @@ maven_pom(
     source = "guava-testlib-25.1-jre.pom",
     visibility = ["//visibility:public"],
 )
-
-# managed by go/iml_to_build [unb]
-filegroup(
-    name = "unb.guava-testlib_files",
-    srcs = ["guava-testlib-25.1-jre.jar"],
-    tags = [
-        "manual",
-        "unb",
-    ],
-    visibility = ["//visibility:public"],
-)

@@ -13,14 +13,3 @@ maven_pom(
     source = "kotlinx-coroutines-guava-1.2.1.pom",
     visibility = ["//visibility:public"],
 )
-
-# managed by go/iml_to_build [unb]
-filegroup(
-    name = "unb.kotlinx-coroutines-guava_files",
-    srcs = ["kotlinx-coroutines-guava-1.2.1.jar"],
-    tags = [
-        "manual",
-        "unb",
-    ],
-    visibility = ["//visibility:public"],
-)

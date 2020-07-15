@@ -14,14 +14,3 @@ maven_pom(
     source = "error_prone_annotations-2.1.2.pom",
     visibility = ["//visibility:public"],
 )
-
-# managed by go/iml_to_build [unb]
-java_import(
-    name = "unb.error_prone_annotations",
-    jars = ["error_prone_annotations-2.1.2.jar"],
-    tags = [
-        "manual",
-        "unb",
-    ],
-    visibility = ["//visibility:public"],
-)

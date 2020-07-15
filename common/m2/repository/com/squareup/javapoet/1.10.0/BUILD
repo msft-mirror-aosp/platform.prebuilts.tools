@@ -14,14 +14,3 @@ maven_pom(
     source = "javapoet-1.10.0.pom",
     visibility = ["//visibility:public"],
 )
-
-# managed by go/iml_to_build [unb]
-java_import(
-    name = "unb.javapoet",
-    jars = ["javapoet-1.10.0.jar"],
-    tags = [
-        "manual",
-        "unb",
-    ],
-    visibility = ["//visibility:public"],
-)

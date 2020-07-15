@@ -13,14 +13,3 @@ maven_pom(
     source = "juniversalchardet-1.0.3.pom",
     visibility = ["//visibility:public"],
 )
-
-# managed by go/iml_to_build [unb]
-java_import(
-    name = "unb.juniversalchardet",
-    jars = ["juniversalchardet-1.0.3.jar"],
-    tags = [
-        "manual",
-        "unb",
-    ],
-    visibility = ["//visibility:public"],
-)

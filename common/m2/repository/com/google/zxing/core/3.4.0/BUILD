@@ -14,14 +14,3 @@ maven_pom(
     source = "core-3.4.0.pom",
     visibility = ["//visibility:public"],
 )
-
-# managed by go/iml_to_build [unb]
-filegroup(
-    name = "unb.zxing-core_files",
-    srcs = ["core-3.4.0.jar"],
-    tags = [
-        "manual",
-        "unb",
-    ],
-    visibility = ["//visibility:public"],
-)

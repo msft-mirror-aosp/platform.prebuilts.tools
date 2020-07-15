@@ -13,14 +13,3 @@ maven_pom(
     source = "compose-compiler-hosted-0.1.0-dev14.pom",
     visibility = ["//visibility:public"],
 )
-
-# managed by go/iml_to_build [unb]
-java_import(
-    name = "unb.compose-compiler-hosted",
-    jars = ["compose-compiler-hosted-0.1.0-dev14.jar"],
-    tags = [
-        "manual",
-        "unb",
-    ],
-    visibility = ["//visibility:public"],
-)

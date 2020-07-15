@@ -14,14 +14,3 @@ maven_pom(
     source = "antlr4-runtime-4.5.3.pom",
     visibility = ["//visibility:public"],
 )
-
-# managed by go/iml_to_build [unb]
-java_import(
-    name = "unb.antlr4-runtime",
-    jars = ["antlr4-runtime-4.5.3.jar"],
-    tags = [
-        "manual",
-        "unb",
-    ],
-    visibility = ["//visibility:public"],
-)

@@ -6,9 +6,9 @@ java_import(
 )
 
 # managed by go/iml_to_build [unb]
-filegroup(
-    name = "unb.tightvnc_files",
-    srcs = ["tightvnc.jar"],
+java_import(
+    name = "unb.tightvnc",
+    jars = ["tightvnc.jar"],
     tags = [
         "manual",
         "unb",

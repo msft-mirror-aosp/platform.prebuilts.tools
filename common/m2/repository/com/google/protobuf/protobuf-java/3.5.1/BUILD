@@ -14,14 +14,3 @@ maven_pom(
     source = "protobuf-java-3.5.1.pom",
     visibility = ["//visibility:public"],
 )
-
-# managed by go/iml_to_build [unb]
-filegroup(
-    name = "unb.protobuf_files",
-    srcs = ["protobuf-java-3.5.1.jar"],
-    tags = [
-        "manual",
-        "unb",
-    ],
-    visibility = ["//visibility:public"],
-)
