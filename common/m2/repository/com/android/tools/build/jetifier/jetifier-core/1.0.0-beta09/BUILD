@@ -13,3 +13,14 @@ maven_pom(
     source = "jetifier-core-1.0.0-beta09.pom",
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build [unb]
+java_import(
+    name = "unb.jetifier-core",
+    jars = ["jetifier-core-1.0.0-beta09.jar"],
+    tags = [
+        "manual",
+        "unb",
+    ],
+    visibility = ["//visibility:public"],
+)

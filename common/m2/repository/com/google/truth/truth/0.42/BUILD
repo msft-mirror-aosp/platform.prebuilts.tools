@@ -14,3 +14,14 @@ maven_pom(
     source = "truth-0.42.pom",
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build [unb]
+filegroup(
+    name = "unb.truth_files",
+    srcs = ["truth-0.42.jar"],
+    tags = [
+        "manual",
+        "unb",
+    ],
+    visibility = ["//visibility:public"],
+)

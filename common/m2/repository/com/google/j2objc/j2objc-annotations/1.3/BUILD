@@ -14,3 +14,14 @@ maven_pom(
     source = "j2objc-annotations-1.3.pom",
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build [unb]
+filegroup(
+    name = "unb.Guava_files",
+    srcs = ["j2objc-annotations-1.3.jar"],
+    tags = [
+        "manual",
+        "unb",
+    ],
+    visibility = ["//visibility:public"],
+)

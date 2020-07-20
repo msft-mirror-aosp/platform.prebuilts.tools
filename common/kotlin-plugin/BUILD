@@ -301,7 +301,11 @@ java_import(
 
 # managed by go/iml_to_build [unb]
 java_import(
-    name = "Kotlin/lib/unb.kotlin-plugin",
+    name = "unb.kotlin-plugin",
     jars = ["Kotlin/lib/kotlin-plugin.jar"],
+    tags = [
+        "manual",
+        "unb",
+    ],
     visibility = ["//visibility:public"],
 )

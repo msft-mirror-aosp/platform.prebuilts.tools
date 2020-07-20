@@ -14,3 +14,14 @@ maven_pom(
     source = "guava-28.2-jre.pom",
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build [unb]
+filegroup(
+    name = "unb.Guava_files",
+    srcs = ["guava-28.2-jre.jar"],
+    tags = [
+        "manual",
+        "unb",
+    ],
+    visibility = ["//visibility:public"],
+)

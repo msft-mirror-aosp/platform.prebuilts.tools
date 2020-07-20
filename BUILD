@@ -1,3 +1,5 @@
+load("//tools/adt/idea/studio:studio.bzl", "studio_data")
+
 filegroup(
     name = "offline-sdk",
     srcs = glob(["*/offline-sdk/**"]),
@@ -25,5 +27,41 @@ filegroup(
 filegroup(
     name = "clion",
     srcs = glob(["clion/**"]),
+    visibility = ["//visibility:public"],
+)
+
+studio_data(
+    name = "simpleperf-bundle",
+    files = ["//prebuilts/tools/common/simpleperf"],
+    files_linux = glob(["linux-x86_64/simpleperf/*"]),
+    files_mac = glob(["darwin-x86_64/simpleperf/*"]),
+    files_win = glob([
+        "windows/simpleperf/*",
+        "windows-x86_64/simpleperf/*",
+    ]),
+    mappings = {
+        "prebuilts/tools/common/simpleperf/": "simpleperf/",
+        "prebuilts/tools/linux-x86_64/simpleperf/": "simpleperf/linux-x86_64/",
+        "prebuilts/tools/windows/simpleperf/": "simpleperf/windows/",
+        "prebuilts/tools/windows-x86_64/simpleperf/": "simpleperf/windows-x86_64/",
+        "prebuilts/tools/darwin-x86_64/simpleperf/": "simpleperf/darwin-x86_64/",
+    },
+    visibility = ["//visibility:public"],
+)
+
+studio_data(
+    name = "lldb-bundle",
+    files = glob(["common/lldb/**"]),
+    files_linux = glob(["linux-x86_64/lldb/**"]) + ["//prebuilts/python/linux-x86:linux-x86-bundle"],
+    files_mac = glob(["darwin-x86_64/lldb/**"]),
+    files_win = glob(["windows-x86_64/lldb/**"]) + ["//prebuilts/python/windows-x86:windows-x86-bundle"],
+    mappings = {
+        "prebuilts/tools/common/lldb/": "",
+        "prebuilts/tools/windows-x86_64/lldb/": "",
+        "prebuilts/tools/linux-x86_64/lldb/": "",
+        "prebuilts/tools/darwin-x86_64/lldb/": "",
+        "prebuilts/python/windows-x86/x64/Lib/": "lib/",
+        "prebuilts/python/linux-x86/lib/python2.7/": "lib/python2.7/",
+    },
     visibility = ["//visibility:public"],
 )

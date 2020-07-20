@@ -13,3 +13,25 @@ maven_pom(
     source = "junit-4.12.pom",
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build [unb]
+java_import(
+    name = "unb.junit-4.12",
+    jars = ["junit-4.12.jar"],
+    tags = [
+        "manual",
+        "unb",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build [unb]
+filegroup(
+    name = "unb.JUnit4_files",
+    srcs = ["junit-4.12.jar"],
+    tags = [
+        "manual",
+        "unb",
+    ],
+    visibility = ["//visibility:public"],
+)

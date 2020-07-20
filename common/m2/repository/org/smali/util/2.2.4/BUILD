@@ -13,3 +13,14 @@ maven_pom(
     source = "util-2.2.4.pom",
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build [unb]
+filegroup(
+    name = "unb.dexlib2_files",
+    srcs = ["util-2.2.4.jar"],
+    tags = [
+        "manual",
+        "unb",
+    ],
+    visibility = ["//visibility:public"],
+)
