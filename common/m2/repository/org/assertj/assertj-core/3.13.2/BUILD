@@ -14,3 +14,10 @@ maven_pom(
     source = "assertj-core-3.13.2.pom",
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build [unb]
+filegroup(
+    name = "unb.assertJ_files",
+    srcs = ["assertj-core-3.13.2.jar"],
+    visibility = ["//visibility:public"],
+)
