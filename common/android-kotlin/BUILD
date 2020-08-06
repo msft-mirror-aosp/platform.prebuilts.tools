@@ -39,9 +39,9 @@ filegroup(
     # do not sort: must match IML order
     srcs = [
         "android-extensions-compiler-tests.jar",
+        "idea-tests.jar",
         "idea-gradle-tests.jar",
         "idea-test-framework-tests.jar",
-        "idea-tests.jar",
         "tests-common-tests.jar",
     ],
     tags = [
