@@ -19,5 +19,9 @@ maven_pom(
 filegroup(
     name = "unb.assertJ_files",
     srcs = ["assertj-core-3.13.2.jar"],
+    tags = [
+        "manual",
+        "unb",
+    ],
     visibility = ["//visibility:public"],
 )
