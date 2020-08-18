@@ -32,7 +32,7 @@ rm -r $LOG_DIR
 mkdir $LOG_DIR
 
 # LLDB would create these files with more restrictive permissions than our umask above. Make sure
-# he doesn't get a chance.
+# it doesn't get a chance.
 # "touch" does not exist on pre API-16 devices. This is a poor man's replacement
 cat </dev/null >"$LLDB_DEBUGSERVER_LOG_FILE" 2>"$PLATFORM_LOG_FILE"
 
