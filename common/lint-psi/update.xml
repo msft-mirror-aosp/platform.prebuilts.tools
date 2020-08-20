@@ -3,15 +3,19 @@
 <project xmlns:if="ant:if" xmlns:unless="ant:unless" name="Kotlin" default="dist">
     <fail message="Property &quot;kotlin_src_dir&quot; needs to be set" unless="kotlin_src_dir"/>
 
+    <property environment="env"/>
+    <property name="gradle-home" value="${user.home}/.gradle" unless:set="env.GRADLE_USER_HOME"/>
+    <property name="gradle-home" value="${env.GRADLE_USER_HOME}" if:set="env.GRADLE_USER_HOME"/>
+
     <property name="output" value="${basedir}/temp"/>
     <property name="kotlin-dist" value="${kotlin_src_dir}/dist"/>
 
     <loadproperties srcFile="${kotlin_src_dir}/gradle/versions.properties" />
     <property name="build-version" value="${versions.intellijSdk}"/>
 
-    <property name="buildsrc.dir" value="${kotlin_src_dir}/dependencies/repo/kotlin.build"/>
-    <property name="idea.sdk" value="${buildsrc.dir}/ideaIC/${build-version}/artifacts/plugins/java"/>
-    <property name="idea.sources" value="${buildsrc.dir}/sources/intellij-${build-version}-sources.jar"/>
+    <property name="kotlin-build-deps" value="${gradle-home}/kotlin-build-dependencies/repo/kotlin.build"/>
+    <property name="idea.sdk" value="${kotlin-build-deps}/ideaIC/${build-version}/artifacts/plugins/java"/>
+    <property name="idea.sources" value="${kotlin-build-deps}/sources/intellij-${build-version}-sources.jar"/>
 
     <echo message="Assembling intellij-core, UAST and Kotlin version ${build-version}"/>
 

@@ -21,66 +21,20 @@ index 0cceaca7f05..71bf58819ab 100644
                  findVirtualFileGivenPackage(dir, relativeClassName, type)
              } ?: singleJavaFileRootsIndex.findJavaSourceClass(classId)
 diff --git a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
-index 3331ae7610e..9685c42dd5b 100644
+index 2d491bb5b1f..83575c41967 100644
 --- a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
 +++ b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
-@@ -370,7 +370,7 @@ class KotlinCoreEnvironment private constructor(
+@@ -364,7 +364,9 @@ class KotlinCoreEnvironment private constructor(
              is JvmModulePathRoot ->
                  if (root.file.isFile) findJarRoot(root.file) else findExistingRoot(root, "Java module root")
              is JavaSourceRoot ->
 -                findExistingRoot(root, "Java source root")
-+                if (root.file.isFile) findJarRoot(root.file) else findExistingRoot(root, "Java source root")
++                // Partial cherry pick of https://github.com/JetBrains/kotlin/pull/3649 supporting .srcjar roots.
++                if (root.file.isFile && root.file.path.endsWith(".srcjar")) findJarRoot(root.file)
++                else findExistingRoot(root, "Java source root")
              else ->
                  throw IllegalStateException("Unexpected root: $root")
          }
-@@ -503,7 +503,8 @@ class KotlinCoreEnvironment private constructor(
-             }
-         }
- 
--        private fun createApplicationEnvironment(
-+        // made public for Android Lint
-+        fun createApplicationEnvironment(
-             parentDisposable: Disposable, configuration: CompilerConfiguration, unitTestMode: Boolean
-         ): KotlinCoreApplicationEnvironment {
-             val applicationEnvironment = KotlinCoreApplicationEnvironment.create(parentDisposable, unitTestMode)
-@@ -562,7 +563,8 @@ class KotlinCoreEnvironment private constructor(
-             CandidateInterceptor.registerExtensionPoint(project)
-         }
- 
--        internal fun registerExtensionsFromPlugins(project: MockProject, configuration: CompilerConfiguration) {
-+        // made public for Android Lint
-+        fun registerExtensionsFromPlugins(project: MockProject, configuration: CompilerConfiguration) {
-             val messageCollector = configuration.get(CLIConfigurationKeys.MESSAGE_COLLECTOR_KEY)
-             for (registrar in configuration.getList(ComponentRegistrar.PLUGIN_COMPONENT_REGISTRARS)) {
-                 try {
-@@ -628,7 +630,8 @@ class KotlinCoreEnvironment private constructor(
-             }
-         }
- 
--        private fun registerProjectServicesForCLI(@Suppress("UNUSED_PARAMETER") projectEnvironment: JavaCoreProjectEnvironment) {
-+        // made public for Android Lint
-+        fun registerProjectServicesForCLI(@Suppress("UNUSED_PARAMETER") projectEnvironment: JavaCoreProjectEnvironment) {
-             /**
-              * Note that Kapt may restart code analysis process, and CLI services should be aware of that.
-              * Use PsiManager.getModificationTracker() to ensure that all the data you cached is still valid.
-diff --git a/compiler/light-classes/src/org/jetbrains/kotlin/asJava/classes/KtLightClassForSourceDeclaration.kt b/compiler/light-classes/src/org/jetbrains/kotlin/asJava/classes/KtLightClassForSourceDeclaration.kt
-index ef8364eca42..710c8bb5d6e 100644
---- a/compiler/light-classes/src/org/jetbrains/kotlin/asJava/classes/KtLightClassForSourceDeclaration.kt
-+++ b/compiler/light-classes/src/org/jetbrains/kotlin/asJava/classes/KtLightClassForSourceDeclaration.kt
-@@ -275,7 +275,12 @@ abstract class KtLightClassForSourceDeclaration(
-         }
- 
-         val thisDescriptor = getDescriptor()
--        return qualifiedName != null && thisDescriptor != null && checkSuperTypeByFQName(thisDescriptor, qualifiedName, checkDeep)
-+        // https://youtrack.jetbrains.com/issue/KT-37210
-+        return if (qualifiedName == null || thisDescriptor == null) {
-+            super.isInheritor(baseClass, checkDeep)
-+        } else {
-+            checkSuperTypeByFQName(thisDescriptor, qualifiedName, checkDeep)
-+        }
-     }
- 
-     @Throws(IncorrectOperationException::class)
 diff --git a/compiler/light-classes/src/org/jetbrains/kotlin/asJava/elements/KotlinLightTypeParameterListBuilder.kt b/compiler/light-classes/src/org/jetbrains/kotlin/asJava/elements/KotlinLightTypeParameterListBuilder.kt
 index 34fd6e8efbf..2e90875eb6b 100644
 --- a/compiler/light-classes/src/org/jetbrains/kotlin/asJava/elements/KotlinLightTypeParameterListBuilder.kt
@@ -107,21 +61,11 @@ index 34fd6e8efbf..2e90875eb6b 100644
 +    val sourcePsi: KtTypeParameter
 +) : LightTypeParameterBuilder(name, owner, index)
 \ No newline at end of file
-diff --git a/gradle/versions.properties b/gradle/versions.properties
-index 03c33f3084f..fa4bd9bdbcd 100644
---- a/gradle/versions.properties
-+++ b/gradle/versions.properties
-@@ -1,4 +1,4 @@
--versions.intellijSdk=201.6487-EAP-CANDIDATE-SNAPSHOT
-+versions.intellijSdk=201.7223.91
- versions.androidBuildTools=r23.0.1
- versions.idea.NodeJS=193.6494.7
- versions.jar.asm-all=7.0.1
 diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
-index 09e85475fe4..925878393bf 100644
+index de4d9391e29..d56f515478b 100644
 --- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
 +++ b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
-@@ -146,7 +146,23 @@ abstract class KotlinAbstractUElement(private val givenParent: UElement?) : Kotl
+@@ -145,7 +145,23 @@ abstract class KotlinAbstractUElement(private val givenParent: UElement?) : Kotl
              return false
          }
  
@@ -171,7 +115,7 @@ index 7e5c84dabe0..fdbdc5d9cbd 100644
  
  internal fun wrapExpressionBody(function: UElement, bodyExpression: KtExpression): UExpression? = when (bodyExpression) {
 diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/expressions/ElvisExpression.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/expressions/ElvisExpression.kt
-index 89cb7f7f247..44b74018a03 100644
+index 8b854d7c735..5e7f7ac4fb0 100644
 --- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/expressions/ElvisExpression.kt
 +++ b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/expressions/ElvisExpression.kt
 @@ -3,6 +3,7 @@ package org.jetbrains.uast.kotlin.expressions
@@ -222,21 +166,6 @@ index c099eb07009..257f50c64fc 100644
                      ) {
                          private val myExtendsList by lazy {
                              super.getExtendsList().apply {
-diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/psi/UastKotlinPsiParameter.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/psi/UastKotlinPsiParameter.kt
-index 2b2861b8360..957fcead8ab 100644
---- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/psi/UastKotlinPsiParameter.kt
-+++ b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/psi/UastKotlinPsiParameter.kt
-@@ -54,7 +54,9 @@ open class UastKotlinPsiParameterBase<T : KtElement>(
-     val ktOrigin: T,
-     language: Language = ktOrigin.language,
-     isVarArgs: Boolean = false,
--    val ktDefaultValue: KtExpression? = null,
-+    // Diff: Removed trailing comma from fix for KT-37613 backported
-+    // from 1.4 branch:
-+    val ktDefaultValue: KtExpression? = null
- ) : LightParameter(name, type, parent, language, isVarArgs) {
- 
-     override fun getParent(): PsiElement = parent
 diff --git a/plugins/uast-kotlin/testData/LocalDeclarations.values.txt b/plugins/uast-kotlin/testData/LocalDeclarations.values.txt
 index 791501900cd..e3d85177910 100644
 --- a/plugins/uast-kotlin/testData/LocalDeclarations.values.txt
@@ -259,51 +188,3 @@ index 791501900cd..e3d85177910 100644
                                      ULiteralExpression (value = 42) [42] = 42
                  UReturnExpression [return bar() == <init>()] = Nothing
                      UBinaryExpression (operator = ==) [bar() == <init>()] = Undetermined
-diff --git a/plugins/uast-kotlin/testData/ReifiedParameters.log.txt b/plugins/uast-kotlin/testData/ReifiedParameters.log.txt
-index 103f76bb0ff..40cdfa7cd48 100644
---- a/plugins/uast-kotlin/testData/ReifiedParameters.log.txt
-+++ b/plugins/uast-kotlin/testData/ReifiedParameters.log.txt
-@@ -42,8 +42,7 @@ UFile (package = )
-                 UAnnotation (fqName = org.jetbrains.annotations.Nullable)
-                 UAnnotation (fqName = kotlin.Suppress)
-                     UNamedExpression (name = names)
--                        UPolyadicExpression (operator = +)
--                            ULiteralExpression (value = "s")
-+                        ULiteralExpression (value = "s")
-             UBlockExpression
-                 UReturnExpression
-                     USimpleNameReferenceExpression (identifier = t)
-@@ -52,8 +51,7 @@ UFile (package = )
-                 UAnnotation (fqName = org.jetbrains.annotations.NotNull)
-                 UAnnotation (fqName = kotlin.Suppress)
-                     UNamedExpression (name = names)
--                        UPolyadicExpression (operator = +)
--                            ULiteralExpression (value = "s")
-+                        ULiteralExpression (value = "s")
-             UBlockExpression
-                 UReturnExpression
-                     USimpleNameReferenceExpression (identifier = t)
-diff --git a/plugins/uast-kotlin/testData/TryCatch.log.txt b/plugins/uast-kotlin/testData/TryCatch.log.txt
-index 2a36b4ae4cb..c53ba2040c9 100644
---- a/plugins/uast-kotlin/testData/TryCatch.log.txt
-+++ b/plugins/uast-kotlin/testData/TryCatch.log.txt
-@@ -29,8 +29,7 @@ UFile (package = )
-         UMethod (name = catches)
-             UAnnotation (fqName = java.lang.SuppressWarnings)
-                 UNamedExpression (name = value)
--                    UPolyadicExpression (operator = +)
--                        ULiteralExpression (value = "Something")
-+                    ULiteralExpression (value = "Something")
-             UBlockExpression
-                 UTryExpression
-                     UBlockExpression
-@@ -42,8 +41,7 @@ UFile (package = )
-                             UAnnotation (fqName = org.jetbrains.annotations.NotNull)
-                             UAnnotation (fqName = java.lang.SuppressWarnings)
-                                 UNamedExpression (name = value)
--                                    UPolyadicExpression (operator = +)
--                                        ULiteralExpression (value = "Something")
-+                                    ULiteralExpression (value = "Something")
-                         UBlockExpression
-                             UCallExpression (kind = UastCallKind(name='method_call'), argCount = 0))
-                                 UIdentifier (Identifier (catcher))
