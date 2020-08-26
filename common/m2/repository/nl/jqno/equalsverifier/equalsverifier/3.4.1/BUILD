@@ -14,3 +14,10 @@ maven_pom(
     source = "equalsverifier-3.4.1.pom",
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build [unb]
+filegroup(
+    name = "unb.equalsverifier_files",
+    srcs = ["equalsverifier-3.4.1.jar"],
+    visibility = ["//visibility:public"],
+)
