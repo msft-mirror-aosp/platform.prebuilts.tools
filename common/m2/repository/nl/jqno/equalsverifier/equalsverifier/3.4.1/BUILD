@@ -3,13 +3,21 @@ load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom", "maven_aa
 
 maven_java_import(
     name = "jar",
-    jars = ["kotlin-stdlib-1.4.0-rc.jar"],
+    jars = ["equalsverifier-3.4.1.jar"],
     pom = ":pom",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
     name = "pom",
-    source = "kotlin-stdlib-1.4.0-rc.pom",
+    parent = "//prebuilts/tools/common/m2/repository/org/sonatype/oss/oss-parent/9:pom",
+    source = "equalsverifier-3.4.1.pom",
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build [unb]
+filegroup(
+    name = "unb.equalsverifier_files",
+    srcs = ["equalsverifier-3.4.1.jar"],
     visibility = ["//visibility:public"],
 )
