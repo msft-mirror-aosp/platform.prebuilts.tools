@@ -25,32 +25,8 @@ $ git clone https://github.com/JetBrains/kotlin
 Then switch to a compatible patch branch.
 
 Currently:
-$ git checkout 1.3.70
-$ bunch switch 201
-
-Then cherry-pick these CLs from 1.4 back to 1.3.70:
-$ git cherry-pick f1d5570ca12e523722a7f2f95bf2a2eb797ccf9b (resolve conflicts, take the f1d5570ca12... version)
-$ git cherry-pick 2eb6f1988df4995d3ba74602a2b087e9c1c06d5c
-$ git cherry-pick 0ca67c1baced6f460c94cb2d3d554e522d738bde
-$ git cherry-pick c4bd1ce73c4b769d08696b3a3331429916e57099
-$ git cherry-pick 872b140500a19ef2e3738013a1d07f26be79c5ea
-$ git cherry-pick 6ae7d53a93d962811f54f8514b00ff2a275d2748 (resolve conflicts, take the 4fcb32b5ade... version)
-$ git cherry-pick 86fd4da5676d836644d292b3c7f562e25aa20d92 (conflicts are only in tests; doesn't matter)
-$ git cherry-pick ab36e20b1b4ca19aa622e26cd125de4b2e2ee5b4 (conflicts: take all imports; ignore tests)
-$ git cherry-pick 9674643254c82ba9931616eb02569e0fbb8ec5eb
-$ git cherry-pick 738e2f813c727189b03cba8418c63bba2818345e
-$ git cherry-pick b7e715045a9cddb92f2539a07a3adc2ef5e9b5d9
-$ git cherry-pick fc433dece8255e3f117447c4f3077ade4199205c
-$ git cherry-pick e60a32e8d398c2004b33b01e2f014d1ec48856ab
-$ git cherry-pick 86e434195ecfbcb88a32357df819567a1f9993e4
-$ git cherry-pick 903f35ce0cd686ce8fb4e22011f4608af5b4e594
-$ git cherry-pick b1414fa47705325a3978ea8ba38054a9be892d45
-
-Note that this will include some changes to uast-kotlin/testData
-that are not correct for 1.3.70 (for example, changes to
-literal string handling which shows up in the pretty
-printed ASTs; the kotlin-compiler-patch.diff reverts some
-of those changes.)
+$ git checkout 1.4.0
+$ bunch switch 202
 
 Verify that the file gradle/versions.properties has the line
     versions.intellijSdk=<VERSION>
@@ -59,7 +35,11 @@ or a later version if there are no binary compatibility
 issues (recall that Lint still has to link with Studio's platform
 version when running in the IDE).
 
-(Currently using 201.7223.91)
+(Currently using 202.5103-EAP-CANDIDATE-SNAPSHOT)
+
+Next cherry pick some fixes from upstream:
+    fa8c6e7fb6: Uast: KT-40578: resolve Kotlin property writes to setters (#3597)
+    27c139926c: LightClass improved isInheritor check for cases when resolve is failed (KT-37210)
 
 Then make sure to apply some extra patches to work around bugs:
 $ git apply /path/to/kotlin-compiler-patch.diff (which is located in this directory).

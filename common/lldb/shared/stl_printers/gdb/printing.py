@@ -14,15 +14,16 @@
 ## limitations under the License.
 ############################################################################
 
+from __future__ import print_function
 import gdb
 import lldb
 
 import traceback
 
 def print_exc(err_msg):
-    print '<<< %s >>>' % err_msg
+    print('<<< %s >>>' % err_msg)
     traceback.print_exc()
-    print '<<< --- >>>'
+    print('<<< --- >>>')
 
 
 def type_summary_function(sbvalue, internal_dict):
@@ -165,7 +166,7 @@ def is_obsolete(name):
 def register_pretty_printer(obj, printer):
     gdb.pretty_printers.append(printer)
     if lldb.debugger.GetCategory(printer.name).IsValid():
-        print ('WARNING: A type category with name "%s" already exists.' %
+        print('WARNING: A type category with name "%s" already exists.' %
                printer.name)
         return
     cat = lldb.debugger.CreateCategory(printer.name)
