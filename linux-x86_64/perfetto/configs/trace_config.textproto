@@ -62,6 +62,7 @@ data_sources {
       ftrace_events: "ion_heap_grow"
       ftrace_events: "ion/ion_stat"
       ftrace_events: "oom_score_adj_update"
+      ftrace_events: "gpu_mem/gpu_mem_total"
 
       # Old (kernel) LMK
       ftrace_events: "lowmemorykiller/lowmemory_kill"
@@ -75,6 +76,12 @@ data_sources {
       atrace_categories: "dalvik"
       atrace_categories: "binder_driver"
     }
+  }
+}
+
+data_sources: {
+  config {
+    name: "android.gpu.memory"
   }
 }
 
