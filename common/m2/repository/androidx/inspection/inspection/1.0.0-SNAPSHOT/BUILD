@@ -4,20 +4,20 @@ load("//tools/base/bazel:app_inspection.bzl", "app_inspection_aar_import")
 
 maven_aar(
     name = "aar",
-    aar = "inspection-1.0.0-20200811.152641-1.aar",
+    aar = "inspection-1.0.0-20200912.174511-1.aar",
     pom = ":pom",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
     name = "pom",
-    source = "inspection-1.0.0-20200811.152641-1.pom",
+    source = "inspection-1.0.0-20200912.174511-1.pom",
     visibility = ["//visibility:public"],
 )
 
 app_inspection_aar_import(
     name = "jar",
-    aar = "inspection-1.0.0-20200811.152641-1.aar",
+    aar = "inspection-1.0.0-20200912.174511-1.aar",
     pom = ":pom",
     visibility = ["//visibility:public"],
 )
