@@ -49,6 +49,12 @@ data_sources {
       buffer_size_kb: 16384
       drain_period_ms: 250
 
+      # Store certain high-volume "sched" ftrace events in a denser format
+      # (falling back to the default format if not supported by the tracer).
+      compact_sched {
+        enabled: true
+      }
+
       # We need to do process tracking to ensure kernel ftrace events targeted at short-lived
       # threads are associated correctly
       ftrace_events: "task/task_newtask"
@@ -62,6 +68,7 @@ data_sources {
       ftrace_events: "ion_heap_grow"
       ftrace_events: "ion/ion_stat"
       ftrace_events: "oom_score_adj_update"
+      ftrace_events: "gpu_mem/gpu_mem_total"
 
       # Old (kernel) LMK
       ftrace_events: "lowmemorykiller/lowmemory_kill"
@@ -82,6 +89,13 @@ data_sources {
       atrace_categories: "sync"
       atrace_categories: "workq"
     }
+  }
+}
+
+data_sources: {
+  config {
+    name: "android.gpu.memory"
+    target_buffer: 0
   }
 }
 
