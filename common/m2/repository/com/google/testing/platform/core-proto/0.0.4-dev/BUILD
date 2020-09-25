@@ -13,3 +13,10 @@ maven_pom(
     source = "core-proto-0.0.4-dev.pom",
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build [unb]
+java_import(
+    name = "unb.androidx-test-core-proto",
+    jars = ["core-proto-0.0.4-dev.jar"],
+    visibility = ["//visibility:public"],
+)
