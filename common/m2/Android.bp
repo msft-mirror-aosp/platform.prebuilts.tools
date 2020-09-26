@@ -335,3 +335,35 @@ java_import {
     jars: ["repository/com/google/devtools/ksp/symbol-processing-api/1.4.10-dev-experimental-20201110/symbol-processing-api-1.4.10-dev-experimental-20201110.jar"],
     host_supported: true,
 }
+
+cc_prebuilt_binary {
+    name: "prebuilt-protoc-gen-grpc-java-plugin",
+    host_supported: true,
+    device_supported: false,
+    srcs: ["repository/io/grpc/protoc-gen-grpc-java/1.0.3/protoc-gen-grpc-java-1.0.3-linux-x86_64.exe"],
+}
+
+java_import_host {
+    name: "grpc-core-prebuilt-jar",
+    jars: ["repository/io/grpc/grpc-core/1.0.3/grpc-core-1.0.3.jar"]
+}
+
+java_import_host {
+    name: "grpc-stub-prebuilt-jar",
+    jars: ["repository/io/grpc/grpc-stub/1.0.3/grpc-stub-1.0.3.jar"]
+}
+
+java_import_host {
+    name: "grpc-protobuf-prebuilt-jar",
+    jars: ["repository/io/grpc/grpc-protobuf/1.0.3/grpc-protobuf-1.0.3.jar"]
+}
+
+java_import_host {
+    name: "google-cloud-core-prebuilt-jar",
+    jars: ["repository/com/google/cloud/google-cloud-core/1.65.0/google-cloud-core-1.65.0.jar" ]
+}
+
+java_import_host {
+    name: "google-cloud-storage-prebuilt-jar",
+    jars: ["repository/com/google/cloud/google-cloud-storage/1.65.0/google-cloud-storage-1.65.0.jar" ]
+}
