@@ -61,7 +61,7 @@ java_import {
 
 java_import {
     name: "truth-prebuilt-jar",
-    jars: ["repository/com/google/truth/truth/0.42/truth-0.42.jar"],
+    jars: ["repository/com/google/truth/truth/0.44/truth-0.44.jar"],
     sdk_version: "current",
     host_supported: true,
 }
@@ -284,3 +284,13 @@ java_import_host {
 }
 
 build = ["robolectric.bp"]
+
+java_import_host {
+    name: "protobuf-lite",
+    jars: ["repository/com/google/protobuf/protobuf-lite/3.0.1/protobuf-lite-3.0.1.jar"],
+}
+
+java_import_host {
+    name: "jsoup-1.6.3",
+    jars: ["repository/org/jsoup/jsoup/1.6.3/jsoup-1.6.3.jar"],
+}
