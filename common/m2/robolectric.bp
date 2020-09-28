@@ -65,8 +65,8 @@ java_genrule_host {
         "mkdir $$D/linux-x86_64 && mv $$D/*linux-amd64* $$D/linux-x86_64/libsqlite4java.so && " +
         "mkdir $$D/linux-x86 && mv $$D/*linux-i386* $$D/linux-x86/libsqlite4java.so && " +
         "mkdir $$D/mac-x86_64 && mv $$D/*osx* $$D/mac-x86_64/libsqlite4java.jnilib && " +
-        "mkdir $$D/windows-x86_64 && mv $$D/*win32-x64* $$D/windows-x86_64/libsqlite4java.dll && " +
-        "mkdir $$D/windows-x86 && mv $$D/*win32-x86* $$D/windows-x86/libsqlite4java.dll && " +
+        "mkdir $$D/windows-x86_64 && mv $$D/*win32-x64* $$D/windows-x86_64/sqlite4java.dll && " +
+        "mkdir $$D/windows-x86 && mv $$D/*win32-x86* $$D/windows-x86/sqlite4java.dll && " +
         "$(location soong_zip) -o $(out) -C $$D -D $$D",
 }
 
