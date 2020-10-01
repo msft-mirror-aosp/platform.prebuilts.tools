@@ -13,27 +13,6 @@
 // limitations under the License.
 
 java_import {
-    name: "asm-commons-prebuilt-jar",
-    jars: ["repository/org/ow2/asm/asm-commons/5.0.1/asm-commons-5.0.1.jar"],
-    sdk_version: "current",
-    // host_supported: true,  See version conflict comment below.
-}
-
-java_import {
-    name: "asm-prebuilt-jar",
-    jars: ["repository/org/ow2/asm/asm/5.0.1/asm-5.0.1.jar"],
-    sdk_version: "current",
-    // host_supported: true,  See version conflict comment below.
-}
-
-java_import {
-    name: "asm-tree-prebuilt-jar",
-    jars: ["repository/org/ow2/asm/asm-tree/5.0.1/asm-tree-5.0.1.jar"],
-    sdk_version: "current",
-    // host_supported: true,  See version conflict comment below.
-}
-
-java_import {
     name: "byte-buddy-prebuilt-jar",
     jars: ["repository/net/bytebuddy/byte-buddy/1.6.5/byte-buddy-1.6.5.jar"],
     sdk_version: "current",
@@ -81,72 +60,27 @@ java_import {
 }
 
 java_import {
-    name: "squareup-haha-prebuilt",
-    jars: ["repository/com/squareup/haha/haha/2.0.2/haha-2.0.2.jar"],
-    sdk_version: "current",
-}
-
-java_import {
     name: "truth-prebuilt-jar",
-    jars: ["repository/com/google/truth/truth/0.42/truth-0.42.jar"],
+    jars: ["repository/com/google/truth/truth/0.44/truth-0.44.jar"],
     sdk_version: "current",
     host_supported: true,
 }
 
-java_import {
-    name: "assertj-core-prebuilt-jar",
-    jars: ["repository/org/assertj/assertj-core/3.8.0/assertj-core-3.8.0.jar"],
-    host_supported: true,
-}
-
-// These versions differ. Consider updating and unifying.
-
-java_import_host {
-    name: "asm-commons-prebuilt-host-jar",
-    jars: ["repository/org/ow2/asm/asm-commons/6.0/asm-commons-6.0.jar"],
-}
-
-java_import_host {
-    name: "asm-prebuilt-host-jar",
-    jars: ["repository/org/ow2/asm/asm/6.0/asm-6.0.jar"],
-}
-
-java_import_host {
-    name: "asm-tree-prebuilt-host-jar",
-    jars: ["repository/org/ow2/asm/asm-tree/6.0/asm-tree-6.0.jar"],
-}
-
-// These are host-only prebuilts.
-
-java_import_host {
-    name: "asm-analysis-prebuilt-host-jar",
-    jars: ["repository/org/ow2/asm/asm-analysis/6.0/asm-analysis-6.0.jar"],
-}
-
-java_import_host {
-    name: "asm-util-prebuilt-host-jar",
-    jars: ["repository/org/ow2/asm/asm-util/6.0/asm-util-6.0.jar"],
-}
-
-java_import_host {
-    name: "guava-prebuilt-host-jar",
-    jars: ["repository/com/google/guava/guava/22.0/guava-22.0.jar"],
-    installable: true,
-}
-
+// TODO: remove in favor of external/javapoet
 java_import_host {
     name: "javapoet-prebuilt-jar",
     jars: ["repository/com/squareup/javapoet/1.8.0/javapoet-1.8.0.jar"],
 }
 
 java_import_host {
-    name: "protobuf-java-prebuilt-jar",
-    jars: ["repository/com/google/protobuf/protobuf-java/3.0.2/protobuf-java-3.0.2.jar"],
+    name: "protobuf-java-util-prebuilt-jar",
+    jars: ["repository/com/google/protobuf/protobuf-java-util/3.0.2/protobuf-java-util-3.0.2.jar"],
 }
 
 java_import_host {
-    name: "protobuf-java-util-prebuilt-jar",
-    jars: ["repository/com/google/protobuf/protobuf-java-util/3.0.2/protobuf-java-util-3.0.2.jar"],
+    name: "grpc-netty-shaded-1.16.1-jar",
+    jars: ["repository/io/grpc/grpc-netty-shaded/1.16.1/grpc-netty-shaded-1.16.1.jar"],
+    visibility: ["//external/grpc-grpc-java/netty/shaded"],
 }
 
 java_import_host {
@@ -200,15 +134,6 @@ java_library_host {
     static_libs: ["truth-prebuilt"],
 }
 
-java_library_host {
-    name: "protobuf-java-host-prebuilt",
-    static_libs: [
-        "gson-prebuilt-jar",
-        "protobuf-java-prebuilt-jar",
-        "protobuf-java-util-prebuilt-jar",
-    ],
-}
-
 java_import {
     name: "metalava-tools-common-m2-deps",
     host_supported: true,
@@ -255,41 +180,7 @@ java_import {
     ],
 }
 
-java_import_host {
-    name: "dagger2-compiler-2.19-import",
-    jars: [
-        "repository/com/google/dagger/dagger-compiler/2.19/dagger-compiler-2.19.jar",
-        "repository/com/google/dagger/dagger-producers/2.19/dagger-producers-2.19.jar",
-        "repository/com/google/dagger/dagger-spi/2.19/dagger-spi-2.19.jar",
-        "repository/com/google/dagger/dagger/2.19/dagger-2.19.jar",
-        "repository/com/google/guava/guava/25.1-jre/guava-25.1-jre.jar",
-        "repository/com/squareup/javapoet/1.11.1/javapoet-1.11.1.jar",
-        "repository/com/google/dagger/dagger-google-java-format/1.6/google-java-format-1.6-all-deps.jar",
-    ],
-}
-
-java_import {
-    name: "dagger2-2.19",
-    jars: ["repository/com/google/dagger/dagger/2.19/dagger-2.19.jar"],
-    host_supported: true,
-}
-
-java_plugin {
-    name: "dagger2-compiler-2.19",
-    static_libs: [
-        "dagger2-compiler-2.19-import",
-        "jsr330",
-    ],
-    processor_class: "dagger.internal.codegen.ComponentProcessor",
-    generates_api: true,
-}
-
-java_import {
-    name: "kotlin-metadata",
-    jars: ["repository/me/eugeniomarletti/kotlin-metadata/1.2.1/kotlin-metadata-1.2.1.jar"],
-    host_supported: true,
-}
-
+// TODO: remove in favor of kotlinx_metadata_jvm
 java_import {
     name: "kotlinx-metadata-jvm",
     jars: ["repository/org/jetbrains/kotlinx/kotlinx-metadata-jvm/0.1.0/kotlinx-metadata-jvm-0.1.0.jar"],
@@ -342,6 +233,7 @@ java_import {
     jars: ["repository/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.3.0/kotlinx-coroutines-core-1.3.0.jar"],
 }
 
+// TODO: remove in favor of kotlinx_coroutines
 java_library_static {
     name: "kotlinx-coroutines-core",
     static_libs: [
@@ -356,6 +248,7 @@ java_import {
     jars: ["repository/org/jetbrains/kotlinx/kotlinx-coroutines-android/1.3.0/kotlinx-coroutines-android-1.3.0.jar"],
 }
 
+// TODO: remove in favor of kotlinx_coroutines_android
 java_library_static {
     name: "kotlinx-coroutines-android",
     static_libs: [
@@ -391,3 +284,13 @@ java_import_host {
 }
 
 build = ["robolectric.bp"]
+
+java_import_host {
+    name: "protobuf-lite",
+    jars: ["repository/com/google/protobuf/protobuf-lite/3.0.1/protobuf-lite-3.0.1.jar"],
+}
+
+java_import_host {
+    name: "jsoup-1.6.3",
+    jars: ["repository/org/jsoup/jsoup/1.6.3/jsoup-1.6.3.jar"],
+}
