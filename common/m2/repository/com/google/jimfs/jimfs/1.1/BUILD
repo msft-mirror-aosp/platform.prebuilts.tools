@@ -15,13 +15,9 @@ maven_pom(
     visibility = ["//visibility:public"],
 )
 
-# managed by go/iml_to_build [unb]
+# managed by go/iml_to_build
 filegroup(
-    name = "unb.jimfs_files",
+    name = "jimfs_files",
     srcs = ["jimfs-1.1.jar"],
-    tags = [
-        "manual",
-        "unb",
-    ],
     visibility = ["//visibility:public"],
 )

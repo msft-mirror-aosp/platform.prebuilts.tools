@@ -14,9 +14,9 @@ maven_pom(
     visibility = ["//visibility:public"],
 )
 
-# managed by go/iml_to_build [unb]
+# managed by go/iml_to_build
 filegroup(
-    name = "unb.kotlin-stdlib-jdk8_files",
+    name = "kotlin-stdlib-jdk8_files",
     srcs = ["kotlin-stdlib-jdk8-1.4.0.jar"],
     visibility = ["//visibility:public"],
 )

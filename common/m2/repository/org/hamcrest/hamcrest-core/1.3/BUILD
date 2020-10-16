@@ -15,24 +15,16 @@ maven_pom(
     visibility = ["//visibility:public"],
 )
 
-# managed by go/iml_to_build [unb]
+# managed by go/iml_to_build
 java_import(
-    name = "unb.hamcrest-core-1.3",
+    name = "hamcrest-core-1.3",
     jars = ["hamcrest-core-1.3.jar"],
-    tags = [
-        "manual",
-        "unb",
-    ],
     visibility = ["//visibility:public"],
 )
 
-# managed by go/iml_to_build [unb]
+# managed by go/iml_to_build
 filegroup(
-    name = "unb.JUnit4_files",
+    name = "JUnit4_files",
     srcs = ["hamcrest-core-1.3.jar"],
-    tags = [
-        "manual",
-        "unb",
-    ],
     visibility = ["//visibility:public"],
 )

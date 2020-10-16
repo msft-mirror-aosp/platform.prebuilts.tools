@@ -14,13 +14,9 @@ maven_pom(
     visibility = ["//visibility:public"],
 )
 
-# managed by go/iml_to_build [unb]
+# managed by go/iml_to_build
 filegroup(
-    name = "unb.kxml2_files",
+    name = "kxml2_files",
     srcs = ["kxml2-2.3.0.jar"],
-    tags = [
-        "manual",
-        "unb",
-    ],
     visibility = ["//visibility:public"],
 )

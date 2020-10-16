@@ -13,14 +13,3 @@ maven_pom(
     source = "jsr305-1.3.9.pom",
     visibility = ["//visibility:public"],
 )
-
-# managed by go/iml_to_build [unb]
-filegroup(
-    name = "unb.jsr305_files",
-    srcs = ["jsr305-1.3.9.jar"],
-    tags = [
-        "manual",
-        "unb",
-    ],
-    visibility = ["//visibility:public"],
-)

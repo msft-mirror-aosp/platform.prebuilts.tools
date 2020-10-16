@@ -14,13 +14,9 @@ maven_pom(
     visibility = ["//visibility:public"],
 )
 
-# managed by go/iml_to_build [unb]
+# managed by go/iml_to_build
 filegroup(
-    name = "unb.aapt-proto_files",
+    name = "aapt-proto_files",
     srcs = ["aapt2-proto-0.3.1.jar"],
-    tags = [
-        "manual",
-        "unb",
-    ],
     visibility = ["//visibility:public"],
 )

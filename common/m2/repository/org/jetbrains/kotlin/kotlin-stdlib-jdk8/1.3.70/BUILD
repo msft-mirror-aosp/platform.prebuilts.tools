@@ -13,14 +13,3 @@ maven_pom(
     source = "kotlin-stdlib-jdk8-1.3.70.pom",
     visibility = ["//visibility:public"],
 )
-
-# managed by go/iml_to_build [unb]
-filegroup(
-    name = "unb.kotlin-stdlib-jdk8_files",
-    srcs = ["kotlin-stdlib-jdk8-1.3.70.jar"],
-    tags = [
-        "manual",
-        "unb",
-    ],
-    visibility = ["//visibility:public"],
-)

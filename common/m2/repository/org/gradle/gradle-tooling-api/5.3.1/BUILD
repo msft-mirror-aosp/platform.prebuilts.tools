@@ -14,13 +14,9 @@ maven_pom(
     visibility = ["//visibility:public"],
 )
 
-# managed by go/iml_to_build [unb]
+# managed by go/iml_to_build
 java_import(
-    name = "unb.gradle-tooling-api-5.3.1",
+    name = "gradle-tooling-api-5.3.1",
     jars = ["gradle-tooling-api-5.3.1.jar"],
-    tags = [
-        "manual",
-        "unb",
-    ],
     visibility = ["//visibility:public"],
 )

@@ -15,13 +15,9 @@ maven_pom(
     visibility = ["//visibility:public"],
 )
 
-# managed by go/iml_to_build [unb]
+# managed by go/iml_to_build
 filegroup(
-    name = "unb.eclipse-layout-kernel_files",
+    name = "eclipse-layout-kernel_files",
     srcs = ["org.eclipse.elk.alg.layered-0.3.0.jar"],
-    tags = [
-        "manual",
-        "unb",
-    ],
     visibility = ["//visibility:public"],
 )

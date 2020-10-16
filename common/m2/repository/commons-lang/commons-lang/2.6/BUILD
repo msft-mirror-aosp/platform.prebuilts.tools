@@ -15,13 +15,9 @@ maven_pom(
     visibility = ["//visibility:public"],
 )
 
-# managed by go/iml_to_build [unb]
+# managed by go/iml_to_build
 java_import(
-    name = "unb.commons-lang",
+    name = "commons-lang",
     jars = ["commons-lang-2.6.jar"],
-    tags = [
-        "manual",
-        "unb",
-    ],
     visibility = ["//visibility:public"],
 )
