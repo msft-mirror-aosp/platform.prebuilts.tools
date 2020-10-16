@@ -3,13 +3,13 @@ load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom", "maven_aa
 
 maven_java_import(
     name = "jar",
-    jars = ["gradle-tooling-api-6.7-rc-4.jar"],
+    jars = ["gradle-tooling-api-6.7.jar"],
     pom = ":pom",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
     name = "pom",
-    source = "gradle-tooling-api-6.7-rc-4.pom",
+    source = "gradle-tooling-api-6.7.pom",
     visibility = ["//visibility:public"],
 )
