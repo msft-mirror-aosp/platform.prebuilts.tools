@@ -6,5 +6,5 @@ There are two ways of obtaining the binaries:
 
 2) [Download and build](https://source.android.com/source/initializing) the latest (or a specific) version of AOSP, then copy the simpleperf binaries generated as artifacts to this directory. Also, update the text on the bottom of this file mentioning the AOSP source tree built.
 
-Current binaries were downloaded from AOSP simpleperf prebuilts (tree @ [1e2dddd02630636a8e28529e0c2acf14388cd90f](https://android.googlesource.com/platform/prebuilts/simpleperf/+/c463a3e871abac8c4dd17ffdeeb1a66d3abc2fdf/bin/android/)).
+Current binaries were downloaded from AOSP simpleperf prebuilts (commit [2087fac969d4743643d562fc521dd9fffb398e3c](https://android.googlesource.com/platform/prebuilts/simpleperf/+/2087fac969d4743643d562fc521dd9fffb398e3c/bin/android/)).
 
