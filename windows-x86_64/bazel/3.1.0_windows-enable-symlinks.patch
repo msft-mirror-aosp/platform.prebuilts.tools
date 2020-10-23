@@ -1,0 +1,1676 @@
+From 8ace0abfb71e0d60cd9450c95849ecca115b339b Mon Sep 17 00:00:00 2001
+From: tomrenn <tomrenn@google.com>
+Date: Wed, 15 Apr 2020 13:07:23 -0700
+Subject: [PATCH 1/3] Add --windows_enable_symlinks startup option to support
+ native symlinks.
+
+Assumes the user has developer mode enabled and is running a Windows 10 build 14972 or greater.
+
+RELNOTES: none
+PiperOrigin-RevId: 306704925
+---
+ src/main/cpp/blaze.cc                         | 166 +++++-------
+ src/main/cpp/startup_options.cc               |   5 +-
+ src/main/cpp/startup_options.h                |   4 +
+ .../lib/runtime/BazelFileSystemModule.java    |  10 +-
+ .../build/lib/runtime/BlazeRuntime.java       | 150 +++++------
+ .../runtime/BlazeServerStartupOptions.java    | 249 +++++++++---------
+ .../build/lib/windows/WindowsFileSystem.java  |  15 +-
+ .../windows/jni/WindowsFileOperations.java    |  24 ++
+ src/main/native/windows/file-jni.cc           |  18 ++
+ src/main/native/windows/file.cc               |  40 +++
+ src/main/native/windows/file.h                |  22 ++
+ src/main/tools/build-runfiles-windows.cc      |   4 -
+ .../lib/util/DependencySetWindowsTest.java    |  71 ++---
+ .../build/lib/vfs/util/FileSystems.java       |   3 +-
+ .../windows/WindowsFileOperationsTest.java    |  32 +++
+ .../lib/windows/WindowsFileSystemTest.java    |  25 +-
+ .../lib/windows/util/WindowsTestUtil.java     |  16 ++
+ 17 files changed, 512 insertions(+), 342 deletions(-)
+
+diff --git a/src/main/cpp/blaze.cc b/src/main/cpp/blaze.cc
+index a934d4d141..d2d1ce366c 100644
+--- a/src/main/cpp/blaze.cc
++++ b/src/main/cpp/blaze.cc
+@@ -80,15 +80,15 @@
+ 
+ using blaze_util::GetLastErrorString;
+ 
+-extern char** environ;
++extern char **environ;
+ 
+ namespace blaze {
+ 
++using command_server::CommandServer;
+ using std::map;
+ using std::set;
+ using std::string;
+ using std::vector;
+-using command_server::CommandServer;
+ 
+ // The following is a treatise on how the interaction between the client and the
+ // server works.
+@@ -177,7 +177,7 @@ enum RestartReason {
+ };
+ 
+ // String string representation of RestartReason.
+-static const char* ReasonString(RestartReason reason) {
++static const char *ReasonString(RestartReason reason) {
+   switch (reason) {
+     case NO_RESTART:
+       return "no_restart";
+@@ -217,8 +217,8 @@ struct DurationMillis {
+ // Encapsulates miscellaneous information reported to the server for logging and
+ // profiling purposes.
+ struct LoggingInfo {
+-  explicit LoggingInfo(
+-      const string &binary_path_, const uint64_t start_time_ms_)
++  explicit LoggingInfo(const string &binary_path_,
++                       const uint64_t start_time_ms_)
+       : binary_path(binary_path_),
+         start_time_ms(start_time_ms_),
+         restart_reason(NO_RESTART) {}
+@@ -278,7 +278,7 @@ class BlazeServer final {
+   void Cancel();
+ 
+   // Returns information about the actual server process and its configuration.
+-  const ServerProcessInfo& ProcessInfo() const { return process_info_; }
++  const ServerProcessInfo &ProcessInfo() const { return process_info_; }
+ 
+  private:
+   BlazeLock blaze_lock_;
+@@ -321,9 +321,7 @@ static BlazeServer *blaze_server;
+ // objects before those.
+ 
+ uint64_t BlazeServer::AcquireLock() {
+-  return blaze::AcquireLock(output_base_,
+-                            batch_,
+-                            block_for_lock_,
++  return blaze::AcquireLock(output_base_, batch_, block_for_lock_,
+                             &blaze_lock_);
+ }
+ 
+@@ -332,7 +330,6 @@ uint64_t BlazeServer::AcquireLock() {
+ 
+ static map<string, EnvVarValue> PrepareEnvironmentForJvm();
+ 
+-
+ // Escapes colons by replacing them with '_C' and underscores by replacing them
+ // with '_U'. E.g. "name:foo_bar" becomes "name_Cfoo_Ubar"
+ static string EscapeForOptionSource(const string &input) {
+@@ -354,9 +351,8 @@ static vector<string> GetServerExeArgs(const blaze_util::Path &jvm_path,
+ 
+   // e.g. A Blaze server process running in ~/src/build_root (where there's a
+   // ~/src/build_root/WORKSPACE file) will appear in ps(1) as "blaze(src)".
+-  result.push_back(
+-      startup_options.GetLowercaseProductName() +
+-      "(" + workspace_layout.GetPrettyWorkspaceName(workspace) + ")");
++  result.push_back(startup_options.GetLowercaseProductName() + "(" +
++                   workspace_layout.GetPrettyWorkspaceName(workspace) + ")");
+   startup_options.AddJVMArgumentPrefix(jvm_path.GetParent().GetParent(),
+                                        &result);
+ 
+@@ -421,8 +417,8 @@ static vector<string> GetServerExeArgs(const blaze_util::Path &jvm_path,
+   }
+   result.insert(result.end(), user_options.begin(), user_options.end());
+ 
+-  startup_options.AddJVMArgumentSuffix(
+-      real_install_dir, server_jar_path, &result);
++  startup_options.AddJVMArgumentSuffix(real_install_dir, server_jar_path,
++                                       &result);
+ 
+   // JVM arguments are complete. Now pass in Blaze startup options.
+   // Note that we always use the --flag=ARG form (instead of the --flag ARG one)
+@@ -505,7 +501,11 @@ static vector<string> GetServerExeArgs(const blaze_util::Path &jvm_path,
+   } else {
+     result.push_back("--nofatal_event_bus_exceptions");
+   }
+-
++  if (startup_options.windows_enable_symlinks) {
++    result.push_back("--windows_enable_symlinks");
++  } else {
++    result.push_back("--nowindows_enable_symlinks");
++  }
+   // We use this syntax so that the logic in AreStartupOptionsDifferent() that
+   // decides whether the server needs killing is simpler. This is parsed by the
+   // Java code where --noclient_debug and --client_debug=false are equivalent.
+@@ -530,8 +530,7 @@ static vector<string> GetServerExeArgs(const blaze_util::Path &jvm_path,
+     result.push_back("--host_jvm_debug");
+   }
+   if (!startup_options.host_jvm_profile.empty()) {
+-    result.push_back("--host_jvm_profile=" +
+-                     startup_options.host_jvm_profile);
++    result.push_back("--host_jvm_profile=" + startup_options.host_jvm_profile);
+   }
+   if (!startup_options.host_jvm_args.empty()) {
+     for (const auto &arg : startup_options.host_jvm_args) {
+@@ -616,8 +615,8 @@ static void EnsureServerDir(const blaze_util::Path &server_dir) {
+ }
+ 
+ // Do a chdir into the workspace, and die if it fails.
+-static const void GoToWorkspace(
+-    const WorkspaceLayout &workspace_layout, const string &workspace) {
++static const void GoToWorkspace(const WorkspaceLayout &workspace_layout,
++                                const string &workspace) {
+   if (workspace_layout.InWorkspace(workspace) &&
+       !blaze_util::ChangeDirectory(workspace)) {
+     BAZEL_DIE(blaze_exit_code::INTERNAL_ERROR)
+@@ -766,12 +765,11 @@ static int GetServerPid(const blaze_util::Path &server_dir) {
+ }
+ 
+ // Connect to the server process or exit if it doesn't work out.
+-static void ConnectOrDie(
+-    const OptionProcessor &option_processor,
+-    const StartupOptions &startup_options,
+-    const int server_pid,
+-    BlazeServerStartup *server_startup,
+-    BlazeServer *server) {
++static void ConnectOrDie(const OptionProcessor &option_processor,
++                         const StartupOptions &startup_options,
++                         const int server_pid,
++                         BlazeServerStartup *server_startup,
++                         BlazeServer *server) {
+   // Give the server two minutes to start up. That's enough to connect with a
+   // debugger.
+   const auto start_time = std::chrono::system_clock::now();
+@@ -858,8 +856,8 @@ static void StartServerAndConnect(
+ 
+   // Really make sure there's no other server running in this output base (even
+   // an unresponsive one), as that could cause major problems.
+-  EnsurePreviousServerProcessTerminated(
+-      server_dir, startup_options, logging_info);
++  EnsurePreviousServerProcessTerminated(server_dir, startup_options,
++                                        logging_info);
+ 
+   // cmdline file is used to validate the server running in this server_dir.
+   // There's no server running now so we're safe to unconditionally write this.
+@@ -883,8 +881,8 @@ static void StartServerAndConnect(
+       server->ProcessInfo().jvm_log_file_append_, startup_options.install_base,
+       server_dir, startup_options, &server_startup);
+ 
+-  ConnectOrDie(
+-      option_processor, startup_options, server_pid, server_startup, server);
++  ConnectOrDie(option_processor, startup_options, server_pid, server_startup,
++               server);
+ 
+   delete server_startup;
+ }
+@@ -1038,7 +1036,7 @@ static DurationMillis ExtractData(const string &self_path,
+   }
+ }
+ 
+-static bool IsVolatileArg(const string& arg) {
++static bool IsVolatileArg(const string &arg) {
+   // TODO(ccalvarin) when --batch is gone and the startup_options field in the
+   // gRPC message is always set, there is no reason for client options that are
+   // not used at server startup to be part of the startup command line. The
+@@ -1086,12 +1084,12 @@ static bool AreStartupOptionsDifferent(
+   //     --host_jvm_args="foo" twice) so we cannot simply use two sets and take
+   //     the set difference, but must consider the occurrences of each flag.
+   std::unordered_multiset<string> old_args, new_args;
+-  for (const string& a : running_server_args) {
++  for (const string &a : running_server_args) {
+     if (!IsVolatileArg(a)) {
+       old_args.insert(a);
+     }
+   }
+-  for (const string& a : requested_args) {
++  for (const string &a : requested_args) {
+     if (!IsVolatileArg(a)) {
+       auto it = old_args.find(a);
+       if (it != old_args.end()) {
+@@ -1123,8 +1121,7 @@ static bool AreStartupOptionsDifferent(
+ // Kills the running Blaze server, if any, if the startup options do not match.
+ static void KillRunningServerIfDifferentStartupOptions(
+     const StartupOptions &startup_options,
+-    const vector<string> &server_exe_args,
+-    LoggingInfo *logging_info,
++    const vector<string> &server_exe_args, LoggingInfo *logging_info,
+     BlazeServer *server) {
+   if (!server->Connected()) {
+     return;
+@@ -1158,10 +1155,9 @@ static void KillRunningServerIfDifferentStartupOptions(
+ // (installation symlink and older MD5_MANIFEST contents).
+ // This function requires that the installation be complete, and the
+ // server lock acquired.
+-static void EnsureCorrectRunningVersion(
+-    const StartupOptions &startup_options,
+-    LoggingInfo *logging_info,
+-    BlazeServer *server) {
++static void EnsureCorrectRunningVersion(const StartupOptions &startup_options,
++                                        LoggingInfo *logging_info,
++                                        BlazeServer *server) {
+   // Read the previous installation's semaphore symlink in output_base. If the
+   // target dirs don't match, or if the symlink was not present, then kill any
+   // running servers. Lastly, symlink to our installation so others know which
+@@ -1171,8 +1167,8 @@ static void EnsureCorrectRunningVersion(
+   string prev_installation;
+   bool ok =
+       blaze_util::ReadDirectorySymlink(installation_path, &prev_installation);
+-  if (!ok || !blaze_util::CompareAbsolutePaths(
+-                 prev_installation, startup_options.install_base)) {
++  if (!ok || !blaze_util::CompareAbsolutePaths(prev_installation,
++                                               startup_options.install_base)) {
+     if (server->Connected()) {
+       BAZEL_LOG(INFO)
+           << "Killing running server because it is using another version of "
+@@ -1182,8 +1178,7 @@ static void EnsureCorrectRunningVersion(
+     }
+ 
+     blaze_util::UnlinkPath(installation_path);
+-    if (!SymlinkDirectories(startup_options.install_base,
+-                            installation_path)) {
++    if (!SymlinkDirectories(startup_options.install_base, installation_path)) {
+       string err = GetLastErrorString();
+       BAZEL_DIE(blaze_exit_code::LOCAL_ENVIRONMENTAL_ERROR)
+           << "failed to create installation symlink '"
+@@ -1253,18 +1248,16 @@ static ATTRIBUTE_NORETURN void RunClientServerMode(
+     }
+   }
+ 
+-  BAZEL_LOG(INFO)
+-      << "Connected (server pid=" << server->ProcessInfo().server_pid_ << ").";
++  BAZEL_LOG(INFO) << "Connected (server pid="
++                  << server->ProcessInfo().server_pid_ << ").";
+ 
+   // Wall clock time since process startup.
+   const DurationMillis client_startup_duration =
+       (GetMillisecondsMonotonic() - logging_info->start_time_ms);
+ 
+-  SignalHandler::Get().Install(
+-      startup_options.product_name,
+-      startup_options.output_base,
+-      &server->ProcessInfo(),
+-      CancelServer);
++  SignalHandler::Get().Install(startup_options.product_name,
++                               startup_options.output_base,
++                               &server->ProcessInfo(), CancelServer);
+   SignalHandler::Get().PropagateSignalOrExit(server->Communicate(
+       option_processor.GetCommand(), option_processor.GetCommandArguments(),
+       startup_options.invocation_policy,
+@@ -1274,12 +1267,9 @@ static ATTRIBUTE_NORETURN void RunClientServerMode(
+ }
+ 
+ // Parse the options.
+-static void ParseOptionsOrDie(
+-    const string &cwd,
+-    const string &workspace,
+-    OptionProcessor &option_processor,
+-    int argc,
+-    const char *const *argv) {
++static void ParseOptionsOrDie(const string &cwd, const string &workspace,
++                              OptionProcessor &option_processor, int argc,
++                              const char *const *argv) {
+   std::string error;
+   std::vector<std::string> args(argv, argv + argc);
+   const blaze_exit_code::ExitCode parse_exit_code =
+@@ -1302,11 +1292,9 @@ static string GetCanonicalCwd() {
+ }
+ 
+ // Updates the parsed startup options and global config to fill in defaults.
+-static void UpdateConfiguration(
+-    const string &install_md5,
+-    const string &workspace,
+-    const bool server_mode,
+-    StartupOptions *startup_options) {
++static void UpdateConfiguration(const string &install_md5,
++                                const string &workspace, const bool server_mode,
++                                StartupOptions *startup_options) {
+   // The default install_base is <output_user_root>/install/<md5(blaze)>
+   // but if an install_base is specified on the command line, we use that as
+   // the base instead.
+@@ -1317,8 +1305,8 @@ static void UpdateConfiguration(
+     }
+     string install_user_root =
+         blaze_util::JoinPath(startup_options->output_user_root, "install");
+-    startup_options->install_base = blaze_util::JoinPath(install_user_root,
+-                                                         install_md5);
++    startup_options->install_base =
++        blaze_util::JoinPath(install_user_root, install_md5);
+   }
+ 
+   if (startup_options->output_base.IsEmpty()) {
+@@ -1377,7 +1365,7 @@ static map<string, EnvVarValue> PrepareEnvironmentForJvm() {
+   // environment variables to modify the current process, we may actually use
+   // such map to configure a process from scratch (via interfaces like execvpe
+   // or posix_spawn), so we need to inherit any untouched variables.
+-  for (char** entry = environ; *entry != NULL; entry++) {
++  for (char **entry = environ; *entry != NULL; entry++) {
+     const std::string var_value = *entry;
+     std::string::size_type equals = var_value.find('=');
+     if (equals == std::string::npos) {
+@@ -1510,8 +1498,7 @@ static void RunLauncher(const string &self_path,
+ 
+   blaze_server->Connect();
+ 
+-  if (!startup_options.batch &&
+-      "shutdown" == option_processor.GetCommand() &&
++  if (!startup_options.batch && "shutdown" == option_processor.GetCommand() &&
+       !blaze_server->Connected()) {
+     // TODO(b/134525510): Connected() can return false when the server process
+     // is alive but unresponsive, so bailing early here might not always be the
+@@ -1549,8 +1536,8 @@ static void RunLauncher(const string &self_path,
+   server_exe_args[0] = server_exe.AsNativePath();
+ #endif
+ 
+-  KillRunningServerIfDifferentStartupOptions(
+-      startup_options, server_exe_args, logging_info, blaze_server);
++  KillRunningServerIfDifferentStartupOptions(startup_options, server_exe_args,
++                                             logging_info, blaze_server);
+ 
+   const blaze_util::Path server_dir =
+       blaze_util::Path(startup_options.output_base).GetRelative("server");
+@@ -1633,14 +1620,11 @@ int Main(int argc, const char *const *argv, WorkspaceLayout *workspace_layout,
+ 
+   vector<string> archive_contents;
+   string install_md5;
+-  DetermineArchiveContents(
+-      self_path,
+-      &archive_contents,
+-      &install_md5);
++  DetermineArchiveContents(self_path, &archive_contents, &install_md5);
+ 
+-  UpdateConfiguration(
+-      install_md5, workspace, IsServerMode(option_processor->GetCommand()),
+-      startup_options);
++  UpdateConfiguration(install_md5, workspace,
++                      IsServerMode(option_processor->GetCommand()),
++                      startup_options);
+ 
+   RunLauncher(self_path, archive_contents, install_md5, *startup_options,
+               *option_processor, *workspace_layout, workspace, &logging_info);
+@@ -1680,8 +1664,7 @@ BlazeServer::BlazeServer(const StartupOptions &startup_options)
+   }
+ }
+ 
+-bool BlazeServer::TryConnect(
+-    CommandServer::Stub *client) {
++bool BlazeServer::TryConnect(CommandServer::Stub *client) {
+   grpc::ClientContext context;
+   context.set_deadline(std::chrono::system_clock::now() +
+                        std::chrono::seconds(connect_timeout_secs_));
+@@ -1695,9 +1678,8 @@ bool BlazeServer::TryConnect(
+   grpc::Status status = client->Ping(&context, request, &response);
+ 
+   if (!status.ok() || !ProtoStringEqual(response.cookie(), response_cookie_)) {
+-    BAZEL_LOG(INFO) << "Connection to server failed: ("
+-                    << status.error_code() << ") "
+-                    << status.error_message().c_str() << "\n";
++    BAZEL_LOG(INFO) << "Connection to server failed: (" << status.error_code()
++                    << ") " << status.error_message().c_str() << "\n";
+     return false;
+   }
+ 
+@@ -1750,8 +1732,7 @@ bool BlazeServer::Connect() {
+   channel_args.SetInt(GRPC_ARG_ENABLE_HTTP_PROXY, 0);
+   std::shared_ptr<grpc::Channel> channel(grpc::CreateCustomChannel(
+       port, grpc::InsecureChannelCredentials(), channel_args));
+-  std::unique_ptr<CommandServer::Stub> client(
+-      CommandServer::NewStub(channel));
++  std::unique_ptr<CommandServer::Stub> client(CommandServer::NewStub(channel));
+ 
+   if (!TryConnect(client.get())) {
+     return false;
+@@ -1848,9 +1829,8 @@ void BlazeServer::SendCancelMessage() {
+   // There isn't a lot we can do if this request fails
+   grpc::Status status = client_->Cancel(&context, request, &response);
+   if (!status.ok()) {
+-    BAZEL_LOG(USER) << "\nCould not interrupt server: ("
+-                    << status.error_code() << ") "
+-                    << status.error_message().c_str() << "\n";
++    BAZEL_LOG(USER) << "\nCould not interrupt server: (" << status.error_code()
++                    << ") " << status.error_message().c_str() << "\n";
+   }
+ }
+ 
+@@ -1910,8 +1890,7 @@ void BlazeServer::KillRunningServer() {
+   // Wait for the server process to terminate (if we know the server PID).
+   // If it does not terminate itself gracefully within 1m, terminate it.
+   if (process_info_.server_pid_ > 0 &&
+-      !AwaitServerProcessTermination(process_info_.server_pid_,
+-                                     output_base_,
++      !AwaitServerProcessTermination(process_info_.server_pid_, output_base_,
+                                      kPostShutdownGracePeriodSeconds)) {
+     if (!status.ok()) {
+       BAZEL_LOG(WARNING)
+@@ -2065,7 +2044,7 @@ unsigned int BlazeServer::Communicate(
+         << process_info_.jvm_log_file_.AsPrintablePath() << "')\n";
+     return GetExitCodeForAbruptExit(output_base_);
+   } else if (final_response.has_exec_request()) {
+-    const command_server::ExecRequest& request = final_response.exec_request();
++    const command_server::ExecRequest &request = final_response.exec_request();
+     if (request.argv_size() < 1) {
+       BAZEL_LOG(USER)
+           << "\nServer requested exec() but did not pass a binary to execute\n";
+@@ -2073,7 +2052,7 @@ unsigned int BlazeServer::Communicate(
+     }
+ 
+     vector<string> argv(request.argv().begin(), request.argv().end());
+-    for (const auto& variable : request.environment_variable()) {
++    for (const auto &variable : request.environment_variable()) {
+       SetEnv(variable.name(), variable.value());
+     }
+ 
+@@ -2090,14 +2069,13 @@ unsigned int BlazeServer::Communicate(
+   }
+ 
+   if (final_response.has_failure_detail()) {
+-    BAZEL_LOG(INFO)
+-        << "failure_detail: " << final_response.failure_detail().DebugString();
++    BAZEL_LOG(INFO) << "failure_detail: "
++                    << final_response.failure_detail().DebugString();
+   }
+ 
+   // We'll exit with exit code SIGPIPE on Unixes due to PropagateSignalOnExit()
+-  return pipe_broken
+-      ? blaze_exit_code::LOCAL_ENVIRONMENTAL_ERROR
+-      : final_response.exit_code();
++  return pipe_broken ? blaze_exit_code::LOCAL_ENVIRONMENTAL_ERROR
++                     : final_response.exit_code();
+ }
+ 
+ void BlazeServer::SendAction(CancelThreadAction action) {
+diff --git a/src/main/cpp/startup_options.cc b/src/main/cpp/startup_options.cc
+index eb12211dd5..81183429ac 100644
+--- a/src/main/cpp/startup_options.cc
++++ b/src/main/cpp/startup_options.cc
+@@ -95,7 +95,8 @@ StartupOptions::StartupOptions(const string &product_name,
+       macos_qos_class(QOS_CLASS_DEFAULT),
+ #endif
+       unlimit_coredumps(false),
+-      incompatible_enable_execution_transition(false) {
++      incompatible_enable_execution_transition(false),
++      windows_enable_symlinks(false) {
+   if (blaze::IsRunningWithinTest()) {
+     output_root = blaze_util::MakeAbsolute(blaze::GetPathEnv("TEST_TMPDIR"));
+     max_idle_secs = 15;
+@@ -144,6 +145,8 @@ StartupOptions::StartupOptions(const string &product_name,
+   RegisterNullaryStartupFlag("unlimit_coredumps", &unlimit_coredumps);
+   RegisterNullaryStartupFlag("watchfs", &watchfs);
+   RegisterNullaryStartupFlag("write_command_log", &write_command_log);
++  RegisterNullaryStartupFlag("windows_enable_symlinks",
++                             &windows_enable_symlinks);
+   RegisterUnaryStartupFlag("command_port");
+   RegisterUnaryStartupFlag("connect_timeout_secs");
+   RegisterUnaryStartupFlag("digest_function");
+diff --git a/src/main/cpp/startup_options.h b/src/main/cpp/startup_options.h
+index efe99e8887..5c2fedfc16 100644
+--- a/src/main/cpp/startup_options.h
++++ b/src/main/cpp/startup_options.h
+@@ -269,6 +269,10 @@ class StartupOptions {
+   // See https://github.com/bazelbuild/bazel/issues/7935
+   bool incompatible_enable_execution_transition;
+ 
++  // Whether to create symbolic links on Windows for files. Requires
++  // developer mode to be enabled.
++  bool windows_enable_symlinks;
++
+  protected:
+   // Constructor for subclasses only so that site-specific extensions of this
+   // class can override the product name.  The product_name must be the
+diff --git a/src/main/java/com/google/devtools/build/lib/runtime/BazelFileSystemModule.java b/src/main/java/com/google/devtools/build/lib/runtime/BazelFileSystemModule.java
+index ef23dc76f1..ae7afe82ac 100644
+--- a/src/main/java/com/google/devtools/build/lib/runtime/BazelFileSystemModule.java
++++ b/src/main/java/com/google/devtools/build/lib/runtime/BazelFileSystemModule.java
+@@ -65,13 +65,19 @@ public class BazelFileSystemModule extends BlazeModule {
+   public ModuleFileSystem getFileSystem(
+       OptionsParsingResult startupOptions, PathFragment realExecRootBase)
+       throws DefaultHashFunctionNotSetException {
++    BlazeServerStartupOptions options = startupOptions.getOptions(BlazeServerStartupOptions.class);
++    boolean enableSymLinks = options != null && options.enableWindowsSymlinks;
+     if ("0".equals(System.getProperty("io.bazel.EnableJni"))) {
+       // Ignore UnixFileSystem, to be used for bootstrapping.
+       return ModuleFileSystem.create(
+-          OS.getCurrent() == OS.WINDOWS ? new WindowsFileSystem() : new JavaIoFileSystem());
++          OS.getCurrent() == OS.WINDOWS
++              ? new WindowsFileSystem(enableSymLinks)
++              : new JavaIoFileSystem());
+     }
+     // The JNI-based UnixFileSystem is faster, but on Windows it is not available.
+     return ModuleFileSystem.create(
+-        OS.getCurrent() == OS.WINDOWS ? new WindowsFileSystem() : new UnixFileSystem());
++        OS.getCurrent() == OS.WINDOWS
++            ? new WindowsFileSystem(enableSymLinks)
++            : new UnixFileSystem());
+   }
+ }
+diff --git a/src/main/java/com/google/devtools/build/lib/runtime/BlazeRuntime.java b/src/main/java/com/google/devtools/build/lib/runtime/BlazeRuntime.java
+index 06d1d32a11..0ec14cd907 100644
+--- a/src/main/java/com/google/devtools/build/lib/runtime/BlazeRuntime.java
++++ b/src/main/java/com/google/devtools/build/lib/runtime/BlazeRuntime.java
+@@ -250,7 +250,8 @@ public final class BlazeRuntime implements BugReport.BlazeRuntimeInterface {
+     return workspace;
+   }
+ 
+-  @Nullable public CoverageReportActionFactory getCoverageReportActionFactory(
++  @Nullable
++  public CoverageReportActionFactory getCoverageReportActionFactory(
+       OptionsProvider commandOptions) {
+     CoverageReportActionFactory firstFactory = null;
+     for (BlazeModule module : blazeModules) {
+@@ -438,10 +439,7 @@ public final class BlazeRuntime implements BugReport.BlazeRuntimeInterface {
+     return actionKeyContext;
+   }
+ 
+-  /**
+-   * The directory in which blaze stores the server state - that is, the socket
+-   * file and a log.
+-   */
++  /** The directory in which blaze stores the server state - that is, the socket file and a log. */
+   private Path getServerDirectory() {
+     return getWorkspace().getDirectories().getOutputBase().getChild("server");
+   }
+@@ -462,16 +460,12 @@ public final class BlazeRuntime implements BugReport.BlazeRuntimeInterface {
+     return queryOutputFormatters;
+   }
+ 
+-  /**
+-   * Returns the package factory.
+-   */
++  /** Returns the package factory. */
+   public PackageFactory getPackageFactory() {
+     return packageFactory;
+   }
+ 
+-  /**
+-   * Returns the rule class provider.
+-   */
++  /** Returns the rule class provider. */
+   public ConfiguredRuleClassProvider getRuleClassProvider() {
+     return ruleClassProvider;
+   }
+@@ -550,8 +544,8 @@ public final class BlazeRuntime implements BugReport.BlazeRuntimeInterface {
+       try {
+         MemoryProfiler.instance().start(memoryProfilePath.getOutputStream());
+       } catch (IOException e) {
+-        env.getReporter().handle(
+-            Event.error("Error while creating memory profile file: " + e.getMessage()));
++        env.getReporter()
++            .handle(Event.error("Error while creating memory profile file: " + e.getMessage()));
+       }
+     }
+ 
+@@ -715,8 +709,8 @@ public final class BlazeRuntime implements BugReport.BlazeRuntimeInterface {
+   private static Logger templateLogger = Logger.getLogger("com.google.devtools.build");
+ 
+   /**
+-   * Configures "com.google.devtools.build.*" loggers to the given
+-   *  {@code level}. Note: This code relies on static state.
++   * Configures "com.google.devtools.build.*" loggers to the given {@code level}. Note: This code
++   * relies on static state.
+    */
+   public static void setupLogging(Level level) {
+     templateLogger.setLevel(level);
+@@ -734,14 +728,11 @@ public final class BlazeRuntime implements BugReport.BlazeRuntimeInterface {
+   }
+ 
+   /**
+-   * Returns the Clock-instance used for the entire build. Before,
+-   * individual classes (such as Profiler) used to specify the type
+-   * of clock (e.g. EpochClock) they wanted to use. This made it
+-   * difficult to get Blaze working on Windows as some of the clocks
+-   * available for Linux aren't (directly) available on Windows.
+-   * Setting the Blaze-wide clock upon construction of BlazeRuntime
+-   * allows injecting whatever Clock instance should be used from
+-   * BlazeMain.
++   * Returns the Clock-instance used for the entire build. Before, individual classes (such as
++   * Profiler) used to specify the type of clock (e.g. EpochClock) they wanted to use. This made it
++   * difficult to get Blaze working on Windows as some of the clocks available for Linux aren't
++   * (directly) available on Windows. Setting the Blaze-wide clock upon construction of BlazeRuntime
++   * allows injecting whatever Clock instance should be used from BlazeMain.
+    *
+    * @return The Blaze-wide clock
+    */
+@@ -794,16 +785,14 @@ public final class BlazeRuntime implements BugReport.BlazeRuntimeInterface {
+     }
+   }
+ 
+-  /**
+-   * Creates a BuildOptions class for the given options taken from an optionsProvider.
+-   */
++  /** Creates a BuildOptions class for the given options taken from an optionsProvider. */
+   public BuildOptions createBuildOptions(OptionsProvider optionsProvider) {
+     return ruleClassProvider.createBuildOptions(optionsProvider);
+   }
+ 
+   /**
+-   * Main method for the Blaze server startup. Note: This method logs
+-   * exceptions to remote servers. Do not add this to a unittest.
++   * Main method for the Blaze server startup. Note: This method logs exceptions to remote servers.
++   * Do not add this to a unittest.
+    */
+   public static void main(Iterable<Class<? extends BlazeModule>> moduleClasses, String[] args) {
+     setupUncaughtHandlerAtStartup(args);
+@@ -870,9 +859,7 @@ public final class BlazeRuntime implements BugReport.BlazeRuntimeInterface {
+     return buf.toString();
+   }
+ 
+-  /**
+-   * Command line options split in to two parts: startup options and everything else.
+-   */
++  /** Command line options split in to two parts: startup options and everything else. */
+   @VisibleForTesting
+   static class CommandLineOptions {
+     private final ImmutableList<String> startupArgs;
+@@ -896,17 +883,16 @@ public final class BlazeRuntime implements BugReport.BlazeRuntimeInterface {
+    * Splits given options into two lists - arguments matching options defined in this class and
+    * everything else, while preserving order in each list.
+    *
+-   * <p>Note that this method relies on the startup options always being in the
+-   * <code>--flag=ARG</code> form (instead of <code>--flag ARG</code>). This is enforced by
+-   * <code>GetArgumentArray()</code> in <code>blaze.cc</code> by reconstructing the startup
+-   * options from their parsed versions instead of using <code>argv</code> verbatim.
++   * <p>Note that this method relies on the startup options always being in the <code>--flag=ARG
++   * </code> form (instead of <code>--flag ARG</code>). This is enforced by <code>GetArgumentArray()
++   * </code> in <code>blaze.cc</code> by reconstructing the startup options from their parsed
++   * versions instead of using <code>argv</code> verbatim.
+    */
+-  static CommandLineOptions splitStartupOptions(
+-      Iterable<BlazeModule> modules, String... args) {
++  static CommandLineOptions splitStartupOptions(Iterable<BlazeModule> modules, String... args) {
+     List<String> prefixes = new ArrayList<>();
+     List<OptionDefinition> startupOptions = Lists.newArrayList();
+-    for (Class<? extends OptionsBase> defaultOptions
+-      : BlazeCommandUtils.getStartupOptions(modules)) {
++    for (Class<? extends OptionsBase> defaultOptions :
++        BlazeCommandUtils.getStartupOptions(modules)) {
+       startupOptions.addAll(OptionsParser.getOptionDefinitions(defaultOptions));
+     }
+ 
+@@ -924,7 +910,7 @@ public final class BlazeRuntime implements BugReport.BlazeRuntimeInterface {
+     for (Iterator<String> argi = otherArgs.iterator(); argi.hasNext(); ) {
+       String arg = argi.next();
+       if (!arg.startsWith("--")) {
+-        break;  // stop at command - all startup options would be specified before it.
++        break; // stop at command - all startup options would be specified before it.
+       }
+       for (String prefix : prefixes) {
+         if (arg.startsWith(prefix)) {
+@@ -991,9 +977,12 @@ public final class BlazeRuntime implements BugReport.BlazeRuntimeInterface {
+     InvocationPolicy policy;
+     try {
+       runtime = newRuntime(modules, commandLineOptions.getStartupArgs(), null);
+-      policy = InvocationPolicyParser.parsePolicy(
+-          runtime.getStartupOptionsProvider().getOptions(BlazeServerStartupOptions.class)
+-              .invocationPolicy);
++      policy =
++          InvocationPolicyParser.parsePolicy(
++              runtime
++                  .getStartupOptionsProvider()
++                  .getOptions(BlazeServerStartupOptions.class)
++                  .invocationPolicy);
+     } catch (OptionsParsingException e) {
+       OutErr.SYSTEM_OUT_ERR.printErrLn(e.getMessage());
+       return ExitCode.COMMAND_LINE_ERROR.getNumericExitCode();
+@@ -1013,14 +1002,15 @@ public final class BlazeRuntime implements BugReport.BlazeRuntimeInterface {
+ 
+     try {
+       logger.info(getRequestLogString(commandLineOptions.getOtherArgs()));
+-      BlazeCommandResult result = dispatcher.exec(
+-          policy,
+-          commandLineOptions.getOtherArgs(),
+-          OutErr.SYSTEM_OUT_ERR,
+-          LockingMode.ERROR_OUT,
+-          "batch client",
+-          runtime.getClock().currentTimeMillis(),
+-          Optional.of(startupOptionsFromCommandLine.build()));
++      BlazeCommandResult result =
++          dispatcher.exec(
++              policy,
++              commandLineOptions.getOtherArgs(),
++              OutErr.SYSTEM_OUT_ERR,
++              LockingMode.ERROR_OUT,
++              "batch client",
++              runtime.getClock().currentTimeMillis(),
++              Optional.of(startupOptionsFromCommandLine.build()));
+       if (result.getExecRequest() == null) {
+         // Simple case: we are given an exit code
+         return result.getExitCode().getNumericExitCode();
+@@ -1044,15 +1034,16 @@ public final class BlazeRuntime implements BugReport.BlazeRuntimeInterface {
+ 
+       String workingDirectory = request.getWorkingDirectory().toString(StandardCharsets.ISO_8859_1);
+       try {
+-        ProcessBuilder process = new ProcessBuilder()
+-            .command(argv)
+-            .directory(new File(workingDirectory))
+-            .inheritIO();
++        ProcessBuilder process =
++            new ProcessBuilder().command(argv).directory(new File(workingDirectory)).inheritIO();
+ 
+-        for (int i = 0;  i < request.getEnvironmentVariableCount(); i++) {
++        for (int i = 0; i < request.getEnvironmentVariableCount(); i++) {
+           EnvironmentVariable variable = request.getEnvironmentVariable(i);
+-          process.environment().put(variable.getName().toString(StandardCharsets.ISO_8859_1),
+-              variable.getValue().toString(StandardCharsets.ISO_8859_1));
++          process
++              .environment()
++              .put(
++                  variable.getName().toString(StandardCharsets.ISO_8859_1),
++                  variable.getValue().toString(StandardCharsets.ISO_8859_1));
+         }
+ 
+         return process.start().waitFor();
+@@ -1089,8 +1080,8 @@ public final class BlazeRuntime implements BugReport.BlazeRuntimeInterface {
+       try {
+         // This is necessary so that Bazel kind of works during bootstrapping, at which time the
+         // gRPC server is not compiled in so that we don't need gRPC for bootstrapping.
+-        Class<?> factoryClass = Class.forName(
+-            "com.google.devtools.build.lib.server.GrpcServerImpl$Factory");
++        Class<?> factoryClass =
++            Class.forName("com.google.devtools.build.lib.server.GrpcServerImpl$Factory");
+         RPCServer.Factory factory = (RPCServer.Factory) factoryClass.getConstructor().newInstance();
+         rpcServer[0] =
+             factory.create(
+@@ -1137,14 +1128,18 @@ public final class BlazeRuntime implements BugReport.BlazeRuntimeInterface {
+     }
+   }
+ 
+-  private static FileSystem defaultFileSystemImplementation()
+-      throws DefaultHashFunctionNotSetException {
++  private static FileSystem defaultFileSystemImplementation(
++      BlazeServerStartupOptions startupOptions) throws DefaultHashFunctionNotSetException {
+     if ("0".equals(System.getProperty("io.bazel.EnableJni"))) {
+       // Ignore UnixFileSystem, to be used for bootstrapping.
+-      return OS.getCurrent() == OS.WINDOWS ? new WindowsFileSystem() : new JavaIoFileSystem();
++      return OS.getCurrent() == OS.WINDOWS
++          ? new WindowsFileSystem(startupOptions.enableWindowsSymlinks)
++          : new JavaIoFileSystem();
+     }
+     // The JNI-based UnixFileSystem is faster, but on Windows it is not available.
+-    return OS.getCurrent() == OS.WINDOWS ? new WindowsFileSystem() : new UnixFileSystem();
++    return OS.getCurrent() == OS.WINDOWS
++        ? new WindowsFileSystem(startupOptions.enableWindowsSymlinks)
++        : new UnixFileSystem();
+   }
+ 
+   private static SubprocessFactory subprocessFactoryImplementation() {
+@@ -1195,13 +1190,12 @@ public final class BlazeRuntime implements BugReport.BlazeRuntimeInterface {
+    * main method of the Blaze program.
+    *
+    * @param args Blaze startup options.
+-   *
+    * @return a new BlazeRuntime instance initialized with the given filesystem and directories, and
+-   *         an error string that, if not null, describes a fatal initialization failure that makes
+-   *         this runtime unsuitable for real commands
++   *     an error string that, if not null, describes a fatal initialization failure that makes this
++   *     runtime unsuitable for real commands
+    */
+-  private static BlazeRuntime newRuntime(Iterable<BlazeModule> blazeModules, List<String> args,
+-      Runnable abruptShutdownHandler)
++  private static BlazeRuntime newRuntime(
++      Iterable<BlazeModule> blazeModules, List<String> args, Runnable abruptShutdownHandler)
+       throws AbruptExitException, OptionsParsingException {
+     OptionsParsingResult options = parseStartupOptions(blazeModules, args);
+     for (BlazeModule module : blazeModules) {
+@@ -1248,7 +1242,7 @@ public final class BlazeRuntime implements BugReport.BlazeRuntimeInterface {
+       }
+ 
+       if (fs == null) {
+-        fs = defaultFileSystemImplementation();
++        fs = defaultFileSystemImplementation(startupOptions);
+       }
+     } catch (DefaultHashFunctionNotSetException e) {
+       throw new AbruptExitException(
+@@ -1400,10 +1394,9 @@ public final class BlazeRuntime implements BugReport.BlazeRuntimeInterface {
+           @Override
+           public void publish(LogRecord record) {
+             System.err.println("Remote logging disabled for testing, forcing abrupt shutdown.");
+-            System.err.printf("%s#%s: %s\n",
+-                record.getSourceClassName(),
+-                record.getSourceMethodName(),
+-                record.getMessage());
++            System.err.printf(
++                "%s#%s: %s\n",
++                record.getSourceClassName(), record.getSourceMethodName(), record.getMessage());
+ 
+             Throwable e = record.getThrown();
+             if (e != null) {
+@@ -1485,7 +1478,7 @@ public final class BlazeRuntime implements BugReport.BlazeRuntimeInterface {
+       ActionKeyContext actionKeyContext =
+           this.actionKeyContext != null ? this.actionKeyContext : new ActionKeyContext();
+       Clock clock = (this.clock == null) ? BlazeClock.instance() : this.clock;
+-      UUID instanceId =  (this.instanceId == null) ? UUID.randomUUID() : this.instanceId;
++      UUID instanceId = (this.instanceId == null) ? UUID.randomUUID() : this.instanceId;
+ 
+       Preconditions.checkNotNull(clock);
+ 
+@@ -1534,7 +1527,8 @@ public final class BlazeRuntime implements BugReport.BlazeRuntimeInterface {
+         Package.Builder.Helper candidateHelper =
+             module.getPackageBuilderHelper(ruleClassProvider, fileSystem);
+         if (candidateHelper != null) {
+-          Preconditions.checkState(packageBuilderHelper == null,
++          Preconditions.checkState(
++              packageBuilderHelper == null,
+               "more than one module defines a package builder helper");
+           packageBuilderHelper = candidateHelper;
+         }
+@@ -1555,8 +1549,8 @@ public final class BlazeRuntime implements BugReport.BlazeRuntimeInterface {
+       for (BlazeModule module : blazeModules) {
+         ProjectFile.Provider candidate = module.createProjectFileProvider();
+         if (candidate != null) {
+-          Preconditions.checkState(projectFileProvider == null,
+-              "more than one module defines a project file provider");
++          Preconditions.checkState(
++              projectFileProvider == null, "more than one module defines a project file provider");
+           projectFileProvider = candidate;
+         }
+       }
+diff --git a/src/main/java/com/google/devtools/build/lib/runtime/BlazeServerStartupOptions.java b/src/main/java/com/google/devtools/build/lib/runtime/BlazeServerStartupOptions.java
+index f5451e19df..0f3a4a9cfa 100644
+--- a/src/main/java/com/google/devtools/build/lib/runtime/BlazeServerStartupOptions.java
++++ b/src/main/java/com/google/devtools/build/lib/runtime/BlazeServerStartupOptions.java
+@@ -42,8 +42,8 @@ import java.util.Map;
+ public class BlazeServerStartupOptions extends OptionsBase {
+   /**
+    * Converter for the <code>option_sources</code> option. Takes a string in the form of
+-   * "option_name1:source1:option_name2:source2:.." and converts it into an option name to
+-   * source map.
++   * "option_name1:source1:option_name2:source2:.." and converts it into an option name to source
++   * map.
+    */
+   public static class OptionSourcesConverter implements Converter<Map<String, String>> {
+     private String unescape(String input) {
+@@ -83,14 +83,13 @@ public class BlazeServerStartupOptions extends OptionsBase {
+    * necessary.
+    */
+   @Option(
+-    name = "install_base",
+-    defaultValue = "", // NOTE: only for documentation, value is always passed by the client.
+-    documentationCategory = OptionDocumentationCategory.UNDOCUMENTED,
+-    effectTags = {OptionEffectTag.CHANGES_INPUTS, OptionEffectTag.LOSES_INCREMENTAL_STATE},
+-    metadataTags = {OptionMetadataTag.HIDDEN},
+-    converter = OptionsUtils.PathFragmentConverter.class,
+-    help = "This launcher option is intended for use only by tests."
+-  )
++      name = "install_base",
++      defaultValue = "", // NOTE: only for documentation, value is always passed by the client.
++      documentationCategory = OptionDocumentationCategory.UNDOCUMENTED,
++      effectTags = {OptionEffectTag.CHANGES_INPUTS, OptionEffectTag.LOSES_INCREMENTAL_STATE},
++      metadataTags = {OptionMetadataTag.HIDDEN},
++      converter = OptionsUtils.PathFragmentConverter.class,
++      help = "This launcher option is intended for use only by tests.")
+   public PathFragment installBase;
+ 
+   /*
+@@ -98,13 +97,12 @@ public class BlazeServerStartupOptions extends OptionsBase {
+    * any other embedded binaries - anything that ends up in the install_base).
+    */
+   @Option(
+-    name = "install_md5",
+-    defaultValue = "", // NOTE: only for documentation, value is always passed by the client.
+-    documentationCategory = OptionDocumentationCategory.UNDOCUMENTED,
+-    effectTags = {OptionEffectTag.LOSES_INCREMENTAL_STATE, OptionEffectTag.BAZEL_MONITORING},
+-    metadataTags = {OptionMetadataTag.HIDDEN},
+-    help = "This launcher option is intended for use only by tests."
+-  )
++      name = "install_md5",
++      defaultValue = "", // NOTE: only for documentation, value is always passed by the client.
++      documentationCategory = OptionDocumentationCategory.UNDOCUMENTED,
++      effectTags = {OptionEffectTag.LOSES_INCREMENTAL_STATE, OptionEffectTag.BAZEL_MONITORING},
++      metadataTags = {OptionMetadataTag.HIDDEN},
++      help = "This launcher option is intended for use only by tests.")
+   public String installMD5;
+ 
+   /* Note: The help string in this option applies to the client code; not
+@@ -132,17 +130,16 @@ public class BlazeServerStartupOptions extends OptionsBase {
+   public PathFragment outputBase;
+ 
+   @Option(
+-    name = "output_user_root",
+-    defaultValue = "null", // NOTE: only for documentation, value is always passed by the client.
+-    documentationCategory = OptionDocumentationCategory.BAZEL_CLIENT_OPTIONS,
+-    effectTags = {OptionEffectTag.AFFECTS_OUTPUTS, OptionEffectTag.LOSES_INCREMENTAL_STATE},
+-    converter = OptionsUtils.PathFragmentConverter.class,
+-    valueHelp = "<path>",
+-    help =
+-        "The user-specific directory beneath which all build outputs are written; by default, "
+-            + "this is a function of $USER, but by specifying a constant, build outputs can be "
+-            + "shared between collaborating users."
+-  )
++      name = "output_user_root",
++      defaultValue = "null", // NOTE: only for documentation, value is always passed by the client.
++      documentationCategory = OptionDocumentationCategory.BAZEL_CLIENT_OPTIONS,
++      effectTags = {OptionEffectTag.AFFECTS_OUTPUTS, OptionEffectTag.LOSES_INCREMENTAL_STATE},
++      converter = OptionsUtils.PathFragmentConverter.class,
++      valueHelp = "<path>",
++      help =
++          "The user-specific directory beneath which all build outputs are written; by default, "
++              + "this is a function of $USER, but by specifying a constant, build outputs can be "
++              + "shared between collaborating users.")
+   public PathFragment outputUserRoot;
+ 
+   /**
+@@ -151,16 +148,15 @@ public class BlazeServerStartupOptions extends OptionsBase {
+    * code.
+    */
+   @Option(
+-    name = "server_jvm_out",
+-    defaultValue = "null",
+-    documentationCategory = OptionDocumentationCategory.BAZEL_CLIENT_OPTIONS,
+-    effectTags = {OptionEffectTag.AFFECTS_OUTPUTS, OptionEffectTag.LOSES_INCREMENTAL_STATE},
+-    converter = OptionsUtils.PathFragmentConverter.class,
+-    valueHelp = "<path>",
+-    help =
+-        "The location to write the server's JVM's output. If unset then defaults to a location "
+-            + "in output_base."
+-  )
++      name = "server_jvm_out",
++      defaultValue = "null",
++      documentationCategory = OptionDocumentationCategory.BAZEL_CLIENT_OPTIONS,
++      effectTags = {OptionEffectTag.AFFECTS_OUTPUTS, OptionEffectTag.LOSES_INCREMENTAL_STATE},
++      converter = OptionsUtils.PathFragmentConverter.class,
++      valueHelp = "<path>",
++      help =
++          "The location to write the server's JVM's output. If unset then defaults to a location "
++              + "in output_base.")
+   public PathFragment serverJvmOut;
+ 
+   @Option(
+@@ -188,17 +184,16 @@ public class BlazeServerStartupOptions extends OptionsBase {
+   public PathFragment defaultSystemJavabase;
+ 
+   @Option(
+-    name = "max_idle_secs",
+-    // NOTE: default value only used for documentation, value is always passed by the client when
+-    // not in --batch mode.
+-    defaultValue = "" + (3 * 3600),
+-    documentationCategory = OptionDocumentationCategory.BAZEL_CLIENT_OPTIONS,
+-    effectTags = {OptionEffectTag.EAGERNESS_TO_EXIT, OptionEffectTag.LOSES_INCREMENTAL_STATE},
+-    valueHelp = "<integer>",
+-    help =
+-        "The number of seconds the build server will wait idling before shutting down. Zero "
+-            + "means that the server will never shutdown."
+-  )
++      name = "max_idle_secs",
++      // NOTE: default value only used for documentation, value is always passed by the client when
++      // not in --batch mode.
++      defaultValue = "" + (3 * 3600),
++      documentationCategory = OptionDocumentationCategory.BAZEL_CLIENT_OPTIONS,
++      effectTags = {OptionEffectTag.EAGERNESS_TO_EXIT, OptionEffectTag.LOSES_INCREMENTAL_STATE},
++      valueHelp = "<integer>",
++      help =
++          "The number of seconds the build server will wait idling before shutting down. Zero "
++              + "means that the server will never shutdown.")
+   public int maxIdleSeconds;
+ 
+   @Option(
+@@ -228,14 +223,13 @@ public class BlazeServerStartupOptions extends OptionsBase {
+   public boolean batch;
+ 
+   @Option(
+-    name = "deep_execroot",
+-    defaultValue = "true", // NOTE: only for documentation, value is always passed by the client.
+-    documentationCategory = OptionDocumentationCategory.BAZEL_CLIENT_OPTIONS,
+-    effectTags = {OptionEffectTag.LOSES_INCREMENTAL_STATE, OptionEffectTag.EXECUTION},
+-    help =
+-        "If set, the execution root will be under $OUTPUT_BASE/execroot instead of "
+-            + "$OUTPUT_BASE."
+-  )
++      name = "deep_execroot",
++      defaultValue = "true", // NOTE: only for documentation, value is always passed by the client.
++      documentationCategory = OptionDocumentationCategory.BAZEL_CLIENT_OPTIONS,
++      effectTags = {OptionEffectTag.LOSES_INCREMENTAL_STATE, OptionEffectTag.EXECUTION},
++      help =
++          "If set, the execution root will be under $OUTPUT_BASE/execroot instead of "
++              + "$OUTPUT_BASE.")
+   public boolean deepExecRoot;
+ 
+   @Option(
+@@ -293,92 +287,85 @@ public class BlazeServerStartupOptions extends OptionsBase {
+   public boolean fatalEventBusExceptions;
+ 
+   @Option(
+-    name = "option_sources",
+-    converter = OptionSourcesConverter.class,
+-    defaultValue = "",
+-    documentationCategory = OptionDocumentationCategory.UNDOCUMENTED,
+-    effectTags = {OptionEffectTag.AFFECTS_OUTPUTS},
+-    metadataTags = {OptionMetadataTag.HIDDEN},
+-    help = ""
+-  )
++      name = "option_sources",
++      converter = OptionSourcesConverter.class,
++      defaultValue = "",
++      documentationCategory = OptionDocumentationCategory.UNDOCUMENTED,
++      effectTags = {OptionEffectTag.AFFECTS_OUTPUTS},
++      metadataTags = {OptionMetadataTag.HIDDEN},
++      help = "")
+   public Map<String, String> optionSources;
+ 
+   // TODO(bazel-team): In order to make it easier to have local watchers in open source Bazel,
+   // turn this into a non-startup option.
+   @Option(
+-    name = "watchfs",
+-    defaultValue = "false", // NOTE: only for documentation, value is always passed by the client.
+-    documentationCategory = OptionDocumentationCategory.BAZEL_CLIENT_OPTIONS,
+-    effectTags = {OptionEffectTag.UNKNOWN},
+-    metadataTags = OptionMetadataTag.DEPRECATED,
+-    help =
+-        "If true, %{product} tries to use the operating system's file watch service for local "
+-            + "changes instead of scanning every file for a change."
+-  )
++      name = "watchfs",
++      defaultValue = "false", // NOTE: only for documentation, value is always passed by the client.
++      documentationCategory = OptionDocumentationCategory.BAZEL_CLIENT_OPTIONS,
++      effectTags = {OptionEffectTag.UNKNOWN},
++      metadataTags = OptionMetadataTag.DEPRECATED,
++      help =
++          "If true, %{product} tries to use the operating system's file watch service for local "
++              + "changes instead of scanning every file for a change.")
+   public boolean watchFS;
+ 
+   // This option is only passed in --batch mode. The value is otherwise passed as part of the
+   // server request.
+   @Option(
+-    name = "invocation_policy",
+-    defaultValue = "",
+-    documentationCategory = OptionDocumentationCategory.UNDOCUMENTED,
+-    effectTags = {OptionEffectTag.CHANGES_INPUTS},
+-    help =
+-        "A base64-encoded-binary-serialized or text-formated "
+-            + "invocation_policy.InvocationPolicy proto. Unlike other options, it is an error to "
+-            + "specify --invocation_policy multiple times."
+-  )
++      name = "invocation_policy",
++      defaultValue = "",
++      documentationCategory = OptionDocumentationCategory.UNDOCUMENTED,
++      effectTags = {OptionEffectTag.CHANGES_INPUTS},
++      help =
++          "A base64-encoded-binary-serialized or text-formated "
++              + "invocation_policy.InvocationPolicy proto. Unlike other options, it is an error to "
++              + "specify --invocation_policy multiple times.")
+   public String invocationPolicy;
+ 
+   @Option(
+-    name = "command_port",
+-    defaultValue = "0",
+-    documentationCategory = OptionDocumentationCategory.UNDOCUMENTED,
+-    effectTags = {
+-      OptionEffectTag.LOSES_INCREMENTAL_STATE,
+-      OptionEffectTag.BAZEL_INTERNAL_CONFIGURATION
+-    },
+-    help = "Port to start up the gRPC command server on. If 0, let the kernel choose."
+-  )
++      name = "command_port",
++      defaultValue = "0",
++      documentationCategory = OptionDocumentationCategory.UNDOCUMENTED,
++      effectTags = {
++        OptionEffectTag.LOSES_INCREMENTAL_STATE,
++        OptionEffectTag.BAZEL_INTERNAL_CONFIGURATION
++      },
++      help = "Port to start up the gRPC command server on. If 0, let the kernel choose.")
+   public int commandPort;
+ 
+   @Option(
+-    name = "product_name",
+-    defaultValue = "bazel", // NOTE: only for documentation, value is always passed by the client.
+-    documentationCategory = OptionDocumentationCategory.UNDOCUMENTED,
+-    effectTags = {
+-      OptionEffectTag.LOSES_INCREMENTAL_STATE,
+-      OptionEffectTag.AFFECTS_OUTPUTS,
+-      OptionEffectTag.BAZEL_MONITORING
+-    },
+-    metadataTags = {OptionMetadataTag.HIDDEN},
+-    help =
+-        "The name of the build system. It is used as part of the name of the generated "
+-            + "directories (e.g. productName-bin for binaries) as well as for printing error "
+-            + "messages and logging"
+-  )
++      name = "product_name",
++      defaultValue = "bazel", // NOTE: only for documentation, value is always passed by the client.
++      documentationCategory = OptionDocumentationCategory.UNDOCUMENTED,
++      effectTags = {
++        OptionEffectTag.LOSES_INCREMENTAL_STATE,
++        OptionEffectTag.AFFECTS_OUTPUTS,
++        OptionEffectTag.BAZEL_MONITORING
++      },
++      metadataTags = {OptionMetadataTag.HIDDEN},
++      help =
++          "The name of the build system. It is used as part of the name of the generated "
++              + "directories (e.g. productName-bin for binaries) as well as for printing error "
++              + "messages and logging")
+   public String productName;
+ 
+   // TODO(ulfjack): Make this a command option.
+   @Option(
+-    name = "write_command_log",
+-    defaultValue = "true", // NOTE: only for documentation, value is always passed by the client.
+-    documentationCategory = OptionDocumentationCategory.UNDOCUMENTED,
+-    effectTags = {OptionEffectTag.AFFECTS_OUTPUTS, OptionEffectTag.LOSES_INCREMENTAL_STATE},
+-    help = "Whether or not to write the command.log file"
+-  )
++      name = "write_command_log",
++      defaultValue = "true", // NOTE: only for documentation, value is always passed by the client.
++      documentationCategory = OptionDocumentationCategory.UNDOCUMENTED,
++      effectTags = {OptionEffectTag.AFFECTS_OUTPUTS, OptionEffectTag.LOSES_INCREMENTAL_STATE},
++      help = "Whether or not to write the command.log file")
+   public boolean writeCommandLog;
+ 
+   @Option(
+-    name = "client_debug",
+-    defaultValue = "false", // NOTE: only for documentation, value is set and used by the client.
+-    documentationCategory = OptionDocumentationCategory.BAZEL_CLIENT_OPTIONS,
+-    effectTags = {OptionEffectTag.AFFECTS_OUTPUTS, OptionEffectTag.BAZEL_MONITORING},
+-    help =
+-        "If true, log debug information from the client to stderr. Changing this option will not "
+-            + "cause the server to restart."
+-  )
++      name = "client_debug",
++      defaultValue = "false", // NOTE: only for documentation, value is set and used by the client.
++      documentationCategory = OptionDocumentationCategory.BAZEL_CLIENT_OPTIONS,
++      effectTags = {OptionEffectTag.AFFECTS_OUTPUTS, OptionEffectTag.BAZEL_MONITORING},
++      help =
++          "If true, log debug information from the client to stderr. Changing this option will not "
++              + "cause the server to restart.")
+   public boolean clientDebug;
+ 
+   @Option(
+@@ -433,12 +420,13 @@ public class BlazeServerStartupOptions extends OptionsBase {
+       defaultValue = "false", // NOTE: purely decorative, rc files are read by the client.
+       documentationCategory = OptionDocumentationCategory.BAZEL_CLIENT_OPTIONS,
+       effectTags = {
+-          OptionEffectTag.BAZEL_INTERNAL_CONFIGURATION,
++        OptionEffectTag.BAZEL_INTERNAL_CONFIGURATION,
+       },
+-      help = "Raises the soft coredump limit to the hard limit to make coredumps of the server"
+-          + " (including the JVM) and the client possible under common conditions. Stick this"
+-          + " flag in your bazelrc once and forget about it so that you get coredumps when you"
+-          + " actually encounter a condition that triggers them.")
++      help =
++          "Raises the soft coredump limit to the hard limit to make coredumps of the server"
++              + " (including the JVM) and the client possible under common conditions. Stick this"
++              + " flag in your bazelrc once and forget about it so that you get coredumps when you"
++              + " actually encounter a condition that triggers them.")
+   public boolean unlimitCoredumps;
+ 
+   @Option(
+@@ -466,4 +454,15 @@ public class BlazeServerStartupOptions extends OptionsBase {
+       },
+       help = "If false, the execution transition behaves like the host transition.")
+   public boolean enableExecutionTransition;
++
++  @Option(
++      name = "windows_enable_symlinks",
++      defaultValue = "false", // Only for documentation; value is set by the client.
++      documentationCategory = OptionDocumentationCategory.BAZEL_CLIENT_OPTIONS,
++      effectTags = {OptionEffectTag.BAZEL_INTERNAL_CONFIGURATION},
++      help =
++          "If true, real symbolic links will be created on Windows instead of file copying. "
++              + "Requires Windows developer mode to be enabled and Windows 10 version 1703 or "
++              + "greater.")
++  public boolean enableWindowsSymlinks;
+ }
+diff --git a/src/main/java/com/google/devtools/build/lib/windows/WindowsFileSystem.java b/src/main/java/com/google/devtools/build/lib/windows/WindowsFileSystem.java
+index a80f3d5a16..8e11fa0880 100644
+--- a/src/main/java/com/google/devtools/build/lib/windows/WindowsFileSystem.java
++++ b/src/main/java/com/google/devtools/build/lib/windows/WindowsFileSystem.java
+@@ -38,10 +38,15 @@ public class WindowsFileSystem extends JavaIoFileSystem {
+   public static final LinkOption[] NO_OPTIONS = new LinkOption[0];
+   public static final LinkOption[] NO_FOLLOW = new LinkOption[] {LinkOption.NOFOLLOW_LINKS};
+ 
+-  public WindowsFileSystem() throws DefaultHashFunctionNotSetException {}
++  private final boolean createSymbolicLinks;
+ 
+-  public WindowsFileSystem(DigestHashFunction hashFunction) {
++  public WindowsFileSystem(boolean createSymbolicLinks) throws DefaultHashFunctionNotSetException {
++    this.createSymbolicLinks = createSymbolicLinks;
++  }
++
++  public WindowsFileSystem(DigestHashFunction hashFunction, boolean createSymbolicLinks) {
+     super(hashFunction);
++    this.createSymbolicLinks = createSymbolicLinks;
+   }
+ 
+   @Override
+@@ -85,7 +90,11 @@ public class WindowsFileSystem extends JavaIoFileSystem {
+       if (!target.toFile().exists() || target.toFile().isDirectory()) {
+         WindowsFileOperations.createJunction(link.toString(), target.toString());
+       } else {
+-        Files.copy(target, link);
++        if (createSymbolicLinks) {
++          WindowsFileOperations.createSymlink(link.toString(), target.toString());
++        } else {
++          Files.copy(target, link);
++        }
+       }
+     } catch (java.nio.file.FileAlreadyExistsException e) {
+       throw new IOException(linkPath + ERR_FILE_EXISTS, e);
+diff --git a/src/main/java/com/google/devtools/build/lib/windows/jni/WindowsFileOperations.java b/src/main/java/com/google/devtools/build/lib/windows/jni/WindowsFileOperations.java
+index 340893f581..9d7e937571 100644
+--- a/src/main/java/com/google/devtools/build/lib/windows/jni/WindowsFileOperations.java
++++ b/src/main/java/com/google/devtools/build/lib/windows/jni/WindowsFileOperations.java
+@@ -86,6 +86,11 @@ public class WindowsFileOperations {
+   private static final int CREATE_JUNCTION_ACCESS_DENIED = 5;
+   private static final int CREATE_JUNCTION_DISAPPEARED = 6;
+ 
++  // Keep CREATE_SYMLINK_* values in sync with src/main/native/windows/file.h.
++  private static final int CREATE_SYMLINK_SUCCESS = 0;
++  // CREATE_SYMLINK_ERROR = 1;
++  private static final int CREATE_SYMLINK_TARGET_IS_DIRECTORY = 2;
++
+   // Keep DELETE_PATH_* values in sync with src/main/native/windows/file.h.
+   private static final int DELETE_PATH_SUCCESS = 0;
+   // DELETE_PATH_ERROR = 1;
+@@ -108,6 +113,8 @@ public class WindowsFileOperations {
+ 
+   private static native int nativeCreateJunction(String name, String target, String[] error);
+ 
++  private static native int nativeCreateSymlink(String name, String target, String[] error);
++
+   private static native int nativeReadSymlinkOrJunction(
+       String name, String[] result, String[] error);
+ 
+@@ -211,6 +218,23 @@ public class WindowsFileOperations {
+         String.format("Cannot create junction (name=%s, target=%s): %s", name, target, error[0]));
+   }
+ 
++  public static void createSymlink(String name, String target) throws IOException {
++    WindowsJniLoader.loadJni();
++    String[] error = new String[] {null};
++    switch (nativeCreateSymlink(asLongPath(name), asLongPath(target), error)) {
++      case CREATE_SYMLINK_SUCCESS:
++        return;
++      case CREATE_SYMLINK_TARGET_IS_DIRECTORY:
++        error[0] = "symlink target is a directory, use a junction";
++        break;
++      default:
++        // this is CREATE_SYMLINK_ERROR (1). The JNI code puts a custom message in 'error[0]'.
++        break;
++    }
++    throw new IOException(
++        String.format("Cannot create symlink (name=%s, target=%s): %s", name, target, error[0]));
++  }
++
+   public static ReadSymlinkOrJunctionResult readSymlinkOrJunction(String name) {
+     WindowsJniLoader.loadJni();
+     String[] target = new String[] {null};
+diff --git a/src/main/native/windows/file-jni.cc b/src/main/native/windows/file-jni.cc
+index 63d81d8775..d06f42ad3a 100644
+--- a/src/main/native/windows/file-jni.cc
++++ b/src/main/native/windows/file-jni.cc
+@@ -103,6 +103,24 @@ Java_com_google_devtools_build_lib_windows_jni_WindowsFileOperations_nativeCreat
+   return static_cast<jint>(result);
+ }
+ 
++extern "C" JNIEXPORT jint JNICALL
++Java_com_google_devtools_build_lib_windows_jni_WindowsFileOperations_nativeCreateSymlink(
++    JNIEnv* env, jclass clazz, jstring name, jstring target,
++    jobjectArray error_msg_holder) {
++  std::wstring wname(bazel::windows::GetJavaWstring(env, name));
++  std::wstring wtarget(bazel::windows::GetJavaWstring(env, target));
++  std::wstring error;
++  int result = bazel::windows::CreateSymlink(wname, wtarget, &error);
++  if (result != bazel::windows::CreateSymlinkResult::kSuccess &&
++      !error.empty() && CanReportError(env, error_msg_holder)) {
++    ReportLastError(bazel::windows::MakeErrorMessage(
++                        WSTR(__FILE__), __LINE__, L"nativeCreateSymlink",
++                        wname + L", " + wtarget, error),
++                    env, error_msg_holder);
++  }
++  return static_cast<jint>(result);
++}
++
+ extern "C" JNIEXPORT jint JNICALL
+ Java_com_google_devtools_build_lib_windows_jni_WindowsFileOperations_nativeReadSymlinkOrJunction(
+     JNIEnv* env, jclass clazz, jstring name, jobjectArray target_holder,
+diff --git a/src/main/native/windows/file.cc b/src/main/native/windows/file.cc
+index 5dab7810fe..78f63e0abb 100644
+--- a/src/main/native/windows/file.cc
++++ b/src/main/native/windows/file.cc
+@@ -413,6 +413,46 @@ int CreateJunction(const wstring& junction_name, const wstring& junction_target,
+   return CreateJunctionResult::kSuccess;
+ }
+ 
++int CreateSymlink(const wstring& symlink_name, const wstring& symlink_target,
++                   wstring* error) {
++  if (!IsAbsoluteNormalizedWindowsPath(symlink_name)) {
++    if (error) {
++      *error = MakeErrorMessage(
++          WSTR(__FILE__), __LINE__, L"CreateSymlink", symlink_name,
++          L"expected an absolute Windows path for symlink_name");
++    }
++    return CreateSymlinkResult::kError;
++  }
++  if (!IsAbsoluteNormalizedWindowsPath(symlink_target)) {
++    if (error) {
++      *error = MakeErrorMessage(
++          WSTR(__FILE__), __LINE__, L"CreateSymlink", symlink_target,
++          L"expected an absolute Windows path for symlink_target");
++    }
++    return CreateSymlinkResult::kError;
++  }
++
++  const wstring name = AddUncPrefixMaybe(symlink_name);
++  const wstring target = AddUncPrefixMaybe(symlink_target);
++
++  DWORD attrs = GetFileAttributesW(target.c_str());
++  if (attrs & FILE_ATTRIBUTE_DIRECTORY) {
++    // Instead of creating a symlink to a directory use a Junction.
++    return CreateSymlinkResult::kTargetIsDirectory;
++  }
++
++  if (!CreateSymbolicLinkW(name.c_str(), target.c_str(),
++                           SYMBOLIC_LINK_FLAG_ALLOW_UNPRIVILEGED_CREATE)) {
++     // The flag SYMBOLIC_LINK_FLAG_ALLOW_UNPRIVILEGED_CREATE requires
++     // developer mode enabled, which we expect if using symbolic linking.
++     *error = MakeErrorMessage(
++               WSTR(__FILE__), __LINE__, L"CreateSymlink", symlink_target,
++               L"createSymbolicLinkW failed");
++     return CreateSymlinkResult::kError;
++  }
++  return CreateSymlinkResult::kSuccess;
++}
++
+ int ReadSymlinkOrJunction(const wstring& path, wstring* result,
+                           wstring* error) {
+   if (!IsAbsoluteNormalizedWindowsPath(path)) {
+diff --git a/src/main/native/windows/file.h b/src/main/native/windows/file.h
+index f8651e6ed9..465d8b56b9 100644
+--- a/src/main/native/windows/file.h
++++ b/src/main/native/windows/file.h
+@@ -18,6 +18,10 @@
+ #define WIN32_LEAN_AND_MEAN
+ #endif
+ 
++#ifndef SYMBOLIC_LINK_FLAG_ALLOW_UNPRIVILEGED_CREATE
++#define SYMBOLIC_LINK_FLAG_ALLOW_UNPRIVILEGED_CREATE 0x2
++#endif
++
+ #include <windows.h>
+ 
+ #include <memory>
+@@ -93,6 +97,15 @@ struct CreateJunctionResult {
+   };
+ };
+ 
++// Keep in sync with j.c.g.devtools.build.lib.windows.WindowsFileOperations
++struct CreateSymlinkResult {
++  enum {
++    kSuccess = 0,
++    kError = 1,
++    kTargetIsDirectory = 2,
++  };
++};
++
+ // Keep in sync with j.c.g.devtools.build.lib.windows.WindowsFileOperations
+ struct ReadSymlinkOrJunctionResult {
+   enum {
+@@ -143,6 +156,15 @@ wstring GetLongPath(const WCHAR* path, unique_ptr<WCHAR[]>* result);
+ int CreateJunction(const wstring& junction_name, const wstring& junction_target,
+                    wstring* error);
+ 
++// Creates a symlink at `symlink_name`, pointing to `symlink_target`.
++// Returns CreateSymlinkResult::kSuccess if could create the symlink.
++// If the target is a directory, this function will return
++// CreateSymlinkResult::kTargetIsDirectory since a junction is preferred
++// instead. When the function returns CreateSymlinkResult::kError and `error`
++// is non-null then `error` receives an error message.
++int CreateSymlink(const wstring& symlink_name, const wstring& symlink_target,
++                  wstring* error);
++
+ // Reads the symlink or junction into 'result'.
+ // Returns a value from 'ReadSymlinkOrJunctionResult'.
+ // When the method returns 'ReadSymlinkOrJunctionResult::kError' and 'error' is
+diff --git a/src/main/tools/build-runfiles-windows.cc b/src/main/tools/build-runfiles-windows.cc
+index 297116d310..ca744de4e3 100644
+--- a/src/main/tools/build-runfiles-windows.cc
++++ b/src/main/tools/build-runfiles-windows.cc
+@@ -36,10 +36,6 @@ using std::stringstream;
+ using std::unordered_map;
+ using std::wstring;
+ 
+-#ifndef SYMBOLIC_LINK_FLAG_ALLOW_UNPRIVILEGED_CREATE
+-#define SYMBOLIC_LINK_FLAG_ALLOW_UNPRIVILEGED_CREATE 0x2
+-#endif
+-
+ #ifndef SYMBOLIC_LINK_FLAG_DIRECTORY
+ #define SYMBOLIC_LINK_FLAG_DIRECTORY 0x1
+ #endif
+diff --git a/src/test/java/com/google/devtools/build/lib/util/DependencySetWindowsTest.java b/src/test/java/com/google/devtools/build/lib/util/DependencySetWindowsTest.java
+index 0020370dae..a519598f96 100644
+--- a/src/test/java/com/google/devtools/build/lib/util/DependencySetWindowsTest.java
++++ b/src/test/java/com/google/devtools/build/lib/util/DependencySetWindowsTest.java
+@@ -31,7 +31,8 @@ public class DependencySetWindowsTest {
+ 
+   private Scratch scratch = new Scratch();
+   private final FileSystem fileSystem =
+-      new WindowsFileSystem(DigestHashFunction.getDefaultUnchecked());
++      new WindowsFileSystem(
++          DigestHashFunction.getDefaultUnchecked(), /*createSymbolicLinks=*/ false);
+   private final Path root = fileSystem.getPath("C:/");
+ 
+   private DependencySet newDependencySet() {
+@@ -40,27 +41,32 @@ public class DependencySetWindowsTest {
+ 
+   @Test
+   public void dotDParser_windowsPaths() throws Exception {
+-    Path dotd = scratch.file("/tmp/foo.d",
+-        "bazel-out/hello-lib/cpp/hello-lib.o: \\",
+-        " cpp/hello-lib.cc cpp/hello-lib.h c:\\mingw\\include\\stdio.h \\",
+-        " c:\\mingw\\include\\_mingw.h \\",
+-        " c:\\mingw\\lib\\gcc\\mingw32\\4.8.1\\include\\stdarg.h");
++    Path dotd =
++        scratch.file(
++            "/tmp/foo.d",
++            "bazel-out/hello-lib/cpp/hello-lib.o: \\",
++            " cpp/hello-lib.cc cpp/hello-lib.h c:\\mingw\\include\\stdio.h \\",
++            " c:\\mingw\\include\\_mingw.h \\",
++            " c:\\mingw\\lib\\gcc\\mingw32\\4.8.1\\include\\stdarg.h");
+ 
+-    Set<Path> expected = Sets.newHashSet(
+-        root.getRelative("cpp/hello-lib.cc"),
+-        root.getRelative("cpp/hello-lib.h"),
+-        fileSystem.getPath("C:/mingw/include/stdio.h"),
+-        fileSystem.getPath("C:/mingw/include/_mingw.h"),
+-        fileSystem.getPath("C:/mingw/lib/gcc/mingw32/4.8.1/include/stdarg.h"));
++    Set<Path> expected =
++        Sets.newHashSet(
++            root.getRelative("cpp/hello-lib.cc"),
++            root.getRelative("cpp/hello-lib.h"),
++            fileSystem.getPath("C:/mingw/include/stdio.h"),
++            fileSystem.getPath("C:/mingw/include/_mingw.h"),
++            fileSystem.getPath("C:/mingw/lib/gcc/mingw32/4.8.1/include/stdarg.h"));
+ 
+     assertThat(newDependencySet().read(dotd).getDependencies()).containsExactlyElementsIn(expected);
+   }
+ 
+   @Test
+   public void dotDParser_windowsPathsWithSpaces() throws Exception {
+-    Path dotd = scratch.file("/tmp/foo.d",
+-        "bazel-out/hello-lib/cpp/hello-lib.o: \\",
+-        "C:\\Program\\ Files\\ (x86)\\LLVM\\stddef.h");
++    Path dotd =
++        scratch.file(
++            "/tmp/foo.d",
++            "bazel-out/hello-lib/cpp/hello-lib.o: \\",
++            "C:\\Program\\ Files\\ (x86)\\LLVM\\stddef.h");
+     assertThat(newDependencySet().read(dotd).getDependencies())
+         .containsExactlyElementsIn(
+             Sets.newHashSet(fileSystem.getPath("C:/Program Files (x86)/LLVM/stddef.h")));
+@@ -71,20 +77,23 @@ public class DependencySetWindowsTest {
+     // This is (slightly simplified) actual output from clang. Yes, clang will happily mix
+     // forward slashes and backslashes in a single path, not to mention using backslashes as
+     // separators next to backslashes as escape characters.
+-    Path dotd = scratch.file("/tmp/foo.d",
+-        "bazel-out/hello-lib/cpp/hello-lib.o: \\",
+-        "cpp/hello-lib.cc cpp/hello-lib.h /mingw/include\\stdio.h \\",
+-        "/mingw/include\\_mingw.h \\",
+-        "C:\\Program\\ Files\\ (x86)\\LLVM\\bin\\..\\lib\\clang\\3.5.0\\include\\stddef.h \\",
+-        "C:\\Program\\ Files\\ (x86)\\LLVM\\bin\\..\\lib\\clang\\3.5.0\\include\\stdarg.h");
++    Path dotd =
++        scratch.file(
++            "/tmp/foo.d",
++            "bazel-out/hello-lib/cpp/hello-lib.o: \\",
++            "cpp/hello-lib.cc cpp/hello-lib.h /mingw/include\\stdio.h \\",
++            "/mingw/include\\_mingw.h \\",
++            "C:\\Program\\ Files\\ (x86)\\LLVM\\bin\\..\\lib\\clang\\3.5.0\\include\\stddef.h \\",
++            "C:\\Program\\ Files\\ (x86)\\LLVM\\bin\\..\\lib\\clang\\3.5.0\\include\\stdarg.h");
+ 
+-    Set<Path> expected = Sets.newHashSet(
+-        root.getRelative("cpp/hello-lib.cc"),
+-        root.getRelative("cpp/hello-lib.h"),
+-        fileSystem.getPath("C:/fake/msys/mingw/include/stdio.h"),
+-        fileSystem.getPath("C:/fake/msys/mingw/include/_mingw.h"),
+-        fileSystem.getPath("C:/Program Files (x86)/LLVM/lib/clang/3.5.0/include/stddef.h"),
+-        fileSystem.getPath("C:/Program Files (x86)/LLVM/lib/clang/3.5.0/include/stdarg.h"));
++    Set<Path> expected =
++        Sets.newHashSet(
++            root.getRelative("cpp/hello-lib.cc"),
++            root.getRelative("cpp/hello-lib.h"),
++            fileSystem.getPath("C:/fake/msys/mingw/include/stdio.h"),
++            fileSystem.getPath("C:/fake/msys/mingw/include/_mingw.h"),
++            fileSystem.getPath("C:/Program Files (x86)/LLVM/lib/clang/3.5.0/include/stddef.h"),
++            fileSystem.getPath("C:/Program Files (x86)/LLVM/lib/clang/3.5.0/include/stdarg.h"));
+ 
+     assertThat(newDependencySet().read(dotd).getDependencies()).containsExactlyElementsIn(expected);
+   }
+@@ -95,10 +104,8 @@ public class DependencySetWindowsTest {
+     Path file2 = fileSystem.getPath("C:/blah/blah/genhello/hello.h");
+     Path file2DiffCase = fileSystem.getPath("C:/Blah/blah/Genhello/hello.h");
+     String filename = "hello.o";
+-    Path dotd = scratch.file("/tmp/foo.d",
+-        filename + ": \\",
+-        " " + file1 + " \\",
+-        " " + file2 + " ");
++    Path dotd =
++        scratch.file("/tmp/foo.d", filename + ": \\", " " + file1 + " \\", " " + file2 + " ");
+     assertThat(newDependencySet().read(dotd).getDependencies())
+         .containsExactly(file1, file2DiffCase);
+   }
+diff --git a/src/test/java/com/google/devtools/build/lib/vfs/util/FileSystems.java b/src/test/java/com/google/devtools/build/lib/vfs/util/FileSystems.java
+index 623870eec7..c4778ebfdd 100644
+--- a/src/test/java/com/google/devtools/build/lib/vfs/util/FileSystems.java
++++ b/src/test/java/com/google/devtools/build/lib/vfs/util/FileSystems.java
+@@ -28,7 +28,8 @@ public final class FileSystems {
+   /** Constructs a platform native (Unix or Windows) file system. */
+   public static FileSystem getNativeFileSystem() {
+     if (OS.getCurrent() == OS.WINDOWS) {
+-      return new WindowsFileSystem(DigestHashFunction.getDefaultUnchecked());
++      return new WindowsFileSystem(
++          DigestHashFunction.getDefaultUnchecked(), /*createSymbolicLinks=*/ false);
+     }
+     try {
+       return Class.forName(TestConstants.TEST_REAL_UNIX_FILE_SYSTEM)
+diff --git a/src/test/java/com/google/devtools/build/lib/windows/WindowsFileOperationsTest.java b/src/test/java/com/google/devtools/build/lib/windows/WindowsFileOperationsTest.java
+index 9c04f8bd3e..7dac094e6e 100644
+--- a/src/test/java/com/google/devtools/build/lib/windows/WindowsFileOperationsTest.java
++++ b/src/test/java/com/google/devtools/build/lib/windows/WindowsFileOperationsTest.java
+@@ -65,6 +65,38 @@ public class WindowsFileOperationsTest {
+     assertThat(Arrays.asList(children)).containsExactly("file.txt");
+   }
+ 
++  @Test
++  public void testSymlinkCreation() throws Exception {
++    File helloFile = testUtil.scratchFile("file.txt", "hello").toFile();
++    File symlinkFile = new File(scratchRoot, "symlink");
++    testUtil.createSymlinks(ImmutableMap.of("symlink", "file.txt"));
++
++    assertThat(WindowsFileOperations.isSymlinkOrJunction(symlinkFile.toString())).isTrue();
++    assertThat(symlinkFile.exists()).isTrue();
++
++    // Assert deleting the symlink does not remove the target file.
++    assertThat(WindowsFileOperations.deletePath(symlinkFile.toString())).isTrue();
++    assertThat(helloFile.exists()).isTrue();
++    try {
++      WindowsFileOperations.isSymlinkOrJunction(symlinkFile.toString());
++      fail("Expected to throw: Symlink should no longer exist.");
++    } catch (IOException e) {
++      assertThat(e).hasMessageThat().contains("path does not exist");
++    }
++  }
++
++  @Test
++  public void testSymlinkCreationFailsForDirectory() throws Exception {
++    testUtil.scratchDir("dir").toFile();
++
++    try {
++      testUtil.createSymlinks(ImmutableMap.of("symlink", "dir"));
++      fail("Expected to throw: Symlinks to a directory should fail.");
++    } catch (IOException e) {
++      assertThat(e).hasMessageThat().contains("target is a directory");
++    }
++  }
++
+   @Test
+   public void testIsJunction() throws Exception {
+     final Map<String, String> junctions = new HashMap<>();
+diff --git a/src/test/java/com/google/devtools/build/lib/windows/WindowsFileSystemTest.java b/src/test/java/com/google/devtools/build/lib/windows/WindowsFileSystemTest.java
+index dc3275c03a..c44fca0c7a 100644
+--- a/src/test/java/com/google/devtools/build/lib/windows/WindowsFileSystemTest.java
++++ b/src/test/java/com/google/devtools/build/lib/windows/WindowsFileSystemTest.java
+@@ -51,7 +51,9 @@ public class WindowsFileSystemTest {
+ 
+   @Before
+   public void loadJni() throws Exception {
+-    fs = new WindowsFileSystem(DigestHashFunction.getDefaultUnchecked());
++    fs =
++        new WindowsFileSystem(
++            DigestHashFunction.getDefaultUnchecked(), /*createSymbolicLinks=*/ false);
+     scratchRoot = fs.getPath(System.getenv("TEST_TMPDIR")).getRelative("x");
+     testUtil = new WindowsTestUtil(scratchRoot.getPathString());
+     cleanupScratchDir();
+@@ -96,7 +98,7 @@ public class WindowsFileSystemTest {
+     assertThat(juncBadPath.exists(Symlinks.NOFOLLOW)).isTrue();
+     // TODO(bazel-team): fix https://github.com/bazelbuild/bazel/issues/1690 and uncomment the
+     // assertion below.
+-    //assertThat(fs.isSymbolicLink(juncBadPath)).isTrue();
++    // assertThat(fs.isSymbolicLink(juncBadPath)).isTrue();
+     assertThat(fs.isDirectory(juncBadPath, /* followSymlinks */ true)).isFalse();
+     assertThat(fs.isDirectory(juncBadPath, /* followSymlinks */ false)).isFalse();
+ 
+@@ -332,6 +334,25 @@ public class WindowsFileSystemTest {
+     }
+   }
+ 
++  @Test
++  public void testCreateSymbolicLinkWithRealSymlinks() throws Exception {
++    fs =
++        new WindowsFileSystem(
++            DigestHashFunction.getDefaultUnchecked(), /*createSymbolicLinks=*/ true);
++    java.nio.file.Path helloPath = testUtil.scratchFile("hello.txt", "hello");
++    PathFragment targetFragment = PathFragment.create(helloPath.toString());
++    Path linkPath = scratchRoot.getRelative("link.txt");
++    fs.createSymbolicLink(linkPath, targetFragment);
++
++    assertThat(linkPath.isSymbolicLink()).isTrue();
++    assertThat(linkPath.readSymbolicLink()).isEqualTo(targetFragment);
++
++    // Assert deleting the symbolic link keeps the target file.
++    linkPath.delete();
++    assertThat(linkPath.exists()).isFalse();
++    assertThat(helloPath.toFile().exists()).isTrue();
++  }
++
+   @Test
+   public void testReadJunction() throws Exception {
+     testUtil.scratchFile("dir\\hello.txt", "hello");
+diff --git a/src/test/java/com/google/devtools/build/lib/windows/util/WindowsTestUtil.java b/src/test/java/com/google/devtools/build/lib/windows/util/WindowsTestUtil.java
+index 86270fc435..b054f85ae6 100644
+--- a/src/test/java/com/google/devtools/build/lib/windows/util/WindowsTestUtil.java
++++ b/src/test/java/com/google/devtools/build/lib/windows/util/WindowsTestUtil.java
+@@ -63,6 +63,22 @@ public final class WindowsTestUtil {
+     }
+   }
+ 
++  /**
++   * Create symbolic links.
++   *
++   * <p>Each key in the map is a symlink path relative to {@link #scratchRoot}. These are the link
++   * names.
++   *
++   * <p>Each value in the map is a file path relative to {@link #scratchRoot}. These are the link
++   * targets.
++   */
++  public void createSymlinks(Map<String, String> links) throws Exception {
++    for (Map.Entry<String, String> entry : links.entrySet()) {
++      WindowsFileOperations.createSymlink(
++          scratchRoot + "/" + entry.getKey(), scratchRoot + "/" + entry.getValue());
++    }
++  }
++
+   /** Delete everything under {@link #scratchRoot}/path. */
+   public void deleteAllUnder(String path) throws IOException {
+     if (Strings.isNullOrEmpty(path)) {
+-- 
+2.26.0.windows.1
+

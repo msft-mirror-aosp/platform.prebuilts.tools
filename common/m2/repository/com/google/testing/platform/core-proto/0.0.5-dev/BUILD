@@ -14,9 +14,9 @@ maven_pom(
     visibility = ["//visibility:public"],
 )
 
-# managed by go/iml_to_build [unb]
+# managed by go/iml_to_build
 java_import(
-    name = "unb.androidx-test-core-proto",
+    name = "androidx-test-core-proto",
     jars = ["core-proto-0.0.5-dev.jar"],
     visibility = ["//visibility:public"],
 )

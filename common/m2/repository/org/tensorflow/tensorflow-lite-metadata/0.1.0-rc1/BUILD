@@ -13,14 +13,3 @@ maven_pom(
     source = "tensorflow-lite-metadata-0.1.0-rc1.pom",
     visibility = ["//visibility:public"],
 )
-
-# managed by go/iml_to_build [unb]
-java_import(
-    name = "unb.tensorflow-lite-metadata",
-    jars = ["tensorflow-lite-metadata-0.1.0-rc1.jar"],
-    tags = [
-        "manual",
-        "unb",
-    ],
-    visibility = ["//visibility:public"],
-)
