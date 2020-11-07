@@ -61,7 +61,7 @@ java_import {
 
 java_import {
     name: "truth-prebuilt-jar",
-    jars: ["repository/com/google/truth/truth/0.44/truth-0.44.jar"],
+    jars: ["repository/com/google/truth/truth/1.0.1/truth-1.0.1.jar"],
     sdk_version: "current",
     host_supported: true,
 }
@@ -121,6 +121,7 @@ java_library_static {
     name: "truth-prebuilt",
     static_libs: [
         "truth-prebuilt-jar",
+        "asm-7.0",
         "diffutils-prebuilt-jar",
         "guava",
     ],
