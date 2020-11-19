@@ -21,7 +21,7 @@ index 0cceaca7f05..71bf58819ab 100644
                  findVirtualFileGivenPackage(dir, relativeClassName, type)
              } ?: singleJavaFileRootsIndex.findJavaSourceClass(classId)
 diff --git a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
-index 2d491bb5b1f..83575c41967 100644
+index 3d9b322a7b4..ce2b7cd92bf 100644
 --- a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
 +++ b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
 @@ -364,7 +364,9 @@ class KotlinCoreEnvironment private constructor(
@@ -91,7 +91,7 @@ index de4d9391e29..d56f515478b 100644
  
      override fun hashCode() = psi?.hashCode() ?: 0
 diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethod.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethod.kt
-index 7e5c84dabe0..fdbdc5d9cbd 100644
+index 12b796b8d61..60893e2afe0 100644
 --- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethod.kt
 +++ b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethod.kt
 @@ -16,6 +16,7 @@
@@ -102,7 +102,7 @@ index 7e5c84dabe0..fdbdc5d9cbd 100644
  import com.intellij.psi.*
  import org.jetbrains.kotlin.asJava.elements.*
  import org.jetbrains.kotlin.psi.*
-@@ -179,6 +180,11 @@ class KotlinUMethodWithFakeLightDelegate internal constructor(
+@@ -185,6 +186,11 @@ class KotlinUMethodWithFakeLightDelegate internal constructor(
      }
  
      override fun hashCode(): Int = original.hashCode()
@@ -167,7 +167,7 @@ index c099eb07009..257f50c64fc 100644
                          private val myExtendsList by lazy {
                              super.getExtendsList().apply {
 diff --git a/plugins/uast-kotlin/testData/LocalDeclarations.values.txt b/plugins/uast-kotlin/testData/LocalDeclarations.values.txt
-index 791501900cd..e3d85177910 100644
+index 10c4499fdce..5c7d7dbe020 100644
 --- a/plugins/uast-kotlin/testData/LocalDeclarations.values.txt
 +++ b/plugins/uast-kotlin/testData/LocalDeclarations.values.txt
 @@ -9,7 +9,7 @@ UFile (package = ) [public final class LocalDeclarationsKt {...]
@@ -178,7 +178,7 @@ index 791501900cd..e3d85177910 100644
 +                                UReturnExpression [return <init>()] = Nothing
                                      UCallExpression (kind = UastCallKind(name='constructor_call'), argCount = 0)) [<init>()] = external <init>()()
                                          UIdentifier (Identifier (Local)) [UIdentifier (Identifier (Local))]
-                                         USimpleNameReferenceExpression (identifier = <init>, resolvesTo = Local) [<init>] = external <init>()()
+                                         USimpleNameReferenceExpression (identifier = <init>, resolvesTo = PsiClass: Local) [<init>] = external <init>()()
 @@ -26,7 +26,7 @@ UFile (package = ) [public final class LocalDeclarationsKt {...]
                              UParameter (name = text) [@org.jetbrains.annotations.NotNull var text: java.lang.String]
                                  UAnnotation (fqName = org.jetbrains.annotations.NotNull) [@org.jetbrains.annotations.NotNull]
