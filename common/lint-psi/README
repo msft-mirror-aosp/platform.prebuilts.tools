@@ -25,7 +25,7 @@ $ git clone https://github.com/JetBrains/kotlin
 Then switch to a compatible patch branch.
 
 Currently:
-$ git checkout 1.4.0
+$ git checkout 1.4.20
 $ bunch switch 202
 
 Verify that the file gradle/versions.properties has the line
@@ -36,10 +36,6 @@ issues (recall that Lint still has to link with Studio's platform
 version when running in the IDE).
 
 (Currently using 202.5103-EAP-CANDIDATE-SNAPSHOT)
-
-Next cherry pick some fixes from upstream:
-    fa8c6e7fb6: Uast: KT-40578: resolve Kotlin property writes to setters (#3597)
-    27c139926c: LightClass improved isInheritor check for cases when resolve is failed (KT-37210)
 
 Then make sure to apply some extra patches to work around bugs:
 $ git apply /path/to/kotlin-compiler-patch.diff (which is located in this directory).
