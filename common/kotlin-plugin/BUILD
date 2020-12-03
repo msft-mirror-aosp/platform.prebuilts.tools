@@ -301,6 +301,20 @@ java_import(
 
 # managed by go/iml_to_build
 java_import(
+    name = "Kotlin/lib/parcelize-compiler",
+    jars = ["Kotlin/lib/parcelize-compiler.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+java_import(
+    name = "Kotlin/lib/parcelize-ide",
+    jars = ["Kotlin/lib/parcelize-ide.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+java_import(
     name = "Kotlin/lib/sam-with-receiver-ide-plugin",
     jars = ["Kotlin/lib/sam-with-receiver-ide-plugin.jar"],
     visibility = ["//visibility:public"],
