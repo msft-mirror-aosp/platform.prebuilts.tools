@@ -289,6 +289,11 @@ java_library_static {
     sdk_version: "current",
 }
 
+java_import {
+    name: "kotlinx-coroutines-core-jvm",
+    jars: ["repository/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.4.2/kotlinx-coroutines-core-jvm-1.4.2.jar"],
+}
+
 java_import_host {
     name: "car-androidx-room-compiler-tools-common-m2-deps",
     jars: [
@@ -323,4 +328,10 @@ java_import_host {
 java_import_host {
     name: "jsoup-1.6.3",
     jars: ["repository/org/jsoup/jsoup/1.6.3/jsoup-1.6.3.jar"],
+}
+
+java_import {
+    name: "symbol-processing-api",
+    jars: ["repository/com/google/devtools/ksp/symbol-processing-api/1.4.10-dev-experimental-20201110/symbol-processing-api-1.4.10-dev-experimental-20201110.jar"],
+    host_supported: true,
 }
