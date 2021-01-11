@@ -14,3 +14,10 @@ maven_pom(
     source = "commons-io-2.4.pom",
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+java_import(
+    name = "commons-io-2.4",
+    jars = ["commons-io-2.4.jar"],
+    visibility = ["//visibility:public"],
+)
