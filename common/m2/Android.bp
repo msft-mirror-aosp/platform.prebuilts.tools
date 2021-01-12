@@ -270,6 +270,11 @@ java_library_static {
     sdk_version: "current",
 }
 
+java_import {
+    name: "kotlinx-coroutines-core-jvm",
+    jars: ["repository/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.4.2/kotlinx-coroutines-core-jvm-1.4.2.jar"],
+}
+
 java_import_host {
     name: "javax-annotation-api-prebuilt-host-jar",
     jars: ["repository/javax/annotation/javax.annotation-api/1.2/javax.annotation-api-1.2.jar"],
@@ -290,5 +295,11 @@ java_import_host {
 java_import {
     name: "flogger-0.5.1",
     jars: ["repository/com/google/flogger/flogger/0.5.1/flogger-0.5.1.jar"],
+    host_supported: true,
+}
+
+java_import {
+    name: "symbol-processing-api",
+    jars: ["repository/com/google/devtools/ksp/symbol-processing-api/1.4.10-dev-experimental-20201110/symbol-processing-api-1.4.10-dev-experimental-20201110.jar"],
     host_supported: true,
 }
