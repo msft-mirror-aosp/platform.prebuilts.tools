@@ -78,7 +78,7 @@ java_import {
 
 java_import {
     name: "truth-prebuilt-jar",
-    jars: ["repository/com/google/truth/truth/0.42/truth-0.42.jar"],
+    jars: ["repository/com/google/truth/truth/0.44/truth-0.44.jar"],
     sdk_version: "current",
     host_supported: true,
 }
@@ -137,6 +137,12 @@ java_import_host {
 java_import_host {
     name: "protobuf-java-util-prebuilt-jar",
     jars: ["repository/com/google/protobuf/protobuf-java-util/3.0.2/protobuf-java-util-3.0.2.jar"],
+}
+
+java_import_host {
+    name: "grpc-netty-shaded-1.16.1-jar",
+    jars: ["repository/io/grpc/grpc-netty-shaded/1.16.1/grpc-netty-shaded-1.16.1.jar"],
+    visibility: ["//external/grpc-grpc-java/netty/shaded"],
 }
 
 java_import_host {
@@ -303,6 +309,11 @@ java_import {
     host_supported: true,
 }
 
+java_import_host {
+    name: "com.google.api.grpc_proto-google-common-protos-prebuilt-jar",
+    jars: ["repository/com/google/api/grpc/proto-google-common-protos/1.14.0/proto-google-common-protos-1.14.0.jar"],
+}
+
 java_import {
     name: "commons-codec",
     jars: ["repository/commons-codec/commons-codec/1.10/commons-codec-1.10.jar"],
@@ -380,3 +391,19 @@ java_import_host {
     name: "jsoup-1.6.3",
     jars: ["repository/org/jsoup/jsoup/1.6.3/jsoup-1.6.3.jar"],
 }
+
+java_import_host {
+    name: "javax-annotation-api-prebuilt-host-jar",
+    jars: ["repository/javax/annotation/javax.annotation-api/1.2/javax.annotation-api-1.2.jar"],
+}
+
+java_import_host {
+    name: "google-auth-library-credentials-0.13.0",
+    jars: ["repository/com/google/auth/google-auth-library-credentials/0.13.0/google-auth-library-credentials-0.13.0.jar"],
+}
+
+java_import_host {
+    name: "google-auth-library-oauth2-http-0.13.0",
+    jars: ["repository/com/google/auth/google-auth-library-oauth2-http/0.13.0/google-auth-library-oauth2-http-0.13.0.jar"],
+}
+
