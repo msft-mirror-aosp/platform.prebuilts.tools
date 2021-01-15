@@ -3,20 +3,20 @@ load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom", "maven_aa
 
 maven_java_import(
     name = "jar",
-    jars = ["kotlinx-coroutines-guava-1.2.1.jar"],
+    jars = ["kotlinx-coroutines-guava-1.3.9.jar"],
     pom = ":pom",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
     name = "pom",
-    source = "kotlinx-coroutines-guava-1.2.1.pom",
+    source = "kotlinx-coroutines-guava-1.3.9.pom",
     visibility = ["//visibility:public"],
 )
 
 # managed by go/iml_to_build
 filegroup(
     name = "kotlinx-coroutines-guava_files",
-    srcs = ["kotlinx-coroutines-guava-1.2.1.jar"],
+    srcs = ["kotlinx-coroutines-guava-1.3.9.jar"],
     visibility = ["//visibility:public"],
 )
