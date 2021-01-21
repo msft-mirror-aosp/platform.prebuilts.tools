@@ -20,3 +20,10 @@ filegroup(
     srcs = ["kotlinx-coroutines-guava-1.3.9.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+java_import(
+    name = "kotlinx-coroutines-guava",
+    jars = ["kotlinx-coroutines-guava-1.3.9.jar"],
+    visibility = ["//visibility:public"],
+)
