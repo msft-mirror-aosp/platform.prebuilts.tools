@@ -18,3 +18,7 @@ https://github.com/bazelbuild/bazel/commit/08a15e795107ec76d574579223485a3efb9da
 `3.1.0_unprivileged-symlink.patch`
 https://github.com/bazelbuild/bazel/commit/a6fccbb5f28972475f57821ac67db7dd993b2174
 
+`3.1.0_remote-hangs.patch
+https://github.com/coeuvre/bazel/commit/6cd8bc333a83159cc4bb041686b923a16b4f0b37
+https://github.com/coeuvre/bazel/commit/fb83b9815e329653a65be0d352963f6fdf9ff2fa
+
