@@ -14,3 +14,10 @@ maven_pom(
     source = "asm-analysis-7.0.pom",
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+filegroup(
+    name = "asm-tools_files",
+    srcs = ["asm-analysis-7.0.jar"],
+    visibility = ["//visibility:public"],
+)
