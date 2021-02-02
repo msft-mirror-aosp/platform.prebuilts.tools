@@ -1,4 +1,4 @@
-load("//tools/base/bazel:app_inspection.bzl", "app_inspection_proto")
+load("//tools/base/app-inspection:app_inspection.bzl", "app_inspection_proto")
 load("//tools/adt/idea/studio:studio.bzl", "studio_data")
 
 app_inspection_proto(
