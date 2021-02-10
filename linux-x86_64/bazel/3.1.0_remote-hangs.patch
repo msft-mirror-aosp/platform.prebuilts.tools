@@ -1,0 +1,186 @@
+diff --git a/src/main/java/com/google/devtools/build/lib/concurrent/MultisetSemaphore.java b/src/main/java/com/google/devtools/build/lib/concurrent/MultisetSemaphore.java
+index 94611b5..471a6df 100644
+--- a/src/main/java/com/google/devtools/build/lib/concurrent/MultisetSemaphore.java
++++ b/src/main/java/com/google/devtools/build/lib/concurrent/MultisetSemaphore.java
+@@ -86,7 +86,7 @@ public abstract class MultisetSemaphore<T> {
+     public Builder maxNumUniqueValues(int maxNumUniqueValues) {
+       Preconditions.checkState(
+           maxNumUniqueValues > 0,
+-          "maxNumUniqueValues must be positive (was %d)",
++          "maxNumUniqueValues must be positive (was %s)",
+           maxNumUniqueValues);
+       this.maxNumUniqueValues = maxNumUniqueValues;
+       return this;
+diff --git a/src/main/java/com/google/devtools/build/lib/remote/GrpcCacheClient.java b/src/main/java/com/google/devtools/build/lib/remote/GrpcCacheClient.java
+index 6c6000c..5cc2f64 100644
+--- a/src/main/java/com/google/devtools/build/lib/remote/GrpcCacheClient.java
++++ b/src/main/java/com/google/devtools/build/lib/remote/GrpcCacheClient.java
+@@ -73,6 +73,7 @@ import javax.annotation.Nullable;
+ @ThreadSafe
+ public class GrpcCacheClient implements RemoteCacheClient, MissingDigestsFinder {
+   private final CallCredentials credentials;
++
+   private final ReferenceCountedChannel channel;
+   private final RemoteOptions options;
+   private final DigestUtil digestUtil;
+@@ -326,7 +327,6 @@ public class GrpcCacheClient implements RemoteCacheClient, MissingDigestsFinder
+                   data.writeTo(out);
+                   offset.addAndGet(data.size());
+                 } catch (IOException e) {
+-                  future.setException(e);
+                   // Cancel the call.
+                   throw new RuntimeException(e);
+                 }
+@@ -355,6 +355,8 @@ public class GrpcCacheClient implements RemoteCacheClient, MissingDigestsFinder
+                   future.set(null);
+                 } catch (IOException e) {
+                   future.setException(e);
++                } catch (RuntimeException e) {
++                  future.setException(e);
+                 }
+               }
+             });
+diff --git a/src/main/java/com/google/devtools/build/lib/remote/RemoteCache.java b/src/main/java/com/google/devtools/build/lib/remote/RemoteCache.java
+index e104671..39fc0e0 100644
+--- a/src/main/java/com/google/devtools/build/lib/remote/RemoteCache.java
++++ b/src/main/java/com/google/devtools/build/lib/remote/RemoteCache.java
+@@ -263,7 +263,11 @@ public class RemoteCache implements AutoCloseable {
+         new FutureCallback<Void>() {
+           @Override
+           public void onSuccess(Void aVoid) {
+-            outerF.set(bOut.toByteArray());
++            try {
++              outerF.set(bOut.toByteArray());
++            } catch (RuntimeException e) {
++              outerF.setException(e);
++            }
+           }
+ 
+           @Override
+@@ -453,6 +457,8 @@ public class RemoteCache implements AutoCloseable {
+               outerF.set(null);
+             } catch (IOException e) {
+               outerF.setException(e);
++            } catch (RuntimeException e) {
++              outerF.setException(e);
+             }
+           }
+ 
+@@ -464,6 +470,8 @@ public class RemoteCache implements AutoCloseable {
+               if (t != e) {
+                 t.addSuppressed(e);
+               }
++            } catch (RuntimeException e) {
++              t.addSuppressed(e);
+             } finally {
+               outerF.setException(t);
+             }
+diff --git a/src/main/java/com/google/devtools/build/lib/remote/http/BUILD b/src/main/java/com/google/devtools/build/lib/remote/http/BUILD
+index 318c501..a1713b6 100644
+--- a/src/main/java/com/google/devtools/build/lib/remote/http/BUILD
++++ b/src/main/java/com/google/devtools/build/lib/remote/http/BUILD
+@@ -23,6 +23,7 @@ java_library(
+         "//src/main/java/com/google/devtools/build/lib/remote/util",
+         "//src/main/java/com/google/devtools/build/lib/vfs",
+         "//third_party:auth",
++        "//third_party:flogger",
+         "//third_party:guava",
+         "//third_party:jsr305",
+         "//third_party:netty",
+diff --git a/src/main/java/com/google/devtools/build/lib/remote/http/HttpCacheClient.java b/src/main/java/com/google/devtools/build/lib/remote/http/HttpCacheClient.java
+index 73047a0..b60f753 100644
+--- a/src/main/java/com/google/devtools/build/lib/remote/http/HttpCacheClient.java
++++ b/src/main/java/com/google/devtools/build/lib/remote/http/HttpCacheClient.java
+@@ -19,6 +19,8 @@ import com.google.auth.Credentials;
+ import com.google.common.collect.ImmutableList;
+ import com.google.common.collect.ImmutableSet;
+ import com.google.common.hash.HashingOutputStream;
++import com.google.common.flogger.GoogleLogger;
++import com.google.common.io.Closeables;
+ import com.google.common.util.concurrent.Futures;
+ import com.google.common.util.concurrent.ListenableFuture;
+ import com.google.common.util.concurrent.MoreExecutors;
+@@ -112,6 +114,7 @@ import javax.net.ssl.SSLEngine;
+  * <p>The implementation currently does not support transfer encoding chunked.
+  */
+ public final class HttpCacheClient implements RemoteCacheClient {
++  private static final GoogleLogger logger = GoogleLogger.forEnclosingClass();
+ 
+   public static final String AC_PREFIX = "ac/";
+   public static final String CAS_PREFIX = "cas/";
+@@ -512,9 +515,16 @@ public final class HttpCacheClient implements RemoteCacheClient {
+                               if (!dataWritten.get() && authTokenExpired(response)) {
+                                 // The error is due to an auth token having expired. Let's try
+                                 // again.
+-                                refreshCredentials();
+-                                getAfterCredentialRefresh(downloadCmd, outerF);
+-                                return;
++                                try {
++                                  refreshCredentials();
++                                  getAfterCredentialRefresh(downloadCmd, outerF);
++                                  return;
++                                } catch (IOException e) {
++                                  cause.addSuppressed(e);
++                                } catch (RuntimeException e) {
++                                  logger.atWarning().withCause(e).log("Unexpected exception");
++                                  cause.addSuppressed(e);
++                                }
+                               } else if (cacheMiss(response.status())) {
+                                 outerF.setException(new CacheNotFoundException(digest));
+                                 return;
+diff --git a/src/main/java/com/google/devtools/build/lib/remote/util/BUILD b/src/main/java/com/google/devtools/build/lib/remote/util/BUILD
+index 2ab7faa..13b0a3a 100644
+--- a/src/main/java/com/google/devtools/build/lib/remote/util/BUILD
++++ b/src/main/java/com/google/devtools/build/lib/remote/util/BUILD
+@@ -21,6 +21,8 @@ java_library(
+         "//src/main/java/com/google/devtools/build/lib/remote/options",
+         "//src/main/java/com/google/devtools/build/lib/vfs",
+         "//src/main/java/com/google/devtools/build/lib/vfs:pathfragment",
++        "//src/main/protobuf:failure_details_java_proto",
++        "//third_party:flogger",
+         "//third_party:guava",
+         "//third_party:jsr305",
+         "//third_party/grpc:grpc-jar",
+diff --git a/src/main/java/com/google/devtools/build/lib/remote/util/NetworkTime.java b/src/main/java/com/google/devtools/build/lib/remote/util/NetworkTime.java
+index 1f51559..bdb440a 100644
+--- a/src/main/java/com/google/devtools/build/lib/remote/util/NetworkTime.java
++++ b/src/main/java/com/google/devtools/build/lib/remote/util/NetworkTime.java
+@@ -15,6 +15,7 @@ package com.google.devtools.build.lib.remote.util;
+ 
+ import build.bazel.remote.execution.v2.ExecutionGrpc;
+ import com.google.common.base.Stopwatch;
++import com.google.common.flogger.GoogleLogger;
+ import com.google.devtools.build.lib.concurrent.ThreadSafety;
+ import io.grpc.CallOptions;
+ import io.grpc.Channel;
+@@ -31,6 +32,8 @@ import java.time.Duration;
+ /** Reentrant wall clock stopwatch and grpc interceptor for network waits. */
+ @ThreadSafety.ThreadSafe
+ public class NetworkTime {
++  private static final GoogleLogger logger = GoogleLogger.forEnclosingClass();
++
+   public static final Context.Key<NetworkTime> CONTEXT_KEY = Context.key("remote-network-time");
+ 
+   private final Stopwatch wallTime = Stopwatch.createUnstarted();
+@@ -87,9 +90,20 @@ public class NetworkTime {
+           new ForwardingClientCallListener.SimpleForwardingClientCallListener<RespT>(
+               responseListener) {
+ 
++            /**
++             * This method must not throw any exceptions. Doing so will cause the wrapped call to
++             * silently hang indefinitely: https://github.com/grpc/grpc-java/pull/6107
++             */
+             @Override
+             public void onClose(Status status, Metadata trailers) {
+-              networkTime.stop();
++              // There is a risk that networkTime.stop() would throw a IllegalStateException: if
++              // networkTime.outstanding is overflowed, wallTime.stop() will be called even it's
++              // already stopped.
++              try {
++                networkTime.stop();
++              } catch (RuntimeException e) {
++                logger.atWarning().withCause(e).log("Failed to stop networkTime");
++              }
+               super.onClose(status, trailers);
+             }
+           },
