@@ -3,13 +3,13 @@ load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom", "maven_aa
 
 maven_aar(
     name = "aar",
-    aar = "activity-compose-1.3.0-alpha01.aar",
+    aar = "activity-ktx-1.3.0-alpha02.aar",
     pom = ":pom",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
     name = "pom",
-    source = "activity-compose-1.3.0-alpha01.pom",
+    source = "activity-ktx-1.3.0-alpha02.pom",
     visibility = ["//visibility:public"],
 )
