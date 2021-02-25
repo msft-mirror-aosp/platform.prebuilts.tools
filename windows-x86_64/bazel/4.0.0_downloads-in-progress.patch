@@ -1,12 +1,18 @@
-Index: src/main/java/com/google/devtools/build/lib/remote/RemoteActionInputFetcher.java
-IDEA additional info:
-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
-<+>UTF-8
-===================================================================
+From 6f77a1f8090dd60a0dcccdf99a445fc3013368b4 Mon Sep 17 00:00:00 2001
+From: Tom <tomrenn@google.com>
+Date: Thu, 25 Feb 2021 21:09:23 +0000
+Subject: [PATCH] Add ref counting to downloads in progress
+
+Fixes https://github.com/bazebuild/bazel/issues/12972
+---
+ .../lib/remote/RemoteActionInputFetcher.java  | 166 +++++++++++++-----
+ 1 file changed, 124 insertions(+), 42 deletions(-)
+
 diff --git a/src/main/java/com/google/devtools/build/lib/remote/RemoteActionInputFetcher.java b/src/main/java/com/google/devtools/build/lib/remote/RemoteActionInputFetcher.java
---- a/src/main/java/com/google/devtools/build/lib/remote/RemoteActionInputFetcher.java	(revision 6b33bdb1e22514304c0e35ce8e067f2175685245)
-+++ b/src/main/java/com/google/devtools/build/lib/remote/RemoteActionInputFetcher.java	(date 1613519922565)
-@@ -19,10 +19,12 @@
+index 6191f65903..abb3e89d1e 100644
+--- a/src/main/java/com/google/devtools/build/lib/remote/RemoteActionInputFetcher.java
++++ b/src/main/java/com/google/devtools/build/lib/remote/RemoteActionInputFetcher.java
+@@ -19,10 +19,12 @@ import com.google.common.annotations.VisibleForTesting;
  import com.google.common.base.Preconditions;
  import com.google.common.collect.ImmutableSet;
  import com.google.common.flogger.GoogleLogger;
@@ -19,7 +25,7 @@ diff --git a/src/main/java/com/google/devtools/build/lib/remote/RemoteActionInpu
  import com.google.devtools.build.lib.actions.ActionInput;
  import com.google.devtools.build.lib.actions.ActionInputPrefetcher;
  import com.google.devtools.build.lib.actions.FileArtifactValue;
-@@ -44,6 +46,11 @@
+@@ -44,6 +46,11 @@ import java.util.HashMap;
  import java.util.HashSet;
  import java.util.Map;
  import java.util.Set;
@@ -31,7 +37,7 @@ diff --git a/src/main/java/com/google/devtools/build/lib/remote/RemoteActionInpu
  import javax.annotation.concurrent.GuardedBy;
  
  /**
-@@ -64,7 +71,7 @@
+@@ -64,7 +71,7 @@ class RemoteActionInputFetcher implements ActionInputPrefetcher {
  
    @VisibleForTesting
    @GuardedBy("lock")
@@ -40,7 +46,7 @@ diff --git a/src/main/java/com/google/devtools/build/lib/remote/RemoteActionInpu
  
    private final RemoteCache remoteCache;
    private final Path execRoot;
-@@ -158,52 +165,126 @@
+@@ -158,52 +165,127 @@ class RemoteActionInputFetcher implements ActionInputPrefetcher {
          return Futures.immediateFuture(null);
        }
  
@@ -63,6 +69,12 @@ diff --git a/src/main/java/com/google/devtools/build/lib/remote/RemoteActionInpu
 -                    downloadsInProgress.remove(path);
 -                    downloadedPaths.add(path);
 -                  }
+-
+-                  try {
+-                    path.chmod(0755);
+-                  } catch (IOException e) {
+-                    logger.atWarning().withCause(e).log("Failed to chmod 755 on %s", path);
+-                  }
 +      DownloadProxyHolder<Void> inProgressProxyHolder = downloadsInProgress.get(path);
 +      if (inProgressProxyHolder != null) {
 +        return inProgressProxyHolder.createDownloadProxy();
@@ -76,6 +88,7 @@ diff --git a/src/main/java/com/google/devtools/build/lib/remote/RemoteActionInpu
 +        ListenableFuture<Void> download = remoteCache.downloadFile(path, digest);
 +        DownloadProxyHolder<Void> downloadProxyHolder = new DownloadProxyHolder<>(download);
 +        downloadsInProgress.put(path, downloadProxyHolder);
++	ListenableFuture<Void> proxyDownload = downloadProxyHolder.createDownloadProxy();
 +        Futures.addCallback(
 +            download,
 +            new FutureCallback<Void>() {
@@ -86,18 +99,12 @@ diff --git a/src/main/java/com/google/devtools/build/lib/remote/RemoteActionInpu
 +                  downloadedPaths.add(path);
 +                  downloadProxyHolder.notifyOnSuccess(v);
 +                }
- 
--                  try {
--                    path.chmod(0755);
--                  } catch (IOException e) {
--                    logger.atWarning().withCause(e).log("Failed to chmod 755 on %s", path);
--                  }
--                }
++
 +                try {
 +                  path.chmod(0755);
 +                } catch (IOException e) {
 +                  logger.atWarning().withCause(e).log("Failed to chmod 755 on %s", path);
-+                }
+                 }
 +              }
  
 -                @Override
@@ -111,20 +118,16 @@ diff --git a/src/main/java/com/google/devtools/build/lib/remote/RemoteActionInpu
 -                    logger.atWarning().withCause(e).log(
 -                        "Failed to delete output file after incomplete download: %s", path);
 -                  }
--                }
--              },
--              MoreExecutors.directExecutor());
--        } finally {
--          ctx.detach(prevCtx);
--        }
--      }
--      return download;
 +              @Override
 +              public void onFailure(Throwable t) {
 +                synchronized (lock) {
 +                  downloadsInProgress.remove(path);
 +                  downloadProxyHolder.notifyOnFailure(t);
-+                }
+                 }
+-              },
+-              MoreExecutors.directExecutor());
+-        } finally {
+-          ctx.detach(prevCtx);
 +                try {
 +                  path.delete();
 +                } catch (IOException e) {
@@ -134,7 +137,7 @@ diff --git a/src/main/java/com/google/devtools/build/lib/remote/RemoteActionInpu
 +              }
 +            },
 +            MoreExecutors.directExecutor());
-+        return downloadProxyHolder.createDownloadProxy();
++        return proxyDownload;
 +      } finally {
 +        ctx.detach(prevCtx);
 +      }
@@ -165,8 +168,9 @@ diff --git a/src/main/java/com/google/devtools/build/lib/remote/RemoteActionInpu
 +          // note: the proxyFuture may already be cancelled, but there's no harm in setting the value
 +          // if it's done
 +          proxyFuture.set(v);
-+        }
-+      }
+         }
+       }
+-      return download;
 +    }
 +
 +    void notifyOnFailure(Throwable throwable) {
@@ -211,3 +215,6 @@ diff --git a/src/main/java/com/google/devtools/build/lib/remote/RemoteActionInpu
      }
    }
  }
+-- 
+2.26.0.windows.1
+
