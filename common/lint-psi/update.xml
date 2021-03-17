@@ -1,16 +1,17 @@
 <!-- Update intellij-core and uast libraries from a built Kotlin distribution.
      Consult README for more details. -->
 <project xmlns:if="ant:if" xmlns:unless="ant:unless" name="Kotlin" default="dist">
-    <fail message="Property &quot;kotlin_src_dir&quot; needs to be set" unless="kotlin_src_dir"/>
+    <fail message="Property &quot;kotlin_compiler_repo&quot; needs to be set" unless="kotlin_compiler_repo"/>
+    <fail message="Property &quot;kotlin_plugin_repo&quot; needs to be set" unless="kotlin_plugin_repo"/>
 
     <property environment="env"/>
     <property name="gradle-home" value="${user.home}/.gradle" unless:set="env.GRADLE_USER_HOME"/>
     <property name="gradle-home" value="${env.GRADLE_USER_HOME}" if:set="env.GRADLE_USER_HOME"/>
 
     <property name="output" value="${basedir}/temp"/>
-    <property name="kotlin-dist" value="${kotlin_src_dir}/dist"/>
+    <property name="kotlin-dist" value="${kotlin_plugin_repo}/out/artifacts/KotlinPluginCommunity"/>
 
-    <loadproperties srcFile="${kotlin_src_dir}/gradle/versions.properties" />
+    <loadproperties srcFile="${kotlin_compiler_repo}/gradle/versions.properties" />
     <property name="build-version" value="${versions.intellijSdk}"/>
 
     <property name="kotlin-build-deps" value="${gradle-home}/kotlin-build-dependencies/repo/kotlin.build"/>
@@ -97,13 +98,10 @@
             <fileset dir="${temp}/classes/uast-java-sources"/>
         </jar>
 
-        <copy todir="${dist-uast}" includeemptydirs="false">
-            <fileset dir="${kotlin_src_dir}/plugins/uast-kotlin/build/libs" includes="**/*.jar"/>
-            <globmapper from="*.jar" to="uast-kotlin.jar"/>
-        </copy>
+        <copy file="${kotlin-dist}/lib/kotlin-uast-kotlin.jar" tofile="${dist-uast}/uast-kotlin.jar"></copy>
 
         <jar jarfile="${dist-uast}/uast-kotlin-sources.jar">
-            <fileset dir="${kotlin_src_dir}/plugins/uast-kotlin/src"/>
+            <fileset dir="${kotlin_plugin_repo}/uast/uast-kotlin/src"/>
         </jar>
 
         <delete dir="${temp}"/>
@@ -207,51 +205,51 @@
 
 
         <jar jarfile="${dist-kotlin-compiler}/kotlin-compiler-sources.jar">
-            <fileset dir="${kotlin_src_dir}/compiler/frontend/src">
+            <fileset dir="${kotlin_compiler_repo}/compiler/frontend/src">
                 <include name="**/*.java" />
                 <include name="**/*.kt" />
             </fileset>
-            <fileset dir="${kotlin_src_dir}/compiler/frontend.java/src">
+            <fileset dir="${kotlin_compiler_repo}/compiler/frontend.java/src">
                 <include name="**/*.java" />
                 <include name="**/*.kt" />
             </fileset>
-            <fileset dir="${kotlin_src_dir}/compiler/light-classes/src">
+            <fileset dir="${kotlin_compiler_repo}/compiler/light-classes/src">
                 <include name="**/*.java" />
                 <include name="**/*.kt" />
             </fileset>
-            <fileset dir="${kotlin_src_dir}/compiler/util/src">
+            <fileset dir="${kotlin_compiler_repo}/compiler/util/src">
                 <include name="**/*.java" />
                 <include name="**/*.kt" />
             </fileset>
-            <fileset dir="${kotlin_src_dir}/compiler/builtins-serializer/src">
+            <fileset dir="${kotlin_compiler_repo}/compiler/builtins-serializer/src">
                 <include name="**/*.java" />
                 <include name="**/*.kt" />
             </fileset>
-            <fileset dir="${kotlin_src_dir}/compiler/cli/src">
+            <fileset dir="${kotlin_compiler_repo}/compiler/cli/src">
                 <include name="**/*.java" />
                 <include name="**/*.kt" />
             </fileset>
-            <fileset dir="${kotlin_src_dir}/compiler/cli/cli-common/src">
+            <fileset dir="${kotlin_compiler_repo}/compiler/cli/cli-common/src">
                 <include name="**/*.java" />
                 <include name="**/*.kt" />
             </fileset>
-            <fileset dir="${kotlin_src_dir}/compiler/container/src">
+            <fileset dir="${kotlin_compiler_repo}/compiler/container/src">
                 <include name="**/*.java" />
                 <include name="**/*.kt" />
             </fileset>
-            <fileset dir="${kotlin_src_dir}/compiler/preloader/src">
+            <fileset dir="${kotlin_compiler_repo}/compiler/preloader/src">
                 <include name="**/*.java" />
                 <include name="**/*.kt" />
             </fileset>
-            <fileset dir="${kotlin_src_dir}/compiler/resolution/src">
+            <fileset dir="${kotlin_compiler_repo}/compiler/resolution/src">
                 <include name="**/*.java" />
                 <include name="**/*.kt" />
             </fileset>
-            <fileset dir="${kotlin_src_dir}/compiler/serialization/src">
+            <fileset dir="${kotlin_compiler_repo}/compiler/serialization/src">
                 <include name="**/*.java" />
                 <include name="**/*.kt" />
             </fileset>
-            <fileset dir="${kotlin_src_dir}/compiler/psi/src">
+            <fileset dir="${kotlin_compiler_repo}/compiler/psi/src">
                 <include name="**/*.java" />
                 <include name="**/*.kt" />
             </fileset>

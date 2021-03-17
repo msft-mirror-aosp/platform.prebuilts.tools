@@ -21,10 +21,10 @@ index 0cceaca7f05..71bf58819ab 100644
                  findVirtualFileGivenPackage(dir, relativeClassName, type)
              } ?: singleJavaFileRootsIndex.findJavaSourceClass(classId)
 diff --git a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
-index 3d9b322a7b4..ce2b7cd92bf 100644
+index d355f8b1385..da61c53ef78 100644
 --- a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
 +++ b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
-@@ -364,7 +364,9 @@ class KotlinCoreEnvironment private constructor(
+@@ -369,7 +369,9 @@ class KotlinCoreEnvironment private constructor(
              is JvmModulePathRoot ->
                  if (root.file.isFile) findJarRoot(root.file) else findExistingRoot(root, "Java module root")
              is JavaSourceRoot ->
@@ -35,6 +35,23 @@ index 3d9b322a7b4..ce2b7cd92bf 100644
              else ->
                  throw IllegalStateException("Unexpected root: $root")
          }
+diff --git a/compiler/frontend/src/org/jetbrains/kotlin/resolve/BodyResolver.java b/compiler/frontend/src/org/jetbrains/kotlin/resolve/BodyResolver.java
+index e204e3c0b48..c406d844bc2 100644
+--- a/compiler/frontend/src/org/jetbrains/kotlin/resolve/BodyResolver.java
++++ b/compiler/frontend/src/org/jetbrains/kotlin/resolve/BodyResolver.java
+@@ -778,6 +778,12 @@ public class BodyResolver {
+         resolvePropertyAccessors(c, property, propertyDescriptor);
+ 
+         ForceResolveUtil.forceResolveAllContents(propertyDescriptor.getAnnotations());
++
++        // Android Lint: workaround for https://youtrack.jetbrains.com/issue/KT-45676
++        FieldDescriptor backingField = propertyDescriptor.getBackingField();
++        if (backingField != null) {
++            ForceResolveUtil.forceResolveAllContents(backingField.getAnnotations());
++        }
+     }
+ 
+     private void resolvePropertyDeclarationBodies(@NotNull BodiesResolveContext c) {
 diff --git a/compiler/light-classes/src/org/jetbrains/kotlin/asJava/elements/KotlinLightTypeParameterListBuilder.kt b/compiler/light-classes/src/org/jetbrains/kotlin/asJava/elements/KotlinLightTypeParameterListBuilder.kt
 index 34fd6e8efbf..2e90875eb6b 100644
 --- a/compiler/light-classes/src/org/jetbrains/kotlin/asJava/elements/KotlinLightTypeParameterListBuilder.kt
@@ -61,130 +78,3 @@ index 34fd6e8efbf..2e90875eb6b 100644
 +    val sourcePsi: KtTypeParameter
 +) : LightTypeParameterBuilder(name, owner, index)
 \ No newline at end of file
-diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
-index de4d9391e29..d56f515478b 100644
---- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
-+++ b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
-@@ -145,7 +145,23 @@ abstract class KotlinAbstractUElement(private val givenParent: UElement?) : Kotl
-             return false
-         }
- 
--        return this.psi == other.psi
-+        // https://youtrack.jetbrains.com/issue/KT-22133
-+        if (this.psi == other.psi) {
-+            if (this.psi == null) {
-+                // Two UElements can be different but both have null PSI fields; in that case,
-+                // do a deeper check
-+                if (this === other) { // same instance: always equal
-+                    return true
-+                }
-+                if (this.javaClass !== other.javaClass) { // different types: never equal
-+                    return false
-+                }
-+                return this.asSourceString() == other.asSourceString() // source code equality
-+            }
-+            return true
-+        } else {
-+            return false
-+        }
-     }
- 
-     override fun hashCode() = psi?.hashCode() ?: 0
-diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethod.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethod.kt
-index 12b796b8d61..60893e2afe0 100644
---- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethod.kt
-+++ b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethod.kt
-@@ -16,6 +16,7 @@
- 
- package org.jetbrains.uast.kotlin.declarations
- 
-+import com.intellij.openapi.util.TextRange
- import com.intellij.psi.*
- import org.jetbrains.kotlin.asJava.elements.*
- import org.jetbrains.kotlin.psi.*
-@@ -185,6 +186,11 @@ class KotlinUMethodWithFakeLightDelegate internal constructor(
-     }
- 
-     override fun hashCode(): Int = original.hashCode()
-+
-+    // Needed by metalava
-+    override fun getTextRange(): TextRange {
-+        return original.textRange
-+    }
- }
- 
- internal fun wrapExpressionBody(function: UElement, bodyExpression: KtExpression): UExpression? = when (bodyExpression) {
-diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/expressions/ElvisExpression.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/expressions/ElvisExpression.kt
-index 8b854d7c735..5e7f7ac4fb0 100644
---- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/expressions/ElvisExpression.kt
-+++ b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/expressions/ElvisExpression.kt
-@@ -3,6 +3,7 @@ package org.jetbrains.uast.kotlin.expressions
- import com.intellij.psi.PsiElement
- import com.intellij.psi.PsiMethod
- import com.intellij.psi.PsiType
-+import org.jetbrains.kotlin.psi.KtAnnotatedExpression
- import org.jetbrains.kotlin.psi.KtBinaryExpression
- import org.jetbrains.kotlin.psi.KtExpression
- import org.jetbrains.kotlin.resolve.BindingContext
-@@ -95,7 +96,12 @@ class KotlinUElvisExpression(
-     override val sourcePsi: PsiElement? = elvisExpression
-     override val psi: PsiElement? = sourcePsi
-     override val kind = KotlinSpecialExpressionKinds.ELVIS
--    override val annotations: List<UAnnotation> = emptyList()
-+    // Workaround for https://youtrack.jetbrains.com/issue/KT-37133
-+    override val annotations: List<UAnnotation>
-+        get() {
-+            val annotatedExpression = sourcePsi?.parent as? KtAnnotatedExpression ?: return emptyList()
-+            return annotatedExpression.annotationEntries.map { KotlinUAnnotation(it, this) }
-+        }
-     override val expressions: List<UExpression> by lz {
-         createElvisExpressions(left, right, this, elvisExpression.parent)
-     }
-diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethod.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethod.kt
-index c099eb07009..257f50c64fc 100644
---- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethod.kt
-+++ b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethod.kt
-@@ -7,6 +7,7 @@ package org.jetbrains.uast.kotlin.psi
- 
- import com.intellij.psi.*
- import com.intellij.psi.impl.light.*
-+import org.jetbrains.kotlin.asJava.elements.KotlinLightTypeParameterBuilder
- import org.jetbrains.kotlin.asJava.elements.KotlinLightTypeParameterListBuilder
- import org.jetbrains.kotlin.descriptors.CallableDescriptor
- import org.jetbrains.kotlin.psi.KtClassOrObject
-@@ -26,10 +27,11 @@ internal class UastFakeLightMethod(original: KtFunction, containingClass: PsiCla
-         KotlinLightTypeParameterListBuilder(this).also { paramList ->
-             for ((i, p) in original.typeParameters.withIndex()) {
-                 paramList.addParameter(
--                    object : LightTypeParameterBuilder(
-+                    object : KotlinLightTypeParameterBuilder(
-                         p.name ?: "__no_name__",
-                         this,
--                        i
-+                        i,
-+                        p
-                     ) {
-                         private val myExtendsList by lazy {
-                             super.getExtendsList().apply {
-diff --git a/plugins/uast-kotlin/testData/LocalDeclarations.values.txt b/plugins/uast-kotlin/testData/LocalDeclarations.values.txt
-index 10c4499fdce..5c7d7dbe020 100644
---- a/plugins/uast-kotlin/testData/LocalDeclarations.values.txt
-+++ b/plugins/uast-kotlin/testData/LocalDeclarations.values.txt
-@@ -9,7 +9,7 @@ UFile (package = ) [public final class LocalDeclarationsKt {...]
-                     UVariable (name = bar) [var bar: <ErrorType> = fun () {...}]
-                         ULambdaExpression [fun () {...}] = Undetermined
-                             UBlockExpression [{...}] = Nothing
--                                UReturnExpression [return <init>()] = Undetermined
-+                                UReturnExpression [return <init>()] = Nothing
-                                     UCallExpression (kind = UastCallKind(name='constructor_call'), argCount = 0)) [<init>()] = external <init>()()
-                                         UIdentifier (Identifier (Local)) [UIdentifier (Identifier (Local))]
-                                         USimpleNameReferenceExpression (identifier = <init>, resolvesTo = PsiClass: Local) [<init>] = external <init>()()
-@@ -26,7 +26,7 @@ UFile (package = ) [public final class LocalDeclarationsKt {...]
-                             UParameter (name = text) [@org.jetbrains.annotations.NotNull var text: java.lang.String]
-                                 UAnnotation (fqName = org.jetbrains.annotations.NotNull) [@org.jetbrains.annotations.NotNull]
-                             UBlockExpression [{...}] = Nothing
--                                UReturnExpression [return 42] = Undetermined
-+                                UReturnExpression [return 42] = Nothing
-                                     ULiteralExpression (value = 42) [42] = 42
-                 UReturnExpression [return bar() == <init>()] = Nothing
-                     UBinaryExpression (operator = ==) [bar() == <init>()] = Undetermined

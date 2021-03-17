@@ -18,37 +18,36 @@ and then drop in the compiler jar (which contains all of intellij-core).
 Updating
 --------
 
-First, clone a copy of the Kotlin git repository:
-$ git clone https://github.com/JetBrains/kotlin
-(or to start a new branch, git checkout -t origin/master -b my-master)
+You will need to do a custom build of both the Kotlin compiler and the Kotlin
+plugin (instructions for this are elsewhere). Pay special attention to the
+IntelliJ version used---Lint needs to be source-compatible with both the
+IntelliJ version used in Android Studio and the IntelliJ version that we
+extract here from Kotlinc.
 
-Then switch to a compatible patch branch.
+    Current Kotlin compiler branch: 1.4.30-for-ide
+    Current Kotlin plugin branch: kt-202-1.4.30
 
-Currently:
-$ git checkout 1.4.20
-$ bunch switch 202
+The custom build differs from the normal build in the following ways:
 
-Verify that the file gradle/versions.properties has the line
-    versions.intellijSdk=<VERSION>
-and set <VERSION> to match the one in tools/idea/build.txt,
-or a later version if there are no binary compatibility
-issues (recall that Lint still has to link with Studio's platform
-version when running in the IDE).
+  * We have some patches to work around bugs.
 
-(Currently using 202.5103-EAP-CANDIDATE-SNAPSHOT)
+        Kotlin compiler patches: kotlin-compiler-patch.diff
+        Kotlin plugin (UAST) patches: kotlin-plugin-patch.diff
 
-Then make sure to apply some extra patches to work around bugs:
-$ git apply /path/to/kotlin-compiler-patch.diff (which is located in this directory).
+    If the patches do not apply cleanly, you can use the --3way
+    flag to fall back to a merge. Just be sure to update the patch file
+    after resolving conflicts.
 
-Note: if the patch does not apply cleanly, you can use the --3way
-flag to fall back to a merge. Just be sure to update the patch file
-after resolving conflicts.
+  * When building the Kotlin compiler, set -Pteamcity=false to ensure
+    that shrinking is turned off for the IntelliJ dependency.
 
-Next, build the Kotlin repository:
-$ ./gradlew dist :plugins:uast-kotlin:jar
+A successful build of the Kotlin plugin should produce an artifact
+under out/artifacts/KotlinPluginCommunity.
 
-Finally, run the update.xml script, pointing back to the Kotlin repository:
-ant -f update.xml -Dkotlin_src_dir=$MY_KOTLIN_REPO_ROOT
+Then you can run the update.xml script, giving it paths to your local
+Kotlin compiler / Kotlin plugin repositories:
+
+    ant -f update.xml -Dkotlin_compiler_repo=$MY_KOTLIN_COMPILER_REPO_ROOT -Dkotlin_plugin_repo=$MY_KOTLIN_PLUGIN_REPO_ROOT
 
 The packaging script will extract code and update the intellij-core and uast prebuilts
 in this directory. It performs a number of steps to do that, such as unbundling the
