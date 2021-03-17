@@ -1,0 +1,220 @@
+From 6f77a1f8090dd60a0dcccdf99a445fc3013368b4 Mon Sep 17 00:00:00 2001
+From: Tom <tomrenn@google.com>
+Date: Thu, 25 Feb 2021 21:09:23 +0000
+Subject: [PATCH] Add ref counting to downloads in progress
+
+Fixes https://github.com/bazebuild/bazel/issues/12972
+---
+ .../lib/remote/RemoteActionInputFetcher.java  | 166 +++++++++++++-----
+ 1 file changed, 124 insertions(+), 42 deletions(-)
+
+diff --git a/src/main/java/com/google/devtools/build/lib/remote/RemoteActionInputFetcher.java b/src/main/java/com/google/devtools/build/lib/remote/RemoteActionInputFetcher.java
+index 6191f65903..abb3e89d1e 100644
+--- a/src/main/java/com/google/devtools/build/lib/remote/RemoteActionInputFetcher.java
++++ b/src/main/java/com/google/devtools/build/lib/remote/RemoteActionInputFetcher.java
+@@ -19,10 +19,12 @@ import com.google.common.annotations.VisibleForTesting;
+ import com.google.common.base.Preconditions;
+ import com.google.common.collect.ImmutableSet;
+ import com.google.common.flogger.GoogleLogger;
++import com.google.common.util.concurrent.AbstractFuture;
+ import com.google.common.util.concurrent.FutureCallback;
+ import com.google.common.util.concurrent.Futures;
+ import com.google.common.util.concurrent.ListenableFuture;
+ import com.google.common.util.concurrent.MoreExecutors;
++import com.google.common.util.concurrent.SettableFuture;
+ import com.google.devtools.build.lib.actions.ActionInput;
+ import com.google.devtools.build.lib.actions.ActionInputPrefetcher;
+ import com.google.devtools.build.lib.actions.FileArtifactValue;
+@@ -44,6 +46,11 @@ import java.util.HashMap;
+ import java.util.HashSet;
+ import java.util.Map;
+ import java.util.Set;
++import java.util.concurrent.ExecutionException;
++import java.util.concurrent.TimeUnit;
++import java.util.concurrent.TimeoutException;
++import java.util.concurrent.atomic.AtomicInteger;
++import javax.annotation.Nullable;
+ import javax.annotation.concurrent.GuardedBy;
+ 
+ /**
+@@ -64,7 +71,7 @@ class RemoteActionInputFetcher implements ActionInputPrefetcher {
+ 
+   @VisibleForTesting
+   @GuardedBy("lock")
+-  final Map<Path, ListenableFuture<Void>> downloadsInProgress = new HashMap<>();
++  final Map<Path, DownloadProxyHolder<Void>> downloadsInProgress = new HashMap<>();
+ 
+   private final RemoteCache remoteCache;
+   private final Path execRoot;
+@@ -158,52 +165,127 @@ class RemoteActionInputFetcher implements ActionInputPrefetcher {
+         return Futures.immediateFuture(null);
+       }
+ 
+-      ListenableFuture<Void> download = downloadsInProgress.get(path);
+-      if (download == null) {
+-        Context ctx =
+-            TracingMetadataUtils.contextWithMetadata(
+-                requestMetadata.toBuilder().setActionId(metadata.getActionId()).build());
+-        Context prevCtx = ctx.attach();
+-        try {
+-          Digest digest = DigestUtil.buildDigest(metadata.getDigest(), metadata.getSize());
+-          download = remoteCache.downloadFile(path, digest);
+-          downloadsInProgress.put(path, download);
+-          Futures.addCallback(
+-              download,
+-              new FutureCallback<Void>() {
+-                @Override
+-                public void onSuccess(Void v) {
+-                  synchronized (lock) {
+-                    downloadsInProgress.remove(path);
+-                    downloadedPaths.add(path);
+-                  }
+-
+-                  try {
+-                    path.chmod(0755);
+-                  } catch (IOException e) {
+-                    logger.atWarning().withCause(e).log("Failed to chmod 755 on %s", path);
+-                  }
++      DownloadProxyHolder<Void> inProgressProxyHolder = downloadsInProgress.get(path);
++      if (inProgressProxyHolder != null) {
++        return inProgressProxyHolder.createDownloadProxy();
++      }
++      Context ctx =
++          TracingMetadataUtils.contextWithMetadata(
++              requestMetadata.toBuilder().setActionId(metadata.getActionId()).build());
++      Context prevCtx = ctx.attach();
++      try {
++        Digest digest = DigestUtil.buildDigest(metadata.getDigest(), metadata.getSize());
++        ListenableFuture<Void> download = remoteCache.downloadFile(path, digest);
++        DownloadProxyHolder<Void> downloadProxyHolder = new DownloadProxyHolder<>(download);
++        downloadsInProgress.put(path, downloadProxyHolder);
++	ListenableFuture<Void> proxyDownload = downloadProxyHolder.createDownloadProxy();
++        Futures.addCallback(
++            download,
++            new FutureCallback<Void>() {
++              @Override
++              public void onSuccess(Void v) {
++                synchronized (lock) {
++                  downloadsInProgress.remove(path);
++                  downloadedPaths.add(path);
++                  downloadProxyHolder.notifyOnSuccess(v);
++                }
++
++                try {
++                  path.chmod(0755);
++                } catch (IOException e) {
++                  logger.atWarning().withCause(e).log("Failed to chmod 755 on %s", path);
+                 }
++              }
+ 
+-                @Override
+-                public void onFailure(Throwable t) {
+-                  synchronized (lock) {
+-                    downloadsInProgress.remove(path);
+-                  }
+-                  try {
+-                    path.delete();
+-                  } catch (IOException e) {
+-                    logger.atWarning().withCause(e).log(
+-                        "Failed to delete output file after incomplete download: %s", path);
+-                  }
++              @Override
++              public void onFailure(Throwable t) {
++                synchronized (lock) {
++                  downloadsInProgress.remove(path);
++                  downloadProxyHolder.notifyOnFailure(t);
+                 }
+-              },
+-              MoreExecutors.directExecutor());
+-        } finally {
+-          ctx.detach(prevCtx);
++                try {
++                  path.delete();
++                } catch (IOException e) {
++                  logger.atWarning().withCause(e).log(
++                      "Failed to delete output file after incomplete download: %s", path);
++                }
++              }
++            },
++            MoreExecutors.directExecutor());
++        return proxyDownload;
++      } finally {
++        ctx.detach(prevCtx);
++      }
++    }
++  }
++
++
++  /**
++   * Counts the number of callers who were given this FutureHolder from
++   * {@link com.google.devtools.build.lib.remote.RemoteActionInputFetcher#downloadFileAsync}. The
++   * underlying {@link java.util.concurrent.Future} is not cancelled unless all callers have
++   * called {@link java.util.concurrent.Future#cancel(boolean)}.
++   */
++  private class DownloadProxyHolder<V> {
++    private final AtomicInteger refCount;
++    private final ListenableFuture<V> download;
++    @GuardedBy("lock")
++    private final Set<SettableFuture<V>> proxyFutures = new HashSet<>();
++
++    private DownloadProxyHolder(ListenableFuture<V> download) {
++      this.download = download;
++      this.refCount = new AtomicInteger(0);
++    }
++
++    void notifyOnSuccess(V v) {
++      synchronized (lock) {
++        for (SettableFuture<V> proxyFuture : proxyFutures) {
++          // note: the proxyFuture may already be cancelled, but there's no harm in setting the value
++          // if it's done
++          proxyFuture.set(v);
+         }
+       }
+-      return download;
++    }
++
++    void notifyOnFailure(Throwable throwable) {
++      synchronized (lock) {
++        for (SettableFuture<V> proxyFuture : proxyFutures) {
++          // note: the proxyFuture may already be cancelled, but there's no harm in setting the
++          // value if it's already done
++          proxyFuture.setException(throwable);
++        }
++      }
++    }
++
++    /**
++     * Returns a ListenableFuture to be notified when the download is completed. If the future
++     * is cancelled, the download is only cancelled if {@code refCount} reaches zero.
++     */
++    ListenableFuture<V> createDownloadProxy() {
++        SettableFuture<V> downloadProxy = SettableFuture.create();
++
++        Futures.addCallback(downloadProxy, new FutureCallback<V>() {
++          @Override
++          public void onSuccess(@Nullable V v) {}
++
++          @Override
++          public void onFailure(Throwable throwable) {
++            synchronized (lock) {
++              proxyFutures.remove(downloadProxy);
++            }
++            if (downloadProxy.isCancelled()) {
++              if (refCount.decrementAndGet() == 0) {
++                // all download proxies were cancelled
++                download.cancel(/* mayInterruptIfRunning= */ true);
++              }
++            }
++          }
++        }, MoreExecutors.directExecutor());
++        synchronized (lock) {
++          proxyFutures.add(downloadProxy);
++        }
++        refCount.incrementAndGet();
++        return downloadProxy;
+     }
+   }
+ }
+-- 
+2.26.0.windows.1
+

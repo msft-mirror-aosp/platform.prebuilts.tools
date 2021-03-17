@@ -6,3 +6,8 @@ to bazel release tags/3.1.0.
 
 Additional documentation
 https://g3doc.corp.google.com/company/teams/android-studio/Infrastructure/update_bazel.md#windows
+
+## Patches
+
+`4.0.0_downloads-in-progress.patch` resolves
+https://github.com/bazelbuild/bazel/issues/12972
