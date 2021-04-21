@@ -55,6 +55,9 @@ data_sources {
         enabled: true
       }
 
+      # Enables symbol name resolution against /proc/kallsyms
+      symbolize_ksyms: true
+
       # We need to do process tracking to ensure kernel ftrace events targeted at short-lived
       # threads are associated correctly
       ftrace_events: "task/task_newtask"
@@ -67,6 +70,7 @@ data_sources {
       ftrace_events: "ion_heap_shrink"
       ftrace_events: "ion_heap_grow"
       ftrace_events: "ion/ion_stat"
+      ftrace_events: "dmabuf_heap/dma_heap_stat"
       ftrace_events: "oom_score_adj_update"
       ftrace_events: "gpu_mem/gpu_mem_total"
 
@@ -76,6 +80,7 @@ data_sources {
       atrace_apps: "*"
 
       atrace_categories: "am"
+      atrace_categories: "bionic"
       atrace_categories: "camera"
       atrace_categories: "wm"
       atrace_categories: "dalvik"
@@ -89,6 +94,8 @@ data_sources {
       atrace_categories: "binder_driver"
       atrace_categories: "sync"
       atrace_categories: "workq"
+      atrace_categories: "res"
+
     }
   }
 }
