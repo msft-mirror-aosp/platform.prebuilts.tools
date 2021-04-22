@@ -61,6 +61,7 @@ studio_data(
         "prebuilts/tools/linux-x86_64/lldb/": "",
         "prebuilts/tools/darwin-x86_64/lldb/": "",
         "prebuilts/python/windows-x86/x64/Lib/": "lib/",
+        "prebuilts/python/windows-x86/x64/DLLs/": "dlls/",
         "prebuilts/python/linux-x86/lib/python3.8/": "lib/python3.8/",
         "prebuilts/python/darwin-x86/lib/python3.8/": "lib/python3.8/",
     },
