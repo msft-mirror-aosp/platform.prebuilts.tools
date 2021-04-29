@@ -3,6 +3,7 @@ load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom", "maven_aa
 
 maven_java_import(
     name = "jar",
+    classifiers = ["nodeps"],
     jars = ["semver4j-0.16.4.jar"],
     pom = ":pom",
     visibility = ["//visibility:public"],
@@ -10,6 +11,7 @@ maven_java_import(
 
 maven_pom(
     name = "pom",
+    classifiers = ["nodeps"],
     source = "semver4j-0.16.4.pom",
     visibility = ["//visibility:public"],
 )
