@@ -1,3 +1,29 @@
+diff --git a/idea/kotlin.idea.iml b/idea/kotlin.idea.iml
+index 0521bc94857..6b0e094f090 100644
+--- a/idea/kotlin.idea.iml
++++ b/idea/kotlin.idea.iml
+@@ -24,6 +24,7 @@
+       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+       <sourceFolder url="file://$MODULE_DIR$/resources" type="java-resource" />
+       <sourceFolder url="file://$MODULE_DIR$/resources-en" type="java-resource" />
++      <sourceFolder url="file://$MODULE_DIR$/tests/test" isTestSource="true" />
+     </content>
+     <content url="file://$MODULE_DIR$/../live-templates">
+       <sourceFolder url="file://$MODULE_DIR$/../live-templates/src" isTestSource="false" />
+diff --git a/j2k/old/kotlin.j2k.old.iml b/j2k/old/kotlin.j2k.old.iml
+index 05ee3c0d1c4..1ec66b64fd3 100644
+--- a/j2k/old/kotlin.j2k.old.iml
++++ b/j2k/old/kotlin.j2k.old.iml
+@@ -30,5 +30,7 @@
+     <orderEntry type="module" module-name="kotlin.fir.frontend-independent" />
+     <orderEntry type="module" module-name="intellij.java.psi.impl" />
+     <orderEntry type="module" module-name="kotlin.resources-descriptors" scope="TEST" />
+-</component>
++    <orderEntry type="module" module-name="intellij.platform.serviceContainer" />
++    <orderEntry type="module" module-name="intellij.java.execution" />
++  </component>
+ </module>
+\ No newline at end of file
 diff --git a/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt b/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
 index 2bcd8ff5987..ca2d58d69f5 100644
 --- a/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
@@ -103,25 +129,3 @@ index 9d132b40918..952c681bd2f 100644
                      ) {
                          private val myExtendsList by lazy {
                              super.getExtendsList().apply {
-diff --git a/uast/uast-kotlin/testData/LocalDeclarations.values.txt b/uast/uast-kotlin/testData/LocalDeclarations.values.txt
-index 51263ce227c..db7ff53ba4a 100644
---- a/uast/uast-kotlin/testData/LocalDeclarations.values.txt
-+++ b/uast/uast-kotlin/testData/LocalDeclarations.values.txt
-@@ -9,7 +9,7 @@ UFile (package = ) [public final class LocalDeclarationsKt {...]
-                     UVariable (name = bar) [var bar: <ErrorType> = fun () {...}]
-                         ULambdaExpression [fun () {...}] = Undetermined
-                             UBlockExpression [{...}] = Nothing
--                                UReturnExpression [return <init>()] = Undetermined
-+                                UReturnExpression [return <init>()] = Nothing
-                                     UCallExpression (kind = UastCallKind(name='constructor_call'), argCount = 0)) [<init>()] = external <init>()()
-                                         UIdentifier (Identifier (Local)) [UIdentifier (Identifier (Local))]
-                                         USimpleNameReferenceExpression (identifier = <init>, resolvesTo = PsiClass: Local) [<init>] = external <init>()()
-@@ -26,7 +26,7 @@ UFile (package = ) [public final class LocalDeclarationsKt {...]
-                             UParameter (name = text) [@org.jetbrains.annotations.NotNull var text: java.lang.String]
-                                 UAnnotation (fqName = org.jetbrains.annotations.NotNull) [@org.jetbrains.annotations.NotNull]
-                             UBlockExpression [{...}] = Nothing
--                                UReturnExpression [return 42] = Undetermined
-+                                UReturnExpression [return 42] = Nothing
-                                     ULiteralExpression (value = 42) [42] = 42
-                 UReturnExpression [return bar() == <init>()] = Nothing
-                     UBinaryExpression (operator = ==) [bar() == <init>()] = Undetermined
