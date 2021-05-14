@@ -35,23 +35,6 @@ index d355f8b1385..da61c53ef78 100644
              else ->
                  throw IllegalStateException("Unexpected root: $root")
          }
-diff --git a/compiler/frontend/src/org/jetbrains/kotlin/resolve/BodyResolver.java b/compiler/frontend/src/org/jetbrains/kotlin/resolve/BodyResolver.java
-index e204e3c0b48..c406d844bc2 100644
---- a/compiler/frontend/src/org/jetbrains/kotlin/resolve/BodyResolver.java
-+++ b/compiler/frontend/src/org/jetbrains/kotlin/resolve/BodyResolver.java
-@@ -778,6 +778,12 @@ public class BodyResolver {
-         resolvePropertyAccessors(c, property, propertyDescriptor);
- 
-         ForceResolveUtil.forceResolveAllContents(propertyDescriptor.getAnnotations());
-+
-+        // Android Lint: workaround for https://youtrack.jetbrains.com/issue/KT-45676
-+        FieldDescriptor backingField = propertyDescriptor.getBackingField();
-+        if (backingField != null) {
-+            ForceResolveUtil.forceResolveAllContents(backingField.getAnnotations());
-+        }
-     }
- 
-     private void resolvePropertyDeclarationBodies(@NotNull BodiesResolveContext c) {
 diff --git a/compiler/light-classes/src/org/jetbrains/kotlin/asJava/elements/KotlinLightTypeParameterListBuilder.kt b/compiler/light-classes/src/org/jetbrains/kotlin/asJava/elements/KotlinLightTypeParameterListBuilder.kt
 index 34fd6e8efbf..2e90875eb6b 100644
 --- a/compiler/light-classes/src/org/jetbrains/kotlin/asJava/elements/KotlinLightTypeParameterListBuilder.kt
