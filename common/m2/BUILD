@@ -881,16 +881,16 @@ maven_pom(
 )
 
 maven_java_import(
-    name = "org.gradle.gradle-tooling-api.7.0",
-    jars = ["repository/org/gradle/gradle-tooling-api/7.0/gradle-tooling-api-7.0.jar"],
-    pom = ":org.gradle.gradle-tooling-api.7.0_pom",
-    repo_path = "repository/org/gradle/gradle-tooling-api/7.0",
+    name = "org.gradle.gradle-tooling-api.7.1",
+    jars = ["repository/org/gradle/gradle-tooling-api/7.1/gradle-tooling-api-7.1.jar"],
+    pom = ":org.gradle.gradle-tooling-api.7.1_pom",
+    repo_path = "repository/org/gradle/gradle-tooling-api/7.1",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
-    name = "org.gradle.gradle-tooling-api.7.0_pom",
-    source = "repository/org/gradle/gradle-tooling-api/7.0/gradle-tooling-api-7.0.pom",
+    name = "org.gradle.gradle-tooling-api.7.1_pom",
+    source = "repository/org/gradle/gradle-tooling-api/7.1/gradle-tooling-api-7.1.pom",
     visibility = ["//visibility:public"],
 )
 
