@@ -3492,6 +3492,21 @@ maven_pom(
 )
 
 maven_java_import(
+    name = "org.jacoco.org.jacoco.agent.0.8.7",
+    jars = ["repository/org/jacoco/org.jacoco.agent/0.8.7/org.jacoco.agent-0.8.7.jar"],
+    pom = ":org.jacoco.org.jacoco.agent.0.8.7_pom",
+    repo_path = "repository/org/jacoco/org.jacoco.agent/0.8.7",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jacoco.org.jacoco.agent.0.8.7_pom",
+    parent = "//prebuilts/tools/common/m2:org.jacoco.org.jacoco.build.0.8.7_pom",
+    source = "repository/org/jacoco/org.jacoco.agent/0.8.7/org.jacoco.agent-0.8.7.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
     name = "org.jacoco.org.jacoco.agent.0.7.5.201505241946",
     classifiers = ["runtime"],
     jars = ["repository/org/jacoco/org.jacoco.agent/0.7.5.201505241946/org.jacoco.agent-0.7.5.201505241946.jar"],
@@ -3528,6 +3543,12 @@ maven_pom(
 maven_pom(
     name = "org.jacoco.org.jacoco.build.0.8.6_pom",
     source = "repository/org/jacoco/org.jacoco.build/0.8.6/org.jacoco.build-0.8.6.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jacoco.org.jacoco.build.0.8.7_pom",
+    source = "repository/org/jacoco/org.jacoco.build/0.8.7/org.jacoco.build-0.8.7.pom",
     visibility = ["//visibility:public"],
 )
 
