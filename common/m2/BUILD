@@ -23000,128 +23000,128 @@ maven_pom(
 )
 
 maven_java_import(
-    name = "com.google.testing.platform.android-device-provider-gradle.0.0.8-alpha04",
-    jars = ["repository/com/google/testing/platform/android-device-provider-gradle/0.0.8-alpha04/android-device-provider-gradle-0.0.8-alpha04.jar"],
-    pom = ":com.google.testing.platform.android-device-provider-gradle.0.0.8-alpha04_pom",
-    repo_path = "repository/com/google/testing/platform/android-device-provider-gradle/0.0.8-alpha04",
+    name = "com.google.testing.platform.android-device-provider-gradle.0.0.8-alpha05",
+    jars = ["repository/com/google/testing/platform/android-device-provider-gradle/0.0.8-alpha05/android-device-provider-gradle-0.0.8-alpha05.jar"],
+    pom = ":com.google.testing.platform.android-device-provider-gradle.0.0.8-alpha05_pom",
+    repo_path = "repository/com/google/testing/platform/android-device-provider-gradle/0.0.8-alpha05",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
-    name = "com.google.testing.platform.android-device-provider-gradle.0.0.8-alpha04_pom",
-    source = "repository/com/google/testing/platform/android-device-provider-gradle/0.0.8-alpha04/android-device-provider-gradle-0.0.8-alpha04.pom",
+    name = "com.google.testing.platform.android-device-provider-gradle.0.0.8-alpha05_pom",
+    source = "repository/com/google/testing/platform/android-device-provider-gradle/0.0.8-alpha05/android-device-provider-gradle-0.0.8-alpha05.pom",
     visibility = ["//visibility:public"],
 )
 
 maven_java_import(
-    name = "com.google.testing.platform.android-test-plugin-host-retention.0.0.8-alpha04",
-    jars = ["repository/com/google/testing/platform/android-test-plugin-host-retention/0.0.8-alpha04/android-test-plugin-host-retention-0.0.8-alpha04.jar"],
-    pom = ":com.google.testing.platform.android-test-plugin-host-retention.0.0.8-alpha04_pom",
-    repo_path = "repository/com/google/testing/platform/android-test-plugin-host-retention/0.0.8-alpha04",
+    name = "com.google.testing.platform.android-test-plugin-host-retention.0.0.8-alpha05",
+    jars = ["repository/com/google/testing/platform/android-test-plugin-host-retention/0.0.8-alpha05/android-test-plugin-host-retention-0.0.8-alpha05.jar"],
+    pom = ":com.google.testing.platform.android-test-plugin-host-retention.0.0.8-alpha05_pom",
+    repo_path = "repository/com/google/testing/platform/android-test-plugin-host-retention/0.0.8-alpha05",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
-    name = "com.google.testing.platform.android-test-plugin-host-retention.0.0.8-alpha04_pom",
-    source = "repository/com/google/testing/platform/android-test-plugin-host-retention/0.0.8-alpha04/android-test-plugin-host-retention-0.0.8-alpha04.pom",
+    name = "com.google.testing.platform.android-test-plugin-host-retention.0.0.8-alpha05_pom",
+    source = "repository/com/google/testing/platform/android-test-plugin-host-retention/0.0.8-alpha05/android-test-plugin-host-retention-0.0.8-alpha05.pom",
     visibility = ["//visibility:public"],
 )
 
 maven_java_import(
-    name = "com.google.testing.platform.android-driver-instrumentation.0.0.8-alpha04",
-    jars = ["repository/com/google/testing/platform/android-driver-instrumentation/0.0.8-alpha04/android-driver-instrumentation-0.0.8-alpha04.jar"],
-    pom = ":com.google.testing.platform.android-driver-instrumentation.0.0.8-alpha04_pom",
-    repo_path = "repository/com/google/testing/platform/android-driver-instrumentation/0.0.8-alpha04",
+    name = "com.google.testing.platform.android-driver-instrumentation.0.0.8-alpha05",
+    jars = ["repository/com/google/testing/platform/android-driver-instrumentation/0.0.8-alpha05/android-driver-instrumentation-0.0.8-alpha05.jar"],
+    pom = ":com.google.testing.platform.android-driver-instrumentation.0.0.8-alpha05_pom",
+    repo_path = "repository/com/google/testing/platform/android-driver-instrumentation/0.0.8-alpha05",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
-    name = "com.google.testing.platform.android-driver-instrumentation.0.0.8-alpha04_pom",
-    source = "repository/com/google/testing/platform/android-driver-instrumentation/0.0.8-alpha04/android-driver-instrumentation-0.0.8-alpha04.pom",
+    name = "com.google.testing.platform.android-driver-instrumentation.0.0.8-alpha05_pom",
+    source = "repository/com/google/testing/platform/android-driver-instrumentation/0.0.8-alpha05/android-driver-instrumentation-0.0.8-alpha05.pom",
     visibility = ["//visibility:public"],
 )
 
 maven_java_import(
-    name = "com.google.testing.platform.launcher.0.0.8-alpha04",
-    jars = ["repository/com/google/testing/platform/launcher/0.0.8-alpha04/launcher-0.0.8-alpha04.jar"],
-    pom = ":com.google.testing.platform.launcher.0.0.8-alpha04_pom",
-    repo_path = "repository/com/google/testing/platform/launcher/0.0.8-alpha04",
+    name = "com.google.testing.platform.launcher.0.0.8-alpha05",
+    jars = ["repository/com/google/testing/platform/launcher/0.0.8-alpha05/launcher-0.0.8-alpha05.jar"],
+    pom = ":com.google.testing.platform.launcher.0.0.8-alpha05_pom",
+    repo_path = "repository/com/google/testing/platform/launcher/0.0.8-alpha05",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
-    name = "com.google.testing.platform.launcher.0.0.8-alpha04_pom",
-    source = "repository/com/google/testing/platform/launcher/0.0.8-alpha04/launcher-0.0.8-alpha04.pom",
+    name = "com.google.testing.platform.launcher.0.0.8-alpha05_pom",
+    source = "repository/com/google/testing/platform/launcher/0.0.8-alpha05/launcher-0.0.8-alpha05.pom",
     visibility = ["//visibility:public"],
 )
 
 maven_java_import(
-    name = "com.google.testing.platform.android-test-plugin-host-device-info.0.0.8-alpha04",
-    jars = ["repository/com/google/testing/platform/android-test-plugin-host-device-info/0.0.8-alpha04/android-test-plugin-host-device-info-0.0.8-alpha04.jar"],
-    pom = ":com.google.testing.platform.android-test-plugin-host-device-info.0.0.8-alpha04_pom",
-    repo_path = "repository/com/google/testing/platform/android-test-plugin-host-device-info/0.0.8-alpha04",
+    name = "com.google.testing.platform.android-test-plugin-host-device-info.0.0.8-alpha05",
+    jars = ["repository/com/google/testing/platform/android-test-plugin-host-device-info/0.0.8-alpha05/android-test-plugin-host-device-info-0.0.8-alpha05.jar"],
+    pom = ":com.google.testing.platform.android-test-plugin-host-device-info.0.0.8-alpha05_pom",
+    repo_path = "repository/com/google/testing/platform/android-test-plugin-host-device-info/0.0.8-alpha05",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
-    name = "com.google.testing.platform.android-test-plugin-host-device-info.0.0.8-alpha04_pom",
-    source = "repository/com/google/testing/platform/android-test-plugin-host-device-info/0.0.8-alpha04/android-test-plugin-host-device-info-0.0.8-alpha04.pom",
+    name = "com.google.testing.platform.android-test-plugin-host-device-info.0.0.8-alpha05_pom",
+    source = "repository/com/google/testing/platform/android-test-plugin-host-device-info/0.0.8-alpha05/android-test-plugin-host-device-info-0.0.8-alpha05.pom",
     visibility = ["//visibility:public"],
 )
 
 maven_java_import(
-    name = "com.google.testing.platform.android-test-plugin.0.0.8-alpha04",
-    jars = ["repository/com/google/testing/platform/android-test-plugin/0.0.8-alpha04/android-test-plugin-0.0.8-alpha04.jar"],
-    pom = ":com.google.testing.platform.android-test-plugin.0.0.8-alpha04_pom",
-    repo_path = "repository/com/google/testing/platform/android-test-plugin/0.0.8-alpha04",
+    name = "com.google.testing.platform.android-test-plugin.0.0.8-alpha05",
+    jars = ["repository/com/google/testing/platform/android-test-plugin/0.0.8-alpha05/android-test-plugin-0.0.8-alpha05.jar"],
+    pom = ":com.google.testing.platform.android-test-plugin.0.0.8-alpha05_pom",
+    repo_path = "repository/com/google/testing/platform/android-test-plugin/0.0.8-alpha05",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
-    name = "com.google.testing.platform.android-test-plugin.0.0.8-alpha04_pom",
-    source = "repository/com/google/testing/platform/android-test-plugin/0.0.8-alpha04/android-test-plugin-0.0.8-alpha04.pom",
+    name = "com.google.testing.platform.android-test-plugin.0.0.8-alpha05_pom",
+    source = "repository/com/google/testing/platform/android-test-plugin/0.0.8-alpha05/android-test-plugin-0.0.8-alpha05.pom",
     visibility = ["//visibility:public"],
 )
 
 maven_java_import(
-    name = "com.google.testing.platform.android-device-provider-local.0.0.8-alpha04",
-    jars = ["repository/com/google/testing/platform/android-device-provider-local/0.0.8-alpha04/android-device-provider-local-0.0.8-alpha04.jar"],
-    pom = ":com.google.testing.platform.android-device-provider-local.0.0.8-alpha04_pom",
-    repo_path = "repository/com/google/testing/platform/android-device-provider-local/0.0.8-alpha04",
+    name = "com.google.testing.platform.android-device-provider-local.0.0.8-alpha05",
+    jars = ["repository/com/google/testing/platform/android-device-provider-local/0.0.8-alpha05/android-device-provider-local-0.0.8-alpha05.jar"],
+    pom = ":com.google.testing.platform.android-device-provider-local.0.0.8-alpha05_pom",
+    repo_path = "repository/com/google/testing/platform/android-device-provider-local/0.0.8-alpha05",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
-    name = "com.google.testing.platform.android-device-provider-local.0.0.8-alpha04_pom",
-    source = "repository/com/google/testing/platform/android-device-provider-local/0.0.8-alpha04/android-device-provider-local-0.0.8-alpha04.pom",
+    name = "com.google.testing.platform.android-device-provider-local.0.0.8-alpha05_pom",
+    source = "repository/com/google/testing/platform/android-device-provider-local/0.0.8-alpha05/android-device-provider-local-0.0.8-alpha05.pom",
     visibility = ["//visibility:public"],
 )
 
 maven_java_import(
-    name = "com.google.testing.platform.core.0.0.8-alpha04",
-    jars = ["repository/com/google/testing/platform/core/0.0.8-alpha04/core-0.0.8-alpha04.jar"],
-    pom = ":com.google.testing.platform.core.0.0.8-alpha04_pom",
-    repo_path = "repository/com/google/testing/platform/core/0.0.8-alpha04",
+    name = "com.google.testing.platform.core.0.0.8-alpha05",
+    jars = ["repository/com/google/testing/platform/core/0.0.8-alpha05/core-0.0.8-alpha05.jar"],
+    pom = ":com.google.testing.platform.core.0.0.8-alpha05_pom",
+    repo_path = "repository/com/google/testing/platform/core/0.0.8-alpha05",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
-    name = "com.google.testing.platform.core.0.0.8-alpha04_pom",
-    source = "repository/com/google/testing/platform/core/0.0.8-alpha04/core-0.0.8-alpha04.pom",
+    name = "com.google.testing.platform.core.0.0.8-alpha05_pom",
+    source = "repository/com/google/testing/platform/core/0.0.8-alpha05/core-0.0.8-alpha05.pom",
     visibility = ["//visibility:public"],
 )
 
 maven_java_import(
-    name = "com.google.testing.platform.core-proto.0.0.8-alpha04",
-    jars = ["repository/com/google/testing/platform/core-proto/0.0.8-alpha04/core-proto-0.0.8-alpha04.jar"],
-    pom = ":com.google.testing.platform.core-proto.0.0.8-alpha04_pom",
-    repo_path = "repository/com/google/testing/platform/core-proto/0.0.8-alpha04",
+    name = "com.google.testing.platform.core-proto.0.0.8-alpha05",
+    jars = ["repository/com/google/testing/platform/core-proto/0.0.8-alpha05/core-proto-0.0.8-alpha05.jar"],
+    pom = ":com.google.testing.platform.core-proto.0.0.8-alpha05_pom",
+    repo_path = "repository/com/google/testing/platform/core-proto/0.0.8-alpha05",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
-    name = "com.google.testing.platform.core-proto.0.0.8-alpha04_pom",
-    source = "repository/com/google/testing/platform/core-proto/0.0.8-alpha04/core-proto-0.0.8-alpha04.pom",
+    name = "com.google.testing.platform.core-proto.0.0.8-alpha05_pom",
+    source = "repository/com/google/testing/platform/core-proto/0.0.8-alpha05/core-proto-0.0.8-alpha05.pom",
     visibility = ["//visibility:public"],
 )
 
@@ -24359,7 +24359,7 @@ filegroup(
 # managed by go/iml_to_build
 java_import(
     name = "utp-core-proto",
-    jars = ["repository/com/google/testing/platform/core-proto/0.0.8-alpha04/core-proto-0.0.8-alpha04.jar"],
+    jars = ["repository/com/google/testing/platform/core-proto/0.0.8-alpha05/core-proto-0.0.8-alpha05.jar"],
     visibility = ["//visibility:public"],
 )
 
