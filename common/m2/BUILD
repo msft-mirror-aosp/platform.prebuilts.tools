@@ -8698,8 +8698,23 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
+filegroup(
+    name = "io.grpc.protoc-gen-grpc-java.1.21.1",
+    visibility = ["//visibility:public"],
+)
+
 maven_pom(
-    name = "io.grpc.protoc-gen-grpc-java.1.21.1_pom",
+    name = "io.grpc.protoc-gen-grpc-java.1.21.1_maven",
+    classified_files = [
+        "repository/io/grpc/protoc-gen-grpc-java/1.21.1/protoc-gen-grpc-java-1.21.1-linux-x86_64.exe",
+        "repository/io/grpc/protoc-gen-grpc-java/1.21.1/protoc-gen-grpc-java-1.21.1-osx-x86_64.exe",
+        "repository/io/grpc/protoc-gen-grpc-java/1.21.1/protoc-gen-grpc-java-1.21.1-windows-x86_64.exe",
+    ],
+    classifiers = [
+        "linux-x86_64",
+        "osx-x86_64",
+        "windows-x86_64",
+    ],
     source = "repository/io/grpc/protoc-gen-grpc-java/1.21.1/protoc-gen-grpc-java-1.21.1.pom",
     visibility = ["//visibility:public"],
 )
@@ -22711,8 +22726,23 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
+filegroup(
+    name = "com.google.protobuf.protoc.3.10.0",
+    visibility = ["//visibility:public"],
+)
+
 maven_pom(
-    name = "com.google.protobuf.protoc.3.10.0_pom",
+    name = "com.google.protobuf.protoc.3.10.0_maven",
+    classified_files = [
+        "repository/com/google/protobuf/protoc/3.10.0/protoc-3.10.0-linux-x86_64.exe",
+        "repository/com/google/protobuf/protoc/3.10.0/protoc-3.10.0-osx-x86_64.exe",
+        "repository/com/google/protobuf/protoc/3.10.0/protoc-3.10.0-windows-x86_64.exe",
+    ],
+    classifiers = [
+        "linux-x86_64",
+        "osx-x86_64",
+        "windows-x86_64",
+    ],
     parent = "//prebuilts/tools/common/m2:com.google.google.1_pom",
     source = "repository/com/google/protobuf/protoc/3.10.0/protoc-3.10.0.pom",
     visibility = ["//visibility:public"],
