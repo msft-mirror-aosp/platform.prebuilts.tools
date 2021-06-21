@@ -1,20 +1,9 @@
 #!/usr/bin/env bash
 set -eu
 
-function fail {
-    echo "ERROR: $@" >&2
-    exit 1
-}
+[[ $# -eq 1 ]] || { echo "Please specify a download URL from https://plugins.jetbrains.com/plugin/6954-kotlin/versions/staging"; exit 1; }
 
-[[ $# -eq 1 ]] || fail "Please specify a download URL from https://plugins.jetbrains.com/plugin/6954-kotlin/versions/staging"
-
-# Find workspace root.
-WORKSPACE="$PWD"
-while [ ! -d "$WORKSPACE/.repo" ]; do
-    [ "$WORKSPACE" != / ] || fail "Failed to find the workspace root"
-    WORKSPACE=$(dirname "$WORKSPACE")
-done
-cd "$WORKSPACE"
+cd "$(bazel info workspace)"
 
 # Download.
 KT_DIR=prebuilts/tools/common/kotlin-plugin
