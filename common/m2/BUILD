@@ -24510,3 +24510,395 @@ java_import(
     jars = ["repository/org/gradle/gradle-tooling-api/5.3.1/gradle-tooling-api-5.3.1.jar"],
     visibility = ["//visibility:public"],
 )
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-script-runtime.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-script-runtime/1.5.20/kotlin-script-runtime-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-script-runtime.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-script-runtime/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-script-runtime.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-script-runtime/1.5.20/kotlin-script-runtime-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-stdlib-jdk8.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.5.20/kotlin-stdlib-jdk8-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-stdlib-jdk8.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-stdlib-jdk8.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.5.20/kotlin-stdlib-jdk8-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-stdlib.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-stdlib/1.5.20/kotlin-stdlib-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-stdlib.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-stdlib/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-stdlib.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-stdlib/1.5.20/kotlin-stdlib-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-stdlib-common.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.5.20/kotlin-stdlib-common-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-stdlib-common.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-stdlib-common.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.5.20/kotlin-stdlib-common-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-stdlib-jdk7.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.5.20/kotlin-stdlib-jdk7-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-stdlib-jdk7.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-stdlib-jdk7.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.5.20/kotlin-stdlib-jdk7-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-reflect.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-reflect/1.5.20/kotlin-reflect-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-reflect.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-reflect/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-reflect.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-reflect/1.5.20/kotlin-reflect-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-android-extensions-runtime.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-android-extensions-runtime/1.5.20/kotlin-android-extensions-runtime-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-android-extensions-runtime.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-android-extensions-runtime/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-android-extensions-runtime.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-android-extensions-runtime/1.5.20/kotlin-android-extensions-runtime-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-gradle-plugin.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-gradle-plugin/1.5.20/kotlin-gradle-plugin-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-gradle-plugin.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-gradle-plugin/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-gradle-plugin.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-gradle-plugin/1.5.20/kotlin-gradle-plugin-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-gradle-plugin-api.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-gradle-plugin-api/1.5.20/kotlin-gradle-plugin-api-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-gradle-plugin-api.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-gradle-plugin-api/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-gradle-plugin-api.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-gradle-plugin-api/1.5.20/kotlin-gradle-plugin-api-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-native-utils.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-native-utils/1.5.20/kotlin-native-utils-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-native-utils.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-native-utils/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-native-utils.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-native-utils/1.5.20/kotlin-native-utils-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-util-io.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-util-io/1.5.20/kotlin-util-io-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-util-io.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-util-io/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-util-io.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-util-io/1.5.20/kotlin-util-io-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-project-model.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-project-model/1.5.20/kotlin-project-model-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-project-model.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-project-model/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-project-model.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-project-model/1.5.20/kotlin-project-model-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-gradle-plugin-model.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-gradle-plugin-model/1.5.20/kotlin-gradle-plugin-model-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-gradle-plugin-model.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-gradle-plugin-model/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-gradle-plugin-model.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-gradle-plugin-model/1.5.20/kotlin-gradle-plugin-model-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-util-klib.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-util-klib/1.5.20/kotlin-util-klib-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-util-klib.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-util-klib/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-util-klib.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-util-klib/1.5.20/kotlin-util-klib-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-klib-commonizer-api.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-klib-commonizer-api/1.5.20/kotlin-klib-commonizer-api-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-klib-commonizer-api.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-klib-commonizer-api/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-klib-commonizer-api.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-klib-commonizer-api/1.5.20/kotlin-klib-commonizer-api-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-tooling-metadata.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-tooling-metadata/1.5.20/kotlin-tooling-metadata-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-tooling-metadata.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-tooling-metadata/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-tooling-metadata.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-tooling-metadata/1.5.20/kotlin-tooling-metadata-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.checkerframework.checker-qual.2.11.1",
+    jars = ["repository/org/checkerframework/checker-qual/2.11.1/checker-qual-2.11.1.jar"],
+    pom = ":org.checkerframework.checker-qual.2.11.1_pom",
+    repo_path = "repository/org/checkerframework/checker-qual/2.11.1",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.checkerframework.checker-qual.2.11.1_pom",
+    source = "repository/org/checkerframework/checker-qual/2.11.1/checker-qual-2.11.1.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-compiler-embeddable.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-compiler-embeddable/1.5.20/kotlin-compiler-embeddable-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-compiler-embeddable.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-compiler-embeddable/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-compiler-embeddable.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-compiler-embeddable/1.5.20/kotlin-compiler-embeddable-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-daemon-embeddable.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-daemon-embeddable/1.5.20/kotlin-daemon-embeddable-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-daemon-embeddable.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-daemon-embeddable/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-daemon-embeddable.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-daemon-embeddable/1.5.20/kotlin-daemon-embeddable-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-annotation-processing-gradle.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-annotation-processing-gradle/1.5.20/kotlin-annotation-processing-gradle-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-annotation-processing-gradle.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-annotation-processing-gradle/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-annotation-processing-gradle.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-annotation-processing-gradle/1.5.20/kotlin-annotation-processing-gradle-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-android-extensions.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-android-extensions/1.5.20/kotlin-android-extensions-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-android-extensions.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-android-extensions/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-android-extensions.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-android-extensions/1.5.20/kotlin-android-extensions-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-compiler-runner.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-compiler-runner/1.5.20/kotlin-compiler-runner-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-compiler-runner.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-compiler-runner/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-compiler-runner.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-compiler-runner/1.5.20/kotlin-compiler-runner-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-build-common.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-build-common/1.5.20/kotlin-build-common-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-build-common.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-build-common/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-build-common.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-build-common/1.5.20/kotlin-build-common-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-daemon-client.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-daemon-client/1.5.20/kotlin-daemon-client-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-daemon-client.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-daemon-client/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-daemon-client.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-daemon-client/1.5.20/kotlin-daemon-client-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-scripting-compiler-embeddable.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-scripting-compiler-embeddable/1.5.20/kotlin-scripting-compiler-embeddable-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-scripting-compiler-embeddable.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-scripting-compiler-embeddable/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-scripting-compiler-embeddable.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-scripting-compiler-embeddable/1.5.20/kotlin-scripting-compiler-embeddable-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-scripting-compiler-impl-embeddable.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-scripting-compiler-impl-embeddable/1.5.20/kotlin-scripting-compiler-impl-embeddable-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-scripting-compiler-impl-embeddable.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-scripting-compiler-impl-embeddable/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-scripting-compiler-impl-embeddable.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-scripting-compiler-impl-embeddable/1.5.20/kotlin-scripting-compiler-impl-embeddable-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-scripting-common.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-scripting-common/1.5.20/kotlin-scripting-common-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-scripting-common.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-scripting-common/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-scripting-common.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-scripting-common/1.5.20/kotlin-scripting-common-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-scripting-jvm.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-scripting-jvm/1.5.20/kotlin-scripting-jvm-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-scripting-jvm.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-scripting-jvm/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-scripting-jvm.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-scripting-jvm/1.5.20/kotlin-scripting-jvm-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
