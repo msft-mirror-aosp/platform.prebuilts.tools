@@ -71,6 +71,11 @@ java_import_host {
     jars: ["repository/com/google/auth/google-auth-library-oauth2-http/0.13.0/google-auth-library-oauth2-http-0.13.0.jar"],
 }
 
+java_import_host {
+    name: "google-http-client-jackson2-1.28.0",
+    jars: ["repository/com/google/http-client/google-http-client-jackson2/1.28.0/google-http-client-jackson2-1.28.0.jar"],
+}
+
 java_import {
     name: "gson-prebuilt-jar",
     jars: ["repository/com/google/code/gson/gson/2.8.0/gson-2.8.0.jar"],
@@ -225,20 +230,8 @@ java_import {
 }
 
 java_import {
-    name: "auto-common",
-    jars: ["repository/com/google/auto/auto-common/0.10/auto-common-0.10.jar"],
-    host_supported: true,
-}
-
-java_import {
     name: "antlr4",
     jars: ["repository/org/antlr/antlr4/4.7.2/antlr4-4.7.2.jar"],
-    host_supported: true,
-}
-
-java_import {
-    name: "auto-value-annotations",
-    jars: ["repository/com/google/auto/value/auto-value-annotations/1.6.2/auto-value-annotations-1.6.2.jar"],
     host_supported: true,
 }
 
@@ -296,6 +289,11 @@ java_library_static {
     sdk_version: "current",
 }
 
+java_import {
+    name: "kotlinx-coroutines-core-jvm",
+    jars: ["repository/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.4.2/kotlinx-coroutines-core-jvm-1.4.2.jar"],
+}
+
 java_import_host {
     name: "car-androidx-room-compiler-tools-common-m2-deps",
     jars: [
@@ -330,4 +328,10 @@ java_import_host {
 java_import_host {
     name: "jsoup-1.6.3",
     jars: ["repository/org/jsoup/jsoup/1.6.3/jsoup-1.6.3.jar"],
+}
+
+java_import {
+    name: "symbol-processing-api",
+    jars: ["repository/com/google/devtools/ksp/symbol-processing-api/1.4.10-dev-experimental-20201110/symbol-processing-api-1.4.10-dev-experimental-20201110.jar"],
+    host_supported: true,
 }
