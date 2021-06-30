@@ -24932,3 +24932,101 @@ maven_pom(
     source = "repository/org/jetbrains/kotlin/kotlin-scripting-jvm/1.5.20/kotlin-scripting-jvm-1.5.20.pom",
     visibility = ["//visibility:public"],
 )
+
+maven_java_import(
+    name = "com.android.tools.lint.lint-gradle.27.1.0",
+    jars = ["repository/com/android/tools/lint/lint-gradle/27.1.0/lint-gradle-27.1.0.jar"],
+    pom = ":com.android.tools.lint.lint-gradle.27.1.0_pom",
+    repo_path = "repository/com/android/tools/lint/lint-gradle/27.1.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.lint.lint-gradle.27.1.0_pom",
+    source = "repository/com/android/tools/lint/lint-gradle/27.1.0/lint-gradle-27.1.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.external.com-intellij.intellij-core.27.1.0",
+    jars = ["repository/com/android/tools/external/com-intellij/intellij-core/27.1.0/intellij-core-27.1.0.jar"],
+    pom = ":com.android.tools.external.com-intellij.intellij-core.27.1.0_pom",
+    repo_path = "repository/com/android/tools/external/com-intellij/intellij-core/27.1.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.external.com-intellij.intellij-core.27.1.0_pom",
+    source = "repository/com/android/tools/external/com-intellij/intellij-core/27.1.0/intellij-core-27.1.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.external.com-intellij.kotlin-compiler.27.1.0",
+    jars = ["repository/com/android/tools/external/com-intellij/kotlin-compiler/27.1.0/kotlin-compiler-27.1.0.jar"],
+    pom = ":com.android.tools.external.com-intellij.kotlin-compiler.27.1.0_pom",
+    repo_path = "repository/com/android/tools/external/com-intellij/kotlin-compiler/27.1.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.external.com-intellij.kotlin-compiler.27.1.0_pom",
+    source = "repository/com/android/tools/external/com-intellij/kotlin-compiler/27.1.0/kotlin-compiler-27.1.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.external.org-jetbrains.uast.27.1.0",
+    jars = ["repository/com/android/tools/external/org-jetbrains/uast/27.1.0/uast-27.1.0.jar"],
+    pom = ":com.android.tools.external.org-jetbrains.uast.27.1.0_pom",
+    repo_path = "repository/com/android/tools/external/org-jetbrains/uast/27.1.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.external.org-jetbrains.uast.27.1.0_pom",
+    source = "repository/com/android/tools/external/org-jetbrains/uast/27.1.0/uast-27.1.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.lint.lint.27.1.0",
+    jars = ["repository/com/android/tools/lint/lint/27.1.0/lint-27.1.0.jar"],
+    pom = ":com.android.tools.lint.lint.27.1.0_pom",
+    repo_path = "repository/com/android/tools/lint/lint/27.1.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.lint.lint.27.1.0_pom",
+    source = "repository/com/android/tools/lint/lint/27.1.0/lint-27.1.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.lint.lint-checks.27.1.0",
+    jars = ["repository/com/android/tools/lint/lint-checks/27.1.0/lint-checks-27.1.0.jar"],
+    pom = ":com.android.tools.lint.lint-checks.27.1.0_pom",
+    repo_path = "repository/com/android/tools/lint/lint-checks/27.1.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.lint.lint-checks.27.1.0_pom",
+    source = "repository/com/android/tools/lint/lint-checks/27.1.0/lint-checks-27.1.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.lint.lint-api.27.1.0",
+    jars = ["repository/com/android/tools/lint/lint-api/27.1.0/lint-api-27.1.0.jar"],
+    pom = ":com.android.tools.lint.lint-api.27.1.0_pom",
+    repo_path = "repository/com/android/tools/lint/lint-api/27.1.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.lint.lint-api.27.1.0_pom",
+    source = "repository/com/android/tools/lint/lint-api/27.1.0/lint-api-27.1.0.pom",
+    visibility = ["//visibility:public"],
+)
