@@ -25030,3 +25030,45 @@ maven_pom(
     source = "repository/com/android/tools/lint/lint-api/27.1.0/lint-api-27.1.0.pom",
     visibility = ["//visibility:public"],
 )
+
+maven_java_import(
+    name = "com.android.tools.build.bundletool.1.7.0",
+    jars = ["repository/com/android/tools/build/bundletool/1.7.0/bundletool-1.7.0.jar"],
+    pom = ":com.android.tools.build.bundletool.1.7.0_pom",
+    repo_path = "repository/com/android/tools/build/bundletool/1.7.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.build.bundletool.1.7.0_pom",
+    source = "repository/com/android/tools/build/bundletool/1.7.0/bundletool-1.7.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.build.aapt2-proto.7.0.0-beta04-7396180",
+    jars = ["repository/com/android/tools/build/aapt2-proto/7.0.0-beta04-7396180/aapt2-proto-7.0.0-beta04-7396180.jar"],
+    pom = ":com.android.tools.build.aapt2-proto.7.0.0-beta04-7396180_pom",
+    repo_path = "repository/com/android/tools/build/aapt2-proto/7.0.0-beta04-7396180",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.build.aapt2-proto.7.0.0-beta04-7396180_pom",
+    source = "repository/com/android/tools/build/aapt2-proto/7.0.0-beta04-7396180/aapt2-proto-7.0.0-beta04-7396180.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.bitbucket.b_c.jose4j.0.7.0",
+    jars = ["repository/org/bitbucket/b_c/jose4j/0.7.0/jose4j-0.7.0.jar"],
+    pom = ":org.bitbucket.b_c.jose4j.0.7.0_pom",
+    repo_path = "repository/org/bitbucket/b_c/jose4j/0.7.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.bitbucket.b_c.jose4j.0.7.0_pom",
+    source = "repository/org/bitbucket/b_c/jose4j/0.7.0/jose4j-0.7.0.pom",
+    visibility = ["//visibility:public"],
+)
