@@ -10972,19 +10972,6 @@ maven_pom(
 )
 
 maven_aar(
-    name = "androidx.activity.activity-compose.1.3.0-alpha06_aar",
-    aar = "repository/androidx/activity/activity-compose/1.3.0-alpha06/activity-compose-1.3.0-alpha06.aar",
-    pom = ":androidx.activity.activity-compose.1.3.0-alpha06_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.activity.activity-compose.1.3.0-alpha06_pom",
-    source = "repository/androidx/activity/activity-compose/1.3.0-alpha06/activity-compose-1.3.0-alpha06.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
     name = "androidx.activity.activity.1.3.0-alpha02_aar",
     aar = "repository/androidx/activity/activity/1.3.0-alpha02/activity-1.3.0-alpha02.aar",
     pom = ":androidx.activity.activity.1.3.0-alpha02_pom",
@@ -11050,19 +11037,6 @@ maven_pom(
 )
 
 maven_aar(
-    name = "androidx.activity.activity.1.3.0-alpha06_aar",
-    aar = "repository/androidx/activity/activity/1.3.0-alpha06/activity-1.3.0-alpha06.aar",
-    pom = ":androidx.activity.activity.1.3.0-alpha06_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.activity.activity.1.3.0-alpha06_pom",
-    source = "repository/androidx/activity/activity/1.3.0-alpha06/activity-1.3.0-alpha06.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
     name = "androidx.activity.activity.1.2.0_aar",
     aar = "repository/androidx/activity/activity/1.2.0/activity-1.2.0.aar",
     pom = ":androidx.activity.activity.1.2.0_pom",
@@ -11111,19 +11085,6 @@ maven_aar(
 maven_pom(
     name = "androidx.activity.activity-ktx.1.1.0_pom",
     source = "repository/androidx/activity/activity-ktx/1.1.0/activity-ktx-1.1.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.activity.activity-ktx.1.3.0-alpha06_aar",
-    aar = "repository/androidx/activity/activity-ktx/1.3.0-alpha06/activity-ktx-1.3.0-alpha06.aar",
-    pom = ":androidx.activity.activity-ktx.1.3.0-alpha06_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.activity.activity-ktx.1.3.0-alpha06_pom",
-    source = "repository/androidx/activity/activity-ktx/1.3.0-alpha06/activity-ktx-1.3.0-alpha06.pom",
     visibility = ["//visibility:public"],
 )
 
