@@ -24443,13 +24443,6 @@ java_import(
 )
 
 # managed by go/iml_to_build
-java_import(
-    name = "kotlinx-coroutines-guava",
-    jars = ["repository/org/jetbrains/kotlinx/kotlinx-coroutines-guava/1.3.9/kotlinx-coroutines-guava-1.3.9.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
 filegroup(
     name = "kotlinx-coroutines-guava_files",
     srcs = ["repository/org/jetbrains/kotlinx/kotlinx-coroutines-guava/1.3.9/kotlinx-coroutines-guava-1.3.9.jar"],
