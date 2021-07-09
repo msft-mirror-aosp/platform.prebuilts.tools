@@ -881,16 +881,16 @@ maven_pom(
 )
 
 maven_java_import(
-    name = "org.gradle.gradle-tooling-api.7.0",
-    jars = ["repository/org/gradle/gradle-tooling-api/7.0/gradle-tooling-api-7.0.jar"],
-    pom = ":org.gradle.gradle-tooling-api.7.0_pom",
-    repo_path = "repository/org/gradle/gradle-tooling-api/7.0",
+    name = "org.gradle.gradle-tooling-api.7.1",
+    jars = ["repository/org/gradle/gradle-tooling-api/7.1/gradle-tooling-api-7.1.jar"],
+    pom = ":org.gradle.gradle-tooling-api.7.1_pom",
+    repo_path = "repository/org/gradle/gradle-tooling-api/7.1",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
-    name = "org.gradle.gradle-tooling-api.7.0_pom",
-    source = "repository/org/gradle/gradle-tooling-api/7.0/gradle-tooling-api-7.0.pom",
+    name = "org.gradle.gradle-tooling-api.7.1_pom",
+    source = "repository/org/gradle/gradle-tooling-api/7.1/gradle-tooling-api-7.1.pom",
     visibility = ["//visibility:public"],
 )
 
@@ -3492,6 +3492,21 @@ maven_pom(
 )
 
 maven_java_import(
+    name = "org.jacoco.org.jacoco.agent.0.8.7",
+    jars = ["repository/org/jacoco/org.jacoco.agent/0.8.7/org.jacoco.agent-0.8.7.jar"],
+    pom = ":org.jacoco.org.jacoco.agent.0.8.7_pom",
+    repo_path = "repository/org/jacoco/org.jacoco.agent/0.8.7",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jacoco.org.jacoco.agent.0.8.7_pom",
+    parent = "//prebuilts/tools/common/m2:org.jacoco.org.jacoco.build.0.8.7_pom",
+    source = "repository/org/jacoco/org.jacoco.agent/0.8.7/org.jacoco.agent-0.8.7.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
     name = "org.jacoco.org.jacoco.agent.0.7.5.201505241946",
     classifiers = ["runtime"],
     jars = ["repository/org/jacoco/org.jacoco.agent/0.7.5.201505241946/org.jacoco.agent-0.7.5.201505241946.jar"],
@@ -3528,6 +3543,12 @@ maven_pom(
 maven_pom(
     name = "org.jacoco.org.jacoco.build.0.8.6_pom",
     source = "repository/org/jacoco/org.jacoco.build/0.8.6/org.jacoco.build-0.8.6.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jacoco.org.jacoco.build.0.8.7_pom",
+    source = "repository/org/jacoco/org.jacoco.build/0.8.7/org.jacoco.build-0.8.7.pom",
     visibility = ["//visibility:public"],
 )
 
@@ -8677,8 +8698,23 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
+filegroup(
+    name = "io.grpc.protoc-gen-grpc-java.1.21.1",
+    visibility = ["//visibility:public"],
+)
+
 maven_pom(
-    name = "io.grpc.protoc-gen-grpc-java.1.21.1_pom",
+    name = "io.grpc.protoc-gen-grpc-java.1.21.1_maven",
+    classified_files = [
+        "repository/io/grpc/protoc-gen-grpc-java/1.21.1/protoc-gen-grpc-java-1.21.1-linux-x86_64.exe",
+        "repository/io/grpc/protoc-gen-grpc-java/1.21.1/protoc-gen-grpc-java-1.21.1-osx-x86_64.exe",
+        "repository/io/grpc/protoc-gen-grpc-java/1.21.1/protoc-gen-grpc-java-1.21.1-windows-x86_64.exe",
+    ],
+    classifiers = [
+        "linux-x86_64",
+        "osx-x86_64",
+        "windows-x86_64",
+    ],
     source = "repository/io/grpc/protoc-gen-grpc-java/1.21.1/protoc-gen-grpc-java-1.21.1.pom",
     visibility = ["//visibility:public"],
 )
@@ -22690,8 +22726,23 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
+filegroup(
+    name = "com.google.protobuf.protoc.3.10.0",
+    visibility = ["//visibility:public"],
+)
+
 maven_pom(
-    name = "com.google.protobuf.protoc.3.10.0_pom",
+    name = "com.google.protobuf.protoc.3.10.0_maven",
+    classified_files = [
+        "repository/com/google/protobuf/protoc/3.10.0/protoc-3.10.0-linux-x86_64.exe",
+        "repository/com/google/protobuf/protoc/3.10.0/protoc-3.10.0-osx-x86_64.exe",
+        "repository/com/google/protobuf/protoc/3.10.0/protoc-3.10.0-windows-x86_64.exe",
+    ],
+    classifiers = [
+        "linux-x86_64",
+        "osx-x86_64",
+        "windows-x86_64",
+    ],
     parent = "//prebuilts/tools/common/m2:com.google.google.1_pom",
     source = "repository/com/google/protobuf/protoc/3.10.0/protoc-3.10.0.pom",
     visibility = ["//visibility:public"],
@@ -22979,128 +23030,128 @@ maven_pom(
 )
 
 maven_java_import(
-    name = "com.google.testing.platform.android-device-provider-gradle.0.0.8-alpha04",
-    jars = ["repository/com/google/testing/platform/android-device-provider-gradle/0.0.8-alpha04/android-device-provider-gradle-0.0.8-alpha04.jar"],
-    pom = ":com.google.testing.platform.android-device-provider-gradle.0.0.8-alpha04_pom",
-    repo_path = "repository/com/google/testing/platform/android-device-provider-gradle/0.0.8-alpha04",
+    name = "com.google.testing.platform.android-device-provider-gradle.0.0.8-alpha05",
+    jars = ["repository/com/google/testing/platform/android-device-provider-gradle/0.0.8-alpha05/android-device-provider-gradle-0.0.8-alpha05.jar"],
+    pom = ":com.google.testing.platform.android-device-provider-gradle.0.0.8-alpha05_pom",
+    repo_path = "repository/com/google/testing/platform/android-device-provider-gradle/0.0.8-alpha05",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
-    name = "com.google.testing.platform.android-device-provider-gradle.0.0.8-alpha04_pom",
-    source = "repository/com/google/testing/platform/android-device-provider-gradle/0.0.8-alpha04/android-device-provider-gradle-0.0.8-alpha04.pom",
+    name = "com.google.testing.platform.android-device-provider-gradle.0.0.8-alpha05_pom",
+    source = "repository/com/google/testing/platform/android-device-provider-gradle/0.0.8-alpha05/android-device-provider-gradle-0.0.8-alpha05.pom",
     visibility = ["//visibility:public"],
 )
 
 maven_java_import(
-    name = "com.google.testing.platform.android-test-plugin-host-retention.0.0.8-alpha04",
-    jars = ["repository/com/google/testing/platform/android-test-plugin-host-retention/0.0.8-alpha04/android-test-plugin-host-retention-0.0.8-alpha04.jar"],
-    pom = ":com.google.testing.platform.android-test-plugin-host-retention.0.0.8-alpha04_pom",
-    repo_path = "repository/com/google/testing/platform/android-test-plugin-host-retention/0.0.8-alpha04",
+    name = "com.google.testing.platform.android-test-plugin-host-retention.0.0.8-alpha05",
+    jars = ["repository/com/google/testing/platform/android-test-plugin-host-retention/0.0.8-alpha05/android-test-plugin-host-retention-0.0.8-alpha05.jar"],
+    pom = ":com.google.testing.platform.android-test-plugin-host-retention.0.0.8-alpha05_pom",
+    repo_path = "repository/com/google/testing/platform/android-test-plugin-host-retention/0.0.8-alpha05",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
-    name = "com.google.testing.platform.android-test-plugin-host-retention.0.0.8-alpha04_pom",
-    source = "repository/com/google/testing/platform/android-test-plugin-host-retention/0.0.8-alpha04/android-test-plugin-host-retention-0.0.8-alpha04.pom",
+    name = "com.google.testing.platform.android-test-plugin-host-retention.0.0.8-alpha05_pom",
+    source = "repository/com/google/testing/platform/android-test-plugin-host-retention/0.0.8-alpha05/android-test-plugin-host-retention-0.0.8-alpha05.pom",
     visibility = ["//visibility:public"],
 )
 
 maven_java_import(
-    name = "com.google.testing.platform.android-driver-instrumentation.0.0.8-alpha04",
-    jars = ["repository/com/google/testing/platform/android-driver-instrumentation/0.0.8-alpha04/android-driver-instrumentation-0.0.8-alpha04.jar"],
-    pom = ":com.google.testing.platform.android-driver-instrumentation.0.0.8-alpha04_pom",
-    repo_path = "repository/com/google/testing/platform/android-driver-instrumentation/0.0.8-alpha04",
+    name = "com.google.testing.platform.android-driver-instrumentation.0.0.8-alpha05",
+    jars = ["repository/com/google/testing/platform/android-driver-instrumentation/0.0.8-alpha05/android-driver-instrumentation-0.0.8-alpha05.jar"],
+    pom = ":com.google.testing.platform.android-driver-instrumentation.0.0.8-alpha05_pom",
+    repo_path = "repository/com/google/testing/platform/android-driver-instrumentation/0.0.8-alpha05",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
-    name = "com.google.testing.platform.android-driver-instrumentation.0.0.8-alpha04_pom",
-    source = "repository/com/google/testing/platform/android-driver-instrumentation/0.0.8-alpha04/android-driver-instrumentation-0.0.8-alpha04.pom",
+    name = "com.google.testing.platform.android-driver-instrumentation.0.0.8-alpha05_pom",
+    source = "repository/com/google/testing/platform/android-driver-instrumentation/0.0.8-alpha05/android-driver-instrumentation-0.0.8-alpha05.pom",
     visibility = ["//visibility:public"],
 )
 
 maven_java_import(
-    name = "com.google.testing.platform.launcher.0.0.8-alpha04",
-    jars = ["repository/com/google/testing/platform/launcher/0.0.8-alpha04/launcher-0.0.8-alpha04.jar"],
-    pom = ":com.google.testing.platform.launcher.0.0.8-alpha04_pom",
-    repo_path = "repository/com/google/testing/platform/launcher/0.0.8-alpha04",
+    name = "com.google.testing.platform.launcher.0.0.8-alpha05",
+    jars = ["repository/com/google/testing/platform/launcher/0.0.8-alpha05/launcher-0.0.8-alpha05.jar"],
+    pom = ":com.google.testing.platform.launcher.0.0.8-alpha05_pom",
+    repo_path = "repository/com/google/testing/platform/launcher/0.0.8-alpha05",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
-    name = "com.google.testing.platform.launcher.0.0.8-alpha04_pom",
-    source = "repository/com/google/testing/platform/launcher/0.0.8-alpha04/launcher-0.0.8-alpha04.pom",
+    name = "com.google.testing.platform.launcher.0.0.8-alpha05_pom",
+    source = "repository/com/google/testing/platform/launcher/0.0.8-alpha05/launcher-0.0.8-alpha05.pom",
     visibility = ["//visibility:public"],
 )
 
 maven_java_import(
-    name = "com.google.testing.platform.android-test-plugin-host-device-info.0.0.8-alpha04",
-    jars = ["repository/com/google/testing/platform/android-test-plugin-host-device-info/0.0.8-alpha04/android-test-plugin-host-device-info-0.0.8-alpha04.jar"],
-    pom = ":com.google.testing.platform.android-test-plugin-host-device-info.0.0.8-alpha04_pom",
-    repo_path = "repository/com/google/testing/platform/android-test-plugin-host-device-info/0.0.8-alpha04",
+    name = "com.google.testing.platform.android-test-plugin-host-device-info.0.0.8-alpha05",
+    jars = ["repository/com/google/testing/platform/android-test-plugin-host-device-info/0.0.8-alpha05/android-test-plugin-host-device-info-0.0.8-alpha05.jar"],
+    pom = ":com.google.testing.platform.android-test-plugin-host-device-info.0.0.8-alpha05_pom",
+    repo_path = "repository/com/google/testing/platform/android-test-plugin-host-device-info/0.0.8-alpha05",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
-    name = "com.google.testing.platform.android-test-plugin-host-device-info.0.0.8-alpha04_pom",
-    source = "repository/com/google/testing/platform/android-test-plugin-host-device-info/0.0.8-alpha04/android-test-plugin-host-device-info-0.0.8-alpha04.pom",
+    name = "com.google.testing.platform.android-test-plugin-host-device-info.0.0.8-alpha05_pom",
+    source = "repository/com/google/testing/platform/android-test-plugin-host-device-info/0.0.8-alpha05/android-test-plugin-host-device-info-0.0.8-alpha05.pom",
     visibility = ["//visibility:public"],
 )
 
 maven_java_import(
-    name = "com.google.testing.platform.android-test-plugin.0.0.8-alpha04",
-    jars = ["repository/com/google/testing/platform/android-test-plugin/0.0.8-alpha04/android-test-plugin-0.0.8-alpha04.jar"],
-    pom = ":com.google.testing.platform.android-test-plugin.0.0.8-alpha04_pom",
-    repo_path = "repository/com/google/testing/platform/android-test-plugin/0.0.8-alpha04",
+    name = "com.google.testing.platform.android-test-plugin.0.0.8-alpha05",
+    jars = ["repository/com/google/testing/platform/android-test-plugin/0.0.8-alpha05/android-test-plugin-0.0.8-alpha05.jar"],
+    pom = ":com.google.testing.platform.android-test-plugin.0.0.8-alpha05_pom",
+    repo_path = "repository/com/google/testing/platform/android-test-plugin/0.0.8-alpha05",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
-    name = "com.google.testing.platform.android-test-plugin.0.0.8-alpha04_pom",
-    source = "repository/com/google/testing/platform/android-test-plugin/0.0.8-alpha04/android-test-plugin-0.0.8-alpha04.pom",
+    name = "com.google.testing.platform.android-test-plugin.0.0.8-alpha05_pom",
+    source = "repository/com/google/testing/platform/android-test-plugin/0.0.8-alpha05/android-test-plugin-0.0.8-alpha05.pom",
     visibility = ["//visibility:public"],
 )
 
 maven_java_import(
-    name = "com.google.testing.platform.android-device-provider-local.0.0.8-alpha04",
-    jars = ["repository/com/google/testing/platform/android-device-provider-local/0.0.8-alpha04/android-device-provider-local-0.0.8-alpha04.jar"],
-    pom = ":com.google.testing.platform.android-device-provider-local.0.0.8-alpha04_pom",
-    repo_path = "repository/com/google/testing/platform/android-device-provider-local/0.0.8-alpha04",
+    name = "com.google.testing.platform.android-device-provider-local.0.0.8-alpha05",
+    jars = ["repository/com/google/testing/platform/android-device-provider-local/0.0.8-alpha05/android-device-provider-local-0.0.8-alpha05.jar"],
+    pom = ":com.google.testing.platform.android-device-provider-local.0.0.8-alpha05_pom",
+    repo_path = "repository/com/google/testing/platform/android-device-provider-local/0.0.8-alpha05",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
-    name = "com.google.testing.platform.android-device-provider-local.0.0.8-alpha04_pom",
-    source = "repository/com/google/testing/platform/android-device-provider-local/0.0.8-alpha04/android-device-provider-local-0.0.8-alpha04.pom",
+    name = "com.google.testing.platform.android-device-provider-local.0.0.8-alpha05_pom",
+    source = "repository/com/google/testing/platform/android-device-provider-local/0.0.8-alpha05/android-device-provider-local-0.0.8-alpha05.pom",
     visibility = ["//visibility:public"],
 )
 
 maven_java_import(
-    name = "com.google.testing.platform.core.0.0.8-alpha04",
-    jars = ["repository/com/google/testing/platform/core/0.0.8-alpha04/core-0.0.8-alpha04.jar"],
-    pom = ":com.google.testing.platform.core.0.0.8-alpha04_pom",
-    repo_path = "repository/com/google/testing/platform/core/0.0.8-alpha04",
+    name = "com.google.testing.platform.core.0.0.8-alpha05",
+    jars = ["repository/com/google/testing/platform/core/0.0.8-alpha05/core-0.0.8-alpha05.jar"],
+    pom = ":com.google.testing.platform.core.0.0.8-alpha05_pom",
+    repo_path = "repository/com/google/testing/platform/core/0.0.8-alpha05",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
-    name = "com.google.testing.platform.core.0.0.8-alpha04_pom",
-    source = "repository/com/google/testing/platform/core/0.0.8-alpha04/core-0.0.8-alpha04.pom",
+    name = "com.google.testing.platform.core.0.0.8-alpha05_pom",
+    source = "repository/com/google/testing/platform/core/0.0.8-alpha05/core-0.0.8-alpha05.pom",
     visibility = ["//visibility:public"],
 )
 
 maven_java_import(
-    name = "com.google.testing.platform.core-proto.0.0.8-alpha04",
-    jars = ["repository/com/google/testing/platform/core-proto/0.0.8-alpha04/core-proto-0.0.8-alpha04.jar"],
-    pom = ":com.google.testing.platform.core-proto.0.0.8-alpha04_pom",
-    repo_path = "repository/com/google/testing/platform/core-proto/0.0.8-alpha04",
+    name = "com.google.testing.platform.core-proto.0.0.8-alpha05",
+    jars = ["repository/com/google/testing/platform/core-proto/0.0.8-alpha05/core-proto-0.0.8-alpha05.jar"],
+    pom = ":com.google.testing.platform.core-proto.0.0.8-alpha05_pom",
+    repo_path = "repository/com/google/testing/platform/core-proto/0.0.8-alpha05",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
-    name = "com.google.testing.platform.core-proto.0.0.8-alpha04_pom",
-    source = "repository/com/google/testing/platform/core-proto/0.0.8-alpha04/core-proto-0.0.8-alpha04.pom",
+    name = "com.google.testing.platform.core-proto.0.0.8-alpha05_pom",
+    source = "repository/com/google/testing/platform/core-proto/0.0.8-alpha05/core-proto-0.0.8-alpha05.pom",
     visibility = ["//visibility:public"],
 )
 
@@ -24338,7 +24389,7 @@ filegroup(
 # managed by go/iml_to_build
 java_import(
     name = "utp-core-proto",
-    jars = ["repository/com/google/testing/platform/core-proto/0.0.8-alpha04/core-proto-0.0.8-alpha04.jar"],
+    jars = ["repository/com/google/testing/platform/core-proto/0.0.8-alpha05/core-proto-0.0.8-alpha05.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -24487,5 +24538,495 @@ java_import(
 java_import(
     name = "gradle-tooling-api-5.3.1",
     jars = ["repository/org/gradle/gradle-tooling-api/5.3.1/gradle-tooling-api-5.3.1.jar"],
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-script-runtime.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-script-runtime/1.5.20/kotlin-script-runtime-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-script-runtime.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-script-runtime/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-script-runtime.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-script-runtime/1.5.20/kotlin-script-runtime-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-stdlib-jdk8.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.5.20/kotlin-stdlib-jdk8-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-stdlib-jdk8.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-stdlib-jdk8.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.5.20/kotlin-stdlib-jdk8-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-stdlib.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-stdlib/1.5.20/kotlin-stdlib-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-stdlib.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-stdlib/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-stdlib.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-stdlib/1.5.20/kotlin-stdlib-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-stdlib-common.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.5.20/kotlin-stdlib-common-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-stdlib-common.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-stdlib-common.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.5.20/kotlin-stdlib-common-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-stdlib-jdk7.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.5.20/kotlin-stdlib-jdk7-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-stdlib-jdk7.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-stdlib-jdk7.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.5.20/kotlin-stdlib-jdk7-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-reflect.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-reflect/1.5.20/kotlin-reflect-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-reflect.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-reflect/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-reflect.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-reflect/1.5.20/kotlin-reflect-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-android-extensions-runtime.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-android-extensions-runtime/1.5.20/kotlin-android-extensions-runtime-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-android-extensions-runtime.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-android-extensions-runtime/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-android-extensions-runtime.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-android-extensions-runtime/1.5.20/kotlin-android-extensions-runtime-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-gradle-plugin.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-gradle-plugin/1.5.20/kotlin-gradle-plugin-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-gradle-plugin.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-gradle-plugin/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-gradle-plugin.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-gradle-plugin/1.5.20/kotlin-gradle-plugin-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-gradle-plugin-api.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-gradle-plugin-api/1.5.20/kotlin-gradle-plugin-api-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-gradle-plugin-api.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-gradle-plugin-api/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-gradle-plugin-api.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-gradle-plugin-api/1.5.20/kotlin-gradle-plugin-api-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-native-utils.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-native-utils/1.5.20/kotlin-native-utils-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-native-utils.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-native-utils/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-native-utils.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-native-utils/1.5.20/kotlin-native-utils-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-util-io.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-util-io/1.5.20/kotlin-util-io-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-util-io.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-util-io/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-util-io.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-util-io/1.5.20/kotlin-util-io-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-project-model.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-project-model/1.5.20/kotlin-project-model-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-project-model.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-project-model/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-project-model.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-project-model/1.5.20/kotlin-project-model-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-gradle-plugin-model.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-gradle-plugin-model/1.5.20/kotlin-gradle-plugin-model-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-gradle-plugin-model.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-gradle-plugin-model/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-gradle-plugin-model.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-gradle-plugin-model/1.5.20/kotlin-gradle-plugin-model-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-util-klib.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-util-klib/1.5.20/kotlin-util-klib-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-util-klib.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-util-klib/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-util-klib.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-util-klib/1.5.20/kotlin-util-klib-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-klib-commonizer-api.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-klib-commonizer-api/1.5.20/kotlin-klib-commonizer-api-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-klib-commonizer-api.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-klib-commonizer-api/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-klib-commonizer-api.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-klib-commonizer-api/1.5.20/kotlin-klib-commonizer-api-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-tooling-metadata.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-tooling-metadata/1.5.20/kotlin-tooling-metadata-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-tooling-metadata.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-tooling-metadata/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-tooling-metadata.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-tooling-metadata/1.5.20/kotlin-tooling-metadata-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.checkerframework.checker-qual.2.11.1",
+    jars = ["repository/org/checkerframework/checker-qual/2.11.1/checker-qual-2.11.1.jar"],
+    pom = ":org.checkerframework.checker-qual.2.11.1_pom",
+    repo_path = "repository/org/checkerframework/checker-qual/2.11.1",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.checkerframework.checker-qual.2.11.1_pom",
+    source = "repository/org/checkerframework/checker-qual/2.11.1/checker-qual-2.11.1.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-compiler-embeddable.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-compiler-embeddable/1.5.20/kotlin-compiler-embeddable-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-compiler-embeddable.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-compiler-embeddable/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-compiler-embeddable.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-compiler-embeddable/1.5.20/kotlin-compiler-embeddable-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-daemon-embeddable.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-daemon-embeddable/1.5.20/kotlin-daemon-embeddable-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-daemon-embeddable.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-daemon-embeddable/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-daemon-embeddable.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-daemon-embeddable/1.5.20/kotlin-daemon-embeddable-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-annotation-processing-gradle.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-annotation-processing-gradle/1.5.20/kotlin-annotation-processing-gradle-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-annotation-processing-gradle.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-annotation-processing-gradle/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-annotation-processing-gradle.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-annotation-processing-gradle/1.5.20/kotlin-annotation-processing-gradle-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-android-extensions.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-android-extensions/1.5.20/kotlin-android-extensions-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-android-extensions.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-android-extensions/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-android-extensions.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-android-extensions/1.5.20/kotlin-android-extensions-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-compiler-runner.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-compiler-runner/1.5.20/kotlin-compiler-runner-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-compiler-runner.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-compiler-runner/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-compiler-runner.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-compiler-runner/1.5.20/kotlin-compiler-runner-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-build-common.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-build-common/1.5.20/kotlin-build-common-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-build-common.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-build-common/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-build-common.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-build-common/1.5.20/kotlin-build-common-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-daemon-client.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-daemon-client/1.5.20/kotlin-daemon-client-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-daemon-client.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-daemon-client/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-daemon-client.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-daemon-client/1.5.20/kotlin-daemon-client-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-scripting-compiler-embeddable.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-scripting-compiler-embeddable/1.5.20/kotlin-scripting-compiler-embeddable-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-scripting-compiler-embeddable.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-scripting-compiler-embeddable/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-scripting-compiler-embeddable.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-scripting-compiler-embeddable/1.5.20/kotlin-scripting-compiler-embeddable-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-scripting-compiler-impl-embeddable.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-scripting-compiler-impl-embeddable/1.5.20/kotlin-scripting-compiler-impl-embeddable-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-scripting-compiler-impl-embeddable.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-scripting-compiler-impl-embeddable/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-scripting-compiler-impl-embeddable.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-scripting-compiler-impl-embeddable/1.5.20/kotlin-scripting-compiler-impl-embeddable-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-scripting-common.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-scripting-common/1.5.20/kotlin-scripting-common-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-scripting-common.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-scripting-common/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-scripting-common.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-scripting-common/1.5.20/kotlin-scripting-common-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-scripting-jvm.1.5.20",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-scripting-jvm/1.5.20/kotlin-scripting-jvm-1.5.20.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-scripting-jvm.1.5.20_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-scripting-jvm/1.5.20",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-scripting-jvm.1.5.20_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-scripting-jvm/1.5.20/kotlin-scripting-jvm-1.5.20.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.lint.lint-gradle.27.1.0",
+    jars = ["repository/com/android/tools/lint/lint-gradle/27.1.0/lint-gradle-27.1.0.jar"],
+    pom = ":com.android.tools.lint.lint-gradle.27.1.0_pom",
+    repo_path = "repository/com/android/tools/lint/lint-gradle/27.1.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.lint.lint-gradle.27.1.0_pom",
+    source = "repository/com/android/tools/lint/lint-gradle/27.1.0/lint-gradle-27.1.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.external.com-intellij.intellij-core.27.1.0",
+    jars = ["repository/com/android/tools/external/com-intellij/intellij-core/27.1.0/intellij-core-27.1.0.jar"],
+    pom = ":com.android.tools.external.com-intellij.intellij-core.27.1.0_pom",
+    repo_path = "repository/com/android/tools/external/com-intellij/intellij-core/27.1.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.external.com-intellij.intellij-core.27.1.0_pom",
+    source = "repository/com/android/tools/external/com-intellij/intellij-core/27.1.0/intellij-core-27.1.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.external.com-intellij.kotlin-compiler.27.1.0",
+    jars = ["repository/com/android/tools/external/com-intellij/kotlin-compiler/27.1.0/kotlin-compiler-27.1.0.jar"],
+    pom = ":com.android.tools.external.com-intellij.kotlin-compiler.27.1.0_pom",
+    repo_path = "repository/com/android/tools/external/com-intellij/kotlin-compiler/27.1.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.external.com-intellij.kotlin-compiler.27.1.0_pom",
+    source = "repository/com/android/tools/external/com-intellij/kotlin-compiler/27.1.0/kotlin-compiler-27.1.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.external.org-jetbrains.uast.27.1.0",
+    jars = ["repository/com/android/tools/external/org-jetbrains/uast/27.1.0/uast-27.1.0.jar"],
+    pom = ":com.android.tools.external.org-jetbrains.uast.27.1.0_pom",
+    repo_path = "repository/com/android/tools/external/org-jetbrains/uast/27.1.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.external.org-jetbrains.uast.27.1.0_pom",
+    source = "repository/com/android/tools/external/org-jetbrains/uast/27.1.0/uast-27.1.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.lint.lint.27.1.0",
+    jars = ["repository/com/android/tools/lint/lint/27.1.0/lint-27.1.0.jar"],
+    pom = ":com.android.tools.lint.lint.27.1.0_pom",
+    repo_path = "repository/com/android/tools/lint/lint/27.1.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.lint.lint.27.1.0_pom",
+    source = "repository/com/android/tools/lint/lint/27.1.0/lint-27.1.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.lint.lint-checks.27.1.0",
+    jars = ["repository/com/android/tools/lint/lint-checks/27.1.0/lint-checks-27.1.0.jar"],
+    pom = ":com.android.tools.lint.lint-checks.27.1.0_pom",
+    repo_path = "repository/com/android/tools/lint/lint-checks/27.1.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.lint.lint-checks.27.1.0_pom",
+    source = "repository/com/android/tools/lint/lint-checks/27.1.0/lint-checks-27.1.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.lint.lint-api.27.1.0",
+    jars = ["repository/com/android/tools/lint/lint-api/27.1.0/lint-api-27.1.0.jar"],
+    pom = ":com.android.tools.lint.lint-api.27.1.0_pom",
+    repo_path = "repository/com/android/tools/lint/lint-api/27.1.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.lint.lint-api.27.1.0_pom",
+    source = "repository/com/android/tools/lint/lint-api/27.1.0/lint-api-27.1.0.pom",
     visibility = ["//visibility:public"],
 )

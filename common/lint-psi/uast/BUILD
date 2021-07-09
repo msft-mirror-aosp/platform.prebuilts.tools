@@ -1,6 +1,19 @@
 load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom")
 load("//tools/base/bazel:utils.bzl", "java_jarjar")
 
+filegroup(
+    name = "agp_gradle_build_files",
+    srcs = [
+        ":uast-common.jar",
+        ":uast-common-sources.jar",
+        ":uast-java.jar",
+        ":uast-java-sources.jar",
+        ":uast-kotlin.jar",
+        ":uast-kotlin-sources.jar",
+    ],
+    visibility = ["//tools/base/build-system:__pkg__"],
+)
+
 java_jarjar(
     name = "uast-all",
     srcs = [

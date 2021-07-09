@@ -15,3 +15,9 @@ java_proto_library(
     resources = PROTO_SRCS,
     visibility = ["//visibility:public"],
 )
+
+filegroup(
+    name = "agp_gradle_build_files",
+    srcs = PROTO_SRCS,
+    visibility = ["//tools/base/build-system:__pkg__"],
+)
