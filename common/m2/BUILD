@@ -25548,3 +25548,266 @@ maven_pom(
     source = "repository/com/fasterxml/jackson/core/jackson-core/2.11.1/jackson-core-2.11.1.pom",
     visibility = ["//visibility:public"],
 )
+
+maven_aar(
+    name = "androidx.core.core.1.5.0_aar",
+    aar = "repository/androidx/core/core/1.5.0/core-1.5.0.aar",
+    pom = ":androidx.core.core.1.5.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.core.core.1.5.0_pom",
+    source = "repository/androidx/core/core/1.5.0/core-1.5.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.core.core-ktx.1.6.0_aar",
+    aar = "repository/androidx/core/core-ktx/1.6.0/core-ktx-1.6.0.aar",
+    pom = ":androidx.core.core-ktx.1.6.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.core.core-ktx.1.6.0_pom",
+    source = "repository/androidx/core/core-ktx/1.6.0/core-ktx-1.6.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.appcompat.appcompat.1.3.0_aar",
+    aar = "repository/androidx/appcompat/appcompat/1.3.0/appcompat-1.3.0.aar",
+    pom = ":androidx.appcompat.appcompat.1.3.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.appcompat.appcompat.1.3.0_pom",
+    source = "repository/androidx/appcompat/appcompat/1.3.0/appcompat-1.3.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.fragment.fragment.1.3.4_aar",
+    aar = "repository/androidx/fragment/fragment/1.3.4/fragment-1.3.4.aar",
+    pom = ":androidx.fragment.fragment.1.3.4_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.fragment.fragment.1.3.4_pom",
+    source = "repository/androidx/fragment/fragment/1.3.4/fragment-1.3.4.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.appcompat.appcompat-resources.1.3.0_aar",
+    aar = "repository/androidx/appcompat/appcompat-resources/1.3.0/appcompat-resources-1.3.0.aar",
+    pom = ":androidx.appcompat.appcompat-resources.1.3.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.appcompat.appcompat-resources.1.3.0_pom",
+    source = "repository/androidx/appcompat/appcompat-resources/1.3.0/appcompat-resources-1.3.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.activity.activity.1.2.3_aar",
+    aar = "repository/androidx/activity/activity/1.2.3/activity-1.2.3.aar",
+    pom = ":androidx.activity.activity.1.2.3_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.activity.activity.1.2.3_pom",
+    source = "repository/androidx/activity/activity/1.2.3/activity-1.2.3.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.media.media.1.3.1_aar",
+    aar = "repository/androidx/media/media/1.3.1/media-1.3.1.aar",
+    pom = ":androidx.media.media.1.3.1_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.media.media.1.3.1_pom",
+    source = "repository/androidx/media/media/1.3.1/media-1.3.1.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.recyclerview.recyclerview.1.2.1_aar",
+    aar = "repository/androidx/recyclerview/recyclerview/1.2.1/recyclerview-1.2.1.aar",
+    pom = ":androidx.recyclerview.recyclerview.1.2.1_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.recyclerview.recyclerview.1.2.1_pom",
+    source = "repository/androidx/recyclerview/recyclerview/1.2.1/recyclerview-1.2.1.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "com.google.android.material.material.1.4.0_aar",
+    aar = "repository/com/google/android/material/material/1.4.0/material-1.4.0.aar",
+    pom = ":com.google.android.material.material.1.4.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.google.android.material.material.1.4.0_pom",
+    source = "repository/com/google/android/material/material/1.4.0/material-1.4.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "com.google.android.gms.play-services-ads.20.2.0_aar",
+    aar = "repository/com/google/android/gms/play-services-ads/20.2.0/play-services-ads-20.2.0.aar",
+    pom = ":com.google.android.gms.play-services-ads.20.2.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.google.android.gms.play-services-ads.20.2.0_pom",
+    source = "repository/com/google/android/gms/play-services-ads/20.2.0/play-services-ads-20.2.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "com.google.android.gms.play-services-ads-base.20.2.0_aar",
+    aar = "repository/com/google/android/gms/play-services-ads-base/20.2.0/play-services-ads-base-20.2.0.aar",
+    pom = ":com.google.android.gms.play-services-ads-base.20.2.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.google.android.gms.play-services-ads-base.20.2.0_pom",
+    source = "repository/com/google/android/gms/play-services-ads-base/20.2.0/play-services-ads-base-20.2.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "com.google.android.gms.play-services-ads-lite.20.2.0_aar",
+    aar = "repository/com/google/android/gms/play-services-ads-lite/20.2.0/play-services-ads-lite-20.2.0.aar",
+    pom = ":com.google.android.gms.play-services-ads-lite.20.2.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.google.android.gms.play-services-ads-lite.20.2.0_pom",
+    source = "repository/com/google/android/gms/play-services-ads-lite/20.2.0/play-services-ads-lite-20.2.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "com.google.android.gms.play-services-maps.17.0.1_aar",
+    aar = "repository/com/google/android/gms/play-services-maps/17.0.1/play-services-maps-17.0.1.aar",
+    pom = ":com.google.android.gms.play-services-maps.17.0.1_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.google.android.gms.play-services-maps.17.0.1_pom",
+    source = "repository/com/google/android/gms/play-services-maps/17.0.1/play-services-maps-17.0.1.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "com.google.android.gms.play-services-wearable.17.1.0_aar",
+    aar = "repository/com/google/android/gms/play-services-wearable/17.1.0/play-services-wearable-17.1.0.aar",
+    pom = ":com.google.android.gms.play-services-wearable.17.1.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.google.android.gms.play-services-wearable.17.1.0_pom",
+    source = "repository/com/google/android/gms/play-services-wearable/17.1.0/play-services-wearable-17.1.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin.secrets-gradle-plugin.1.3.0",
+    jars = ["repository/com/google/android/libraries/mapsplatform/secrets-gradle-plugin/secrets-gradle-plugin/1.3.0/secrets-gradle-plugin-1.3.0.jar"],
+    pom = ":com.google.android.libraries.mapsplatform.secrets-gradle-plugin.secrets-gradle-plugin.1.3.0_pom",
+    repo_path = "repository/com/google/android/libraries/mapsplatform/secrets-gradle-plugin/secrets-gradle-plugin/1.3.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin.secrets-gradle-plugin.1.3.0_pom",
+    source = "repository/com/google/android/libraries/mapsplatform/secrets-gradle-plugin/secrets-gradle-plugin/1.3.0/secrets-gradle-plugin-1.3.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-stdlib-jdk8.1.4.10",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.4.10/kotlin-stdlib-jdk8-1.4.10.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-stdlib-jdk8.1.4.10_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.4.10",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-stdlib-jdk8.1.4.10_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.4.10/kotlin-stdlib-jdk8-1.4.10.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-stdlib-jdk7.1.4.10",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.4.10/kotlin-stdlib-jdk7-1.4.10.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-stdlib-jdk7.1.4.10_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.4.10",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-stdlib-jdk7.1.4.10_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.4.10/kotlin-stdlib-jdk7-1.4.10.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.core.core.1.6.0_aar",
+    aar = "repository/androidx/core/core/1.6.0/core-1.6.0.aar",
+    pom = ":androidx.core.core.1.6.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.core.core.1.6.0_pom",
+    source = "repository/androidx/core/core/1.6.0/core-1.6.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.annotation.annotation-experimental.1.1.0_aar",
+    aar = "repository/androidx/annotation/annotation-experimental/1.1.0/annotation-experimental-1.1.0.aar",
+    pom = ":androidx.annotation.annotation-experimental.1.1.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.annotation.annotation-experimental.1.1.0_pom",
+    source = "repository/androidx/annotation/annotation-experimental/1.1.0/annotation-experimental-1.1.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.activity.activity.1.2.2_aar",
+    aar = "repository/androidx/activity/activity/1.2.2/activity-1.2.2.aar",
+    pom = ":androidx.activity.activity.1.2.2_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.activity.activity.1.2.2_pom",
+    source = "repository/androidx/activity/activity/1.2.2/activity-1.2.2.pom",
+    visibility = ["//visibility:public"],
+)
