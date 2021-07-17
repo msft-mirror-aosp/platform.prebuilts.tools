@@ -25476,3 +25476,75 @@ maven_pom(
     source = "repository/com/android/tools/lint/lint-api/27.0.0/lint-api-27.0.0.pom",
     visibility = ["//visibility:public"],
 )
+
+maven_java_import(
+    name = "com.fasterxml.jackson.core.jackson-databind.2.11.1",
+    jars = ["repository/com/fasterxml/jackson/core/jackson-databind/2.11.1/jackson-databind-2.11.1.jar"],
+    pom = ":com.fasterxml.jackson.core.jackson-databind.2.11.1_pom",
+    repo_path = "repository/com/fasterxml/jackson/core/jackson-databind/2.11.1",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.fasterxml.jackson.core.jackson-databind.2.11.1_pom",
+    parent = ":com.fasterxml.jackson.jackson-base.2.11.1_pom",
+    source = "repository/com/fasterxml/jackson/core/jackson-databind/2.11.1/jackson-databind-2.11.1.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.fasterxml.jackson.jackson-base.2.11.1_pom",
+    parent = ":com.fasterxml.jackson.jackson-bom.2.11.1_pom",
+    source = "repository/com/fasterxml/jackson/jackson-base/2.11.1/jackson-base-2.11.1.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.fasterxml.jackson.jackson-bom.2.11.1_pom",
+    parent = ":com.fasterxml.jackson.jackson-parent.2.11_pom",
+    source = "repository/com/fasterxml/jackson/jackson-bom/2.11.1/jackson-bom-2.11.1.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.fasterxml.jackson.jackson-parent.2.11_pom",
+    parent = ":com.fasterxml.oss-parent.38_pom",
+    source = "repository/com/fasterxml/jackson/jackson-parent/2.11/jackson-parent-2.11.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.fasterxml.oss-parent.38_pom",
+    source = "repository/com/fasterxml/oss-parent/38/oss-parent-38.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.fasterxml.jackson.core.jackson-annotations.2.11.1",
+    jars = ["repository/com/fasterxml/jackson/core/jackson-annotations/2.11.1/jackson-annotations-2.11.1.jar"],
+    pom = ":com.fasterxml.jackson.core.jackson-annotations.2.11.1_pom",
+    repo_path = "repository/com/fasterxml/jackson/core/jackson-annotations/2.11.1",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.fasterxml.jackson.core.jackson-annotations.2.11.1_pom",
+    parent = ":com.fasterxml.jackson.jackson-parent.2.11_pom",
+    source = "repository/com/fasterxml/jackson/core/jackson-annotations/2.11.1/jackson-annotations-2.11.1.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.fasterxml.jackson.core.jackson-core.2.11.1",
+    jars = ["repository/com/fasterxml/jackson/core/jackson-core/2.11.1/jackson-core-2.11.1.jar"],
+    pom = ":com.fasterxml.jackson.core.jackson-core.2.11.1_pom",
+    repo_path = "repository/com/fasterxml/jackson/core/jackson-core/2.11.1",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.fasterxml.jackson.core.jackson-core.2.11.1_pom",
+    parent = ":com.fasterxml.jackson.jackson-base.2.11.1_pom",
+    source = "repository/com/fasterxml/jackson/core/jackson-core/2.11.1/jackson-core-2.11.1.pom",
+    visibility = ["//visibility:public"],
+)
