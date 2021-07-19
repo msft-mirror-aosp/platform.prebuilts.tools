@@ -11779,19 +11779,6 @@ maven_pom(
 )
 
 maven_aar(
-    name = "androidx.compose.foundation.foundation.1.0.0-beta09_aar",
-    aar = "repository/androidx/compose/foundation/foundation/1.0.0-beta09/foundation-1.0.0-beta09.aar",
-    pom = ":androidx.compose.foundation.foundation.1.0.0-beta09_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.foundation.foundation.1.0.0-beta09_pom",
-    source = "repository/androidx/compose/foundation/foundation/1.0.0-beta09/foundation-1.0.0-beta09.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
     name = "androidx.compose.foundation.foundation-layout.1.0.0-beta07_aar",
     aar = "repository/androidx/compose/foundation/foundation-layout/1.0.0-beta07/foundation-layout-1.0.0-beta07.aar",
     pom = ":androidx.compose.foundation.foundation-layout.1.0.0-beta07_pom",
@@ -11801,19 +11788,6 @@ maven_aar(
 maven_pom(
     name = "androidx.compose.foundation.foundation-layout.1.0.0-beta07_pom",
     source = "repository/androidx/compose/foundation/foundation-layout/1.0.0-beta07/foundation-layout-1.0.0-beta07.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.compose.foundation.foundation-layout.1.0.0-beta09_aar",
-    aar = "repository/androidx/compose/foundation/foundation-layout/1.0.0-beta09/foundation-layout-1.0.0-beta09.aar",
-    pom = ":androidx.compose.foundation.foundation-layout.1.0.0-beta09_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.foundation.foundation-layout.1.0.0-beta09_pom",
-    source = "repository/androidx/compose/foundation/foundation-layout/1.0.0-beta09/foundation-layout-1.0.0-beta09.pom",
     visibility = ["//visibility:public"],
 )
 
@@ -11831,19 +11805,6 @@ maven_pom(
 )
 
 maven_aar(
-    name = "androidx.compose.runtime.runtime.1.0.0-beta09_aar",
-    aar = "repository/androidx/compose/runtime/runtime/1.0.0-beta09/runtime-1.0.0-beta09.aar",
-    pom = ":androidx.compose.runtime.runtime.1.0.0-beta09_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.runtime.runtime.1.0.0-beta09_pom",
-    source = "repository/androidx/compose/runtime/runtime/1.0.0-beta09/runtime-1.0.0-beta09.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
     name = "androidx.compose.runtime.runtime-saveable.1.0.0-beta07_aar",
     aar = "repository/androidx/compose/runtime/runtime-saveable/1.0.0-beta07/runtime-saveable-1.0.0-beta07.aar",
     pom = ":androidx.compose.runtime.runtime-saveable.1.0.0-beta07_pom",
@@ -11853,19 +11814,6 @@ maven_aar(
 maven_pom(
     name = "androidx.compose.runtime.runtime-saveable.1.0.0-beta07_pom",
     source = "repository/androidx/compose/runtime/runtime-saveable/1.0.0-beta07/runtime-saveable-1.0.0-beta07.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.compose.runtime.runtime-saveable.1.0.0-beta09_aar",
-    aar = "repository/androidx/compose/runtime/runtime-saveable/1.0.0-beta09/runtime-saveable-1.0.0-beta09.aar",
-    pom = ":androidx.compose.runtime.runtime-saveable.1.0.0-beta09_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.runtime.runtime-saveable.1.0.0-beta09_pom",
-    source = "repository/androidx/compose/runtime/runtime-saveable/1.0.0-beta09/runtime-saveable-1.0.0-beta09.pom",
     visibility = ["//visibility:public"],
 )
 
@@ -11896,19 +11844,6 @@ maven_pom(
 )
 
 maven_aar(
-    name = "androidx.compose.material.material.1.0.0-beta09_aar",
-    aar = "repository/androidx/compose/material/material/1.0.0-beta09/material-1.0.0-beta09.aar",
-    pom = ":androidx.compose.material.material.1.0.0-beta09_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.material.material.1.0.0-beta09_pom",
-    source = "repository/androidx/compose/material/material/1.0.0-beta09/material-1.0.0-beta09.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
     name = "androidx.compose.material.material-icons-core.1.0.0-beta07_aar",
     aar = "repository/androidx/compose/material/material-icons-core/1.0.0-beta07/material-icons-core-1.0.0-beta07.aar",
     pom = ":androidx.compose.material.material-icons-core.1.0.0-beta07_pom",
@@ -11918,19 +11853,6 @@ maven_aar(
 maven_pom(
     name = "androidx.compose.material.material-icons-core.1.0.0-beta07_pom",
     source = "repository/androidx/compose/material/material-icons-core/1.0.0-beta07/material-icons-core-1.0.0-beta07.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.compose.material.material-icons-core.1.0.0-beta09_aar",
-    aar = "repository/androidx/compose/material/material-icons-core/1.0.0-beta09/material-icons-core-1.0.0-beta09.aar",
-    pom = ":androidx.compose.material.material-icons-core.1.0.0-beta09_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.material.material-icons-core.1.0.0-beta09_pom",
-    source = "repository/androidx/compose/material/material-icons-core/1.0.0-beta09/material-icons-core-1.0.0-beta09.pom",
     visibility = ["//visibility:public"],
 )
 
@@ -11960,19 +11882,6 @@ maven_pom(
     visibility = ["//visibility:public"],
 )
 
-maven_aar(
-    name = "androidx.compose.material.material-ripple.1.0.0-beta09_aar",
-    aar = "repository/androidx/compose/material/material-ripple/1.0.0-beta09/material-ripple-1.0.0-beta09.aar",
-    pom = ":androidx.compose.material.material-ripple.1.0.0-beta09_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.material.material-ripple.1.0.0-beta09_pom",
-    source = "repository/androidx/compose/material/material-ripple/1.0.0-beta09/material-ripple-1.0.0-beta09.pom",
-    visibility = ["//visibility:public"],
-)
-
 maven_java_import(
     name = "androidx.compose.compiler.compiler.1.0.0-beta07",
     jars = ["repository/androidx/compose/compiler/compiler/1.0.0-beta07/compiler-1.0.0-beta07.jar"],
@@ -11984,20 +11893,6 @@ maven_java_import(
 maven_pom(
     name = "androidx.compose.compiler.compiler.1.0.0-beta07_pom",
     source = "repository/androidx/compose/compiler/compiler/1.0.0-beta07/compiler-1.0.0-beta07.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "androidx.compose.compiler.compiler.1.0.0-beta09",
-    jars = ["repository/androidx/compose/compiler/compiler/1.0.0-beta09/compiler-1.0.0-beta09.jar"],
-    pom = ":androidx.compose.compiler.compiler.1.0.0-beta09_pom",
-    repo_path = "repository/androidx/compose/compiler/compiler/1.0.0-beta09",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.compiler.compiler.1.0.0-beta09_pom",
-    source = "repository/androidx/compose/compiler/compiler/1.0.0-beta09/compiler-1.0.0-beta09.pom",
     visibility = ["//visibility:public"],
 )
 
@@ -12015,19 +11910,6 @@ maven_pom(
 )
 
 maven_aar(
-    name = "androidx.compose.animation.animation.1.0.0-beta09_aar",
-    aar = "repository/androidx/compose/animation/animation/1.0.0-beta09/animation-1.0.0-beta09.aar",
-    pom = ":androidx.compose.animation.animation.1.0.0-beta09_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.animation.animation.1.0.0-beta09_pom",
-    source = "repository/androidx/compose/animation/animation/1.0.0-beta09/animation-1.0.0-beta09.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
     name = "androidx.compose.animation.animation-core.1.0.0-beta07_aar",
     aar = "repository/androidx/compose/animation/animation-core/1.0.0-beta07/animation-core-1.0.0-beta07.aar",
     pom = ":androidx.compose.animation.animation-core.1.0.0-beta07_pom",
@@ -12037,32 +11919,6 @@ maven_aar(
 maven_pom(
     name = "androidx.compose.animation.animation-core.1.0.0-beta07_pom",
     source = "repository/androidx/compose/animation/animation-core/1.0.0-beta07/animation-core-1.0.0-beta07.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.compose.animation.animation-core.1.0.0-beta09_aar",
-    aar = "repository/androidx/compose/animation/animation-core/1.0.0-beta09/animation-core-1.0.0-beta09.aar",
-    pom = ":androidx.compose.animation.animation-core.1.0.0-beta09_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.animation.animation-core.1.0.0-beta09_pom",
-    source = "repository/androidx/compose/animation/animation-core/1.0.0-beta09/animation-core-1.0.0-beta09.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.compose.ui.ui-test.1.0.0-beta09_aar",
-    aar = "repository/androidx/compose/ui/ui-test/1.0.0-beta09/ui-test-1.0.0-beta09.aar",
-    pom = ":androidx.compose.ui.ui-test.1.0.0-beta09_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.ui.ui-test.1.0.0-beta09_pom",
-    source = "repository/androidx/compose/ui/ui-test/1.0.0-beta09/ui-test-1.0.0-beta09.pom",
     visibility = ["//visibility:public"],
 )
 
@@ -12080,19 +11936,6 @@ maven_pom(
 )
 
 maven_aar(
-    name = "androidx.compose.ui.ui-graphics.1.0.0-beta09_aar",
-    aar = "repository/androidx/compose/ui/ui-graphics/1.0.0-beta09/ui-graphics-1.0.0-beta09.aar",
-    pom = ":androidx.compose.ui.ui-graphics.1.0.0-beta09_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.ui.ui-graphics.1.0.0-beta09_pom",
-    source = "repository/androidx/compose/ui/ui-graphics/1.0.0-beta09/ui-graphics-1.0.0-beta09.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
     name = "androidx.compose.ui.ui-text.1.0.0-beta07_aar",
     aar = "repository/androidx/compose/ui/ui-text/1.0.0-beta07/ui-text-1.0.0-beta07.aar",
     pom = ":androidx.compose.ui.ui-text.1.0.0-beta07_pom",
@@ -12102,19 +11945,6 @@ maven_aar(
 maven_pom(
     name = "androidx.compose.ui.ui-text.1.0.0-beta07_pom",
     source = "repository/androidx/compose/ui/ui-text/1.0.0-beta07/ui-text-1.0.0-beta07.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.compose.ui.ui-text.1.0.0-beta09_aar",
-    aar = "repository/androidx/compose/ui/ui-text/1.0.0-beta09/ui-text-1.0.0-beta09.aar",
-    pom = ":androidx.compose.ui.ui-text.1.0.0-beta09_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.ui.ui-text.1.0.0-beta09_pom",
-    source = "repository/androidx/compose/ui/ui-text/1.0.0-beta09/ui-text-1.0.0-beta09.pom",
     visibility = ["//visibility:public"],
 )
 
@@ -12132,19 +11962,6 @@ maven_pom(
 )
 
 maven_aar(
-    name = "androidx.compose.ui.ui-tooling-data.1.0.0-beta09_aar",
-    aar = "repository/androidx/compose/ui/ui-tooling-data/1.0.0-beta09/ui-tooling-data-1.0.0-beta09.aar",
-    pom = ":androidx.compose.ui.ui-tooling-data.1.0.0-beta09_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.ui.ui-tooling-data.1.0.0-beta09_pom",
-    source = "repository/androidx/compose/ui/ui-tooling-data/1.0.0-beta09/ui-tooling-data-1.0.0-beta09.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
     name = "androidx.compose.ui.ui.1.0.0-beta07_aar",
     aar = "repository/androidx/compose/ui/ui/1.0.0-beta07/ui-1.0.0-beta07.aar",
     pom = ":androidx.compose.ui.ui.1.0.0-beta07_pom",
@@ -12154,19 +11971,6 @@ maven_aar(
 maven_pom(
     name = "androidx.compose.ui.ui.1.0.0-beta07_pom",
     source = "repository/androidx/compose/ui/ui/1.0.0-beta07/ui-1.0.0-beta07.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.compose.ui.ui.1.0.0-beta09_aar",
-    aar = "repository/androidx/compose/ui/ui/1.0.0-beta09/ui-1.0.0-beta09.aar",
-    pom = ":androidx.compose.ui.ui.1.0.0-beta09_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.ui.ui.1.0.0-beta09_pom",
-    source = "repository/androidx/compose/ui/ui/1.0.0-beta09/ui-1.0.0-beta09.pom",
     visibility = ["//visibility:public"],
 )
 
@@ -12184,19 +11988,6 @@ maven_pom(
 )
 
 maven_aar(
-    name = "androidx.compose.ui.ui-tooling.1.0.0-beta09_aar",
-    aar = "repository/androidx/compose/ui/ui-tooling/1.0.0-beta09/ui-tooling-1.0.0-beta09.aar",
-    pom = ":androidx.compose.ui.ui-tooling.1.0.0-beta09_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.ui.ui-tooling.1.0.0-beta09_pom",
-    source = "repository/androidx/compose/ui/ui-tooling/1.0.0-beta09/ui-tooling-1.0.0-beta09.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
     name = "androidx.compose.ui.ui-test-junit4.1.0.0-beta07_aar",
     aar = "repository/androidx/compose/ui/ui-test-junit4/1.0.0-beta07/ui-test-junit4-1.0.0-beta07.aar",
     pom = ":androidx.compose.ui.ui-test-junit4.1.0.0-beta07_pom",
@@ -12206,19 +11997,6 @@ maven_aar(
 maven_pom(
     name = "androidx.compose.ui.ui-test-junit4.1.0.0-beta07_pom",
     source = "repository/androidx/compose/ui/ui-test-junit4/1.0.0-beta07/ui-test-junit4-1.0.0-beta07.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.compose.ui.ui-test-junit4.1.0.0-beta09_aar",
-    aar = "repository/androidx/compose/ui/ui-test-junit4/1.0.0-beta09/ui-test-junit4-1.0.0-beta09.aar",
-    pom = ":androidx.compose.ui.ui-test-junit4.1.0.0-beta09_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.ui.ui-test-junit4.1.0.0-beta09_pom",
-    source = "repository/androidx/compose/ui/ui-test-junit4/1.0.0-beta09/ui-test-junit4-1.0.0-beta09.pom",
     visibility = ["//visibility:public"],
 )
 
@@ -12236,19 +12014,6 @@ maven_pom(
 )
 
 maven_aar(
-    name = "androidx.compose.ui.ui-geometry.1.0.0-beta09_aar",
-    aar = "repository/androidx/compose/ui/ui-geometry/1.0.0-beta09/ui-geometry-1.0.0-beta09.aar",
-    pom = ":androidx.compose.ui.ui-geometry.1.0.0-beta09_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.ui.ui-geometry.1.0.0-beta09_pom",
-    source = "repository/androidx/compose/ui/ui-geometry/1.0.0-beta09/ui-geometry-1.0.0-beta09.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
     name = "androidx.compose.ui.ui-unit.1.0.0-beta07_aar",
     aar = "repository/androidx/compose/ui/ui-unit/1.0.0-beta07/ui-unit-1.0.0-beta07.aar",
     pom = ":androidx.compose.ui.ui-unit.1.0.0-beta07_pom",
@@ -12262,19 +12027,6 @@ maven_pom(
 )
 
 maven_aar(
-    name = "androidx.compose.ui.ui-unit.1.0.0-beta09_aar",
-    aar = "repository/androidx/compose/ui/ui-unit/1.0.0-beta09/ui-unit-1.0.0-beta09.aar",
-    pom = ":androidx.compose.ui.ui-unit.1.0.0-beta09_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.ui.ui-unit.1.0.0-beta09_pom",
-    source = "repository/androidx/compose/ui/ui-unit/1.0.0-beta09/ui-unit-1.0.0-beta09.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
     name = "androidx.compose.ui.ui-util.1.0.0-beta07_aar",
     aar = "repository/androidx/compose/ui/ui-util/1.0.0-beta07/ui-util-1.0.0-beta07.aar",
     pom = ":androidx.compose.ui.ui-util.1.0.0-beta07_pom",
@@ -12284,19 +12036,6 @@ maven_aar(
 maven_pom(
     name = "androidx.compose.ui.ui-util.1.0.0-beta07_pom",
     source = "repository/androidx/compose/ui/ui-util/1.0.0-beta07/ui-util-1.0.0-beta07.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.compose.ui.ui-util.1.0.0-beta09_aar",
-    aar = "repository/androidx/compose/ui/ui-util/1.0.0-beta09/ui-util-1.0.0-beta09.aar",
-    pom = ":androidx.compose.ui.ui-util.1.0.0-beta09_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.ui.ui-util.1.0.0-beta09_pom",
-    source = "repository/androidx/compose/ui/ui-util/1.0.0-beta09/ui-util-1.0.0-beta09.pom",
     visibility = ["//visibility:public"],
 )
 
