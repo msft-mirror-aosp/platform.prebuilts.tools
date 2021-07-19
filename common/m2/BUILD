@@ -9776,19 +9776,6 @@ maven_pom(
 )
 
 maven_aar(
-    name = "androidx.recyclerview.recyclerview.1.2.0_aar",
-    aar = "repository/androidx/recyclerview/recyclerview/1.2.0/recyclerview-1.2.0.aar",
-    pom = ":androidx.recyclerview.recyclerview.1.2.0_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.recyclerview.recyclerview.1.2.0_pom",
-    source = "repository/androidx/recyclerview/recyclerview/1.2.0/recyclerview-1.2.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
     name = "androidx.recyclerview.recyclerview.1.0.0_aar",
     aar = "repository/androidx/recyclerview/recyclerview/1.0.0/recyclerview-1.0.0.aar",
     pom = ":androidx.recyclerview.recyclerview.1.0.0_pom",
@@ -11762,19 +11749,6 @@ maven_aar(
 maven_pom(
     name = "androidx.cursoradapter.cursoradapter.1.0.0_pom",
     source = "repository/androidx/cursoradapter/cursoradapter/1.0.0/cursoradapter-1.0.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.media.media.1.3.0_aar",
-    aar = "repository/androidx/media/media/1.3.0/media-1.3.0.aar",
-    pom = ":androidx.media.media.1.3.0_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.media.media.1.3.0_pom",
-    source = "repository/androidx/media/media/1.3.0/media-1.3.0.pom",
     visibility = ["//visibility:public"],
 )
 
@@ -21948,20 +21922,6 @@ maven_pom(
 )
 
 maven_java_import(
-    name = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin.secrets-gradle-plugin.1.2.0",
-    jars = ["repository/com/google/android/libraries/mapsplatform/secrets-gradle-plugin/secrets-gradle-plugin/1.2.0/secrets-gradle-plugin-1.2.0.jar"],
-    pom = ":com.google.android.libraries.mapsplatform.secrets-gradle-plugin.secrets-gradle-plugin.1.2.0_pom",
-    repo_path = "repository/com/google/android/libraries/mapsplatform/secrets-gradle-plugin/secrets-gradle-plugin/1.2.0",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin.secrets-gradle-plugin.1.2.0_pom",
-    source = "repository/com/google/android/libraries/mapsplatform/secrets-gradle-plugin/secrets-gradle-plugin/1.2.0/secrets-gradle-plugin-1.2.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
     name = "com.google.android.apps.common.testing.accessibility.framework.accessibility-test-framework.2.1",
     jars = ["repository/com/google/android/apps/common/testing/accessibility/framework/accessibility-test-framework/2.1/accessibility-test-framework-2.1.jar"],
     pom = ":com.google.android.apps.common.testing.accessibility.framework.accessibility-test-framework.2.1_pom",
@@ -22104,19 +22064,6 @@ maven_aar(
 maven_pom(
     name = "com.google.android.gms.play-services-measurement.17.5.0_pom",
     source = "repository/com/google/android/gms/play-services-measurement/17.5.0/play-services-measurement-17.5.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "com.google.android.gms.play-services-wearable.17.0.0_aar",
-    aar = "repository/com/google/android/gms/play-services-wearable/17.0.0/play-services-wearable-17.0.0.aar",
-    pom = ":com.google.android.gms.play-services-wearable.17.0.0_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.android.gms.play-services-wearable.17.0.0_pom",
-    source = "repository/com/google/android/gms/play-services-wearable/17.0.0/play-services-wearable-17.0.0.pom",
     visibility = ["//visibility:public"],
 )
 
