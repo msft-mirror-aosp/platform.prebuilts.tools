@@ -22134,19 +22134,6 @@ maven_pom(
 )
 
 maven_aar(
-    name = "com.google.android.gms.play-services-gass.19.6.0_aar",
-    aar = "repository/com/google/android/gms/play-services-gass/19.6.0/play-services-gass-19.6.0.aar",
-    pom = ":com.google.android.gms.play-services-gass.19.6.0_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.android.gms.play-services-gass.19.6.0_pom",
-    source = "repository/com/google/android/gms/play-services-gass/19.6.0/play-services-gass-19.6.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
     name = "com.google.android.gms.play-services-ads-base.20.0.0_aar",
     aar = "repository/com/google/android/gms/play-services-ads-base/20.0.0/play-services-ads-base-20.0.0.aar",
     pom = ":com.google.android.gms.play-services-ads-base.20.0.0_pom",
@@ -22156,19 +22143,6 @@ maven_aar(
 maven_pom(
     name = "com.google.android.gms.play-services-ads-base.20.0.0_pom",
     source = "repository/com/google/android/gms/play-services-ads-base/20.0.0/play-services-ads-base-20.0.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "com.google.android.gms.play-services-ads-base.19.6.0_aar",
-    aar = "repository/com/google/android/gms/play-services-ads-base/19.6.0/play-services-ads-base-19.6.0.aar",
-    pom = ":com.google.android.gms.play-services-ads-base.19.6.0_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.android.gms.play-services-ads-base.19.6.0_pom",
-    source = "repository/com/google/android/gms/play-services-ads-base/19.6.0/play-services-ads-base-19.6.0.pom",
     visibility = ["//visibility:public"],
 )
 
@@ -22203,19 +22177,6 @@ maven_aar(
 maven_pom(
     name = "com.google.android.gms.play-services-ads.20.0.0_pom",
     source = "repository/com/google/android/gms/play-services-ads/20.0.0/play-services-ads-20.0.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "com.google.android.gms.play-services-ads.19.6.0_aar",
-    aar = "repository/com/google/android/gms/play-services-ads/19.6.0/play-services-ads-19.6.0.aar",
-    pom = ":com.google.android.gms.play-services-ads.19.6.0_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.android.gms.play-services-ads.19.6.0_pom",
-    source = "repository/com/google/android/gms/play-services-ads/19.6.0/play-services-ads-19.6.0.pom",
     visibility = ["//visibility:public"],
 )
 
@@ -22294,19 +22255,6 @@ maven_aar(
 maven_pom(
     name = "com.google.android.gms.play-services-ads-lite.20.0.0_pom",
     source = "repository/com/google/android/gms/play-services-ads-lite/20.0.0/play-services-ads-lite-20.0.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "com.google.android.gms.play-services-ads-lite.19.6.0_aar",
-    aar = "repository/com/google/android/gms/play-services-ads-lite/19.6.0/play-services-ads-lite-19.6.0.aar",
-    pom = ":com.google.android.gms.play-services-ads-lite.19.6.0_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.android.gms.play-services-ads-lite.19.6.0_pom",
-    source = "repository/com/google/android/gms/play-services-ads-lite/19.6.0/play-services-ads-lite-19.6.0.pom",
     visibility = ["//visibility:public"],
 )
 
