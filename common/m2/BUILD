@@ -25406,3 +25406,329 @@ maven_pom(
     source = "repository/androidx/activity/activity/1.2.2/activity-1.2.2.pom",
     visibility = ["//visibility:public"],
 )
+
+maven_aar(
+    name = "androidx.compose.ui.ui-tooling.1.0.0_aar",
+    aar = "repository/androidx/compose/ui/ui-tooling/1.0.0/ui-tooling-1.0.0.aar",
+    pom = ":androidx.compose.ui.ui-tooling.1.0.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.compose.ui.ui-tooling.1.0.0_pom",
+    source = "repository/androidx/compose/ui/ui-tooling/1.0.0/ui-tooling-1.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.compose.runtime.runtime.1.0.0_aar",
+    aar = "repository/androidx/compose/runtime/runtime/1.0.0/runtime-1.0.0.aar",
+    pom = ":androidx.compose.runtime.runtime.1.0.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.compose.runtime.runtime.1.0.0_pom",
+    source = "repository/androidx/compose/runtime/runtime/1.0.0/runtime-1.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.compose.ui.ui-tooling-data.1.0.0_aar",
+    aar = "repository/androidx/compose/ui/ui-tooling-data/1.0.0/ui-tooling-data-1.0.0.aar",
+    pom = ":androidx.compose.ui.ui-tooling-data.1.0.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.compose.ui.ui-tooling-data.1.0.0_pom",
+    source = "repository/androidx/compose/ui/ui-tooling-data/1.0.0/ui-tooling-data-1.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.compose.ui.ui-tooling-preview.1.0.0_aar",
+    aar = "repository/androidx/compose/ui/ui-tooling-preview/1.0.0/ui-tooling-preview-1.0.0.aar",
+    pom = ":androidx.compose.ui.ui-tooling-preview.1.0.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.compose.ui.ui-tooling-preview.1.0.0_pom",
+    source = "repository/androidx/compose/ui/ui-tooling-preview/1.0.0/ui-tooling-preview-1.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.compose.ui.ui-test-junit4.1.0.0_aar",
+    aar = "repository/androidx/compose/ui/ui-test-junit4/1.0.0/ui-test-junit4-1.0.0.aar",
+    pom = ":androidx.compose.ui.ui-test-junit4.1.0.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.compose.ui.ui-test-junit4.1.0.0_pom",
+    source = "repository/androidx/compose/ui/ui-test-junit4/1.0.0/ui-test-junit4-1.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.compose.ui.ui-test.1.0.0_aar",
+    aar = "repository/androidx/compose/ui/ui-test/1.0.0/ui-test-1.0.0.aar",
+    pom = ":androidx.compose.ui.ui-test.1.0.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.compose.ui.ui-test.1.0.0_pom",
+    source = "repository/androidx/compose/ui/ui-test/1.0.0/ui-test-1.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.compose.runtime.runtime-saveable.1.0.0_aar",
+    aar = "repository/androidx/compose/runtime/runtime-saveable/1.0.0/runtime-saveable-1.0.0.aar",
+    pom = ":androidx.compose.runtime.runtime-saveable.1.0.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.compose.runtime.runtime-saveable.1.0.0_pom",
+    source = "repository/androidx/compose/runtime/runtime-saveable/1.0.0/runtime-saveable-1.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "androidx.compose.compiler.compiler.1.0.0",
+    jars = ["repository/androidx/compose/compiler/compiler/1.0.0/compiler-1.0.0.jar"],
+    pom = ":androidx.compose.compiler.compiler.1.0.0_pom",
+    repo_path = "repository/androidx/compose/compiler/compiler/1.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.compose.compiler.compiler.1.0.0_pom",
+    source = "repository/androidx/compose/compiler/compiler/1.0.0/compiler-1.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.activity.activity-compose.1.3.0_aar",
+    aar = "repository/androidx/activity/activity-compose/1.3.0/activity-compose-1.3.0.aar",
+    pom = ":androidx.activity.activity-compose.1.3.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.activity.activity-compose.1.3.0_pom",
+    source = "repository/androidx/activity/activity-compose/1.3.0/activity-compose-1.3.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.activity.activity-ktx.1.3.0_aar",
+    aar = "repository/androidx/activity/activity-ktx/1.3.0/activity-ktx-1.3.0.aar",
+    pom = ":androidx.activity.activity-ktx.1.3.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.activity.activity-ktx.1.3.0_pom",
+    source = "repository/androidx/activity/activity-ktx/1.3.0/activity-ktx-1.3.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.activity.activity.1.3.0_aar",
+    aar = "repository/androidx/activity/activity/1.3.0/activity-1.3.0.aar",
+    pom = ":androidx.activity.activity.1.3.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.activity.activity.1.3.0_pom",
+    source = "repository/androidx/activity/activity/1.3.0/activity-1.3.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.compose.ui.ui.1.0.0_aar",
+    aar = "repository/androidx/compose/ui/ui/1.0.0/ui-1.0.0.aar",
+    pom = ":androidx.compose.ui.ui.1.0.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.compose.ui.ui.1.0.0_pom",
+    source = "repository/androidx/compose/ui/ui/1.0.0/ui-1.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.compose.ui.ui-geometry.1.0.0_aar",
+    aar = "repository/androidx/compose/ui/ui-geometry/1.0.0/ui-geometry-1.0.0.aar",
+    pom = ":androidx.compose.ui.ui-geometry.1.0.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.compose.ui.ui-geometry.1.0.0_pom",
+    source = "repository/androidx/compose/ui/ui-geometry/1.0.0/ui-geometry-1.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.compose.ui.ui-graphics.1.0.0_aar",
+    aar = "repository/androidx/compose/ui/ui-graphics/1.0.0/ui-graphics-1.0.0.aar",
+    pom = ":androidx.compose.ui.ui-graphics.1.0.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.compose.ui.ui-graphics.1.0.0_pom",
+    source = "repository/androidx/compose/ui/ui-graphics/1.0.0/ui-graphics-1.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.compose.ui.ui-text.1.0.0_aar",
+    aar = "repository/androidx/compose/ui/ui-text/1.0.0/ui-text-1.0.0.aar",
+    pom = ":androidx.compose.ui.ui-text.1.0.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.compose.ui.ui-text.1.0.0_pom",
+    source = "repository/androidx/compose/ui/ui-text/1.0.0/ui-text-1.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.compose.ui.ui-unit.1.0.0_aar",
+    aar = "repository/androidx/compose/ui/ui-unit/1.0.0/ui-unit-1.0.0.aar",
+    pom = ":androidx.compose.ui.ui-unit.1.0.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.compose.ui.ui-unit.1.0.0_pom",
+    source = "repository/androidx/compose/ui/ui-unit/1.0.0/ui-unit-1.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.compose.ui.ui-util.1.0.0_aar",
+    aar = "repository/androidx/compose/ui/ui-util/1.0.0/ui-util-1.0.0.aar",
+    pom = ":androidx.compose.ui.ui-util.1.0.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.compose.ui.ui-util.1.0.0_pom",
+    source = "repository/androidx/compose/ui/ui-util/1.0.0/ui-util-1.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.profileinstaller.profileinstaller.1.0.0_aar",
+    aar = "repository/androidx/profileinstaller/profileinstaller/1.0.0/profileinstaller-1.0.0.aar",
+    pom = ":androidx.profileinstaller.profileinstaller.1.0.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.profileinstaller.profileinstaller.1.0.0_pom",
+    source = "repository/androidx/profileinstaller/profileinstaller/1.0.0/profileinstaller-1.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.compose.material.material.1.0.0_aar",
+    aar = "repository/androidx/compose/material/material/1.0.0/material-1.0.0.aar",
+    pom = ":androidx.compose.material.material.1.0.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.compose.material.material.1.0.0_pom",
+    source = "repository/androidx/compose/material/material/1.0.0/material-1.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.compose.animation.animation-core.1.0.0_aar",
+    aar = "repository/androidx/compose/animation/animation-core/1.0.0/animation-core-1.0.0.aar",
+    pom = ":androidx.compose.animation.animation-core.1.0.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.compose.animation.animation-core.1.0.0_pom",
+    source = "repository/androidx/compose/animation/animation-core/1.0.0/animation-core-1.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.compose.foundation.foundation.1.0.0_aar",
+    aar = "repository/androidx/compose/foundation/foundation/1.0.0/foundation-1.0.0.aar",
+    pom = ":androidx.compose.foundation.foundation.1.0.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.compose.foundation.foundation.1.0.0_pom",
+    source = "repository/androidx/compose/foundation/foundation/1.0.0/foundation-1.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.compose.material.material-icons-core.1.0.0_aar",
+    aar = "repository/androidx/compose/material/material-icons-core/1.0.0/material-icons-core-1.0.0.aar",
+    pom = ":androidx.compose.material.material-icons-core.1.0.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.compose.material.material-icons-core.1.0.0_pom",
+    source = "repository/androidx/compose/material/material-icons-core/1.0.0/material-icons-core-1.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.compose.material.material-ripple.1.0.0_aar",
+    aar = "repository/androidx/compose/material/material-ripple/1.0.0/material-ripple-1.0.0.aar",
+    pom = ":androidx.compose.material.material-ripple.1.0.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.compose.material.material-ripple.1.0.0_pom",
+    source = "repository/androidx/compose/material/material-ripple/1.0.0/material-ripple-1.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.compose.animation.animation.1.0.0_aar",
+    aar = "repository/androidx/compose/animation/animation/1.0.0/animation-1.0.0.aar",
+    pom = ":androidx.compose.animation.animation.1.0.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.compose.animation.animation.1.0.0_pom",
+    source = "repository/androidx/compose/animation/animation/1.0.0/animation-1.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.compose.foundation.foundation-layout.1.0.0_aar",
+    aar = "repository/androidx/compose/foundation/foundation-layout/1.0.0/foundation-layout-1.0.0.aar",
+    pom = ":androidx.compose.foundation.foundation-layout.1.0.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.compose.foundation.foundation-layout.1.0.0_pom",
+    source = "repository/androidx/compose/foundation/foundation-layout/1.0.0/foundation-layout-1.0.0.pom",
+    visibility = ["//visibility:public"],
+)
