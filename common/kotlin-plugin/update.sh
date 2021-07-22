@@ -43,7 +43,7 @@ done
 # Print out some metadata for the commit message.
 echo "Done."
 echo "------"
-PLUGIN_XML="$(unzip -p "$KT_DIR/Kotlin/lib/kotlin-resources-descriptors.jar" META-INF/plugin.xml)"
+PLUGIN_XML="$(unzip -p "$KT_DIR/Kotlin/lib/kotlin-idea.jar" META-INF/plugin.xml)"
 echo "Compiler version: $(cat "$KT_DIR/Kotlin/kotlinc/build.txt")"
 echo "Plugin version: $(sed -n 's:.*<version>\(.*\)</version>:\1:p' <<< "$PLUGIN_XML")"
 echo "Compatibility: $(sed -n 's:.*<idea-version \(.*\)/>:\1:p' <<< "$PLUGIN_XML")"
