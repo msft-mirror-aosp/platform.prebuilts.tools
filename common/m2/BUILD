@@ -25420,3 +25420,253 @@ maven_pom(
     source = "repository/junit/junit/4.13.2/junit-4.13.2.pom",
     visibility = ["//visibility:public"],
 )
+
+maven_java_import(
+    name = "org.jetbrains.dokka.dokka-core.1.4.32",
+    jars = ["repository/org/jetbrains/dokka/dokka-core/1.4.32/dokka-core-1.4.32.jar"],
+    pom = ":org.jetbrains.dokka.dokka-core.1.4.32_pom",
+    repo_path = "repository/org/jetbrains/dokka/dokka-core/1.4.32",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.dokka.dokka-core.1.4.32_pom",
+    source = "repository/org/jetbrains/dokka/dokka-core/1.4.32/dokka-core-1.4.32.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.markdown-jvm.0.2.1",
+    jars = ["repository/org/jetbrains/markdown-jvm/0.2.1/markdown-jvm-0.2.1.jar"],
+    pom = ":org.jetbrains.markdown-jvm.0.2.1_pom",
+    repo_path = "repository/org/jetbrains/markdown-jvm/0.2.1",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.markdown-jvm.0.2.1_pom",
+    source = "repository/org/jetbrains/markdown-jvm/0.2.1/markdown-jvm-0.2.1.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jsoup.jsoup.1.13.1",
+    jars = ["repository/org/jsoup/jsoup/1.13.1/jsoup-1.13.1.jar"],
+    pom = ":org.jsoup.jsoup.1.13.1_pom",
+    repo_path = "repository/org/jsoup/jsoup/1.13.1",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jsoup.jsoup.1.13.1_pom",
+    source = "repository/org/jsoup/jsoup/1.13.1/jsoup-1.13.1.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.fasterxml.jackson.module.jackson-module-kotlin.2.11.1",
+    jars = ["repository/com/fasterxml/jackson/module/jackson-module-kotlin/2.11.1/jackson-module-kotlin-2.11.1.jar"],
+    pom = ":com.fasterxml.jackson.module.jackson-module-kotlin.2.11.1_pom",
+    repo_path = "repository/com/fasterxml/jackson/module/jackson-module-kotlin/2.11.1",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.fasterxml.jackson.module.jackson-module-kotlin.2.11.1_pom",
+    parent = ":com.fasterxml.jackson.jackson-base.2.11.1_pom",
+    source = "repository/com/fasterxml/jackson/module/jackson-module-kotlin/2.11.1/jackson-module-kotlin-2.11.1.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.fasterxml.jackson.dataformat.jackson-dataformat-xml.2.11.1",
+    jars = ["repository/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.11.1/jackson-dataformat-xml-2.11.1.jar"],
+    pom = ":com.fasterxml.jackson.dataformat.jackson-dataformat-xml.2.11.1_pom",
+    repo_path = "repository/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.11.1",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.fasterxml.jackson.dataformat.jackson-dataformat-xml.2.11.1_pom",
+    parent = ":com.fasterxml.jackson.jackson-base.2.11.1_pom",
+    source = "repository/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.11.1/jackson-dataformat-xml-2.11.1.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.fasterxml.jackson.module.jackson-module-jaxb-annotations.2.11.1",
+    jars = ["repository/com/fasterxml/jackson/module/jackson-module-jaxb-annotations/2.11.1/jackson-module-jaxb-annotations-2.11.1.jar"],
+    pom = ":com.fasterxml.jackson.module.jackson-module-jaxb-annotations.2.11.1_pom",
+    repo_path = "repository/com/fasterxml/jackson/module/jackson-module-jaxb-annotations/2.11.1",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.fasterxml.jackson.module.jackson-module-jaxb-annotations.2.11.1_pom",
+    parent = ":com.fasterxml.jackson.module.jackson-modules-base.2.11.1_pom",
+    source = "repository/com/fasterxml/jackson/module/jackson-module-jaxb-annotations/2.11.1/jackson-module-jaxb-annotations-2.11.1.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.fasterxml.jackson.module.jackson-modules-base.2.11.1_pom",
+    parent = ":com.fasterxml.jackson.jackson-base.2.11.1_pom",
+    source = "repository/com/fasterxml/jackson/module/jackson-modules-base/2.11.1/jackson-modules-base-2.11.1.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.woodstox.stax2-api.4.2.1",
+    jars = ["repository/org/codehaus/woodstox/stax2-api/4.2.1/stax2-api-4.2.1.jar"],
+    pom = ":org.codehaus.woodstox.stax2-api.4.2.1_pom",
+    repo_path = "repository/org/codehaus/woodstox/stax2-api/4.2.1",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.woodstox.stax2-api.4.2.1_pom",
+    parent = ":com.fasterxml.oss-parent.38_pom",
+    source = "repository/org/codehaus/woodstox/stax2-api/4.2.1/stax2-api-4.2.1.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.fasterxml.woodstox.woodstox-core.6.2.1",
+    jars = ["repository/com/fasterxml/woodstox/woodstox-core/6.2.1/woodstox-core-6.2.1.jar"],
+    pom = ":com.fasterxml.woodstox.woodstox-core.6.2.1_pom",
+    repo_path = "repository/com/fasterxml/woodstox/woodstox-core/6.2.1",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.fasterxml.woodstox.woodstox-core.6.2.1_pom",
+    parent = ":com.fasterxml.oss-parent.38_pom",
+    source = "repository/com/fasterxml/woodstox/woodstox-core/6.2.1/woodstox-core-6.2.1.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlinx.kotlinx-coroutines-core-jvm.1.4.1",
+    jars = ["repository/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.4.1/kotlinx-coroutines-core-jvm-1.4.1.jar"],
+    pom = ":org.jetbrains.kotlinx.kotlinx-coroutines-core-jvm.1.4.1_pom",
+    repo_path = "repository/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.4.1",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlinx.kotlinx-coroutines-core-jvm.1.4.1_pom",
+    source = "repository/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.4.1/kotlinx-coroutines-core-jvm-1.4.1.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.dokka.dokka-base.1.4.32",
+    jars = ["repository/org/jetbrains/dokka/dokka-base/1.4.32/dokka-base-1.4.32.jar"],
+    pom = ":org.jetbrains.dokka.dokka-base.1.4.32_pom",
+    repo_path = "repository/org/jetbrains/dokka/dokka-base/1.4.32",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.dokka.dokka-base.1.4.32_pom",
+    source = "repository/org/jetbrains/dokka/dokka-base/1.4.32/dokka-base-1.4.32.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.dokka.dokka-analysis.1.4.32",
+    jars = ["repository/org/jetbrains/dokka/dokka-analysis/1.4.32/dokka-analysis-1.4.32.jar"],
+    pom = ":org.jetbrains.dokka.dokka-analysis.1.4.32_pom",
+    repo_path = "repository/org/jetbrains/dokka/dokka-analysis/1.4.32",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.dokka.dokka-analysis.1.4.32_pom",
+    source = "repository/org/jetbrains/dokka/dokka-analysis/1.4.32/dokka-analysis-1.4.32.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.dokka.kotlin-analysis-intellij.1.4.32",
+    jars = ["repository/org/jetbrains/dokka/kotlin-analysis-intellij/1.4.32/kotlin-analysis-intellij-1.4.32.jar"],
+    pom = ":org.jetbrains.dokka.kotlin-analysis-intellij.1.4.32_pom",
+    repo_path = "repository/org/jetbrains/dokka/kotlin-analysis-intellij/1.4.32",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.dokka.kotlin-analysis-intellij.1.4.32_pom",
+    source = "repository/org/jetbrains/dokka/kotlin-analysis-intellij/1.4.32/kotlin-analysis-intellij-1.4.32.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.dokka.kotlin-analysis-compiler.1.4.32",
+    jars = ["repository/org/jetbrains/dokka/kotlin-analysis-compiler/1.4.32/kotlin-analysis-compiler-1.4.32.jar"],
+    pom = ":org.jetbrains.dokka.kotlin-analysis-compiler.1.4.32_pom",
+    repo_path = "repository/org/jetbrains/dokka/kotlin-analysis-compiler/1.4.32",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.dokka.kotlin-analysis-compiler.1.4.32_pom",
+    source = "repository/org/jetbrains/dokka/kotlin-analysis-compiler/1.4.32/kotlin-analysis-compiler-1.4.32.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlinx.kotlinx-html-jvm.0.7.3",
+    jars = ["repository/org/jetbrains/kotlinx/kotlinx-html-jvm/0.7.3/kotlinx-html-jvm-0.7.3.jar"],
+    pom = ":org.jetbrains.kotlinx.kotlinx-html-jvm.0.7.3_pom",
+    repo_path = "repository/org/jetbrains/kotlinx/kotlinx-html-jvm/0.7.3",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlinx.kotlinx-html-jvm.0.7.3_pom",
+    source = "repository/org/jetbrains/kotlinx/kotlinx-html-jvm/0.7.3/kotlinx-html-jvm-0.7.3.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.dokka.javadoc-plugin.1.4.32",
+    jars = ["repository/org/jetbrains/dokka/javadoc-plugin/1.4.32/javadoc-plugin-1.4.32.jar"],
+    pom = ":org.jetbrains.dokka.javadoc-plugin.1.4.32_pom",
+    repo_path = "repository/org/jetbrains/dokka/javadoc-plugin/1.4.32",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.dokka.javadoc-plugin.1.4.32_pom",
+    source = "repository/org/jetbrains/dokka/javadoc-plugin/1.4.32/javadoc-plugin-1.4.32.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.soywiz.korlibs.korte.korte-jvm.2.0.7",
+    jars = ["repository/com/soywiz/korlibs/korte/korte-jvm/2.0.7/korte-jvm-2.0.7.jar"],
+    pom = ":com.soywiz.korlibs.korte.korte-jvm.2.0.7_pom",
+    repo_path = "repository/com/soywiz/korlibs/korte/korte-jvm/2.0.7",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.soywiz.korlibs.korte.korte-jvm.2.0.7_pom",
+    source = "repository/com/soywiz/korlibs/korte/korte-jvm/2.0.7/korte-jvm-2.0.7.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.dokka.kotlin-as-java-plugin.1.4.32",
+    jars = ["repository/org/jetbrains/dokka/kotlin-as-java-plugin/1.4.32/kotlin-as-java-plugin-1.4.32.jar"],
+    pom = ":org.jetbrains.dokka.kotlin-as-java-plugin.1.4.32_pom",
+    repo_path = "repository/org/jetbrains/dokka/kotlin-as-java-plugin/1.4.32",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.dokka.kotlin-as-java-plugin.1.4.32_pom",
+    source = "repository/org/jetbrains/dokka/kotlin-as-java-plugin/1.4.32/kotlin-as-java-plugin-1.4.32.pom",
+    visibility = ["//visibility:public"],
+)
