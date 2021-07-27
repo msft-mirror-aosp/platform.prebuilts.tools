@@ -25732,17 +25732,3 @@ maven_pom(
     source = "repository/androidx/compose/foundation/foundation-layout/1.0.0/foundation-layout-1.0.0.pom",
     visibility = ["//visibility:public"],
 )
-
-maven_java_import(
-    name = "junit.junit.4.13.2",
-    jars = ["repository/junit/junit/4.13.2/junit-4.13.2.jar"],
-    pom = ":junit.junit.4.13.2_pom",
-    repo_path = "repository/junit/junit/4.13.2",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "junit.junit.4.13.2_pom",
-    source = "repository/junit/junit/4.13.2/junit-4.13.2.pom",
-    visibility = ["//visibility:public"],
-)
