@@ -1,5 +1,7 @@
 load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom")
+load("//tools/base/bazel:kotlin.bzl", "maven_library")
 load("//tools/base/bazel:utils.bzl", "java_jarjar")
+load("//tools/base/common:version.bzl", "BUILD_VERSION")
 
 filegroup(
     name = "agp_gradle_build_files",
@@ -24,18 +26,20 @@ java_jarjar(
     rules = "no_rules.txt",
 )
 
-maven_java_import(
-    name = "uast",
-    jars = [
-        ":uast-all.jar",
-    ],
-    pom = ":uast.pom",
-    visibility = ["//visibility:public"],
+# java_jarjar doesn't return a JavaInfo provider, so were-import the
+# jar to obtain one.
+java_import(
+    name = "import_all",
+    jars = [":uast-all.jar"],
 )
 
-maven_pom(
-    name = "uast.pom",
-    artifact = "uast",
-    group = "com.android.tools.external.intellij",
-    source = "//tools/buildSrc/base:build_version",
+maven_library(
+    name = "uast_bzl",
+    srcs = [],
+    bundled_deps = [
+        ":import_all",
+    ],
+    coordinates = "com.android.tools.external.intellij:uast:" + BUILD_VERSION,
+    legacy_name = "uast",
+    visibility = ["//visibility:public"],
 )
