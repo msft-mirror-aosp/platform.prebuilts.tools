@@ -25670,3 +25670,31 @@ maven_pom(
     source = "repository/org/jetbrains/dokka/kotlin-as-java-plugin/1.4.32/kotlin-as-java-plugin-1.4.32.pom",
     visibility = ["//visibility:public"],
 )
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-stdlib-common.1.4.0",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.4.0/kotlin-stdlib-common-1.4.0.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-stdlib-common.1.4.0_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.4.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-stdlib-common.1.4.0_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.4.0/kotlin-stdlib-common-1.4.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-stdlib.1.4.0",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-stdlib/1.4.0/kotlin-stdlib-1.4.0.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-stdlib.1.4.0_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-stdlib/1.4.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-stdlib.1.4.0_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-stdlib/1.4.0/kotlin-stdlib-1.4.0.pom",
+    visibility = ["//visibility:public"],
+)
