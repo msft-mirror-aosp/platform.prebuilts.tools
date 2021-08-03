@@ -22586,128 +22586,128 @@ maven_pom(
 )
 
 maven_java_import(
-    name = "com.google.testing.platform.android-device-provider-gradle.0.0.8-alpha05",
-    jars = ["repository/com/google/testing/platform/android-device-provider-gradle/0.0.8-alpha05/android-device-provider-gradle-0.0.8-alpha05.jar"],
-    pom = ":com.google.testing.platform.android-device-provider-gradle.0.0.8-alpha05_pom",
-    repo_path = "repository/com/google/testing/platform/android-device-provider-gradle/0.0.8-alpha05",
+    name = "com.google.testing.platform.android-device-provider-gradle.0.0.8-alpha06",
+    jars = ["repository/com/google/testing/platform/android-device-provider-gradle/0.0.8-alpha06/android-device-provider-gradle-0.0.8-alpha06.jar"],
+    pom = ":com.google.testing.platform.android-device-provider-gradle.0.0.8-alpha06_pom",
+    repo_path = "repository/com/google/testing/platform/android-device-provider-gradle/0.0.8-alpha06",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
-    name = "com.google.testing.platform.android-device-provider-gradle.0.0.8-alpha05_pom",
-    source = "repository/com/google/testing/platform/android-device-provider-gradle/0.0.8-alpha05/android-device-provider-gradle-0.0.8-alpha05.pom",
+    name = "com.google.testing.platform.android-device-provider-gradle.0.0.8-alpha06_pom",
+    source = "repository/com/google/testing/platform/android-device-provider-gradle/0.0.8-alpha06/android-device-provider-gradle-0.0.8-alpha06.pom",
     visibility = ["//visibility:public"],
 )
 
 maven_java_import(
-    name = "com.google.testing.platform.android-test-plugin-host-retention.0.0.8-alpha05",
-    jars = ["repository/com/google/testing/platform/android-test-plugin-host-retention/0.0.8-alpha05/android-test-plugin-host-retention-0.0.8-alpha05.jar"],
-    pom = ":com.google.testing.platform.android-test-plugin-host-retention.0.0.8-alpha05_pom",
-    repo_path = "repository/com/google/testing/platform/android-test-plugin-host-retention/0.0.8-alpha05",
+    name = "com.google.testing.platform.android-test-plugin-host-retention.0.0.8-alpha06",
+    jars = ["repository/com/google/testing/platform/android-test-plugin-host-retention/0.0.8-alpha06/android-test-plugin-host-retention-0.0.8-alpha06.jar"],
+    pom = ":com.google.testing.platform.android-test-plugin-host-retention.0.0.8-alpha06_pom",
+    repo_path = "repository/com/google/testing/platform/android-test-plugin-host-retention/0.0.8-alpha06",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
-    name = "com.google.testing.platform.android-test-plugin-host-retention.0.0.8-alpha05_pom",
-    source = "repository/com/google/testing/platform/android-test-plugin-host-retention/0.0.8-alpha05/android-test-plugin-host-retention-0.0.8-alpha05.pom",
+    name = "com.google.testing.platform.android-test-plugin-host-retention.0.0.8-alpha06_pom",
+    source = "repository/com/google/testing/platform/android-test-plugin-host-retention/0.0.8-alpha06/android-test-plugin-host-retention-0.0.8-alpha06.pom",
     visibility = ["//visibility:public"],
 )
 
 maven_java_import(
-    name = "com.google.testing.platform.android-driver-instrumentation.0.0.8-alpha05",
-    jars = ["repository/com/google/testing/platform/android-driver-instrumentation/0.0.8-alpha05/android-driver-instrumentation-0.0.8-alpha05.jar"],
-    pom = ":com.google.testing.platform.android-driver-instrumentation.0.0.8-alpha05_pom",
-    repo_path = "repository/com/google/testing/platform/android-driver-instrumentation/0.0.8-alpha05",
+    name = "com.google.testing.platform.android-driver-instrumentation.0.0.8-alpha06",
+    jars = ["repository/com/google/testing/platform/android-driver-instrumentation/0.0.8-alpha06/android-driver-instrumentation-0.0.8-alpha06.jar"],
+    pom = ":com.google.testing.platform.android-driver-instrumentation.0.0.8-alpha06_pom",
+    repo_path = "repository/com/google/testing/platform/android-driver-instrumentation/0.0.8-alpha06",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
-    name = "com.google.testing.platform.android-driver-instrumentation.0.0.8-alpha05_pom",
-    source = "repository/com/google/testing/platform/android-driver-instrumentation/0.0.8-alpha05/android-driver-instrumentation-0.0.8-alpha05.pom",
+    name = "com.google.testing.platform.android-driver-instrumentation.0.0.8-alpha06_pom",
+    source = "repository/com/google/testing/platform/android-driver-instrumentation/0.0.8-alpha06/android-driver-instrumentation-0.0.8-alpha06.pom",
     visibility = ["//visibility:public"],
 )
 
 maven_java_import(
-    name = "com.google.testing.platform.launcher.0.0.8-alpha05",
-    jars = ["repository/com/google/testing/platform/launcher/0.0.8-alpha05/launcher-0.0.8-alpha05.jar"],
-    pom = ":com.google.testing.platform.launcher.0.0.8-alpha05_pom",
-    repo_path = "repository/com/google/testing/platform/launcher/0.0.8-alpha05",
+    name = "com.google.testing.platform.launcher.0.0.8-alpha06",
+    jars = ["repository/com/google/testing/platform/launcher/0.0.8-alpha06/launcher-0.0.8-alpha06.jar"],
+    pom = ":com.google.testing.platform.launcher.0.0.8-alpha06_pom",
+    repo_path = "repository/com/google/testing/platform/launcher/0.0.8-alpha06",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
-    name = "com.google.testing.platform.launcher.0.0.8-alpha05_pom",
-    source = "repository/com/google/testing/platform/launcher/0.0.8-alpha05/launcher-0.0.8-alpha05.pom",
+    name = "com.google.testing.platform.launcher.0.0.8-alpha06_pom",
+    source = "repository/com/google/testing/platform/launcher/0.0.8-alpha06/launcher-0.0.8-alpha06.pom",
     visibility = ["//visibility:public"],
 )
 
 maven_java_import(
-    name = "com.google.testing.platform.android-test-plugin-host-device-info.0.0.8-alpha05",
-    jars = ["repository/com/google/testing/platform/android-test-plugin-host-device-info/0.0.8-alpha05/android-test-plugin-host-device-info-0.0.8-alpha05.jar"],
-    pom = ":com.google.testing.platform.android-test-plugin-host-device-info.0.0.8-alpha05_pom",
-    repo_path = "repository/com/google/testing/platform/android-test-plugin-host-device-info/0.0.8-alpha05",
+    name = "com.google.testing.platform.android-test-plugin-host-device-info.0.0.8-alpha06",
+    jars = ["repository/com/google/testing/platform/android-test-plugin-host-device-info/0.0.8-alpha06/android-test-plugin-host-device-info-0.0.8-alpha06.jar"],
+    pom = ":com.google.testing.platform.android-test-plugin-host-device-info.0.0.8-alpha06_pom",
+    repo_path = "repository/com/google/testing/platform/android-test-plugin-host-device-info/0.0.8-alpha06",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
-    name = "com.google.testing.platform.android-test-plugin-host-device-info.0.0.8-alpha05_pom",
-    source = "repository/com/google/testing/platform/android-test-plugin-host-device-info/0.0.8-alpha05/android-test-plugin-host-device-info-0.0.8-alpha05.pom",
+    name = "com.google.testing.platform.android-test-plugin-host-device-info.0.0.8-alpha06_pom",
+    source = "repository/com/google/testing/platform/android-test-plugin-host-device-info/0.0.8-alpha06/android-test-plugin-host-device-info-0.0.8-alpha06.pom",
     visibility = ["//visibility:public"],
 )
 
 maven_java_import(
-    name = "com.google.testing.platform.android-test-plugin.0.0.8-alpha05",
-    jars = ["repository/com/google/testing/platform/android-test-plugin/0.0.8-alpha05/android-test-plugin-0.0.8-alpha05.jar"],
-    pom = ":com.google.testing.platform.android-test-plugin.0.0.8-alpha05_pom",
-    repo_path = "repository/com/google/testing/platform/android-test-plugin/0.0.8-alpha05",
+    name = "com.google.testing.platform.android-test-plugin.0.0.8-alpha06",
+    jars = ["repository/com/google/testing/platform/android-test-plugin/0.0.8-alpha06/android-test-plugin-0.0.8-alpha06.jar"],
+    pom = ":com.google.testing.platform.android-test-plugin.0.0.8-alpha06_pom",
+    repo_path = "repository/com/google/testing/platform/android-test-plugin/0.0.8-alpha06",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
-    name = "com.google.testing.platform.android-test-plugin.0.0.8-alpha05_pom",
-    source = "repository/com/google/testing/platform/android-test-plugin/0.0.8-alpha05/android-test-plugin-0.0.8-alpha05.pom",
+    name = "com.google.testing.platform.android-test-plugin.0.0.8-alpha06_pom",
+    source = "repository/com/google/testing/platform/android-test-plugin/0.0.8-alpha06/android-test-plugin-0.0.8-alpha06.pom",
     visibility = ["//visibility:public"],
 )
 
 maven_java_import(
-    name = "com.google.testing.platform.android-device-provider-local.0.0.8-alpha05",
-    jars = ["repository/com/google/testing/platform/android-device-provider-local/0.0.8-alpha05/android-device-provider-local-0.0.8-alpha05.jar"],
-    pom = ":com.google.testing.platform.android-device-provider-local.0.0.8-alpha05_pom",
-    repo_path = "repository/com/google/testing/platform/android-device-provider-local/0.0.8-alpha05",
+    name = "com.google.testing.platform.android-device-provider-local.0.0.8-alpha06",
+    jars = ["repository/com/google/testing/platform/android-device-provider-local/0.0.8-alpha06/android-device-provider-local-0.0.8-alpha06.jar"],
+    pom = ":com.google.testing.platform.android-device-provider-local.0.0.8-alpha06_pom",
+    repo_path = "repository/com/google/testing/platform/android-device-provider-local/0.0.8-alpha06",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
-    name = "com.google.testing.platform.android-device-provider-local.0.0.8-alpha05_pom",
-    source = "repository/com/google/testing/platform/android-device-provider-local/0.0.8-alpha05/android-device-provider-local-0.0.8-alpha05.pom",
+    name = "com.google.testing.platform.android-device-provider-local.0.0.8-alpha06_pom",
+    source = "repository/com/google/testing/platform/android-device-provider-local/0.0.8-alpha06/android-device-provider-local-0.0.8-alpha06.pom",
     visibility = ["//visibility:public"],
 )
 
 maven_java_import(
-    name = "com.google.testing.platform.core.0.0.8-alpha05",
-    jars = ["repository/com/google/testing/platform/core/0.0.8-alpha05/core-0.0.8-alpha05.jar"],
-    pom = ":com.google.testing.platform.core.0.0.8-alpha05_pom",
-    repo_path = "repository/com/google/testing/platform/core/0.0.8-alpha05",
+    name = "com.google.testing.platform.core.0.0.8-alpha06",
+    jars = ["repository/com/google/testing/platform/core/0.0.8-alpha06/core-0.0.8-alpha06.jar"],
+    pom = ":com.google.testing.platform.core.0.0.8-alpha06_pom",
+    repo_path = "repository/com/google/testing/platform/core/0.0.8-alpha06",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
-    name = "com.google.testing.platform.core.0.0.8-alpha05_pom",
-    source = "repository/com/google/testing/platform/core/0.0.8-alpha05/core-0.0.8-alpha05.pom",
+    name = "com.google.testing.platform.core.0.0.8-alpha06_pom",
+    source = "repository/com/google/testing/platform/core/0.0.8-alpha06/core-0.0.8-alpha06.pom",
     visibility = ["//visibility:public"],
 )
 
 maven_java_import(
-    name = "com.google.testing.platform.core-proto.0.0.8-alpha05",
-    jars = ["repository/com/google/testing/platform/core-proto/0.0.8-alpha05/core-proto-0.0.8-alpha05.jar"],
-    pom = ":com.google.testing.platform.core-proto.0.0.8-alpha05_pom",
-    repo_path = "repository/com/google/testing/platform/core-proto/0.0.8-alpha05",
+    name = "com.google.testing.platform.core-proto.0.0.8-alpha06",
+    jars = ["repository/com/google/testing/platform/core-proto/0.0.8-alpha06/core-proto-0.0.8-alpha06.jar"],
+    pom = ":com.google.testing.platform.core-proto.0.0.8-alpha06_pom",
+    repo_path = "repository/com/google/testing/platform/core-proto/0.0.8-alpha06",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
-    name = "com.google.testing.platform.core-proto.0.0.8-alpha05_pom",
-    source = "repository/com/google/testing/platform/core-proto/0.0.8-alpha05/core-proto-0.0.8-alpha05.pom",
+    name = "com.google.testing.platform.core-proto.0.0.8-alpha06_pom",
+    source = "repository/com/google/testing/platform/core-proto/0.0.8-alpha06/core-proto-0.0.8-alpha06.pom",
     visibility = ["//visibility:public"],
 )
 
@@ -23945,7 +23945,7 @@ filegroup(
 # managed by go/iml_to_build
 java_import(
     name = "utp-core-proto",
-    jars = ["repository/com/google/testing/platform/core-proto/0.0.8-alpha05/core-proto-0.0.8-alpha05.jar"],
+    jars = ["repository/com/google/testing/platform/core-proto/0.0.8-alpha06/core-proto-0.0.8-alpha06.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -24623,318 +24623,6 @@ maven_pom(
 )
 
 maven_aar(
-    name = "androidx.compose.ui.ui-tooling.1.0.0-rc01_aar",
-    aar = "repository/androidx/compose/ui/ui-tooling/1.0.0-rc01/ui-tooling-1.0.0-rc01.aar",
-    pom = ":androidx.compose.ui.ui-tooling.1.0.0-rc01_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.ui.ui-tooling.1.0.0-rc01_pom",
-    source = "repository/androidx/compose/ui/ui-tooling/1.0.0-rc01/ui-tooling-1.0.0-rc01.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.compose.runtime.runtime.1.0.0-rc01_aar",
-    aar = "repository/androidx/compose/runtime/runtime/1.0.0-rc01/runtime-1.0.0-rc01.aar",
-    pom = ":androidx.compose.runtime.runtime.1.0.0-rc01_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.runtime.runtime.1.0.0-rc01_pom",
-    source = "repository/androidx/compose/runtime/runtime/1.0.0-rc01/runtime-1.0.0-rc01.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.compose.ui.ui.1.0.0-rc01_aar",
-    aar = "repository/androidx/compose/ui/ui/1.0.0-rc01/ui-1.0.0-rc01.aar",
-    pom = ":androidx.compose.ui.ui.1.0.0-rc01_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.ui.ui.1.0.0-rc01_pom",
-    source = "repository/androidx/compose/ui/ui/1.0.0-rc01/ui-1.0.0-rc01.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.compose.ui.ui-geometry.1.0.0-rc01_aar",
-    aar = "repository/androidx/compose/ui/ui-geometry/1.0.0-rc01/ui-geometry-1.0.0-rc01.aar",
-    pom = ":androidx.compose.ui.ui-geometry.1.0.0-rc01_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.ui.ui-geometry.1.0.0-rc01_pom",
-    source = "repository/androidx/compose/ui/ui-geometry/1.0.0-rc01/ui-geometry-1.0.0-rc01.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.compose.ui.ui-graphics.1.0.0-rc01_aar",
-    aar = "repository/androidx/compose/ui/ui-graphics/1.0.0-rc01/ui-graphics-1.0.0-rc01.aar",
-    pom = ":androidx.compose.ui.ui-graphics.1.0.0-rc01_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.ui.ui-graphics.1.0.0-rc01_pom",
-    source = "repository/androidx/compose/ui/ui-graphics/1.0.0-rc01/ui-graphics-1.0.0-rc01.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.compose.ui.ui-text.1.0.0-rc01_aar",
-    aar = "repository/androidx/compose/ui/ui-text/1.0.0-rc01/ui-text-1.0.0-rc01.aar",
-    pom = ":androidx.compose.ui.ui-text.1.0.0-rc01_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.ui.ui-text.1.0.0-rc01_pom",
-    source = "repository/androidx/compose/ui/ui-text/1.0.0-rc01/ui-text-1.0.0-rc01.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.compose.ui.ui-unit.1.0.0-rc01_aar",
-    aar = "repository/androidx/compose/ui/ui-unit/1.0.0-rc01/ui-unit-1.0.0-rc01.aar",
-    pom = ":androidx.compose.ui.ui-unit.1.0.0-rc01_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.ui.ui-unit.1.0.0-rc01_pom",
-    source = "repository/androidx/compose/ui/ui-unit/1.0.0-rc01/ui-unit-1.0.0-rc01.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.compose.ui.ui-util.1.0.0-rc01_aar",
-    aar = "repository/androidx/compose/ui/ui-util/1.0.0-rc01/ui-util-1.0.0-rc01.aar",
-    pom = ":androidx.compose.ui.ui-util.1.0.0-rc01_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.ui.ui-util.1.0.0-rc01_pom",
-    source = "repository/androidx/compose/ui/ui-util/1.0.0-rc01/ui-util-1.0.0-rc01.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.profileinstaller.profileinstaller.1.0.0-rc01_aar",
-    aar = "repository/androidx/profileinstaller/profileinstaller/1.0.0-rc01/profileinstaller-1.0.0-rc01.aar",
-    pom = ":androidx.profileinstaller.profileinstaller.1.0.0-rc01_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.profileinstaller.profileinstaller.1.0.0-rc01_pom",
-    source = "repository/androidx/profileinstaller/profileinstaller/1.0.0-rc01/profileinstaller-1.0.0-rc01.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.compose.ui.ui-tooling-data.1.0.0-rc01_aar",
-    aar = "repository/androidx/compose/ui/ui-tooling-data/1.0.0-rc01/ui-tooling-data-1.0.0-rc01.aar",
-    pom = ":androidx.compose.ui.ui-tooling-data.1.0.0-rc01_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.ui.ui-tooling-data.1.0.0-rc01_pom",
-    source = "repository/androidx/compose/ui/ui-tooling-data/1.0.0-rc01/ui-tooling-data-1.0.0-rc01.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.compose.material.material.1.0.0-rc01_aar",
-    aar = "repository/androidx/compose/material/material/1.0.0-rc01/material-1.0.0-rc01.aar",
-    pom = ":androidx.compose.material.material.1.0.0-rc01_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.material.material.1.0.0-rc01_pom",
-    source = "repository/androidx/compose/material/material/1.0.0-rc01/material-1.0.0-rc01.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.compose.animation.animation-core.1.0.0-rc01_aar",
-    aar = "repository/androidx/compose/animation/animation-core/1.0.0-rc01/animation-core-1.0.0-rc01.aar",
-    pom = ":androidx.compose.animation.animation-core.1.0.0-rc01_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.animation.animation-core.1.0.0-rc01_pom",
-    source = "repository/androidx/compose/animation/animation-core/1.0.0-rc01/animation-core-1.0.0-rc01.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.compose.foundation.foundation.1.0.0-rc01_aar",
-    aar = "repository/androidx/compose/foundation/foundation/1.0.0-rc01/foundation-1.0.0-rc01.aar",
-    pom = ":androidx.compose.foundation.foundation.1.0.0-rc01_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.foundation.foundation.1.0.0-rc01_pom",
-    source = "repository/androidx/compose/foundation/foundation/1.0.0-rc01/foundation-1.0.0-rc01.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.compose.material.material-icons-core.1.0.0-rc01_aar",
-    aar = "repository/androidx/compose/material/material-icons-core/1.0.0-rc01/material-icons-core-1.0.0-rc01.aar",
-    pom = ":androidx.compose.material.material-icons-core.1.0.0-rc01_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.material.material-icons-core.1.0.0-rc01_pom",
-    source = "repository/androidx/compose/material/material-icons-core/1.0.0-rc01/material-icons-core-1.0.0-rc01.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.compose.material.material-ripple.1.0.0-rc01_aar",
-    aar = "repository/androidx/compose/material/material-ripple/1.0.0-rc01/material-ripple-1.0.0-rc01.aar",
-    pom = ":androidx.compose.material.material-ripple.1.0.0-rc01_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.material.material-ripple.1.0.0-rc01_pom",
-    source = "repository/androidx/compose/material/material-ripple/1.0.0-rc01/material-ripple-1.0.0-rc01.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.compose.animation.animation.1.0.0-rc01_aar",
-    aar = "repository/androidx/compose/animation/animation/1.0.0-rc01/animation-1.0.0-rc01.aar",
-    pom = ":androidx.compose.animation.animation.1.0.0-rc01_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.animation.animation.1.0.0-rc01_pom",
-    source = "repository/androidx/compose/animation/animation/1.0.0-rc01/animation-1.0.0-rc01.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.compose.foundation.foundation-layout.1.0.0-rc01_aar",
-    aar = "repository/androidx/compose/foundation/foundation-layout/1.0.0-rc01/foundation-layout-1.0.0-rc01.aar",
-    pom = ":androidx.compose.foundation.foundation-layout.1.0.0-rc01_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.foundation.foundation-layout.1.0.0-rc01_pom",
-    source = "repository/androidx/compose/foundation/foundation-layout/1.0.0-rc01/foundation-layout-1.0.0-rc01.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.activity.activity-compose.1.3.0-rc01_aar",
-    aar = "repository/androidx/activity/activity-compose/1.3.0-rc01/activity-compose-1.3.0-rc01.aar",
-    pom = ":androidx.activity.activity-compose.1.3.0-rc01_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.activity.activity-compose.1.3.0-rc01_pom",
-    source = "repository/androidx/activity/activity-compose/1.3.0-rc01/activity-compose-1.3.0-rc01.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.activity.activity-ktx.1.3.0-rc01_aar",
-    aar = "repository/androidx/activity/activity-ktx/1.3.0-rc01/activity-ktx-1.3.0-rc01.aar",
-    pom = ":androidx.activity.activity-ktx.1.3.0-rc01_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.activity.activity-ktx.1.3.0-rc01_pom",
-    source = "repository/androidx/activity/activity-ktx/1.3.0-rc01/activity-ktx-1.3.0-rc01.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.activity.activity.1.3.0-rc01_aar",
-    aar = "repository/androidx/activity/activity/1.3.0-rc01/activity-1.3.0-rc01.aar",
-    pom = ":androidx.activity.activity.1.3.0-rc01_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.activity.activity.1.3.0-rc01_pom",
-    source = "repository/androidx/activity/activity/1.3.0-rc01/activity-1.3.0-rc01.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.compose.ui.ui-tooling-preview.1.0.0-rc01_aar",
-    aar = "repository/androidx/compose/ui/ui-tooling-preview/1.0.0-rc01/ui-tooling-preview-1.0.0-rc01.aar",
-    pom = ":androidx.compose.ui.ui-tooling-preview.1.0.0-rc01_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.ui.ui-tooling-preview.1.0.0-rc01_pom",
-    source = "repository/androidx/compose/ui/ui-tooling-preview/1.0.0-rc01/ui-tooling-preview-1.0.0-rc01.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.compose.ui.ui-test-junit4.1.0.0-rc01_aar",
-    aar = "repository/androidx/compose/ui/ui-test-junit4/1.0.0-rc01/ui-test-junit4-1.0.0-rc01.aar",
-    pom = ":androidx.compose.ui.ui-test-junit4.1.0.0-rc01_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.ui.ui-test-junit4.1.0.0-rc01_pom",
-    source = "repository/androidx/compose/ui/ui-test-junit4/1.0.0-rc01/ui-test-junit4-1.0.0-rc01.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.compose.ui.ui-test.1.0.0-rc01_aar",
-    aar = "repository/androidx/compose/ui/ui-test/1.0.0-rc01/ui-test-1.0.0-rc01.aar",
-    pom = ":androidx.compose.ui.ui-test.1.0.0-rc01_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.ui.ui-test.1.0.0-rc01_pom",
-    source = "repository/androidx/compose/ui/ui-test/1.0.0-rc01/ui-test-1.0.0-rc01.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "androidx.compose.runtime.runtime-saveable.1.0.0-rc01_aar",
-    aar = "repository/androidx/compose/runtime/runtime-saveable/1.0.0-rc01/runtime-saveable-1.0.0-rc01.aar",
-    pom = ":androidx.compose.runtime.runtime-saveable.1.0.0-rc01_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.runtime.runtime-saveable.1.0.0-rc01_pom",
-    source = "repository/androidx/compose/runtime/runtime-saveable/1.0.0-rc01/runtime-saveable-1.0.0-rc01.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
     name = "androidx.test.espresso.espresso-core.3.3.0_aar",
     aar = "repository/androidx/test/espresso/espresso-core/3.3.0/espresso-core-3.3.0.aar",
     pom = ":androidx.test.espresso.espresso-core.3.3.0_pom",
@@ -24957,20 +24645,6 @@ maven_aar(
 maven_pom(
     name = "androidx.test.espresso.espresso-idling-resource.3.3.0_pom",
     source = "repository/androidx/test/espresso/espresso-idling-resource/3.3.0/espresso-idling-resource-3.3.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "androidx.compose.compiler.compiler.1.0.0-rc01",
-    jars = ["repository/androidx/compose/compiler/compiler/1.0.0-rc01/compiler-1.0.0-rc01.jar"],
-    pom = ":androidx.compose.compiler.compiler.1.0.0-rc01_pom",
-    repo_path = "repository/androidx/compose/compiler/compiler/1.0.0-rc01",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "androidx.compose.compiler.compiler.1.0.0-rc01_pom",
-    source = "repository/androidx/compose/compiler/compiler/1.0.0-rc01/compiler-1.0.0-rc01.pom",
     visibility = ["//visibility:public"],
 )
 
@@ -25730,5 +25404,269 @@ maven_aar(
 maven_pom(
     name = "androidx.compose.foundation.foundation-layout.1.0.0_pom",
     source = "repository/androidx/compose/foundation/foundation-layout/1.0.0/foundation-layout-1.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "junit.junit.4.13.2",
+    jars = ["repository/junit/junit/4.13.2/junit-4.13.2.jar"],
+    pom = ":junit.junit.4.13.2_pom",
+    repo_path = "repository/junit/junit/4.13.2",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "junit.junit.4.13.2_pom",
+    source = "repository/junit/junit/4.13.2/junit-4.13.2.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.dokka.dokka-core.1.4.32",
+    jars = ["repository/org/jetbrains/dokka/dokka-core/1.4.32/dokka-core-1.4.32.jar"],
+    pom = ":org.jetbrains.dokka.dokka-core.1.4.32_pom",
+    repo_path = "repository/org/jetbrains/dokka/dokka-core/1.4.32",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.dokka.dokka-core.1.4.32_pom",
+    source = "repository/org/jetbrains/dokka/dokka-core/1.4.32/dokka-core-1.4.32.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.markdown-jvm.0.2.1",
+    jars = ["repository/org/jetbrains/markdown-jvm/0.2.1/markdown-jvm-0.2.1.jar"],
+    pom = ":org.jetbrains.markdown-jvm.0.2.1_pom",
+    repo_path = "repository/org/jetbrains/markdown-jvm/0.2.1",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.markdown-jvm.0.2.1_pom",
+    source = "repository/org/jetbrains/markdown-jvm/0.2.1/markdown-jvm-0.2.1.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jsoup.jsoup.1.13.1",
+    jars = ["repository/org/jsoup/jsoup/1.13.1/jsoup-1.13.1.jar"],
+    pom = ":org.jsoup.jsoup.1.13.1_pom",
+    repo_path = "repository/org/jsoup/jsoup/1.13.1",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jsoup.jsoup.1.13.1_pom",
+    source = "repository/org/jsoup/jsoup/1.13.1/jsoup-1.13.1.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.fasterxml.jackson.module.jackson-module-kotlin.2.11.1",
+    jars = ["repository/com/fasterxml/jackson/module/jackson-module-kotlin/2.11.1/jackson-module-kotlin-2.11.1.jar"],
+    pom = ":com.fasterxml.jackson.module.jackson-module-kotlin.2.11.1_pom",
+    repo_path = "repository/com/fasterxml/jackson/module/jackson-module-kotlin/2.11.1",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.fasterxml.jackson.module.jackson-module-kotlin.2.11.1_pom",
+    parent = ":com.fasterxml.jackson.jackson-base.2.11.1_pom",
+    source = "repository/com/fasterxml/jackson/module/jackson-module-kotlin/2.11.1/jackson-module-kotlin-2.11.1.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.fasterxml.jackson.dataformat.jackson-dataformat-xml.2.11.1",
+    jars = ["repository/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.11.1/jackson-dataformat-xml-2.11.1.jar"],
+    pom = ":com.fasterxml.jackson.dataformat.jackson-dataformat-xml.2.11.1_pom",
+    repo_path = "repository/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.11.1",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.fasterxml.jackson.dataformat.jackson-dataformat-xml.2.11.1_pom",
+    parent = ":com.fasterxml.jackson.jackson-base.2.11.1_pom",
+    source = "repository/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.11.1/jackson-dataformat-xml-2.11.1.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.fasterxml.jackson.module.jackson-module-jaxb-annotations.2.11.1",
+    jars = ["repository/com/fasterxml/jackson/module/jackson-module-jaxb-annotations/2.11.1/jackson-module-jaxb-annotations-2.11.1.jar"],
+    pom = ":com.fasterxml.jackson.module.jackson-module-jaxb-annotations.2.11.1_pom",
+    repo_path = "repository/com/fasterxml/jackson/module/jackson-module-jaxb-annotations/2.11.1",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.fasterxml.jackson.module.jackson-module-jaxb-annotations.2.11.1_pom",
+    parent = ":com.fasterxml.jackson.module.jackson-modules-base.2.11.1_pom",
+    source = "repository/com/fasterxml/jackson/module/jackson-module-jaxb-annotations/2.11.1/jackson-module-jaxb-annotations-2.11.1.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.fasterxml.jackson.module.jackson-modules-base.2.11.1_pom",
+    parent = ":com.fasterxml.jackson.jackson-base.2.11.1_pom",
+    source = "repository/com/fasterxml/jackson/module/jackson-modules-base/2.11.1/jackson-modules-base-2.11.1.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.woodstox.stax2-api.4.2.1",
+    jars = ["repository/org/codehaus/woodstox/stax2-api/4.2.1/stax2-api-4.2.1.jar"],
+    pom = ":org.codehaus.woodstox.stax2-api.4.2.1_pom",
+    repo_path = "repository/org/codehaus/woodstox/stax2-api/4.2.1",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.woodstox.stax2-api.4.2.1_pom",
+    parent = ":com.fasterxml.oss-parent.38_pom",
+    source = "repository/org/codehaus/woodstox/stax2-api/4.2.1/stax2-api-4.2.1.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.fasterxml.woodstox.woodstox-core.6.2.1",
+    jars = ["repository/com/fasterxml/woodstox/woodstox-core/6.2.1/woodstox-core-6.2.1.jar"],
+    pom = ":com.fasterxml.woodstox.woodstox-core.6.2.1_pom",
+    repo_path = "repository/com/fasterxml/woodstox/woodstox-core/6.2.1",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.fasterxml.woodstox.woodstox-core.6.2.1_pom",
+    parent = ":com.fasterxml.oss-parent.38_pom",
+    source = "repository/com/fasterxml/woodstox/woodstox-core/6.2.1/woodstox-core-6.2.1.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlinx.kotlinx-coroutines-core-jvm.1.4.1",
+    jars = ["repository/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.4.1/kotlinx-coroutines-core-jvm-1.4.1.jar"],
+    pom = ":org.jetbrains.kotlinx.kotlinx-coroutines-core-jvm.1.4.1_pom",
+    repo_path = "repository/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.4.1",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlinx.kotlinx-coroutines-core-jvm.1.4.1_pom",
+    source = "repository/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.4.1/kotlinx-coroutines-core-jvm-1.4.1.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.dokka.dokka-base.1.4.32",
+    jars = ["repository/org/jetbrains/dokka/dokka-base/1.4.32/dokka-base-1.4.32.jar"],
+    pom = ":org.jetbrains.dokka.dokka-base.1.4.32_pom",
+    repo_path = "repository/org/jetbrains/dokka/dokka-base/1.4.32",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.dokka.dokka-base.1.4.32_pom",
+    source = "repository/org/jetbrains/dokka/dokka-base/1.4.32/dokka-base-1.4.32.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.dokka.dokka-analysis.1.4.32",
+    jars = ["repository/org/jetbrains/dokka/dokka-analysis/1.4.32/dokka-analysis-1.4.32.jar"],
+    pom = ":org.jetbrains.dokka.dokka-analysis.1.4.32_pom",
+    repo_path = "repository/org/jetbrains/dokka/dokka-analysis/1.4.32",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.dokka.dokka-analysis.1.4.32_pom",
+    source = "repository/org/jetbrains/dokka/dokka-analysis/1.4.32/dokka-analysis-1.4.32.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.dokka.kotlin-analysis-intellij.1.4.32",
+    jars = ["repository/org/jetbrains/dokka/kotlin-analysis-intellij/1.4.32/kotlin-analysis-intellij-1.4.32.jar"],
+    pom = ":org.jetbrains.dokka.kotlin-analysis-intellij.1.4.32_pom",
+    repo_path = "repository/org/jetbrains/dokka/kotlin-analysis-intellij/1.4.32",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.dokka.kotlin-analysis-intellij.1.4.32_pom",
+    source = "repository/org/jetbrains/dokka/kotlin-analysis-intellij/1.4.32/kotlin-analysis-intellij-1.4.32.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.dokka.kotlin-analysis-compiler.1.4.32",
+    jars = ["repository/org/jetbrains/dokka/kotlin-analysis-compiler/1.4.32/kotlin-analysis-compiler-1.4.32.jar"],
+    pom = ":org.jetbrains.dokka.kotlin-analysis-compiler.1.4.32_pom",
+    repo_path = "repository/org/jetbrains/dokka/kotlin-analysis-compiler/1.4.32",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.dokka.kotlin-analysis-compiler.1.4.32_pom",
+    source = "repository/org/jetbrains/dokka/kotlin-analysis-compiler/1.4.32/kotlin-analysis-compiler-1.4.32.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlinx.kotlinx-html-jvm.0.7.3",
+    jars = ["repository/org/jetbrains/kotlinx/kotlinx-html-jvm/0.7.3/kotlinx-html-jvm-0.7.3.jar"],
+    pom = ":org.jetbrains.kotlinx.kotlinx-html-jvm.0.7.3_pom",
+    repo_path = "repository/org/jetbrains/kotlinx/kotlinx-html-jvm/0.7.3",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlinx.kotlinx-html-jvm.0.7.3_pom",
+    source = "repository/org/jetbrains/kotlinx/kotlinx-html-jvm/0.7.3/kotlinx-html-jvm-0.7.3.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.dokka.javadoc-plugin.1.4.32",
+    jars = ["repository/org/jetbrains/dokka/javadoc-plugin/1.4.32/javadoc-plugin-1.4.32.jar"],
+    pom = ":org.jetbrains.dokka.javadoc-plugin.1.4.32_pom",
+    repo_path = "repository/org/jetbrains/dokka/javadoc-plugin/1.4.32",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.dokka.javadoc-plugin.1.4.32_pom",
+    source = "repository/org/jetbrains/dokka/javadoc-plugin/1.4.32/javadoc-plugin-1.4.32.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.soywiz.korlibs.korte.korte-jvm.2.0.7",
+    jars = ["repository/com/soywiz/korlibs/korte/korte-jvm/2.0.7/korte-jvm-2.0.7.jar"],
+    pom = ":com.soywiz.korlibs.korte.korte-jvm.2.0.7_pom",
+    repo_path = "repository/com/soywiz/korlibs/korte/korte-jvm/2.0.7",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.soywiz.korlibs.korte.korte-jvm.2.0.7_pom",
+    source = "repository/com/soywiz/korlibs/korte/korte-jvm/2.0.7/korte-jvm-2.0.7.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.dokka.kotlin-as-java-plugin.1.4.32",
+    jars = ["repository/org/jetbrains/dokka/kotlin-as-java-plugin/1.4.32/kotlin-as-java-plugin-1.4.32.jar"],
+    pom = ":org.jetbrains.dokka.kotlin-as-java-plugin.1.4.32_pom",
+    repo_path = "repository/org/jetbrains/dokka/kotlin-as-java-plugin/1.4.32",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.dokka.kotlin-as-java-plugin.1.4.32_pom",
+    source = "repository/org/jetbrains/dokka/kotlin-as-java-plugin/1.4.32/kotlin-as-java-plugin-1.4.32.pom",
     visibility = ["//visibility:public"],
 )
