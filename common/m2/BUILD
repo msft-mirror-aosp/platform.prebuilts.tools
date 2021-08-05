@@ -25739,6 +25739,22 @@ maven_pom(
 )
 
 maven_pom(
+    name = "com.google.prefab.cli.2.0.0_pom",
+    source = "repository/com/google/prefab/cli/2.0.0/cli-2.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.google.prefab.cli.2.0.0",
+    classified_only = True,
+    classifiers = ["all"],
+    jars = ["repository/com/google/prefab/cli/2.0.0/cli-2.0.0.jar"],
+    pom = ":com.google.prefab.cli.2.0.0_pom",
+    repo_path = "repository/com/google/prefab/cli/2.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
     name = "org.codehaus.groovy.groovy-all.3.0.8_pom",
     source = "repository/org/codehaus/groovy/groovy-all/3.0.8/groovy-all-3.0.8.pom",
     visibility = ["//visibility:public"],
