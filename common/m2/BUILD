@@ -25737,3 +25737,451 @@ maven_pom(
     source = "repository/androidx/activity/activity-ktx/1.2.3/activity-ktx-1.2.3.pom",
     visibility = ["//visibility:public"],
 )
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-all.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-all/3.0.8/groovy-all-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy/3.0.8/groovy-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy/3.0.8/groovy-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-ant.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-ant/3.0.8/groovy-ant-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-ant.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-ant/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-ant.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-ant/3.0.8/groovy-ant-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-groovydoc.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-groovydoc/3.0.8/groovy-groovydoc-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-groovydoc.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-groovydoc/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-groovydoc.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-groovydoc/3.0.8/groovy-groovydoc-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-astbuilder.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-astbuilder/3.0.8/groovy-astbuilder-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-astbuilder.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-astbuilder/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-astbuilder.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-astbuilder/3.0.8/groovy-astbuilder-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-cli-picocli.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-cli-picocli/3.0.8/groovy-cli-picocli-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-cli-picocli.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-cli-picocli/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-cli-picocli.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-cli-picocli/3.0.8/groovy-cli-picocli-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-console.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-console/3.0.8/groovy-console-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-console.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-console/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-console.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-console/3.0.8/groovy-console-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-templates.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-templates/3.0.8/groovy-templates-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-templates.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-templates/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-templates.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-templates/3.0.8/groovy-templates-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-xml.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-xml/3.0.8/groovy-xml-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-xml.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-xml/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-xml.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-xml/3.0.8/groovy-xml-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-swing.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-swing/3.0.8/groovy-swing-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-swing.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-swing/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-swing.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-swing/3.0.8/groovy-swing-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-datetime.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-datetime/3.0.8/groovy-datetime-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-datetime.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-datetime/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-datetime.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-datetime/3.0.8/groovy-datetime-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-docgenerator.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-docgenerator/3.0.8/groovy-docgenerator-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-docgenerator.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-docgenerator/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-docgenerator.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-docgenerator/3.0.8/groovy-docgenerator-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-groovysh.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-groovysh/3.0.8/groovy-groovysh-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-groovysh.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-groovysh/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-groovysh.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-groovysh/3.0.8/groovy-groovysh-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-jmx.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-jmx/3.0.8/groovy-jmx-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-jmx.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-jmx/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-jmx.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-jmx/3.0.8/groovy-jmx-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-json.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-json/3.0.8/groovy-json-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-json.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-json/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-json.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-json/3.0.8/groovy-json-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-jsr223.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-jsr223/3.0.8/groovy-jsr223-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-jsr223.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-jsr223/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-jsr223.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-jsr223/3.0.8/groovy-jsr223-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-macro.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-macro/3.0.8/groovy-macro-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-macro.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-macro/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-macro.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-macro/3.0.8/groovy-macro-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-nio.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-nio/3.0.8/groovy-nio-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-nio.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-nio/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-nio.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-nio/3.0.8/groovy-nio-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-servlet.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-servlet/3.0.8/groovy-servlet-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-servlet.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-servlet/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-servlet.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-servlet/3.0.8/groovy-servlet-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-sql.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-sql/3.0.8/groovy-sql-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-sql.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-sql/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-sql.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-sql/3.0.8/groovy-sql-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-test.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-test/3.0.8/groovy-test-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-test.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-test/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-test.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-test/3.0.8/groovy-test-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-test-junit5.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-test-junit5/3.0.8/groovy-test-junit5-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-test-junit5.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-test-junit5/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-test-junit5.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-test-junit5/3.0.8/groovy-test-junit5-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-testng.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-testng/3.0.8/groovy-testng-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-testng.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-testng/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-testng.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-testng/3.0.8/groovy-testng-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.testng.testng.7.4.0",
+    jars = ["repository/org/testng/testng/7.4.0/testng-7.4.0.jar"],
+    pom = ":org.testng.testng.7.4.0_pom",
+    repo_path = "repository/org/testng/testng/7.4.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.testng.testng.7.4.0_pom",
+    source = "repository/org/testng/testng/7.4.0/testng-7.4.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.webjars.jquery.3.5.1",
+    jars = ["repository/org/webjars/jquery/3.5.1/jquery-3.5.1.jar"],
+    pom = ":org.webjars.jquery.3.5.1_pom",
+    repo_path = "repository/org/webjars/jquery/3.5.1",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.webjars.jquery.3.5.1_pom",
+    parent = ":org.sonatype.oss.oss-parent.7_pom",
+    source = "repository/org/webjars/jquery/3.5.1/jquery-3.5.1.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.gradle.gradle-tooling-api.7.2-rc-1",
+    jars = ["repository/org/gradle/gradle-tooling-api/7.2-rc-1/gradle-tooling-api-7.2-rc-1.jar"],
+    pom = ":org.gradle.gradle-tooling-api.7.2-rc-1_pom",
+    repo_path = "repository/org/gradle/gradle-tooling-api/7.2-rc-1",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.gradle.gradle-tooling-api.7.2-rc-1_pom",
+    source = "repository/org/gradle/gradle-tooling-api/7.2-rc-1/gradle-tooling-api-7.2-rc-1.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-reflect.1.5.21",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-reflect/1.5.21/kotlin-reflect-1.5.21.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-reflect.1.5.21_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-reflect/1.5.21",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-reflect.1.5.21_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-reflect/1.5.21/kotlin-reflect-1.5.21.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-stdlib.1.5.21",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-stdlib/1.5.21/kotlin-stdlib-1.5.21.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-stdlib.1.5.21_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-stdlib/1.5.21",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-stdlib.1.5.21_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-stdlib/1.5.21/kotlin-stdlib-1.5.21.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-stdlib-common.1.5.21",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.5.21/kotlin-stdlib-common-1.5.21.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-stdlib-common.1.5.21_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.5.21",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-stdlib-common.1.5.21_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.5.21/kotlin-stdlib-common-1.5.21.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-stdlib-jdk7.1.5.21",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.5.21/kotlin-stdlib-jdk7-1.5.21.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-stdlib-jdk7.1.5.21_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.5.21",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-stdlib-jdk7.1.5.21_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.5.21/kotlin-stdlib-jdk7-1.5.21.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-stdlib-jdk8.1.5.21",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.5.21/kotlin-stdlib-jdk8-1.5.21.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-stdlib-jdk8.1.5.21_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.5.21",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-stdlib-jdk8.1.5.21_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.5.21/kotlin-stdlib-jdk8-1.5.21.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.github.javaparser.javaparser-core.3.18.0",
+    jars = ["repository/com/github/javaparser/javaparser-core/3.18.0/javaparser-core-3.18.0.jar"],
+    pom = ":com.github.javaparser.javaparser-core.3.18.0_pom",
+    repo_path = "repository/com/github/javaparser/javaparser-core/3.18.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.github.javaparser.javaparser-core.3.18.0_pom",
+    parent = ":com.github.javaparser.javaparser-parent.3.18.0_pom",
+    source = "repository/com/github/javaparser/javaparser-core/3.18.0/javaparser-core-3.18.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.github.javaparser.javaparser-parent.3.18.0_pom",
+    source = "repository/com/github/javaparser/javaparser-parent/3.18.0/javaparser-parent-3.18.0.pom",
+    visibility = ["//visibility:public"],
+)
