@@ -25698,3 +25698,42 @@ maven_pom(
     source = "repository/org/jetbrains/kotlin/kotlin-stdlib/1.4.0/kotlin-stdlib-1.4.0.pom",
     visibility = ["//visibility:public"],
 )
+
+maven_aar(
+    name = "com.google.android.gms.play-services-wallet.18.1.3_aar",
+    aar = "repository/com/google/android/gms/play-services-wallet/18.1.3/play-services-wallet-18.1.3.aar",
+    pom = ":com.google.android.gms.play-services-wallet.18.1.3_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.google.android.gms.play-services-wallet.18.1.3_pom",
+    source = "repository/com/google/android/gms/play-services-wallet/18.1.3/play-services-wallet-18.1.3.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "com.google.android.gms.play-services-identity.17.0.0_aar",
+    aar = "repository/com/google/android/gms/play-services-identity/17.0.0/play-services-identity-17.0.0.aar",
+    pom = ":com.google.android.gms.play-services-identity.17.0.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.google.android.gms.play-services-identity.17.0.0_pom",
+    source = "repository/com/google/android/gms/play-services-identity/17.0.0/play-services-identity-17.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.activity.activity-ktx.1.2.3_aar",
+    aar = "repository/androidx/activity/activity-ktx/1.2.3/activity-ktx-1.2.3.aar",
+    pom = ":androidx.activity.activity-ktx.1.2.3_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.activity.activity-ktx.1.2.3_pom",
+    source = "repository/androidx/activity/activity-ktx/1.2.3/activity-ktx-1.2.3.pom",
+    visibility = ["//visibility:public"],
+)
