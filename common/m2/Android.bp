@@ -107,10 +107,25 @@ java_import {
     host_supported: true,
 }
 
+java_import {
+    name: "rxjava",
+    jars: [
+        "repository/io/reactivex/rxjava2/rxjava/2.2.9/rxjava-2.2.9.jar",
+        "repository/org/reactivestreams/reactive-streams/1.0.2/reactive-streams-1.0.2.jar"
+    ],
+    sdk_version: "current",
+    host_supported: true,
+}
+
 // TODO: remove in favor of external/javapoet
 java_import_host {
     name: "javapoet-prebuilt-jar",
     jars: ["repository/com/squareup/javapoet/1.8.0/javapoet-1.8.0.jar"],
+}
+
+java_import_host {
+    name: "kotlinpoet",
+    jars: ["repository/com/squareup/kotlinpoet/1.8.0/kotlinpoet-1.8.0.jar"],
 }
 
 java_import_host {
@@ -255,6 +270,12 @@ java_import {
 java_import {
     name: "jetbrains-annotations",
     jars: ["repository/org/jetbrains/annotations/13.0/annotations-13.0.jar"],
+    host_supported: true,
+}
+
+java_import {
+    name: "checker-qual",
+    jars: ["repository/org/checkerframework/checker-qual/2.8.1/checker-qual-2.8.1.jar"],
     host_supported: true,
 }
 
