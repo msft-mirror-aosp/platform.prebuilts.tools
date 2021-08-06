@@ -26201,3 +26201,451 @@ maven_pom(
     source = "repository/com/github/javaparser/javaparser-parent/3.18.0/javaparser-parent-3.18.0.pom",
     visibility = ["//visibility:public"],
 )
+
+maven_java_import(
+    name = "com.android.tools.build.gradle.7.0.0",
+    jars = ["repository/com/android/tools/build/gradle/7.0.0/gradle-7.0.0.jar"],
+    pom = ":com.android.tools.build.gradle.7.0.0_pom",
+    repo_path = "repository/com/android/tools/build/gradle/7.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.build.gradle.7.0.0_pom",
+    source = "repository/com/android/tools/build/gradle/7.0.0/gradle-7.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.build.builder.7.0.0",
+    jars = ["repository/com/android/tools/build/builder/7.0.0/builder-7.0.0.jar"],
+    pom = ":com.android.tools.build.builder.7.0.0_pom",
+    repo_path = "repository/com/android/tools/build/builder/7.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.build.builder.7.0.0_pom",
+    source = "repository/com/android/tools/build/builder/7.0.0/builder-7.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.build.manifest-merger.30.0.0",
+    jars = ["repository/com/android/tools/build/manifest-merger/30.0.0/manifest-merger-30.0.0.jar"],
+    pom = ":com.android.tools.build.manifest-merger.30.0.0_pom",
+    repo_path = "repository/com/android/tools/build/manifest-merger/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.build.manifest-merger.30.0.0_pom",
+    source = "repository/com/android/tools/build/manifest-merger/30.0.0/manifest-merger-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.zipflinger.7.0.0",
+    jars = ["repository/com/android/zipflinger/7.0.0/zipflinger-7.0.0.jar"],
+    pom = ":com.android.zipflinger.7.0.0_pom",
+    repo_path = "repository/com/android/zipflinger/7.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.zipflinger.7.0.0_pom",
+    source = "repository/com/android/zipflinger/7.0.0/zipflinger-7.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.build.apksig.7.0.0",
+    jars = ["repository/com/android/tools/build/apksig/7.0.0/apksig-7.0.0.jar"],
+    pom = ":com.android.tools.build.apksig.7.0.0_pom",
+    repo_path = "repository/com/android/tools/build/apksig/7.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.build.apksig.7.0.0_pom",
+    source = "repository/com/android/tools/build/apksig/7.0.0/apksig-7.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.build.apkzlib.7.0.0",
+    jars = ["repository/com/android/tools/build/apkzlib/7.0.0/apkzlib-7.0.0.jar"],
+    pom = ":com.android.tools.build.apkzlib.7.0.0_pom",
+    repo_path = "repository/com/android/tools/build/apkzlib/7.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.build.apkzlib.7.0.0_pom",
+    source = "repository/com/android/tools/build/apkzlib/7.0.0/apkzlib-7.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.common.30.0.0",
+    jars = ["repository/com/android/tools/common/30.0.0/common-30.0.0.jar"],
+    pom = ":com.android.tools.common.30.0.0_pom",
+    repo_path = "repository/com/android/tools/common/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.common.30.0.0_pom",
+    source = "repository/com/android/tools/common/30.0.0/common-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.signflinger.7.0.0",
+    jars = ["repository/com/android/signflinger/7.0.0/signflinger-7.0.0.jar"],
+    pom = ":com.android.signflinger.7.0.0_pom",
+    repo_path = "repository/com/android/signflinger/7.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.signflinger.7.0.0_pom",
+    source = "repository/com/android/signflinger/7.0.0/signflinger-7.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.analytics-library.protos.30.0.0",
+    jars = ["repository/com/android/tools/analytics-library/protos/30.0.0/protos-30.0.0.jar"],
+    pom = ":com.android.tools.analytics-library.protos.30.0.0_pom",
+    repo_path = "repository/com/android/tools/analytics-library/protos/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.analytics-library.protos.30.0.0_pom",
+    source = "repository/com/android/tools/analytics-library/protos/30.0.0/protos-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.analytics-library.tracker.30.0.0",
+    jars = ["repository/com/android/tools/analytics-library/tracker/30.0.0/tracker-30.0.0.jar"],
+    pom = ":com.android.tools.analytics-library.tracker.30.0.0_pom",
+    repo_path = "repository/com/android/tools/analytics-library/tracker/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.analytics-library.tracker.30.0.0_pom",
+    source = "repository/com/android/tools/analytics-library/tracker/30.0.0/tracker-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.build.builder-model.7.0.0",
+    jars = ["repository/com/android/tools/build/builder-model/7.0.0/builder-model-7.0.0.jar"],
+    pom = ":com.android.tools.build.builder-model.7.0.0_pom",
+    repo_path = "repository/com/android/tools/build/builder-model/7.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.build.builder-model.7.0.0_pom",
+    source = "repository/com/android/tools/build/builder-model/7.0.0/builder-model-7.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.annotations.30.0.0",
+    jars = ["repository/com/android/tools/annotations/30.0.0/annotations-30.0.0.jar"],
+    pom = ":com.android.tools.annotations.30.0.0_pom",
+    repo_path = "repository/com/android/tools/annotations/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.annotations.30.0.0_pom",
+    source = "repository/com/android/tools/annotations/30.0.0/annotations-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.build.gradle-api.7.0.0",
+    jars = ["repository/com/android/tools/build/gradle-api/7.0.0/gradle-api-7.0.0.jar"],
+    pom = ":com.android.tools.build.gradle-api.7.0.0_pom",
+    repo_path = "repository/com/android/tools/build/gradle-api/7.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.build.gradle-api.7.0.0_pom",
+    source = "repository/com/android/tools/build/gradle-api/7.0.0/gradle-api-7.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.sdk-common.30.0.0",
+    jars = ["repository/com/android/tools/sdk-common/30.0.0/sdk-common-30.0.0.jar"],
+    pom = ":com.android.tools.sdk-common.30.0.0_pom",
+    repo_path = "repository/com/android/tools/sdk-common/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.sdk-common.30.0.0_pom",
+    source = "repository/com/android/tools/sdk-common/30.0.0/sdk-common-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.sdklib.30.0.0",
+    jars = ["repository/com/android/tools/sdklib/30.0.0/sdklib-30.0.0.jar"],
+    pom = ":com.android.tools.sdklib.30.0.0_pom",
+    repo_path = "repository/com/android/tools/sdklib/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.sdklib.30.0.0_pom",
+    source = "repository/com/android/tools/sdklib/30.0.0/sdklib-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.dvlib.30.0.0",
+    jars = ["repository/com/android/tools/dvlib/30.0.0/dvlib-30.0.0.jar"],
+    pom = ":com.android.tools.dvlib.30.0.0_pom",
+    repo_path = "repository/com/android/tools/dvlib/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.dvlib.30.0.0_pom",
+    source = "repository/com/android/tools/dvlib/30.0.0/dvlib-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.repository.30.0.0",
+    jars = ["repository/com/android/tools/repository/30.0.0/repository-30.0.0.jar"],
+    pom = ":com.android.tools.repository.30.0.0_pom",
+    repo_path = "repository/com/android/tools/repository/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.repository.30.0.0_pom",
+    source = "repository/com/android/tools/repository/30.0.0/repository-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.ddms.ddmlib.30.0.0",
+    jars = ["repository/com/android/tools/ddms/ddmlib/30.0.0/ddmlib-30.0.0.jar"],
+    pom = ":com.android.tools.ddms.ddmlib.30.0.0_pom",
+    repo_path = "repository/com/android/tools/ddms/ddmlib/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.ddms.ddmlib.30.0.0_pom",
+    source = "repository/com/android/tools/ddms/ddmlib/30.0.0/ddmlib-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.build.aapt2-proto.7.0.0-7396180",
+    jars = ["repository/com/android/tools/build/aapt2-proto/7.0.0-7396180/aapt2-proto-7.0.0-7396180.jar"],
+    pom = ":com.android.tools.build.aapt2-proto.7.0.0-7396180_pom",
+    repo_path = "repository/com/android/tools/build/aapt2-proto/7.0.0-7396180",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.build.aapt2-proto.7.0.0-7396180_pom",
+    source = "repository/com/android/tools/build/aapt2-proto/7.0.0-7396180/aapt2-proto-7.0.0-7396180.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.build.aaptcompiler.7.0.0",
+    jars = ["repository/com/android/tools/build/aaptcompiler/7.0.0/aaptcompiler-7.0.0.jar"],
+    pom = ":com.android.tools.build.aaptcompiler.7.0.0_pom",
+    repo_path = "repository/com/android/tools/build/aaptcompiler/7.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.build.aaptcompiler.7.0.0_pom",
+    source = "repository/com/android/tools/build/aaptcompiler/7.0.0/aaptcompiler-7.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.analytics-library.crash.30.0.0",
+    jars = ["repository/com/android/tools/analytics-library/crash/30.0.0/crash-30.0.0.jar"],
+    pom = ":com.android.tools.analytics-library.crash.30.0.0_pom",
+    repo_path = "repository/com/android/tools/analytics-library/crash/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.analytics-library.crash.30.0.0_pom",
+    source = "repository/com/android/tools/analytics-library/crash/30.0.0/crash-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.analytics-library.shared.30.0.0",
+    jars = ["repository/com/android/tools/analytics-library/shared/30.0.0/shared-30.0.0.jar"],
+    pom = ":com.android.tools.analytics-library.shared.30.0.0_pom",
+    repo_path = "repository/com/android/tools/analytics-library/shared/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.analytics-library.shared.30.0.0_pom",
+    source = "repository/com/android/tools/analytics-library/shared/30.0.0/shared-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.lint.lint-model.30.0.0",
+    jars = ["repository/com/android/tools/lint/lint-model/30.0.0/lint-model-30.0.0.jar"],
+    pom = ":com.android.tools.lint.lint-model.30.0.0_pom",
+    repo_path = "repository/com/android/tools/lint/lint-model/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.lint.lint-model.30.0.0_pom",
+    source = "repository/com/android/tools/lint/lint-model/30.0.0/lint-model-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "androidx.databinding.databinding-compiler-common.7.0.0",
+    jars = ["repository/androidx/databinding/databinding-compiler-common/7.0.0/databinding-compiler-common-7.0.0.jar"],
+    pom = ":androidx.databinding.databinding-compiler-common.7.0.0_pom",
+    repo_path = "repository/androidx/databinding/databinding-compiler-common/7.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.databinding.databinding-compiler-common.7.0.0_pom",
+    source = "repository/androidx/databinding/databinding-compiler-common/7.0.0/databinding-compiler-common-7.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "androidx.databinding.databinding-common.7.0.0",
+    jars = ["repository/androidx/databinding/databinding-common/7.0.0/databinding-common-7.0.0.jar"],
+    pom = ":androidx.databinding.databinding-common.7.0.0_pom",
+    repo_path = "repository/androidx/databinding/databinding-common/7.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.databinding.databinding-common.7.0.0_pom",
+    source = "repository/androidx/databinding/databinding-common/7.0.0/databinding-common-7.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.databinding.baseLibrary.7.0.0",
+    jars = ["repository/com/android/databinding/baseLibrary/7.0.0/baseLibrary-7.0.0.jar"],
+    pom = ":com.android.databinding.baseLibrary.7.0.0_pom",
+    repo_path = "repository/com/android/databinding/baseLibrary/7.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.databinding.baseLibrary.7.0.0_pom",
+    source = "repository/com/android/databinding/baseLibrary/7.0.0/baseLibrary-7.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.build.builder-test-api.7.0.0",
+    jars = ["repository/com/android/tools/build/builder-test-api/7.0.0/builder-test-api-7.0.0.jar"],
+    pom = ":com.android.tools.build.builder-test-api.7.0.0_pom",
+    repo_path = "repository/com/android/tools/build/builder-test-api/7.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.build.builder-test-api.7.0.0_pom",
+    source = "repository/com/android/tools/build/builder-test-api/7.0.0/builder-test-api-7.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.layoutlib.layoutlib-api.30.0.0",
+    jars = ["repository/com/android/tools/layoutlib/layoutlib-api/30.0.0/layoutlib-api-30.0.0.jar"],
+    pom = ":com.android.tools.layoutlib.layoutlib-api.30.0.0_pom",
+    repo_path = "repository/com/android/tools/layoutlib/layoutlib-api/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.layoutlib.layoutlib-api.30.0.0_pom",
+    source = "repository/com/android/tools/layoutlib/layoutlib-api/30.0.0/layoutlib-api-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.utp.android-device-provider-gradle-proto.30.0.0",
+    jars = ["repository/com/android/tools/utp/android-device-provider-gradle-proto/30.0.0/android-device-provider-gradle-proto-30.0.0.jar"],
+    pom = ":com.android.tools.utp.android-device-provider-gradle-proto.30.0.0_pom",
+    repo_path = "repository/com/android/tools/utp/android-device-provider-gradle-proto/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.utp.android-device-provider-gradle-proto.30.0.0_pom",
+    source = "repository/com/android/tools/utp/android-device-provider-gradle-proto/30.0.0/android-device-provider-gradle-proto-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.utp.android-test-plugin-host-retention-proto.30.0.0",
+    jars = ["repository/com/android/tools/utp/android-test-plugin-host-retention-proto/30.0.0/android-test-plugin-host-retention-proto-30.0.0.jar"],
+    pom = ":com.android.tools.utp.android-test-plugin-host-retention-proto.30.0.0_pom",
+    repo_path = "repository/com/android/tools/utp/android-test-plugin-host-retention-proto/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.utp.android-test-plugin-host-retention-proto.30.0.0_pom",
+    source = "repository/com/android/tools/utp/android-test-plugin-host-retention-proto/30.0.0/android-test-plugin-host-retention-proto-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.utp.android-test-plugin-result-listener-gradle-proto.30.0.0",
+    jars = ["repository/com/android/tools/utp/android-test-plugin-result-listener-gradle-proto/30.0.0/android-test-plugin-result-listener-gradle-proto-30.0.0.jar"],
+    pom = ":com.android.tools.utp.android-test-plugin-result-listener-gradle-proto.30.0.0_pom",
+    repo_path = "repository/com/android/tools/utp/android-test-plugin-result-listener-gradle-proto/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.utp.android-test-plugin-result-listener-gradle-proto.30.0.0_pom",
+    source = "repository/com/android/tools/utp/android-test-plugin-result-listener-gradle-proto/30.0.0/android-test-plugin-result-listener-gradle-proto-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.google.testing.platform.core-proto.0.0.8-alpha04",
+    jars = ["repository/com/google/testing/platform/core-proto/0.0.8-alpha04/core-proto-0.0.8-alpha04.jar"],
+    pom = ":com.google.testing.platform.core-proto.0.0.8-alpha04_pom",
+    repo_path = "repository/com/google/testing/platform/core-proto/0.0.8-alpha04",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.google.testing.platform.core-proto.0.0.8-alpha04_pom",
+    source = "repository/com/google/testing/platform/core-proto/0.0.8-alpha04/core-proto-0.0.8-alpha04.pom",
+    visibility = ["//visibility:public"],
+)
