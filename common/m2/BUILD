@@ -24595,6 +24595,20 @@ maven_pom(
 )
 
 maven_java_import(
+    name = "com.android.tools.build.bundletool.1.8.0",
+    jars = ["repository/com/android/tools/build/bundletool/1.8.0/bundletool-1.8.0.jar"],
+    pom = ":com.android.tools.build.bundletool.1.8.0_pom",
+    repo_path = "repository/com/android/tools/build/bundletool/1.8.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.build.bundletool.1.8.0_pom",
+    source = "repository/com/android/tools/build/bundletool/1.8.0/bundletool-1.8.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
     name = "com.android.tools.build.aapt2-proto.7.0.0-beta04-7396180",
     jars = ["repository/com/android/tools/build/aapt2-proto/7.0.0-beta04-7396180/aapt2-proto-7.0.0-beta04-7396180.jar"],
     pom = ":com.android.tools.build.aapt2-proto.7.0.0-beta04-7396180_pom",
