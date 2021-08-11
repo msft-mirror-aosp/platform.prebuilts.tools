@@ -1,8 +1,8 @@
 diff --git a/idea/kotlin.idea.iml b/idea/kotlin.idea.iml
-index 0521bc94857..6b0e094f090 100644
+index b34840fef45..e1b0b9f19d5 100644
 --- a/idea/kotlin.idea.iml
 +++ b/idea/kotlin.idea.iml
-@@ -24,6 +24,7 @@
+@@ -23,6 +23,7 @@
        <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
        <sourceFolder url="file://$MODULE_DIR$/resources" type="java-resource" />
        <sourceFolder url="file://$MODULE_DIR$/resources-en" type="java-resource" />
@@ -11,24 +11,23 @@ index 0521bc94857..6b0e094f090 100644
      <content url="file://$MODULE_DIR$/../live-templates">
        <sourceFolder url="file://$MODULE_DIR$/../live-templates/src" isTestSource="false" />
 diff --git a/j2k/old/kotlin.j2k.old.iml b/j2k/old/kotlin.j2k.old.iml
-index 05ee3c0d1c4..1ec66b64fd3 100644
+index f48e1851531..5c92ebcf385 100644
 --- a/j2k/old/kotlin.j2k.old.iml
 +++ b/j2k/old/kotlin.j2k.old.iml
-@@ -30,5 +30,7 @@
+@@ -29,5 +29,7 @@
      <orderEntry type="module" module-name="kotlin.fir.frontend-independent" />
      <orderEntry type="module" module-name="intellij.java.psi.impl" />
-     <orderEntry type="module" module-name="kotlin.resources-descriptors" scope="TEST" />
--</component>
+     <orderEntry type="module" module-name="kotlin.resources-fe10" scope="TEST" />
 +    <orderEntry type="module" module-name="intellij.platform.serviceContainer" />
 +    <orderEntry type="module" module-name="intellij.java.execution" />
-+  </component>
+   </component>
  </module>
 \ No newline at end of file
-diff --git a/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt b/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
-index 2bcd8ff5987..ca2d58d69f5 100644
---- a/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
-+++ b/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
-@@ -148,7 +148,23 @@ abstract class KotlinAbstractUElement(private val givenParent: UElement?) : Kotl
+diff --git a/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt b/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
+index 2f79ce42f04..207f0cb487f 100644
+--- a/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
++++ b/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
+@@ -44,7 +44,23 @@ abstract class KotlinAbstractUElement(
              return false
          }
  
@@ -52,20 +51,20 @@ index 2bcd8ff5987..ca2d58d69f5 100644
 +        }
      }
  
-     override fun hashCode() = psi?.hashCode() ?: 0
+     override fun hashCode(): Int {
 diff --git a/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethod.kt b/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethod.kt
-index 12b796b8d61..60893e2afe0 100644
+index 53d8d72b4d5..f89c523cd9f 100644
 --- a/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethod.kt
 +++ b/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethod.kt
 @@ -16,6 +16,7 @@
  
- package org.jetbrains.uast.kotlin.declarations
+ package org.jetbrains.uast.kotlin
  
 +import com.intellij.openapi.util.TextRange
  import com.intellij.psi.*
  import org.jetbrains.kotlin.asJava.elements.*
  import org.jetbrains.kotlin.psi.*
-@@ -185,6 +186,11 @@ class KotlinUMethodWithFakeLightDelegate internal constructor(
+@@ -74,4 +75,9 @@ class KotlinUMethodWithFakeLightDelegate internal constructor(
      }
  
      override fun hashCode(): Int = original.hashCode()
@@ -75,13 +74,11 @@ index 12b796b8d61..60893e2afe0 100644
 +        return original.textRange
 +    }
  }
- 
- internal fun wrapExpressionBody(function: UElement, bodyExpression: KtExpression): UExpression? = when (bodyExpression) {
 diff --git a/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/expressions/ElvisExpression.kt b/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/expressions/ElvisExpression.kt
-index 8b854d7c735..5e7f7ac4fb0 100644
+index 3df05249933..9482b47c5d5 100644
 --- a/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/expressions/ElvisExpression.kt
 +++ b/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/expressions/ElvisExpression.kt
-@@ -3,6 +3,7 @@ package org.jetbrains.uast.kotlin.expressions
+@@ -4,6 +4,7 @@ import com.intellij.openapi.components.ServiceManager
  import com.intellij.psi.PsiElement
  import com.intellij.psi.PsiMethod
  import com.intellij.psi.PsiType
@@ -89,7 +86,7 @@ index 8b854d7c735..5e7f7ac4fb0 100644
  import org.jetbrains.kotlin.psi.KtBinaryExpression
  import org.jetbrains.kotlin.psi.KtExpression
  import org.jetbrains.kotlin.resolve.BindingContext
-@@ -95,7 +96,12 @@ class KotlinUElvisExpression(
+@@ -98,7 +99,12 @@ class KotlinUElvisExpression(
      override val sourcePsi: PsiElement? = elvisExpression
      override val psi: PsiElement? = sourcePsi
      override val kind = KotlinSpecialExpressionKinds.ELVIS
