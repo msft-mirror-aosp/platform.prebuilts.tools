@@ -24595,6 +24595,20 @@ maven_pom(
 )
 
 maven_java_import(
+    name = "com.android.tools.build.bundletool.1.8.0",
+    jars = ["repository/com/android/tools/build/bundletool/1.8.0/bundletool-1.8.0.jar"],
+    pom = ":com.android.tools.build.bundletool.1.8.0_pom",
+    repo_path = "repository/com/android/tools/build/bundletool/1.8.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.build.bundletool.1.8.0_pom",
+    source = "repository/com/android/tools/build/bundletool/1.8.0/bundletool-1.8.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
     name = "com.android.tools.build.aapt2-proto.7.0.0-beta04-7396180",
     jars = ["repository/com/android/tools/build/aapt2-proto/7.0.0-beta04-7396180/aapt2-proto-7.0.0-beta04-7396180.jar"],
     pom = ":com.android.tools.build.aapt2-proto.7.0.0-beta04-7396180_pom",
@@ -25696,5 +25710,956 @@ maven_java_import(
 maven_pom(
     name = "org.jetbrains.kotlin.kotlin-stdlib.1.4.0_pom",
     source = "repository/org/jetbrains/kotlin/kotlin-stdlib/1.4.0/kotlin-stdlib-1.4.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "com.google.android.gms.play-services-wallet.18.1.3_aar",
+    aar = "repository/com/google/android/gms/play-services-wallet/18.1.3/play-services-wallet-18.1.3.aar",
+    pom = ":com.google.android.gms.play-services-wallet.18.1.3_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.google.android.gms.play-services-wallet.18.1.3_pom",
+    source = "repository/com/google/android/gms/play-services-wallet/18.1.3/play-services-wallet-18.1.3.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "com.google.android.gms.play-services-identity.17.0.0_aar",
+    aar = "repository/com/google/android/gms/play-services-identity/17.0.0/play-services-identity-17.0.0.aar",
+    pom = ":com.google.android.gms.play-services-identity.17.0.0_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.google.android.gms.play-services-identity.17.0.0_pom",
+    source = "repository/com/google/android/gms/play-services-identity/17.0.0/play-services-identity-17.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_aar(
+    name = "androidx.activity.activity-ktx.1.2.3_aar",
+    aar = "repository/androidx/activity/activity-ktx/1.2.3/activity-ktx-1.2.3.aar",
+    pom = ":androidx.activity.activity-ktx.1.2.3_pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.activity.activity-ktx.1.2.3_pom",
+    source = "repository/androidx/activity/activity-ktx/1.2.3/activity-ktx-1.2.3.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.google.prefab.cli.2.0.0_pom",
+    source = "repository/com/google/prefab/cli/2.0.0/cli-2.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.google.prefab.cli.2.0.0",
+    classified_only = True,
+    classifiers = ["all"],
+    jars = ["repository/com/google/prefab/cli/2.0.0/cli-2.0.0.jar"],
+    pom = ":com.google.prefab.cli.2.0.0_pom",
+    repo_path = "repository/com/google/prefab/cli/2.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-all.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-all/3.0.8/groovy-all-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy/3.0.8/groovy-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy/3.0.8/groovy-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-ant.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-ant/3.0.8/groovy-ant-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-ant.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-ant/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-ant.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-ant/3.0.8/groovy-ant-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-groovydoc.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-groovydoc/3.0.8/groovy-groovydoc-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-groovydoc.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-groovydoc/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-groovydoc.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-groovydoc/3.0.8/groovy-groovydoc-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-astbuilder.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-astbuilder/3.0.8/groovy-astbuilder-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-astbuilder.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-astbuilder/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-astbuilder.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-astbuilder/3.0.8/groovy-astbuilder-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-cli-picocli.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-cli-picocli/3.0.8/groovy-cli-picocli-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-cli-picocli.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-cli-picocli/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-cli-picocli.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-cli-picocli/3.0.8/groovy-cli-picocli-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-console.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-console/3.0.8/groovy-console-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-console.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-console/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-console.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-console/3.0.8/groovy-console-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-templates.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-templates/3.0.8/groovy-templates-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-templates.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-templates/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-templates.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-templates/3.0.8/groovy-templates-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-xml.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-xml/3.0.8/groovy-xml-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-xml.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-xml/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-xml.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-xml/3.0.8/groovy-xml-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-swing.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-swing/3.0.8/groovy-swing-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-swing.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-swing/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-swing.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-swing/3.0.8/groovy-swing-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-datetime.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-datetime/3.0.8/groovy-datetime-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-datetime.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-datetime/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-datetime.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-datetime/3.0.8/groovy-datetime-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-docgenerator.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-docgenerator/3.0.8/groovy-docgenerator-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-docgenerator.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-docgenerator/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-docgenerator.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-docgenerator/3.0.8/groovy-docgenerator-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-groovysh.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-groovysh/3.0.8/groovy-groovysh-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-groovysh.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-groovysh/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-groovysh.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-groovysh/3.0.8/groovy-groovysh-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-jmx.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-jmx/3.0.8/groovy-jmx-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-jmx.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-jmx/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-jmx.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-jmx/3.0.8/groovy-jmx-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-json.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-json/3.0.8/groovy-json-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-json.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-json/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-json.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-json/3.0.8/groovy-json-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-jsr223.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-jsr223/3.0.8/groovy-jsr223-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-jsr223.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-jsr223/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-jsr223.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-jsr223/3.0.8/groovy-jsr223-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-macro.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-macro/3.0.8/groovy-macro-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-macro.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-macro/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-macro.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-macro/3.0.8/groovy-macro-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-nio.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-nio/3.0.8/groovy-nio-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-nio.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-nio/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-nio.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-nio/3.0.8/groovy-nio-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-servlet.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-servlet/3.0.8/groovy-servlet-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-servlet.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-servlet/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-servlet.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-servlet/3.0.8/groovy-servlet-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-sql.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-sql/3.0.8/groovy-sql-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-sql.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-sql/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-sql.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-sql/3.0.8/groovy-sql-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-test.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-test/3.0.8/groovy-test-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-test.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-test/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-test.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-test/3.0.8/groovy-test-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-test-junit5.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-test-junit5/3.0.8/groovy-test-junit5-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-test-junit5.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-test-junit5/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-test-junit5.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-test-junit5/3.0.8/groovy-test-junit5-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.codehaus.groovy.groovy-testng.3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy-testng/3.0.8/groovy-testng-3.0.8.jar"],
+    pom = ":org.codehaus.groovy.groovy-testng.3.0.8_pom",
+    repo_path = "repository/org/codehaus/groovy/groovy-testng/3.0.8",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.codehaus.groovy.groovy-testng.3.0.8_pom",
+    source = "repository/org/codehaus/groovy/groovy-testng/3.0.8/groovy-testng-3.0.8.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.testng.testng.7.4.0",
+    jars = ["repository/org/testng/testng/7.4.0/testng-7.4.0.jar"],
+    pom = ":org.testng.testng.7.4.0_pom",
+    repo_path = "repository/org/testng/testng/7.4.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.testng.testng.7.4.0_pom",
+    source = "repository/org/testng/testng/7.4.0/testng-7.4.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.webjars.jquery.3.5.1",
+    jars = ["repository/org/webjars/jquery/3.5.1/jquery-3.5.1.jar"],
+    pom = ":org.webjars.jquery.3.5.1_pom",
+    repo_path = "repository/org/webjars/jquery/3.5.1",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.webjars.jquery.3.5.1_pom",
+    parent = ":org.sonatype.oss.oss-parent.7_pom",
+    source = "repository/org/webjars/jquery/3.5.1/jquery-3.5.1.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.gradle.gradle-tooling-api.7.2-rc-1",
+    jars = ["repository/org/gradle/gradle-tooling-api/7.2-rc-1/gradle-tooling-api-7.2-rc-1.jar"],
+    pom = ":org.gradle.gradle-tooling-api.7.2-rc-1_pom",
+    repo_path = "repository/org/gradle/gradle-tooling-api/7.2-rc-1",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.gradle.gradle-tooling-api.7.2-rc-1_pom",
+    source = "repository/org/gradle/gradle-tooling-api/7.2-rc-1/gradle-tooling-api-7.2-rc-1.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-reflect.1.5.21",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-reflect/1.5.21/kotlin-reflect-1.5.21.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-reflect.1.5.21_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-reflect/1.5.21",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-reflect.1.5.21_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-reflect/1.5.21/kotlin-reflect-1.5.21.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-stdlib.1.5.21",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-stdlib/1.5.21/kotlin-stdlib-1.5.21.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-stdlib.1.5.21_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-stdlib/1.5.21",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-stdlib.1.5.21_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-stdlib/1.5.21/kotlin-stdlib-1.5.21.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-stdlib-common.1.5.21",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.5.21/kotlin-stdlib-common-1.5.21.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-stdlib-common.1.5.21_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.5.21",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-stdlib-common.1.5.21_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.5.21/kotlin-stdlib-common-1.5.21.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-stdlib-jdk7.1.5.21",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.5.21/kotlin-stdlib-jdk7-1.5.21.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-stdlib-jdk7.1.5.21_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.5.21",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-stdlib-jdk7.1.5.21_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.5.21/kotlin-stdlib-jdk7-1.5.21.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "org.jetbrains.kotlin.kotlin-stdlib-jdk8.1.5.21",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.5.21/kotlin-stdlib-jdk8-1.5.21.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-stdlib-jdk8.1.5.21_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.5.21",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "org.jetbrains.kotlin.kotlin-stdlib-jdk8.1.5.21_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.5.21/kotlin-stdlib-jdk8-1.5.21.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.github.javaparser.javaparser-core.3.18.0",
+    jars = ["repository/com/github/javaparser/javaparser-core/3.18.0/javaparser-core-3.18.0.jar"],
+    pom = ":com.github.javaparser.javaparser-core.3.18.0_pom",
+    repo_path = "repository/com/github/javaparser/javaparser-core/3.18.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.github.javaparser.javaparser-core.3.18.0_pom",
+    parent = ":com.github.javaparser.javaparser-parent.3.18.0_pom",
+    source = "repository/com/github/javaparser/javaparser-core/3.18.0/javaparser-core-3.18.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.github.javaparser.javaparser-parent.3.18.0_pom",
+    source = "repository/com/github/javaparser/javaparser-parent/3.18.0/javaparser-parent-3.18.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.build.gradle.7.0.0",
+    jars = ["repository/com/android/tools/build/gradle/7.0.0/gradle-7.0.0.jar"],
+    pom = ":com.android.tools.build.gradle.7.0.0_pom",
+    repo_path = "repository/com/android/tools/build/gradle/7.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.build.gradle.7.0.0_pom",
+    source = "repository/com/android/tools/build/gradle/7.0.0/gradle-7.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.build.builder.7.0.0",
+    jars = ["repository/com/android/tools/build/builder/7.0.0/builder-7.0.0.jar"],
+    pom = ":com.android.tools.build.builder.7.0.0_pom",
+    repo_path = "repository/com/android/tools/build/builder/7.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.build.builder.7.0.0_pom",
+    source = "repository/com/android/tools/build/builder/7.0.0/builder-7.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.build.manifest-merger.30.0.0",
+    jars = ["repository/com/android/tools/build/manifest-merger/30.0.0/manifest-merger-30.0.0.jar"],
+    pom = ":com.android.tools.build.manifest-merger.30.0.0_pom",
+    repo_path = "repository/com/android/tools/build/manifest-merger/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.build.manifest-merger.30.0.0_pom",
+    source = "repository/com/android/tools/build/manifest-merger/30.0.0/manifest-merger-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.zipflinger.7.0.0",
+    jars = ["repository/com/android/zipflinger/7.0.0/zipflinger-7.0.0.jar"],
+    pom = ":com.android.zipflinger.7.0.0_pom",
+    repo_path = "repository/com/android/zipflinger/7.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.zipflinger.7.0.0_pom",
+    source = "repository/com/android/zipflinger/7.0.0/zipflinger-7.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.build.apksig.7.0.0",
+    jars = ["repository/com/android/tools/build/apksig/7.0.0/apksig-7.0.0.jar"],
+    pom = ":com.android.tools.build.apksig.7.0.0_pom",
+    repo_path = "repository/com/android/tools/build/apksig/7.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.build.apksig.7.0.0_pom",
+    source = "repository/com/android/tools/build/apksig/7.0.0/apksig-7.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.build.apkzlib.7.0.0",
+    jars = ["repository/com/android/tools/build/apkzlib/7.0.0/apkzlib-7.0.0.jar"],
+    pom = ":com.android.tools.build.apkzlib.7.0.0_pom",
+    repo_path = "repository/com/android/tools/build/apkzlib/7.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.build.apkzlib.7.0.0_pom",
+    source = "repository/com/android/tools/build/apkzlib/7.0.0/apkzlib-7.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.common.30.0.0",
+    jars = ["repository/com/android/tools/common/30.0.0/common-30.0.0.jar"],
+    pom = ":com.android.tools.common.30.0.0_pom",
+    repo_path = "repository/com/android/tools/common/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.common.30.0.0_pom",
+    source = "repository/com/android/tools/common/30.0.0/common-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.signflinger.7.0.0",
+    jars = ["repository/com/android/signflinger/7.0.0/signflinger-7.0.0.jar"],
+    pom = ":com.android.signflinger.7.0.0_pom",
+    repo_path = "repository/com/android/signflinger/7.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.signflinger.7.0.0_pom",
+    source = "repository/com/android/signflinger/7.0.0/signflinger-7.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.analytics-library.protos.30.0.0",
+    jars = ["repository/com/android/tools/analytics-library/protos/30.0.0/protos-30.0.0.jar"],
+    pom = ":com.android.tools.analytics-library.protos.30.0.0_pom",
+    repo_path = "repository/com/android/tools/analytics-library/protos/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.analytics-library.protos.30.0.0_pom",
+    source = "repository/com/android/tools/analytics-library/protos/30.0.0/protos-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.analytics-library.tracker.30.0.0",
+    jars = ["repository/com/android/tools/analytics-library/tracker/30.0.0/tracker-30.0.0.jar"],
+    pom = ":com.android.tools.analytics-library.tracker.30.0.0_pom",
+    repo_path = "repository/com/android/tools/analytics-library/tracker/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.analytics-library.tracker.30.0.0_pom",
+    source = "repository/com/android/tools/analytics-library/tracker/30.0.0/tracker-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.build.builder-model.7.0.0",
+    jars = ["repository/com/android/tools/build/builder-model/7.0.0/builder-model-7.0.0.jar"],
+    pom = ":com.android.tools.build.builder-model.7.0.0_pom",
+    repo_path = "repository/com/android/tools/build/builder-model/7.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.build.builder-model.7.0.0_pom",
+    source = "repository/com/android/tools/build/builder-model/7.0.0/builder-model-7.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.annotations.30.0.0",
+    jars = ["repository/com/android/tools/annotations/30.0.0/annotations-30.0.0.jar"],
+    pom = ":com.android.tools.annotations.30.0.0_pom",
+    repo_path = "repository/com/android/tools/annotations/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.annotations.30.0.0_pom",
+    source = "repository/com/android/tools/annotations/30.0.0/annotations-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.build.gradle-api.7.0.0",
+    jars = ["repository/com/android/tools/build/gradle-api/7.0.0/gradle-api-7.0.0.jar"],
+    pom = ":com.android.tools.build.gradle-api.7.0.0_pom",
+    repo_path = "repository/com/android/tools/build/gradle-api/7.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.build.gradle-api.7.0.0_pom",
+    source = "repository/com/android/tools/build/gradle-api/7.0.0/gradle-api-7.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.sdk-common.30.0.0",
+    jars = ["repository/com/android/tools/sdk-common/30.0.0/sdk-common-30.0.0.jar"],
+    pom = ":com.android.tools.sdk-common.30.0.0_pom",
+    repo_path = "repository/com/android/tools/sdk-common/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.sdk-common.30.0.0_pom",
+    source = "repository/com/android/tools/sdk-common/30.0.0/sdk-common-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.sdklib.30.0.0",
+    jars = ["repository/com/android/tools/sdklib/30.0.0/sdklib-30.0.0.jar"],
+    pom = ":com.android.tools.sdklib.30.0.0_pom",
+    repo_path = "repository/com/android/tools/sdklib/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.sdklib.30.0.0_pom",
+    source = "repository/com/android/tools/sdklib/30.0.0/sdklib-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.dvlib.30.0.0",
+    jars = ["repository/com/android/tools/dvlib/30.0.0/dvlib-30.0.0.jar"],
+    pom = ":com.android.tools.dvlib.30.0.0_pom",
+    repo_path = "repository/com/android/tools/dvlib/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.dvlib.30.0.0_pom",
+    source = "repository/com/android/tools/dvlib/30.0.0/dvlib-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.repository.30.0.0",
+    jars = ["repository/com/android/tools/repository/30.0.0/repository-30.0.0.jar"],
+    pom = ":com.android.tools.repository.30.0.0_pom",
+    repo_path = "repository/com/android/tools/repository/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.repository.30.0.0_pom",
+    source = "repository/com/android/tools/repository/30.0.0/repository-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.ddms.ddmlib.30.0.0",
+    jars = ["repository/com/android/tools/ddms/ddmlib/30.0.0/ddmlib-30.0.0.jar"],
+    pom = ":com.android.tools.ddms.ddmlib.30.0.0_pom",
+    repo_path = "repository/com/android/tools/ddms/ddmlib/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.ddms.ddmlib.30.0.0_pom",
+    source = "repository/com/android/tools/ddms/ddmlib/30.0.0/ddmlib-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.build.aapt2-proto.7.0.0-7396180",
+    jars = ["repository/com/android/tools/build/aapt2-proto/7.0.0-7396180/aapt2-proto-7.0.0-7396180.jar"],
+    pom = ":com.android.tools.build.aapt2-proto.7.0.0-7396180_pom",
+    repo_path = "repository/com/android/tools/build/aapt2-proto/7.0.0-7396180",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.build.aapt2-proto.7.0.0-7396180_pom",
+    source = "repository/com/android/tools/build/aapt2-proto/7.0.0-7396180/aapt2-proto-7.0.0-7396180.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.build.aaptcompiler.7.0.0",
+    jars = ["repository/com/android/tools/build/aaptcompiler/7.0.0/aaptcompiler-7.0.0.jar"],
+    pom = ":com.android.tools.build.aaptcompiler.7.0.0_pom",
+    repo_path = "repository/com/android/tools/build/aaptcompiler/7.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.build.aaptcompiler.7.0.0_pom",
+    source = "repository/com/android/tools/build/aaptcompiler/7.0.0/aaptcompiler-7.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.analytics-library.crash.30.0.0",
+    jars = ["repository/com/android/tools/analytics-library/crash/30.0.0/crash-30.0.0.jar"],
+    pom = ":com.android.tools.analytics-library.crash.30.0.0_pom",
+    repo_path = "repository/com/android/tools/analytics-library/crash/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.analytics-library.crash.30.0.0_pom",
+    source = "repository/com/android/tools/analytics-library/crash/30.0.0/crash-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.analytics-library.shared.30.0.0",
+    jars = ["repository/com/android/tools/analytics-library/shared/30.0.0/shared-30.0.0.jar"],
+    pom = ":com.android.tools.analytics-library.shared.30.0.0_pom",
+    repo_path = "repository/com/android/tools/analytics-library/shared/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.analytics-library.shared.30.0.0_pom",
+    source = "repository/com/android/tools/analytics-library/shared/30.0.0/shared-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.lint.lint-model.30.0.0",
+    jars = ["repository/com/android/tools/lint/lint-model/30.0.0/lint-model-30.0.0.jar"],
+    pom = ":com.android.tools.lint.lint-model.30.0.0_pom",
+    repo_path = "repository/com/android/tools/lint/lint-model/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.lint.lint-model.30.0.0_pom",
+    source = "repository/com/android/tools/lint/lint-model/30.0.0/lint-model-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "androidx.databinding.databinding-compiler-common.7.0.0",
+    jars = ["repository/androidx/databinding/databinding-compiler-common/7.0.0/databinding-compiler-common-7.0.0.jar"],
+    pom = ":androidx.databinding.databinding-compiler-common.7.0.0_pom",
+    repo_path = "repository/androidx/databinding/databinding-compiler-common/7.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.databinding.databinding-compiler-common.7.0.0_pom",
+    source = "repository/androidx/databinding/databinding-compiler-common/7.0.0/databinding-compiler-common-7.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "androidx.databinding.databinding-common.7.0.0",
+    jars = ["repository/androidx/databinding/databinding-common/7.0.0/databinding-common-7.0.0.jar"],
+    pom = ":androidx.databinding.databinding-common.7.0.0_pom",
+    repo_path = "repository/androidx/databinding/databinding-common/7.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "androidx.databinding.databinding-common.7.0.0_pom",
+    source = "repository/androidx/databinding/databinding-common/7.0.0/databinding-common-7.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.databinding.baseLibrary.7.0.0",
+    jars = ["repository/com/android/databinding/baseLibrary/7.0.0/baseLibrary-7.0.0.jar"],
+    pom = ":com.android.databinding.baseLibrary.7.0.0_pom",
+    repo_path = "repository/com/android/databinding/baseLibrary/7.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.databinding.baseLibrary.7.0.0_pom",
+    source = "repository/com/android/databinding/baseLibrary/7.0.0/baseLibrary-7.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.build.builder-test-api.7.0.0",
+    jars = ["repository/com/android/tools/build/builder-test-api/7.0.0/builder-test-api-7.0.0.jar"],
+    pom = ":com.android.tools.build.builder-test-api.7.0.0_pom",
+    repo_path = "repository/com/android/tools/build/builder-test-api/7.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.build.builder-test-api.7.0.0_pom",
+    source = "repository/com/android/tools/build/builder-test-api/7.0.0/builder-test-api-7.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.layoutlib.layoutlib-api.30.0.0",
+    jars = ["repository/com/android/tools/layoutlib/layoutlib-api/30.0.0/layoutlib-api-30.0.0.jar"],
+    pom = ":com.android.tools.layoutlib.layoutlib-api.30.0.0_pom",
+    repo_path = "repository/com/android/tools/layoutlib/layoutlib-api/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.layoutlib.layoutlib-api.30.0.0_pom",
+    source = "repository/com/android/tools/layoutlib/layoutlib-api/30.0.0/layoutlib-api-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.utp.android-device-provider-gradle-proto.30.0.0",
+    jars = ["repository/com/android/tools/utp/android-device-provider-gradle-proto/30.0.0/android-device-provider-gradle-proto-30.0.0.jar"],
+    pom = ":com.android.tools.utp.android-device-provider-gradle-proto.30.0.0_pom",
+    repo_path = "repository/com/android/tools/utp/android-device-provider-gradle-proto/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.utp.android-device-provider-gradle-proto.30.0.0_pom",
+    source = "repository/com/android/tools/utp/android-device-provider-gradle-proto/30.0.0/android-device-provider-gradle-proto-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.utp.android-test-plugin-host-retention-proto.30.0.0",
+    jars = ["repository/com/android/tools/utp/android-test-plugin-host-retention-proto/30.0.0/android-test-plugin-host-retention-proto-30.0.0.jar"],
+    pom = ":com.android.tools.utp.android-test-plugin-host-retention-proto.30.0.0_pom",
+    repo_path = "repository/com/android/tools/utp/android-test-plugin-host-retention-proto/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.utp.android-test-plugin-host-retention-proto.30.0.0_pom",
+    source = "repository/com/android/tools/utp/android-test-plugin-host-retention-proto/30.0.0/android-test-plugin-host-retention-proto-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.android.tools.utp.android-test-plugin-result-listener-gradle-proto.30.0.0",
+    jars = ["repository/com/android/tools/utp/android-test-plugin-result-listener-gradle-proto/30.0.0/android-test-plugin-result-listener-gradle-proto-30.0.0.jar"],
+    pom = ":com.android.tools.utp.android-test-plugin-result-listener-gradle-proto.30.0.0_pom",
+    repo_path = "repository/com/android/tools/utp/android-test-plugin-result-listener-gradle-proto/30.0.0",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.android.tools.utp.android-test-plugin-result-listener-gradle-proto.30.0.0_pom",
+    source = "repository/com/android/tools/utp/android-test-plugin-result-listener-gradle-proto/30.0.0/android-test-plugin-result-listener-gradle-proto-30.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+maven_java_import(
+    name = "com.google.testing.platform.core-proto.0.0.8-alpha04",
+    jars = ["repository/com/google/testing/platform/core-proto/0.0.8-alpha04/core-proto-0.0.8-alpha04.jar"],
+    pom = ":com.google.testing.platform.core-proto.0.0.8-alpha04_pom",
+    repo_path = "repository/com/google/testing/platform/core-proto/0.0.8-alpha04",
+    visibility = ["//visibility:public"],
+)
+
+maven_pom(
+    name = "com.google.testing.platform.core-proto.0.0.8-alpha04_pom",
+    source = "repository/com/google/testing/platform/core-proto/0.0.8-alpha04/core-proto-0.0.8-alpha04.pom",
     visibility = ["//visibility:public"],
 )

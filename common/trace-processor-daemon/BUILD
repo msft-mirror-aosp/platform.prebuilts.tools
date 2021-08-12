@@ -11,6 +11,7 @@ studio_data(
     name = "trace-processor-daemon-bundle",
     files_linux = glob(["linux/*"]),
     files_mac = glob(["darwin/*"]),
+    files_mac_arm = glob(["darwin/*"]),
     files_win = glob(["windows/*"]),
     mappings = {
         "prebuilts/tools/common/trace-processor-daemon/linux/": "trace_processor_daemon/",
