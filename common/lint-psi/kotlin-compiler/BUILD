@@ -30,12 +30,12 @@ java_import(
 )
 
 maven_library(
-    name = "kotlin-compiler_bzl",
+    name = "kotlin-compiler",
     srcs = [],
     bundled_deps = [
         ":import_all",
     ],
     coordinates = "com.android.tools.external.intellij:kotlin-compiler:" + BUILD_VERSION,
-    legacy_name = "kotlin-compiler",
+    jar_name = "kotlin-compiler-mvn.jar",
     visibility = ["//visibility:public"],
 )

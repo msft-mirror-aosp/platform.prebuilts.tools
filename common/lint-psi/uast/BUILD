@@ -34,12 +34,11 @@ java_import(
 )
 
 maven_library(
-    name = "uast_bzl",
+    name = "uast",
     srcs = [],
     bundled_deps = [
         ":import_all",
     ],
     coordinates = "com.android.tools.external.intellij:uast:" + BUILD_VERSION,
-    legacy_name = "uast",
     visibility = ["//visibility:public"],
 )

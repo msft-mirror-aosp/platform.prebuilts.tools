@@ -28,12 +28,12 @@ java_import(
 )
 
 maven_library(
-    name = "intellij-core_bzl",
+    name = "intellij-core",
     srcs = [],
     bundled_deps = [
         ":import_all",
     ],
     coordinates = "com.android.tools.external.intellij:intellij-core:" + BUILD_VERSION,
-    legacy_name = "intellij-core",
+    jar_name = "intellij-core-mvn.jar",
     visibility = ["//visibility:public"],
 )
