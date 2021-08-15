@@ -1,5 +1,4 @@
-load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom", "maven_import")
-load("//tools/base/bazel:kotlin.bzl", "maven_library")
+load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom", "maven_import", "maven_library")
 load("//tools/base/bazel:merge_archives.bzl", "merge_jars")
 load("//tools/base/common:version.bzl", "BUILD_VERSION")
 
