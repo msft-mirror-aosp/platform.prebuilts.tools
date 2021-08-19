@@ -865,20 +865,6 @@ maven_pom(
     visibility = ["//visibility:public"],
 )
 
-maven_java_import(
-    name = "org.gradle.gradle-tooling-api.7.1",
-    jars = ["repository/org/gradle/gradle-tooling-api/7.1/gradle-tooling-api-7.1.jar"],
-    pom = ":org.gradle.gradle-tooling-api.7.1_pom",
-    repo_path = "repository/org/gradle/gradle-tooling-api/7.1",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "org.gradle.gradle-tooling-api.7.1_pom",
-    source = "repository/org/gradle/gradle-tooling-api/7.1/gradle-tooling-api-7.1.pom",
-    visibility = ["//visibility:public"],
-)
-
 maven_pom(
     name = "org.apache.httpcomponents.httpcomponents-parent.10_pom",
     parent = "//prebuilts/tools/common/m2:org.apache.apache.18_pom",
@@ -26086,20 +26072,6 @@ maven_pom(
     name = "org.webjars.jquery.3.5.1_pom",
     parent = ":org.sonatype.oss.oss-parent.7_pom",
     source = "repository/org/webjars/jquery/3.5.1/jquery-3.5.1.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "org.gradle.gradle-tooling-api.7.2-rc-1",
-    jars = ["repository/org/gradle/gradle-tooling-api/7.2-rc-1/gradle-tooling-api-7.2-rc-1.jar"],
-    pom = ":org.gradle.gradle-tooling-api.7.2-rc-1_pom",
-    repo_path = "repository/org/gradle/gradle-tooling-api/7.2-rc-1",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "org.gradle.gradle-tooling-api.7.2-rc-1_pom",
-    source = "repository/org/gradle/gradle-tooling-api/7.2-rc-1/gradle-tooling-api-7.2-rc-1.pom",
     visibility = ["//visibility:public"],
 )
 
