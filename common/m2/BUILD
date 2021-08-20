@@ -20,20 +20,6 @@ config_setting(
 load("//tools/base/bazel:maven.bzl", "maven_aar", "maven_java_import", "maven_pom")
 
 maven_java_import(
-    name = "it.unimi.dsi.fastutil.8.4.0",
-    jars = ["repository/it/unimi/dsi/fastutil/8.4.0/fastutil-8.4.0.jar"],
-    pom = ":it.unimi.dsi.fastutil.8.4.0_pom",
-    repo_path = "repository/it/unimi/dsi/fastutil/8.4.0",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "it.unimi.dsi.fastutil.8.4.0_pom",
-    source = "repository/it/unimi/dsi/fastutil/8.4.0/fastutil-8.4.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
     name = "junit.junit.4.12",
     jars = ["repository/junit/junit/4.12/junit-4.12.jar"],
     pom = ":junit.junit.4.12_pom",
@@ -215,21 +201,6 @@ maven_pom(
     visibility = ["//visibility:public"],
 )
 
-maven_java_import(
-    name = "org.xerial.sqlite-jdbc.3.21.0.1",
-    jars = ["repository/org/xerial/sqlite-jdbc/3.21.0.1/sqlite-jdbc-3.21.0.1.jar"],
-    pom = ":org.xerial.sqlite-jdbc.3.21.0.1_pom",
-    repo_path = "repository/org/xerial/sqlite-jdbc/3.21.0.1",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "org.xerial.sqlite-jdbc.3.21.0.1_pom",
-    parent = "//prebuilts/tools/common/m2:org.sonatype.oss.oss-parent.9_pom",
-    source = "repository/org/xerial/sqlite-jdbc/3.21.0.1/sqlite-jdbc-3.21.0.1.pom",
-    visibility = ["//visibility:public"],
-)
-
 maven_pom(
     name = "org.jacoco.org.jacoco.build.0.8.3_pom",
     source = "repository/org/jacoco/org.jacoco.build/0.8.3/org.jacoco.build-0.8.3.pom",
@@ -330,34 +301,6 @@ maven_pom(
 )
 
 maven_java_import(
-    name = "org.jetbrains.kotlin.kotlin-stdlib-common.1.4.32",
-    jars = ["repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.4.32/kotlin-stdlib-common-1.4.32.jar"],
-    pom = ":org.jetbrains.kotlin.kotlin-stdlib-common.1.4.32_pom",
-    repo_path = "repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.4.32",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "org.jetbrains.kotlin.kotlin-stdlib-common.1.4.32_pom",
-    source = "repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.4.32/kotlin-stdlib-common-1.4.32.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "org.jetbrains.kotlin.kotlin-stdlib.1.4.32",
-    jars = ["repository/org/jetbrains/kotlin/kotlin-stdlib/1.4.32/kotlin-stdlib-1.4.32.jar"],
-    pom = ":org.jetbrains.kotlin.kotlin-stdlib.1.4.32_pom",
-    repo_path = "repository/org/jetbrains/kotlin/kotlin-stdlib/1.4.32",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "org.jetbrains.kotlin.kotlin-stdlib.1.4.32_pom",
-    source = "repository/org/jetbrains/kotlin/kotlin-stdlib/1.4.32/kotlin-stdlib-1.4.32.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
     name = "org.jetbrains.kotlin.kotlin-stdlib.1.4.21",
     jars = ["repository/org/jetbrains/kotlin/kotlin-stdlib/1.4.21/kotlin-stdlib-1.4.21.jar"],
     pom = ":org.jetbrains.kotlin.kotlin-stdlib.1.4.21_pom",
@@ -368,34 +311,6 @@ maven_java_import(
 maven_pom(
     name = "org.jetbrains.kotlin.kotlin-stdlib.1.4.21_pom",
     source = "repository/org/jetbrains/kotlin/kotlin-stdlib/1.4.21/kotlin-stdlib-1.4.21.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "org.jetbrains.kotlin.kotlin-stdlib-jdk8.1.4.32",
-    jars = ["repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.4.32/kotlin-stdlib-jdk8-1.4.32.jar"],
-    pom = ":org.jetbrains.kotlin.kotlin-stdlib-jdk8.1.4.32_pom",
-    repo_path = "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.4.32",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "org.jetbrains.kotlin.kotlin-stdlib-jdk8.1.4.32_pom",
-    source = "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.4.32/kotlin-stdlib-jdk8-1.4.32.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "org.jetbrains.kotlin.kotlin-stdlib-jdk7.1.4.32",
-    jars = ["repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.4.32/kotlin-stdlib-jdk7-1.4.32.jar"],
-    pom = ":org.jetbrains.kotlin.kotlin-stdlib-jdk7.1.4.32_pom",
-    repo_path = "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.4.32",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "org.jetbrains.kotlin.kotlin-stdlib-jdk7.1.4.32_pom",
-    source = "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.4.32/kotlin-stdlib-jdk7-1.4.32.pom",
     visibility = ["//visibility:public"],
 )
 
@@ -616,22 +531,6 @@ filegroup(
         "//prebuilts/tools/common/m2:windows-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.24.0/protoc-gen-grpc-java-1.24.0-windows-x86_64.exe"],
         "//prebuilts/tools/common/m2:linux-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.24.0/protoc-gen-grpc-java-1.24.0-linux-x86_64.exe"],
     }),
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "io.grpc.protoc-gen-grpc-java.1.21.1_maven",
-    classified_files = [
-        "repository/io/grpc/protoc-gen-grpc-java/1.21.1/protoc-gen-grpc-java-1.21.1-linux-x86_64.exe",
-        "repository/io/grpc/protoc-gen-grpc-java/1.21.1/protoc-gen-grpc-java-1.21.1-osx-x86_64.exe",
-        "repository/io/grpc/protoc-gen-grpc-java/1.21.1/protoc-gen-grpc-java-1.21.1-windows-x86_64.exe",
-    ],
-    classifiers = [
-        "linux-x86_64",
-        "osx-x86_64",
-        "windows-x86_64",
-    ],
-    source = "repository/io/grpc/protoc-gen-grpc-java/1.21.1/protoc-gen-grpc-java-1.21.1.pom",
     visibility = ["//visibility:public"],
 )
 
@@ -968,86 +867,6 @@ maven_pom(
     visibility = ["//visibility:public"],
 )
 
-maven_java_import(
-    name = "log4j.log4j.1.2.17",
-    jars = ["repository/log4j/log4j/1.2.17/log4j-1.2.17.jar"],
-    pom = ":log4j.log4j.1.2.17_pom",
-    repo_path = "repository/log4j/log4j/1.2.17",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "log4j.log4j.1.2.17_pom",
-    source = "repository/log4j/log4j/1.2.17/log4j-1.2.17.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "com.squareup.okio.okio.1.6.0",
-    jars = ["repository/com/squareup/okio/okio/1.6.0/okio-1.6.0.jar"],
-    pom = ":com.squareup.okio.okio.1.6.0_pom",
-    repo_path = "repository/com/squareup/okio/okio/1.6.0",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.squareup.okio.okio.1.6.0_pom",
-    parent = "//prebuilts/tools/common/m2:com.squareup.okio.okio-parent.1.6.0_pom",
-    source = "repository/com/squareup/okio/okio/1.6.0/okio-1.6.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.squareup.okio.okio-parent.1.6.0_pom",
-    parent = "//prebuilts/tools/common/m2:org.sonatype.oss.oss-parent.7_pom",
-    source = "repository/com/squareup/okio/okio-parent/1.6.0/okio-parent-1.6.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.squareup.okhttp.parent.2.5.0_pom",
-    parent = "//prebuilts/tools/common/m2:org.sonatype.oss.oss-parent.7_pom",
-    source = "repository/com/squareup/okhttp/parent/2.5.0/parent-2.5.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "com.squareup.okhttp.okhttp.2.5.0",
-    jars = ["repository/com/squareup/okhttp/okhttp/2.5.0/okhttp-2.5.0.jar"],
-    pom = ":com.squareup.okhttp.okhttp.2.5.0_pom",
-    repo_path = "repository/com/squareup/okhttp/okhttp/2.5.0",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.squareup.okhttp.okhttp.2.5.0_pom",
-    parent = "//prebuilts/tools/common/m2:com.squareup.okhttp.parent.2.5.0_pom",
-    source = "repository/com/squareup/okhttp/okhttp/2.5.0/okhttp-2.5.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.squareup.okhttp3.parent.3.3.0_pom",
-    parent = "//prebuilts/tools/common/m2:org.sonatype.oss.oss-parent.7_pom",
-    source = "repository/com/squareup/okhttp3/parent/3.3.0/parent-3.3.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "com.squareup.okhttp3.okhttp.3.3.0",
-    jars = ["repository/com/squareup/okhttp3/okhttp/3.3.0/okhttp-3.3.0.jar"],
-    pom = ":com.squareup.okhttp3.okhttp.3.3.0_pom",
-    repo_path = "repository/com/squareup/okhttp3/okhttp/3.3.0",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.squareup.okhttp3.okhttp.3.3.0_pom",
-    parent = "//prebuilts/tools/common/m2:com.squareup.okhttp3.parent.3.3.0_pom",
-    source = "repository/com/squareup/okhttp3/okhttp/3.3.0/okhttp-3.3.0.pom",
-    visibility = ["//visibility:public"],
-)
-
 maven_pom(
     name = "com.fasterxml.oss-parent.34_pom",
     source = "repository/com/fasterxml/oss-parent/34/oss-parent-34.pom",
@@ -1091,20 +910,6 @@ maven_pom(
 )
 
 maven_java_import(
-    name = "com.nothome.javaxdelta.2.0.1",
-    jars = ["repository/com/nothome/javaxdelta/2.0.1/javaxdelta-2.0.1.jar"],
-    pom = ":com.nothome.javaxdelta.2.0.1_pom",
-    repo_path = "repository/com/nothome/javaxdelta/2.0.1",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.nothome.javaxdelta.2.0.1_pom",
-    source = "repository/com/nothome/javaxdelta/2.0.1/javaxdelta-2.0.1.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
     name = "com.android.tools.desugar_jdk_libs_configuration.1.1.5",
     jars = ["repository/com/android/tools/desugar_jdk_libs_configuration/1.1.5/desugar_jdk_libs_configuration-1.1.5.jar"],
     pom = ":com.android.tools.desugar_jdk_libs_configuration.1.1.5_pom",
@@ -1133,107 +938,6 @@ maven_pom(
 )
 
 maven_pom(
-    name = "com.android.tools.build.aapt2.3.5.0-5435860_3.5.0-5435860_maven",
-    classified_files = [
-        "repository/com/android/tools/build/aapt2/3.5.0-5435860/aapt2-3.5.0-5435860-linux.jar",
-        "repository/com/android/tools/build/aapt2/3.5.0-5435860/aapt2-3.5.0-5435860-osx.jar",
-        "repository/com/android/tools/build/aapt2/3.5.0-5435860/aapt2-3.5.0-5435860-windows.jar",
-    ],
-    classifiers = [
-        "linux",
-        "osx",
-        "windows",
-    ],
-    source = "repository/com/android/tools/build/aapt2/3.5.0-5435860/aapt2-3.5.0-5435860.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.android.tools.build.aapt2.4.0.0-6051327_4.0.0-6051327_maven",
-    classified_files = [
-        "repository/com/android/tools/build/aapt2/4.0.0-6051327/aapt2-4.0.0-6051327-linux.jar",
-        "repository/com/android/tools/build/aapt2/4.0.0-6051327/aapt2-4.0.0-6051327-osx.jar",
-        "repository/com/android/tools/build/aapt2/4.0.0-6051327/aapt2-4.0.0-6051327-windows.jar",
-    ],
-    classifiers = [
-        "linux",
-        "osx",
-        "windows",
-    ],
-    source = "repository/com/android/tools/build/aapt2/4.0.0-6051327/aapt2-4.0.0-6051327.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.android.tools.build.aapt2.4.1.0-6503028_4.1.0-6503028_maven",
-    classified_files = [
-        "repository/com/android/tools/build/aapt2/4.1.0-6503028/aapt2-4.1.0-6503028-linux.jar",
-        "repository/com/android/tools/build/aapt2/4.1.0-6503028/aapt2-4.1.0-6503028-osx.jar",
-        "repository/com/android/tools/build/aapt2/4.1.0-6503028/aapt2-4.1.0-6503028-windows.jar",
-    ],
-    classifiers = [
-        "linux",
-        "osx",
-        "windows",
-    ],
-    source = "repository/com/android/tools/build/aapt2/4.1.0-6503028/aapt2-4.1.0-6503028.pom",
-    visibility = ["//visibility:public"],
-)
-
-filegroup(
-    name = "com.android.tools.build.aapt2.3.3.2-5309881",
-)
-
-maven_pom(
-    name = "com.android.tools.build.aapt2.3.3.2-5309881_jar_maven",
-    classified_files = [
-        "repository/com/android/tools/build/aapt2/3.3.2-5309881/aapt2-3.3.2-5309881-linux.jar",
-        "repository/com/android/tools/build/aapt2/3.3.2-5309881/aapt2-3.3.2-5309881-osx.jar",
-        "repository/com/android/tools/build/aapt2/3.3.2-5309881/aapt2-3.3.2-5309881-windows.jar",
-    ],
-    classifiers = [
-        "linux",
-        "osx",
-        "windows",
-    ],
-    source = "repository/com/android/tools/build/aapt2/3.3.2-5309881/aapt2-3.3.2-5309881.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "com.android.support.support-annotations.28.0.0",
-    jars = ["repository/com/android/support/support-annotations/28.0.0/support-annotations-28.0.0.jar"],
-    pom = ":com.android.support.support-annotations.28.0.0_pom",
-    repo_path = "repository/com/android/support/support-annotations/28.0.0",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.android.support.support-annotations.28.0.0_pom",
-    source = "repository/com/android/support/support-annotations/28.0.0/support-annotations-28.0.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_aar(
-    name = "com.android.support.appcompat-v7.26.1.0_aar",
-    aar = "repository/com/android/support/appcompat-v7/26.1.0/appcompat-v7-26.1.0.aar",
-    pom = ":com.android.support.appcompat-v7.26.1.0_pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.android.support.appcompat-v7.26.1.0_pom",
-    source = "repository/com/android/support/appcompat-v7/26.1.0/appcompat-v7-26.1.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.guava.guava-parent.29.0-jre_pom",
-    source = "repository/com/google/guava/guava-parent/29.0-jre/guava-parent-29.0-jre.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
     name = "com.google.guava.guava-parent.26.0-android_pom",
     parent = "//prebuilts/tools/common/m2:org.sonatype.oss.oss-parent.9_pom",
     source = "repository/com/google/guava/guava-parent/26.0-android/guava-parent-26.0-android.pom",
@@ -1257,21 +961,6 @@ maven_pom(
     name = "com.google.guava.guava-parent.27.0.1-jre_pom",
     parent = "//prebuilts/tools/common/m2:org.sonatype.oss.oss-parent.9_pom",
     source = "repository/com/google/guava/guava-parent/27.0.1-jre/guava-parent-27.0.1-jre.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "com.google.guava.guava.29.0-jre",
-    jars = ["repository/com/google/guava/guava/29.0-jre/guava-29.0-jre.jar"],
-    pom = ":com.google.guava.guava.29.0-jre_pom",
-    repo_path = "repository/com/google/guava/guava/29.0-jre",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.guava.guava.29.0-jre_pom",
-    parent = "//prebuilts/tools/common/m2:com.google.guava.guava-parent.29.0-jre_pom",
-    source = "repository/com/google/guava/guava/29.0-jre/guava-29.0-jre.pom",
     visibility = ["//visibility:public"],
 )
 
@@ -1320,12 +1009,6 @@ maven_pom(
     visibility = ["//visibility:public"],
 )
 
-filegroup(
-    name = "com.google.guava.guava.18.0_18.0",
-    srcs = glob(["repository/com/google/guava/guava/18.0/**"]),
-    visibility = ["//visibility:public"],
-)
-
 maven_java_import(
     name = "com.google.guava.failureaccess.1.0.1",
     jars = ["repository/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar"],
@@ -1362,13 +1045,6 @@ maven_pom(
     visibility = ["//visibility:public"],
 )
 
-maven_pom(
-    name = "com.google.truth.truth-parent.0.42_pom",
-    parent = "//prebuilts/tools/common/m2:org.sonatype.oss.oss-parent.7_pom",
-    source = "repository/com/google/truth/truth-parent/0.42/truth-parent-0.42.pom",
-    visibility = ["//visibility:public"],
-)
-
 maven_java_import(
     name = "com.google.truth.truth.0.44",
     jars = ["repository/com/google/truth/truth/0.44/truth-0.44.jar"],
@@ -1381,21 +1057,6 @@ maven_pom(
     name = "com.google.truth.truth.0.44_pom",
     parent = "//prebuilts/tools/common/m2:com.google.truth.truth-parent.0.44_pom",
     source = "repository/com/google/truth/truth/0.44/truth-0.44.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "com.google.truth.truth.0.42",
-    jars = ["repository/com/google/truth/truth/0.42/truth-0.42.jar"],
-    pom = ":com.google.truth.truth.0.42_pom",
-    repo_path = "repository/com/google/truth/truth/0.42",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.truth.truth.0.42_pom",
-    parent = "//prebuilts/tools/common/m2:com.google.truth.truth-parent.0.42_pom",
-    source = "repository/com/google/truth/truth/0.42/truth-0.42.pom",
     visibility = ["//visibility:public"],
 )
 
@@ -1436,28 +1097,6 @@ maven_pom(
     visibility = ["//visibility:public"],
 )
 
-maven_pom(
-    name = "com.google.jimfs.jimfs-parent.1.1_pom",
-    parent = "//prebuilts/tools/common/m2:org.sonatype.oss.oss-parent.7_pom",
-    source = "repository/com/google/jimfs/jimfs-parent/1.1/jimfs-parent-1.1.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "com.google.jimfs.jimfs.1.1",
-    jars = ["repository/com/google/jimfs/jimfs/1.1/jimfs-1.1.jar"],
-    pom = ":com.google.jimfs.jimfs.1.1_pom",
-    repo_path = "repository/com/google/jimfs/jimfs/1.1",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.jimfs.jimfs.1.1_pom",
-    parent = "//prebuilts/tools/common/m2:com.google.jimfs.jimfs-parent.1.1_pom",
-    source = "repository/com/google/jimfs/jimfs/1.1/jimfs-1.1.pom",
-    visibility = ["//visibility:public"],
-)
-
 maven_java_import(
     name = "com.google.code.gson.gson.2.7",
     jars = ["repository/com/google/code/gson/gson/2.7/gson-2.7.jar"],
@@ -1473,54 +1112,10 @@ maven_pom(
     visibility = ["//visibility:public"],
 )
 
-maven_java_import(
-    name = "com.google.code.gson.gson.2.8.6",
-    jars = ["repository/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar"],
-    pom = ":com.google.code.gson.gson.2.8.6_pom",
-    repo_path = "repository/com/google/code/gson/gson/2.8.6",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.code.gson.gson.2.8.6_pom",
-    parent = "//prebuilts/tools/common/m2:com.google.code.gson.gson-parent.2.8.6_pom",
-    source = "repository/com/google/code/gson/gson/2.8.6/gson-2.8.6.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "com.google.code.gson.gson.2.6.2",
-    jars = ["repository/com/google/code/gson/gson/2.6.2/gson-2.6.2.jar"],
-    pom = ":com.google.code.gson.gson.2.6.2_pom",
-    repo_path = "repository/com/google/code/gson/gson/2.6.2",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.code.gson.gson.2.6.2_pom",
-    parent = "//prebuilts/tools/common/m2:com.google.code.gson.gson-parent.2.6.2_pom",
-    source = "repository/com/google/code/gson/gson/2.6.2/gson-2.6.2.pom",
-    visibility = ["//visibility:public"],
-)
-
 maven_pom(
     name = "com.google.code.gson.gson-parent.2.7_pom",
     parent = "//prebuilts/tools/common/m2:org.sonatype.oss.oss-parent.7_pom",
     source = "repository/com/google/code/gson/gson-parent/2.7/gson-parent-2.7.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.code.gson.gson-parent.2.8.6_pom",
-    parent = "//prebuilts/tools/common/m2:org.sonatype.oss.oss-parent.7_pom",
-    source = "repository/com/google/code/gson/gson-parent/2.8.6/gson-parent-2.8.6.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.code.gson.gson-parent.2.6.2_pom",
-    parent = "//prebuilts/tools/common/m2:org.sonatype.oss.oss-parent.7_pom",
-    source = "repository/com/google/code/gson/gson-parent/2.6.2/gson-parent-2.6.2.pom",
     visibility = ["//visibility:public"],
 )
 
@@ -1565,21 +1160,6 @@ maven_pom(
     name = "com.google.auto.auto-parent.6_pom",
     parent = "//prebuilts/tools/common/m2:org.sonatype.oss.oss-parent.7_pom",
     source = "repository/com/google/auto/auto-parent/6/auto-parent-6.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "com.google.j2objc.j2objc-annotations.1.3",
-    jars = ["repository/com/google/j2objc/j2objc-annotations/1.3/j2objc-annotations-1.3.jar"],
-    pom = ":com.google.j2objc.j2objc-annotations.1.3_pom",
-    repo_path = "repository/com/google/j2objc/j2objc-annotations/1.3",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.j2objc.j2objc-annotations.1.3_pom",
-    parent = "//prebuilts/tools/common/m2:org.sonatype.oss.oss-parent.7_pom",
-    source = "repository/com/google/j2objc/j2objc-annotations/1.3/j2objc-annotations-1.3.pom",
     visibility = ["//visibility:public"],
 )
 
@@ -1659,23 +1239,6 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
-maven_pom(
-    name = "com.google.protobuf.protoc.3.10.0_maven",
-    classified_files = [
-        "repository/com/google/protobuf/protoc/3.10.0/protoc-3.10.0-linux-x86_64.exe",
-        "repository/com/google/protobuf/protoc/3.10.0/protoc-3.10.0-osx-x86_64.exe",
-        "repository/com/google/protobuf/protoc/3.10.0/protoc-3.10.0-windows-x86_64.exe",
-    ],
-    classifiers = [
-        "linux-x86_64",
-        "osx-x86_64",
-        "windows-x86_64",
-    ],
-    parent = "//prebuilts/tools/common/m2:com.google.google.1_pom",
-    source = "repository/com/google/protobuf/protoc/3.10.0/protoc-3.10.0.pom",
-    visibility = ["//visibility:public"],
-)
-
 filegroup(
     name = "com.google.protobuf.protoc.3.10.0_exe",
     srcs = select({
@@ -1745,21 +1308,6 @@ filegroup(
 )
 
 maven_java_import(
-    name = "com.google.protobuf.protobuf-java.3.5.1",
-    jars = ["repository/com/google/protobuf/protobuf-java/3.5.1/protobuf-java-3.5.1.jar"],
-    pom = ":com.google.protobuf.protobuf-java.3.5.1_pom",
-    repo_path = "repository/com/google/protobuf/protobuf-java/3.5.1",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.protobuf.protobuf-java.3.5.1_pom",
-    parent = "//prebuilts/tools/common/m2:com.google.protobuf.protobuf-parent.3.5.1_pom",
-    source = "repository/com/google/protobuf/protobuf-java/3.5.1/protobuf-java-3.5.1.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
     name = "com.google.protobuf.protobuf-java.3.10.0",
     jars = ["repository/com/google/protobuf/protobuf-java/3.10.0/protobuf-java-3.10.0.jar"],
     pom = ":com.google.protobuf.protobuf-java.3.10.0_pom",
@@ -1814,13 +1362,6 @@ maven_pom(
 )
 
 maven_pom(
-    name = "com.google.protobuf.protobuf-parent.3.5.1_pom",
-    parent = "//prebuilts/tools/common/m2:com.google.google.1_pom",
-    source = "repository/com/google/protobuf/protobuf-parent/3.5.1/protobuf-parent-3.5.1.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
     name = "com.google.protobuf.protobuf-parent.3.10.0_pom",
     source = "repository/com/google/protobuf/protobuf-parent/3.10.0/protobuf-parent-3.10.0.pom",
     visibility = ["//visibility:public"],
@@ -1845,34 +1386,6 @@ maven_pom(
     name = "net.sf.jopt-simple.jopt-simple.4.9_pom",
     parent = "//prebuilts/tools/common/m2:org.sonatype.oss.oss-parent.7_pom",
     source = "repository/net/sf/jopt-simple/jopt-simple/4.9/jopt-simple-4.9.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "net.java.dev.jna.jna-platform.5.5.0",
-    jars = ["repository/net/java/dev/jna/jna-platform/5.5.0/jna-platform-5.5.0.jar"],
-    pom = ":net.java.dev.jna.jna-platform.5.5.0_pom",
-    repo_path = "repository/net/java/dev/jna/jna-platform/5.5.0",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "net.java.dev.jna.jna-platform.5.5.0_pom",
-    source = "repository/net/java/dev/jna/jna-platform/5.5.0/jna-platform-5.5.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "net.java.dev.jna.jna.5.5.0",
-    jars = ["repository/net/java/dev/jna/jna/5.5.0/jna-5.5.0.jar"],
-    pom = ":net.java.dev.jna.jna.5.5.0_pom",
-    repo_path = "repository/net/java/dev/jna/jna/5.5.0",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "net.java.dev.jna.jna.5.5.0_pom",
-    source = "repository/net/java/dev/jna/jna/5.5.0/jna-5.5.0.pom",
     visibility = ["//visibility:public"],
 )
 
