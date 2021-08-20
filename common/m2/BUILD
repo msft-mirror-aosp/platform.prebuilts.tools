@@ -1750,3 +1750,18 @@ maven_pom(
     source = "repository/com/fasterxml/jackson/core/jackson-core/2.11.1/jackson-core-2.11.1.pom",
     visibility = ["//visibility:public"],
 )
+
+# TODO(b/197361777): Clean up jarjar deps
+java_import(
+    name = "jarjar_deps",
+    jars = [
+        "repository/net/sf/jopt-simple/jopt-simple/4.9/jopt-simple-4.9.jar",
+        "repository/org/anarres/jarjar/jarjar-command/1.0.0/jarjar-command-1.0.0.jar",
+        "repository/org/anarres/jarjar/jarjar-core/1.0.0/jarjar-core-1.0.0.jar",
+        "repository/org/ow2/asm/asm/5.0.4/asm-5.0.4.jar",
+        "repository/org/ow2/asm/asm-commons/5.0.4/asm-commons-5.0.4.jar",
+        "repository/org/slf4j/slf4j-api/1.7.2/slf4j-api-1.7.2.jar",
+        "repository/org/slf4j/slf4j-simple/1.7.2/slf4j-simple-1.7.2.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
