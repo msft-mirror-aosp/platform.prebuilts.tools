@@ -1,5 +1,4 @@
-load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom")
-load("//tools/base/bazel:kotlin.bzl", "maven_library")
+load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom", "maven_library")
 load("//tools/base/bazel:utils.bzl", "java_jarjar")
 load("//tools/base/common:version.bzl", "BUILD_VERSION")
 
@@ -34,12 +33,11 @@ java_import(
 )
 
 maven_library(
-    name = "uast_bzl",
+    name = "uast",
     srcs = [],
     bundled_deps = [
         ":import_all",
     ],
     coordinates = "com.android.tools.external.intellij:uast:" + BUILD_VERSION,
-    legacy_name = "uast",
     visibility = ["//visibility:public"],
 )

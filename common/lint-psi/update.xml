@@ -98,10 +98,14 @@
             <fileset dir="${temp}/classes/uast-java-sources"/>
         </jar>
 
-        <copy file="${kotlin-dist}/lib/kotlin-uast-kotlin.jar" tofile="${dist-uast}/uast-kotlin.jar"></copy>
+        <jar jarfile="${dist-uast}/uast-kotlin.jar">
+            <zipfileset src="${kotlin-dist}/lib/kotlin-uast-kotlin.jar" />
+            <zipfileset src="${kotlin-dist}/lib/kotlin-uast-kotlin-base.jar" />
+        </jar>
 
         <jar jarfile="${dist-uast}/uast-kotlin-sources.jar">
             <fileset dir="${kotlin_plugin_repo}/uast/uast-kotlin/src"/>
+            <fileset dir="${kotlin_plugin_repo}/uast/uast-kotlin-base/src"/>
         </jar>
 
         <delete dir="${temp}"/>

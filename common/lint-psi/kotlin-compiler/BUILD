@@ -1,6 +1,5 @@
-load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom")
+load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom", "maven_library")
 load("//tools/base/bazel:merge_archives.bzl", "merge_jars")
-load("//tools/base/bazel:kotlin.bzl", "maven_library")
 load("//tools/base/common:version.bzl", "BUILD_VERSION")
 
 filegroup(
@@ -30,12 +29,12 @@ java_import(
 )
 
 maven_library(
-    name = "kotlin-compiler_bzl",
+    name = "kotlin-compiler",
     srcs = [],
     bundled_deps = [
         ":import_all",
     ],
     coordinates = "com.android.tools.external.intellij:kotlin-compiler:" + BUILD_VERSION,
-    legacy_name = "kotlin-compiler",
+    jar_name = "kotlin-compiler-mvn.jar",
     visibility = ["//visibility:public"],
 )

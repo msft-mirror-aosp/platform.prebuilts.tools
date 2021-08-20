@@ -852,21 +852,6 @@ maven_pom(
 )
 
 maven_java_import(
-    name = "org.assertj.assertj-core.3.13.2",
-    jars = ["repository/org/assertj/assertj-core/3.13.2/assertj-core-3.13.2.jar"],
-    pom = ":org.assertj.assertj-core.3.13.2_pom",
-    repo_path = "repository/org/assertj/assertj-core/3.13.2",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "org.assertj.assertj-core.3.13.2_pom",
-    parent = "//prebuilts/tools/common/m2:org.assertj.assertj-parent-pom.2.2.5_pom",
-    source = "repository/org/assertj/assertj-core/3.13.2/assertj-core-3.13.2.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
     name = "org.gradle.gradle-tooling-api.5.3.1",
     jars = ["repository/org/gradle/gradle-tooling-api/5.3.1/gradle-tooling-api-5.3.1.jar"],
     pom = ":org.gradle.gradle-tooling-api.5.3.1_pom",
@@ -24009,13 +23994,6 @@ filegroup(
 filegroup(
     name = "baksmali_files",
     srcs = ["repository/org/smali/baksmali/2.2.4/baksmali-2.2.4.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-filegroup(
-    name = "assertJ_files",
-    srcs = ["repository/org/assertj/assertj-core/3.13.2/assertj-core-3.13.2.jar"],
     visibility = ["//visibility:public"],
 )
 
