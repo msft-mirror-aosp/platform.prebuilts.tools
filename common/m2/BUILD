@@ -34,34 +34,6 @@ maven_pom(
 )
 
 maven_java_import(
-    name = "org.anarres.jarjar.jarjar-core.1.0.0",
-    jars = ["repository/org/anarres/jarjar/jarjar-core/1.0.0/jarjar-core-1.0.0.jar"],
-    pom = ":org.anarres.jarjar.jarjar-core.1.0.0_pom",
-    repo_path = "repository/org/anarres/jarjar/jarjar-core/1.0.0",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "org.anarres.jarjar.jarjar-core.1.0.0_pom",
-    source = "repository/org/anarres/jarjar/jarjar-core/1.0.0/jarjar-core-1.0.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "org.anarres.jarjar.jarjar-command.1.0.0",
-    jars = ["repository/org/anarres/jarjar/jarjar-command/1.0.0/jarjar-command-1.0.0.jar"],
-    pom = ":org.anarres.jarjar.jarjar-command.1.0.0_pom",
-    repo_path = "repository/org/anarres/jarjar/jarjar-command/1.0.0",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "org.anarres.jarjar.jarjar-command.1.0.0_pom",
-    source = "repository/org/anarres/jarjar/jarjar-command/1.0.0/jarjar-command-1.0.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
     name = "org.hamcrest.hamcrest-core.1.3",
     jars = ["repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"],
     pom = ":org.hamcrest.hamcrest-core.1.3_pom",
@@ -108,21 +80,6 @@ maven_pom(
 )
 
 maven_java_import(
-    name = "org.ow2.asm.asm.5.0.4",
-    jars = ["repository/org/ow2/asm/asm/5.0.4/asm-5.0.4.jar"],
-    pom = ":org.ow2.asm.asm.5.0.4_pom",
-    repo_path = "repository/org/ow2/asm/asm/5.0.4",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "org.ow2.asm.asm.5.0.4_pom",
-    parent = "//prebuilts/tools/common/m2:org.ow2.asm.asm-parent.5.0.4_pom",
-    source = "repository/org/ow2/asm/asm/5.0.4/asm-5.0.4.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
     name = "org.ow2.asm.asm.7.0",
     jars = ["repository/org/ow2/asm/asm/7.0/asm-7.0.jar"],
     pom = ":org.ow2.asm.asm.7.0_pom",
@@ -152,28 +109,6 @@ maven_pom(
     visibility = ["//visibility:public"],
 )
 
-maven_pom(
-    name = "org.ow2.asm.asm-parent.5.0.4_pom",
-    parent = "//prebuilts/tools/common/m2:org.ow2.ow2.1.3_pom",
-    source = "repository/org/ow2/asm/asm-parent/5.0.4/asm-parent-5.0.4.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "org.ow2.asm.asm-commons.5.0.4",
-    jars = ["repository/org/ow2/asm/asm-commons/5.0.4/asm-commons-5.0.4.jar"],
-    pom = ":org.ow2.asm.asm-commons.5.0.4_pom",
-    repo_path = "repository/org/ow2/asm/asm-commons/5.0.4",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "org.ow2.asm.asm-commons.5.0.4_pom",
-    parent = "//prebuilts/tools/common/m2:org.ow2.asm.asm-parent.5.0.4_pom",
-    source = "repository/org/ow2/asm/asm-commons/5.0.4/asm-commons-5.0.4.pom",
-    visibility = ["//visibility:public"],
-)
-
 maven_java_import(
     name = "org.ow2.asm.asm-commons.7.0",
     jars = ["repository/org/ow2/asm/asm-commons/7.0/asm-commons-7.0.jar"],
@@ -192,12 +127,6 @@ maven_pom(
 maven_pom(
     name = "org.ow2.ow2.1.5_pom",
     source = "repository/org/ow2/ow2/1.5/ow2-1.5.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "org.ow2.ow2.1.3_pom",
-    source = "repository/org/ow2/ow2/1.3/ow2-1.3.pom",
     visibility = ["//visibility:public"],
 )
 
@@ -233,42 +162,6 @@ maven_java_import(
 maven_pom(
     name = "org.mockito.mockito-core.2.7.1_pom",
     source = "repository/org/mockito/mockito-core/2.7.1/mockito-core-2.7.1.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "org.slf4j.slf4j-simple.1.7.2",
-    jars = ["repository/org/slf4j/slf4j-simple/1.7.2/slf4j-simple-1.7.2.jar"],
-    pom = ":org.slf4j.slf4j-simple.1.7.2_pom",
-    repo_path = "repository/org/slf4j/slf4j-simple/1.7.2",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "org.slf4j.slf4j-simple.1.7.2_pom",
-    parent = "//prebuilts/tools/common/m2:org.slf4j.slf4j-parent.1.7.2_pom",
-    source = "repository/org/slf4j/slf4j-simple/1.7.2/slf4j-simple-1.7.2.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "org.slf4j.slf4j-api.1.7.2",
-    jars = ["repository/org/slf4j/slf4j-api/1.7.2/slf4j-api-1.7.2.jar"],
-    pom = ":org.slf4j.slf4j-api.1.7.2_pom",
-    repo_path = "repository/org/slf4j/slf4j-api/1.7.2",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "org.slf4j.slf4j-api.1.7.2_pom",
-    parent = "//prebuilts/tools/common/m2:org.slf4j.slf4j-parent.1.7.2_pom",
-    source = "repository/org/slf4j/slf4j-api/1.7.2/slf4j-api-1.7.2.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "org.slf4j.slf4j-parent.1.7.2_pom",
-    source = "repository/org/slf4j/slf4j-parent/1.7.2/slf4j-parent-1.7.2.pom",
     visibility = ["//visibility:public"],
 )
 
@@ -909,34 +802,6 @@ maven_pom(
     visibility = ["//visibility:public"],
 )
 
-maven_java_import(
-    name = "com.android.tools.desugar_jdk_libs_configuration.1.1.5",
-    jars = ["repository/com/android/tools/desugar_jdk_libs_configuration/1.1.5/desugar_jdk_libs_configuration-1.1.5.jar"],
-    pom = ":com.android.tools.desugar_jdk_libs_configuration.1.1.5_pom",
-    repo_path = "repository/com/android/tools/desugar_jdk_libs_configuration/1.1.5",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.android.tools.desugar_jdk_libs_configuration.1.1.5_pom",
-    source = "repository/com/android/tools/desugar_jdk_libs_configuration/1.1.5/desugar_jdk_libs_configuration-1.1.5.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "com.android.tools.desugar_jdk_libs.1.1.5",
-    jars = ["repository/com/android/tools/desugar_jdk_libs/1.1.5/desugar_jdk_libs-1.1.5.jar"],
-    pom = ":com.android.tools.desugar_jdk_libs.1.1.5_pom",
-    repo_path = "repository/com/android/tools/desugar_jdk_libs/1.1.5",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.android.tools.desugar_jdk_libs.1.1.5_pom",
-    source = "repository/com/android/tools/desugar_jdk_libs/1.1.5/desugar_jdk_libs-1.1.5.pom",
-    visibility = ["//visibility:public"],
-)
-
 maven_pom(
     name = "com.google.guava.guava-parent.26.0-android_pom",
     parent = "//prebuilts/tools/common/m2:org.sonatype.oss.oss-parent.9_pom",
@@ -1371,21 +1236,6 @@ maven_pom(
     name = "com.google.protobuf.protobuf-parent.3.4.0_pom",
     parent = "//prebuilts/tools/common/m2:com.google.google.1_pom",
     source = "repository/com/google/protobuf/protobuf-parent/3.4.0/protobuf-parent-3.4.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "net.sf.jopt-simple.jopt-simple.4.9",
-    jars = ["repository/net/sf/jopt-simple/jopt-simple/4.9/jopt-simple-4.9.jar"],
-    pom = ":net.sf.jopt-simple.jopt-simple.4.9_pom",
-    repo_path = "repository/net/sf/jopt-simple/jopt-simple/4.9",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "net.sf.jopt-simple.jopt-simple.4.9_pom",
-    parent = "//prebuilts/tools/common/m2:org.sonatype.oss.oss-parent.7_pom",
-    source = "repository/net/sf/jopt-simple/jopt-simple/4.9/jopt-simple-4.9.pom",
     visibility = ["//visibility:public"],
 )
 
