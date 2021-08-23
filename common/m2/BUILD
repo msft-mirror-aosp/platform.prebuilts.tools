@@ -180,16 +180,16 @@ maven_pom(
 )
 
 maven_java_import(
-    name = "org.jetbrains.kotlin.kotlin-gradle-plugin.1.5.10",
-    jars = ["repository/org/jetbrains/kotlin/kotlin-gradle-plugin/1.5.10/kotlin-gradle-plugin-1.5.10.jar"],
-    pom = ":org.jetbrains.kotlin.kotlin-gradle-plugin.1.5.10_pom",
-    repo_path = "repository/org/jetbrains/kotlin/kotlin-gradle-plugin/1.5.10",
+    name = "org.jetbrains.kotlin.kotlin-gradle-plugin.1.5.21",
+    jars = ["repository/org/jetbrains/kotlin/kotlin-gradle-plugin/1.5.21/kotlin-gradle-plugin-1.5.21.jar"],
+    pom = ":org.jetbrains.kotlin.kotlin-gradle-plugin.1.5.21_pom",
+    repo_path = "repository/org/jetbrains/kotlin/kotlin-gradle-plugin/1.5.21",
     visibility = ["//visibility:public"],
 )
 
 maven_pom(
-    name = "org.jetbrains.kotlin.kotlin-gradle-plugin.1.5.10_pom",
-    source = "repository/org/jetbrains/kotlin/kotlin-gradle-plugin/1.5.10/kotlin-gradle-plugin-1.5.10.pom",
+    name = "org.jetbrains.kotlin.kotlin-gradle-plugin.1.5.21_pom",
+    source = "repository/org/jetbrains/kotlin/kotlin-gradle-plugin/1.5.21/kotlin-gradle-plugin-1.5.21.pom",
     visibility = ["//visibility:public"],
 )
 
