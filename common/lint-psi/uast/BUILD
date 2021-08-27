@@ -38,6 +38,6 @@ maven_library(
     bundled_deps = [
         ":import_all",
     ],
-    coordinates = "com.android.tools.external.intellij:uast:" + BUILD_VERSION,
+    coordinates = "com.android.tools.external.org-jetbrains:uast:" + BUILD_VERSION,
     visibility = ["//visibility:public"],
 )

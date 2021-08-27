@@ -34,7 +34,7 @@ maven_library(
     bundled_deps = [
         ":import_all",
     ],
-    coordinates = "com.android.tools.external.intellij:kotlin-compiler:" + BUILD_VERSION,
+    coordinates = "com.android.tools.external.com-intellij:kotlin-compiler:" + BUILD_VERSION,
     jar_name = "kotlin-compiler-mvn.jar",
     visibility = ["//visibility:public"],
 )

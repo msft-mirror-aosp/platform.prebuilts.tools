@@ -32,7 +32,7 @@ maven_library(
     bundled_deps = [
         ":import_all",
     ],
-    coordinates = "com.android.tools.external.intellij:intellij-core:" + BUILD_VERSION,
+    coordinates = "com.android.tools.external.com-intellij:intellij-core:" + BUILD_VERSION,
     jar_name = "intellij-core-mvn.jar",
     visibility = ["//visibility:public"],
 )
