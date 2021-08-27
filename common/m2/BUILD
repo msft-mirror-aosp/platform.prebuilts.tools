@@ -66,19 +66,6 @@ maven_pom(
     visibility = ["//visibility:public"],
 )
 
-maven_pom(
-    name = "org.apache.commons.commons-parent.42_pom",
-    parent = "//prebuilts/tools/common/m2:org.apache.apache.18_pom",
-    source = "repository/org/apache/commons/commons-parent/42/commons-parent-42.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "org.apache.apache.18_pom",
-    source = "repository/org/apache/apache/18/apache-18.pom",
-    visibility = ["//visibility:public"],
-)
-
 maven_java_import(
     name = "org.ow2.asm.asm.7.0",
     jars = ["repository/org/ow2/asm/asm/7.0/asm-7.0.jar"],
@@ -152,34 +139,6 @@ maven_pom(
 )
 
 maven_java_import(
-    name = "org.mockito.mockito-core.2.7.1",
-    jars = ["repository/org/mockito/mockito-core/2.7.1/mockito-core-2.7.1.jar"],
-    pom = ":org.mockito.mockito-core.2.7.1_pom",
-    repo_path = "repository/org/mockito/mockito-core/2.7.1",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "org.mockito.mockito-core.2.7.1_pom",
-    source = "repository/org/mockito/mockito-core/2.7.1/mockito-core-2.7.1.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "org.jsoup.jsoup.1.12.1",
-    jars = ["repository/org/jsoup/jsoup/1.12.1/jsoup-1.12.1.jar"],
-    pom = ":org.jsoup.jsoup.1.12.1_pom",
-    repo_path = "repository/org/jsoup/jsoup/1.12.1",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "org.jsoup.jsoup.1.12.1_pom",
-    source = "repository/org/jsoup/jsoup/1.12.1/jsoup-1.12.1.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
     name = "org.jetbrains.kotlin.kotlin-gradle-plugin.1.5.21",
     jars = ["repository/org/jetbrains/kotlin/kotlin-gradle-plugin/1.5.21/kotlin-gradle-plugin-1.5.21.jar"],
     pom = ":org.jetbrains.kotlin.kotlin-gradle-plugin.1.5.21_pom",
@@ -190,48 +149,6 @@ maven_java_import(
 maven_pom(
     name = "org.jetbrains.kotlin.kotlin-gradle-plugin.1.5.21_pom",
     source = "repository/org/jetbrains/kotlin/kotlin-gradle-plugin/1.5.21/kotlin-gradle-plugin-1.5.21.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "org.jetbrains.kotlin.kotlin-stdlib.1.4.21",
-    jars = ["repository/org/jetbrains/kotlin/kotlin-stdlib/1.4.21/kotlin-stdlib-1.4.21.jar"],
-    pom = ":org.jetbrains.kotlin.kotlin-stdlib.1.4.21_pom",
-    repo_path = "repository/org/jetbrains/kotlin/kotlin-stdlib/1.4.21",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "org.jetbrains.kotlin.kotlin-stdlib.1.4.21_pom",
-    source = "repository/org/jetbrains/kotlin/kotlin-stdlib/1.4.21/kotlin-stdlib-1.4.21.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "org.jetbrains.kotlinx.kotlinx-coroutines-core.1.4.1",
-    jars = ["repository/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.4.1/kotlinx-coroutines-core-1.4.1.jar"],
-    pom = ":org.jetbrains.kotlinx.kotlinx-coroutines-core.1.4.1_pom",
-    repo_path = "repository/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.4.1",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "org.jetbrains.kotlinx.kotlinx-coroutines-core.1.4.1_pom",
-    source = "repository/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.4.1/kotlinx-coroutines-core-1.4.1.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "io.grpc.grpc-api.1.24.0",
-    jars = ["repository/io/grpc/grpc-api/1.24.0/grpc-api-1.24.0.jar"],
-    pom = ":io.grpc.grpc-api.1.24.0_pom",
-    repo_path = "repository/io/grpc/grpc-api/1.24.0",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "io.grpc.grpc-api.1.24.0_pom",
-    source = "repository/io/grpc/grpc-api/1.24.0/grpc-api-1.24.0.pom",
     visibility = ["//visibility:public"],
 )
 
@@ -264,20 +181,6 @@ maven_pom(
 )
 
 maven_java_import(
-    name = "io.grpc.grpc-protobuf.1.24.0",
-    jars = ["repository/io/grpc/grpc-protobuf/1.24.0/grpc-protobuf-1.24.0.jar"],
-    pom = ":io.grpc.grpc-protobuf.1.24.0_pom",
-    repo_path = "repository/io/grpc/grpc-protobuf/1.24.0",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "io.grpc.grpc-protobuf.1.24.0_pom",
-    source = "repository/io/grpc/grpc-protobuf/1.24.0/grpc-protobuf-1.24.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
     name = "io.grpc.grpc-protobuf.1.21.1",
     jars = ["repository/io/grpc/grpc-protobuf/1.21.1/grpc-protobuf-1.21.1.jar"],
     pom = ":io.grpc.grpc-protobuf.1.21.1_pom",
@@ -288,20 +191,6 @@ maven_java_import(
 maven_pom(
     name = "io.grpc.grpc-protobuf.1.21.1_pom",
     source = "repository/io/grpc/grpc-protobuf/1.21.1/grpc-protobuf-1.21.1.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "io.grpc.grpc-stub.1.24.0",
-    jars = ["repository/io/grpc/grpc-stub/1.24.0/grpc-stub-1.24.0.jar"],
-    pom = ":io.grpc.grpc-stub.1.24.0_pom",
-    repo_path = "repository/io/grpc/grpc-stub/1.24.0",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "io.grpc.grpc-stub.1.24.0_pom",
-    source = "repository/io/grpc/grpc-stub/1.24.0/grpc-stub-1.24.0.pom",
     visibility = ["//visibility:public"],
 )
 
@@ -334,20 +223,6 @@ maven_pom(
 )
 
 maven_java_import(
-    name = "io.grpc.grpc-core.1.24.0",
-    jars = ["repository/io/grpc/grpc-core/1.24.0/grpc-core-1.24.0.jar"],
-    pom = ":io.grpc.grpc-core.1.24.0_pom",
-    repo_path = "repository/io/grpc/grpc-core/1.24.0",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "io.grpc.grpc-core.1.24.0_pom",
-    source = "repository/io/grpc/grpc-core/1.24.0/grpc-core-1.24.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
     name = "io.grpc.grpc-core.1.21.1",
     jars = ["repository/io/grpc/grpc-core/1.21.1/grpc-core-1.21.1.jar"],
     pom = ":io.grpc.grpc-core.1.21.1_pom",
@@ -358,20 +233,6 @@ maven_java_import(
 maven_pom(
     name = "io.grpc.grpc-core.1.21.1_pom",
     source = "repository/io/grpc/grpc-core/1.21.1/grpc-core-1.21.1.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "io.grpc.grpc-auth.1.24.0",
-    jars = ["repository/io/grpc/grpc-auth/1.24.0/grpc-auth-1.24.0.jar"],
-    pom = ":io.grpc.grpc-auth.1.24.0_pom",
-    repo_path = "repository/io/grpc/grpc-auth/1.24.0",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "io.grpc.grpc-auth.1.24.0_pom",
-    source = "repository/io/grpc/grpc-auth/1.24.0/grpc-auth-1.24.0.pom",
     visibility = ["//visibility:public"],
 )
 
@@ -390,20 +251,6 @@ maven_pom(
 )
 
 maven_java_import(
-    name = "io.grpc.grpc-protobuf-lite.1.24.0",
-    jars = ["repository/io/grpc/grpc-protobuf-lite/1.24.0/grpc-protobuf-lite-1.24.0.jar"],
-    pom = ":io.grpc.grpc-protobuf-lite.1.24.0_pom",
-    repo_path = "repository/io/grpc/grpc-protobuf-lite/1.24.0",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "io.grpc.grpc-protobuf-lite.1.24.0_pom",
-    source = "repository/io/grpc/grpc-protobuf-lite/1.24.0/grpc-protobuf-lite-1.24.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
     name = "io.grpc.grpc-protobuf-lite.1.21.1",
     jars = ["repository/io/grpc/grpc-protobuf-lite/1.21.1/grpc-protobuf-lite-1.21.1.jar"],
     pom = ":io.grpc.grpc-protobuf-lite.1.21.1_pom",
@@ -418,36 +265,12 @@ maven_pom(
 )
 
 filegroup(
-    name = "io.grpc.protoc-gen-grpc-java.1.24.0_exe",
-    srcs = select({
-        "//prebuilts/tools/common/m2:osx-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.24.0/protoc-gen-grpc-java-1.24.0-osx-x86_64.exe"],
-        "//prebuilts/tools/common/m2:windows-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.24.0/protoc-gen-grpc-java-1.24.0-windows-x86_64.exe"],
-        "//prebuilts/tools/common/m2:linux-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.24.0/protoc-gen-grpc-java-1.24.0-linux-x86_64.exe"],
-    }),
-    visibility = ["//visibility:public"],
-)
-
-filegroup(
     name = "io.grpc.protoc-gen-grpc-java.1.21.1_exe",
     srcs = select({
         "//prebuilts/tools/common/m2:osx-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.21.1/protoc-gen-grpc-java-1.21.1-osx-x86_64.exe"],
         "//prebuilts/tools/common/m2:windows-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.21.1/protoc-gen-grpc-java-1.21.1-windows-x86_64.exe"],
         "//prebuilts/tools/common/m2:linux-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.21.1/protoc-gen-grpc-java-1.21.1-linux-x86_64.exe"],
     }),
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "io.grpc.grpc-context.1.24.0",
-    jars = ["repository/io/grpc/grpc-context/1.24.0/grpc-context-1.24.0.jar"],
-    pom = ":io.grpc.grpc-context.1.24.0_pom",
-    repo_path = "repository/io/grpc/grpc-context/1.24.0",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "io.grpc.grpc-context.1.24.0_pom",
-    source = "repository/io/grpc/grpc-context/1.24.0/grpc-context-1.24.0.pom",
     visibility = ["//visibility:public"],
 )
 
@@ -462,20 +285,6 @@ maven_java_import(
 maven_pom(
     name = "io.grpc.grpc-context.1.21.1_pom",
     source = "repository/io/grpc/grpc-context/1.21.1/grpc-context-1.21.1.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "io.grpc.grpc-netty-shaded.1.24.0",
-    jars = ["repository/io/grpc/grpc-netty-shaded/1.24.0/grpc-netty-shaded-1.24.0.jar"],
-    pom = ":io.grpc.grpc-netty-shaded.1.24.0_pom",
-    repo_path = "repository/io/grpc/grpc-netty-shaded/1.24.0",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "io.grpc.grpc-netty-shaded.1.24.0_pom",
-    source = "repository/io/grpc/grpc-netty-shaded/1.24.0/grpc-netty-shaded-1.24.0.pom",
     visibility = ["//visibility:public"],
 )
 
@@ -664,35 +473,6 @@ maven_pom(
     visibility = ["//visibility:public"],
 )
 
-maven_java_import(
-    name = "io.perfmark.perfmark-api.0.17.0",
-    jars = ["repository/io/perfmark/perfmark-api/0.17.0/perfmark-api-0.17.0.jar"],
-    pom = ":io.perfmark.perfmark-api.0.17.0_pom",
-    repo_path = "repository/io/perfmark/perfmark-api/0.17.0",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "io.perfmark.perfmark-api.0.17.0_pom",
-    source = "repository/io/perfmark/perfmark-api/0.17.0/perfmark-api-0.17.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "commons-cli.commons-cli.1.4",
-    jars = ["repository/commons-cli/commons-cli/1.4/commons-cli-1.4.jar"],
-    pom = ":commons-cli.commons-cli.1.4_pom",
-    repo_path = "repository/commons-cli/commons-cli/1.4",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "commons-cli.commons-cli.1.4_pom",
-    parent = "//prebuilts/tools/common/m2:org.apache.commons.commons-parent.42_pom",
-    source = "repository/commons-cli/commons-cli/1.4/commons-cli-1.4.pom",
-    visibility = ["//visibility:public"],
-)
-
 # This BUILD file was generated by //tools/base/bazel:java_import_generator, please do not edit.
 load("//tools/base/app-inspection:app_inspection.bzl", "app_inspection_aar_import")
 
@@ -761,230 +541,6 @@ maven_pom(
 )
 
 maven_pom(
-    name = "com.fasterxml.oss-parent.34_pom",
-    source = "repository/com/fasterxml/oss-parent/34/oss-parent-34.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.fasterxml.jackson.jackson-bom.2.9.9_pom",
-    parent = "//prebuilts/tools/common/m2:com.fasterxml.jackson.jackson-parent.2.9.1.2_pom",
-    source = "repository/com/fasterxml/jackson/jackson-bom/2.9.9/jackson-bom-2.9.9.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.fasterxml.jackson.jackson-base.2.9.9_pom",
-    parent = "//prebuilts/tools/common/m2:com.fasterxml.jackson.jackson-bom.2.9.9_pom",
-    source = "repository/com/fasterxml/jackson/jackson-base/2.9.9/jackson-base-2.9.9.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "com.fasterxml.jackson.core.jackson-core.2.9.9",
-    jars = ["repository/com/fasterxml/jackson/core/jackson-core/2.9.9/jackson-core-2.9.9.jar"],
-    pom = ":com.fasterxml.jackson.core.jackson-core.2.9.9_pom",
-    repo_path = "repository/com/fasterxml/jackson/core/jackson-core/2.9.9",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.fasterxml.jackson.core.jackson-core.2.9.9_pom",
-    parent = "//prebuilts/tools/common/m2:com.fasterxml.jackson.jackson-base.2.9.9_pom",
-    source = "repository/com/fasterxml/jackson/core/jackson-core/2.9.9/jackson-core-2.9.9.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.fasterxml.jackson.jackson-parent.2.9.1.2_pom",
-    parent = "//prebuilts/tools/common/m2:com.fasterxml.oss-parent.34_pom",
-    source = "repository/com/fasterxml/jackson/jackson-parent/2.9.1.2/jackson-parent-2.9.1.2.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.guava.guava-parent.26.0-android_pom",
-    parent = "//prebuilts/tools/common/m2:org.sonatype.oss.oss-parent.9_pom",
-    source = "repository/com/google/guava/guava-parent/26.0-android/guava-parent-26.0-android.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.guava.guava-parent.28.0-android_pom",
-    source = "repository/com/google/guava/guava-parent/28.0-android/guava-parent-28.0-android.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.guava.guava-parent.23.0_pom",
-    parent = "//prebuilts/tools/common/m2:org.sonatype.oss.oss-parent.7_pom",
-    source = "repository/com/google/guava/guava-parent/23.0/guava-parent-23.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.guava.guava-parent.27.0.1-jre_pom",
-    parent = "//prebuilts/tools/common/m2:org.sonatype.oss.oss-parent.9_pom",
-    source = "repository/com/google/guava/guava-parent/27.0.1-jre/guava-parent-27.0.1-jre.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "com.google.guava.guava.28.0-android",
-    jars = ["repository/com/google/guava/guava/28.0-android/guava-28.0-android.jar"],
-    pom = ":com.google.guava.guava.28.0-android_pom",
-    repo_path = "repository/com/google/guava/guava/28.0-android",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.guava.guava.28.0-android_pom",
-    parent = "//prebuilts/tools/common/m2:com.google.guava.guava-parent.28.0-android_pom",
-    source = "repository/com/google/guava/guava/28.0-android/guava-28.0-android.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "com.google.guava.guava.23.0",
-    jars = ["repository/com/google/guava/guava/23.0/guava-23.0.jar"],
-    pom = ":com.google.guava.guava.23.0_pom",
-    repo_path = "repository/com/google/guava/guava/23.0",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.guava.guava.23.0_pom",
-    parent = "//prebuilts/tools/common/m2:com.google.guava.guava-parent.23.0_pom",
-    source = "repository/com/google/guava/guava/23.0/guava-23.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "com.google.guava.guava.27.0.1-jre",
-    jars = ["repository/com/google/guava/guava/27.0.1-jre/guava-27.0.1-jre.jar"],
-    pom = ":com.google.guava.guava.27.0.1-jre_pom",
-    repo_path = "repository/com/google/guava/guava/27.0.1-jre",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.guava.guava.27.0.1-jre_pom",
-    parent = "//prebuilts/tools/common/m2:com.google.guava.guava-parent.27.0.1-jre_pom",
-    source = "repository/com/google/guava/guava/27.0.1-jre/guava-27.0.1-jre.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "com.google.guava.failureaccess.1.0.1",
-    jars = ["repository/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar"],
-    pom = ":com.google.guava.failureaccess.1.0.1_pom",
-    repo_path = "repository/com/google/guava/failureaccess/1.0.1",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.guava.failureaccess.1.0.1_pom",
-    parent = "//prebuilts/tools/common/m2:com.google.guava.guava-parent.26.0-android_pom",
-    source = "repository/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "com.google.api.grpc.proto-google-common-protos.1.12.0",
-    jars = ["repository/com/google/api/grpc/proto-google-common-protos/1.12.0/proto-google-common-protos-1.12.0.jar"],
-    pom = ":com.google.api.grpc.proto-google-common-protos.1.12.0_pom",
-    repo_path = "repository/com/google/api/grpc/proto-google-common-protos/1.12.0",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.api.grpc.proto-google-common-protos.1.12.0_pom",
-    source = "repository/com/google/api/grpc/proto-google-common-protos/1.12.0/proto-google-common-protos-1.12.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.truth.truth-parent.0.44_pom",
-    parent = "//prebuilts/tools/common/m2:org.sonatype.oss.oss-parent.7_pom",
-    source = "repository/com/google/truth/truth-parent/0.44/truth-parent-0.44.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "com.google.truth.truth.0.44",
-    jars = ["repository/com/google/truth/truth/0.44/truth-0.44.jar"],
-    pom = ":com.google.truth.truth.0.44_pom",
-    repo_path = "repository/com/google/truth/truth/0.44",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.truth.truth.0.44_pom",
-    parent = "//prebuilts/tools/common/m2:com.google.truth.truth-parent.0.44_pom",
-    source = "repository/com/google/truth/truth/0.44/truth-0.44.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "com.google.http-client.google-http-client.1.31.0",
-    jars = ["repository/com/google/http-client/google-http-client/1.31.0/google-http-client-1.31.0.jar"],
-    pom = ":com.google.http-client.google-http-client.1.31.0_pom",
-    repo_path = "repository/com/google/http-client/google-http-client/1.31.0",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.http-client.google-http-client.1.31.0_pom",
-    parent = "//prebuilts/tools/common/m2:com.google.http-client.google-http-client-parent.1.31.0_pom",
-    source = "repository/com/google/http-client/google-http-client/1.31.0/google-http-client-1.31.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.http-client.google-http-client-parent.1.31.0_pom",
-    parent = "//prebuilts/tools/common/m2:org.sonatype.oss.oss-parent.7_pom",
-    source = "repository/com/google/http-client/google-http-client-parent/1.31.0/google-http-client-parent-1.31.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "com.google.http-client.google-http-client-jackson2.1.31.0",
-    jars = ["repository/com/google/http-client/google-http-client-jackson2/1.31.0/google-http-client-jackson2-1.31.0.jar"],
-    pom = ":com.google.http-client.google-http-client-jackson2.1.31.0_pom",
-    repo_path = "repository/com/google/http-client/google-http-client-jackson2/1.31.0",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.http-client.google-http-client-jackson2.1.31.0_pom",
-    parent = "//prebuilts/tools/common/m2:com.google.http-client.google-http-client-parent.1.31.0_pom",
-    source = "repository/com/google/http-client/google-http-client-jackson2/1.31.0/google-http-client-jackson2-1.31.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "com.google.code.gson.gson.2.7",
-    jars = ["repository/com/google/code/gson/gson/2.7/gson-2.7.jar"],
-    pom = ":com.google.code.gson.gson.2.7_pom",
-    repo_path = "repository/com/google/code/gson/gson/2.7",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.code.gson.gson.2.7_pom",
-    parent = "//prebuilts/tools/common/m2:com.google.code.gson.gson-parent.2.7_pom",
-    source = "repository/com/google/code/gson/gson/2.7/gson-2.7.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.code.gson.gson-parent.2.7_pom",
-    parent = "//prebuilts/tools/common/m2:org.sonatype.oss.oss-parent.7_pom",
-    source = "repository/com/google/code/gson/gson-parent/2.7/gson-parent-2.7.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
     name = "com.google.auto.value.auto-value-parent.1.6.2_pom",
     parent = "//prebuilts/tools/common/m2:com.google.auto.auto-parent.6_pom",
     source = "repository/com/google/auto/value/auto-value-parent/1.6.2/auto-value-parent-1.6.2.pom",
@@ -1029,42 +585,6 @@ maven_pom(
 )
 
 maven_pom(
-    name = "com.google.auth.google-auth-library-parent.0.17.1_pom",
-    source = "repository/com/google/auth/google-auth-library-parent/0.17.1/google-auth-library-parent-0.17.1.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "com.google.auth.google-auth-library-oauth2-http.0.17.1",
-    jars = ["repository/com/google/auth/google-auth-library-oauth2-http/0.17.1/google-auth-library-oauth2-http-0.17.1.jar"],
-    pom = ":com.google.auth.google-auth-library-oauth2-http.0.17.1_pom",
-    repo_path = "repository/com/google/auth/google-auth-library-oauth2-http/0.17.1",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.auth.google-auth-library-oauth2-http.0.17.1_pom",
-    parent = "//prebuilts/tools/common/m2:com.google.auth.google-auth-library-parent.0.17.1_pom",
-    source = "repository/com/google/auth/google-auth-library-oauth2-http/0.17.1/google-auth-library-oauth2-http-0.17.1.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "com.google.auth.google-auth-library-credentials.0.17.1",
-    jars = ["repository/com/google/auth/google-auth-library-credentials/0.17.1/google-auth-library-credentials-0.17.1.jar"],
-    pom = ":com.google.auth.google-auth-library-credentials.0.17.1_pom",
-    repo_path = "repository/com/google/auth/google-auth-library-credentials/0.17.1",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.auth.google-auth-library-credentials.0.17.1_pom",
-    parent = "//prebuilts/tools/common/m2:com.google.auth.google-auth-library-parent.0.17.1_pom",
-    source = "repository/com/google/auth/google-auth-library-credentials/0.17.1/google-auth-library-credentials-0.17.1.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
     name = "com.google.android.gms.play-services-location.11.8.0_pom",
     source = "repository/com/google/android/gms/play-services-location/11.8.0/play-services-location-11.8.0.pom",
     visibility = ["//visibility:public"],
@@ -1075,22 +595,6 @@ maven_java_import(
     jars = ["repository/com/google/android/gms/play-services-location/11.8.0/play-services-location-11.8.0.jar"],
     pom = ":com.google.android.gms.play-services-location.11.8.0_pom",
     repo_path = "repository/com/google/android/gms/play-services-location/11.8.0",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.google.1_pom",
-    source = "repository/com/google/google/1/google-1.pom",
-    visibility = ["//visibility:public"],
-)
-
-filegroup(
-    name = "com.google.protobuf.protoc.3.9.0_exe",
-    srcs = select({
-        "//prebuilts/tools/common/m2:osx-x86_64": ["repository/com/google/protobuf/protoc/3.9.0/protoc-3.9.0-osx-x86_64.exe"],
-        "//prebuilts/tools/common/m2:windows-x86_64": ["repository/com/google/protobuf/protoc/3.9.0/protoc-3.9.0-windows-x86_64.exe"],
-        "//prebuilts/tools/common/m2:linux-x86_64": ["repository/com/google/protobuf/protoc/3.9.0/protoc-3.9.0-linux-x86_64.exe"],
-    }),
     visibility = ["//visibility:public"],
 )
 
@@ -1139,30 +643,6 @@ maven_pom(
     visibility = ["//visibility:public"],
 )
 
-maven_java_import(
-    name = "com.google.protobuf.protobuf-java.3.9.0",
-    jars = ["repository/com/google/protobuf/protobuf-java/3.9.0/protobuf-java-3.9.0.jar"],
-    pom = ":com.google.protobuf.protobuf-java.3.9.0_pom",
-    repo_path = "repository/com/google/protobuf/protobuf-java/3.9.0",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.protobuf.protobuf-java.3.9.0_pom",
-    parent = "//prebuilts/tools/common/m2:com.google.protobuf.protobuf-parent.3.9.0_pom",
-    source = "repository/com/google/protobuf/protobuf-java/3.9.0/protobuf-java-3.9.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-# Manually extrated proto files from the jar
-# So bazel can consume them without wrapping the
-# proto compiler in a extract jar step.
-filegroup(
-    name = "com.google.protobuf.protobuf-java.3.9.0.include_include",
-    srcs = glob(["repository/com/google/protobuf/protobuf-java/3.9.0/**/*.proto"]),
-    visibility = ["//visibility:public"],
-)
-
 # Manually extrated proto files from the jar
 # So bazel can consume them without wrapping the
 # proto compiler in a extract jar step.
@@ -1196,21 +676,6 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
-maven_java_import(
-    name = "com.google.protobuf.protobuf-java.3.4.0",
-    jars = ["repository/com/google/protobuf/protobuf-java/3.4.0/protobuf-java-3.4.0.jar"],
-    pom = ":com.google.protobuf.protobuf-java.3.4.0_pom",
-    repo_path = "repository/com/google/protobuf/protobuf-java/3.4.0",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.protobuf.protobuf-java.3.4.0_pom",
-    parent = "//prebuilts/tools/common/m2:com.google.protobuf.protobuf-parent.3.4.0_pom",
-    source = "repository/com/google/protobuf/protobuf-java/3.4.0/protobuf-java-3.4.0.pom",
-    visibility = ["//visibility:public"],
-)
-
 # Manually extrated proto files from the jar
 # So bazel can consume them without wrapping the
 # proto compiler in a extract jar step.
@@ -1221,21 +686,8 @@ filegroup(
 )
 
 maven_pom(
-    name = "com.google.protobuf.protobuf-parent.3.9.0_pom",
-    source = "repository/com/google/protobuf/protobuf-parent/3.9.0/protobuf-parent-3.9.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
     name = "com.google.protobuf.protobuf-parent.3.10.0_pom",
     source = "repository/com/google/protobuf/protobuf-parent/3.10.0/protobuf-parent-3.10.0.pom",
-    visibility = ["//visibility:public"],
-)
-
-maven_pom(
-    name = "com.google.protobuf.protobuf-parent.3.4.0_pom",
-    parent = "//prebuilts/tools/common/m2:com.google.google.1_pom",
-    source = "repository/com/google/protobuf/protobuf-parent/3.4.0/protobuf-parent-3.4.0.pom",
     visibility = ["//visibility:public"],
 )
 
