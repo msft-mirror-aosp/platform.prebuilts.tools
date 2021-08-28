@@ -626,27 +626,6 @@ java_import(
     visibility = ["//visibility:public"],
 )
 
-maven_java_import(
-    name = "com.fasterxml.jackson.core.jackson-databind.2.11.1",
-    jars = ["repository/com/fasterxml/jackson/core/jackson-databind/2.11.1/jackson-databind-2.11.1.jar"],
-    repo_path = "repository/com/fasterxml/jackson/core/jackson-databind/2.11.1",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "com.fasterxml.jackson.core.jackson-annotations.2.11.1",
-    jars = ["repository/com/fasterxml/jackson/core/jackson-annotations/2.11.1/jackson-annotations-2.11.1.jar"],
-    repo_path = "repository/com/fasterxml/jackson/core/jackson-annotations/2.11.1",
-    visibility = ["//visibility:public"],
-)
-
-maven_java_import(
-    name = "com.fasterxml.jackson.core.jackson-core.2.11.1",
-    jars = ["repository/com/fasterxml/jackson/core/jackson-core/2.11.1/jackson-core-2.11.1.jar"],
-    repo_path = "repository/com/fasterxml/jackson/core/jackson-core/2.11.1",
-    visibility = ["//visibility:public"],
-)
-
 # TODO(b/197361777): Clean up jarjar deps
 java_import(
     name = "jarjar_deps",
