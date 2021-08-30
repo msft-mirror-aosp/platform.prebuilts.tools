@@ -1,4 +1,4 @@
-load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_library")
+load("//tools/base/bazel:maven.bzl", "maven_library")
 load("//tools/base/bazel:utils.bzl", "java_jarjar")
 load("//tools/base/common:version.bzl", "BUILD_VERSION")
 
