@@ -241,16 +241,6 @@ java_import(
 )
 
 filegroup(
-    name = "com.google.protobuf.protoc.3.0.0_exe",
-    srcs = select({
-        "//prebuilts/tools/common/m2:osx-x86_64": ["repository/com/google/protobuf/protoc/3.0.0/protoc-3.0.0-osx-x86_64.exe"],
-        "//prebuilts/tools/common/m2:windows-x86_64": ["repository/com/google/protobuf/protoc/3.0.0/protoc-3.0.0-windows-x86_64.exe"],
-        "//prebuilts/tools/common/m2:linux-x86_64": ["repository/com/google/protobuf/protoc/3.0.0/protoc-3.0.0-linux-x86_64.exe"],
-    }),
-    visibility = ["//visibility:public"],
-)
-
-filegroup(
     name = "com.google.protobuf.protoc.3.10.0_exe",
     srcs = select({
         "//prebuilts/tools/common/m2:osx-x86_64": ["repository/com/google/protobuf/protoc/3.10.0/protoc-3.10.0-osx-x86_64.exe"],
@@ -260,28 +250,9 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
-filegroup(
-    name = "com.google.protobuf.protoc.3.4.0_exe",
-    srcs = select({
-        "//prebuilts/tools/common/m2:osx-x86_64": ["repository/com/google/protobuf/protoc/3.4.0/protoc-3.4.0-osx-x86_64.exe"],
-        "//prebuilts/tools/common/m2:windows-x86_64": ["repository/com/google/protobuf/protoc/3.4.0/protoc-3.4.0-windows-x86_64.exe"],
-        "//prebuilts/tools/common/m2:linux-x86_64": ["repository/com/google/protobuf/protoc/3.4.0/protoc-3.4.0-linux-x86_64.exe"],
-    }),
-    visibility = ["//visibility:public"],
-)
-
 java_import(
     name = "com.google.protobuf.protobuf-java-util.3.10.0",
     jars = ["repository/com/google/protobuf/protobuf-java-util/3.10.0/protobuf-java-util-3.10.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# Manually extrated proto files from the jar
-# So bazel can consume them without wrapping the
-# proto compiler in a extract jar step.
-filegroup(
-    name = "com.google.protobuf.protobuf-java.3.0.0.include_include",
-    srcs = glob(["repository/com/google/protobuf/protobuf-java/3.0.0/**/*.proto"]),
     visibility = ["//visibility:public"],
 )
 
@@ -297,15 +268,6 @@ java_import(
 filegroup(
     name = "com.google.protobuf.protobuf-java.3.10.0.include_include",
     srcs = glob(["repository/com/google/protobuf/protobuf-java/3.10.0/**/*.proto"]),
-    visibility = ["//visibility:public"],
-)
-
-# Manually extrated proto files from the jar
-# So bazel can consume them without wrapping the
-# proto compiler in a extract jar step.
-filegroup(
-    name = "com.google.protobuf.protobuf-java.3.4.0.include_include",
-    srcs = glob(["repository/com/google/protobuf/protobuf-java/3.4.0/**/*.proto"]),
     visibility = ["//visibility:public"],
 )
 
