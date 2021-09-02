@@ -1,4 +1,4 @@
-load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom", "maven_library")
+load("//tools/base/bazel:maven.bzl", "maven_library")
 load("//tools/base/bazel:utils.bzl", "java_jarjar")
 load("//tools/base/common:version.bzl", "BUILD_VERSION")
 
@@ -38,6 +38,6 @@ maven_library(
     bundled_deps = [
         ":import_all",
     ],
-    coordinates = "com.android.tools.external.intellij:uast:" + BUILD_VERSION,
+    coordinates = "com.android.tools.external.org-jetbrains:uast:" + BUILD_VERSION,
     visibility = ["//visibility:public"],
 )

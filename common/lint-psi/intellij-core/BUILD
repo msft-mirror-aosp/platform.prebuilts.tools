@@ -1,4 +1,4 @@
-load("//tools/base/bazel:maven.bzl", "maven_java_import", "maven_pom", "maven_import", "maven_library")
+load("//tools/base/bazel:maven.bzl", "maven_import", "maven_library")
 load("//tools/base/bazel:merge_archives.bzl", "merge_jars")
 load("//tools/base/common:version.bzl", "BUILD_VERSION")
 
@@ -32,7 +32,7 @@ maven_library(
     bundled_deps = [
         ":import_all",
     ],
-    coordinates = "com.android.tools.external.intellij:intellij-core:" + BUILD_VERSION,
+    coordinates = "com.android.tools.external.com-intellij:intellij-core:" + BUILD_VERSION,
     jar_name = "intellij-core-mvn.jar",
     visibility = ["//visibility:public"],
 )
