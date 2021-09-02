@@ -563,3 +563,32 @@ java_import(
     ],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+filegroup(
+    name = "ffmpeg_files",
+    # do not sort: must match IML order
+    srcs = [
+        "repository/org/bytedeco/ffmpeg/4.4-1.5.6/ffmpeg-4.4-1.5.6.jar",
+        "repository/org/bytedeco/javacpp/1.5.6/javacpp-1.5.6.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+filegroup(
+    name = "ffmpeg-platform_files",
+    # do not sort: must match IML order
+    srcs = [
+        "repository/org/bytedeco/ffmpeg-platform/4.4-1.5.6/ffmpeg-platform-4.4-1.5.6.jar",
+        "repository/org/bytedeco/ffmpeg/4.4-1.5.6/ffmpeg-4.4-1.5.6-linux-x86_64.jar",
+        "repository/org/bytedeco/ffmpeg/4.4-1.5.6/ffmpeg-4.4-1.5.6-macosx-x86_64.jar",
+        "repository/org/bytedeco/ffmpeg/4.4-1.5.6/ffmpeg-4.4-1.5.6-windows-x86_64.jar",
+        "repository/org/bytedeco/javacpp-platform/1.5.6/javacpp-platform-1.5.6.jar",
+        "repository/org/bytedeco/javacpp/1.5.6/javacpp-1.5.6-linux-x86_64.jar",
+        "repository/org/bytedeco/javacpp/1.5.6/javacpp-1.5.6-macosx-arm64.jar",
+        "repository/org/bytedeco/javacpp/1.5.6/javacpp-1.5.6-macosx-x86_64.jar",
+        "repository/org/bytedeco/javacpp/1.5.6/javacpp-1.5.6-windows-x86_64.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
