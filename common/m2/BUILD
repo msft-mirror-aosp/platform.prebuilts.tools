@@ -17,42 +17,6 @@ config_setting(
 )
 
 java_import(
-    name = "junit.junit.4.12",
-    jars = ["repository/junit/junit/4.12/junit-4.12.jar"],
-    visibility = ["//visibility:public"],
-)
-
-java_import(
-    name = "org.hamcrest.hamcrest-core.1.3",
-    jars = ["repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"],
-    visibility = ["//visibility:public"],
-)
-
-java_import(
-    name = "org.ow2.asm.asm.7.0",
-    jars = ["repository/org/ow2/asm/asm/7.0/asm-7.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
-java_import(
-    name = "org.ow2.asm.asm-tree.7.0",
-    jars = ["repository/org/ow2/asm/asm-tree/7.0/asm-tree-7.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
-java_import(
-    name = "org.ow2.asm.asm-commons.7.0",
-    jars = ["repository/org/ow2/asm/asm-commons/7.0/asm-commons-7.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
-java_import(
-    name = "org.jacoco.org.jacoco.core.0.8.3",
-    jars = ["repository/org/jacoco/org.jacoco.core/0.8.3/org.jacoco.core-0.8.3.jar"],
-    visibility = ["//visibility:public"],
-)
-
-java_import(
     name = "org.jetbrains.kotlin.kotlin-gradle-plugin.1.5.21",
     jars = ["repository/org/jetbrains/kotlin/kotlin-gradle-plugin/1.5.21/kotlin-gradle-plugin-1.5.21.jar"],
     visibility = ["//visibility:public"],
@@ -205,32 +169,8 @@ app_inspection_aar_import(
 )
 
 java_import(
-    name = "androidx.annotation.annotation.1.1.0",
-    jars = ["repository/androidx/annotation/annotation/1.1.0/annotation-1.1.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
-java_import(
-    name = "javax.xml.bind.jaxb-api.2.3.1",
-    jars = ["repository/javax/xml/bind/jaxb-api/2.3.1/jaxb-api-2.3.1.jar"],
-    visibility = ["//visibility:public"],
-)
-
-java_import(
     name = "javax.annotation.javax.annotation-api.1.3.2",
     jars = ["repository/javax/annotation/javax.annotation-api/1.3.2/javax.annotation-api-1.3.2.jar"],
-    visibility = ["//visibility:public"],
-)
-
-java_import(
-    name = "com.google.auto.value.auto-value.1.6.2",
-    jars = ["repository/com/google/auto/value/auto-value/1.6.2/auto-value-1.6.2.jar"],
-    visibility = ["//visibility:public"],
-)
-
-java_import(
-    name = "com.google.auto.value.auto-value-annotations.1.6.2",
-    jars = ["repository/com/google/auto/value/auto-value-annotations/1.6.2/auto-value-annotations-1.6.2.jar"],
     visibility = ["//visibility:public"],
 )
 
