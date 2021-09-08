@@ -22,54 +22,6 @@ java_import(
     visibility = ["//visibility:public"],
 )
 
-java_import(
-    name = "io.grpc.grpc-api.1.21.1",
-    jars = ["repository/io/grpc/grpc-api/1.21.1/grpc-api-1.21.1.jar"],
-    visibility = ["//visibility:public"],
-)
-
-java_import(
-    name = "io.grpc.grpc-netty.1.21.1",
-    jars = ["repository/io/grpc/grpc-netty/1.21.1/grpc-netty-1.21.1.jar"],
-    visibility = ["//visibility:public"],
-)
-
-java_import(
-    name = "io.grpc.grpc-protobuf.1.21.1",
-    jars = ["repository/io/grpc/grpc-protobuf/1.21.1/grpc-protobuf-1.21.1.jar"],
-    visibility = ["//visibility:public"],
-)
-
-java_import(
-    name = "io.grpc.grpc-stub.1.21.1",
-    jars = ["repository/io/grpc/grpc-stub/1.21.1/grpc-stub-1.21.1.jar"],
-    visibility = ["//visibility:public"],
-)
-
-java_import(
-    name = "io.grpc.grpc-okhttp.1.21.1",
-    jars = ["repository/io/grpc/grpc-okhttp/1.21.1/grpc-okhttp-1.21.1.jar"],
-    visibility = ["//visibility:public"],
-)
-
-java_import(
-    name = "io.grpc.grpc-core.1.21.1",
-    jars = ["repository/io/grpc/grpc-core/1.21.1/grpc-core-1.21.1.jar"],
-    visibility = ["//visibility:public"],
-)
-
-java_import(
-    name = "io.grpc.grpc-auth.1.21.1",
-    jars = ["repository/io/grpc/grpc-auth/1.21.1/grpc-auth-1.21.1.jar"],
-    visibility = ["//visibility:public"],
-)
-
-java_import(
-    name = "io.grpc.grpc-protobuf-lite.1.21.1",
-    jars = ["repository/io/grpc/grpc-protobuf-lite/1.21.1/grpc-protobuf-lite-1.21.1.jar"],
-    visibility = ["//visibility:public"],
-)
-
 filegroup(
     name = "io.grpc.protoc-gen-grpc-java.1.21.1_exe",
     srcs = select({
@@ -77,84 +29,6 @@ filegroup(
         "//prebuilts/tools/common/m2:windows-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.21.1/protoc-gen-grpc-java-1.21.1-windows-x86_64.exe"],
         "//prebuilts/tools/common/m2:linux-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.21.1/protoc-gen-grpc-java-1.21.1-linux-x86_64.exe"],
     }),
-    visibility = ["//visibility:public"],
-)
-
-java_import(
-    name = "io.grpc.grpc-context.1.21.1",
-    jars = ["repository/io/grpc/grpc-context/1.21.1/grpc-context-1.21.1.jar"],
-    visibility = ["//visibility:public"],
-)
-
-java_import(
-    name = "io.netty.netty-handler.4.1.34.Final",
-    jars = ["repository/io/netty/netty-handler/4.1.34.Final/netty-handler-4.1.34.Final.jar"],
-    visibility = ["//visibility:public"],
-)
-
-java_import(
-    name = "io.netty.netty-codec-http.4.1.34.Final",
-    jars = ["repository/io/netty/netty-codec-http/4.1.34.Final/netty-codec-http-4.1.34.Final.jar"],
-    visibility = ["//visibility:public"],
-)
-
-java_import(
-    name = "io.netty.netty-codec-http2.4.1.34.Final",
-    jars = ["repository/io/netty/netty-codec-http2/4.1.34.Final/netty-codec-http2-4.1.34.Final.jar"],
-    visibility = ["//visibility:public"],
-)
-
-java_import(
-    name = "io.netty.netty-buffer.4.1.34.Final",
-    jars = ["repository/io/netty/netty-buffer/4.1.34.Final/netty-buffer-4.1.34.Final.jar"],
-    visibility = ["//visibility:public"],
-)
-
-java_import(
-    name = "io.netty.netty-resolver.4.1.34.Final",
-    jars = ["repository/io/netty/netty-resolver/4.1.34.Final/netty-resolver-4.1.34.Final.jar"],
-    visibility = ["//visibility:public"],
-)
-
-java_import(
-    name = "io.netty.netty-codec.4.1.34.Final",
-    jars = ["repository/io/netty/netty-codec/4.1.34.Final/netty-codec-4.1.34.Final.jar"],
-    visibility = ["//visibility:public"],
-)
-
-java_import(
-    name = "io.netty.netty-transport.4.1.34.Final",
-    jars = ["repository/io/netty/netty-transport/4.1.34.Final/netty-transport-4.1.34.Final.jar"],
-    visibility = ["//visibility:public"],
-)
-
-java_import(
-    name = "io.netty.netty-handler-proxy.4.1.34.Final",
-    jars = ["repository/io/netty/netty-handler-proxy/4.1.34.Final/netty-handler-proxy-4.1.34.Final.jar"],
-    visibility = ["//visibility:public"],
-)
-
-java_import(
-    name = "io.netty.netty-codec-socks.4.1.34.Final",
-    jars = ["repository/io/netty/netty-codec-socks/4.1.34.Final/netty-codec-socks-4.1.34.Final.jar"],
-    visibility = ["//visibility:public"],
-)
-
-java_import(
-    name = "io.netty.netty-common.4.1.34.Final",
-    jars = ["repository/io/netty/netty-common/4.1.34.Final/netty-common-4.1.34.Final.jar"],
-    visibility = ["//visibility:public"],
-)
-
-java_import(
-    name = "io.opencensus.opencensus-api.0.21.0",
-    jars = ["repository/io/opencensus/opencensus-api/0.21.0/opencensus-api-0.21.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
-java_import(
-    name = "io.opencensus.opencensus-contrib-grpc-metrics.0.21.0",
-    jars = ["repository/io/opencensus/opencensus-contrib-grpc-metrics/0.21.0/opencensus-contrib-grpc-metrics-0.21.0.jar"],
     visibility = ["//visibility:public"],
 )
 
