@@ -4,20 +4,30 @@ class TargetPlatform:
     def __init__(self, api, isArt):
         self._decoder = '_ZNK3art6Thread13DecodeJObjectEP8_jobject'
         self._thread = '_ZN3art6Thread14CurrentFromGdbEv'
-        if api >= 23:
+
+        if api >= 26:
             self._length_offset = 8
             self._data_offset = 16
             self._container_offset = 0
             self._uses_container = False
+            self._uses_adaptive_jstring_encoding = True
+        elif api >= 23:
+            self._length_offset = 8
+            self._data_offset = 16
+            self._container_offset = 0
+            self._uses_container = False
+            self._uses_adaptive_jstring_encoding = False
         elif api >= 21:
             self._length_offset = 12
             self._data_offset = 12
             self._container_offset = 8
             self._uses_container = True
+            self._uses_adaptive_jstring_encoding = False
         elif api >= 19:
             self._data_offset = 12
             self._container_offset = 8
             self._uses_container = True
+            self._uses_adaptive_jstring_encoding = False
             if isArt:
                 self._length_offset = 12
             else:
@@ -43,6 +53,9 @@ class TargetPlatform:
     def thread(self):
         return self._thread
 
+    def uses_adaptive_encoding(self):
+        return self._uses_adaptive_jstring_encoding
+
 class Reader:
     def __init__(self, valobj):
         self._decoder_expression = '(void*){0}((void*){1}(), (void*){2:#0x})'
@@ -63,6 +76,7 @@ class Reader:
         expression = self._decoder_expression.format(platform.decoder(), platform.thread(), jstring_val)
         options = lldb.SBExpressionOptions()
         options.SetTryAllThreads(False)
+
         mirror_string = self._target.EvaluateExpression(expression, options)
         if not mirror_string.IsValid():
             return ''
@@ -85,11 +99,30 @@ class Reader:
         else:
             data_address = mirror_string_address + platform.data_offset()
 
-        data = self._process.ReadMemory(data_address, 2 * length, error)
+        if not platform.uses_adaptive_encoding():
+            # Length field gives the number of characters. Assume 2 bytes per character per UTF16.
+            is_ascii = False
+            num_bytes = length * 2
+        elif (length & 1) == 0:
+            # Uses ASCII. Ignore last bit of length field.
+            is_ascii = True
+            num_bytes = length >> 1
+        else:
+            # Uses UTF16. Ignore last bit of length field. Assume 2 bytes per character per UTF16.
+            is_ascii = False
+            num_bytes = length
+
+        data = self._process.ReadMemory(data_address, num_bytes, error)
         if error.Fail():
             return ''
 
-        return '"{}"'.format(bytearray(data).decode('utf-16'))
+        if is_ascii:
+            return data
+        else:
+            return '"{}"'.format(bytearray(data).decode('utf-16'))
+
+def jstring_summary_provider_26(valobj, internal_dict):
+    return Reader(valobj).decode_string(TargetPlatform(26, True))
 
 def jstring_summary_provider_23(valobj, internal_dict):
     return Reader(valobj).decode_string(TargetPlatform(23, True))
@@ -111,7 +144,9 @@ def use_function(function):
 
 def register(api, isDalvik):
     # If API < 19, we'll just show the jobject's address, which is what lldb currently does.
-    if api >= 23:
+    if api >= 26:
+        use_function("jstring_reader.jstring_summary_provider_26")
+    elif api >= 23:
         use_function("jstring_reader.jstring_summary_provider_23")
     elif api >= 21:
         use_function("jstring_reader.jstring_summary_provider_21")
