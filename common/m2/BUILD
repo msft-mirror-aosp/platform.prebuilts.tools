@@ -406,3 +406,23 @@ filegroup(
     ],
     visibility = ["//visibility:public"],
 )
+
+# This is the Kotlin compiler used for building our Kotlin sources in Bazel.
+# It is declared here manually in order to avoid affecting version resolution
+# for the main maven repo---because for various reasons our compiler version
+# might not match the version of the kotlin-stdlib we want on the classpath.
+java_import(
+    name = "kotlin-compiler",
+    jars = [
+        # This list can be computed by querying the deps of
+        # @maven//:org.jetbrains.kotlin.kotlin-compiler_<VERSION>.
+        "repository/org/jetbrains/annotations/13.0/annotations-13.0.jar",
+        "repository/org/jetbrains/intellij/deps/trove4j/1.0.20181211/trove4j-1.0.20181211.jar",
+        "repository/org/jetbrains/kotlin/kotlin-compiler/1.5.31/kotlin-compiler-1.5.31.jar",
+        "repository/org/jetbrains/kotlin/kotlin-reflect/1.5.31/kotlin-reflect-1.5.31.jar",
+        "repository/org/jetbrains/kotlin/kotlin-script-runtime/1.5.31/kotlin-script-runtime-1.5.31.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.5.31/kotlin-stdlib-common-1.5.31.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib/1.5.31/kotlin-stdlib-1.5.31.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
