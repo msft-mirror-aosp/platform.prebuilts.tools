@@ -41,3 +41,15 @@ maven_library(
     coordinates = "com.android.tools.external.org-jetbrains:uast:" + BUILD_VERSION,
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+filegroup(
+    name = "lint-cli-psi-prebuilts_files",
+    # do not sort: must match IML order
+    srcs = [
+        "uast-common.jar",
+        "uast-java.jar",
+        "uast-kotlin.jar",
+    ],
+    visibility = ["//visibility:public"],
+)

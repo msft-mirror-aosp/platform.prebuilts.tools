@@ -38,3 +38,10 @@ maven_library(
     jar_name = "kotlin-compiler-mvn.jar",
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+filegroup(
+    name = "lint-cli-psi-prebuilts_files",
+    srcs = ["kotlin-compiler.jar"],
+    visibility = ["//visibility:public"],
+)

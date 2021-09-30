@@ -36,3 +36,10 @@ maven_library(
     jar_name = "intellij-core-mvn.jar",
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+filegroup(
+    name = "lint-cli-psi-prebuilts_files",
+    srcs = ["intellij-core.jar"],
+    visibility = ["//visibility:public"],
+)

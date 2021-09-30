@@ -426,3 +426,10 @@ java_import(
     ],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+java_import(
+    name = "groovy-3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy/3.0.8/groovy-3.0.8.jar"],
+    visibility = ["//visibility:public"],
+)
