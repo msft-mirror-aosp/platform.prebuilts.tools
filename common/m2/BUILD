@@ -313,7 +313,7 @@ java_import(
 # managed by go/iml_to_build
 filegroup(
     name = "kotlinx-coroutines-guava_files",
-    srcs = ["repository/org/jetbrains/kotlinx/kotlinx-coroutines-guava/1.3.9/kotlinx-coroutines-guava-1.3.9.jar"],
+    srcs = ["repository/org/jetbrains/kotlinx/kotlinx-coroutines-guava/1.5.0/kotlinx-coroutines-guava-1.5.0.jar"],
     visibility = ["//visibility:public"],
 )
 
