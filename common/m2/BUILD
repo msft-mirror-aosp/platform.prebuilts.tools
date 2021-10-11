@@ -433,3 +433,21 @@ java_import(
     jars = ["repository/org/codehaus/groovy/groovy/3.0.8/groovy-3.0.8.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+java_import(
+    name = "junit-4.13.2",
+    # do not sort: must match IML order
+    jars = [
+        "repository/junit/junit/4.13.2/junit-4.13.2.jar",
+        "repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+java_import(
+    name = "commons-compress-1.20",
+    jars = ["repository/org/apache/commons/commons-compress/1.20/commons-compress-1.20.jar"],
+    visibility = ["//visibility:public"],
+)
