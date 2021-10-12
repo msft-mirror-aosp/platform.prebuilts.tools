@@ -429,13 +429,6 @@ java_import(
 
 # managed by go/iml_to_build
 java_import(
-    name = "groovy-3.0.8",
-    jars = ["repository/org/codehaus/groovy/groovy/3.0.8/groovy-3.0.8.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-java_import(
     name = "junit-4.13.2",
     # do not sort: must match IML order
     jars = [
@@ -449,5 +442,12 @@ java_import(
 java_import(
     name = "commons-compress-1.20",
     jars = ["repository/org/apache/commons/commons-compress/1.20/commons-compress-1.20.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+java_import(
+    name = "groovy-3.0.9",
+    jars = ["repository/org/codehaus/groovy/groovy/3.0.9/groovy-3.0.9.jar"],
     visibility = ["//visibility:public"],
 )
