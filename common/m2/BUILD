@@ -313,7 +313,7 @@ java_import(
 # managed by go/iml_to_build
 filegroup(
     name = "kotlinx-coroutines-guava_files",
-    srcs = ["repository/org/jetbrains/kotlinx/kotlinx-coroutines-guava/1.3.9/kotlinx-coroutines-guava-1.3.9.jar"],
+    srcs = ["repository/org/jetbrains/kotlinx/kotlinx-coroutines-guava/1.5.0/kotlinx-coroutines-guava-1.5.0.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -424,5 +424,30 @@ java_import(
         "repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.5.31/kotlin-stdlib-common-1.5.31.jar",
         "repository/org/jetbrains/kotlin/kotlin-stdlib/1.5.31/kotlin-stdlib-1.5.31.jar",
     ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+java_import(
+    name = "groovy-3.0.8",
+    jars = ["repository/org/codehaus/groovy/groovy/3.0.8/groovy-3.0.8.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+java_import(
+    name = "junit-4.13.2",
+    # do not sort: must match IML order
+    jars = [
+        "repository/junit/junit/4.13.2/junit-4.13.2.jar",
+        "repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+java_import(
+    name = "commons-compress-1.20",
+    jars = ["repository/org/apache/commons/commons-compress/1.20/commons-compress-1.20.jar"],
     visibility = ["//visibility:public"],
 )

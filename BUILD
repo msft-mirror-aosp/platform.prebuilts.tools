@@ -36,14 +36,10 @@ studio_data(
     files_linux = glob(["linux-x86_64/simpleperf/*"]),
     files_mac = glob(["darwin-x86_64/simpleperf/*"]),
     files_mac_arm = glob(["darwin-x86_64/simpleperf/*"]),
-    files_win = glob([
-        "windows/simpleperf/*",
-        "windows-x86_64/simpleperf/*",
-    ]),
+    files_win = glob(["windows-x86_64/simpleperf/*"]),
     mappings = {
         "prebuilts/tools/common/simpleperf/": "simpleperf/",
         "prebuilts/tools/linux-x86_64/simpleperf/": "simpleperf/linux-x86_64/",
-        "prebuilts/tools/windows/simpleperf/": "simpleperf/windows/",
         "prebuilts/tools/windows-x86_64/simpleperf/": "simpleperf/windows-x86_64/",
         "prebuilts/tools/darwin-x86_64/simpleperf/": "simpleperf/darwin-x86_64/",
     },
