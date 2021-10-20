@@ -7,4 +7,9 @@ The objects in this directory were extracted from a download of the
 Toml plugin from
 <https://plugins.jetbrains.com/plugin/8195-toml/versions>,
 specifically (as of September 2021) version 0.2.155.4114-212 from
-<https://plugins.jetbrains.com/plugin/8195-toml/versions/stable/136667>.
+<https://plugins.jetbrains.com/plugin/8195-toml/versions/stable/136667>,
+then patching the plugin.xml to disallow out-of-band updates:
+
+$ jar xf intellij-toml/lib/intellij-toml-0.2.155.4114-212.jar META-INF/plugin.xml
+$ patch -u META-INF/plugin.xml < update.patch
+$ jar uf intellij-toml/lib/intellij-toml-0.2.155.4114-212.jar META-INF/plugin.xml
