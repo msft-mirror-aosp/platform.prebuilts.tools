@@ -433,3 +433,10 @@ java_import(
     jars = ["repository/org/codehaus/groovy/groovy/3.0.9/groovy-3.0.9.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+filegroup(
+    name = "jetbrains.kotlinx.coroutines.test_files",
+    srcs = ["repository/org/jetbrains/kotlinx/kotlinx-coroutines-test/1.5.0/kotlinx-coroutines-test-1.5.0.jar"],
+    visibility = ["//visibility:public"],
+)
