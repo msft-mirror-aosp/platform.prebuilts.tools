@@ -136,11 +136,10 @@ java_import(
     visibility = ["//visibility:public"],
 )
 
-# managed by go/iml_to_build
 java_import(
     name = "antlr4-runtime",
     jars = ["repository/org/antlr/antlr4-runtime/4.5.3/antlr4-runtime-4.5.3.jar"],
-    visibility = ["//visibility:public"],
+    visibility = ["//tools/data-binding:__pkg__"],
 )
 
 # managed by go/iml_to_build
