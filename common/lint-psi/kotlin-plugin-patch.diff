@@ -1,33 +1,8 @@
-diff --git a/idea/kotlin.idea.iml b/idea/kotlin.idea.iml
-index b34840fef45..e1b0b9f19d5 100644
---- a/idea/kotlin.idea.iml
-+++ b/idea/kotlin.idea.iml
-@@ -23,6 +23,7 @@
-       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
-       <sourceFolder url="file://$MODULE_DIR$/resources" type="java-resource" />
-       <sourceFolder url="file://$MODULE_DIR$/resources-en" type="java-resource" />
-+      <sourceFolder url="file://$MODULE_DIR$/tests/test" isTestSource="true" />
-     </content>
-     <content url="file://$MODULE_DIR$/../live-templates">
-       <sourceFolder url="file://$MODULE_DIR$/../live-templates/src" isTestSource="false" />
-diff --git a/j2k/old/kotlin.j2k.old.iml b/j2k/old/kotlin.j2k.old.iml
-index f48e1851531..5c92ebcf385 100644
---- a/j2k/old/kotlin.j2k.old.iml
-+++ b/j2k/old/kotlin.j2k.old.iml
-@@ -29,5 +29,7 @@
-     <orderEntry type="module" module-name="kotlin.fir.frontend-independent" />
-     <orderEntry type="module" module-name="intellij.java.psi.impl" />
-     <orderEntry type="module" module-name="kotlin.resources-fe10" scope="TEST" />
-+    <orderEntry type="module" module-name="intellij.platform.serviceContainer" />
-+    <orderEntry type="module" module-name="intellij.java.execution" />
-   </component>
- </module>
-\ No newline at end of file
-diff --git a/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt b/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
-index 2f79ce42f04..207f0cb487f 100644
---- a/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
-+++ b/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
-@@ -44,7 +44,23 @@ abstract class KotlinAbstractUElement(
+diff --git a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
+index f8e6ca241a1f..042f690391cd 100644
+--- a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
++++ b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
+@@ -34,7 +34,23 @@ abstract class KotlinAbstractUElement(
              return false
          }
  
@@ -52,19 +27,45 @@ index 2f79ce42f04..207f0cb487f 100644
      }
  
      override fun hashCode(): Int {
-diff --git a/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethod.kt b/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethod.kt
-index 53d8d72b4d5..f89c523cd9f 100644
---- a/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethod.kt
-+++ b/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethod.kt
-@@ -16,6 +16,7 @@
+diff --git a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/controlStructures/ElvisExpression.kt b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/controlStructures/ElvisExpression.kt
+index 78d2baddd8bb..f7c6ebbef0a6 100644
+--- a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/controlStructures/ElvisExpression.kt
++++ b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/controlStructures/ElvisExpression.kt
+@@ -5,6 +5,7 @@ import com.intellij.openapi.components.ServiceManager
+ import com.intellij.psi.PsiElement
+ import com.intellij.psi.PsiMethod
+ import com.intellij.psi.PsiType
++import org.jetbrains.kotlin.psi.KtAnnotatedExpression
+ import org.jetbrains.kotlin.psi.KtBinaryExpression
+ import org.jetbrains.kotlin.psi.KtExpression
+ import org.jetbrains.uast.*
+@@ -103,7 +104,12 @@ class KotlinUElvisExpression(
+     override val sourcePsi: PsiElement = elvisExpression
+     override val psi: PsiElement = sourcePsi
+     override val kind = KotlinSpecialExpressionKinds.ELVIS
+-    override val uAnnotations: List<UAnnotation> = emptyList()
++    // Workaround for https://youtrack.jetbrains.com/issue/KT-37133
++    override val uAnnotations: List<UAnnotation>
++        get() {
++            val annotatedExpression = sourcePsi?.parent as? KtAnnotatedExpression ?: return emptyList()
++            return annotatedExpression.annotationEntries.map { KotlinUAnnotation(it, this) }
++        }
+     override val expressions: List<UExpression> by lz {
+         createElvisExpressions(left, right, this, elvisExpression.parent)
+     }
+diff --git a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethodWithFakeLightDelegate.kt b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethodWithFakeLightDelegate.kt
+index 2d73dd7767d6..e640bb9a209e 100644
+--- a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethodWithFakeLightDelegate.kt
++++ b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethodWithFakeLightDelegate.kt
+@@ -2,6 +2,7 @@
  
  package org.jetbrains.uast.kotlin
  
 +import com.intellij.openapi.util.TextRange
  import com.intellij.psi.*
- import org.jetbrains.kotlin.asJava.elements.*
  import org.jetbrains.kotlin.psi.*
-@@ -74,4 +75,9 @@ class KotlinUMethodWithFakeLightDelegate internal constructor(
+ import org.jetbrains.uast.*
+@@ -28,4 +29,9 @@ class KotlinUMethodWithFakeLightDelegate(
      }
  
      override fun hashCode(): Int = original.hashCode()
@@ -74,45 +75,19 @@ index 53d8d72b4d5..f89c523cd9f 100644
 +        return original.textRange
 +    }
  }
-diff --git a/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/expressions/ElvisExpression.kt b/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/expressions/ElvisExpression.kt
-index 3df05249933..9482b47c5d5 100644
---- a/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/expressions/ElvisExpression.kt
-+++ b/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/expressions/ElvisExpression.kt
-@@ -4,6 +4,7 @@ import com.intellij.openapi.components.ServiceManager
- import com.intellij.psi.PsiElement
- import com.intellij.psi.PsiMethod
- import com.intellij.psi.PsiType
-+import org.jetbrains.kotlin.psi.KtAnnotatedExpression
- import org.jetbrains.kotlin.psi.KtBinaryExpression
- import org.jetbrains.kotlin.psi.KtExpression
- import org.jetbrains.kotlin.resolve.BindingContext
-@@ -98,7 +99,12 @@ class KotlinUElvisExpression(
-     override val sourcePsi: PsiElement? = elvisExpression
-     override val psi: PsiElement? = sourcePsi
-     override val kind = KotlinSpecialExpressionKinds.ELVIS
--    override val annotations: List<UAnnotation> = emptyList()
-+    // Workaround for https://youtrack.jetbrains.com/issue/KT-37133
-+    override val annotations: List<UAnnotation>
-+        get() {
-+            val annotatedExpression = sourcePsi?.parent as? KtAnnotatedExpression ?: return emptyList()
-+            return annotatedExpression.annotationEntries.map { KotlinUAnnotation(it, this) }
-+        }
-     override val expressions: List<UExpression> by lz {
-         createElvisExpressions(left, right, this, elvisExpression.parent)
-     }
-diff --git a/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethod.kt b/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethod.kt
-index 9d132b40918..952c681bd2f 100644
---- a/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethod.kt
-+++ b/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethod.kt
-@@ -7,6 +7,7 @@ package org.jetbrains.uast.kotlin.psi
- 
+diff --git a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethod.kt b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethod.kt
+index aac00424cb6c..60232494fb55 100644
+--- a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethod.kt
++++ b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethod.kt
+@@ -5,6 +5,7 @@ package org.jetbrains.uast.kotlin.psi
+ import com.intellij.openapi.components.ServiceManager
  import com.intellij.psi.*
  import com.intellij.psi.impl.light.*
 +import org.jetbrains.kotlin.asJava.elements.KotlinLightTypeParameterBuilder
  import org.jetbrains.kotlin.asJava.elements.KotlinLightTypeParameterListBuilder
- import org.jetbrains.kotlin.descriptors.CallableDescriptor
- import org.jetbrains.kotlin.psi.KtClassOrObject
-@@ -26,10 +27,11 @@ internal class UastFakeLightMethod(original: KtFunction, containingClass: PsiCla
+ import org.jetbrains.kotlin.psi.*
+ import org.jetbrains.kotlin.utils.addToStdlib.safeAs
+@@ -21,10 +22,11 @@ class UastFakeLightMethod(
          KotlinLightTypeParameterListBuilder(this).also { paramList ->
              for ((i, p) in original.typeParameters.withIndex()) {
                  paramList.addParameter(
@@ -124,5 +99,5 @@ index 9d132b40918..952c681bd2f 100644
 +                        i,
 +                        p
                      ) {
-                         private val myExtendsList by lazy {
+                         private val myExtendsList by lz {
                              super.getExtendsList().apply {
