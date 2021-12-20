@@ -218,9 +218,9 @@ filegroup(
     name = "asm-tools_files",
     # do not sort: must match IML order
     srcs = [
-        "repository/org/ow2/asm/asm-analysis/7.0/asm-analysis-7.0.jar",
-        "repository/org/ow2/asm/asm-tree/7.0/asm-tree-7.0.jar",
-        "repository/org/ow2/asm/asm/7.0/asm-7.0.jar",
+        "repository/org/ow2/asm/asm-analysis/9.1/asm-analysis-9.1.jar",
+        "repository/org/ow2/asm/asm-tree/9.1/asm-tree-9.1.jar",
+        "repository/org/ow2/asm/asm/9.1/asm-9.1.jar",
     ],
     visibility = ["//visibility:public"],
 )
