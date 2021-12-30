@@ -54,6 +54,22 @@ If you use `CLEAN_BUILD=true`, then the build scripts will additionally:
   caches task outputs in the Gradle user home.
 
 
+Using custom dependency sources
+---
+When running `build.sh`, you can set the environment variables `CUSTOM_KOTLIN_DIR`
+and/or `CUSTOM_INTELLIJ_DIR` in order to build from a local fork of those dependencies.
+This is useful for iterating on patches and upstream work. When using custom dependency
+checkouts, the corresponding worktree is left unchanged (no patches are applied).
+
+`CUSTOM_KOTLIN_DIR` should point to a checkout of the Kotlin compiler (JetBrains/kotlin)
+and `CUSTOM_INTELLIJ_DIR` should point to a checkout of IntelliJ (JetBrains/intellij-community).
+You should use absolute paths in all cases.
+
+Note: some dependencies are downloaded from maven rather than built from sources,
+thus they are unaffected by custom dependency sources. This currently includes
+IntelliJ Core and IntelliJ UAST.
+
+
 Appendix: notes on the Kotlin compiler prebuilt
 ---
 

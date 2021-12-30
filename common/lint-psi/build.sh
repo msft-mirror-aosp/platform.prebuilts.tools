@@ -17,18 +17,9 @@ export CLEAN_BUILD="${CLEAN_BUILD:-false}"
 
 export WORKSPACE="$(bazel info workspace)"
 export LINT_PSI_DIR="$WORKSPACE/prebuilts/tools/common/lint-psi"
-export KOTLIN_DIR="$LINT_PSI_DIR/dependency-source-checkouts/kotlin"
-export INTELLIJ_DIR="$LINT_PSI_DIR/dependency-source-checkouts/intellij"
+export KOTLIN_DIR="${CUSTOM_KOTLIN_DIR:-$LINT_PSI_DIR/dependency-source-checkouts/kotlin}"
+export INTELLIJ_DIR="${CUSTOM_INTELLIJ_DIR:-$LINT_PSI_DIR/dependency-source-checkouts/intellij}"
 
-# Tip: if you want to build with your own fork of IntelliJ or Kotlin,
-# you can replace the following git remotes with local directories. Then update
-# the corresponding SHA to point to the commit you want---or better yet point to
-# a branch name so that the build will track your local work. The build will
-# still happen under the dependency-source-checkouts directory---but the sources
-# will be copied over from your forked repo.
-# Example:
-#   KOTLIN_REMOTE="file:///absolute/path/to/forked/kotlin/repo"
-#   KOTLIN_SHA="my-dev-branch"
 INTELLIJ_REMOTE="git@github.com:JetBrains/intellij-community.git"
 KOTLIN_REMOTE="git@github.com:JetBrains/kotlin.git"
 
@@ -38,7 +29,6 @@ phase() {
 
 fetch_git_repo() {
     local DIR="$1"; local REMOTE="$2"; local REF="$3"
-    phase "Fetching $REF from $REMOTE"
     git init "$DIR"
     git -C "$DIR" fetch --filter=blob:none "$REMOTE" "$REF"
     git -C "$DIR" checkout -f FETCH_HEAD
@@ -47,8 +37,15 @@ fetch_git_repo() {
 
 cd "$WORKSPACE"
 
-fetch_git_repo "$INTELLIJ_DIR" "$INTELLIJ_REMOTE" "$INTELLIJ_SHA"
-fetch_git_repo "$KOTLIN_DIR" "$KOTLIN_REMOTE" "$KOTLIN_SHA"
+# Forbid clean builds with custom repos, to avoid clobbering user files.
+if [[ "$CLEAN_BUILD" = "true" && ( "${CUSTOM_KOTLIN_DIR:-}" || "${CUSTOM_INTELLIJ_DIR:-}" ) ]]; then
+    echo "ERROR: clean builds are not supported when using custom dependency repositories"
+    exit 1
+fi
+
+phase "Fetching dependency sources if needed"
+if [[ ! "${CUSTOM_KOTLIN_DIR:-}" ]]; then fetch_git_repo "$KOTLIN_DIR" "$KOTLIN_REMOTE" "$KOTLIN_SHA"; fi
+if [[ ! "${CUSTOM_INTELLIJ_DIR:-}" ]]; then fetch_git_repo "$INTELLIJ_DIR" "$INTELLIJ_REMOTE" "$INTELLIJ_SHA"; fi
 
 GRADLE_CLEAN_FLAGS=()
 if [[ "$CLEAN_BUILD" = "true" ]]; then
@@ -59,9 +56,9 @@ if [[ "$CLEAN_BUILD" = "true" ]]; then
     GRADLE_CLEAN_FLAGS+=(clean --no-daemon --no-build-cache)
 fi
 
-phase "Applying Lint patches"
-git -C "$KOTLIN_DIR" apply "$LINT_PSI_DIR/kotlin-compiler-patch.diff"
-git -C "$INTELLIJ_DIR" apply "$LINT_PSI_DIR/kotlin-plugin-patch.diff"
+phase "Applying patches if needed"
+if [[ ! "${CUSTOM_KOTLIN_DIR:-}" ]]; then git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/kotlin-compiler-patch.diff"; fi
+if [[ ! "${CUSTOM_INTELLIJ_DIR:-}" ]]; then git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/kotlin-plugin-patch.diff"; fi
 
 phase "Building Kotlin compiler"
 # This command is inspired by JetBrains/intellij-community/.idea/runConfigurations/Publish_compiler_for_ide_jars.xml
