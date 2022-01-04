@@ -1,0 +1,13 @@
+From https://www.jacoco.org/jacoco/ in the Release Builds section download jacoco-0.8.7.zip, which pulls from the link https://search.maven.org/remotecontent?filepath=org/jacoco/jacoco/0.8.7/jacoco-0.8.7.zip
+
+Extract from the zip:
+- lib/jacocoagent.jar and rename to jacoco-agent-0.8.7.jar
+- lib/jacococli.jar and rename to jacoco-cli-0.8.7.jar
+
+In order to update to a new version:
+1. Download the zip (ideally the most recent stable release)
+2. Extract the agent and CLI jars
+3. Update BUILD so that :agent and :cli-jar point to the new jars
+4. Delete the old jars
+5. Update PREBUILT to reference the new version
+6. Verify that the coverage build succeeds (presubmit check is fine)
