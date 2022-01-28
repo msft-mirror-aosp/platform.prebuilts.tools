@@ -201,8 +201,8 @@ filegroup(
     name = "dexlib2_files",
     # do not sort: must match IML order
     srcs = [
-        "repository/org/smali/dexlib2/2.2.4/dexlib2-2.2.4.jar",
-        "repository/org/smali/util/2.2.4/util-2.2.4.jar",
+        "repository/org/smali/dexlib2/2.5.2/dexlib2-2.5.2.jar",
+        "repository/org/smali/util/2.5.2/util-2.5.2.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -292,7 +292,7 @@ filegroup(
 # managed by go/iml_to_build
 filegroup(
     name = "baksmali_files",
-    srcs = ["repository/org/smali/baksmali/2.2.4/baksmali-2.2.4.jar"],
+    srcs = ["repository/org/smali/baksmali/2.5.2/baksmali-2.5.2.jar"],
     visibility = ["//visibility:public"],
 )
 
