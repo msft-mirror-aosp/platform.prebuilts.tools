@@ -1,41 +1,32 @@
 load("//tools/base/bazel:maven.bzl", "maven_library")
-load("//tools/base/bazel:utils.bzl", "java_jarjar")
 load("//tools/base/common:version.bzl", "BASE_VERSION")
-load("//tools/base/bazel:merge_archives.bzl", "merge_jars")
+load("//tools/base/bazel:jvm_import.bzl", "jvm_import")
 
-java_jarjar(
-    name = "uast-all",
-    srcs = [
-        ":uast-common.jar",
-        ":uast-java.jar",
-        ":uast-kotlin.jar",
-    ],
-    rules = "no_rules.txt",
+jvm_import(
+    name = "uast-common",
+    jars = ["uast-common.jar"],
+    srcjar = "uast-common-sources.jar",
 )
 
-merge_jars(
-    name = "uast-all-sources",
-    out = "intellij-core-all.jar",
-    jars = [
-        ":uast-common-sources.jar",
-        ":uast-java-sources.jar",
-        ":uast-kotlin-sources.jar",
-    ],
+jvm_import(
+    name = "uast-java",
+    jars = ["uast-java.jar"],
+    srcjar = "uast-java-sources.jar",
 )
 
-# java_jarjar doesn't return a JavaInfo provider, so were-import the
-# jar to obtain one.
-java_import(
-    name = "import_all",
-    jars = [":uast-all.jar"],
-    srcjar = "uast-all-sources",
+jvm_import(
+    name = "uast-kotlin",
+    jars = ["uast-kotlin.jar"],
+    srcjar = "uast-kotlin-sources.jar",
 )
 
 maven_library(
     name = "uast",
     srcs = [],
     bundled_deps = [
-        ":import_all",
+        ":uast-common",
+        ":uast-java",
+        ":uast-kotlin",
     ],
     coordinates = "com.android.tools.external.org-jetbrains:uast:" + BASE_VERSION,
     description = "Unified AST",

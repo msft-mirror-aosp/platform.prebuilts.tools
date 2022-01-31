@@ -124,15 +124,17 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
+load("//tools/base/bazel:jvm_import.bzl", "jvm_import")
+
 # managed by go/iml_to_build
-java_import(
+jvm_import(
     name = "junit-4.12",
     jars = ["repository/junit/junit/4.12/junit-4.12.jar"],
     visibility = ["//visibility:public"],
 )
 
 # managed by go/iml_to_build
-java_import(
+jvm_import(
     name = "hamcrest-core-1.3",
     jars = ["repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"],
     visibility = ["//visibility:public"],
@@ -145,21 +147,21 @@ java_import(
 )
 
 # managed by go/iml_to_build
-java_import(
+jvm_import(
     name = "juniversalchardet",
     jars = ["repository/com/googlecode/juniversalchardet/juniversalchardet/1.0.3/juniversalchardet-1.0.3.jar"],
     visibility = ["//visibility:public"],
 )
 
 # managed by go/iml_to_build
-java_import(
+jvm_import(
     name = "javapoet",
     jars = ["repository/com/squareup/javapoet/1.10.0/javapoet-1.10.0.jar"],
     visibility = ["//visibility:public"],
 )
 
 # managed by go/iml_to_build
-java_import(
+jvm_import(
     name = "jetifier-core",
     jars = ["repository/com/android/tools/build/jetifier/jetifier-core/1.0.0-beta09/jetifier-core-1.0.0-beta09.jar"],
     visibility = ["//visibility:public"],
@@ -173,14 +175,14 @@ filegroup(
 )
 
 # managed by go/iml_to_build
-java_import(
+jvm_import(
     name = "commons-lang",
     jars = ["repository/commons-lang/commons-lang/2.6/commons-lang-2.6.jar"],
     visibility = ["//visibility:public"],
 )
 
 # managed by go/iml_to_build
-java_import(
+jvm_import(
     name = "auto-common",
     jars = ["repository/com/google/auto/auto-common/0.10/auto-common-0.10.jar"],
     visibility = ["//visibility:public"],
@@ -216,15 +218,15 @@ filegroup(
     name = "asm-tools_files",
     # do not sort: must match IML order
     srcs = [
-        "repository/org/ow2/asm/asm-analysis/7.0/asm-analysis-7.0.jar",
-        "repository/org/ow2/asm/asm-tree/7.0/asm-tree-7.0.jar",
-        "repository/org/ow2/asm/asm/7.0/asm-7.0.jar",
+        "repository/org/ow2/asm/asm-analysis/9.1/asm-analysis-9.1.jar",
+        "repository/org/ow2/asm/asm-tree/9.1/asm-tree-9.1.jar",
+        "repository/org/ow2/asm/asm/9.1/asm-9.1.jar",
     ],
     visibility = ["//visibility:public"],
 )
 
 # managed by go/iml_to_build
-java_import(
+jvm_import(
     name = "utp-core-proto",
     jars = ["repository/com/google/testing/platform/core-proto/0.0.8-alpha07/core-proto-0.0.8-alpha07.jar"],
     visibility = ["//visibility:public"],
@@ -238,14 +240,14 @@ filegroup(
 )
 
 # managed by go/iml_to_build
-java_import(
+jvm_import(
     name = "flatbuffers-java",
     jars = ["repository/com/google/flatbuffers/flatbuffers-java/1.12.0/flatbuffers-java-1.12.0.jar"],
     visibility = ["//visibility:public"],
 )
 
 # managed by go/iml_to_build
-java_import(
+jvm_import(
     name = "tensorflow-lite-metadata",
     jars = ["repository/org/tensorflow/tensorflow-lite-metadata/0.1.0-rc2/tensorflow-lite-metadata-0.1.0-rc2.jar"],
     visibility = ["//visibility:public"],
@@ -294,14 +296,14 @@ filegroup(
 )
 
 # managed by go/iml_to_build
-java_import(
+jvm_import(
     name = "okio",
     jars = ["repository/com/squareup/okio/okio/1.14.0/okio-1.14.0.jar"],
     visibility = ["//visibility:public"],
 )
 
 # managed by go/iml_to_build
-java_import(
+jvm_import(
     name = "moshi",
     # do not sort: must match IML order
     jars = [
@@ -319,7 +321,7 @@ filegroup(
 )
 
 # managed by go/iml_to_build
-java_import(
+jvm_import(
     name = "JUnit4",
     # do not sort: must match IML order
     jars = [
@@ -330,21 +332,21 @@ java_import(
 )
 
 # managed by go/iml_to_build
-java_import(
+jvm_import(
     name = "commons-lang3-3.3.2",
     jars = ["repository/org/apache/commons/commons-lang3/3.3.2/commons-lang3-3.3.2.jar"],
     visibility = ["//visibility:public"],
 )
 
 # managed by go/iml_to_build
-java_import(
+jvm_import(
     name = "commons-io-2.4",
     jars = ["repository/commons-io/commons-io/2.4/commons-io-2.4.jar"],
     visibility = ["//visibility:public"],
 )
 
 # managed by go/iml_to_build
-java_import(
+jvm_import(
     name = "eclipse-layout-kernel",
     # do not sort: must match IML order
     jars = [
@@ -358,7 +360,7 @@ java_import(
 )
 
 # managed by go/iml_to_build
-java_import(
+jvm_import(
     name = "gradle-tooling-api-5.3.1",
     jars = ["repository/org/gradle/gradle-tooling-api/5.3.1/gradle-tooling-api-5.3.1.jar"],
     visibility = ["//visibility:public"],
@@ -459,7 +461,7 @@ java_import(
 )
 
 # managed by go/iml_to_build
-java_import(
+jvm_import(
     name = "groovy-3.0.9",
     jars = ["repository/org/codehaus/groovy/groovy/3.0.9/groovy-3.0.9.jar"],
     visibility = ["//visibility:public"],
