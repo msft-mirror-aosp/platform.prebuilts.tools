@@ -2,6 +2,7 @@
 from pathlib import Path
 from zipfile import ZipFile
 import argparse
+import os
 import platform
 import shlex
 import shutil
@@ -57,6 +58,7 @@ def main():
     else:
         copy_artifacts_to_prebuilts(args, plugin_zip, sources_zip)
         write_metadata_file(args)
+        write_jps_lib_xml(args)
 
     print('\nDone.\n')
 
@@ -184,6 +186,34 @@ def write_metadata_file(args):
         f.write(f'kotlin_compiler_version: {compiler_version}\n')
         f.write(f'kotlin_plugin_version: {plugin_version}\n')
         f.write(f'kotlin_plugin_platform: {idea_version}\n')
+
+
+def write_jps_lib_xml(args):
+    project_dir = args.workspace.joinpath('tools/adt/idea')
+
+    # Note: see comment in the BUILD file for why we exclude kotlin-stdlib and kotlin-reflect.
+    jars = list(args.workspace.glob('prebuilts/tools/common/kotlin-plugin/Kotlin/lib/*.jar'))
+    jars = [jar for jar in jars if jar.name not in ['kotlin-stdlib-jdk8.jar', 'kotlin-reflect.jar']]
+    jars = [os.path.relpath(jar, project_dir) for jar in jars]
+
+    src = args.workspace.joinpath('prebuilts/tools/common/kotlin-plugin/kotlin-plugin-sources.jar')
+    src = os.path.relpath(src, project_dir)
+
+    outfile = project_dir.joinpath(f'.idea/libraries/studio_plugin_Kotlin.xml')
+    print(f'\nWriting JPS library: {outfile}\n')
+    with open(outfile, 'w') as f:
+        f.write(f'<component name="libraryTable">\n')
+        f.write(f'  <library name="studio-plugin-Kotlin">\n')
+        f.write(f'    <CLASSES>\n')
+        for jar in jars:
+            f.write(f'      <root url="jar://$PROJECT_DIR$/{jar}!/" />\n')
+        f.write(f'    </CLASSES>\n')
+        f.write(f'    <JAVADOC />\n')
+        f.write(f'    <SOURCES>\n')
+        f.write(f'      <root url="jar://$PROJECT_DIR$/{src}!/" />\n')
+        f.write(f'    </SOURCES>\n')
+        f.write(f'  </library>\n')
+        f.write(f'</component>')
 
 
 def compute_java_home(args):
