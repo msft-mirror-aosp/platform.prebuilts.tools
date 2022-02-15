@@ -388,8 +388,8 @@ filegroup(
     name = "ffmpeg_files",
     # do not sort: must match IML order
     srcs = [
-        "repository/org/bytedeco/ffmpeg/4.4-1.5.6/ffmpeg-4.4-1.5.6.jar",
-        "repository/org/bytedeco/javacpp/1.5.6/javacpp-1.5.6.jar",
+        "repository/org/bytedeco/ffmpeg/5.0-1.5.7/ffmpeg-5.0-1.5.7.jar",
+        "repository/org/bytedeco/javacpp/1.5.7/javacpp-1.5.7.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -399,15 +399,16 @@ filegroup(
     name = "ffmpeg-platform_files",
     # do not sort: must match IML order
     srcs = [
-        "repository/org/bytedeco/ffmpeg-platform/4.4-1.5.6/ffmpeg-platform-4.4-1.5.6.jar",
-        "repository/org/bytedeco/ffmpeg/4.4-1.5.6/ffmpeg-4.4-1.5.6-linux-x86_64.jar",
-        "repository/org/bytedeco/ffmpeg/4.4-1.5.6/ffmpeg-4.4-1.5.6-macosx-x86_64.jar",
-        "repository/org/bytedeco/ffmpeg/4.4-1.5.6/ffmpeg-4.4-1.5.6-windows-x86_64.jar",
-        "repository/org/bytedeco/javacpp-platform/1.5.6/javacpp-platform-1.5.6.jar",
-        "repository/org/bytedeco/javacpp/1.5.6/javacpp-1.5.6-linux-x86_64.jar",
-        "repository/org/bytedeco/javacpp/1.5.6/javacpp-1.5.6-macosx-arm64.jar",
-        "repository/org/bytedeco/javacpp/1.5.6/javacpp-1.5.6-macosx-x86_64.jar",
-        "repository/org/bytedeco/javacpp/1.5.6/javacpp-1.5.6-windows-x86_64.jar",
+        "repository/org/bytedeco/ffmpeg-platform/5.0-1.5.7/ffmpeg-platform-5.0-1.5.7.jar",
+        "repository/org/bytedeco/ffmpeg/5.0-1.5.7/ffmpeg-5.0-1.5.7-linux-x86_64.jar",
+        "repository/org/bytedeco/ffmpeg/5.0-1.5.7/ffmpeg-5.0-1.5.7-macosx-arm64.jar",
+        "repository/org/bytedeco/ffmpeg/5.0-1.5.7/ffmpeg-5.0-1.5.7-macosx-x86_64.jar",
+        "repository/org/bytedeco/ffmpeg/5.0-1.5.7/ffmpeg-5.0-1.5.7-windows-x86_64.jar",
+        "repository/org/bytedeco/javacpp-platform/1.5.7/javacpp-platform-1.5.7.jar",
+        "repository/org/bytedeco/javacpp/1.5.7/javacpp-1.5.7-linux-x86_64.jar",
+        "repository/org/bytedeco/javacpp/1.5.7/javacpp-1.5.7-macosx-arm64.jar",
+        "repository/org/bytedeco/javacpp/1.5.7/javacpp-1.5.7-macosx-x86_64.jar",
+        "repository/org/bytedeco/javacpp/1.5.7/javacpp-1.5.7-windows-x86_64.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -415,29 +416,30 @@ filegroup(
 studio_data(
     name = "ffmpeg-platform-bundle",
     files = [
-        "repository/org/bytedeco/ffmpeg-platform/4.4-1.5.6/ffmpeg-platform-4.4-1.5.6.jar",
-        "repository/org/bytedeco/javacpp-platform/1.5.6/javacpp-platform-1.5.6.jar",
+        "repository/org/bytedeco/ffmpeg-platform/5.0-1.5.7/ffmpeg-platform-5.0-1.5.7.jar",
+        "repository/org/bytedeco/javacpp-platform/1.5.7/javacpp-platform-1.5.7.jar",
     ],
     files_linux = [
-        "repository/org/bytedeco/ffmpeg/4.4-1.5.6/ffmpeg-4.4-1.5.6-linux-x86_64.jar",
-        "repository/org/bytedeco/javacpp/1.5.6/javacpp-1.5.6-linux-x86_64.jar",
+        "repository/org/bytedeco/ffmpeg/5.0-1.5.7/ffmpeg-5.0-1.5.7-linux-x86_64.jar",
+        "repository/org/bytedeco/javacpp/1.5.7/javacpp-1.5.7-linux-x86_64.jar",
     ],
     files_mac = [
-        "repository/org/bytedeco/ffmpeg/4.4-1.5.6/ffmpeg-4.4-1.5.6-macosx-x86_64.jar",
-        "repository/org/bytedeco/javacpp/1.5.6/javacpp-1.5.6-macosx-x86_64.jar",
+        "repository/org/bytedeco/ffmpeg/5.0-1.5.7/ffmpeg-5.0-1.5.7-macosx-x86_64.jar",
+        "repository/org/bytedeco/javacpp/1.5.7/javacpp-1.5.7-macosx-x86_64.jar",
     ],
     files_mac_arm = [
-        "repository/org/bytedeco/javacpp/1.5.6/javacpp-1.5.6-macosx-arm64.jar",
+        "repository/org/bytedeco/ffmpeg/5.0-1.5.7/ffmpeg-5.0-1.5.7-macosx-arm64.jar",
+        "repository/org/bytedeco/javacpp/1.5.7/javacpp-1.5.7-macosx-arm64.jar",
     ],
     files_win = [
-        "repository/org/bytedeco/ffmpeg/4.4-1.5.6/ffmpeg-4.4-1.5.6-windows-x86_64.jar",
-        "repository/org/bytedeco/javacpp/1.5.6/javacpp-1.5.6-windows-x86_64.jar",
+        "repository/org/bytedeco/ffmpeg/5.0-1.5.7/ffmpeg-5.0-1.5.7-windows-x86_64.jar",
+        "repository/org/bytedeco/javacpp/1.5.7/javacpp-1.5.7-windows-x86_64.jar",
     ],
     mappings = {
-        "prebuilts/tools/common/m2/repository/org/bytedeco/ffmpeg-platform/4.4-1.5.6/": "",
-        "prebuilts/tools/common/m2/repository/org/bytedeco/ffmpeg/4.4-1.5.6/": "",
-        "prebuilts/tools/common/m2/repository/org/bytedeco/javacpp-platform/1.5.6/": "",
-        "prebuilts/tools/common/m2/repository/org/bytedeco/javacpp/1.5.6/": "",
+        "prebuilts/tools/common/m2/repository/org/bytedeco/ffmpeg-platform/5.0-1.5.7/": "",
+        "prebuilts/tools/common/m2/repository/org/bytedeco/ffmpeg/5.0-1.5.7/": "",
+        "prebuilts/tools/common/m2/repository/org/bytedeco/javacpp-platform/1.5.7/": "",
+        "prebuilts/tools/common/m2/repository/org/bytedeco/javacpp/1.5.7/": "",
     },
     visibility = ["//visibility:public"],
 )
