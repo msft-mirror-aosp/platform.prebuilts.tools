@@ -50,7 +50,7 @@ package {
 
 java_import {
     name: "byte-buddy-prebuilt-jar",
-    jars: ["repository/net/bytebuddy/byte-buddy/1.6.5/byte-buddy-1.6.5.jar"],
+    jars: ["repository/net/bytebuddy/byte-buddy/1.9.3/byte-buddy-1.9.3.jar"],
     sdk_version: "current",
 }
 
@@ -87,6 +87,7 @@ java_import {
     name: "guava-listenablefuture-prebuilt-jar",
     jars: ["repository/com/google/guava/guava/listenablefuture/1.0/listenablefuture-1.0.jar"],
     sdk_version: "current",
+    min_sdk_version: "29",
     apex_available: [
         "//apex_available:platform",
         "//apex_available:anyapex",
@@ -111,10 +112,25 @@ java_import {
     host_supported: true,
 }
 
+java_import {
+    name: "rxjava",
+    jars: [
+        "repository/io/reactivex/rxjava2/rxjava/2.2.9/rxjava-2.2.9.jar",
+        "repository/org/reactivestreams/reactive-streams/1.0.2/reactive-streams-1.0.2.jar"
+    ],
+    sdk_version: "current",
+    host_supported: true,
+}
+
 // TODO: remove in favor of external/javapoet
 java_import_host {
     name: "javapoet-prebuilt-jar",
     jars: ["repository/com/squareup/javapoet/1.8.0/javapoet-1.8.0.jar"],
+}
+
+java_import_host {
+    name: "kotlinpoet",
+    jars: ["repository/com/squareup/kotlinpoet/1.8.0/kotlinpoet-1.8.0.jar"],
 }
 
 java_import_host {
@@ -213,6 +229,22 @@ java_import {
 }
 
 java_import {
+  name: "wire-runtime-prebuilt-jar",
+  jars: [
+    "repository/com/squareup/wire/wire-runtime/3.6.0/wire-runtime-3.6.0.jar",
+  ],
+}
+
+java_library_static {
+    name: "wire-runtime",
+    static_libs: [
+        "wire-runtime-prebuilt-jar",
+        "okio-lib",
+    ],
+    sdk_version: "current",
+}
+
+java_import {
     name: "accessibility-test-framework",
     jars: [
         "repository/com/google/android/apps/common/testing/accessibility/framework/accessibility-test-framework/2.0/accessibility-test-framework-2.0.jar",
@@ -269,39 +301,9 @@ java_import {
 }
 
 java_import {
-    name: "kotlinx-coroutines-core-nodeps",
-    jars: ["repository/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.3.0/kotlinx-coroutines-core-1.3.0.jar"],
-}
-
-// TODO: remove in favor of kotlinx_coroutines
-java_library_static {
-    name: "kotlinx-coroutines-core",
-    static_libs: [
-        "kotlinx-coroutines-core-nodeps",
-        "kotlin-stdlib"
-    ],
-    sdk_version: "current",
-}
-
-java_import {
-    name: "kotlinx-coroutines-android-nodeps",
-    jars: ["repository/org/jetbrains/kotlinx/kotlinx-coroutines-android/1.3.0/kotlinx-coroutines-android-1.3.0.jar"],
-}
-
-// TODO: remove in favor of kotlinx_coroutines_android
-java_library_static {
-    name: "kotlinx-coroutines-android",
-    static_libs: [
-        "kotlin-stdlib",
-        "kotlinx-coroutines-core",
-        "kotlinx-coroutines-android-nodeps"
-    ],
-    sdk_version: "current",
-}
-
-java_import {
-    name: "kotlinx-coroutines-core-jvm",
-    jars: ["repository/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.4.2/kotlinx-coroutines-core-jvm-1.4.2.jar"],
+    name: "checker-qual",
+    jars: ["repository/org/checkerframework/checker-qual/2.8.1/checker-qual-2.8.1.jar"],
+    host_supported: true,
 }
 
 java_import_host {
