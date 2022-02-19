@@ -138,8 +138,9 @@ java_import_host {
     jars: ["repository/com/google/protobuf/protobuf-java-util/3.0.2/protobuf-java-util-3.0.2.jar"],
 }
 
-java_import_host {
+java_import {
     name: "grpc-netty-shaded-1.16.1-jar",
+    host_supported: true,
     jars: ["repository/io/grpc/grpc-netty-shaded/1.16.1/grpc-netty-shaded-1.16.1.jar"],
     visibility: ["//external/grpc-grpc-java/netty/shaded"],
 }
