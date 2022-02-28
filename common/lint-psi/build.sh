@@ -9,9 +9,9 @@ set -eu
 # For the Kotlin version, see prebuilts/tools/common/kotlin-plugin/Kotlin/kotlinc/build.txt.
 # The git SHAs must also be updated to match the versions specified.
 export INTELLIJ_VERSION="212.5457.46"
-export KOTLIN_VERSION="1.6.10"
-export INTELLIJ_SHA="ba104b20a36f29e8303a7e8ce29ea09e232db72c" # IntelliJ branch kt-212-1.6.0 (after the Kotlin 1.6.10 release).
-export KOTLIN_SHA="1b49105c78c566ec42b422cbd46782b47a0d9f40" # Kotlin compiler tag v1.6.10.
+export KOTLIN_VERSION="1.6.20-M1"
+export INTELLIJ_SHA="78d9e59209a9253630c6714f82d02cf88ba8f0b0" # 212-1.6.20, Feb 18 2022.
+export KOTLIN_SHA="d14d5ac57b8bd3fe61a39a563a047a50816d3c47" # v1.6.20-M1
 
 export CLEAN_BUILD="${CLEAN_BUILD:-false}"
 
@@ -57,8 +57,13 @@ if [[ "$CLEAN_BUILD" = "true" ]]; then
 fi
 
 phase "Applying patches if needed"
-if [[ ! "${CUSTOM_KOTLIN_DIR:-}" ]]; then git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/kotlin-compiler-patch.diff"; fi
-if [[ ! "${CUSTOM_INTELLIJ_DIR:-}" ]]; then git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/kotlin-plugin-patch.diff"; fi
+if [[ ! "${CUSTOM_KOTLIN_DIR:-}" ]]; then
+    git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/kotlin-compiler-patch.diff"
+fi
+if [[ ! "${CUSTOM_INTELLIJ_DIR:-}" ]]; then
+    # f8485e8335: FIR/UAST: decouple from frontend-independent
+    git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/kotlin-plugin-f8485e8335.diff"
+fi
 
 phase "Building Kotlin compiler"
 # This command is inspired by JetBrains/intellij-community/.idea/runConfigurations/Publish_compiler_for_ide_jars.xml

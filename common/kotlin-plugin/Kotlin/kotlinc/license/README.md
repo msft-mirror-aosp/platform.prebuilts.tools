@@ -81,6 +81,10 @@ the Kotlin IntelliJ IDEA plugin:
       - License: Apache 2 ([license/third_party/gwt_license.txt][gwt])
       - Origin: Derived from GWT, (C) 2007-08 Google Inc.
 
+ - Path: libraries/stdlib/native-wasm/src/kotlin/collections
+      - License: Apache 2 ([license/third_party/gwt_license.txt][gwt])
+      - Origin: Derived from GWT, (C) 2007-08 Google Inc.
+
  - Path: libraries/stdlib/js-v1/src/js/long.js
       - License: Apache 2 ([license/third_party/closure-compiler_LICENSE.txt][closure-compiler])
       - Origin: Google Closure Library, Copyright 2009 The Closure Library Authors
@@ -116,6 +120,10 @@ the Kotlin IntelliJ IDEA plugin:
  - Path: compiler/tests-common/tests/org/jetbrains/kotlin/codegen/ir/ComposeLikeGenerationExtension.kt
       - License: Apache 2 ([license/third_party/aosp_license.txt][aosp])
       - Origin: Derived from JetPack Compose compiler plugin code, Copyright 2019 The Android Open Source Project
+
+ - Path: libraries/stdlib/wasm/src/kotlin/text/FloatingPointConverter.kt
+   - License: MIT ([license/third_party/asmble_license.txt][asmble])
+   - Origin: Copyright (C) 2018 Chad Retz
 
 ## Kotlin Test Data
 

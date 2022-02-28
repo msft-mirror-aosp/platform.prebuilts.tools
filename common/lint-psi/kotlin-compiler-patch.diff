@@ -1,5 +1,5 @@
 diff --git a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt
-index b0d6978ec11..f71be04d53c 100644
+index 692a3b9d4f84..d09213b45a4a 100644
 --- a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt
 +++ b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt
 @@ -40,6 +40,7 @@ import org.jetbrains.kotlin.name.FqName
@@ -21,10 +21,10 @@ index b0d6978ec11..f71be04d53c 100644
                  findVirtualFileGivenPackage(dir, relativeClassName, type)
              } ?: singleJavaFileRootsIndex.findJavaSourceClass(classId)
 diff --git a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
-index 7b839b52d3a..8d5487da3c0 100644
+index 92877f1e09db..a743e39f3c75 100644
 --- a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
 +++ b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
-@@ -374,7 +374,9 @@ class KotlinCoreEnvironment private constructor(
+@@ -412,7 +412,9 @@ class KotlinCoreEnvironment private constructor(
              is JvmModulePathRoot ->
                  if (root.file.isFile) findJarRoot(root.file) else findExistingRoot(root, "Java module root")
              is JavaSourceRoot ->
@@ -32,32 +32,6 @@ index 7b839b52d3a..8d5487da3c0 100644
 +                // Partial cherry pick of https://github.com/JetBrains/kotlin/pull/3649 supporting .srcjar roots.
 +                if (root.file.isFile && root.file.path.endsWith(".srcjar")) findJarRoot(root.file)
 +                else findExistingRoot(root, "Java source root")
+             is VirtualJvmClasspathRoot -> root.file
              else ->
                  throw IllegalStateException("Unexpected root: $root")
-         }
-diff --git a/compiler/light-classes/src/org/jetbrains/kotlin/asJava/elements/KotlinLightTypeParameterListBuilder.kt b/compiler/light-classes/src/org/jetbrains/kotlin/asJava/elements/KotlinLightTypeParameterListBuilder.kt
-index 34fd6e8efbf..2e90875eb6b 100644
---- a/compiler/light-classes/src/org/jetbrains/kotlin/asJava/elements/KotlinLightTypeParameterListBuilder.kt
-+++ b/compiler/light-classes/src/org/jetbrains/kotlin/asJava/elements/KotlinLightTypeParameterListBuilder.kt
-@@ -20,9 +20,11 @@ import com.intellij.psi.PsiElement
- import com.intellij.psi.PsiFile
- import com.intellij.psi.PsiTypeParameterListOwner
- import com.intellij.psi.ResolveState
-+import com.intellij.psi.impl.light.LightTypeParameterBuilder
- import com.intellij.psi.impl.light.LightTypeParameterListBuilder
- import com.intellij.psi.scope.PsiScopeProcessor
- import org.jetbrains.kotlin.idea.KotlinLanguage
-+import org.jetbrains.kotlin.psi.KtTypeParameter
- 
- class KotlinLightTypeParameterListBuilder(private val owner: PsiTypeParameterListOwner) :
-     LightTypeParameterListBuilder(owner.manager, KotlinLanguage.INSTANCE) {
-@@ -40,3 +42,8 @@ class KotlinLightTypeParameterListBuilder(private val owner: PsiTypeParameterLis
- 
-     override fun getText(): String? = ""
- }
-+
-+open class KotlinLightTypeParameterBuilder(
-+    name: String, owner: PsiTypeParameterListOwner, index: Int,
-+    val sourcePsi: KtTypeParameter
-+) : LightTypeParameterBuilder(name, owner, index)
-\ No newline at end of file
