@@ -15,8 +15,8 @@ def main():
 
     parser.add_argument('--no-update-prebuilts', action='store_true')
     parser.add_argument('--clean-build', action='store_true')
-    parser.add_argument('--kotlin-version', default='1.6.10')
-    parser.add_argument('--intellij-version', default='213.6461.79')
+    parser.add_argument('--kotlin-version', default='1.6.20-M1')
+    parser.add_argument('--intellij-version', default='213.6777.52')
 
     args = parser.parse_args()
 
