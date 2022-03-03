@@ -9,9 +9,9 @@ but others are runtime dependencies that get shipped with the
 SDK Tools. Such runtime dependencies must include a NOTICE file
 next to the artifact or the build will fail.
 
-To add a new dependency run the bazel command:
+To add a new dependency, add it to tools/base/bazel/maven/artifacts.bzl and run the command:
 
-   $ bazel run //tools/base/bazel:add_dependency com.example:foo:1.0.0
+   tools/base/bazel/maven/maven_fetch.sh
 
 There is more information here:
 
