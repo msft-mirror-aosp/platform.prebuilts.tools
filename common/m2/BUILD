@@ -164,7 +164,7 @@ jvm_import(
 # managed by go/iml_to_build
 jvm_import(
     name = "jetifier-core",
-    jars = ["repository/com/android/tools/build/jetifier/jetifier-core/1.0.0-beta09/jetifier-core-1.0.0-beta09.jar"],
+    jars = ["repository/com/android/tools/build/jetifier/jetifier-core/1.0.0-beta10/jetifier-core-1.0.0-beta10.jar"],
     visibility = ["//visibility:public"],
 )
 
