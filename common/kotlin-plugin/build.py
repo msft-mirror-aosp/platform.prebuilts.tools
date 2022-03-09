@@ -2,6 +2,7 @@
 from pathlib import Path
 from zipfile import ZipFile
 import argparse
+import platform
 import shlex
 import shutil
 import subprocess
@@ -31,6 +32,12 @@ def main():
     args.kotlin_ide_dir = workspace.joinpath('external/jetbrains/intellij-kotlin')
     args.kotlin_version_full = f'{args.kotlin_version}-release-for-android-studio'
     args.gradlew = args.kotlinc_dir.joinpath('gradlew')
+    args.java_home = compute_java_home(args)
+    args.java = args.java_home.joinpath('bin/java')
+    args.cmd_env = {
+        'PATH': '/bin:/usr/bin',
+        'JAVA_HOME': str(args.java_home),
+    }
 
     # Build.
     build_kotlin_compiler(args)
@@ -60,7 +67,7 @@ def build_kotlin_compiler(args):
         '-Pkotlin.build.isObsoleteJdkOverrideEnabled=true',  # Avoids the need for JDK 1.6.
         '-Dorg.gradle.dependency.verification=off',  # TODO: dependency verification fails currently.
     ]
-    run_subprocess(cmd, 'Building the Kotlin compiler')
+    run_subprocess(cmd, args.cmd_env, 'Building the Kotlin compiler')
 
 
 # Builds the Kotlin IDE plugin from the sources in external/jetbrains/intellij-kotlin.
@@ -68,7 +75,7 @@ def build_kotlin_ide(args):
     ant_launcher_jar = args.kotlin_ide_dir.joinpath('lib/ant/lib/ant-launcher.jar')
     build_xml = args.kotlin_ide_dir.joinpath('build.xml')
     cmd = [
-        'java', '-jar', str(ant_launcher_jar),  # N.B. using system-default 'java' for now.
+        str(args.java), '-jar', str(ant_launcher_jar),
         '-f', str(build_xml),
         'kotlin_plugin',
         f'-Dbuild.number={args.intellij_version}',
@@ -82,7 +89,7 @@ def build_kotlin_ide(args):
     ]
     if not args.clean_build:
         cmd.append('-Dintellij.build.incremental.compilation=true')
-    run_subprocess(cmd, 'Building the Kotlin IDE plugin')
+    run_subprocess(cmd, args.cmd_env, 'Building the Kotlin IDE plugin')
 
 
 # Runs the project-model-updater tool so that the Kotlin IDE plugin uses
@@ -98,7 +105,7 @@ def update_ide_project_model(args):
     # Run the updater.
     clean_args = ['clean', '--no-daemon', '--no-build-cache'] if args.clean_build else []
     cmd = [str(args.gradlew), f'--project-dir={updater_dir}', *clean_args, 'run']
-    run_subprocess(cmd, 'Running project-model-updater')
+    run_subprocess(cmd, args.cmd_env, 'Running project-model-updater')
 
 
 def copy_artifacts_to_prebuilts(args):
@@ -144,11 +151,23 @@ def write_metadata_file(args):
         f.write(f'Kotlin plugin platform: {idea_version}\n')
 
 
+def compute_java_home(args):
+    jdk_base = args.workspace.joinpath('prebuilts/studio/jdk/jdk11')
+    system = platform.system()
+    if system == 'Linux':
+        return jdk_base.joinpath('linux')
+    elif system == 'Darwin':
+        subdir = 'mac-arm64' if platform.machine() == 'arm64' else 'mac'
+        return jdk_base.joinpath(subdir, 'Contents/Home')
+    else:
+        sys.exit(f'Unrecognized system: {system}')
+
+
 # A wrapper around subprocess.run() with additional logging and stricter env.
-def run_subprocess(cmd, description):
+def run_subprocess(cmd, env, description):
     cmd_quoted = shlex.join(cmd)
     print(f'\n{description}:\n\n{cmd_quoted}\n')
-    result = subprocess.run(cmd, env={})
+    result = subprocess.run(cmd, env=env)
     if result.returncode != 0:
         sys.exit(f'\nERROR: {description} failed (see logs).\n')
 
