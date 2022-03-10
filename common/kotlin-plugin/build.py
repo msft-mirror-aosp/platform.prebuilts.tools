@@ -14,8 +14,8 @@ def main():
     parser = argparse.ArgumentParser(
         description='Builds the Kotlin IDE plugin and updates prebuilts.')
 
-    parser.add_argument('--no-update-prebuilts', action='store_true')
     parser.add_argument('--clean-build', action='store_true')
+    parser.add_argument('--stage', metavar='DIR', type=Path)
     parser.add_argument('--kotlin-version', default='1.6.20-M1')
     parser.add_argument('--intellij-version', default='213.6777.52')
 
@@ -42,9 +42,13 @@ def main():
     # Build.
     build_kotlin_compiler(args)
     update_ide_project_model(args)
-    build_kotlin_ide(args)
-    if not args.no_update_prebuilts:
-        copy_artifacts_to_prebuilts(args)
+    (plugin_zip, sources_zip) = build_kotlin_ide(args)
+    if args.stage:
+        args.stage.mkdir(parents=True, exist_ok=True)
+        shutil.copy(plugin_zip, args.stage)
+        shutil.copy(sources_zip, args.stage)
+    else:
+        copy_artifacts_to_prebuilts(args, plugin_zip, sources_zip)
         write_metadata_file(args)
     print('\nDone.\n')
 
@@ -71,6 +75,7 @@ def build_kotlin_compiler(args):
 
 
 # Builds the Kotlin IDE plugin from the sources in external/jetbrains/intellij-kotlin.
+# Returns a tuple of build outputs.
 def build_kotlin_ide(args):
     ant_launcher_jar = args.kotlin_ide_dir.joinpath('lib/ant/lib/ant-launcher.jar')
     build_xml = args.kotlin_ide_dir.joinpath('build.xml')
@@ -91,6 +96,12 @@ def build_kotlin_ide(args):
         cmd.append('-Dintellij.build.incremental.compilation=true')
     run_subprocess(cmd, args.cmd_env, 'Building the Kotlin IDE plugin')
 
+    # Gather build outputs.
+    artifacts_dir: Path = args.kotlin_ide_dir.joinpath('out/idea-ce/artifacts')
+    plugin_zip = artifacts_dir.joinpath(f'IC-plugins/Kotlin-{args.intellij_version}.zip')
+    sources_zip = artifacts_dir.joinpath('kotlin-plugin-sources.zip')
+    return (plugin_zip, sources_zip)
+
 
 # Runs the project-model-updater tool so that the Kotlin IDE plugin uses
 # our locally built Kotlin compiler.
@@ -108,7 +119,7 @@ def update_ide_project_model(args):
     run_subprocess(cmd, args.cmd_env, 'Running project-model-updater')
 
 
-def copy_artifacts_to_prebuilts(args):
+def copy_artifacts_to_prebuilts(args, new_plugin_zip, new_sources_zip):
     print('\nCopying build outputs to prebuilts.\n')
 
     # Compute destination paths.
@@ -121,10 +132,7 @@ def copy_artifacts_to_prebuilts(args):
         shutil.rmtree(target_plugin_dir)
     target_sources_zip.unlink(missing_ok=True)
 
-    # Copy build outputs.
-    artifacts_dir: Path = args.kotlin_ide_dir.joinpath('out/idea-ce/artifacts')
-    new_plugin_zip = artifacts_dir.joinpath(f'IC-plugins/Kotlin-{args.intellij_version}.zip')
-    new_sources_zip = artifacts_dir.joinpath('kotlin-plugin-sources.zip')
+    # Copy new files.
     shutil.unpack_archive(new_plugin_zip, target_plugin_dir.parent)
     shutil.copy(new_sources_zip, target_sources_zip)
 
