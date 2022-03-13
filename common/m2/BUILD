@@ -2,6 +2,12 @@ load("//tools/adt/idea/studio:studio.bzl", "studio_data")
 load("//tools/base/bazel:jvm_import.bzl", "jvm_import")
 
 config_setting(
+    name = "osx-arm64",
+    values = {"host_cpu": "darwin_arm64"},
+    visibility = ["//visibility:public"],
+)
+
+config_setting(
     name = "osx-x86_64",
     values = {"host_cpu": "darwin"},
     visibility = ["//visibility:public"],
@@ -28,6 +34,7 @@ java_import(
 filegroup(
     name = "io.grpc.protoc-gen-grpc-java.1.45.1_exe",
     srcs = select({
+        "//prebuilts/tools/common/m2:osx-arm64": ["repository/io/grpc/protoc-gen-grpc-java/1.45.1/protoc-gen-grpc-java-1.45.1-osx-aarch_64.exe"],
         "//prebuilts/tools/common/m2:osx-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.45.1/protoc-gen-grpc-java-1.45.1-osx-x86_64.exe"],
         "//prebuilts/tools/common/m2:windows-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.45.1/protoc-gen-grpc-java-1.45.1-windows-x86_64.exe"],
         "//prebuilts/tools/common/m2:linux-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.45.1/protoc-gen-grpc-java-1.45.1-linux-x86_64.exe"],
@@ -75,6 +82,7 @@ java_import(
 filegroup(
     name = "com.google.protobuf.protoc.3.19.2_exe",
     srcs = select({
+        "//prebuilts/tools/common/m2:osx-arm64": ["repository/com/google/protobuf/protoc/3.19.2/protoc-3.19.2-osx-aarch_64.exe"],
         "//prebuilts/tools/common/m2:osx-x86_64": ["repository/com/google/protobuf/protoc/3.19.2/protoc-3.19.2-osx-x86_64.exe"],
         "//prebuilts/tools/common/m2:windows-x86_64": ["repository/com/google/protobuf/protoc/3.19.2/protoc-3.19.2-windows-x86_64.exe"],
         "//prebuilts/tools/common/m2:linux-x86_64": ["repository/com/google/protobuf/protoc/3.19.2/protoc-3.19.2-linux-x86_64.exe"],
