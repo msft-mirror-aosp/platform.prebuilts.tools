@@ -173,7 +173,7 @@ def compute_java_home(args):
 
 # A wrapper around subprocess.run() with additional logging and stricter env.
 def run_subprocess(cmd, env, description):
-    cmd_quoted = shlex.join(cmd)
+    cmd_quoted = ' '.join([shlex.quote(arg) for arg in cmd])
     print(f'\n{description}:\n\n{cmd_quoted}\n')
     result = subprocess.run(cmd, env=env)
     if result.returncode != 0:
