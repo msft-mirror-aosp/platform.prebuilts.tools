@@ -7,6 +7,7 @@ import shlex
 import shutil
 import subprocess
 import sys
+import tempfile
 import xml.etree.ElementTree as ET
 
 
@@ -14,6 +15,7 @@ def main():
     parser = argparse.ArgumentParser(
         description='Builds the Kotlin IDE plugin and updates prebuilts.')
 
+    parser.add_argument('--download', metavar='BUILD_ID')
     parser.add_argument('--clean-build', action='store_true')
     parser.add_argument('--stage', metavar='DIR', type=Path)
     parser.add_argument('--kotlin-version', default='1.6.20-M1')
@@ -39,10 +41,15 @@ def main():
         'JAVA_HOME': str(args.java_home),
     }
 
-    # Build.
-    build_kotlin_compiler(args)
-    update_ide_project_model(args)
-    (plugin_zip, sources_zip) = build_kotlin_ide(args)
+    # Download or build.
+    if args.download:
+        (plugin_zip, sources_zip) = download_kotlin_ide_from_ab(args)
+    else:
+        build_kotlin_compiler(args)
+        update_ide_project_model(args)
+        (plugin_zip, sources_zip) = build_kotlin_ide(args)
+
+    # Copy artifacts.
     if args.stage:
         args.stage.mkdir(parents=True, exist_ok=True)
         shutil.copy(plugin_zip, args.stage)
@@ -50,6 +57,7 @@ def main():
     else:
         copy_artifacts_to_prebuilts(args, plugin_zip, sources_zip)
         write_metadata_file(args)
+
     print('\nDone.\n')
 
 
@@ -117,6 +125,23 @@ def update_ide_project_model(args):
     clean_args = ['clean', '--no-daemon', '--no-build-cache'] if args.clean_build else []
     cmd = [str(args.gradlew), f'--project-dir={updater_dir}', *clean_args, 'run']
     run_subprocess(cmd, args.cmd_env, 'Running project-model-updater')
+
+
+# Downloads the Kotlin IDE plugin from AB. Returns a tuple of build outputs.
+def download_kotlin_ide_from_ab(args):
+    # Download.
+    bid = args.download
+    fetch = '/google/data/ro/projects/android/fetch_artifact'
+    tmp_dir = Path(tempfile.mkdtemp(prefix=f'kotlin-plugin-from-ab-{bid}-'))
+    for artifact in ['Kotlin-*.zip', 'kotlin-plugin-sources.zip']:
+        cmd = [fetch, '--bid', bid, '--target', 'IntelliJ-KotlinPlugin', artifact, str(tmp_dir)]
+        run_subprocess(cmd, args.cmd_env, f'Downloading {artifact} into {tmp_dir}')
+
+    # Gather artifacts.
+    plugins = list(tmp_dir.glob('Kotlin-*.zip'))
+    sources = list(tmp_dir.glob('kotlin-plugin-sources.zip'))
+    assert len(plugins) == len(sources) == 1
+    return (plugins[0], sources[0])
 
 
 def copy_artifacts_to_prebuilts(args, new_plugin_zip, new_sources_zip):
