@@ -200,6 +200,7 @@ def compute_java_home(args):
 def run_subprocess(cmd, env, description):
     cmd_quoted = ' '.join([shlex.quote(arg) for arg in cmd])
     print(f'\n{description}:\n\n{cmd_quoted}\n')
+    sys.stdout.flush()
     result = subprocess.run(cmd, env=env)
     if result.returncode != 0:
         sys.exit(f'\nERROR: {description} failed (see logs).\n')
