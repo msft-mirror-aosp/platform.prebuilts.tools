@@ -167,6 +167,7 @@ def write_metadata_file(args):
     print('\nWriting METADATA file.\n')
 
     # Gather version info.
+    build_id = args.download if args.download else '<local_build>'
     kotlin_prebuilts: Path = args.workspace.joinpath('prebuilts/tools/common/kotlin-plugin')
     compiler_version = kotlin_prebuilts.joinpath('Kotlin/kotlinc/build.txt').read_text()
     plugin_jar = kotlin_prebuilts.joinpath('Kotlin/lib/kotlin-plugin.jar')
@@ -179,9 +180,10 @@ def write_metadata_file(args):
     # Write METADATA file.
     metadata_file = kotlin_prebuilts.joinpath('METADATA')
     with open(metadata_file, 'w') as f:
-        f.write(f'Kotlin compiler version: {compiler_version}\n')
-        f.write(f'Kotlin plugin version: {plugin_version}\n')
-        f.write(f'Kotlin plugin platform: {idea_version}\n')
+        f.write(f'build_id: {build_id}\n')
+        f.write(f'kotlin_compiler_version: {compiler_version}\n')
+        f.write(f'kotlin_plugin_version: {plugin_version}\n')
+        f.write(f'kotlin_plugin_platform: {idea_version}\n')
 
 
 def compute_java_home(args):
