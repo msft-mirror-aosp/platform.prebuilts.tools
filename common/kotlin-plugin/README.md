@@ -17,6 +17,19 @@ This is the official way to update these artifacts because it gives us verifiabl
 Always use an AB build if the artifacts will end up in a public release.
 
 
+Patching the Kotlin IDE plugin (or the bundled compiler)
+---
+We do not want any long-term divergence from usptream. So, in general, patches must first
+be submitted upstream before they can be cherry-picked to our fork. Additionally, since our fork
+does not go through the same level of testing as the official Kotlin release, patches should
+ideally be small and relatively safe.
+
+In order to develop a patch, you can open `platform/external/jetbrains/intellij-kotlin` in
+IntelliJ. You should run `./build.py` first in order to build the Kotlin compiler used by the IDE
+plugin---otherwise you will see unresolved symbols. When you are ready to test your change, don't
+forget to run `./build.py` again.
+
+
 Upstream release process
 ---
 The Kotlin IDE plugin is developed in
