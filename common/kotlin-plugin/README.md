@@ -4,13 +4,17 @@ The Kotlin IDE plugin also bundles the Kotlin compiler, which we build from the 
 `platform/external/jetbrains/kotlin`.
 
 
-Building from sources
+Building
 ---
 To build the Kotlin IDE plugin and update these artifacts, run `./build.py`.
 
 Pass `--clean-build` to avoid reusing any previous build outputs.
 
 Pass `--stage /path/to/out/dir` to prepare a Kotlin plugin zip without updating prebuilts.
+
+Pass `--download BUILD_ID` to download a build from AB instead of building locally.
+This is the official way to update these artifacts because it gives us verifiable builds.
+Always use an AB build if the artifacts will end up in a public release.
 
 
 Upstream release process
