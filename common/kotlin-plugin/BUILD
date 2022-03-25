@@ -23,8 +23,8 @@ jvm_import(
         # which circumvents the normal classloader delegation hierarchy in order to
         # prioritize its own version of kotlin-stdlib.
         exclude = [
-            "Kotlin/lib/kotlin-stdlib-jdk8.jar",
-            "Kotlin/lib/kotlin-reflect.jar",
+            "Kotlin/lib/kotlinc_kotlin-stdlib.jar",
+            "Kotlin/lib/kotlinc_kotlin-reflect.jar",
         ],
     ),
 )

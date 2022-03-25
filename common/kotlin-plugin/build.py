@@ -193,7 +193,7 @@ def write_jps_lib_xml(args):
 
     # Note: see comment in the BUILD file for why we exclude kotlin-stdlib and kotlin-reflect.
     jars = list(args.workspace.glob('prebuilts/tools/common/kotlin-plugin/Kotlin/lib/*.jar'))
-    jars = [jar for jar in jars if jar.name not in ['kotlin-stdlib-jdk8.jar', 'kotlin-reflect.jar']]
+    jars = [jar for jar in jars if jar.name not in ['kotlinc_kotlin-stdlib.jar', 'kotlinc_kotlin-reflect.jar']]
     jars = [os.path.relpath(jar, project_dir) for jar in jars]
 
     src = args.workspace.joinpath('prebuilts/tools/common/kotlin-plugin/kotlin-plugin-sources.jar')
