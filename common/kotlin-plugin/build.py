@@ -2,11 +2,13 @@
 from pathlib import Path
 from zipfile import ZipFile
 import argparse
+import os
 import platform
 import shlex
 import shutil
 import subprocess
 import sys
+import tempfile
 import xml.etree.ElementTree as ET
 
 
@@ -14,8 +16,9 @@ def main():
     parser = argparse.ArgumentParser(
         description='Builds the Kotlin IDE plugin and updates prebuilts.')
 
-    parser.add_argument('--no-update-prebuilts', action='store_true')
+    parser.add_argument('--download', metavar='BUILD_ID')
     parser.add_argument('--clean-build', action='store_true')
+    parser.add_argument('--stage', metavar='DIR', type=Path)
     parser.add_argument('--kotlin-version', default='1.6.20-M1')
     parser.add_argument('--intellij-version', default='213.6777.52')
 
@@ -39,13 +42,24 @@ def main():
         'JAVA_HOME': str(args.java_home),
     }
 
-    # Build.
-    build_kotlin_compiler(args)
-    update_ide_project_model(args)
-    build_kotlin_ide(args)
-    if not args.no_update_prebuilts:
-        copy_artifacts_to_prebuilts(args)
+    # Download or build.
+    if args.download:
+        (plugin_zip, sources_zip) = download_kotlin_ide_from_ab(args)
+    else:
+        build_kotlin_compiler(args)
+        update_ide_project_model(args)
+        (plugin_zip, sources_zip) = build_kotlin_ide(args)
+
+    # Copy artifacts.
+    if args.stage:
+        args.stage.mkdir(parents=True, exist_ok=True)
+        shutil.copy(plugin_zip, args.stage)
+        shutil.copy(sources_zip, args.stage)
+    else:
+        copy_artifacts_to_prebuilts(args, plugin_zip, sources_zip)
         write_metadata_file(args)
+        write_jps_lib_xml(args)
+
     print('\nDone.\n')
 
 
@@ -71,6 +85,7 @@ def build_kotlin_compiler(args):
 
 
 # Builds the Kotlin IDE plugin from the sources in external/jetbrains/intellij-kotlin.
+# Returns a tuple of build outputs.
 def build_kotlin_ide(args):
     ant_launcher_jar = args.kotlin_ide_dir.joinpath('lib/ant/lib/ant-launcher.jar')
     build_xml = args.kotlin_ide_dir.joinpath('build.xml')
@@ -91,6 +106,12 @@ def build_kotlin_ide(args):
         cmd.append('-Dintellij.build.incremental.compilation=true')
     run_subprocess(cmd, args.cmd_env, 'Building the Kotlin IDE plugin')
 
+    # Gather build outputs.
+    artifacts_dir: Path = args.kotlin_ide_dir.joinpath('out/idea-ce/artifacts')
+    plugin_zip = artifacts_dir.joinpath(f'IC-plugins/Kotlin-{args.intellij_version}.zip')
+    sources_zip = artifacts_dir.joinpath('kotlin-plugin-sources.zip')
+    return (plugin_zip, sources_zip)
+
 
 # Runs the project-model-updater tool so that the Kotlin IDE plugin uses
 # our locally built Kotlin compiler.
@@ -108,7 +129,24 @@ def update_ide_project_model(args):
     run_subprocess(cmd, args.cmd_env, 'Running project-model-updater')
 
 
-def copy_artifacts_to_prebuilts(args):
+# Downloads the Kotlin IDE plugin from AB. Returns a tuple of build outputs.
+def download_kotlin_ide_from_ab(args):
+    # Download.
+    bid = args.download
+    fetch = '/google/data/ro/projects/android/fetch_artifact'
+    tmp_dir = Path(tempfile.mkdtemp(prefix=f'kotlin-plugin-from-ab-{bid}-'))
+    for artifact in ['Kotlin-*.zip', 'kotlin-plugin-sources.zip']:
+        cmd = [fetch, '--bid', bid, '--target', 'IntelliJ-KotlinPlugin', artifact, str(tmp_dir)]
+        run_subprocess(cmd, args.cmd_env, f'Downloading {artifact} into {tmp_dir}')
+
+    # Gather artifacts.
+    plugins = list(tmp_dir.glob('Kotlin-*.zip'))
+    sources = list(tmp_dir.glob('kotlin-plugin-sources.zip'))
+    assert len(plugins) == len(sources) == 1
+    return (plugins[0], sources[0])
+
+
+def copy_artifacts_to_prebuilts(args, new_plugin_zip, new_sources_zip):
     print('\nCopying build outputs to prebuilts.\n')
 
     # Compute destination paths.
@@ -121,10 +159,7 @@ def copy_artifacts_to_prebuilts(args):
         shutil.rmtree(target_plugin_dir)
     target_sources_zip.unlink(missing_ok=True)
 
-    # Copy build outputs.
-    artifacts_dir: Path = args.kotlin_ide_dir.joinpath('out/idea-ce/artifacts')
-    new_plugin_zip = artifacts_dir.joinpath(f'IC-plugins/Kotlin-{args.intellij_version}.zip')
-    new_sources_zip = artifacts_dir.joinpath('kotlin-plugin-sources.zip')
+    # Copy new files.
     shutil.unpack_archive(new_plugin_zip, target_plugin_dir.parent)
     shutil.copy(new_sources_zip, target_sources_zip)
 
@@ -134,6 +169,7 @@ def write_metadata_file(args):
     print('\nWriting METADATA file.\n')
 
     # Gather version info.
+    build_id = args.download if args.download else '<local_build>'
     kotlin_prebuilts: Path = args.workspace.joinpath('prebuilts/tools/common/kotlin-plugin')
     compiler_version = kotlin_prebuilts.joinpath('Kotlin/kotlinc/build.txt').read_text()
     plugin_jar = kotlin_prebuilts.joinpath('Kotlin/lib/kotlin-plugin.jar')
@@ -146,9 +182,38 @@ def write_metadata_file(args):
     # Write METADATA file.
     metadata_file = kotlin_prebuilts.joinpath('METADATA')
     with open(metadata_file, 'w') as f:
-        f.write(f'Kotlin compiler version: {compiler_version}\n')
-        f.write(f'Kotlin plugin version: {plugin_version}\n')
-        f.write(f'Kotlin plugin platform: {idea_version}\n')
+        f.write(f'build_id: {build_id}\n')
+        f.write(f'kotlin_compiler_version: {compiler_version}\n')
+        f.write(f'kotlin_plugin_version: {plugin_version}\n')
+        f.write(f'kotlin_plugin_platform: {idea_version}\n')
+
+
+def write_jps_lib_xml(args):
+    project_dir = args.workspace.joinpath('tools/adt/idea')
+
+    # Note: see comment in the BUILD file for why we exclude kotlin-stdlib and kotlin-reflect.
+    jars = list(args.workspace.glob('prebuilts/tools/common/kotlin-plugin/Kotlin/lib/*.jar'))
+    jars = [jar for jar in jars if jar.name not in ['kotlinc_kotlin-stdlib.jar', 'kotlinc_kotlin-reflect.jar']]
+    jars = [os.path.relpath(jar, project_dir) for jar in jars]
+
+    src = args.workspace.joinpath('prebuilts/tools/common/kotlin-plugin/kotlin-plugin-sources.jar')
+    src = os.path.relpath(src, project_dir)
+
+    outfile = project_dir.joinpath(f'.idea/libraries/studio_plugin_Kotlin.xml')
+    print(f'\nWriting JPS library: {outfile}\n')
+    with open(outfile, 'w') as f:
+        f.write(f'<component name="libraryTable">\n')
+        f.write(f'  <library name="studio-plugin-Kotlin">\n')
+        f.write(f'    <CLASSES>\n')
+        for jar in jars:
+            f.write(f'      <root url="jar://$PROJECT_DIR$/{jar}!/" />\n')
+        f.write(f'    </CLASSES>\n')
+        f.write(f'    <JAVADOC />\n')
+        f.write(f'    <SOURCES>\n')
+        f.write(f'      <root url="jar://$PROJECT_DIR$/{src}!/" />\n')
+        f.write(f'    </SOURCES>\n')
+        f.write(f'  </library>\n')
+        f.write(f'</component>')
 
 
 def compute_java_home(args):
@@ -165,8 +230,9 @@ def compute_java_home(args):
 
 # A wrapper around subprocess.run() with additional logging and stricter env.
 def run_subprocess(cmd, env, description):
-    cmd_quoted = shlex.join(cmd)
+    cmd_quoted = ' '.join([shlex.quote(arg) for arg in cmd])
     print(f'\n{description}:\n\n{cmd_quoted}\n')
+    sys.stdout.flush()
     result = subprocess.run(cmd, env=env)
     if result.returncode != 0:
         sys.exit(f'\nERROR: {description} failed (see logs).\n')

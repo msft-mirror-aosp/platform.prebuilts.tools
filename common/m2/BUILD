@@ -26,11 +26,11 @@ java_import(
 )
 
 filegroup(
-    name = "io.grpc.protoc-gen-grpc-java.1.21.1_exe",
+    name = "io.grpc.protoc-gen-grpc-java.1.39.0_exe",
     srcs = select({
-        "//prebuilts/tools/common/m2:osx-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.21.1/protoc-gen-grpc-java-1.21.1-osx-x86_64.exe"],
-        "//prebuilts/tools/common/m2:windows-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.21.1/protoc-gen-grpc-java-1.21.1-windows-x86_64.exe"],
-        "//prebuilts/tools/common/m2:linux-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.21.1/protoc-gen-grpc-java-1.21.1-linux-x86_64.exe"],
+        "//prebuilts/tools/common/m2:osx-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.39.0/protoc-gen-grpc-java-1.39.0-osx-x86_64.exe"],
+        "//prebuilts/tools/common/m2:windows-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.39.0/protoc-gen-grpc-java-1.39.0-windows-x86_64.exe"],
+        "//prebuilts/tools/common/m2:linux-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.39.0/protoc-gen-grpc-java-1.39.0-linux-x86_64.exe"],
     }),
     visibility = ["//visibility:public"],
 )
@@ -58,24 +58,24 @@ java_import(
 )
 
 filegroup(
-    name = "com.google.protobuf.protoc.3.10.0_exe",
+    name = "com.google.protobuf.protoc.3.17.2_exe",
     srcs = select({
-        "//prebuilts/tools/common/m2:osx-x86_64": ["repository/com/google/protobuf/protoc/3.10.0/protoc-3.10.0-osx-x86_64.exe"],
-        "//prebuilts/tools/common/m2:windows-x86_64": ["repository/com/google/protobuf/protoc/3.10.0/protoc-3.10.0-windows-x86_64.exe"],
-        "//prebuilts/tools/common/m2:linux-x86_64": ["repository/com/google/protobuf/protoc/3.10.0/protoc-3.10.0-linux-x86_64.exe"],
+        "//prebuilts/tools/common/m2:osx-x86_64": ["repository/com/google/protobuf/protoc/3.17.2/protoc-3.17.2-osx-x86_64.exe"],
+        "//prebuilts/tools/common/m2:windows-x86_64": ["repository/com/google/protobuf/protoc/3.17.2/protoc-3.17.2-windows-x86_64.exe"],
+        "//prebuilts/tools/common/m2:linux-x86_64": ["repository/com/google/protobuf/protoc/3.17.2/protoc-3.17.2-linux-x86_64.exe"],
     }),
     visibility = ["//visibility:public"],
 )
 
 java_import(
-    name = "com.google.protobuf.protobuf-java-util.3.10.0",
-    jars = ["repository/com/google/protobuf/protobuf-java-util/3.10.0/protobuf-java-util-3.10.0.jar"],
+    name = "com.google.protobuf.protobuf-java-util.3.17.2",
+    jars = ["repository/com/google/protobuf/protobuf-java-util/3.17.2/protobuf-java-util-3.17.2.jar"],
     visibility = ["//visibility:public"],
 )
 
 java_import(
-    name = "com.google.protobuf.protobuf-java.3.10.0",
-    jars = ["repository/com/google/protobuf/protobuf-java/3.10.0/protobuf-java-3.10.0.jar"],
+    name = "com.google.protobuf.protobuf-java.3.17.2",
+    jars = ["repository/com/google/protobuf/protobuf-java/3.17.2/protobuf-java-3.17.2.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -83,8 +83,8 @@ java_import(
 # So bazel can consume them without wrapping the
 # proto compiler in a extract jar step.
 filegroup(
-    name = "com.google.protobuf.protobuf-java.3.10.0.include_include",
-    srcs = glob(["repository/com/google/protobuf/protobuf-java/3.10.0/**/*.proto"]),
+    name = "com.google.protobuf.protobuf-java.3.17.2.include_include",
+    srcs = glob(["repository/com/google/protobuf/protobuf-java/3.17.2/**/*.proto"]),
     visibility = ["//visibility:public"],
 )
 
@@ -164,7 +164,7 @@ jvm_import(
 # managed by go/iml_to_build
 jvm_import(
     name = "jetifier-core",
-    jars = ["repository/com/android/tools/build/jetifier/jetifier-core/1.0.0-beta09/jetifier-core-1.0.0-beta09.jar"],
+    jars = ["repository/com/android/tools/build/jetifier/jetifier-core/1.0.0-beta10/jetifier-core-1.0.0-beta10.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -455,11 +455,11 @@ jvm_import(
         # @maven//:org.jetbrains.kotlin.kotlin-compiler_<VERSION>.
         "repository/org/jetbrains/annotations/13.0/annotations-13.0.jar",
         "repository/org/jetbrains/intellij/deps/trove4j/1.0.20181211/trove4j-1.0.20181211.jar",
-        "repository/org/jetbrains/kotlin/kotlin-compiler/1.5.31-google/kotlin-compiler-1.5.31.jar",
-        "repository/org/jetbrains/kotlin/kotlin-reflect/1.5.31/kotlin-reflect-1.5.31.jar",
-        "repository/org/jetbrains/kotlin/kotlin-script-runtime/1.5.31/kotlin-script-runtime-1.5.31.jar",
-        "repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.5.31/kotlin-stdlib-common-1.5.31.jar",
-        "repository/org/jetbrains/kotlin/kotlin-stdlib/1.5.31/kotlin-stdlib-1.5.31.jar",
+        "repository/org/jetbrains/kotlin/kotlin-compiler/1.6.10/kotlin-compiler-1.6.10.jar",
+        "repository/org/jetbrains/kotlin/kotlin-reflect/1.6.10/kotlin-reflect-1.6.10.jar",
+        "repository/org/jetbrains/kotlin/kotlin-script-runtime/1.6.10/kotlin-script-runtime-1.6.10.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.6.10/kotlin-stdlib-common-1.6.10.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib/1.6.10/kotlin-stdlib-1.6.10.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -467,7 +467,7 @@ jvm_import(
 jvm_import(
     name = "jvm-abi-gen-plugin",
     jars = [
-        "repository/org/jetbrains/kotlin/jvm-abi-gen/1.5.31/jvm-abi-gen-1.5.31.jar",
+        "repository/org/jetbrains/kotlin/jvm-abi-gen/1.6.10/jvm-abi-gen-1.6.10.jar",
     ],
     visibility = ["//visibility:public"],
 )
