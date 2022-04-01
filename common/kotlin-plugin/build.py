@@ -192,7 +192,7 @@ def write_jps_lib_xml(args):
     project_dir = args.workspace.joinpath('tools/adt/idea')
 
     # Note: see comment in the BUILD file for why we exclude kotlin-stdlib and kotlin-reflect.
-    jars = list(args.workspace.glob('prebuilts/tools/common/kotlin-plugin/Kotlin/lib/*.jar'))
+    jars = sorted(args.workspace.glob('prebuilts/tools/common/kotlin-plugin/Kotlin/lib/*.jar'))
     jars = [jar for jar in jars if jar.name not in ['kotlinc_kotlin-stdlib.jar', 'kotlinc_kotlin-reflect.jar']]
     jars = [os.path.relpath(jar, project_dir) for jar in jars]
 
