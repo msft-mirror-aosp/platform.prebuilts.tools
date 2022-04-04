@@ -335,6 +335,13 @@ jvm_import(
 
 # managed by go/iml_to_build
 jvm_import(
+    name = "JSch",
+    jars = ["repository/com/jcraft/jsch/0.1.55/jsch-0.1.55.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
     name = "commons-lang3-3.3.2",
     jars = ["repository/org/apache/commons/commons-lang3/3.3.2/commons-lang3-3.3.2.jar"],
     visibility = ["//visibility:public"],
