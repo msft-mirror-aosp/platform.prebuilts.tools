@@ -1,5 +1,5 @@
 diff --git a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt
-index 692a3b9d4f84..d09213b45a4a 100644
+index 084dfedd1210..b318ca796136 100644
 --- a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt
 +++ b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt
 @@ -40,6 +40,7 @@ import org.jetbrains.kotlin.name.FqName
@@ -17,9 +17,9 @@ index 692a3b9d4f84..d09213b45a4a 100644
 -        return topLevelClassesCache.getOrPut(classId.packageFqName.child(classId.relativeClassName.pathSegments().first())) {
 +        // KT-35614: getOrPut -> getOrPutNullable
 +        return topLevelClassesCache.getOrPutNullable(classId.packageFqName.child(classId.relativeClassName.pathSegments().first())) {
-             index.findClass(classId) { dir, type ->
-                 findVirtualFileGivenPackage(dir, relativeClassName, type)
-             } ?: singleJavaFileRootsIndex.findJavaSourceClass(classId)
+             // Search java sources first. For build tools, it makes sense to build new files passing all the
+             // class files for the previous build on the class path.
+             //
 diff --git a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
 index 92877f1e09db..a743e39f3c75 100644
 --- a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
