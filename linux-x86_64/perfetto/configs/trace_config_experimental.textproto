@@ -61,10 +61,7 @@ data_sources {
       ftrace_events: "ion_heap_shrink"
       ftrace_events: "ion_heap_grow"
       ftrace_events: "ion/ion_stat"
-      ftrace_events: "dmabuf_heap/dma_heap_stat"
       ftrace_events: "oom_score_adj_update"
-      ftrace_events: "gpu_mem/gpu_mem_total"
-      ftrace_events: "fastrpc/fastrpc_dma_stat"
 
       # Old (kernel) LMK
       ftrace_events: "lowmemorykiller/lowmemory_kill"
@@ -80,13 +77,6 @@ data_sources {
       # Experimental additions to the long trace list
       ftrace_events: "mm_event/mm_event_record"
     }
-  }
-}
-
-data_sources: {
-  config {
-    name: "android.gpu.memory"
-    target_buffer: 0
   }
 }
 

@@ -55,9 +55,6 @@ data_sources {
         enabled: true
       }
 
-      # Enables symbol name resolution against /proc/kallsyms
-      symbolize_ksyms: true
-
       # We need to do process tracking to ensure kernel ftrace events targeted at short-lived
       # threads are associated correctly
       ftrace_events: "task/task_newtask"
@@ -70,19 +67,17 @@ data_sources {
       ftrace_events: "ion_heap_shrink"
       ftrace_events: "ion_heap_grow"
       ftrace_events: "ion/ion_stat"
-      ftrace_events: "dmabuf_heap/dma_heap_stat"
       ftrace_events: "oom_score_adj_update"
-      ftrace_events: "gpu_mem/gpu_mem_total"
-      ftrace_events: "fastrpc/fastrpc_dma_stat"
 
       # Old (kernel) LMK
       ftrace_events: "lowmemorykiller/lowmemory_kill"
 
-      atrace_apps: "*"
+      # New (userspace) LMK
+      atrace_apps: "lmkd"
+      # Added for userspace annotation in the platform scenario test app
+      atrace_apps: "android.platform.test.scenario"
 
       atrace_categories: "am"
-      atrace_categories: "bionic"
-      atrace_categories: "camera"
       atrace_categories: "wm"
       atrace_categories: "dalvik"
       atrace_categories: "sched"
@@ -95,16 +90,7 @@ data_sources {
       atrace_categories: "binder_driver"
       atrace_categories: "sync"
       atrace_categories: "workq"
-      atrace_categories: "res"
-
     }
-  }
-}
-
-data_sources: {
-  config {
-    name: "android.gpu.memory"
-    target_buffer: 0
   }
 }
 
@@ -145,11 +131,5 @@ data_sources {
       meminfo_counters: MEMINFO_MAPPED
       meminfo_counters: MEMINFO_SHMEM
     }
-  }
-}
-
-data_sources: {
-  config: {
-    name: "android.surfaceflinger.frametimeline"
   }
 }
