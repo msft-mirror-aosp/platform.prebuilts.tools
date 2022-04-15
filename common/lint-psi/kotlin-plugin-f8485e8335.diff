@@ -56,23 +56,11 @@ index ccd20a5b3eb3..72f964c3f80d 100644
  
      companion object {
          fun getInstance(): ReadWriteAccessChecker = service()
-diff --git a/plugins/kotlin/uast/uast-kotlin-base/build.gradle.kts b/plugins/kotlin/uast/uast-kotlin-base/build.gradle.kts
-index aea2064ab62c..1fc5bf05e668 100644
---- a/plugins/kotlin/uast/uast-kotlin-base/build.gradle.kts
-+++ b/plugins/kotlin/uast/uast-kotlin-base/build.gradle.kts
-@@ -42,7 +42,6 @@ dependencies {
-     jpsLikeJarDependency(intellijDep(forIde = true), JpsDepScope.COMPILE, { includeJars("util") }) // 'intellij.platform.uast' dependency
-     jpsLikeJarDependency("org.jetbrains:annotations:20.1.0", JpsDepScope.COMPILE) // 'intellij.platform.uast' dependency
-     jpsLikeJarDependency(intellijDep(forIde = true), JpsDepScope.TEST, { includeJars("idea_rt") }) // 'intellij.java.rt' dependency
--    jpsLikeModuleDependency(":kotlin-ide.kotlin.fir.frontend-independent", JpsDepScope.COMPILE)
-     jpsLikeJarDependency("org.jetbrains.kotlin:kotlin-test:1.4.32", JpsDepScope.TEST)
-     jpsLikeJarDependency(intellijDep(forIde = true), JpsDepScope.TEST, { includeJars("uast-tests") }) // 'intellij.platform.uast.tests' dependency
-     jpsLikeJarDependency(intellijPluginDep("java", forIde = true), JpsDepScope.TEST) // 'intellij.platform.uast.tests' dependency
 diff --git a/plugins/kotlin/uast/uast-kotlin-base/kotlin.uast.uast-kotlin-base.iml b/plugins/kotlin/uast/uast-kotlin-base/kotlin.uast.uast-kotlin-base.iml
-index 9e86e7efb07a..0c3c48efa082 100644
+index 7915d756310c..29fc38289f66 100644
 --- a/plugins/kotlin/uast/uast-kotlin-base/kotlin.uast.uast-kotlin-base.iml
 +++ b/plugins/kotlin/uast/uast-kotlin-base/kotlin.uast.uast-kotlin-base.iml
-@@ -32,7 +32,6 @@
+@@ -31,7 +31,6 @@
      <orderEntry type="module" module-name="intellij.java.psi.impl" />
      <orderEntry type="module" module-name="intellij.java.rt" scope="TEST" />
      <orderEntry type="module" module-name="intellij.java.uast" />
@@ -80,13 +68,6 @@ index 9e86e7efb07a..0c3c48efa082 100644
      <orderEntry type="library" scope="TEST" name="kotlin-test" level="project" />
      <orderEntry type="module" module-name="intellij.platform.uast.tests" scope="TEST" />
      <orderEntry type="module" module-name="kotlin.tests-common" scope="TEST" />
-@@ -40,4 +39,4 @@
-     <orderEntry type="library" scope="TEST" name="kotlinc.kotlin-compiler-cli" level="project" />
-     <orderEntry type="library" scope="TEST" name="kotlinc.kotlin-compiler-tests" level="project" />
-   </component>
--</module>
-\ No newline at end of file
-+</module>
 diff --git a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/expressions/KotlinUSimpleReferenceExpression.kt b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/expressions/KotlinUSimpleReferenceExpression.kt
 index 0fc76ff68940..dcb63f17b121 100644
 --- a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/expressions/KotlinUSimpleReferenceExpression.kt
@@ -109,14 +90,15 @@ index 0fc76ff68940..dcb63f17b121 100644
              findAssignment(sourcePsi)?.right ?: run {
                  visitor.afterVisitSimpleNameReferenceExpression(this)
 diff --git a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/internal/baseKotlinInternalUastUtils.kt b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/internal/baseKotlinInternalUastUtils.kt
-index 34c0563b2e6c..87b253eb8c25 100644
+index 34c0563b2e6c..901c7c080c43 100644
 --- a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/internal/baseKotlinInternalUastUtils.kt
 +++ b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/internal/baseKotlinInternalUastUtils.kt
-@@ -12,13 +12,13 @@ import org.jetbrains.kotlin.asJava.findFacadeClass
+@@ -12,13 +12,14 @@ import org.jetbrains.kotlin.asJava.findFacadeClass
  import org.jetbrains.kotlin.asJava.getAccessorLightMethods
  import org.jetbrains.kotlin.asJava.toLightClass
  import org.jetbrains.kotlin.asJava.toLightElements
 -import org.jetbrains.kotlin.idea.references.readWriteAccess
++import org.jetbrains.kotlin.idea.KotlinLanguage
 +import org.jetbrains.kotlin.lexer.KtTokens
  import org.jetbrains.kotlin.name.FqName
  import org.jetbrains.kotlin.psi.*
@@ -130,7 +112,7 @@ index 34c0563b2e6c..87b253eb8c25 100644
  import org.jetbrains.uast.*
  
  @Suppress("NOTHING_TO_INLINE")
-@@ -53,6 +53,30 @@ fun KtExpression.unwrapBlockOrParenthesis(): KtExpression {
+@@ -53,6 +54,30 @@ fun KtExpression.unwrapBlockOrParenthesis(): KtExpression {
      return innerExpression
  }
  
@@ -161,7 +143,7 @@ index 34c0563b2e6c..87b253eb8c25 100644
  fun KtElement.canAnalyze(): Boolean {
      if (!isValid) return false
      val containingFile = containingFile as? KtFile ?: return false // EA-114080, EA-113475, EA-134193
-@@ -77,7 +101,7 @@ fun KtClassOrObject.toPsiType(): PsiType {
+@@ -77,7 +102,7 @@ fun KtClassOrObject.toPsiType(): PsiType {
  }
  
  fun PsiElement.getMaybeLightElement(sourcePsi: KtExpression? = null): PsiElement? {
@@ -170,48 +152,28 @@ index 34c0563b2e6c..87b253eb8c25 100644
          with(getAccessorLightMethods()) {
              (setter ?: backingField)?.let { return it } // backingField is for val property assignments in init blocks
          }
-diff --git a/plugins/kotlin/uast/uast-kotlin/build.gradle.kts b/plugins/kotlin/uast/uast-kotlin/build.gradle.kts
-index 88e3ed37ba76..885107675d41 100644
---- a/plugins/kotlin/uast/uast-kotlin/build.gradle.kts
-+++ b/plugins/kotlin/uast/uast-kotlin/build.gradle.kts
-@@ -45,7 +45,7 @@ dependencies {
-     jpsLikeModuleDependency(":kotlin-ide.kotlin.uast.uast-kotlin-base", JpsDepScope.COMPILE)
-     jpsLikeModuleDependency(":kotlin-ide.kotlin.common", JpsDepScope.TEST)
-     jpsLikeModuleDependency(":kotlin-ide.kotlin.core", JpsDepScope.TEST)
--    jpsLikeModuleDependency(":kotlin-ide.kotlin.fir.frontend-independent", JpsDepScope.COMPILE)
-+    jpsLikeModuleDependency(":kotlin-ide.kotlin.fir.frontend-independent", JpsDepScope.TEST)
-     jpsLikeModuleDependency(":kotlin-ide.kotlin.tests-common", JpsDepScope.TEST)
-     jpsLikeModuleDependency(":kotlin-ide.kotlin.test-framework", JpsDepScope.TEST)
-     jpsLikeJarDependency(intellijPluginDep("java", forIde = true), JpsDepScope.COMPILE) // 'intellij.platform.uast' dependency
-@@ -86,4 +86,4 @@ tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompile> {
-     kotlinOptions.useOldBackend = true // KT-45697
- }
- 
--testsJar()
-\ No newline at end of file
-+testsJar()
 diff --git a/plugins/kotlin/uast/uast-kotlin/kotlin.uast.uast-kotlin.iml b/plugins/kotlin/uast/uast-kotlin/kotlin.uast.uast-kotlin.iml
-index 8543947e4263..6853bb62d786 100644
+index 456fba191ebe..e7963028709e 100644
 --- a/plugins/kotlin/uast/uast-kotlin/kotlin.uast.uast-kotlin.iml
 +++ b/plugins/kotlin/uast/uast-kotlin/kotlin.uast.uast-kotlin.iml
-@@ -34,7 +34,7 @@
-     <orderEntry type="module" module-name="kotlin.uast.uast-kotlin-base" />
-     <orderEntry type="module" module-name="kotlin.common" scope="TEST" />
-     <orderEntry type="module" module-name="kotlin.core" scope="TEST" />
+@@ -13,7 +13,7 @@
+     <orderEntry type="library" name="kotlinc.kotlin-compiler-common" level="project" />
+     <orderEntry type="library" name="kotlinc.kotlin-compiler-fe10" level="project" />
+     <orderEntry type="library" name="kotlinc.kotlin-compiler-ir" level="project" />
 -    <orderEntry type="module" module-name="kotlin.fir.frontend-independent" />
 +    <orderEntry type="module" module-name="kotlin.fir.frontend-independent" scope="TEST" />
-     <orderEntry type="module" module-name="kotlin.tests-common" scope="TEST" />
-     <orderEntry type="module" module-name="kotlin.test-framework" scope="TEST" />
      <orderEntry type="module" module-name="intellij.platform.uast" />
-@@ -47,4 +47,4 @@
-     <orderEntry type="module" module-name="kotlin.gradle.gradle-idea" scope="RUNTIME" />
+     <orderEntry type="module" module-name="intellij.java.psi.impl" />
+     <orderEntry type="module" module-name="intellij.java.uast" />
+@@ -25,4 +25,4 @@
+     <orderEntry type="module" module-name="kotlin.uast.uast-kotlin-base" />
      <orderEntry type="module" module-name="kotlin.uast.uast-kotlin-idea" scope="RUNTIME" />
    </component>
 -</module>
 \ No newline at end of file
 +</module>
 diff --git a/plugins/kotlin/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinUastResolveProviderService.kt b/plugins/kotlin/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinUastResolveProviderService.kt
-index 60a2f3c858af..a95fd1ed35cb 100644
+index 4b32cb0d0150..07689a69e28a 100644
 --- a/plugins/kotlin/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinUastResolveProviderService.kt
 +++ b/plugins/kotlin/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinUastResolveProviderService.kt
 @@ -8,7 +8,6 @@ import org.jetbrains.kotlin.builtins.createFunctionType
@@ -222,7 +184,7 @@ index 60a2f3c858af..a95fd1ed35cb 100644
  import org.jetbrains.kotlin.name.FqNameUnsafe
  import org.jetbrains.kotlin.psi.*
  import org.jetbrains.kotlin.psi.psiUtil.getParentOfType
-@@ -170,7 +169,7 @@ interface KotlinUastResolveProviderService : BaseKotlinUastResolveProviderServic
+@@ -171,7 +170,7 @@ interface KotlinUastResolveProviderService : BaseKotlinUastResolveProviderServic
      override fun resolveAccessorCall(ktSimpleNameExpression: KtSimpleNameExpression): PsiMethod? {
          val resolvedCall = ktSimpleNameExpression.getResolvedCall(ktSimpleNameExpression.analyze()) ?: return null
          val resultingDescriptor = resolvedCall.resultingDescriptor as? SyntheticJavaPropertyDescriptor ?: return null
@@ -232,10 +194,10 @@ index 60a2f3c858af..a95fd1ed35cb 100644
          return resolveToPsiMethod(ktSimpleNameExpression, descriptor)
      }
 diff --git a/plugins/kotlin/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/kotlinInternalUastUtils.kt b/plugins/kotlin/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/kotlinInternalUastUtils.kt
-index 037797a1590f..7dc1f75e120e 100644
+index d12da09b1684..4394fe2d42d7 100644
 --- a/plugins/kotlin/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/kotlinInternalUastUtils.kt
 +++ b/plugins/kotlin/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/kotlinInternalUastUtils.kt
-@@ -19,7 +19,6 @@ import org.jetbrains.kotlin.descriptors.impl.EnumEntrySyntheticClassDescriptor
+@@ -24,7 +24,6 @@ import org.jetbrains.kotlin.descriptors.impl.EnumEntrySyntheticClassDescriptor
  import org.jetbrains.kotlin.descriptors.impl.TypeAliasConstructorDescriptor
  import org.jetbrains.kotlin.descriptors.synthetic.SyntheticMemberDescriptor
  import org.jetbrains.kotlin.idea.KotlinLanguage
@@ -243,7 +205,7 @@ index 037797a1590f..7dc1f75e120e 100644
  import org.jetbrains.kotlin.load.java.lazy.descriptors.LazyJavaPackageFragment
  import org.jetbrains.kotlin.load.java.sam.SamAdapterDescriptor
  import org.jetbrains.kotlin.load.kotlin.KotlinJvmBinaryPackageSourceElement
-@@ -299,7 +298,7 @@ fun resolveToDeclarationImpl(sourcePsi: KtExpression, declarationDescriptor: Dec
+@@ -356,7 +355,7 @@ fun resolveToDeclarationImpl(sourcePsi: KtExpression, declarationDescriptor: Dec
          declarationDescriptor = declarationDescriptor.callableFromObject
      }
      if (declarationDescriptor is SyntheticJavaPropertyDescriptor) {
@@ -252,7 +214,7 @@ index 037797a1590f..7dc1f75e120e 100644
              ReferenceAccess.WRITE, ReferenceAccess.READ_WRITE ->
                  declarationDescriptor.setMethod ?: declarationDescriptor.getMethod
              ReferenceAccess.READ -> declarationDescriptor.getMethod
-@@ -337,7 +336,7 @@ fun resolveToDeclarationImpl(sourcePsi: KtExpression, declarationDescriptor: Dec
+@@ -394,7 +393,7 @@ fun resolveToDeclarationImpl(sourcePsi: KtExpression, declarationDescriptor: Dec
              ?.let { return it }
      }
  
@@ -261,11 +223,11 @@ index 037797a1590f..7dc1f75e120e 100644
  
      return null
  }
-diff --git a/plugins/kotlin/uast/uast-kotlin/test/AbstractKotlinUastTest.kt b/plugins/kotlin/uast/uast-kotlin/test/AbstractKotlinUastTest.kt
-index af0eb5fb4de1..7b9fd145c679 100644
---- a/plugins/kotlin/uast/uast-kotlin/test/AbstractKotlinUastTest.kt
-+++ b/plugins/kotlin/uast/uast-kotlin/test/AbstractKotlinUastTest.kt
-@@ -24,8 +24,6 @@ import org.jetbrains.kotlin.cli.jvm.compiler.TopDownAnalyzerFacadeForJVM
+diff --git a/plugins/kotlin/uast/uast-kotlin/tests/test/org/jetbrains/uast/test/kotlin/AbstractKotlinUastTest.kt b/plugins/kotlin/uast/uast-kotlin/tests/test/org/jetbrains/uast/test/kotlin/AbstractKotlinUastTest.kt
+index 56cb8b103f81..2d168759d9af 100644
+--- a/plugins/kotlin/uast/uast-kotlin/tests/test/org/jetbrains/uast/test/kotlin/AbstractKotlinUastTest.kt
++++ b/plugins/kotlin/uast/uast-kotlin/tests/test/org/jetbrains/uast/test/kotlin/AbstractKotlinUastTest.kt
+@@ -22,8 +22,6 @@ import org.jetbrains.kotlin.cli.jvm.compiler.TopDownAnalyzerFacadeForJVM
  import org.jetbrains.kotlin.cli.jvm.plugins.PluginCliParser
  import org.jetbrains.kotlin.config.*
  import org.jetbrains.kotlin.idea.artifacts.KotlinArtifacts
@@ -274,7 +236,7 @@ index af0eb5fb4de1..7b9fd145c679 100644
  import org.jetbrains.kotlin.parsing.KotlinParserDefinition
  import org.jetbrains.kotlin.resolve.jvm.extensions.AnalysisHandlerExtension
  import org.jetbrains.kotlin.idea.test.ConfigurationKind
-@@ -106,10 +104,6 @@ abstract class AbstractKotlinUastTest : AbstractUastTest() {
+@@ -104,10 +102,6 @@ abstract class AbstractKotlinUastTest : AbstractUastTest() {
              BaseKotlinUastResolveProviderService::class.java,
              CliKotlinUastResolveProviderService::class.java
          )
