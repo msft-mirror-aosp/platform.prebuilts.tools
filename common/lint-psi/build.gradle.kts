@@ -66,6 +66,16 @@ dependencies {
     "kotlin-compiler-content"("org.jetbrains.kotlin:kotlin-scripting-compiler:$kotlinVersion-for-lint")
     "kotlin-compiler-content"("io.javaslang:javaslang:2.0.6") // TODO: Somehow read this version directly from the Kotlin compiler build.
 
+    "kotlin-compiler-content"("org.jetbrains.kotlin:analysis-api-providers-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
+    "kotlin-compiler-content"("org.jetbrains.kotlin:analysis-project-structure-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
+    "kotlin-compiler-content"("org.jetbrains.kotlin:analysis-api-standalone-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
+    "kotlin-compiler-content"("org.jetbrains.kotlinx:kotlinx-collections-immutable-jvm:0.3.4")
+    "kotlin-compiler-content"("org.jetbrains.kotlin:high-level-api-fir-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
+    "kotlin-compiler-content"("org.jetbrains.kotlin:high-level-api-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
+    "kotlin-compiler-content"("org.jetbrains.kotlin:high-level-api-impl-base-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
+    "kotlin-compiler-content"("org.jetbrains.kotlin:low-level-api-fir-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
+    "kotlin-compiler-content"("org.jetbrains.kotlin:symbol-light-classes-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
+
     "uast-common-content"("com.jetbrains.intellij.platform:uast:$intellijVersion") { isTransitive = false }
     "uast-java-content"("com.jetbrains.intellij.java:java-uast:$intellijVersion") { isTransitive = false }
 }
@@ -104,6 +114,7 @@ sourceSets {
         compileClasspath += sourceSets["kotlinUastBaseSrc"].output
         compileClasspath += sourceSets["safeAnalyzeUtilsSrc"].output
         java.srcDir("$intellijDir/plugins/kotlin/uast/uast-kotlin/src")
+        java.srcDir("$intellijDir/plugins/kotlin/uast/uast-kotlin-fir/src")
     }
 }
 
