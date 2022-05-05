@@ -9,9 +9,9 @@ set -eu
 # For the Kotlin version, see prebuilts/tools/common/kotlin-plugin/Kotlin/kotlinc/build.txt.
 # The git SHAs must also be updated to match the versions specified.
 export INTELLIJ_VERSION="213.7172.25"
-export KOTLIN_VERSION="1.6.20"
-export INTELLIJ_SHA="972df871a298701f25a1cdf701c979ac1976f4dc" # 213-1.6.20, Apr 15 2022.
-export KOTLIN_SHA="057e7bdce2e7f361403eacade79bbb4d893e85b7" # v1.6.20
+export KOTLIN_VERSION="1.7.0-Beta-29"
+export INTELLIJ_SHA="a7c9bb509bd02e2c95d6be1c87b48e102dc1e92a" # Apr 14, 2022, kt-221-1.7.0
+export KOTLIN_SHA="b09a27bf2546b0c329e6caa260c70786bc1e7fed" # v1.7.0-Beta-29, Apr 15, 2022, 1.7.0 branch
 
 export CLEAN_BUILD="${CLEAN_BUILD:-false}"
 
@@ -59,13 +59,6 @@ fi
 phase "Applying patches if needed"
 if [[ ! "${CUSTOM_KOTLIN_DIR:-}" ]]; then
     git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/kotlin-compiler-patch.diff"
-fi
-if [[ ! "${CUSTOM_INTELLIJ_DIR:-}" ]]; then
-    # f8485e8335: FIR/UAST: decouple from frontend-independent
-    git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/kotlin-plugin-f8485e8335.diff"
-    # Remove calls to actionUnderSafeAnalyzeBlock(), which is only accessible in the IDE plugin.
-    # This is a temporary patch; future Kotlin UAST versions have cleaned this up upstream.
-    git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/kotlin-plugin-213.diff"
 fi
 
 phase "Building Kotlin compiler"

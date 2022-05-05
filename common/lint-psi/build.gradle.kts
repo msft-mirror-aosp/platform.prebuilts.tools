@@ -22,7 +22,11 @@ val kotlinDir = getEnvOrError("KOTLIN_DIR")
 //
 // All jar outputs are attached to the "assemble" lifecycle task.
 
-val allJarNames = listOf("intellij-core", "kotlin-compiler", "uast-common", "uast-java", "uast-kotlin")
+val allJarNames = listOf(
+    "intellij-core", "kotlin-compiler",
+    "uast-common", "uast-java",
+    "safe-analyze-utils", "uast-kotlin"
+)
 
 for (jarName in allJarNames) {
     val jarContent = configurations.create("$jarName-content")
@@ -54,11 +58,23 @@ tasks.jar { enabled = false }
 dependencies {
     "intellij-core-content"("com.jetbrains.intellij.java:java-psi-impl:$intellijVersion")
     "intellij-core-content"("com.jetbrains.intellij.platform:jps-model-impl:$intellijVersion") // Contains JavaSdkUtil.
+    "intellij-core-content"("com.jetbrains.intellij.platform:project-model:$intellijVersion") // safeAnalyzeUtils depends on it
 
+    "kotlin-compiler-content"("org.jetbrains.kotlin:kotlin-jps-common-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:kotlin-compiler-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:kotlin-compiler-cli-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:kotlin-scripting-compiler:$kotlinVersion-for-lint")
     "kotlin-compiler-content"("io.javaslang:javaslang:2.0.6") // TODO: Somehow read this version directly from the Kotlin compiler build.
+
+    "kotlin-compiler-content"("org.jetbrains.kotlin:analysis-api-providers-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
+    "kotlin-compiler-content"("org.jetbrains.kotlin:analysis-project-structure-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
+    "kotlin-compiler-content"("org.jetbrains.kotlin:analysis-api-standalone-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
+    "kotlin-compiler-content"("org.jetbrains.kotlinx:kotlinx-collections-immutable-jvm:0.3.4")
+    "kotlin-compiler-content"("org.jetbrains.kotlin:high-level-api-fir-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
+    "kotlin-compiler-content"("org.jetbrains.kotlin:high-level-api-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
+    "kotlin-compiler-content"("org.jetbrains.kotlin:high-level-api-impl-base-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
+    "kotlin-compiler-content"("org.jetbrains.kotlin:low-level-api-fir-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
+    "kotlin-compiler-content"("org.jetbrains.kotlin:symbol-light-classes-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
 
     "uast-common-content"("com.jetbrains.intellij.platform:uast:$intellijVersion") { isTransitive = false }
     "uast-java-content"("com.jetbrains.intellij.java:java-uast:$intellijVersion") { isTransitive = false }
@@ -91,19 +107,26 @@ sourceSets {
     create("kotlinUastBaseSrc") {
         java.srcDir("$intellijDir/plugins/kotlin/uast/uast-kotlin-base/src")
     }
+    create("safeAnalyzeUtilsSrc") {
+        java.srcDir("$intellijDir/plugins/kotlin/fe10-analyze/safe-analyze-utils/src")
+    }
     create("kotlinUastSrc") {
         compileClasspath += sourceSets["kotlinUastBaseSrc"].output
+        compileClasspath += sourceSets["safeAnalyzeUtilsSrc"].output
         java.srcDir("$intellijDir/plugins/kotlin/uast/uast-kotlin/src")
+        java.srcDir("$intellijDir/plugins/kotlin/uast/uast-kotlin-fir/src")
     }
 }
 
 tasks.named<Jar>("uast-kotlin-jar") {
     from(sourceSets["kotlinUastBaseSrc"].output)
+    from(sourceSets["safeAnalyzeUtilsSrc"].output)
     from(sourceSets["kotlinUastSrc"].output)
 }
 
 tasks.named<Jar>("uast-kotlin-sources-jar") {
     from(sourceSets["kotlinUastBaseSrc"].allSource)
+    from(sourceSets["safeAnalyzeUtilsSrc"].allSource)
     from(sourceSets["kotlinUastSrc"].allSource)
 }
 
@@ -117,6 +140,7 @@ tasks.withType<KotlinCompile> {
 
 val kotlinUastAdHocCompileClasspath: Configuration by configurations.creating
 configurations.named("kotlinUastBaseSrcCompileOnly") { extendsFrom(kotlinUastAdHocCompileClasspath) }
+configurations.named("safeAnalyzeUtilsSrcCompileOnly") { extendsFrom(kotlinUastAdHocCompileClasspath) }
 configurations.named("kotlinUastSrcCompileOnly") { extendsFrom(kotlinUastAdHocCompileClasspath) }
 
 dependencies {
