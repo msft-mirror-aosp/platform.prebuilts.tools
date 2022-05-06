@@ -88,6 +88,7 @@ def build_kotlin_compiler(args):
 # Returns a tuple of build outputs.
 def build_kotlin_ide(args):
     ant_launcher_jar = args.kotlin_ide_dir.joinpath('lib/ant/lib/ant-launcher.jar')
+    kotlinc_home = args.kotlin_ide_dir.joinpath('build/dependencies/build/kotlin-compiler/Kotlin/kotlinc')
     build_xml = args.kotlin_ide_dir.joinpath('build.xml')
     cmd = [
         str(args.java), '-jar', str(ant_launcher_jar),
@@ -96,6 +97,7 @@ def build_kotlin_ide(args):
         f'-Dbuild.number={args.intellij_version}',
         '-Dintellij.build.dev.mode=false',
         '-Dkotlin.plugin.kind=AS',
+        f'-Djps.kotlin.home={kotlinc_home}',
         '-Dcompile.parallel=true',
         # TODO: the search_index task currently fails: "Missing essential plugin
         # (com.intellij.java.ide)". This is probably because the Kotlin plugin
