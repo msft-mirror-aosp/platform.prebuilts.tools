@@ -44,6 +44,7 @@ data_sources {
     name: "linux.ftrace"
     target_buffer: 0
     ftrace_config {
+      throttle_rss_stat: true
       # These parameters affect only the kernel trace buffer size and how
       # frequently it gets moved into the userspace buffer defined above.
       buffer_size_kb: 16384
@@ -123,6 +124,20 @@ data_sources {
       meminfo_counters: MEMINFO_ANON_PAGES
       meminfo_counters: MEMINFO_MAPPED
       meminfo_counters: MEMINFO_SHMEM
+    }
+  }
+}
+
+data_sources {
+  config {
+    name: "android.power"
+    target_buffer: 1
+    android_power_config {
+      battery_poll_ms: 5000
+      collect_power_rails: true
+      battery_counters: BATTERY_COUNTER_CAPACITY_PERCENT
+      battery_counters: BATTERY_COUNTER_CHARGE
+      battery_counters: BATTERY_COUNTER_CURRENT
     }
   }
 }
