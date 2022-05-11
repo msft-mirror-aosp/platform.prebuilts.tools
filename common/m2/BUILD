@@ -226,7 +226,7 @@ filegroup(
 # managed by go/iml_to_build
 jvm_import(
     name = "utp-core-proto",
-    jars = ["repository/com/google/testing/platform/core-proto/0.0.8-alpha07/core-proto-0.0.8-alpha07.jar"],
+    jars = ["repository/com/google/testing/platform/core-proto/0.0.8-alpha08/core-proto-0.0.8-alpha08.jar"],
     visibility = ["//visibility:public"],
 )
 
