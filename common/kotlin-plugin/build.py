@@ -20,7 +20,7 @@ def main():
     parser.add_argument('--clean-build', action='store_true')
     parser.add_argument('--stage', metavar='DIR', type=Path)
     parser.add_argument('--kotlin-version', default='1.6.21')
-    parser.add_argument('--intellij-version', default='213.6777.52')
+    parser.add_argument('--intellij-version', default='221.5591.52')
 
     args = parser.parse_args()
 
