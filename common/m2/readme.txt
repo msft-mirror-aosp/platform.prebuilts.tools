@@ -15,4 +15,4 @@ To add a new dependency, add it to tools/base/bazel/maven/artifacts.bzl and run 
 
 There is more information here:
 
-   https://googleplex-android.git.corp.google.com/platform/tools/base/+/studio-master-dev/bazel/README.md#Additional-tools
+   https://googleplex-android.git.corp.google.com/platform/tools/base/+/studio-main/bazel/README.md#Additional-tools
