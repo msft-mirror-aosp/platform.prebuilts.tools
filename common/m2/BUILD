@@ -479,6 +479,14 @@ jvm_import(
     visibility = ["//visibility:public"],
 )
 
+jvm_import(
+    name = "compose-compiler-hosted",
+    jars = [
+        "repository/org/jetbrains/compose/compiler/compiler-hosted/1.1.1/compiler-hosted-1.1.1.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
+
 # managed by go/iml_to_build
 jvm_import(
     name = "groovy-3.0.9",
