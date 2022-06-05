@@ -335,6 +335,13 @@ jvm_import(
 
 # managed by go/iml_to_build
 jvm_import(
+    name = "JSch",
+    jars = ["repository/com/jcraft/jsch/0.1.55/jsch-0.1.55.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
     name = "commons-lang3-3.3.2",
     jars = ["repository/org/apache/commons/commons-lang3/3.3.2/commons-lang3-3.3.2.jar"],
     visibility = ["//visibility:public"],
@@ -375,8 +382,8 @@ java_import(
         "repository/net/sf/jopt-simple/jopt-simple/4.9/jopt-simple-4.9.jar",
         "repository/org/anarres/jarjar/jarjar-command/1.0.0/jarjar-command-1.0.0.jar",
         "repository/org/anarres/jarjar/jarjar-core/1.0.0/jarjar-core-1.0.0.jar",
-        "repository/org/ow2/asm/asm/5.0.4/asm-5.0.4.jar",
-        "repository/org/ow2/asm/asm-commons/5.0.4/asm-commons-5.0.4.jar",
+        "repository/org/ow2/asm/asm/7.0/asm-7.0.jar",
+        "repository/org/ow2/asm/asm-commons/7.0/asm-commons-7.0.jar",
         "repository/org/slf4j/slf4j-api/1.7.2/slf4j-api-1.7.2.jar",
         "repository/org/slf4j/slf4j-simple/1.7.2/slf4j-simple-1.7.2.jar",
     ],
@@ -472,10 +479,25 @@ jvm_import(
     visibility = ["//visibility:public"],
 )
 
+jvm_import(
+    name = "compose-compiler-hosted",
+    jars = [
+        "repository/org/jetbrains/compose/compiler/compiler-hosted/1.1.1/compiler-hosted-1.1.1.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
+
 # managed by go/iml_to_build
 jvm_import(
     name = "groovy-3.0.9",
     jars = ["repository/org/codehaus/groovy/groovy/3.0.9/groovy-3.0.9.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+filegroup(
+    name = "kotlin-test_files",
+    srcs = ["repository/org/jetbrains/kotlin/kotlin-test/1.6.10/kotlin-test-1.6.10.jar"],
     visibility = ["//visibility:public"],
 )
 
