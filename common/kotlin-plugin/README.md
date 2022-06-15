@@ -100,7 +100,9 @@ every commit that is not an ancestor of any of its branches---and we do not want
 upstream commits to go through the normal code-review process. Note, there is a chance that
 Gerrit will block the upload if any commit happens to contain a banned word. It is okay
 to bypass this check for third-party code. To do so, use `-o uploadvalidator~skip`
-when uploading.
+when uploading. Additionally, Gerrit may block the upload if there are too many commits
+being merged. In this case use `-o skip-validation` as suggested
+[here](https://gerrit-review.googlesource.com/Documentation/error-too-many-commits.html).
 
 
 Appendix: alternative merge strategy
