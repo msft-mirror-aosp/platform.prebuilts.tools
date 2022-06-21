@@ -469,11 +469,11 @@ jvm_import(
         # @maven//:org.jetbrains.kotlin.kotlin-compiler_<VERSION>.
         "repository/org/jetbrains/annotations/13.0/annotations-13.0.jar",
         "repository/org/jetbrains/intellij/deps/trove4j/1.0.20181211/trove4j-1.0.20181211.jar",
-        "repository/org/jetbrains/kotlin/kotlin-compiler/1.6.10/kotlin-compiler-1.6.10.jar",
-        "repository/org/jetbrains/kotlin/kotlin-reflect/1.6.10/kotlin-reflect-1.6.10.jar",
-        "repository/org/jetbrains/kotlin/kotlin-script-runtime/1.6.10/kotlin-script-runtime-1.6.10.jar",
-        "repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.6.10/kotlin-stdlib-common-1.6.10.jar",
-        "repository/org/jetbrains/kotlin/kotlin-stdlib/1.6.10/kotlin-stdlib-1.6.10.jar",
+        "repository/org/jetbrains/kotlin/kotlin-compiler/1.7.0/kotlin-compiler-1.7.0.jar",
+        "repository/org/jetbrains/kotlin/kotlin-reflect/1.7.0/kotlin-reflect-1.7.0.jar",
+        "repository/org/jetbrains/kotlin/kotlin-script-runtime/1.7.0/kotlin-script-runtime-1.7.0.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.7.0/kotlin-stdlib-common-1.7.0.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib/1.7.0/kotlin-stdlib-1.7.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -481,7 +481,7 @@ jvm_import(
 jvm_import(
     name = "jvm-abi-gen-plugin",
     jars = [
-        "repository/org/jetbrains/kotlin/jvm-abi-gen/1.6.10/jvm-abi-gen-1.6.10.jar",
+        "repository/org/jetbrains/kotlin/jvm-abi-gen/1.7.0/jvm-abi-gen-1.7.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
