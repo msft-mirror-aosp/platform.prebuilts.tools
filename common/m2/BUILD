@@ -206,6 +206,13 @@ filegroup(
 
 # managed by go/iml_to_build
 filegroup(
+    name = "HdrHistogram_files",
+    srcs = ["repository/org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+filegroup(
     name = "jimfs_files",
     srcs = ["repository/com/google/jimfs/jimfs/1.1/jimfs-1.1.jar"],
     visibility = ["//visibility:public"],
