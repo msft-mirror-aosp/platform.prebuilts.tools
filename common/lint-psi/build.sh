@@ -59,6 +59,7 @@ fi
 phase "Applying patches if needed"
 if [[ ! "${CUSTOM_KOTLIN_DIR:-}" ]]; then
     git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/kotlin-compiler-patch.diff"
+    git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/kotlin-compiler-b18999be82.diff"
 fi
 
 phase "Building Kotlin compiler"
