@@ -132,7 +132,7 @@ tasks.named<Jar>("uast-kotlin-sources-jar") {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
         freeCompilerArgs = listOf("-Xjvm-default=enable")
         suppressWarnings = true
     }
