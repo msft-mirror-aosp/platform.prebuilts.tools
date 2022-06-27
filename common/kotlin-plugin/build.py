@@ -44,8 +44,8 @@ def main():
     if args.download:
         (plugin_zip, sources_zip) = download_kotlin_ide_from_ab(args)
     else:
-        # TODO(b/234621399): build_kotlin_compiler(args)
-        # TODO(b/234621399): update_ide_project_model(args)
+        build_kotlin_compiler(args)
+        update_ide_project_model(args)
         (plugin_zip, sources_zip) = build_kotlin_ide(args)
 
     # Copy artifacts.
