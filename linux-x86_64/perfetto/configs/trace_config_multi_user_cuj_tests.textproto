@@ -47,6 +47,7 @@ data_sources: {
     config {
         name: "linux.ftrace"
         ftrace_config {
+           throttle_rss_stat: true
            ftrace_events: "task/task_newtask"
            ftrace_events: "task/task_rename"
            ftrace_events: "sched/sched_process_exit"

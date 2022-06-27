@@ -1,4 +1,4 @@
-# Copyright (C) 2019 The Android Open Source Project
+# Copyright (C) 2022 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,11 +17,11 @@
 # Enable periodic flushing of the trace buffer into the output file.
 write_into_file: true
 
-# Writes the userspace buffer into the file every 1s.
-file_write_period_ms: 1000
+# Writes the userspace buffer into the file every 2.5 seconds.
+file_write_period_ms: 2500
 
 # See b/126487238 - we need to guarantee ordering of events.
-flush_period_ms: 10000
+flush_period_ms: 30000
 
 # The trace buffers needs to be big enough to hold |file_write_period_ms| of
 # trace data. The trace buffer sizing depends on the number of trace categories
@@ -29,7 +29,7 @@ flush_period_ms: 10000
 
 # RSS events
 buffers {
-  size_kb: 32768
+  size_kb: 16384
   fill_policy: RING_BUFFER
 }
 
@@ -49,15 +49,6 @@ data_sources {
       # frequently it gets moved into the userspace buffer defined above.
       buffer_size_kb: 16384
       drain_period_ms: 250
-
-      # Store certain high-volume "sched" ftrace events in a denser format
-      # (falling back to the default format if not supported by the tracer).
-      compact_sched {
-        enabled: true
-      }
-
-      # Enables symbol name resolution against /proc/kallsyms
-      symbolize_ksyms: true
 
       # We need to do process tracking to ensure kernel ftrace events targeted at short-lived
       # threads are associated correctly
@@ -79,26 +70,13 @@ data_sources {
       # Old (kernel) LMK
       ftrace_events: "lowmemorykiller/lowmemory_kill"
 
-      atrace_apps: "*"
+      # New (userspace) LMK
+      atrace_apps: "lmkd"
+      # Added for userspace annotation in the platform scenario test app
+      atrace_apps: "android.platform.test.scenario"
 
       atrace_categories: "am"
-      atrace_categories: "aidl"
-      atrace_categories: "bionic"
-      atrace_categories: "camera"
-      atrace_categories: "wm"
-      atrace_categories: "dalvik"
-      atrace_categories: "sched"
-      atrace_categories: "freq"
-      atrace_categories: "gfx"
-      atrace_categories: "view"
-      atrace_categories: "webview"
-      atrace_categories: "input"
-      atrace_categories: "hal"
       atrace_categories: "binder_driver"
-      atrace_categories: "sync"
-      atrace_categories: "workq"
-      atrace_categories: "res"
-
     }
   }
 }
@@ -116,6 +94,7 @@ data_sources {
     target_buffer: 1
     process_stats_config {
       proc_stats_poll_ms: 10000
+      proc_stats_cache_ttl_ms: 60000
     }
   }
 }
@@ -150,8 +129,16 @@ data_sources {
   }
 }
 
-data_sources: {
-  config: {
-    name: "android.surfaceflinger.frametimeline"
+data_sources {
+  config {
+    name: "android.power"
+    target_buffer: 1
+    android_power_config {
+      battery_poll_ms: 5000
+      collect_power_rails: true
+      battery_counters: BATTERY_COUNTER_CAPACITY_PERCENT
+      battery_counters: BATTERY_COUNTER_CHARGE
+      battery_counters: BATTERY_COUNTER_CURRENT
+    }
   }
 }
