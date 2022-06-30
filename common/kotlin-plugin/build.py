@@ -19,8 +19,8 @@ def main():
     parser.add_argument('--download', metavar='BUILD_ID')
     parser.add_argument('--clean-build', action='store_true')
     parser.add_argument('--stage', metavar='DIR', type=Path)
-    parser.add_argument('--kotlin-version', default='1.6.21')
-    parser.add_argument('--intellij-version', default='213.6777.52')
+    parser.add_argument('--kotlin-version', default='1.7.0')
+    parser.add_argument('--intellij-version', default='221.5591.52')
 
     args = parser.parse_args()
 
@@ -35,11 +35,9 @@ def main():
     args.kotlin_ide_dir = workspace.joinpath('external/jetbrains/intellij-kotlin')
     args.kotlin_version_full = f'{args.kotlin_version}-release-for-android-studio'
     args.gradlew = args.kotlinc_dir.joinpath('gradlew')
-    args.java_home = compute_java_home(args)
-    args.java = args.java_home.joinpath('bin/java')
     args.cmd_env = {
         'PATH': '/bin:/usr/bin',
-        'JAVA_HOME': str(args.java_home),
+        'JAVA_HOME': str(compute_java_home(args)),
     }
 
     # Download or build.
@@ -87,12 +85,11 @@ def build_kotlin_compiler(args):
 # Builds the Kotlin IDE plugin from the sources in external/jetbrains/intellij-kotlin.
 # Returns a tuple of build outputs.
 def build_kotlin_ide(args):
-    ant_launcher_jar = args.kotlin_ide_dir.joinpath('lib/ant/lib/ant-launcher.jar')
-    build_xml = args.kotlin_ide_dir.joinpath('build.xml')
+    jps_bootstrap = args.kotlin_ide_dir.joinpath('platform/jps-bootstrap/jps-bootstrap.sh')
+    clean_args = [] if args.clean_build else ['-Dintellij.build.incremental.compilation=true']
     cmd = [
-        str(args.java), '-jar', str(ant_launcher_jar),
-        '-f', str(build_xml),
-        'kotlin_plugin',
+        str(jps_bootstrap),
+        *clean_args,
         f'-Dbuild.number={args.intellij_version}',
         '-Dintellij.build.dev.mode=false',
         '-Dkotlin.plugin.kind=AS',
@@ -101,14 +98,17 @@ def build_kotlin_ide(args):
         # (com.intellij.java.ide)". This is probably because the Kotlin plugin
         # is being built in isolation, without the Java plugin.
         '-Dintellij.build.skip.build.steps=search_index',
+        str(args.kotlin_ide_dir),
+        'intellij.idea.community.build',
+        'KotlinPluginBuildTarget',
     ]
-    if not args.clean_build:
-        cmd.append('-Dintellij.build.incremental.compilation=true')
     run_subprocess(cmd, args.cmd_env, 'Building the Kotlin IDE plugin')
 
     # Gather build outputs.
     artifacts_dir: Path = args.kotlin_ide_dir.joinpath('out/idea-ce/artifacts')
-    plugin_zip = artifacts_dir.joinpath(f'IC-plugins/Kotlin-{args.intellij_version}.zip')
+    plugin_zips = [p for p in artifacts_dir.glob('IC-plugins/Kotlin-*.zip') if not str(p).endswith('.blockmap.zip')]
+    assert len(plugin_zips) == 1
+    plugin_zip = plugin_zips[0]
     sources_zip = artifacts_dir.joinpath('kotlin-plugin-sources.zip')
     return (plugin_zip, sources_zip)
 
