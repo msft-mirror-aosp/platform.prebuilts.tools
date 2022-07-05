@@ -50,7 +50,7 @@ package {
 
 java_import {
     name: "byte-buddy-prebuilt-jar",
-    jars: ["repository/net/bytebuddy/byte-buddy/1.9.3/byte-buddy-1.9.3.jar"],
+    jars: ["repository/net/bytebuddy/byte-buddy/1.12.10/byte-buddy-1.12.10.jar"],
     sdk_version: "current",
 }
 
@@ -97,6 +97,12 @@ java_import {
 java_import {
     name: "mockito2-prebuilt-jar",
     jars: ["repository/org/mockito/mockito-core/2.7.6/mockito-core-2.7.6.jar"],
+    sdk_version: "current",
+}
+
+java_import {
+    name: "mockito4-prebuilt-jar",
+    jars: ["repository/org/mockito/mockito-core/4.6.1/mockito-core-4.6.1.jar"],
     sdk_version: "current",
 }
 
@@ -173,7 +179,7 @@ java_library_static {
     name: "mockito-robolectric-prebuilt",
     static_libs: [
         "byte-buddy-prebuilt-jar",
-        "mockito2-prebuilt-jar",
+        "mockito4-prebuilt-jar",
         "objenesis-prebuilt-jar",
     ],
     sdk_version: "current",
