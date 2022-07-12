@@ -504,7 +504,7 @@ jvm_import(
 # managed by go/iml_to_build
 filegroup(
     name = "kotlin-test_files",
-    srcs = ["repository/org/jetbrains/kotlin/kotlin-test/1.5.31/kotlin-test-1.5.31.jar"],
+    srcs = ["repository/org/jetbrains/kotlin/kotlin-test/1.7.10/kotlin-test-1.7.10.jar"],
     visibility = ["//visibility:public"],
 )
 
