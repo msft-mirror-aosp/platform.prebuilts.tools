@@ -606,3 +606,10 @@ jvm_import(
     ],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "trace-perfetto-library",
+    jars = ["repository/androidx/tracing/tracing-perfetto-common/1.0.0-alpha01/tracing-perfetto-common-1.0.0-alpha01.jar"],
+    visibility = ["//visibility:public"],
+)
