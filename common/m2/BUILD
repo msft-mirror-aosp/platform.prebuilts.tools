@@ -118,9 +118,9 @@ filegroup(
     name = "mockito_files",
     # do not sort: must match IML order
     srcs = [
-        "repository/org/mockito/mockito-core/3.4.6/mockito-core-3.4.6.jar",
-        "repository/net/bytebuddy/byte-buddy/1.10.13/byte-buddy-1.10.13.jar",
-        "repository/net/bytebuddy/byte-buddy-agent/1.10.13/byte-buddy-agent-1.10.13.jar",
+        "repository/org/mockito/mockito-core/3.12.4/mockito-core-3.12.4.jar",
+        "repository/net/bytebuddy/byte-buddy/1.11.13/byte-buddy-1.11.13.jar",
+        "repository/net/bytebuddy/byte-buddy-agent/1.11.13/byte-buddy-agent-1.11.13.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -604,5 +604,12 @@ jvm_import(
         "repository/org/jetbrains/compose/ui/ui-test-junit4-desktop/1.1.1/ui-test-junit4-desktop-1.1.1.jar",
         "repository/org/jetbrains/compose/ui/ui-test-desktop/1.1.1/ui-test-desktop-1.1.1.jar",
     ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "trace-perfetto-library",
+    jars = ["repository/androidx/tracing/tracing-perfetto-common/1.0.0-alpha01/tracing-perfetto-common-1.0.0-alpha01.jar"],
     visibility = ["//visibility:public"],
 )
