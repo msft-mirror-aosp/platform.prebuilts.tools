@@ -236,17 +236,19 @@ java_import {
 }
 
 java_import {
-  name: "wire-runtime",
+  name: "wire-runtime-prebuilt-jar",
   jars: [
-    "repository/com/squareup/wire/wire-runtime/3.6.0/wire-runtime-3.6.0.jar",
+    "repository/com/squareup/wire/wire-runtime-jvm/4.4.1/wire-runtime-jvm-4.4.1.jar",
   ],
 }
 
-java_import {
-  name: "okio-prebuilt",
-  jars: [
-    "repository/com/squareup/okio/okio/1.9.0/okio-1.9.0.jar",
-  ],
+java_library_static {
+    name: "wire-runtime",
+    static_libs: [
+        "wire-runtime-prebuilt-jar",
+        "okio-lib",
+    ],
+    sdk_version: "current",
 }
 
 java_import {
