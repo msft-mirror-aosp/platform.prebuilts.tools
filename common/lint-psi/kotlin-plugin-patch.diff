@@ -1,0 +1,103 @@
+diff --git a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
+index f8e6ca241a1f..042f690391cd 100644
+--- a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
++++ b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/KotlinAbstractUElement.kt
+@@ -34,7 +34,23 @@ abstract class KotlinAbstractUElement(
+             return false
+         }
+ 
+-        return this.psi == other.psi
++        // https://youtrack.jetbrains.com/issue/KT-22133
++        if (this.psi == other.psi) {
++            if (this.psi == null) {
++                // Two UElements can be different but both have null PSI fields; in that case,
++                // do a deeper check
++                if (this === other) { // same instance: always equal
++                    return true
++                }
++                if (this.javaClass !== other.javaClass) { // different types: never equal
++                    return false
++                }
++                return this.asSourceString() == other.asSourceString() // source code equality
++            }
++            return true
++        } else {
++            return false
++        }
+     }
+ 
+     override fun hashCode(): Int {
+diff --git a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/controlStructures/ElvisExpression.kt b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/controlStructures/ElvisExpression.kt
+index 78d2baddd8bb..f7c6ebbef0a6 100644
+--- a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/controlStructures/ElvisExpression.kt
++++ b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/controlStructures/ElvisExpression.kt
+@@ -5,6 +5,7 @@ import com.intellij.openapi.components.ServiceManager
+ import com.intellij.psi.PsiElement
+ import com.intellij.psi.PsiMethod
+ import com.intellij.psi.PsiType
++import org.jetbrains.kotlin.psi.KtAnnotatedExpression
+ import org.jetbrains.kotlin.psi.KtBinaryExpression
+ import org.jetbrains.kotlin.psi.KtExpression
+ import org.jetbrains.uast.*
+@@ -103,7 +104,12 @@ class KotlinUElvisExpression(
+     override val sourcePsi: PsiElement = elvisExpression
+     override val psi: PsiElement = sourcePsi
+     override val kind = KotlinSpecialExpressionKinds.ELVIS
+-    override val uAnnotations: List<UAnnotation> = emptyList()
++    // Workaround for https://youtrack.jetbrains.com/issue/KT-37133
++    override val uAnnotations: List<UAnnotation>
++        get() {
++            val annotatedExpression = sourcePsi?.parent as? KtAnnotatedExpression ?: return emptyList()
++            return annotatedExpression.annotationEntries.map { KotlinUAnnotation(it, this) }
++        }
+     override val expressions: List<UExpression> by lz {
+         createElvisExpressions(left, right, this, elvisExpression.parent)
+     }
+diff --git a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethodWithFakeLightDelegate.kt b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethodWithFakeLightDelegate.kt
+index 2d73dd7767d6..e640bb9a209e 100644
+--- a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethodWithFakeLightDelegate.kt
++++ b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethodWithFakeLightDelegate.kt
+@@ -2,6 +2,7 @@
+ 
+ package org.jetbrains.uast.kotlin
+ 
++import com.intellij.openapi.util.TextRange
+ import com.intellij.psi.*
+ import org.jetbrains.kotlin.psi.*
+ import org.jetbrains.uast.*
+@@ -28,4 +29,9 @@ class KotlinUMethodWithFakeLightDelegate(
+     }
+ 
+     override fun hashCode(): Int = original.hashCode()
++
++    // Needed by metalava
++    override fun getTextRange(): TextRange {
++        return original.textRange
++    }
+ }
+diff --git a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethod.kt b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethod.kt
+index aac00424cb6c..60232494fb55 100644
+--- a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethod.kt
++++ b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethod.kt
+@@ -5,6 +5,7 @@ package org.jetbrains.uast.kotlin.psi
+ import com.intellij.openapi.components.ServiceManager
+ import com.intellij.psi.*
+ import com.intellij.psi.impl.light.*
++import org.jetbrains.kotlin.asJava.elements.KotlinLightTypeParameterBuilder
+ import org.jetbrains.kotlin.asJava.elements.KotlinLightTypeParameterListBuilder
+ import org.jetbrains.kotlin.psi.*
+ import org.jetbrains.kotlin.utils.addToStdlib.safeAs
+@@ -21,10 +22,11 @@ class UastFakeLightMethod(
+         KotlinLightTypeParameterListBuilder(this).also { paramList ->
+             for ((i, p) in original.typeParameters.withIndex()) {
+                 paramList.addParameter(
+-                    object : LightTypeParameterBuilder(
++                    object : KotlinLightTypeParameterBuilder(
+                         p.name ?: "__no_name__",
+                         this,
+-                        i
++                        i,
++                        p
+                     ) {
+                         private val myExtendsList by lz {
+                             super.getExtendsList().apply {

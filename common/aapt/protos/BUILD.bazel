@@ -1,0 +1,23 @@
+#### Generated file, do not edit manually ####
+#See README.md.
+load("//tools/base/bazel:proto.bzl", "java_proto_library")
+
+PROTO_SRCS = [
+    "Configuration.proto",
+    "ResourcesInternal.proto",
+    "Resources.proto",
+]
+
+java_proto_library(
+    name = "protos",
+    srcs = PROTO_SRCS,
+    resource_strip_prefix = "prebuilts/tools/common/aapt/protos",
+    resources = PROTO_SRCS,
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "agp_gradle_build_files",
+    srcs = PROTO_SRCS,
+    visibility = ["//tools/base/build-system:__pkg__"],
+)
