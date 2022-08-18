@@ -1,0 +1,8 @@
+# keep this the first line in the file
+*	text=auto
+
+# Shell scripts that will be pushed to Android should have Linux-syle line endings, not Windows-style.
+common/lldb/android/start_lldb_server.sh eol=lf
+
+# Maven POM files have SHA1 checksums, so the original line endings should be preserved.
+common/m2/repository/**/*.pom binary

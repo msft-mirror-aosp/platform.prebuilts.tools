@@ -1,0 +1,227 @@
+diff --git a/idea/src/META-INF/plugin.xml b/idea/src/META-INF/plugin.xml
+index 298b59978db..b26d4a369cd 100644
+--- a/idea/src/META-INF/plugin.xml
++++ b/idea/src/META-INF/plugin.xml
+@@ -2782,8 +2782,8 @@
+     <resolveScopeProvider implementation="org.jetbrains.kotlin.idea.core.script.dependencies.KotlinScriptResolveScopeProvider"/>
+     <resolveScopeProvider implementation="org.jetbrains.kotlin.idea.core.script.dependencies.ScriptDependenciesResolveScopeProvider"/>
+ 
+-    <projectService serviceInterface="org.jetbrains.uast.kotlin.KotlinUastBindingContextProviderService"
+-                  serviceImplementation="org.jetbrains.uast.kotlin.internal.IdeaKotlinUastBindingContextProviderService"/>
++    <projectService serviceInterface="org.jetbrains.uast.kotlin.KotlinUastResolveProviderService"
++                  serviceImplementation="org.jetbrains.uast.kotlin.internal.IdeaKotlinUastResolveProviderService"/>
+ 
+     <statistics.usagesCollector implementation="org.jetbrains.kotlin.idea.formatter.KotlinFormatterUsageCollector" />
+   </extensions>
+diff --git a/plugins/uast-kotlin-idea/build.gradle.kts b/plugins/uast-kotlin-idea/build.gradle.kts
+index 812bf3ba724..7e45369c5e4 100644
+--- a/plugins/uast-kotlin-idea/build.gradle.kts
++++ b/plugins/uast-kotlin-idea/build.gradle.kts
+@@ -9,7 +9,8 @@ dependencies {
+     compile(project(":compiler:frontend.java"))
+     compile(project(":idea:ide-common"))
+     compile(project(":plugins:uast-kotlin"))
+-    compileOnly(intellijDep()) { includeJars("openapi", "util", "platform-api") }
++    compile(project(":idea:idea-core"))
++    compileOnly(intellijDep()) { includeJars("idea", "openapi", "util", "platform-api") }
+ }
+ 
+ sourceSets {
+diff --git a/plugins/uast-kotlin-idea/src/IdeaKotlinUastBindingContextProviderService.kt b/plugins/uast-kotlin-idea/src/IdeaKotlinUastResolveProviderService.kt
+similarity index 62%
+rename from plugins/uast-kotlin-idea/src/IdeaKotlinUastBindingContextProviderService.kt
+rename to plugins/uast-kotlin-idea/src/IdeaKotlinUastResolveProviderService.kt
+index f1178c31587..adb02dcc043 100644
+--- a/plugins/uast-kotlin-idea/src/IdeaKotlinUastBindingContextProviderService.kt
++++ b/plugins/uast-kotlin-idea/src/IdeaKotlinUastResolveProviderService.kt
+@@ -16,16 +16,20 @@
+ 
+ package org.jetbrains.uast.kotlin.internal
+ 
++import com.intellij.psi.PsiElement
+ import org.jetbrains.kotlin.codegen.ClassBuilderMode
+ import org.jetbrains.kotlin.codegen.state.IncompatibleClassTracker
+ import org.jetbrains.kotlin.codegen.state.KotlinTypeMapper
+ import org.jetbrains.kotlin.idea.caches.resolve.analyze
+ import org.jetbrains.kotlin.load.java.JvmAbi
+ import org.jetbrains.kotlin.psi.KtElement
++import org.jetbrains.kotlin.resolve.jvm.platform.JvmPlatform
+ import org.jetbrains.kotlin.resolve.lazy.BodyResolveMode
+-import org.jetbrains.uast.kotlin.KotlinUastBindingContextProviderService
++import org.jetbrains.uast.kotlin.KotlinUastResolveProviderService
++import org.jetbrains.kotlin.idea.project.TargetPlatformDetector
++import org.jetbrains.kotlin.idea.util.module
+ 
+-class IdeaKotlinUastBindingContextProviderService : KotlinUastBindingContextProviderService {
++class IdeaKotlinUastResolveProviderService : KotlinUastResolveProviderService {
+     override fun getBindingContext(element: KtElement) = element.analyze(BodyResolveMode.PARTIAL)
+ 
+     override fun getTypeMapper(element: KtElement): KotlinTypeMapper? {
+@@ -33,4 +37,15 @@ class IdeaKotlinUastBindingContextProviderService : KotlinUastBindingContextProv
+             getBindingContext(element), ClassBuilderMode.LIGHT_CLASSES,
+             IncompatibleClassTracker.DoNothing, JvmAbi.DEFAULT_MODULE_NAME, false)
+     }
++
++    override fun isJvmElement(psiElement: PsiElement): Boolean {
++        return try {
++            // Workaround for UAST used without full-fledged IDEA when ProjectFileIndex is not available
++            // If we can't get the module (or don't have one), act as if the current platform is JVM
++            val module = psiElement.module
++            module == null || TargetPlatformDetector.getPlatform(module) is JvmPlatform
++        } catch (e: Exception) {
++            true
++        }
++    }
+ }
+diff --git a/plugins/uast-kotlin/build.gradle.kts b/plugins/uast-kotlin/build.gradle.kts
+index fec9f57a5db..e92276687ec 100644
+--- a/plugins/uast-kotlin/build.gradle.kts
++++ b/plugins/uast-kotlin/build.gradle.kts
+@@ -9,8 +9,7 @@ dependencies {
+     compile(project(":compiler:frontend"))
+     compile(project(":compiler:frontend.java"))
+     compile(project(":compiler:light-classes"))
+-    compile(project(":idea:idea-core"))
+-    compileOnly(intellijDep()) { includeJars("openapi", "idea", "java-api", "java-impl", "platform-api", "platform-impl", "util", "extensions", "asm-all") }
++    compileOnly(intellijDep()) { includeJars("java-api", "java-impl", "platform-api", "platform-impl", "util", "extensions", "asm-all") }
+ 
+     testCompile(projectDist(":kotlin-test:kotlin-test-jvm"))
+     testCompile(projectTests(":compiler:tests-common"))
+diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinUastLanguagePlugin.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinUastLanguagePlugin.kt
+index 5c13c82824f..9c2817f1132 100644
+--- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinUastLanguagePlugin.kt
++++ b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinUastLanguagePlugin.kt
+@@ -17,6 +17,7 @@
+ package org.jetbrains.uast.kotlin
+ 
+ import com.intellij.lang.Language
++import com.intellij.openapi.components.ServiceManager
+ import com.intellij.openapi.util.Key
+ import com.intellij.psi.PsiElement
+ import com.intellij.psi.PsiFile
+@@ -32,8 +33,6 @@ import org.jetbrains.kotlin.descriptors.ClassKind
+ import org.jetbrains.kotlin.descriptors.ConstructorDescriptor
+ import org.jetbrains.kotlin.descriptors.FunctionDescriptor
+ import org.jetbrains.kotlin.idea.KotlinLanguage
+-import org.jetbrains.kotlin.idea.project.TargetPlatformDetector
+-import org.jetbrains.kotlin.idea.util.module
+ import org.jetbrains.kotlin.lexer.KtTokens
+ import org.jetbrains.kotlin.psi.*
+ import org.jetbrains.kotlin.psi.psiUtil.getParentOfType
+@@ -47,9 +46,10 @@ import org.jetbrains.uast.kotlin.expressions.*
+ import org.jetbrains.uast.kotlin.psi.UastKotlinPsiParameter
+ import org.jetbrains.uast.kotlin.psi.UastKotlinPsiVariable
+ 
+-interface KotlinUastBindingContextProviderService {
++interface KotlinUastResolveProviderService {
+     fun getBindingContext(element: KtElement): BindingContext
+     fun getTypeMapper(element: KtElement): KotlinTypeMapper?
++    fun isJvmElement(psiElement: PsiElement): Boolean
+ }
+ 
+ var PsiElement.destructuringDeclarationInitializer: Boolean? by UserDataProperty(Key.create("kotlin.uast.destructuringDeclarationInitializer"))
+@@ -64,14 +64,10 @@ class KotlinUastLanguagePlugin : UastLanguagePlugin {
+         return fileName.endsWith(".kt", false) || fileName.endsWith(".kts", false)
+     }
+ 
+-    private val PsiElement.isJvmElement
+-        get() = try {
+-            // Workaround for UAST used without full-fledged IDEA when ProjectFileIndex is not available
+-            // If we can't get the module (or don't have one), act as if the current platform is JVM
+-            val module = module
+-            module == null || TargetPlatformDetector.getPlatform(module) is JvmPlatform
+-        } catch (e: Exception) {
+-            true
++    private val PsiElement.isJvmElement: Boolean
++        get() {
++            val resolveProvider = ServiceManager.getService(project, KotlinUastResolveProviderService::class.java)
++            return resolveProvider.isJvmElement(this)
+         }
+ 
+     override fun convertElement(element: PsiElement, parent: UElement?, requiredType: Class<out UElement>?): UElement? {
+diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/CliKotlinUastBindingContextProviderService.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/CliKotlinUastResolveProviderService.kt
+similarity index 89%
+rename from plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/CliKotlinUastBindingContextProviderService.kt
+rename to plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/CliKotlinUastResolveProviderService.kt
+index 2cbdd28685e..5cdf6485498 100644
+--- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/CliKotlinUastBindingContextProviderService.kt
++++ b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/CliKotlinUastResolveProviderService.kt
+@@ -1,6 +1,7 @@
+ package org.jetbrains.uast.kotlin.internal
+ 
+ import com.intellij.openapi.project.Project
++import com.intellij.psi.PsiElement
+ import org.jetbrains.kotlin.analyzer.AnalysisResult
+ import org.jetbrains.kotlin.codegen.ClassBuilderMode
+ import org.jetbrains.kotlin.codegen.state.IncompatibleClassTracker
+@@ -12,9 +13,9 @@ import org.jetbrains.kotlin.psi.KtFile
+ import org.jetbrains.kotlin.resolve.BindingContext
+ import org.jetbrains.kotlin.resolve.BindingTrace
+ import org.jetbrains.kotlin.resolve.jvm.extensions.AnalysisHandlerExtension
+-import org.jetbrains.uast.kotlin.KotlinUastBindingContextProviderService
++import org.jetbrains.uast.kotlin.KotlinUastResolveProviderService
+ 
+-class CliKotlinUastBindingContextProviderService : KotlinUastBindingContextProviderService {
++class CliKotlinUastResolveProviderService : KotlinUastResolveProviderService {
+     val Project.analysisCompletedHandler: UastAnalysisHandlerExtension?
+         get() = getExtensions(AnalysisHandlerExtension.extensionPointName)
+                 .filterIsInstance<UastAnalysisHandlerExtension>()
+@@ -27,6 +28,8 @@ class CliKotlinUastBindingContextProviderService : KotlinUastBindingContextProvi
+     override fun getTypeMapper(element: KtElement): KotlinTypeMapper? {
+         return element.project.analysisCompletedHandler?.getTypeMapper()
+     }
++
++    override fun isJvmElement(psiElement: PsiElement) = true
+ }
+ 
+ class UastAnalysisHandlerExtension : AnalysisHandlerExtension {
+diff --git a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/kotlinInternalUastUtils.kt b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/kotlinInternalUastUtils.kt
+index 9e43f412f48..54125b23819 100644
+--- a/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/kotlinInternalUastUtils.kt
++++ b/plugins/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/kotlinInternalUastUtils.kt
+@@ -107,7 +107,7 @@ internal fun KotlinType.toPsiType(source: UElement, element: KtElement, boxed: B
+     if (this.containsLocalTypes()) return UastErrorType
+ 
+     val project = element.project
+-    val typeMapper = ServiceManager.getService(project, KotlinUastBindingContextProviderService::class.java)
++    val typeMapper = ServiceManager.getService(project, KotlinUastResolveProviderService::class.java)
+             .getTypeMapper(element) ?: return UastErrorType
+ 
+     val signatureWriter = BothSignatureWriter(BothSignatureWriter.Mode.TYPE)
+@@ -185,7 +185,7 @@ internal fun KtExpression.unwrapBlockOrParenthesis(): KtExpression {
+ 
+ internal fun KtElement.analyze(): BindingContext {
+     if(containingFile !is KtFile) return BindingContext.EMPTY // EA-114080, EA-113475
+-    return ServiceManager.getService(project, KotlinUastBindingContextProviderService::class.java)
++    return ServiceManager.getService(project, KotlinUastResolveProviderService::class.java)
+             ?.getBindingContext(this) ?: BindingContext.EMPTY
+ }
+ 
+diff --git a/plugins/uast-kotlin/tests/AbstractKotlinUastTest.kt b/plugins/uast-kotlin/tests/AbstractKotlinUastTest.kt
+index ad281f07c74..ab8b7b5cb9b 100644
+--- a/plugins/uast-kotlin/tests/AbstractKotlinUastTest.kt
++++ b/plugins/uast-kotlin/tests/AbstractKotlinUastTest.kt
+@@ -25,10 +25,10 @@ import org.jetbrains.kotlin.test.TestJdkKind
+ import org.jetbrains.kotlin.test.testFramework.KtUsefulTestCase
+ import org.jetbrains.uast.UastLanguagePlugin
+ import org.jetbrains.uast.evaluation.UEvaluatorExtension
+-import org.jetbrains.uast.kotlin.KotlinUastBindingContextProviderService
++import org.jetbrains.uast.kotlin.KotlinUastResolveProviderService
+ import org.jetbrains.uast.kotlin.KotlinUastLanguagePlugin
+ import org.jetbrains.uast.kotlin.evaluation.KotlinEvaluatorExtension
+-import org.jetbrains.uast.kotlin.internal.CliKotlinUastBindingContextProviderService
++import org.jetbrains.uast.kotlin.internal.CliKotlinUastResolveProviderService
+ import org.jetbrains.uast.kotlin.internal.UastAnalysisHandlerExtension
+ import org.jetbrains.uast.test.env.AbstractCoreEnvironment
+ import org.jetbrains.uast.test.env.AbstractUastTest
+@@ -72,8 +72,8 @@ abstract class AbstractKotlinUastTest : AbstractUastTest() {
+                 .registerExtension(KotlinEvaluatorExtension())
+ 
+         project.registerService(
+-                KotlinUastBindingContextProviderService::class.java,
+-                CliKotlinUastBindingContextProviderService::class.java)
++            KotlinUastResolveProviderService::class.java,
++            CliKotlinUastResolveProviderService::class.java)
+     }
+ 
+     override fun createEnvironment(source: File): AbstractCoreEnvironment {
