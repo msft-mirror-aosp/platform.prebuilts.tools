@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 #
 #===- google-java-format-diff.py - google-java-format Diff Reformatter -----===#
 #
@@ -20,6 +20,10 @@ Example usage for git/svn users:
   git diff -U0 HEAD^ | google-java-format-diff.py -p1 -i
   svn diff --diff-cmd=diff -x-U0 | google-java-format-diff.py -i
 
+For perforce users:
+
+  P4DIFF="git --no-pager diff --no-index" p4 diff | ./google-java-format-diff.py -i -p7
+
 """
 
 import argparse
@@ -27,11 +31,10 @@ import difflib
 import re
 import string
 import subprocess
-import StringIO
+import io
 import sys
+import locale
 from distutils.spawn import find_executable
-
-binary = find_executable('google-java-format') or '/usr/bin/google-java-format'
 
 def main():
   parser = argparse.ArgumentParser(description=
@@ -55,6 +58,12 @@ def main():
                       help='use AOSP style instead of Google Style (4-space indentation)')
   parser.add_argument('--skip-sorting-imports', action='store_true',
                       help='do not fix the import order')
+  parser.add_argument('--skip-removing-unused-imports', action='store_true',
+                      help='do not remove ununsed imports')
+  parser.add_argument('-b', '--binary', help='path to google-java-format binary')
+  parser.add_argument('--google-java-format-jar', metavar='ABSOLUTE_PATH', default=None,
+                      help='use a custom google-java-format jar')
+
   args = parser.parse_args()
 
   # Extract changed lines for each file.
@@ -87,21 +96,32 @@ def main():
       lines_by_file.setdefault(filename, []).extend(
           ['-lines', str(start_line) + ':' + str(end_line)])
 
+  if args.binary:
+    base_command = [args.binary]
+  elif args.google_java_format_jar:
+    base_command = ['java', '-jar', args.google_java_format_jar]
+  else:
+    binary = find_executable('google-java-format') or '/usr/bin/google-java-format'
+    base_command = [binary]
+
   # Reformat files containing changes in place.
-  for filename, lines in lines_by_file.iteritems():
+  for filename, lines in lines_by_file.items():
     if args.i and args.verbose:
-      print 'Formatting', filename
-    command = [binary]
+      print('Formatting', filename)
+    command = base_command[:]
     if args.i:
       command.append('-i')
     if args.aosp:
       command.append('--aosp')
     if args.skip_sorting_imports:
       command.append('--skip-sorting-imports')
+    if args.skip_removing_unused_imports:
+      command.append('--skip-removing-unused-imports')
     command.extend(lines)
     command.append(filename)
     p = subprocess.Popen(command, stdout=subprocess.PIPE,
-                         stderr=None, stdin=subprocess.PIPE)
+                         stderr=None, stdin=subprocess.PIPE,
+                         encoding=locale.getpreferredencoding())
     stdout, stderr = p.communicate()
     if p.returncode != 0:
       sys.exit(p.returncode);
@@ -109,11 +129,11 @@ def main():
     if not args.i:
       with open(filename) as f:
         code = f.readlines()
-      formatted_code = StringIO.StringIO(stdout).readlines()
+      formatted_code = io.StringIO(stdout).readlines()
       diff = difflib.unified_diff(code, formatted_code,
                                   filename, filename,
                                   '(before formatting)', '(after formatting)')
-      diff_string = string.join(diff, '')
+      diff_string = ''.join(diff)
       if len(diff_string) > 0:
         sys.stdout.write(diff_string)
 
