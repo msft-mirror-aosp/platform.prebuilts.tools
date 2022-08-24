@@ -35,6 +35,15 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
+filegroup(
+    name = "ffmpeg-licenses",
+    srcs = glob([
+        "repository/org/bytedeco/ffmpeg-LICENSE*",
+        "repository/org/bytedeco/ffmpeg-SOURCE_CODE*",
+    ]),
+    visibility = ["//visibility:public"],
+)
+
 jvm_import(
     name = "utp-core-proto",
     jars = ["repository/com/google/testing/platform/core-proto/0.0.8-alpha08/core-proto-0.0.8-alpha08.jar"],
