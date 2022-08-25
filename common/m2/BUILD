@@ -124,7 +124,7 @@ filegroup(
 # managed by go/iml_to_build
 filegroup(
     name = "equalsverifier_files",
-    srcs = ["repository/nl/jqno/equalsverifier/equalsverifier/3.4.1/equalsverifier-3.4.1.jar"],
+    srcs = ["repository/nl/jqno/equalsverifier/equalsverifier/3.8/equalsverifier-3.8.jar"],
     visibility = ["//visibility:public"],
 )
 
