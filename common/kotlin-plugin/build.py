@@ -20,7 +20,7 @@ def main():
     parser.add_argument('--clean-build', action='store_true')
     parser.add_argument('--stage', metavar='DIR', type=Path)
     parser.add_argument('--kotlin-version', default='1.7.10')
-    parser.add_argument('--intellij-version', default='221.5591.52')
+    parser.add_argument('--intellij-version', default='222.3739.54')
 
     args = parser.parse_args()
 
@@ -44,8 +44,11 @@ def main():
     if args.download:
         (plugin_zip, sources_zip) = download_kotlin_ide_from_ab(args)
     else:
-        build_kotlin_compiler(args)
-        update_ide_project_model(args)
+        # For now we disable the custom Kotlinc build, because Kotlin
+        # plugin 222 bundles a dev version of Kotlinc (1.7.20-dev-1059)
+        # which has no corresponding tag in the Kotlinc repo.
+        # build_kotlin_compiler(args)
+        # update_ide_project_model(args)
         (plugin_zip, sources_zip) = build_kotlin_ide(args)
 
     # Copy artifacts.
