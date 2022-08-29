@@ -8,10 +8,10 @@ set -eu
 # For the IntelliJ version, see tools/idea/build.txt.
 # For the Kotlin version, see prebuilts/tools/common/kotlin-plugin/Kotlin/kotlinc/build.txt.
 # The git SHAs must also be updated to match the versions specified.
-export INTELLIJ_VERSION="221.5787.30"
-export KOTLIN_VERSION="1.7.0-Beta-29"
-export INTELLIJ_SHA="fc89a0cdbae0024dcea26067591fc8ae55a8ff82" # Jun 7, 2022, kt-221-1.7.0
-export KOTLIN_SHA="b09a27bf2546b0c329e6caa260c70786bc1e7fed" # v1.7.0-Beta-29, Apr 15, 2022, 1.7.0 branch
+export INTELLIJ_VERSION="222.3345.118"
+export KOTLIN_VERSION="1.7.20-RC-SNAPSHOT"
+export INTELLIJ_SHA="91372e49273bce88b9372ddeffa6a9b7623cab1c" # Aug 17, 2022, kt-222-1.7.20
+export KOTLIN_SHA="ce1db4e2902b130700bdc2de93a416b918aa9559" # v1.7.20, Aug 25, 2022, 1.7.20 branch
 
 export CLEAN_BUILD="${CLEAN_BUILD:-false}"
 
@@ -59,7 +59,10 @@ fi
 phase "Applying patches if needed"
 if [[ ! "${CUSTOM_KOTLIN_DIR:-}" ]]; then
     git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/kotlin-compiler-patch.diff"
-    git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/kotlin-compiler-b18999be82.diff"
+fi
+if [[ ! "${CUSTOM_INTELLIJ_DIR:-}" ]]; then
+    git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/intellij-safe-analyze.diff"
+    git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/intellij-ba5ddce2cc.diff"
 fi
 
 phase "Building Kotlin compiler"
