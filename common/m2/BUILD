@@ -621,3 +621,24 @@ jvm_import(
     jars = ["repository/androidx/tracing/tracing-perfetto-common/1.0.0-alpha01/tracing-perfetto-common-1.0.0-alpha01.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "jsr305-2.0.1",
+    jars = ["repository/com/google/code/findbugs/jsr305/2.0.1/jsr305-2.0.1.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+filegroup(
+    name = "google-api-services-oauth2-v2-rev150-1.22.0_files",
+    srcs = ["repository/com/google/apis/google-api-services-oauth2/v2-rev150-1.22.0/google-api-services-oauth2-v2-rev150-1.22.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "javax-servlet",
+    jars = ["repository/javax/servlet/javax.servlet-api/3.0.1/javax.servlet-api-3.0.1.jar"],
+    visibility = ["//visibility:public"],
+)
