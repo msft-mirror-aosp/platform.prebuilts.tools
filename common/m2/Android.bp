@@ -50,7 +50,7 @@ package {
 
 java_import {
     name: "byte-buddy-prebuilt-jar",
-    jars: ["repository/net/bytebuddy/byte-buddy/1.9.3/byte-buddy-1.9.3.jar"],
+    jars: ["repository/net/bytebuddy/byte-buddy/1.12.10/byte-buddy-1.12.10.jar"],
     sdk_version: "current",
 }
 
@@ -97,6 +97,12 @@ java_import {
 java_import {
     name: "mockito2-prebuilt-jar",
     jars: ["repository/org/mockito/mockito-core/2.7.6/mockito-core-2.7.6.jar"],
+    sdk_version: "current",
+}
+
+java_import {
+    name: "mockito4-prebuilt-jar",
+    jars: ["repository/org/mockito/mockito-core/4.6.1/mockito-core-4.6.1.jar"],
     sdk_version: "current",
 }
 
@@ -173,7 +179,7 @@ java_library_static {
     name: "mockito-robolectric-prebuilt",
     static_libs: [
         "byte-buddy-prebuilt-jar",
-        "mockito2-prebuilt-jar",
+        "mockito4-prebuilt-jar",
         "objenesis-prebuilt-jar",
     ],
     sdk_version: "current",
@@ -230,17 +236,19 @@ java_import {
 }
 
 java_import {
-  name: "wire-runtime",
+  name: "wire-runtime-prebuilt-jar",
   jars: [
-    "repository/com/squareup/wire/wire-runtime/3.6.0/wire-runtime-3.6.0.jar",
+    "repository/com/squareup/wire/wire-runtime-jvm/4.4.1/wire-runtime-jvm-4.4.1.jar",
   ],
 }
 
-java_import {
-  name: "okio-prebuilt",
-  jars: [
-    "repository/com/squareup/okio/okio/1.9.0/okio-1.9.0.jar",
-  ],
+java_library_static {
+    name: "wire-runtime",
+    static_libs: [
+        "wire-runtime-prebuilt-jar",
+        "okio-lib",
+    ],
+    sdk_version: "current",
 }
 
 java_import {
@@ -331,5 +339,12 @@ java_import {
 java_import {
     name: "symbol-processing-api",
     jars: ["repository/com/google/devtools/ksp/symbol-processing-api/1.4.10-dev-experimental-20201110/symbol-processing-api-1.4.10-dev-experimental-20201110.jar"],
+    host_supported: true,
+}
+
+java_import {
+    name: "kotlin-compiler-embeddable",
+    jars: ["repository/org/jetbrains/kotlin/kotlin-compiler-embeddable/1.6.10/kotlin-compiler-embeddable-1.6.10.jar"],
+    sdk_version: "current",
     host_supported: true,
 }

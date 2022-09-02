@@ -44,6 +44,7 @@ data_sources {
     name: "linux.ftrace"
     target_buffer: 0
     ftrace_config {
+      throttle_rss_stat: true
       # These parameters affect only the kernel trace buffer size and how
       # frequently it gets moved into the userspace buffer defined above.
       buffer_size_kb: 16384
@@ -57,6 +58,12 @@ data_sources {
 
       # Enables symbol name resolution against /proc/kallsyms
       symbolize_ksyms: true
+      # Parse kallsyms before acknowledging that the ftrace data source has been started. In
+      # combination with "perfetto --background-wait" as the consumer, it lets us defer the
+      # test we're tracing until after the cpu has quieted down from the cpu-bound kallsyms parsing.
+      initialize_ksyms_synchronously_for_testing: true
+      # Avoid re-parsing kallsyms on every test run, as it takes 200-500ms per run. See b/239951079
+      ksyms_mem_policy: KSYMS_RETAIN
 
       # We need to do process tracking to ensure kernel ftrace events targeted at short-lived
       # threads are associated correctly
