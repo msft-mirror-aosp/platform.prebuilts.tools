@@ -122,6 +122,7 @@ def update_ide_project_model(args):
     with open(model_props, 'w') as f:
         f.write(f'kotlincVersion={args.kotlin_version_full}\n')
         f.write('kotlincArtifactsMode=MAVEN\n')
+        f.write('kotlinGradlePluginVersion=unused\n')
 
     # Run the updater.
     clean_args = ['clean', '--no-daemon', '--no-build-cache'] if args.clean_build else []
