@@ -19,7 +19,7 @@ def main():
     parser.add_argument('--download', metavar='BUILD_ID')
     parser.add_argument('--clean-build', action='store_true')
     parser.add_argument('--stage', metavar='DIR', type=Path)
-    parser.add_argument('--kotlin-version', default='1.7.10')
+    parser.add_argument('--kotlin-version', default='1.7.20')
     parser.add_argument('--intellij-version', default='222.3739.54')
 
     args = parser.parse_args()
@@ -33,7 +33,7 @@ def main():
     args.workspace = workspace
     args.kotlinc_dir = workspace.joinpath('external/jetbrains/kotlin')
     args.kotlin_ide_dir = workspace.joinpath('external/jetbrains/intellij-kotlin')
-    args.kotlin_version_full = f'{args.kotlin_version}-release-for-android-studio'
+    args.kotlin_version_full = f'{args.kotlin_version}-release'
     args.gradlew = args.kotlinc_dir.joinpath('gradlew')
     args.cmd_env = {
         'PATH': '/bin:/usr/bin',
@@ -44,11 +44,8 @@ def main():
     if args.download:
         (plugin_zip, sources_zip) = download_kotlin_ide_from_ab(args)
     else:
-        # For now we disable the custom Kotlinc build, because Kotlin
-        # plugin 222 bundles a dev version of Kotlinc (1.7.20-dev-1059)
-        # which has no corresponding tag in the Kotlinc repo.
-        # build_kotlin_compiler(args)
-        # update_ide_project_model(args)
+        build_kotlin_compiler(args)
+        update_ide_project_model(args)
         (plugin_zip, sources_zip) = build_kotlin_ide(args)
 
     # Copy artifacts.
@@ -125,6 +122,9 @@ def update_ide_project_model(args):
     with open(model_props, 'w') as f:
         f.write(f'kotlincVersion={args.kotlin_version_full}\n')
         f.write('kotlincArtifactsMode=MAVEN\n')
+        f.write(f'jpsPluginVersion={args.kotlin_version_full}\n')
+        f.write('jpsPluginArtifactsMode=MAVEN\n')
+        f.write('kotlinGradlePluginVersion=unused\n')
 
     # Run the updater.
     clean_args = ['clean', '--no-daemon', '--no-build-cache'] if args.clean_build else []
