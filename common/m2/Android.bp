@@ -77,13 +77,6 @@ java_import_host {
 }
 
 java_import {
-    name: "gson-prebuilt-jar",
-    jars: ["repository/com/google/code/gson/gson/2.8.0/gson-2.8.0.jar"],
-    sdk_version: "current",
-    host_supported: true,
-}
-
-java_import {
     name: "guava-listenablefuture-prebuilt-jar",
     jars: ["repository/com/google/guava/guava/listenablefuture/1.0/listenablefuture-1.0.jar"],
     sdk_version: "current",
@@ -107,11 +100,6 @@ java_import {
 }
 
 java_import {
-    name: "objenesis-prebuilt-jar",
-    jars: ["repository/org/objenesis/objenesis/2.5/objenesis-2.5.jar"],
-}
-
-java_import {
     name: "truth-prebuilt-jar",
     jars: ["repository/com/google/truth/truth/1.0.1/truth-1.0.1.jar"],
     sdk_version: "current",
@@ -126,12 +114,6 @@ java_import {
     ],
     sdk_version: "current",
     host_supported: true,
-}
-
-// TODO: remove in favor of external/javapoet
-java_import_host {
-    name: "javapoet-prebuilt-jar",
-    jars: ["repository/com/squareup/javapoet/1.8.0/javapoet-1.8.0.jar"],
 }
 
 java_import_host {
@@ -180,7 +162,7 @@ java_library_static {
     static_libs: [
         "byte-buddy-prebuilt-jar",
         "mockito4-prebuilt-jar",
-        "objenesis-prebuilt-jar",
+        "objenesis",
     ],
     sdk_version: "current",
 }
@@ -272,21 +254,9 @@ java_import {
     host_supported: true,
 }
 
-java_import {
-    name: "antlr4",
-    jars: ["repository/org/antlr/antlr4/4.7.2/antlr4-4.7.2.jar"],
-    host_supported: true,
-}
-
 java_import_host {
     name: "com.google.api.grpc_proto-google-common-protos-prebuilt-jar",
     jars: ["repository/com/google/api/grpc/proto-google-common-protos/1.14.0/proto-google-common-protos-1.14.0.jar"],
-}
-
-java_import {
-    name: "auto-factory-1.0-beta7",
-    jars: ["repository/com/google/auto/factory/auto-factory/1.0-beta7/auto-factory-1.0-beta7.jar"],
-    host_supported: true,
 }
 
 java_import {
@@ -328,12 +298,6 @@ java_import_host {
 java_import_host {
     name: "jsoup-1.6.3",
     jars: ["repository/org/jsoup/jsoup/1.6.3/jsoup-1.6.3.jar"],
-}
-
-java_import {
-    name: "flogger-0.5.1",
-    jars: ["repository/com/google/flogger/flogger/0.5.1/flogger-0.5.1.jar"],
-    host_supported: true,
 }
 
 java_import {
