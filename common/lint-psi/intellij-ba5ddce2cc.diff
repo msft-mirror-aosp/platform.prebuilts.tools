@@ -1,0 +1,38 @@
+diff --git a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastResolveProviderService.kt b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastResolveProviderService.kt
+index 622a1e811adf1..ab60fa75f97a8 100644
+--- a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastResolveProviderService.kt
++++ b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastResolveProviderService.kt
+@@ -7,7 +7,6 @@ import com.intellij.psi.impl.compiled.ClsMemberImpl
+ import com.intellij.psi.impl.file.PsiPackageImpl
+ import com.intellij.util.SmartList
+ import org.jetbrains.kotlin.analysis.api.KtTypeArgumentWithVariance
+-import org.jetbrains.kotlin.analysis.api.analyseForUast
+ import org.jetbrains.kotlin.analysis.api.base.KtConstantValue
+ import org.jetbrains.kotlin.analysis.api.calls.*
+ import org.jetbrains.kotlin.analysis.api.components.KtConstantEvaluationMode
+diff --git a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt
+index 7edff9766e852..cbcae28de3ba2 100644
+--- a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt
++++ b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt
+@@ -6,6 +6,8 @@ import com.intellij.openapi.project.Project
+ import com.intellij.psi.*
+ import com.intellij.psi.util.PsiTypesUtil
+ import org.jetbrains.kotlin.analysis.api.KtAnalysisSession
++import org.jetbrains.kotlin.analysis.api.analyze
++import org.jetbrains.kotlin.analysis.api.lifetime.KtAlwaysAccessibleLifetimeTokenFactory
+ import org.jetbrains.kotlin.analysis.api.symbols.*
+ import org.jetbrains.kotlin.analysis.api.types.KtClassErrorType
+ import org.jetbrains.kotlin.analysis.api.types.KtNonErrorClassType
+@@ -30,6 +32,12 @@ val firKotlinUastPlugin: FirKotlinUastLanguagePlugin by lz {
+         ?: FirKotlinUastLanguagePlugin()
+ }
+ 
++internal inline fun <R> analyseForUast(
++    useSiteKtElement: KtElement,
++    action: KtAnalysisSession.() -> R
++): R =
++    analyze(useSiteKtElement, KtAlwaysAccessibleLifetimeTokenFactory, action)
++
+ internal fun KtAnalysisSession.containingKtClass(
+     ktConstructorSymbol: KtConstructorSymbol,
+ ): KtClass? {
