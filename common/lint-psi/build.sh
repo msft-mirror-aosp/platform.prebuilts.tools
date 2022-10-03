@@ -9,9 +9,9 @@ set -eu
 # For the Kotlin version, see prebuilts/tools/common/kotlin-plugin/Kotlin/kotlinc/build.txt.
 # The git SHAs must also be updated to match the versions specified.
 export INTELLIJ_VERSION="222.3345.118"
-export KOTLIN_VERSION="1.7.20-RC-SNAPSHOT"
-export INTELLIJ_SHA="91372e49273bce88b9372ddeffa6a9b7623cab1c" # Aug 17, 2022, kt-222-1.7.20
-export KOTLIN_SHA="ce1db4e2902b130700bdc2de93a416b918aa9559" # v1.7.20, Aug 25, 2022, 1.7.20 branch
+export KOTLIN_VERSION="1.7.20"
+export INTELLIJ_SHA="e5cbd47ca631fca606901f397ce290c5d77c125a" # Sep 21, 2022, kt-222-1.7.20
+export KOTLIN_SHA="7159702d253166e43f15736f3dfb81bcad68f4a4" # v1.7.20, Sep 26, 2022, 1.7.20 branch
 
 export CLEAN_BUILD="${CLEAN_BUILD:-false}"
 
