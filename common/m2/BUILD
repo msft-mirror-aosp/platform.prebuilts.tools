@@ -642,3 +642,10 @@ jvm_import(
     jars = ["repository/javax/servlet/javax.servlet-api/3.0.1/javax.servlet-api-3.0.1.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+filegroup(
+    name = "gson_files",
+    srcs = ["repository/com/google/code/gson/gson/2.8.0/gson-2.8.0.jar"],
+    visibility = ["//visibility:public"],
+)
