@@ -133,9 +133,9 @@ filegroup(
     name = "mockito_files",
     # do not sort: must match IML order
     srcs = [
-        "repository/org/mockito/mockito-core/3.12.4/mockito-core-3.12.4.jar",
-        "repository/net/bytebuddy/byte-buddy/1.11.13/byte-buddy-1.11.13.jar",
-        "repository/net/bytebuddy/byte-buddy-agent/1.11.13/byte-buddy-agent-1.11.13.jar",
+        "repository/org/mockito/mockito-core/4.8.0/mockito-core-4.8.0.jar",
+        "repository/net/bytebuddy/byte-buddy/1.12.14/byte-buddy-1.12.14.jar",
+        "repository/net/bytebuddy/byte-buddy-agent/1.12.14/byte-buddy-agent-1.12.14.jar",
     ],
     visibility = ["//visibility:public"],
 )
