@@ -72,8 +72,8 @@ def build_kotlin_compiler(args):
         *clean_args,
         f'-PdeployVersion={args.kotlin_version_full}',
         f'-Pbuild.number={args.kotlin_version_full}',
-        'installIdeArtifacts',
-        ':prepare:ide-plugin-dependencies:kotlin-dist-for-ide:install',
+        'publishIdeArtifacts',
+        ':prepare:ide-plugin-dependencies:kotlin-dist-for-ide:publish',
         '-Ppublish.ide.plugin.dependencies=true',
         '-Pteamcity=true',  # Makes this a release build rather than a dev build.
         '-Pkotlin.build.isObsoleteJdkOverrideEnabled=true',  # Avoids the need for JDK 1.6.
@@ -87,10 +87,13 @@ def build_kotlin_compiler(args):
 def build_kotlin_ide(args):
     jps_bootstrap = args.kotlin_ide_dir.joinpath('platform/jps-bootstrap/jps-bootstrap.sh')
     clean_args = [] if args.clean_build else ['-Dintellij.build.incremental.compilation=true']
+    (ij_major, ij_minor) = args.intellij_version.split('.', 1)
     cmd = [
         str(jps_bootstrap),
         *clean_args,
-        f'-Dbuild.number={args.intellij_version}',
+        f'-Dbuild.number={ij_major}-{args.kotlin_version_full}-IJ{ij_minor}',
+        f'-Dkotlin.plugin.since={args.intellij_version}',
+        f'-Dkotlin.plugin.until={args.intellij_version}',
         '-Dintellij.build.dev.mode=false',
         '-Dkotlin.plugin.kind=AS',
         '-Dcompile.parallel=true',
@@ -121,9 +124,9 @@ def update_ide_project_model(args):
     model_props = updater_dir.joinpath('resources/model.properties')
     with open(model_props, 'w') as f:
         f.write(f'kotlincVersion={args.kotlin_version_full}\n')
-        f.write('kotlincArtifactsMode=MAVEN\n')
+        f.write('kotlincArtifactsMode=BOOTSTRAP\n')
         f.write(f'jpsPluginVersion={args.kotlin_version_full}\n')
-        f.write('jpsPluginArtifactsMode=MAVEN\n')
+        f.write('jpsPluginArtifactsMode=BOOTSTRAP\n')
         f.write('kotlinGradlePluginVersion=unused\n')
 
     # Run the updater.
