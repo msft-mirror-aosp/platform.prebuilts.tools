@@ -2,6 +2,7 @@
 from pathlib import Path
 from zipfile import ZipFile
 import argparse
+import io
 import os
 import platform
 import shlex
@@ -177,19 +178,24 @@ def write_metadata_file(args):
     # Gather version info.
     build_id = args.download if args.download else '<local_build>'
     kotlin_prebuilts: Path = args.workspace.joinpath('prebuilts/tools/common/kotlin-plugin')
-    compiler_version = kotlin_prebuilts.joinpath('Kotlin/kotlinc/build.txt').read_text()
+    standalone_compiler_version = kotlin_prebuilts.joinpath('Kotlin/kotlinc/build.txt').read_text()
     plugin_jar = kotlin_prebuilts.joinpath('Kotlin/lib/kotlin-plugin.jar')
+    kotlinc_jar = kotlin_prebuilts.joinpath('Kotlin/lib/kotlinc_kotlin-compiler-fe10.jar')
     with ZipFile(plugin_jar) as zip:
         with zip.open('META-INF/plugin.xml') as f:
             plugin_xml = ET.parse(f).getroot()
             plugin_version = plugin_xml.findtext('./version')
             idea_version = plugin_xml.find('./idea-version').get('since-build')
+    with ZipFile(kotlinc_jar) as zip:
+        with io.TextIOWrapper(zip.open('META-INF/compiler.version'), encoding="UTF-8") as f:
+            ide_compiler_version = f.read()
 
     # Write METADATA file.
     metadata_file = kotlin_prebuilts.joinpath('METADATA')
     with open(metadata_file, 'w') as f:
         f.write(f'build_id: {build_id}\n')
-        f.write(f'kotlin_compiler_version: {compiler_version}\n')
+        f.write(f'kotlin_standalone_compiler_version: {standalone_compiler_version}\n')
+        f.write(f'kotlin_ide_compiler_version: {ide_compiler_version}\n')
         f.write(f'kotlin_plugin_version: {plugin_version}\n')
         f.write(f'kotlin_plugin_platform: {idea_version}\n')
 
