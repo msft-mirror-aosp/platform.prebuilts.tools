@@ -630,13 +630,6 @@ jvm_import(
 )
 
 # managed by go/iml_to_build
-filegroup(
-    name = "google-api-services-oauth2-v2-rev150-1.22.0_files",
-    srcs = ["repository/com/google/apis/google-api-services-oauth2/v2-rev150-1.22.0/google-api-services-oauth2-v2-rev150-1.22.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
 jvm_import(
     name = "javax-servlet",
     jars = ["repository/javax/servlet/javax.servlet-api/3.0.1/javax.servlet-api-3.0.1.jar"],
@@ -647,5 +640,16 @@ jvm_import(
 filegroup(
     name = "gson_files",
     srcs = ["repository/com/google/code/gson/gson/2.8.0/gson-2.8.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+filegroup(
+    name = "oauth2_files",
+    # do not sort: must match IML order
+    srcs = [
+        "repository/com/google/apis/google-api-services-oauth2/v2-rev150-1.22.0/google-api-services-oauth2-v2-rev150-1.22.0.jar",
+        "repository/com/google/auth/google-auth-library-oauth2-http/0.22.2/google-auth-library-oauth2-http-0.22.2.jar",
+    ],
     visibility = ["//visibility:public"],
 )
