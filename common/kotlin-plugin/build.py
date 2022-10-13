@@ -2,6 +2,7 @@
 from pathlib import Path
 from zipfile import ZipFile
 import argparse
+import io
 import os
 import platform
 import shlex
@@ -19,7 +20,7 @@ def main():
     parser.add_argument('--download', metavar='BUILD_ID')
     parser.add_argument('--clean-build', action='store_true')
     parser.add_argument('--stage', metavar='DIR', type=Path)
-    parser.add_argument('--kotlin-version', default='1.7.10')
+    parser.add_argument('--kotlin-version', default='1.7.20')
     parser.add_argument('--intellij-version', default='222.3739.54')
 
     args = parser.parse_args()
@@ -33,7 +34,7 @@ def main():
     args.workspace = workspace
     args.kotlinc_dir = workspace.joinpath('external/jetbrains/kotlin')
     args.kotlin_ide_dir = workspace.joinpath('external/jetbrains/intellij-kotlin')
-    args.kotlin_version_full = f'{args.kotlin_version}-release-for-android-studio'
+    args.kotlin_version_full = f'{args.kotlin_version}-release'
     args.gradlew = args.kotlinc_dir.joinpath('gradlew')
     args.cmd_env = {
         'PATH': '/bin:/usr/bin',
@@ -44,11 +45,8 @@ def main():
     if args.download:
         (plugin_zip, sources_zip) = download_kotlin_ide_from_ab(args)
     else:
-        # For now we disable the custom Kotlinc build, because Kotlin
-        # plugin 222 bundles a dev version of Kotlinc (1.7.20-dev-1059)
-        # which has no corresponding tag in the Kotlinc repo.
-        # build_kotlin_compiler(args)
-        # update_ide_project_model(args)
+        build_kotlin_compiler(args)
+        update_ide_project_model(args)
         (plugin_zip, sources_zip) = build_kotlin_ide(args)
 
     # Copy artifacts.
@@ -75,8 +73,8 @@ def build_kotlin_compiler(args):
         *clean_args,
         f'-PdeployVersion={args.kotlin_version_full}',
         f'-Pbuild.number={args.kotlin_version_full}',
-        'installIdeArtifacts',
-        ':prepare:ide-plugin-dependencies:kotlin-dist-for-ide:install',
+        'publishIdeArtifacts',
+        ':prepare:ide-plugin-dependencies:kotlin-dist-for-ide:publish',
         '-Ppublish.ide.plugin.dependencies=true',
         '-Pteamcity=true',  # Makes this a release build rather than a dev build.
         '-Pkotlin.build.isObsoleteJdkOverrideEnabled=true',  # Avoids the need for JDK 1.6.
@@ -90,10 +88,13 @@ def build_kotlin_compiler(args):
 def build_kotlin_ide(args):
     jps_bootstrap = args.kotlin_ide_dir.joinpath('platform/jps-bootstrap/jps-bootstrap.sh')
     clean_args = [] if args.clean_build else ['-Dintellij.build.incremental.compilation=true']
+    (ij_major, ij_minor) = args.intellij_version.split('.', 1)
     cmd = [
         str(jps_bootstrap),
         *clean_args,
-        f'-Dbuild.number={args.intellij_version}',
+        f'-Dbuild.number={ij_major}-{args.kotlin_version_full}-IJ{ij_minor}',
+        f'-Dkotlin.plugin.since={args.intellij_version}',
+        f'-Dkotlin.plugin.until={args.intellij_version}',
         '-Dintellij.build.dev.mode=false',
         '-Dkotlin.plugin.kind=AS',
         '-Dcompile.parallel=true',
@@ -124,7 +125,10 @@ def update_ide_project_model(args):
     model_props = updater_dir.joinpath('resources/model.properties')
     with open(model_props, 'w') as f:
         f.write(f'kotlincVersion={args.kotlin_version_full}\n')
-        f.write('kotlincArtifactsMode=MAVEN\n')
+        f.write('kotlincArtifactsMode=BOOTSTRAP\n')
+        f.write(f'jpsPluginVersion={args.kotlin_version_full}\n')
+        f.write('jpsPluginArtifactsMode=BOOTSTRAP\n')
+        f.write('kotlinGradlePluginVersion=unused\n')
 
     # Run the updater.
     clean_args = ['clean', '--no-daemon', '--no-build-cache'] if args.clean_build else []
@@ -174,19 +178,24 @@ def write_metadata_file(args):
     # Gather version info.
     build_id = args.download if args.download else '<local_build>'
     kotlin_prebuilts: Path = args.workspace.joinpath('prebuilts/tools/common/kotlin-plugin')
-    compiler_version = kotlin_prebuilts.joinpath('Kotlin/kotlinc/build.txt').read_text()
+    standalone_compiler_version = kotlin_prebuilts.joinpath('Kotlin/kotlinc/build.txt').read_text()
     plugin_jar = kotlin_prebuilts.joinpath('Kotlin/lib/kotlin-plugin.jar')
+    kotlinc_jar = kotlin_prebuilts.joinpath('Kotlin/lib/kotlinc_kotlin-compiler-fe10.jar')
     with ZipFile(plugin_jar) as zip:
         with zip.open('META-INF/plugin.xml') as f:
             plugin_xml = ET.parse(f).getroot()
             plugin_version = plugin_xml.findtext('./version')
             idea_version = plugin_xml.find('./idea-version').get('since-build')
+    with ZipFile(kotlinc_jar) as zip:
+        with io.TextIOWrapper(zip.open('META-INF/compiler.version'), encoding="UTF-8") as f:
+            ide_compiler_version = f.read()
 
     # Write METADATA file.
     metadata_file = kotlin_prebuilts.joinpath('METADATA')
     with open(metadata_file, 'w') as f:
         f.write(f'build_id: {build_id}\n')
-        f.write(f'kotlin_compiler_version: {compiler_version}\n')
+        f.write(f'kotlin_standalone_compiler_version: {standalone_compiler_version}\n')
+        f.write(f'kotlin_ide_compiler_version: {ide_compiler_version}\n')
         f.write(f'kotlin_plugin_version: {plugin_version}\n')
         f.write(f'kotlin_plugin_platform: {idea_version}\n')
 
