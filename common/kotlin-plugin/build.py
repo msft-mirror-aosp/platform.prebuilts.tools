@@ -19,7 +19,7 @@ def main():
     parser.add_argument('--download', metavar='BUILD_ID')
     parser.add_argument('--clean-build', action='store_true')
     parser.add_argument('--stage', metavar='DIR', type=Path)
-    parser.add_argument('--kotlin-version', default='1.7.10')
+    parser.add_argument('--kotlin-version', default='1.7.20')
     parser.add_argument('--intellij-version', default='221.5591.52')
 
     args = parser.parse_args()
@@ -122,6 +122,7 @@ def update_ide_project_model(args):
     with open(model_props, 'w') as f:
         f.write(f'kotlincVersion={args.kotlin_version_full}\n')
         f.write('kotlincArtifactsMode=MAVEN\n')
+        f.write('kotlinGradlePluginVersion=unused\n')
 
     # Run the updater.
     clean_args = ['clean', '--no-daemon', '--no-build-cache'] if args.clean_build else []
