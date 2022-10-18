@@ -104,13 +104,6 @@ def main():
     binary = find_executable('google-java-format') or '/usr/bin/google-java-format'
     base_command = [binary]
 
-  # Add exports for JDK16+
-  base_command.append('--add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED')
-  base_command.append('--add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED')
-  base_command.append('--add-exports jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED')
-  base_command.append('--add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED')
-  base_command.append('--add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED')
-
   # Reformat files containing changes in place.
   for filename, lines in lines_by_file.items():
     if args.i and args.verbose:
