@@ -34,7 +34,7 @@ import subprocess
 import io
 import sys
 import locale
-from distutils.spawn import find_executable
+from shutil import which
 
 def main():
   parser = argparse.ArgumentParser(description=
@@ -101,7 +101,7 @@ def main():
   elif args.google_java_format_jar:
     base_command = ['java', '-jar', args.google_java_format_jar]
   else:
-    binary = find_executable('google-java-format') or '/usr/bin/google-java-format'
+    binary = which('google-java-format') or '/usr/bin/google-java-format'
     base_command = [binary]
 
   # Add exports for JDK16+
