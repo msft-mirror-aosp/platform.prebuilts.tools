@@ -940,6 +940,22 @@ eArgTypeModuleUUID = _lldb.eArgTypeModuleUUID
 
 eArgTypeSaveCoreStyle = _lldb.eArgTypeSaveCoreStyle
 
+eArgTypeLogHandler = _lldb.eArgTypeLogHandler
+
+eArgTypeSEDStylePair = _lldb.eArgTypeSEDStylePair
+
+eArgTypeRecognizerID = _lldb.eArgTypeRecognizerID
+
+eArgTypeConnectURL = _lldb.eArgTypeConnectURL
+
+eArgTypeTargetID = _lldb.eArgTypeTargetID
+
+eArgTypeStopHookID = _lldb.eArgTypeStopHookID
+
+eArgTypeReproducerProvider = _lldb.eArgTypeReproducerProvider
+
+eArgTypeReproducerSignal = _lldb.eArgTypeReproducerSignal
+
 eArgTypeLastArg = _lldb.eArgTypeLastArg
 
 eSymbolTypeAny = _lldb.eSymbolTypeAny
@@ -1161,6 +1177,8 @@ eBasicTypeUnsignedWChar = _lldb.eBasicTypeUnsignedWChar
 eBasicTypeChar16 = _lldb.eBasicTypeChar16
 
 eBasicTypeChar32 = _lldb.eBasicTypeChar32
+
+eBasicTypeChar8 = _lldb.eBasicTypeChar8
 
 eBasicTypeShort = _lldb.eBasicTypeShort
 
@@ -1396,15 +1414,23 @@ eExpressionEvaluationExecution = _lldb.eExpressionEvaluationExecution
 
 eExpressionEvaluationComplete = _lldb.eExpressionEvaluationComplete
 
-eTraceInstructionControlFlowTypeInstruction = _lldb.eTraceInstructionControlFlowTypeInstruction
+eInstructionControlFlowKindUnknown = _lldb.eInstructionControlFlowKindUnknown
 
-eTraceInstructionControlFlowTypeBranch = _lldb.eTraceInstructionControlFlowTypeBranch
+eInstructionControlFlowKindOther = _lldb.eInstructionControlFlowKindOther
 
-eTraceInstructionControlFlowTypeTakenBranch = _lldb.eTraceInstructionControlFlowTypeTakenBranch
+eInstructionControlFlowKindCall = _lldb.eInstructionControlFlowKindCall
 
-eTraceInstructionControlFlowTypeCall = _lldb.eTraceInstructionControlFlowTypeCall
+eInstructionControlFlowKindReturn = _lldb.eInstructionControlFlowKindReturn
 
-eTraceInstructionControlFlowTypeReturn = _lldb.eTraceInstructionControlFlowTypeReturn
+eInstructionControlFlowKindJump = _lldb.eInstructionControlFlowKindJump
+
+eInstructionControlFlowKindCondJump = _lldb.eInstructionControlFlowKindCondJump
+
+eInstructionControlFlowKindFarCall = _lldb.eInstructionControlFlowKindFarCall
+
+eInstructionControlFlowKindFarReturn = _lldb.eInstructionControlFlowKindFarReturn
+
+eInstructionControlFlowKindFarJump = _lldb.eInstructionControlFlowKindFarJump
 
 eWatchpointKindWrite = _lldb.eWatchpointKindWrite
 
@@ -1540,6 +1566,20 @@ eSaveCoreDirtyOnly = _lldb.eSaveCoreDirtyOnly
 
 eSaveCoreStackOnly = _lldb.eSaveCoreStackOnly
 
+eTraceCounterTSC = _lldb.eTraceCounterTSC
+
+eTraceEventDisabledSW = _lldb.eTraceEventDisabledSW
+
+eTraceEventDisabledHW = _lldb.eTraceEventDisabledHW
+
+eTraceEventCPUChanged = _lldb.eTraceEventCPUChanged
+
+eTraceItemKindError = _lldb.eTraceItemKindError
+
+eTraceItemKindEvent = _lldb.eTraceItemKindEvent
+
+eTraceItemKindInstruction = _lldb.eTraceItemKindInstruction
+
 class SBAddress(object):
     r"""
     A section + offset based address class.
@@ -1577,7 +1617,6 @@ class SBAddress(object):
     """
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -1692,9 +1731,9 @@ class SBAddress(object):
         r"""GetLineEntry(SBAddress self) -> SBLineEntry"""
         return _lldb.SBAddress_GetLineEntry(self)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBAddress self) -> std::string"""
-        return _lldb.SBAddress___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBAddress self) -> std::string"""
+        return _lldb.SBAddress___repr__(self)
 
     __runtime_error_str = 'This resolves the SBAddress using the SBTarget from lldb.target so this property can ONLY be used in the interactive script interpreter (i.e. under the lldb script command). For things like Python based commands and breakpoint callbacks use GetLoadAddress instead.'
 
@@ -1883,7 +1922,6 @@ class SBBlock(object):
     r"""Represents a lexical block. SBFunction contains SBBlock(s)."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -2001,9 +2039,9 @@ class SBBlock(object):
         """
         return _lldb.SBBlock_GetVariables(self, *args)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBBlock self) -> std::string"""
-        return _lldb.SBBlock___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBBlock self) -> std::string"""
+        return _lldb.SBBlock___repr__(self)
 
     def get_range_at_index(self, idx):
         if idx < self.GetNumRanges():
@@ -2132,7 +2170,6 @@ class SBBreakpoint(object):
     """
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -2382,9 +2419,9 @@ class SBBreakpoint(object):
         r"""IsHardware(SBBreakpoint self) -> bool"""
         return _lldb.SBBreakpoint_IsHardware(self)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBBreakpoint self) -> std::string"""
-        return _lldb.SBBreakpoint___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBBreakpoint self) -> std::string"""
+        return _lldb.SBBreakpoint___repr__(self)
 
 
     class locations_access(object):
@@ -2523,7 +2560,6 @@ class SBBreakpointLocation(object):
     """
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -2678,9 +2714,9 @@ class SBBreakpointLocation(object):
         r"""GetBreakpoint(SBBreakpointLocation self) -> SBBreakpoint"""
         return _lldb.SBBreakpointLocation_GetBreakpoint(self)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBBreakpointLocation self) -> std::string"""
-        return _lldb.SBBreakpointLocation___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBBreakpointLocation self) -> std::string"""
+        return _lldb.SBBreakpointLocation___repr__(self)
 
 # Register SBBreakpointLocation in _lldb:
 _lldb.SBBreakpointLocation_swigregister(SBBreakpointLocation)
@@ -2703,7 +2739,6 @@ class SBBreakpointName(object):
     """
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -2864,9 +2899,9 @@ class SBBreakpointName(object):
         r"""GetDescription(SBBreakpointName self, SBStream description) -> bool"""
         return _lldb.SBBreakpointName_GetDescription(self, description)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBBreakpointName self) -> std::string"""
-        return _lldb.SBBreakpointName___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBBreakpointName self) -> std::string"""
+        return _lldb.SBBreakpointName___repr__(self)
 
 # Register SBBreakpointName in _lldb:
 _lldb.SBBreakpointName_swigregister(SBBreakpointName)
@@ -3112,6 +3147,10 @@ class SBCommandInterpreter(object):
         r"""HasAliasOptions(SBCommandInterpreter self) -> bool"""
         return _lldb.SBCommandInterpreter_HasAliasOptions(self)
 
+    def IsInteractive(self) -> "bool":
+        r"""IsInteractive(SBCommandInterpreter self) -> bool"""
+        return _lldb.SBCommandInterpreter_IsInteractive(self)
+
     def GetProcess(self) -> "lldb::SBProcess":
         r"""GetProcess(SBCommandInterpreter self) -> SBProcess"""
         return _lldb.SBCommandInterpreter_GetProcess(self)
@@ -3268,7 +3307,6 @@ class SBCommandReturnObject(object):
     """
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -3363,9 +3401,9 @@ class SBCommandReturnObject(object):
         r"""GetDescription(SBCommandReturnObject self, SBStream description) -> bool"""
         return _lldb.SBCommandReturnObject_GetDescription(self, description)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBCommandReturnObject self) -> std::string"""
-        return _lldb.SBCommandReturnObject___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBCommandReturnObject self) -> std::string"""
+        return _lldb.SBCommandReturnObject___repr__(self)
 
     def SetImmediateOutputFile(self, *args) -> "void":
         r"""
@@ -3540,7 +3578,6 @@ class SBCompileUnit(object):
     """
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -3574,8 +3611,22 @@ class SBCompileUnit(object):
 
     def FindLineEntryIndex(self, *args) -> "uint32_t":
         r"""
+        FindLineEntryIndex(SBCompileUnit self, SBLineEntry line_entry, bool exact=False) -> uint32_t
         FindLineEntryIndex(SBCompileUnit self, uint32_t start_idx, uint32_t line, SBFileSpec inline_file_spec) -> uint32_t
         FindLineEntryIndex(SBCompileUnit self, uint32_t start_idx, uint32_t line, SBFileSpec inline_file_spec, bool exact) -> uint32_t
+
+             Get the index for a provided line entry in this compile unit.
+
+             @param[in] line_entry
+                The SBLineEntry object for which we are looking for the index.
+
+             @param[in] exact
+                An optional boolean defaulting to false that ensures that the provided
+                line entry has a perfect match in the compile unit.
+
+             @return
+                The index of the user-provided line entry. UINT32_MAX if the line entry
+                was not found in the compile unit.
         """
         return _lldb.SBCompileUnit_FindLineEntryIndex(self, *args)
 
@@ -3627,9 +3678,9 @@ class SBCompileUnit(object):
         r"""__ne__(SBCompileUnit self, SBCompileUnit rhs) -> bool"""
         return _lldb.SBCompileUnit___ne__(self, rhs)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBCompileUnit self) -> std::string"""
-        return _lldb.SBCompileUnit___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBCompileUnit self) -> std::string"""
+        return _lldb.SBCompileUnit___repr__(self)
 
     def __iter__(self):
         '''Iterate over all line entries in a lldb.SBCompileUnit object.'''
@@ -3664,7 +3715,6 @@ class SBData(object):
     r"""Represents a data buffer."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -3772,6 +3822,10 @@ class SBData(object):
         r"""SetData(SBData self, SBError error, void const * buf, lldb::ByteOrder endian, uint8_t addr_size)"""
         return _lldb.SBData_SetData(self, error, buf, endian, addr_size)
 
+    def SetDataWithOwnership(self, error: "SBError", buf: "void const *", endian: "lldb::ByteOrder", addr_size: "uint8_t") -> "void":
+        r"""SetDataWithOwnership(SBData self, SBError error, void const * buf, lldb::ByteOrder endian, uint8_t addr_size)"""
+        return _lldb.SBData_SetDataWithOwnership(self, error, buf, endian, addr_size)
+
     def Append(self, rhs: "SBData") -> "bool":
         r"""Append(SBData self, SBData rhs) -> bool"""
         return _lldb.SBData_Append(self, rhs)
@@ -3830,9 +3884,9 @@ class SBData(object):
         r"""SetDataFromDoubleArray(SBData self, double * array) -> bool"""
         return _lldb.SBData_SetDataFromDoubleArray(self, array)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBData self) -> std::string"""
-        return _lldb.SBData___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBData self) -> std::string"""
+        return _lldb.SBData___repr__(self)
 
 
     class read_data_helper:
@@ -4124,7 +4178,26 @@ class SBDebugger(object):
     """
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
+    eBroadcastBitProgress = _lldb.SBDebugger_eBroadcastBitProgress
+    
+    eBroadcastBitWarning = _lldb.SBDebugger_eBroadcastBitWarning
+    
+    eBroadcastBitError = _lldb.SBDebugger_eBroadcastBitError
+    
+
+    @staticmethod
+    def GetProgressFromEvent(event: "SBEvent") -> "unsigned long long &, unsigned long long &, unsigned long long &, bool &":
+        r"""GetProgressFromEvent(SBEvent event) -> char const *"""
+        return _lldb.SBDebugger_GetProgressFromEvent(event)
+
+    @staticmethod
+    def GetDiagnosticFromEvent(event: "SBEvent") -> "lldb::SBStructuredData":
+        r"""GetDiagnosticFromEvent(SBEvent event) -> SBStructuredData"""
+        return _lldb.SBDebugger_GetDiagnosticFromEvent(event)
+
+    def GetBroadcaster(self) -> "lldb::SBBroadcaster":
+        r"""GetBroadcaster(SBDebugger self) -> SBBroadcaster"""
+        return _lldb.SBDebugger_GetBroadcaster(self)
 
     @staticmethod
     def Initialize() -> "void":
@@ -4135,6 +4208,11 @@ class SBDebugger(object):
     def InitializeWithErrorHandling() -> "lldb::SBError":
         r"""InitializeWithErrorHandling() -> SBError"""
         return _lldb.SBDebugger_InitializeWithErrorHandling()
+
+    @staticmethod
+    def PrintStackTraceOnError() -> "void":
+        r"""PrintStackTraceOnError()"""
+        return _lldb.SBDebugger_PrintStackTraceOnError()
 
     @staticmethod
     def Terminate() -> "void":
@@ -4227,6 +4305,10 @@ class SBDebugger(object):
     def GetErrorFileHandle(self) -> "lldb::FileSP":
         r"""GetErrorFileHandle(SBDebugger self) -> lldb::FileSP"""
         return _lldb.SBDebugger_GetErrorFileHandle(self)
+
+    def SetInputString(self, data: "char const *") -> "lldb::SBError":
+        r"""SetInputString(SBDebugger self, char const * data) -> SBError"""
+        return _lldb.SBDebugger_SetInputString(self, data)
 
     def SetInputFile(self, *args) -> "lldb::SBError":
         r"""
@@ -4571,9 +4653,13 @@ class SBDebugger(object):
         r"""GetSyntheticForType(SBDebugger self, SBTypeNameSpecifier arg2) -> SBTypeSynthetic"""
         return _lldb.SBDebugger_GetSyntheticForType(self, arg2)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBDebugger self) -> std::string"""
-        return _lldb.SBDebugger___str__(self)
+    def GetScriptInterpreterInfo(self, arg2: "lldb::ScriptLanguage") -> "lldb::SBStructuredData":
+        r"""GetScriptInterpreterInfo(SBDebugger self, lldb::ScriptLanguage arg2) -> SBStructuredData"""
+        return _lldb.SBDebugger_GetScriptInterpreterInfo(self, arg2)
+
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBDebugger self) -> std::string"""
+        return _lldb.SBDebugger___repr__(self)
 
     def RunCommandInterpreter(self, auto_handle_events: "bool", spawn_thread: "bool", options: "SBCommandInterpreterRunOptions", num_errors: "int &", quit_requested: "bool &", stopped_for_crash: "bool &") -> "void":
         r"""
@@ -4607,6 +4693,10 @@ class SBDebugger(object):
         r"""RunREPL(SBDebugger self, lldb::LanguageType language, char const * repl_options) -> SBError"""
         return _lldb.SBDebugger_RunREPL(self, language, repl_options)
 
+    def LoadTraceFromFile(self, error: "SBError", trace_description_file: "SBFileSpec") -> "lldb::SBTrace":
+        r"""LoadTraceFromFile(SBDebugger self, SBError error, SBFileSpec trace_description_file) -> SBTrace"""
+        return _lldb.SBDebugger_LoadTraceFromFile(self, error, trace_description_file)
+
     def __iter__(self):
         '''Iterate over all targets in a lldb.SBDebugger object.'''
         return lldb_iter(self, 'GetNumTargets', 'GetTargetAtIndex')
@@ -4619,6 +4709,14 @@ class SBDebugger(object):
 # Register SBDebugger in _lldb:
 _lldb.SBDebugger_swigregister(SBDebugger)
 
+def SBDebugger_GetProgressFromEvent(event: "SBEvent") -> "unsigned long long &, unsigned long long &, unsigned long long &, bool &":
+    r"""SBDebugger_GetProgressFromEvent(SBEvent event) -> char const *"""
+    return _lldb.SBDebugger_GetProgressFromEvent(event)
+
+def SBDebugger_GetDiagnosticFromEvent(event: "SBEvent") -> "lldb::SBStructuredData":
+    r"""SBDebugger_GetDiagnosticFromEvent(SBEvent event) -> SBStructuredData"""
+    return _lldb.SBDebugger_GetDiagnosticFromEvent(event)
+
 def SBDebugger_Initialize() -> "void":
     r"""SBDebugger_Initialize()"""
     return _lldb.SBDebugger_Initialize()
@@ -4626,6 +4724,10 @@ def SBDebugger_Initialize() -> "void":
 def SBDebugger_InitializeWithErrorHandling() -> "lldb::SBError":
     r"""SBDebugger_InitializeWithErrorHandling() -> SBError"""
     return _lldb.SBDebugger_InitializeWithErrorHandling()
+
+def SBDebugger_PrintStackTraceOnError() -> "void":
+    r"""SBDebugger_PrintStackTraceOnError()"""
+    return _lldb.SBDebugger_PrintStackTraceOnError()
 
 def SBDebugger_Terminate() -> "void":
     r"""SBDebugger_Terminate()"""
@@ -4691,7 +4793,6 @@ class SBDeclaration(object):
     r"""Specifies an association with a line and column for a variable."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -4747,9 +4848,9 @@ class SBDeclaration(object):
         r"""__ne__(SBDeclaration self, SBDeclaration rhs) -> bool"""
         return _lldb.SBDeclaration___ne__(self, rhs)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBDeclaration self) -> std::string"""
-        return _lldb.SBDeclaration___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBDeclaration self) -> std::string"""
+        return _lldb.SBDeclaration___repr__(self)
 
     file = property(GetFileSpec, None, doc='''A read only property that returns an lldb object that represents the file (lldb.SBFileSpec) for this line entry.''')
     line = property(GetLine, None, doc='''A read only property that returns the 1 based line number for this line entry, a return value of zero indicates that no line information is available.''')
@@ -4822,7 +4923,6 @@ class SBError(object):
     """
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -4890,9 +4990,9 @@ class SBError(object):
         r"""GetDescription(SBError self, SBStream description) -> bool"""
         return _lldb.SBError_GetDescription(self, description)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBError self) -> std::string"""
-        return _lldb.SBError___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBError self) -> std::string"""
+        return _lldb.SBError___repr__(self)
 
     value = property(GetError, None, doc='''A read only property that returns the same result as GetError().''')
     fail = property(Fail, None, doc='''A read only property that returns the same result as Fail().''')
@@ -5543,7 +5643,6 @@ class SBFileSpec(object):
     """
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -5614,9 +5713,9 @@ class SBFileSpec(object):
         r"""AppendPathComponent(SBFileSpec self, char const * file_or_directory)"""
         return _lldb.SBFileSpec_AppendPathComponent(self, file_or_directory)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBFileSpec self) -> std::string"""
-        return _lldb.SBFileSpec___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBFileSpec self) -> std::string"""
+        return _lldb.SBFileSpec___repr__(self)
 
     def __get_fullpath__(self):
         spec_dir = self.GetDirectory()
@@ -5727,7 +5826,6 @@ class SBFrame(object):
     """
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -6010,9 +6108,9 @@ class SBFrame(object):
         r"""GetDescription(SBFrame self, SBStream description) -> bool"""
         return _lldb.SBFrame_GetDescription(self, description)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBFrame self) -> std::string"""
-        return _lldb.SBFrame___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBFrame self) -> std::string"""
+        return _lldb.SBFrame___repr__(self)
 
     def get_all_variables(self):
         return self.GetVariables(True,True,True,True)
@@ -6124,7 +6222,6 @@ class SBFunction(object):
     """
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -6216,9 +6313,9 @@ class SBFunction(object):
         r"""__ne__(SBFunction self, SBFunction rhs) -> bool"""
         return _lldb.SBFunction___ne__(self, rhs)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBFunction self) -> std::string"""
-        return _lldb.SBFunction___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBFunction self) -> std::string"""
+        return _lldb.SBFunction___repr__(self)
 
     def get_instructions_from_current_target (self):
         return self.GetInstructions (target)
@@ -6348,7 +6445,6 @@ class SBInstruction(object):
     r"""Represents a (machine language) instruction."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -6427,9 +6523,9 @@ class SBInstruction(object):
         r"""TestEmulation(SBInstruction self, SBStream output_stream, char const * test_file) -> bool"""
         return _lldb.SBInstruction_TestEmulation(self, output_stream, test_file)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBInstruction self) -> std::string"""
-        return _lldb.SBInstruction___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBInstruction self) -> std::string"""
+        return _lldb.SBInstruction___repr__(self)
 
     def __mnemonic_property__ (self):
         return self.GetMnemonic (target)
@@ -6470,7 +6566,6 @@ class SBInstructionList(object):
     """
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -6525,9 +6620,9 @@ class SBInstructionList(object):
         r"""DumpEmulationForAllInstructions(SBInstructionList self, char const * triple) -> bool"""
         return _lldb.SBInstructionList_DumpEmulationForAllInstructions(self, triple)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBInstructionList self) -> std::string"""
-        return _lldb.SBInstructionList___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBInstructionList self) -> std::string"""
+        return _lldb.SBInstructionList___repr__(self)
 
     def __iter__(self):
         '''Iterate over all instructions in a lldb.SBInstructionList
@@ -6818,7 +6913,6 @@ class SBLineEntry(object):
     """
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -6882,9 +6976,9 @@ class SBLineEntry(object):
         r"""__ne__(SBLineEntry self, SBLineEntry rhs) -> bool"""
         return _lldb.SBLineEntry___ne__(self, rhs)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBLineEntry self) -> std::string"""
-        return _lldb.SBLineEntry___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBLineEntry self) -> std::string"""
+        return _lldb.SBLineEntry___repr__(self)
 
     file = property(GetFileSpec, None, doc='''A read only property that returns an lldb object that represents the file (lldb.SBFileSpec) for this line entry.''')
     line = property(GetLine, None, doc='''A read only property that returns the 1 based line number for this line entry, a return value of zero indicates that no line information is available.''')
@@ -7009,12 +7103,12 @@ class SBMemoryRegionInfo(object):
     r"""API clients can get information about memory regions in processes."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
         __init__(SBMemoryRegionInfo self) -> SBMemoryRegionInfo
         __init__(SBMemoryRegionInfo self, SBMemoryRegionInfo rhs) -> SBMemoryRegionInfo
+        __init__(SBMemoryRegionInfo self, char const * name, lldb::addr_t begin, lldb::addr_t end, uint32_t permissions, bool mapped, bool stack_memory) -> SBMemoryRegionInfo
         """
         _lldb.SBMemoryRegionInfo_swiginit(self, _lldb.new_SBMemoryRegionInfo(*args))
     __swig_destroy__ = _lldb.delete_SBMemoryRegionInfo
@@ -7107,9 +7201,9 @@ class SBMemoryRegionInfo(object):
         r"""GetDescription(SBMemoryRegionInfo self, SBStream description) -> bool"""
         return _lldb.SBMemoryRegionInfo_GetDescription(self, description)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBMemoryRegionInfo self) -> std::string"""
-        return _lldb.SBMemoryRegionInfo___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBMemoryRegionInfo self) -> std::string"""
+        return _lldb.SBMemoryRegionInfo___repr__(self)
 
 # Register SBMemoryRegionInfo in _lldb:
 _lldb.SBMemoryRegionInfo_swigregister(SBMemoryRegionInfo)
@@ -7131,6 +7225,10 @@ class SBMemoryRegionInfoList(object):
     def GetSize(self) -> "uint32_t":
         r"""GetSize(SBMemoryRegionInfoList self) -> uint32_t"""
         return _lldb.SBMemoryRegionInfoList_GetSize(self)
+
+    def GetMemoryRegionContainingAddress(self, addr: "lldb::addr_t", region_info: "SBMemoryRegionInfo") -> "bool":
+        r"""GetMemoryRegionContainingAddress(SBMemoryRegionInfoList self, lldb::addr_t addr, SBMemoryRegionInfo region_info) -> bool"""
+        return _lldb.SBMemoryRegionInfoList_GetMemoryRegionContainingAddress(self, addr, region_info)
 
     def GetMemoryRegionAtIndex(self, idx: "uint32_t", region_info: "SBMemoryRegionInfo") -> "bool":
         r"""GetMemoryRegionAtIndex(SBMemoryRegionInfoList self, uint32_t idx, SBMemoryRegionInfo region_info) -> bool"""
@@ -7256,7 +7354,6 @@ class SBModule(object):
     """
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -7281,6 +7378,16 @@ class SBModule(object):
     def Clear(self) -> "void":
         r"""Clear(SBModule self)"""
         return _lldb.SBModule_Clear(self)
+
+    def IsFileBacked(self) -> "bool":
+        r"""
+        IsFileBacked(SBModule self) -> bool
+        Check if the module is file backed.
+            @return
+                True, if the module is backed by an object file on disk.
+                False, if the module is backed by an object file in memory.
+        """
+        return _lldb.SBModule_IsFileBacked(self)
 
     def GetFileSpec(self) -> "lldb::SBFileSpec":
         r"""
@@ -7561,9 +7668,9 @@ class SBModule(object):
         """
         return _lldb.SBModule_GarbageCollectAllocatedModules()
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBModule self) -> std::string"""
-        return _lldb.SBModule___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBModule self) -> std::string"""
+        return _lldb.SBModule___repr__(self)
 
     def __len__(self):
         '''Return the number of symbols in a lldb.SBModule object.'''
@@ -7811,7 +7918,6 @@ class SBModuleSpec(object):
     r"""Proxy of C++ lldb::SBModuleSpec class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -7918,9 +8024,9 @@ class SBModuleSpec(object):
         r"""GetDescription(SBModuleSpec self, SBStream description) -> bool"""
         return _lldb.SBModuleSpec_GetDescription(self, description)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBModuleSpec self) -> std::string"""
-        return _lldb.SBModuleSpec___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBModuleSpec self) -> std::string"""
+        return _lldb.SBModuleSpec___repr__(self)
 
 # Register SBModuleSpec in _lldb:
 _lldb.SBModuleSpec_swigregister(SBModuleSpec)
@@ -7929,7 +8035,6 @@ class SBModuleSpecList(object):
     r"""Represents a list of :py:class:`SBModuleSpec`."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -7971,9 +8076,9 @@ class SBModuleSpecList(object):
         r"""GetDescription(SBModuleSpecList self, SBStream description) -> bool"""
         return _lldb.SBModuleSpecList_GetDescription(self, description)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBModuleSpecList self) -> std::string"""
-        return _lldb.SBModuleSpecList___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBModuleSpecList self) -> std::string"""
+        return _lldb.SBModuleSpecList___repr__(self)
 
 # Register SBModuleSpecList in _lldb:
 _lldb.SBModuleSpecList_swigregister(SBModuleSpecList)
@@ -8199,6 +8304,10 @@ class SBPlatform(object):
         r"""GetOSUpdateVersion(SBPlatform self) -> uint32_t"""
         return _lldb.SBPlatform_GetOSUpdateVersion(self)
 
+    def SetSDKRoot(self, sysroot: "char const *") -> "void":
+        r"""SetSDKRoot(SBPlatform self, char const * sysroot)"""
+        return _lldb.SBPlatform_SetSDKRoot(self, sysroot)
+
     def Get(self, src: "SBFileSpec", dst: "SBFileSpec") -> "lldb::SBError":
         r"""Get(SBPlatform self, SBFileSpec src, SBFileSpec dst) -> SBError"""
         return _lldb.SBPlatform_Get(self, src, dst)
@@ -8274,7 +8383,6 @@ class SBProcess(object):
     """
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
     eBroadcastBitStateChanged = _lldb.SBProcess_eBroadcastBitStateChanged
     
     eBroadcastBitInterrupt = _lldb.SBProcess_eBroadcastBitInterrupt
@@ -8723,9 +8831,12 @@ class SBProcess(object):
         r"""IsInstrumentationRuntimePresent(SBProcess self, lldb::InstrumentationRuntimeType type) -> bool"""
         return _lldb.SBProcess_IsInstrumentationRuntimePresent(self, type)
 
-    def SaveCore(self, file_name: "char const *") -> "lldb::SBError":
-        r"""SaveCore(SBProcess self, char const * file_name) -> SBError"""
-        return _lldb.SBProcess_SaveCore(self, file_name)
+    def SaveCore(self, *args) -> "lldb::SBError":
+        r"""
+        SaveCore(SBProcess self, char const * file_name, char const * flavor, lldb::SaveCoreStyle core_style) -> SBError
+        SaveCore(SBProcess self, char const * file_name) -> SBError
+        """
+        return _lldb.SBProcess_SaveCore(self, *args)
 
     def GetMemoryRegionInfo(self, load_addr: "lldb::addr_t", region_info: "SBMemoryRegionInfo") -> "lldb::SBError":
         r"""GetMemoryRegionInfo(SBProcess self, lldb::addr_t load_addr, SBMemoryRegionInfo region_info) -> SBError"""
@@ -8769,9 +8880,9 @@ class SBProcess(object):
         """
         return _lldb.SBProcess_DeallocateMemory(self, ptr)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBProcess self) -> std::string"""
-        return _lldb.SBProcess___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBProcess self) -> std::string"""
+        return _lldb.SBProcess___repr__(self)
 
     def __get_is_alive__(self):
         '''Returns "True" if the process is currently alive, "False" otherwise'''
@@ -9196,7 +9307,6 @@ class SBSection(object):
     """
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -9285,6 +9395,10 @@ class SBSection(object):
         """
         return _lldb.SBSection_GetTargetByteSize(self)
 
+    def GetAlignment(self) -> "uint32_t":
+        r"""GetAlignment(SBSection self) -> uint32_t"""
+        return _lldb.SBSection_GetAlignment(self)
+
     def GetDescription(self, description: "SBStream") -> "bool":
         r"""GetDescription(SBSection self, SBStream description) -> bool"""
         return _lldb.SBSection_GetDescription(self, description)
@@ -9297,9 +9411,9 @@ class SBSection(object):
         r"""__ne__(SBSection self, SBSection rhs) -> bool"""
         return _lldb.SBSection___ne__(self, rhs)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBSection self) -> std::string"""
-        return _lldb.SBSection___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBSection self) -> std::string"""
+        return _lldb.SBSection___repr__(self)
 
     def __iter__(self):
         '''Iterate over all subsections in a lldb.SBSection object.'''
@@ -9321,6 +9435,7 @@ class SBSection(object):
     data = property(GetSectionData, None, doc='''A read only property that returns an lldb object that represents the bytes for this section (lldb.SBData) for this section.''')
     type = property(GetSectionType, None, doc='''A read only property that returns an lldb enumeration value (see enumerations that start with "lldb.eSectionType") that represents the type of this section (code, data, etc.).''')
     target_byte_size = property(GetTargetByteSize, None, doc='''A read only property that returns the size of a target byte represented by this section as a number of host bytes.''')
+    alignment = property(GetAlignment, None, doc='''A read only property that returns the alignment of this section as a number of host bytes.''')
 
 
     def __eq__(self, rhs):
@@ -9646,7 +9761,6 @@ class SBSymbol(object):
     """
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
     __swig_destroy__ = _lldb.delete_SBSymbol
 
     def __init__(self, *args):
@@ -9721,9 +9835,9 @@ class SBSymbol(object):
         r"""__ne__(SBSymbol self, SBSymbol rhs) -> bool"""
         return _lldb.SBSymbol___ne__(self, rhs)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBSymbol self) -> std::string"""
-        return _lldb.SBSymbol___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBSymbol self) -> std::string"""
+        return _lldb.SBSymbol___repr__(self)
 
     def get_instructions_from_current_target (self):
         return self.GetInstructions (target)
@@ -9795,7 +9909,6 @@ class SBSymbolContext(object):
     """
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -9871,9 +9984,9 @@ class SBSymbolContext(object):
         r"""GetDescription(SBSymbolContext self, SBStream description) -> bool"""
         return _lldb.SBSymbolContext_GetDescription(self, description)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBSymbolContext self) -> std::string"""
-        return _lldb.SBSymbolContext___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBSymbolContext self) -> std::string"""
+        return _lldb.SBSymbolContext___repr__(self)
 
     module = property(GetModule, SetModule, doc='''A read/write property that allows the getting/setting of the module (lldb.SBModule) in this symbol context.''')
     compile_unit = property(GetCompileUnit, SetCompileUnit, doc='''A read/write property that allows the getting/setting of the compile unit (lldb.SBCompileUnit) in this symbol context.''')
@@ -9893,7 +10006,7 @@ class SBSymbolContextList(object):
     For example (from test/python_api/target/TestTargetAPI.py), ::
 
         def find_functions(self, exe_name):
-            '''Exercise SBTaget.FindFunctions() API.'''
+            '''Exercise SBTarget.FindFunctions() API.'''
             exe = os.path.join(os.getcwd(), exe_name)
 
             # Create a target by the debugger.
@@ -9910,7 +10023,6 @@ class SBSymbolContextList(object):
     """
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -9953,9 +10065,9 @@ class SBSymbolContextList(object):
         r"""Clear(SBSymbolContextList self)"""
         return _lldb.SBSymbolContextList_Clear(self)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBSymbolContextList self) -> std::string"""
-        return _lldb.SBSymbolContextList___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBSymbolContextList self) -> std::string"""
+        return _lldb.SBSymbolContextList___repr__(self)
 
     def __iter__(self):
         '''Iterate over all symbol contexts in a lldb.SBSymbolContextList
@@ -10070,7 +10182,6 @@ class SBTarget(object):
     """
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
     eBroadcastBitBreakpointChanged = _lldb.SBTarget_eBroadcastBitBreakpointChanged
     
     eBroadcastBitModulesLoaded = _lldb.SBTarget_eBroadcastBitModulesLoaded
@@ -10433,6 +10544,10 @@ class SBTarget(object):
         r"""GetTriple(SBTarget self) -> char const *"""
         return _lldb.SBTarget_GetTriple(self)
 
+    def GetABIName(self) -> "char const *":
+        r"""GetABIName(SBTarget self) -> char const *"""
+        return _lldb.SBTarget_GetABIName(self)
+
     def GetDataByteSize(self) -> "uint32_t":
         r"""
         GetDataByteSize(SBTarget self) -> uint32_t
@@ -10456,6 +10571,10 @@ class SBTarget(object):
 
         """
         return _lldb.SBTarget_GetCodeByteSize(self)
+
+    def GetMaximumNumberOfChildrenToDisplay(self) -> "uint32_t":
+        r"""GetMaximumNumberOfChildrenToDisplay(SBTarget self) -> uint32_t"""
+        return _lldb.SBTarget_GetMaximumNumberOfChildrenToDisplay(self)
 
     def SetSectionLoadAddress(self, section: "SBSection", section_base_addr: "lldb::addr_t") -> "lldb::SBError":
         r"""SetSectionLoadAddress(SBTarget self, SBSection section, lldb::addr_t section_base_addr) -> SBError"""
@@ -10966,9 +11085,9 @@ class SBTarget(object):
         """
         return _lldb.SBTarget_EvaluateExpression(self, *args)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBTarget self) -> std::string"""
-        return _lldb.SBTarget___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBTarget self) -> std::string"""
+        return _lldb.SBTarget___repr__(self)
 
     def GetTrace(self) -> "lldb::SBTrace":
         r"""GetTrace(SBTarget self) -> SBTrace"""
@@ -11141,7 +11260,6 @@ class SBThread(object):
     """
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
     eBroadcastBitStackChanged = _lldb.SBThread_eBroadcastBitStackChanged
     
     eBroadcastBitThreadSuspended = _lldb.SBThread_eBroadcastBitThreadSuspended
@@ -11547,9 +11665,17 @@ class SBThread(object):
         """
         return _lldb.SBThread_SafeToCallFunctions(self)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBThread self) -> std::string"""
-        return _lldb.SBThread___str__(self)
+    def GetSiginfo(self) -> "lldb::SBValue":
+        r"""
+
+        Retruns a SBValue object representing the siginfo for the current signal.
+
+        """
+        return _lldb.SBThread_GetSiginfo(self)
+
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBThread self) -> std::string"""
+        return _lldb.SBThread___repr__(self)
 
     def __iter__(self):
         '''Iterate over all frames in a lldb.SBThread object.'''
@@ -11815,6 +11941,10 @@ class SBTrace(object):
         r"""GetStartConfigurationHelp(SBTrace self) -> char const *"""
         return _lldb.SBTrace_GetStartConfigurationHelp(self)
 
+    def SaveToDisk(self, error: "SBError", bundle_dir: "SBFileSpec", compact: "bool"=False) -> "lldb::SBFileSpec":
+        r"""SaveToDisk(SBTrace self, SBError error, SBFileSpec bundle_dir, bool compact=False) -> SBFileSpec"""
+        return _lldb.SBTrace_SaveToDisk(self, error, bundle_dir, compact)
+
     def Start(self, *args) -> "lldb::SBError":
         r"""
         Start(SBTrace self, SBStructuredData configuration) -> SBError
@@ -11847,7 +11977,6 @@ class SBTypeMember(object):
     r"""Represents a member of a type."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -11891,9 +12020,9 @@ class SBTypeMember(object):
         r"""GetBitfieldSizeInBits(SBTypeMember self) -> uint32_t"""
         return _lldb.SBTypeMember_GetBitfieldSizeInBits(self)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBTypeMember self) -> std::string"""
-        return _lldb.SBTypeMember___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBTypeMember self) -> std::string"""
+        return _lldb.SBTypeMember___repr__(self)
 
     name = property(GetName, None, doc='''A read only property that returns the name for this member as a string.''')
     type = property(GetType, None, doc='''A read only property that returns an lldb object that represents the type (lldb.SBType) for this member.''')
@@ -11910,7 +12039,6 @@ class SBTypeMemberFunction(object):
     r"""Represents a member function of a type."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -11966,9 +12094,9 @@ class SBTypeMemberFunction(object):
         r"""GetDescription(SBTypeMemberFunction self, SBStream description, lldb::DescriptionLevel description_level) -> bool"""
         return _lldb.SBTypeMemberFunction_GetDescription(self, description, description_level)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBTypeMemberFunction self) -> std::string"""
-        return _lldb.SBTypeMemberFunction___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBTypeMemberFunction self) -> std::string"""
+        return _lldb.SBTypeMemberFunction___repr__(self)
 
 # Register SBTypeMemberFunction in _lldb:
 _lldb.SBTypeMemberFunction_swigregister(SBTypeMemberFunction)
@@ -12065,7 +12193,6 @@ class SBType(object):
     """
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -12232,6 +12359,20 @@ class SBType(object):
 
         """
         return _lldb.SBType_IsScopedEnumerationType(self)
+
+    def IsAggregateType(self) -> "bool":
+        r"""
+        IsAggregateType(SBType self) -> bool
+        Returns true if this type is an aggregate type.
+
+            Language-specific behaviour:
+
+            * C: Returns true for struct values, arrays, and vectors.
+            * C++: Same a C. Also includes class instances.
+            * Objective-C: Same as C. Also includes class instances.
+
+        """
+        return _lldb.SBType_IsAggregateType(self)
 
     def GetPointerType(self) -> "lldb::SBType":
         r"""
@@ -12797,27 +12938,19 @@ class SBType(object):
     def IsTypeComplete(self) -> "bool":
         r"""
         IsTypeComplete(SBType self) -> bool
-        Returns the `BasicType` value that is most appropriate to this type.
-
-            Returns `eBasicTypeInvalid` if no appropriate `BasicType` was found or this
-            type is invalid. See the `BasicType` documentation for the language-specific m
-            aning of each `BasicType` value.
-
-            **Overload behaviour:** When called with a `BasicType` parameter, the
-            following behaviour applies:
-
-            Returns the `SBType` that represents the passed `BasicType` value. Returns
-            an invalid `SBType` if no fitting `SBType` could be created.
+        Returns true if the type is completely defined.
 
             Language-specific behaviour:
 
-            * C: Returns the respective builtin type. Note that some types
-              (e.g. ``__uint128_t``) might even be successfully created even if they are
-              not available on the target platform. C++ and Objective-C specific types
-              might also be created even if the target program is not written in C++ or
-              Objective-C.
-            * C++: Same as in C.
-            * Objective-C: Same as in C.
+            * C: Returns false for struct types that were only forward declared in the
+              type's `SBTarget`/`SBModule`. Otherwise returns true.
+            * C++: Returns false for template/non-template struct/class types and
+              scoped enums that were only forward declared inside the type's
+              `SBTarget`/`SBModule`. Otherwise returns true.
+            * Objective-C: Follows the same behavior as C for struct types. Objective-C
+              classes are considered complete unless they were only forward declared via
+              ``@class ClassName`` in the type's `SBTarget`/`SBModule`. Otherwise
+              returns true.
 
         """
         return _lldb.SBType_IsTypeComplete(self)
@@ -12898,9 +13031,9 @@ class SBType(object):
         """
         return _lldb.SBType___ne__(self, rhs)
 
-    def __str__(self) -> "std::string":
+    def __repr__(self) -> "std::string":
         r"""
-        __str__(SBType self) -> std::string
+        __repr__(SBType self) -> std::string
         Returns the `BasicType` value that is most appropriate to this type.
 
             Returns `eBasicTypeInvalid` if no appropriate `BasicType` was found or this
@@ -12924,7 +13057,7 @@ class SBType(object):
             * Objective-C: Same as in C.
 
         """
-        return _lldb.SBType___str__(self)
+        return _lldb.SBType___repr__(self)
 
     def template_arg_array(self):
         num_args = self.num_template_args
@@ -13108,7 +13241,6 @@ class SBTypeCategory(object):
     r"""Represents a category that can contain formatters for types."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -13252,9 +13384,9 @@ class SBTypeCategory(object):
         r"""DeleteTypeSynthetic(SBTypeCategory self, SBTypeNameSpecifier arg2) -> bool"""
         return _lldb.SBTypeCategory_DeleteTypeSynthetic(self, arg2)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBTypeCategory self) -> std::string"""
-        return _lldb.SBTypeCategory___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBTypeCategory self) -> std::string"""
+        return _lldb.SBTypeCategory___repr__(self)
 
 
     class formatters_access_class(object):
@@ -13352,7 +13484,6 @@ class SBTypeEnumMember(object):
     r"""Represents a member of an enum in lldb."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -13392,9 +13523,9 @@ class SBTypeEnumMember(object):
         r"""GetDescription(SBTypeEnumMember self, SBStream description, lldb::DescriptionLevel description_level) -> bool"""
         return _lldb.SBTypeEnumMember_GetDescription(self, description, description_level)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBTypeEnumMember self) -> std::string"""
-        return _lldb.SBTypeEnumMember___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBTypeEnumMember self) -> std::string"""
+        return _lldb.SBTypeEnumMember___repr__(self)
 
     name = property(GetName, None, doc='''A read only property that returns the name for this enum member as a string.''')
     type = property(GetType, None, doc='''A read only property that returns an lldb object that represents the type (lldb.SBType) for this enum member.''')
@@ -13482,7 +13613,6 @@ class SBTypeFilter(object):
     r"""Represents a filter that can be associated to one or more types."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -13547,9 +13677,9 @@ class SBTypeFilter(object):
         r"""__ne__(SBTypeFilter self, SBTypeFilter rhs) -> bool"""
         return _lldb.SBTypeFilter___ne__(self, rhs)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBTypeFilter self) -> std::string"""
-        return _lldb.SBTypeFilter___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBTypeFilter self) -> std::string"""
+        return _lldb.SBTypeFilter___repr__(self)
 
     options = property(GetOptions, SetOptions)
     count = property(GetNumberOfExpressionPaths)
@@ -13575,7 +13705,6 @@ class SBTypeFormat(object):
     r"""Represents a format that can be associated to one or more types."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -13637,9 +13766,9 @@ class SBTypeFormat(object):
         r"""__ne__(SBTypeFormat self, SBTypeFormat rhs) -> bool"""
         return _lldb.SBTypeFormat___ne__(self, rhs)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBTypeFormat self) -> std::string"""
-        return _lldb.SBTypeFormat___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBTypeFormat self) -> std::string"""
+        return _lldb.SBTypeFormat___repr__(self)
 
     format = property(GetFormat, SetFormat)
     options = property(GetOptions, SetOptions)
@@ -13652,7 +13781,6 @@ class SBTypeNameSpecifier(object):
     r"""Represents a general way to provide a type name to LLDB APIs."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -13702,9 +13830,9 @@ class SBTypeNameSpecifier(object):
         r"""__ne__(SBTypeNameSpecifier self, SBTypeNameSpecifier rhs) -> bool"""
         return _lldb.SBTypeNameSpecifier___ne__(self, rhs)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBTypeNameSpecifier self) -> std::string"""
-        return _lldb.SBTypeNameSpecifier___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBTypeNameSpecifier self) -> std::string"""
+        return _lldb.SBTypeNameSpecifier___repr__(self)
 
     name = property(GetName)
     is_regex = property(IsRegex)
@@ -13773,7 +13901,6 @@ class SBTypeSummary(object):
     r"""Represents a summary that can be associated to one or more types."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     @staticmethod
     def CreateWithSummaryString(data: "char const *", options: "uint32_t"=0) -> "lldb::SBTypeSummary":
@@ -13860,9 +13987,9 @@ class SBTypeSummary(object):
         r"""__ne__(SBTypeSummary self, SBTypeSummary rhs) -> bool"""
         return _lldb.SBTypeSummary___ne__(self, rhs)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBTypeSummary self) -> std::string"""
-        return _lldb.SBTypeSummary___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBTypeSummary self) -> std::string"""
+        return _lldb.SBTypeSummary___repr__(self)
 
     options = property(GetOptions, SetOptions)
     is_summary_string = property(IsSummaryString)
@@ -13903,7 +14030,6 @@ class SBTypeSynthetic(object):
     r"""Represents a summary that can be associated to one or more types."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     @staticmethod
     def CreateWithClassName(data: "char const *", options: "uint32_t"=0) -> "lldb::SBTypeSynthetic":
@@ -13973,9 +14099,9 @@ class SBTypeSynthetic(object):
         r"""__ne__(SBTypeSynthetic self, SBTypeSynthetic rhs) -> bool"""
         return _lldb.SBTypeSynthetic___ne__(self, rhs)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBTypeSynthetic self) -> std::string"""
-        return _lldb.SBTypeSynthetic___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBTypeSynthetic self) -> std::string"""
+        return _lldb.SBTypeSynthetic___repr__(self)
 
     options = property(GetOptions, SetOptions)
     contains_code = property(IsClassCode, None)
@@ -14135,7 +14261,6 @@ class SBValue(object):
     """
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -14552,6 +14677,10 @@ class SBValue(object):
         r"""SetData(SBValue self, SBData data, SBError error) -> bool"""
         return _lldb.SBValue_SetData(self, data, error)
 
+    def Clone(self, new_name: "char const *") -> "lldb::SBValue":
+        r"""Clone(SBValue self, char const * new_name) -> SBValue"""
+        return _lldb.SBValue_Clone(self, new_name)
+
     def GetLoadAddress(self) -> "lldb::addr_t":
         r"""GetLoadAddress(SBValue self) -> lldb::addr_t"""
         return _lldb.SBValue_GetLoadAddress(self)
@@ -14580,9 +14709,9 @@ class SBValue(object):
         """
         return _lldb.SBValue_EvaluateExpression(self, *args)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBValue self) -> std::string"""
-        return _lldb.SBValue___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBValue self) -> std::string"""
+        return _lldb.SBValue___repr__(self)
 
     def __get_dynamic__ (self):
         '''Helper function for the "SBValue.dynamic" property.'''
@@ -14984,7 +15113,6 @@ class SBWatchpoint(object):
     """
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -15091,9 +15219,9 @@ class SBWatchpoint(object):
         r"""GetWatchpointFromEvent(SBEvent event) -> SBWatchpoint"""
         return _lldb.SBWatchpoint_GetWatchpointFromEvent(event)
 
-    def __str__(self) -> "std::string":
-        r"""__str__(SBWatchpoint self) -> std::string"""
-        return _lldb.SBWatchpoint___str__(self)
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBWatchpoint self) -> std::string"""
+        return _lldb.SBWatchpoint___repr__(self)
 
 # Register SBWatchpoint in _lldb:
 _lldb.SBWatchpoint_swigregister(SBWatchpoint)
@@ -15407,6 +15535,7 @@ def is_numeric_type(basic_type):
     if basic_type == eBasicTypeUnsignedWChar: return (True,False)
     if basic_type == eBasicTypeChar16: return (True,False)
     if basic_type == eBasicTypeChar32: return (True,False)
+    if basic_type == eBasicTypeChar8: return (True,False)
     if basic_type == eBasicTypeShort: return (True,True)
     if basic_type == eBasicTypeUnsignedShort: return (True,False)
     if basic_type == eBasicTypeInt: return (True,True)
@@ -15434,15 +15563,8 @@ def is_numeric_type(basic_type):
 
 
 
-_initialize = True
-try:
-   import lldbconfig
-   _initialize = lldbconfig.INITIALIZE
-except ImportError:
-   pass
 debugger_unique_id = 0
-if _initialize:
-   SBDebugger.Initialize()
+SBDebugger.Initialize()
 debugger = None
 target = None
 process = None
