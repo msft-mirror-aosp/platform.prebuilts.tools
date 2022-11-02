@@ -186,20 +186,22 @@ java_library_static {
     sdk_version: "current",
 }
 
-// TODO(b/255714762): This was previously a prebuilt library, but now it
-// redirects to the version built from source. This redirection will be cleaned
-// up in a large scale change.
 java_library_static {
     name: "truth-prebuilt",
-    static_libs: ["truth"],
+    static_libs: [
+        "truth-prebuilt-jar",
+        "asm-9.2",
+        "diffutils-prebuilt-jar",
+        "guava",
+    ],
     host_supported: true,
     sdk_version: "current",
 }
 
-// TODO(b/255714762): See above.
+// Wrapper for the above. TODO: Remove.
 java_library_host {
     name: "truth-host-prebuilt",
-    static_libs: ["truth"],
+    static_libs: ["truth-prebuilt"],
 }
 
 java_import {
