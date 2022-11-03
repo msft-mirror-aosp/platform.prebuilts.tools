@@ -14,8 +14,8 @@ from. See aapt_version.properties.
  | Linux       | sdk_phone_armv7-win_sdk  | sdk-repo-linux-build-tools-{bid}.zip    |
  | Windows32   | sdk_phone_armv7-win_sdk  | sdk-repo-windows-build-tools-{bid}.zip  |
  | Mac         | sdk_phone_armv7-sdk_mac  | sdk-repo-darwin-build-tools-{bid}.zip   |
- -----------------------------------------------------------------------------------
- | Proto files | sdk_phone_armv7-win_sdk  | aapt2-protos.zip                        |
+ | Proto files | aapt2_artifacts          | aapt2-protos.zip                        |
+ | Licences    | aapt2_artifacts          | licensetexts/aapt2[-protos.zip].txt     |
  -----------------------------------------------------------------------------------
 
 
