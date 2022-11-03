@@ -80,25 +80,25 @@ java_import(
 )
 
 filegroup(
-    name = "com.google.protobuf.protoc.3.19.2_exe",
+    name = "com.google.protobuf.protoc.3.19.3_exe",
     srcs = select({
-        "//prebuilts/tools/common/m2:osx-arm64": ["repository/com/google/protobuf/protoc/3.19.2/protoc-3.19.2-osx-aarch_64.exe"],
-        "//prebuilts/tools/common/m2:osx-x86_64": ["repository/com/google/protobuf/protoc/3.19.2/protoc-3.19.2-osx-x86_64.exe"],
-        "//prebuilts/tools/common/m2:windows-x86_64": ["repository/com/google/protobuf/protoc/3.19.2/protoc-3.19.2-windows-x86_64.exe"],
-        "//prebuilts/tools/common/m2:linux-x86_64": ["repository/com/google/protobuf/protoc/3.19.2/protoc-3.19.2-linux-x86_64.exe"],
+        "//prebuilts/tools/common/m2:osx-arm64": ["repository/com/google/protobuf/protoc/3.19.3/protoc-3.19.3-osx-aarch_64.exe"],
+        "//prebuilts/tools/common/m2:osx-x86_64": ["repository/com/google/protobuf/protoc/3.19.3/protoc-3.19.3-osx-x86_64.exe"],
+        "//prebuilts/tools/common/m2:windows-x86_64": ["repository/com/google/protobuf/protoc/3.19.3/protoc-3.19.3-windows-x86_64.exe"],
+        "//prebuilts/tools/common/m2:linux-x86_64": ["repository/com/google/protobuf/protoc/3.19.3/protoc-3.19.3-linux-x86_64.exe"],
     }),
     visibility = ["//visibility:public"],
 )
 
 java_import(
-    name = "com.google.protobuf.protobuf-java-util.3.19.2",
-    jars = ["repository/com/google/protobuf/protobuf-java-util/3.19.2/protobuf-java-util-3.19.2.jar"],
+    name = "com.google.protobuf.protobuf-java-util.3.19.3",
+    jars = ["repository/com/google/protobuf/protobuf-java-util/3.19.3/protobuf-java-util-3.19.3.jar"],
     visibility = ["//visibility:public"],
 )
 
 java_import(
-    name = "com.google.protobuf.protobuf-java.3.19.2",
-    jars = ["repository/com/google/protobuf/protobuf-java/3.19.2/protobuf-java-3.19.2.jar"],
+    name = "com.google.protobuf.protobuf-java.3.19.3",
+    jars = ["repository/com/google/protobuf/protobuf-java/3.19.3/protobuf-java-3.19.3.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -106,8 +106,8 @@ java_import(
 # So bazel can consume them without wrapping the
 # proto compiler in a extract jar step.
 filegroup(
-    name = "com.google.protobuf.protobuf-java.3.19.2.include_include",
-    srcs = glob(["repository/com/google/protobuf/protobuf-java/3.19.2/**/*.proto"]),
+    name = "com.google.protobuf.protobuf-java.3.19.3.include_include",
+    srcs = glob(["repository/com/google/protobuf/protobuf-java/3.19.3/**/*.proto"]),
     visibility = ["//visibility:public"],
 )
 
