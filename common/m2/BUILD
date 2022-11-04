@@ -398,17 +398,11 @@ jvm_import(
     visibility = ["//visibility:public"],
 )
 
-# TODO(b/197361777): Clean up jarjar deps
 java_import(
-    name = "jarjar_deps",
+    name = "jarjar_asm",
     jars = [
-        "repository/net/sf/jopt-simple/jopt-simple/4.9/jopt-simple-4.9.jar",
-        "repository/org/anarres/jarjar/jarjar-command/1.0.0/jarjar-command-1.0.0.jar",
-        "repository/org/anarres/jarjar/jarjar-core/1.0.0/jarjar-core-1.0.0.jar",
-        "repository/org/ow2/asm/asm/7.0/asm-7.0.jar",
-        "repository/org/ow2/asm/asm-commons/7.0/asm-commons-7.0.jar",
-        "repository/org/slf4j/slf4j-api/1.7.2/slf4j-api-1.7.2.jar",
-        "repository/org/slf4j/slf4j-simple/1.7.2/slf4j-simple-1.7.2.jar",
+        "repository/org/ow2/asm/asm/9.3/asm-9.3.jar",
+        "repository/org/ow2/asm/asm-commons/9.3/asm-commons-9.3.jar",
     ],
     visibility = ["//visibility:public"],
 )
