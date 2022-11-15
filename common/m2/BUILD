@@ -321,24 +321,6 @@ filegroup(
 )
 
 # managed by go/iml_to_build
-jvm_import(
-    name = "okio",
-    jars = ["repository/com/squareup/okio/okio/1.14.0/okio-1.14.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
-    name = "moshi",
-    # do not sort: must match IML order
-    jars = [
-        "repository/com/squareup/moshi/moshi/1.6.0/moshi-1.6.0.jar",
-        "repository/com/squareup/okio/okio/1.14.0/okio-1.14.0.jar",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
 filegroup(
     name = "kotlinx-coroutines-guava_files",
     srcs = ["repository/org/jetbrains/kotlinx/kotlinx-coroutines-guava/1.5.0/kotlinx-coroutines-guava-1.5.0.jar"],
@@ -653,5 +635,19 @@ filegroup(
         "repository/com/google/apis/google-api-services-oauth2/v2-rev150-1.22.0/google-api-services-oauth2-v2-rev150-1.22.0.jar",
         "repository/com/google/auth/google-auth-library-oauth2-http/0.22.2/google-auth-library-oauth2-http-0.22.2.jar",
     ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "moshi-1.6.0",
+    jars = ["repository/com/squareup/moshi/moshi/1.6.0/moshi-1.6.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "okio-2.8.0",
+    jars = ["repository/com/squareup/okio/okio/2.8.0/okio-2.8.0.jar"],
     visibility = ["//visibility:public"],
 )
