@@ -70,6 +70,8 @@ dependencies {
     "kotlin-compiler-content"("org.jetbrains.kotlin:analysis-project-structure-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:analysis-api-standalone-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlinx:kotlinx-collections-immutable-jvm:0.3.4")
+    "kotlin-compiler-content"("org.jetbrains.kotlin:kt-references-fe10-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
+    "kotlin-compiler-content"("org.jetbrains.kotlin:high-level-api-fe10-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:high-level-api-fir-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:high-level-api-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:high-level-api-impl-base-for-ide:$kotlinVersion-for-lint") { isTransitive = false }

@@ -321,24 +321,6 @@ filegroup(
 )
 
 # managed by go/iml_to_build
-jvm_import(
-    name = "okio",
-    jars = ["repository/com/squareup/okio/okio/1.14.0/okio-1.14.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
-    name = "moshi",
-    # do not sort: must match IML order
-    jars = [
-        "repository/com/squareup/moshi/moshi/1.6.0/moshi-1.6.0.jar",
-        "repository/com/squareup/okio/okio/1.14.0/okio-1.14.0.jar",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
 filegroup(
     name = "kotlinx-coroutines-guava_files",
     srcs = ["repository/org/jetbrains/kotlinx/kotlinx-coroutines-guava/1.5.0/kotlinx-coroutines-guava-1.5.0.jar"],
@@ -398,17 +380,11 @@ jvm_import(
     visibility = ["//visibility:public"],
 )
 
-# TODO(b/197361777): Clean up jarjar deps
 java_import(
-    name = "jarjar_deps",
+    name = "jarjar_asm",
     jars = [
-        "repository/net/sf/jopt-simple/jopt-simple/4.9/jopt-simple-4.9.jar",
-        "repository/org/anarres/jarjar/jarjar-command/1.0.0/jarjar-command-1.0.0.jar",
-        "repository/org/anarres/jarjar/jarjar-core/1.0.0/jarjar-core-1.0.0.jar",
-        "repository/org/ow2/asm/asm/7.0/asm-7.0.jar",
-        "repository/org/ow2/asm/asm-commons/7.0/asm-commons-7.0.jar",
-        "repository/org/slf4j/slf4j-api/1.7.2/slf4j-api-1.7.2.jar",
-        "repository/org/slf4j/slf4j-simple/1.7.2/slf4j-simple-1.7.2.jar",
+        "repository/org/ow2/asm/asm/9.3/asm-9.3.jar",
+        "repository/org/ow2/asm/asm-commons/9.3/asm-commons-9.3.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -659,5 +635,19 @@ filegroup(
         "repository/com/google/apis/google-api-services-oauth2/v2-rev150-1.22.0/google-api-services-oauth2-v2-rev150-1.22.0.jar",
         "repository/com/google/auth/google-auth-library-oauth2-http/0.22.2/google-auth-library-oauth2-http-0.22.2.jar",
     ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "moshi-1.6.0",
+    jars = ["repository/com/squareup/moshi/moshi/1.6.0/moshi-1.6.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "okio-2.8.0",
+    jars = ["repository/com/squareup/okio/okio/2.8.0/okio-2.8.0.jar"],
     visibility = ["//visibility:public"],
 )
