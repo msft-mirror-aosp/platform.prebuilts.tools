@@ -83,17 +83,6 @@ license {
 }
 
 license {
-    name: "m2_protobuf_license",
-    visibility: [":__subpackages__"],
-    license_kinds: [
-        "SPDX-license-identifier-BSD",
-    ],
-    license_text: [
-        "repository/com/google/protobuf/protobuf-java/NOTICE",
-    ]
-}
-
-license {
     name: "m2_java_diff_license",
     visibility: [":__subpackages__"],
     license_kinds: [
@@ -204,12 +193,6 @@ java_import {
 java_import_host {
     name: "kotlinpoet",
     jars: ["repository/com/squareup/kotlinpoet/1.8.0/kotlinpoet-1.8.0.jar"],
-}
-
-java_import_host {
-    name: "protobuf-java-util-prebuilt-jar",
-    jars: ["repository/com/google/protobuf/protobuf-java-util/3.0.2/protobuf-java-util-3.0.2.jar"],
-    licenses: ["m2_protobuf_license"],
 }
 
 java_import {
