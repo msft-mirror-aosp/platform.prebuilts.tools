@@ -7,10 +7,10 @@
   <!-- do_not_remove: published-with-gradle-metadata -->
   <modelVersion>4.0.0</modelVersion>
   <groupId>androidx.privacysandbox.tools</groupId>
-  <artifactId>tools-core</artifactId>
+  <artifactId>tools-apigenerator</artifactId>
   <version>1.0.0-SNAPSHOT</version>
-  <name>androidx.privacysandbox.tools:tools-core</name>
-  <description>Core utilities for Privacy Sandbox Tools.</description>
+  <name>androidx.privacysandbox.tools:tools-apigenerator</name>
+  <description>Generate sources for communication with SDKs in the Privacy Sandbox.</description>
   <url>https://developer.android.com/jetpack/androidx/releases/privacysandbox-tools#1.0.0-SNAPSHOT</url>
   <inceptionYear>2022</inceptionYear>
   <licenses>
@@ -37,22 +37,40 @@
       <scope>runtime</scope>
     </dependency>
     <dependency>
-      <groupId>com.google.protobuf</groupId>
-      <artifactId>protobuf-javalite</artifactId>
-      <version>3.21.8</version>
-      <scope>compile</scope>
+      <groupId>androidx.privacysandbox.tools</groupId>
+      <artifactId>tools-core</artifactId>
+      <version>[1.0.0-SNAPSHOT]</version>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>com.squareup</groupId>
       <artifactId>kotlinpoet</artifactId>
       <version>1.12.0</version>
-      <scope>compile</scope>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.jetbrains.kotlin</groupId>
       <artifactId>kotlin-stdlib</artifactId>
       <version>1.7.21</version>
       <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jetbrains.kotlinx</groupId>
+      <artifactId>kotlinx-metadata-jvm</artifactId>
+      <version>0.5.0</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.ow2.asm</groupId>
+      <artifactId>asm</artifactId>
+      <version>9.3</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.ow2.asm</groupId>
+      <artifactId>asm-commons</artifactId>
+      <version>9.3</version>
+      <scope>runtime</scope>
     </dependency>
   </dependencies>
 </project>
