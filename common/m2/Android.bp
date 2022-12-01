@@ -68,7 +68,6 @@ license {
     ],
     license_text: [
         "repository/com/google/truth/LICENSE.txt",
-        "repository/com/google/truth/truth-parent/1.0.1/LICENSE",
     ]
 }
 
@@ -80,24 +79,6 @@ license {
     ],
     license_text: [
         "repository/com/google/guava/LICENSE.txt",
-        "repository/com/google/guava/guava/13.0.1/NOTICE",
-        "repository/com/google/guava/guava/15.0/NOTICE",
-        "repository/com/google/guava/guava/17.0/NOTICE",
-        "repository/com/google/guava/guava/18.0/NOTICE",
-        "repository/com/google/guava/guava/19.0/NOTICE",
-        "repository/com/google/guava/guava/20.0/NOTICE",
-    ]
-}
-
-license {
-    name: "m2_protobuf_license",
-    visibility: [":__subpackages__"],
-    license_kinds: [
-        "SPDX-license-identifier-BSD",
-    ],
-    license_text: [
-        "repository/com/google/protobuf/protobuf-java/NOTICE",
-        "repository/com/google/protobuf/protobuf-java/2.6.1/NOTICE",
     ]
 }
 
@@ -212,12 +193,6 @@ java_import {
 java_import_host {
     name: "kotlinpoet",
     jars: ["repository/com/squareup/kotlinpoet/1.8.0/kotlinpoet-1.8.0.jar"],
-}
-
-java_import_host {
-    name: "protobuf-java-util-prebuilt-jar",
-    jars: ["repository/com/google/protobuf/protobuf-java-util/3.0.2/protobuf-java-util-3.0.2.jar"],
-    licenses: ["m2_protobuf_license"],
 }
 
 java_import {
