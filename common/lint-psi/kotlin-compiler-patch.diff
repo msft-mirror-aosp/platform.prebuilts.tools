@@ -1,5 +1,5 @@
 diff --git a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt
-index 084dfedd1210..b318ca796136 100644
+index 914c096ceab0..6b84229ad10f 100644
 --- a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt
 +++ b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt
 @@ -40,6 +40,7 @@ import org.jetbrains.kotlin.name.FqName
@@ -10,13 +10,13 @@ index 084dfedd1210..b318ca796136 100644
  import java.util.*
  
  // TODO: do not inherit from CoreJavaFileManager to avoid accidental usage of its methods which do not use caches/indices
-@@ -72,7 +73,8 @@ class KotlinCliJavaFileManagerImpl(private val myPsiManager: PsiManager) : CoreJ
- 
+@@ -73,7 +74,8 @@ class KotlinCliJavaFileManagerImpl(private val myPsiManager: PsiManager) : CoreJ
      private fun findVirtualFileForTopLevelClass(classId: ClassId, searchScope: GlobalSearchScope): VirtualFile? {
          val relativeClassName = classId.relativeClassName.asString()
--        return topLevelClassesCache.getOrPut(classId.packageFqName.child(classId.relativeClassName.pathSegments().first())) {
+         val outerMostClassFqName = classId.packageFqName.child(classId.relativeClassName.pathSegments().first())
+-        return topLevelClassesCache.getOrPut(outerMostClassFqName) {
 +        // KT-35614: getOrPut -> getOrPutNullable
-+        return topLevelClassesCache.getOrPutNullable(classId.packageFqName.child(classId.relativeClassName.pathSegments().first())) {
++        return topLevelClassesCache.getOrPutNullable(outerMostClassFqName) {
              // Search java sources first. For build tools, it makes sense to build new files passing all the
              // class files for the previous build on the class path.
              //

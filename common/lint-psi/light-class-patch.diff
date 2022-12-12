@@ -1,0 +1,52 @@
+diff --git a/compiler/light-classes/src/org/jetbrains/kotlin/asJava/classes/ultraLightMethods.kt b/compiler/light-classes/src/org/jetbrains/kotlin/asJava/classes/ultraLightMethods.kt
+index dee595e655b..a00046bf0dc 100644
+--- a/compiler/light-classes/src/org/jetbrains/kotlin/asJava/classes/ultraLightMethods.kt
++++ b/compiler/light-classes/src/org/jetbrains/kotlin/asJava/classes/ultraLightMethods.kt
+@@ -21,6 +21,7 @@ import org.jetbrains.kotlin.codegen.FunctionCodegen
+ import org.jetbrains.kotlin.config.LanguageVersionSettingsImpl
+ import org.jetbrains.kotlin.descriptors.ConstructorDescriptor
+ import org.jetbrains.kotlin.descriptors.FunctionDescriptor
++import org.jetbrains.kotlin.descriptors.PropertyDescriptor
+ import org.jetbrains.kotlin.load.java.BuiltinMethodsWithSpecialGenericSignature.getSpecialSignatureInfo
+ import org.jetbrains.kotlin.load.java.descriptors.JavaMethodDescriptor
+ import org.jetbrains.kotlin.load.kotlin.TypeMappingMode
+@@ -64,7 +65,7 @@ internal abstract class KtUltraLightMethod(
+     lightMemberOrigin: LightMemberOriginForDeclaration?,
+     protected val support: KtUltraLightSupport,
+     containingClass: KtLightClass,
+-    private val methodIndex: Int
++    protected val methodIndex: Int
+ ) : KtLightMethodImpl(
+     lightMemberOrigin,
+     containingClass
+@@ -213,7 +214,21 @@ internal class KtUltraLightMethodForSourceDeclaration(
+         else LightTypeParameterListBuilder(manager, language)
+     }
+ 
+-    private val methodDescriptor get() = kotlinOrigin?.resolve() as? FunctionDescriptor
++    private val methodDescriptor: FunctionDescriptor?
++        get() {
++            return when (val descriptor = kotlinOrigin?.resolve()) {
++                is FunctionDescriptor -> descriptor
++                is PropertyDescriptor -> {
++                    when (methodIndex) {
++                        METHOD_INDEX_FOR_GETTER -> descriptor.getter
++                        METHOD_INDEX_FOR_SETTER -> descriptor.setter
++                        else -> null
++                    }
++                }
++                else -> null
++            }
++        }
++
+ 
+     private val _throwsList: PsiReferenceList by lazyPub { computeThrowsList(methodDescriptor) }
+     override fun getThrowsList(): PsiReferenceList = _throwsList
+@@ -299,4 +314,4 @@ internal class KtUltraLightMethodForDescriptor(
+             clear()
+         }
+     }
+-}
+\ No newline at end of file
++}
+
