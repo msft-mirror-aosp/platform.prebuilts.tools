@@ -117,6 +117,51 @@ license {
     ]
 }
 
+license {
+    name: "m2_joda_time_2.9.1_license",
+    visibility: [":__subpackages__"],
+    license_kinds: [
+        "SPDX-license-identifier-Apache-2.0",
+    ],
+    license_text: [
+        "repository/joda-time/joda-time/2.9.1/LICENSE"
+    ]
+}
+
+license {
+    name: "m2_google_auth_0.13.0_license",
+    visibility: [":__subpackages__"],
+    license_kinds: [
+        "SPDX-license-identifier-BSD-3-Clause",
+    ],
+    license_text: [
+        "repository/com/google/auth/google-auth-library-credentials/0.13.0/LICENSE",
+        "repository/com/google/auth/google-auth-library-oauth2-http/0.13.0/LICENSE"
+    ]
+}
+
+license {
+    name: "m2_grpc_netty_shaded_1.16.1_license",
+    visibility: [":__subpackages__"],
+    license_kinds: [
+        "SPDX-license-identifier-Apache-2.0",
+    ],
+    license_text: [
+        "repository/io/grpc/grpc-netty-shaded/1.16.1/LICENSE"
+    ]
+}
+
+license {
+    name: "m2_jna_3.4.0_license",
+    visibility: [":__subpackages__"],
+    license_kinds: [
+        "SPDX-license-identifier-LGPL-2.1",
+    ],
+    license_text: [
+        "repository/net/java/dev/jna/jna/3.4.0/LICENSE"
+    ]
+}
+
 java_import {
     name: "byte-buddy-prebuilt-jar",
     jars: ["repository/net/bytebuddy/byte-buddy/1.12.10/byte-buddy-1.12.10.jar"],
@@ -134,11 +179,13 @@ java_import {
 java_import_host {
     name: "google-auth-library-credentials-0.13.0",
     jars: ["repository/com/google/auth/google-auth-library-credentials/0.13.0/google-auth-library-credentials-0.13.0.jar"],
+    licenses: ["m2_google_auth_0.13.0_license"],
 }
 
 java_import_host {
     name: "google-auth-library-oauth2-http-0.13.0",
     jars: ["repository/com/google/auth/google-auth-library-oauth2-http/0.13.0/google-auth-library-oauth2-http-0.13.0.jar"],
+    licenses: ["m2_google_auth_0.13.0_license"],
 }
 
 java_import_host {
@@ -200,6 +247,7 @@ java_import {
     host_supported: true,
     jars: ["repository/io/grpc/grpc-netty-shaded/1.16.1/grpc-netty-shaded-1.16.1.jar"],
     visibility: ["//external/grpc-grpc-java/netty/shaded"],
+    licenses: ["m2_grpc_netty_shaded_1.16.1_license"]
 }
 
 java_import_host {
@@ -210,6 +258,7 @@ java_import_host {
 java_import_host {
     name: "jna-prebuilt",
     jars: ["repository/net/java/dev/jna/jna/3.4.0/jna-3.4.0.jar"],
+    licenses: ["m2_jna_3.4.0_license"]
 }
 
 java_import_host {
@@ -426,6 +475,7 @@ java_import {
     name: "location-gnss-joda-time",
     jars: ["repository/joda-time/joda-time/2.9.1/joda-time-2.9.1.jar"],
     sdk_version: "core_current",
+    licenses: ["m2_joda_time_2.9.1_license"],
 }
 
 java_import {
