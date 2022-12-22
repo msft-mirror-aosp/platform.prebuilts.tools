@@ -380,15 +380,6 @@ jvm_import(
     visibility = ["//visibility:public"],
 )
 
-java_import(
-    name = "jarjar_asm",
-    jars = [
-        "repository/org/ow2/asm/asm/9.3/asm-9.3.jar",
-        "repository/org/ow2/asm/asm-commons/9.3/asm-commons-9.3.jar",
-    ],
-    visibility = ["//visibility:public"],
-)
-
 # managed by go/iml_to_build
 filegroup(
     name = "ffmpeg_files",

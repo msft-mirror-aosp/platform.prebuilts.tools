@@ -9,5 +9,5 @@ java_binary(
 
 java_import(
     name = "lib",
-    jars = ["verifier-cli-1.285-all.jar"],
+    jars = ["verifier-cli-1.289-all.jar"],
 )
