@@ -132,7 +132,7 @@ filegroup(
 # managed by go/iml_to_build
 filegroup(
     name = "equalsverifier_files",
-    srcs = ["repository/nl/jqno/equalsverifier/equalsverifier/3.8/equalsverifier-3.8.jar"],
+    srcs = ["repository/nl/jqno/equalsverifier/equalsverifier/3.8.3/equalsverifier-3.8.3.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -246,9 +246,9 @@ filegroup(
     name = "asm-tools_files",
     # do not sort: must match IML order
     srcs = [
-        "repository/org/ow2/asm/asm-analysis/9.1/asm-analysis-9.1.jar",
-        "repository/org/ow2/asm/asm-tree/9.1/asm-tree-9.1.jar",
-        "repository/org/ow2/asm/asm/9.1/asm-9.1.jar",
+        "repository/org/ow2/asm/asm-analysis/9.3/asm-analysis-9.3.jar",
+        "repository/org/ow2/asm/asm-tree/9.3/asm-tree-9.3.jar",
+        "repository/org/ow2/asm/asm/9.3/asm-9.3.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -291,14 +291,14 @@ filegroup(
 # managed by go/iml_to_build
 filegroup(
     name = "guava-testlib_files",
-    srcs = ["repository/com/google/guava/guava-testlib/25.1-jre/guava-testlib-25.1-jre.jar"],
+    srcs = ["repository/com/google/guava/guava-testlib/31.1-jre/guava-testlib-31.1-jre.jar"],
     visibility = ["//visibility:public"],
 )
 
 # managed by go/iml_to_build
 filegroup(
     name = "zxing-core_files",
-    srcs = ["repository/com/google/zxing/core/3.4.0/core-3.4.0.jar"],
+    srcs = ["repository/com/google/zxing/core/3.5.0/core-3.5.0.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -323,7 +323,7 @@ filegroup(
 # managed by go/iml_to_build
 filegroup(
     name = "kotlinx-coroutines-guava_files",
-    srcs = ["repository/org/jetbrains/kotlinx/kotlinx-coroutines-guava/1.5.0/kotlinx-coroutines-guava-1.5.0.jar"],
+    srcs = ["repository/org/jetbrains/kotlinx/kotlinx-coroutines-guava/1.6.4/kotlinx-coroutines-guava-1.6.4.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -494,7 +494,7 @@ filegroup(
 # managed by go/iml_to_build
 filegroup(
     name = "jetbrains.kotlinx.coroutines.test_files",
-    srcs = ["repository/org/jetbrains/kotlinx/kotlinx-coroutines-test/1.5.0/kotlinx-coroutines-test-1.5.0.jar"],
+    srcs = ["repository/org/jetbrains/kotlinx/kotlinx-coroutines-test-jvm/1.6.4/kotlinx-coroutines-test-jvm-1.6.4.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -614,7 +614,7 @@ jvm_import(
 # managed by go/iml_to_build
 filegroup(
     name = "gson_files",
-    srcs = ["repository/com/google/code/gson/gson/2.8.0/gson-2.8.0.jar"],
+    srcs = ["repository/com/google/code/gson/gson/2.9.0/gson-2.9.0.jar"],
     visibility = ["//visibility:public"],
 )
 
