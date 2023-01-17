@@ -20,9 +20,8 @@ def main():
     parser.add_argument('--download', metavar='BUILD_ID')
     parser.add_argument('--clean-build', action='store_true')
     parser.add_argument('--stage', metavar='DIR', type=Path)
-    parser.add_argument('--kotlin-ide-version', default='1.8.20-dev-1103')
-    parser.add_argument('--kotlin-standalone-version', default='1.7.21')
-    parser.add_argument('--intellij-version', default='223.7571.182')
+    parser.add_argument('--kotlin-version', default='1.7.21')
+    parser.add_argument('--intellij-version', default='222.3739.54')
 
     args = parser.parse_args()
 
@@ -35,6 +34,7 @@ def main():
     args.workspace = workspace
     args.kotlinc_dir = workspace.joinpath('external/jetbrains/kotlin')
     args.kotlin_ide_dir = workspace.joinpath('external/jetbrains/intellij-kotlin')
+    args.kotlin_version_full = f'{args.kotlin_version}-release'
     args.gradlew = args.kotlinc_dir.joinpath('gradlew')
     args.cmd_env = {
         'PATH': '/bin:/usr/bin',
@@ -45,8 +45,7 @@ def main():
     if args.download:
         (plugin_zip, sources_zip) = download_kotlin_ide_from_ab(args)
     else:
-        # TODO(b/262609124): Enable custom Kotlinc build again.
-        # build_kotlin_compiler(args)
+        build_kotlin_compiler(args)
         update_ide_project_model(args)
         (plugin_zip, sources_zip) = build_kotlin_ide(args)
 
@@ -72,8 +71,8 @@ def build_kotlin_compiler(args):
         str(args.gradlew),
         f'--project-dir={args.kotlinc_dir}',
         *clean_args,
-        f'-PdeployVersion={args.kotlin_ide_version}',
-        f'-Pbuild.number={args.kotlin_ide_version}',
+        f'-PdeployVersion={args.kotlin_version_full}',
+        f'-Pbuild.number={args.kotlin_version_full}',
         'publishIdeArtifacts',
         ':prepare:ide-plugin-dependencies:kotlin-dist-for-ide:publish',
         '-Ppublish.ide.plugin.dependencies=true',
@@ -93,7 +92,7 @@ def build_kotlin_ide(args):
     cmd = [
         str(jps_bootstrap),
         *clean_args,
-        f'-Dbuild.number={ij_major}-{args.kotlin_standalone_version}-IJ{ij_minor}',
+        f'-Dbuild.number={ij_major}-{args.kotlin_version_full}-IJ{ij_minor}',
         f'-Dkotlin.plugin.since={args.intellij_version}',
         f'-Dkotlin.plugin.until={args.intellij_version}',
         '-Dintellij.build.dev.mode=false',
@@ -125,11 +124,10 @@ def update_ide_project_model(args):
     updater_dir = args.kotlin_ide_dir.joinpath('plugins/kotlin/util/project-model-updater')
     model_props = updater_dir.joinpath('resources/model.properties')
     with open(model_props, 'w') as f:
-        # TODO(b/262609124): Enable custom Kotlinc build again.
-        f.write(f'kotlincVersion={args.kotlin_ide_version}\n')
-        f.write('kotlincArtifactsMode=MAVEN\n')
-        f.write(f'jpsPluginVersion={args.kotlin_standalone_version}\n')
-        f.write('jpsPluginArtifactsMode=MAVEN\n')
+        f.write(f'kotlincVersion={args.kotlin_version_full}\n')
+        f.write('kotlincArtifactsMode=BOOTSTRAP\n')
+        f.write(f'jpsPluginVersion={args.kotlin_version_full}\n')
+        f.write('jpsPluginArtifactsMode=BOOTSTRAP\n')
         f.write('kotlinGradlePluginVersion=unused\n')
 
     # Run the updater.
@@ -182,7 +180,7 @@ def write_metadata_file(args):
     kotlin_prebuilts: Path = args.workspace.joinpath('prebuilts/tools/common/kotlin-plugin')
     standalone_compiler_version = kotlin_prebuilts.joinpath('Kotlin/kotlinc/build.txt').read_text()
     plugin_jar = kotlin_prebuilts.joinpath('Kotlin/lib/kotlin-plugin.jar')
-    kotlinc_jar = kotlin_prebuilts.joinpath('Kotlin/lib/kotlinc.kotlin-compiler-fe10.jar')
+    kotlinc_jar = kotlin_prebuilts.joinpath('Kotlin/lib/kotlinc_kotlin-compiler-fe10.jar')
     with ZipFile(plugin_jar) as zip:
         with zip.open('META-INF/plugin.xml') as f:
             plugin_xml = ET.parse(f).getroot()
@@ -205,10 +203,9 @@ def write_metadata_file(args):
 def write_jps_lib_xml(args):
     project_dir = args.workspace.joinpath('tools/adt/idea')
 
-    # This exclude-list must stay in sync with the corresponding exclude-list in BUILD.
-    excluded = ['kotlinc-lib.jar']
+    # Note: see comment in the BUILD file for why we exclude kotlin-stdlib and kotlin-reflect.
     jars = sorted(args.workspace.glob('prebuilts/tools/common/kotlin-plugin/Kotlin/lib/*.jar'))
-    jars = [jar for jar in jars if jar.name not in excluded]
+    jars = [jar for jar in jars if jar.name not in ['kotlinc_kotlin-stdlib.jar', 'kotlinc_kotlin-reflect.jar']]
     jars = [os.path.relpath(jar, project_dir) for jar in jars]
 
     src = args.workspace.joinpath('prebuilts/tools/common/kotlin-plugin/kotlin-plugin-sources.jar')
