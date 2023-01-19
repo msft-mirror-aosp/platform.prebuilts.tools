@@ -1,0 +1,249 @@
+diff --git a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/FirPsiDeclarationProvider.kt b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/FirPsiDeclarationProvider.kt
+deleted file mode 100644
+index df301ae92018..000000000000
+--- a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/FirPsiDeclarationProvider.kt
++++ /dev/null
+@@ -1,87 +0,0 @@
+-/*
+- * Copyright 2010-2022 JetBrains s.r.o. and Kotlin Programming Language contributors.
+- * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
+- */
+-package org.jetbrains.uast.kotlin.internal
+-
+-import com.intellij.openapi.project.Project
+-import com.intellij.psi.PsiElement
+-import com.intellij.psi.search.GlobalSearchScope
+-import org.jetbrains.kotlin.analysis.api.symbols.*
+-import org.jetbrains.uast.kotlin.providers.createPsiDeclarationProvider
+-
+-internal object FirPsiDeclarationProvider {
+-    fun findPsi(ktSymbol: KtSymbol, project: Project): PsiElement? {
+-        return when (ktSymbol) {
+-            is KtConstructorSymbol -> providePsiForConstructor(ktSymbol, project)
+-            is KtFunctionLikeSymbol -> providePsiForFunction(ktSymbol, project)
+-            is KtVariableLikeSymbol -> providePsiForProperty(ktSymbol, project)
+-            is KtClassLikeSymbol -> providePsiForClass(ktSymbol, project)
+-            is KtEnumEntrySymbol -> providePsiForEnumEntry(ktSymbol, project)
+-            else -> null
+-        }
+-    }
+-
+-    private fun providePsiForConstructor(
+-        constructorSymbol: KtConstructorSymbol,
+-        project: Project
+-    ): PsiElement? {
+-        val classId = constructorSymbol.containingClassIdIfNonLocal ?: return null
+-        val psiClass = project.createPsiDeclarationProvider(constructorSymbol.scope(project))
+-            ?.getClassesByClassId(classId)
+-            ?.firstOrNull() ?: return null
+-        return psiClass.constructors.firstOrNull()
+-    }
+-
+-    private fun providePsiForFunction(
+-        functionLikeSymbol: KtFunctionLikeSymbol,
+-        project: Project
+-    ): PsiElement? {
+-        return functionLikeSymbol.callableIdIfNonLocal?.let {
+-            project.createPsiDeclarationProvider(functionLikeSymbol.scope(project))
+-                ?.getFunctions(it)
+-                ?.firstOrNull()
+-        }
+-    }
+-
+-    private fun providePsiForProperty(
+-        variableLikeSymbol: KtVariableLikeSymbol,
+-        project: Project
+-    ): PsiElement? {
+-        return variableLikeSymbol.callableIdIfNonLocal?.let {
+-            project.createPsiDeclarationProvider(variableLikeSymbol.scope(project))
+-                ?.getProperties(it)
+-                // TODO: needs to pick field/getter/setter accordingly?
+-                ?.firstOrNull()
+-        }
+-    }
+-
+-    private fun providePsiForClass(
+-        classLikeSymbol: KtClassLikeSymbol,
+-        project: Project
+-    ): PsiElement? {
+-        return classLikeSymbol.classIdIfNonLocal?.let {
+-            project.createPsiDeclarationProvider(classLikeSymbol.scope(project))
+-                ?.getClassesByClassId(it)
+-                ?.firstOrNull()
+-        }
+-    }
+-
+-    private fun providePsiForEnumEntry(
+-        enumEntrySymbol: KtEnumEntrySymbol,
+-        project: Project
+-    ): PsiElement? {
+-        val classId = enumEntrySymbol.containingEnumClassIdIfNonLocal ?: return null
+-        val psiClass = project.createPsiDeclarationProvider(enumEntrySymbol.scope(project))
+-            ?.getClassesByClassId(classId)
+-            ?.firstOrNull() ?: return null
+-        return psiClass.fields.find {
+-            it.name == enumEntrySymbol.name.asString()
+-        }
+-    }
+-
+-    private fun KtSymbol.scope(project: Project): GlobalSearchScope {
+-        // TODO: finding containing module and use a narrower scope?
+-        return GlobalSearchScope.allScope(project)
+-    }
+-}
+diff --git a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/providers/KotlinPsiDeclarationProvider.kt b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/providers/KotlinPsiDeclarationProvider.kt
+deleted file mode 100644
+index a0ff4636d7f6..000000000000
+--- a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/providers/KotlinPsiDeclarationProvider.kt
++++ /dev/null
+@@ -1,37 +0,0 @@
+-/*
+- * Copyright 2010-2022 JetBrains s.r.o. and Kotlin Programming Language contributors.
+- * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
+- */
+-package org.jetbrains.uast.kotlin.providers
+-
+-import com.intellij.openapi.project.Project
+-import com.intellij.psi.PsiClass
+-import com.intellij.psi.PsiMember
+-import com.intellij.psi.PsiMethod
+-import com.intellij.psi.search.GlobalSearchScope
+-import org.jetbrains.kotlin.name.CallableId
+-import org.jetbrains.kotlin.name.ClassId
+-
+-/**
+- * A [PsiMember] declaration provider for a given scope. Can be created via [KotlinPsiDeclarationProviderFactory].
+- */
+-abstract class KotlinPsiDeclarationProvider {
+-    /**
+-     * Gets a collection of [PsiClass] by [ClassId]
+-     *
+-     * In standalone mode, this is simply [PsiClassStub]-based [PsiClass]
+-     */
+-    abstract fun getClassesByClassId(classId: ClassId): Collection<PsiClass>
+-
+-    abstract fun getProperties(callableId: CallableId): Collection<PsiMember>
+-    abstract fun getFunctions(callableId: CallableId): Collection<PsiMethod>
+-}
+-
+-abstract class KotlinPsiDeclarationProviderFactory {
+-    abstract fun createPsiDeclarationProvider(searchScope: GlobalSearchScope): KotlinPsiDeclarationProvider
+-}
+-
+-fun Project.createPsiDeclarationProvider(searchScope: GlobalSearchScope): KotlinPsiDeclarationProvider? =
+-    // TODO: avoid using fail-safe service loading once the factory has an easy-to-register ctor.
+-    getServiceIfCreated(KotlinPsiDeclarationProviderFactory::class.java)
+-        ?.createPsiDeclarationProvider(searchScope)
+diff --git a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/providers/impl/FirStaticPsiDeclarationFromBinaryModuleProvider.kt b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/providers/impl/FirStaticPsiDeclarationFromBinaryModuleProvider.kt
+deleted file mode 100644
+index 3fd8101056d5..000000000000
+--- a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/providers/impl/FirStaticPsiDeclarationFromBinaryModuleProvider.kt
++++ /dev/null
+@@ -1,107 +0,0 @@
+-/*
+- * Copyright 2010-2022 JetBrains s.r.o. and Kotlin Programming Language contributors.
+- * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
+- */
+-package org.jetbrains.uast.kotlin.providers.impl
+-
+-import com.intellij.openapi.project.Project
+-import com.intellij.openapi.vfs.VirtualFile
+-import com.intellij.openapi.vfs.impl.jar.CoreJarFileSystem
+-import com.intellij.psi.*
+-import com.intellij.psi.impl.compiled.ClsClassImpl
+-import com.intellij.psi.impl.compiled.ClsFileImpl
+-import com.intellij.psi.search.GlobalSearchScope
+-import org.jetbrains.kotlin.analysis.decompiled.light.classes.ClsJavaStubByVirtualFileCache
+-import org.jetbrains.kotlin.analysis.project.structure.KtBinaryModule
+-import org.jetbrains.kotlin.analysis.providers.impl.AbstractDeclarationFromBinaryModuleProvider
+-import org.jetbrains.kotlin.asJava.builder.ClsWrapperStubPsiFactory
+-import org.jetbrains.kotlin.name.CallableId
+-import org.jetbrains.kotlin.name.ClassId
+-import org.jetbrains.kotlin.name.FqName
+-import org.jetbrains.kotlin.util.capitalizeDecapitalize.decapitalizeSmart
+-import org.jetbrains.uast.kotlin.providers.KotlinPsiDeclarationProvider
+-import org.jetbrains.uast.kotlin.providers.KotlinPsiDeclarationProviderFactory
+-
+-private class FirStaticPsiDeclarationFromBinaryModuleProvider(
+-    private val project: Project,
+-    override val scope: GlobalSearchScope,
+-    private val binaryModules: Collection<KtBinaryModule>,
+-    override val jarFileSystem: CoreJarFileSystem,
+-) : KotlinPsiDeclarationProvider(), AbstractDeclarationFromBinaryModuleProvider {
+-    private val psiManager by lazy { PsiManager.getInstance(project) }
+-
+-    private fun clsClassImplsByFqName(
+-        fqName: FqName,
+-        isPackageName: Boolean = true,
+-    ): Collection<ClsClassImpl> {
+-        return binaryModules
+-            .flatMap {
+-                virtualFilesFromModule(it, fqName, isPackageName)
+-            }
+-            .mapNotNull {
+-                createClsJavaClassFromVirtualFile(it)
+-            }
+-    }
+-
+-    private fun createClsJavaClassFromVirtualFile(
+-        classFile: VirtualFile,
+-    ): ClsClassImpl? {
+-        val javaFileStub = ClsJavaStubByVirtualFileCache.getInstance(project).get(classFile) ?: return null
+-        javaFileStub.psiFactory = ClsWrapperStubPsiFactory.INSTANCE
+-        val fakeFile = object : ClsFileImpl(ClassFileViewProvider(psiManager, classFile)) {
+-            override fun getStub() = javaFileStub
+-
+-            override fun isPhysical() = false
+-        }
+-        javaFileStub.psi = fakeFile
+-        return fakeFile.classes.single() as ClsClassImpl
+-    }
+-
+-    override fun getClassesByClassId(classId: ClassId): Collection<ClsClassImpl> {
+-        return clsClassImplsByFqName(classId.asSingleFqName(), isPackageName = false)
+-    }
+-
+-    override fun getProperties(callableId: CallableId): Collection<PsiMember> {
+-        val classes = callableId.classId?.let { classId ->
+-            getClassesByClassId(classId)
+-        } ?: clsClassImplsByFqName(callableId.packageName)
+-        return classes.flatMap { psiClass ->
+-            psiClass.children
+-                .filterIsInstance<PsiMember>()
+-                .filter { psiMember ->
+-                    if (psiMember !is PsiMethod && psiMember !is PsiField) return@filter false
+-                    val name = psiMember.name ?: return@filter false
+-                    // PsiField a.k.a. backing field
+-                    name == callableId.callableName.identifier ||
+-                            // PsiMethod, i.e., accessors
+-                            (name.startsWith("get") || name.startsWith("set")) &&
+-                            // E.g., getFooBar -> FooBar -> fooBar
+-                            (name.substring(3).decapitalizeSmart().endsWith(callableId.callableName.identifier))
+-
+-                }
+-        }.toList()
+-    }
+-
+-    override fun getFunctions(callableId: CallableId): Collection<PsiMethod> {
+-        val classes = callableId.classId?.let { classId ->
+-            getClassesByClassId(classId)
+-        } ?: clsClassImplsByFqName(callableId.packageName)
+-        return classes.flatMap { psiClass ->
+-            psiClass.methods.filter { psiMethod ->
+-                psiMethod.name == callableId.callableName.identifier
+-            }
+-        }.toList()
+-    }
+-}
+-
+-// TODO: we can't register this in IDE yet due to non-trivial parameters: lib modules and jar file system.
+-//  We need a session or facade that maintains such information
+-class KotlinStaticPsiDeclarationProviderFactory(
+-    private val project: Project,
+-    private val binaryModules: Collection<KtBinaryModule>,
+-    private val jarFileSystem: CoreJarFileSystem,
+-) : KotlinPsiDeclarationProviderFactory() {
+-    override fun createPsiDeclarationProvider(searchScope: GlobalSearchScope): KotlinPsiDeclarationProvider {
+-        return FirStaticPsiDeclarationFromBinaryModuleProvider(project, searchScope, binaryModules, jarFileSystem)
+-    }
+-}

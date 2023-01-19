@@ -5,7 +5,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("java")
-    kotlin("jvm") version "1.6.10" // Aim to match the Kotlin version below.
+    kotlin("jvm") version "1.7.21" // Aim to match the Kotlin version below.
 }
 
 val intellijVersion = getEnvOrError("INTELLIJ_VERSION")
