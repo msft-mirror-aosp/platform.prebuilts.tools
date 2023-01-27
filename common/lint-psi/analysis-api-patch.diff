@@ -1,19 +1,3 @@
-diff --git a/analysis/analysis-api-providers/src/org/jetbrains/kotlin/analysis/providers/impl/KotlinStaticDeclarationProvider.kt b/analysis/analysis-api-providers/src/org/jetbrains/kotlin/analysis/providers/impl/KotlinStaticDeclarationProvider.kt
-index 32fee2e3cd5..28ba04f8a45 100644
---- a/analysis/analysis-api-providers/src/org/jetbrains/kotlin/analysis/providers/impl/KotlinStaticDeclarationProvider.kt
-+++ b/analysis/analysis-api-providers/src/org/jetbrains/kotlin/analysis/providers/impl/KotlinStaticDeclarationProvider.kt
-@@ -220,9 +220,11 @@ public class KotlinStaticDeclarationProviderFactory(
-         val recorder = KtDeclarationRecorder()
-
-         // Indexing built-ins
-+        /* Main cause of performance degradataion
-         loadBuiltIns().forEach {
-             it.accept(recorder)
-         }
-+        */
-
-         // Indexing user source files
-         files.forEach {
 diff --git a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KtModuleUtils.kt b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KtModuleUtils.kt
 index 527966765db..16284fd6828 100644
 --- a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KtModuleUtils.kt
@@ -105,4 +89,114 @@ index e775f370e63..ff097a85c3f 100644
 +    override fun resolveKDocLink(element: KDocName): Collection<DeclarationDescriptor> = emptyList()
 +}
 +
+
+diff --git a/analysis/analysis-api-providers/src/org/jetbrains/kotlin/analysis/providers/impl/KotlinStaticDeclarationProvider.kt b/analysis/analysis-api-providers/src/org/jetbrains/kotlin/analysis/providers/impl/KotlinStaticDeclarationProvider.kt
+index 32fee2e3cd5..745e70d58a8 100644
+--- a/analysis/analysis-api-providers/src/org/jetbrains/kotlin/analysis/providers/impl/KotlinStaticDeclarationProvider.kt
++++ b/analysis/analysis-api-providers/src/org/jetbrains/kotlin/analysis/providers/impl/KotlinStaticDeclarationProvider.kt
+@@ -6,20 +6,22 @@
+ package org.jetbrains.kotlin.analysis.providers.impl
+
+ import com.intellij.openapi.project.Project
++import com.intellij.openapi.vfs.VirtualFile
+ import com.intellij.openapi.vfs.impl.jar.CoreJarFileSystem
+ import com.intellij.psi.*
+ import com.intellij.psi.search.GlobalSearchScope
++import com.intellij.psi.stubs.StubElement
+ import com.intellij.util.indexing.FileContent
+ import com.intellij.util.indexing.FileContentImpl
+ import com.intellij.util.io.URLUtil
+ import org.jetbrains.kotlin.analysis.decompiler.psi.KotlinBuiltInDecompiler
+-import org.jetbrains.kotlin.analysis.decompiler.psi.KotlinDecompiledFileViewProvider
+-import org.jetbrains.kotlin.analysis.decompiler.psi.file.KtDecompiledFile
+ import org.jetbrains.kotlin.analysis.providers.KotlinDeclarationProvider
+ import org.jetbrains.kotlin.analysis.providers.KotlinDeclarationProviderFactory
+ import org.jetbrains.kotlin.fileClasses.javaFileFacadeFqName
++import org.jetbrains.kotlin.idea.KotlinLanguage
+ import org.jetbrains.kotlin.name.*
+ import org.jetbrains.kotlin.psi.*
++import org.jetbrains.kotlin.psi.stubs.impl.*
+ import org.jetbrains.kotlin.serialization.deserialization.builtins.BuiltInSerializerProtocol
+
+ public class KotlinStaticDeclarationIndex {
+@@ -110,7 +112,7 @@ public class KotlinStaticDeclarationProviderFactory(
+     private val psiManager = PsiManager.getInstance(project)
+     private val builtInDecompiler = KotlinBuiltInDecompiler()
+
+-    private fun loadBuiltIns(): Collection<KtDecompiledFile> {
++    private fun loadBuiltIns(): Collection<KotlinFileStubImpl> {
+         val classLoader = this::class.java.classLoader
+         return buildList {
+             StandardClassIds.builtInsPackages.forEach { builtInPackageFqName ->
+@@ -124,7 +126,7 @@ public class KotlinStaticDeclarationProviderFactory(
+                         val pathToQuery = jarPath + URLUtil.JAR_SEPARATOR + builtInFile
+                         jarFileSystem.findFileByPath(pathToQuery)?.let { vf ->
+                             val fileContent = FileContentImpl.createByFile(vf, project)
+-                            createKtFileStub(fileContent)?.let { file -> add(file) }
++                            createKtFileStub(psiManager, builtInDecompiler, fileContent)?.let { file -> add(file) }
+                         }
+                     }
+                 }
+@@ -133,18 +135,25 @@ public class KotlinStaticDeclarationProviderFactory(
+     }
+
+     private fun createKtFileStub(
++        psiManager: PsiManager,
++        builtInDecompiler: KotlinBuiltInDecompiler,
+         fileContent: FileContent,
+-    ): KtDecompiledFile? {
+-        val fileViewProvider =
+-            builtInDecompiler.createFileViewProvider(fileContent.file, psiManager, physical = true) as? KotlinDecompiledFileViewProvider
+-                ?: return null
+-        return builtInDecompiler.readFile(fileContent.content, fileContent.file)?.let { fileWithMetadata ->
+-            KtDecompiledFile(fileViewProvider) {
+-                builtInDecompiler.buildDecompiledText(fileWithMetadata)
+-            }
++    ): KotlinFileStubImpl? {
++        val ktFileStub = builtInDecompiler.stubBuilder.buildFileStub(fileContent) as? KotlinFileStubImpl ?: return null
++        val fakeFile = object : KtFile(KtClassFileViewProvider(psiManager, fileContent.file), isCompiled = true) {
++            override fun getStub() = ktFileStub
++
++            override fun isPhysical() = false
+         }
++        ktFileStub.psi = fakeFile
++        return ktFileStub
+     }
+
++    private class KtClassFileViewProvider(
++        psiManager: PsiManager,
++        virtualFile: VirtualFile,
++    ) : SingleRootFileViewProvider(psiManager, virtualFile, true, KotlinLanguage.INSTANCE)
++
+     private inner class KtDeclarationRecorder : KtVisitorVoid() {
+
+         override fun visitElement(element: PsiElement) {
+@@ -220,8 +229,25 @@ public class KotlinStaticDeclarationProviderFactory(
+         val recorder = KtDeclarationRecorder()
+
+         // Indexing built-ins
+-        loadBuiltIns().forEach {
+-            it.accept(recorder)
++        fun indexStub(stub: StubElement<*>) {
++            when (stub) {
++                is KotlinClassStubImpl -> {
++                    addToClassMap(stub.psi)
++                    // member functions and properties
++                    stub.childrenStubs.forEach(::indexStub)
++                }
++                is KotlinTypeAliasStubImpl -> addToTypeAliasMap(stub.psi)
++                is KotlinFunctionStubImpl -> addToFunctionMap(stub.psi)
++                is KotlinPropertyStubImpl -> addToPropertyMap(stub.psi)
++            }
++        }
++
++        if (System.getProperty("lint.use.fir.uast", "false").toBoolean()) {
++            loadBuiltIns().forEach { ktFileStub ->
++                addToFacadeFileMap(ktFileStub.psi)
++                // top-level functions and properties, built-in classes
++                ktFileStub.childrenStubs.forEach(::indexStub)
++            }
+         }
+
+         // Indexing user source files
 

@@ -35,8 +35,13 @@ for (jarName in allJarNames) {
         archiveFileName.set("$jarName.jar")
         dependsOn(jarContent)
         from(jarContent.map(::zipTree))
-        duplicatesStrategy = DuplicatesStrategy.EXCLUDE // To appease the singlejar tool.
         includeEmptyDirs = false
+        // To appease the singlejar tool, we must avoid duplicate jar entries.
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+        // We remove the "__index__" jar entries, because (1) they are intended only for the IDE environment where
+        // they are used for classloading optimizations, and (2) they lead to duplicate jar entries when
+        // we merge the various UAST jars to be packaged into AGP.
+        exclude("__index__")
     }
 
     val sourcesJarTask = tasks.register<Jar>("$jarName-sources-jar") {
