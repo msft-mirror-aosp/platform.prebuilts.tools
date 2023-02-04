@@ -133,8 +133,11 @@ tasks.named<Jar>("uast-kotlin-sources-jar") {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
-        jvmTarget = "11"
-        freeCompilerArgs = listOf("-Xjvm-default=enable")
+        jvmTarget = "17"
+        freeCompilerArgs = listOf(
+            "-Xjvm-default=all",
+            "-opt-in=org.jetbrains.kotlin.utils.addToStdlib.UnsafeCastFunction"
+        )
         suppressWarnings = true
     }
 }

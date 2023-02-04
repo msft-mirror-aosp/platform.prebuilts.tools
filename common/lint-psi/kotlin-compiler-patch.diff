@@ -21,10 +21,10 @@ index 914c096ceab0..6b84229ad10f 100644
              // class files for the previous build on the class path.
              //
 diff --git a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
-index 92877f1e09db..a743e39f3c75 100644
+index 99b5300d44f..8ce4360c082 100644
 --- a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
 +++ b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
-@@ -412,7 +412,9 @@ class KotlinCoreEnvironment private constructor(
+@@ -384,7 +384,9 @@ class KotlinCoreEnvironment private constructor(
              is JvmModulePathRoot ->
                  if (root.file.isFile) findJarRoot(root.file) else findExistingRoot(root, "Java module root")
              is JavaSourceRoot ->
@@ -35,3 +35,20 @@ index 92877f1e09db..a743e39f3c75 100644
              is VirtualJvmClasspathRoot -> root.file
              else ->
                  throw IllegalStateException("Unexpected root: $root")
+@@ -606,11 +608,15 @@ class KotlinCoreEnvironment private constructor(
+                                 "(cp:\n  ${(Thread.currentThread().contextClassLoader as? UrlClassLoader)?.urls?.joinToString("\n  ") { it.file }})"
+                     )
+ 
++            try {
+             CoreApplicationEnvironment.registerExtensionPointAndExtensions(
+                 FileSystems.getDefault().getPath(pluginRoot.path),
+                 configFilePath,
+                 ApplicationManager.getApplication().extensionArea
+             )
++            } catch (e: RuntimeException) {
++              // IDEA-311845: ExpiredPluginsState reads bin/idea.properties
++            }
+         }
+ 
+         @JvmStatic
+
