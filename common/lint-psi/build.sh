@@ -6,7 +6,7 @@ set -eu
 
 # These versions should generally be updated to match what we use in Android Studio.
 # For the IntelliJ version, see tools/idea/build.txt.
-# For the Kotlin version, see prebuilts/tools/common/kotlin-plugin/Kotlin/kotlinc/build.txt.
+# For the Kotlin version, see tools/idea/.idea/libraries/kotlinc_*.xml.
 # The git SHAs must also be updated to match the versions specified.
 export INTELLIJ_VERSION="223.8214.52"
 export KOTLIN_VERSION="1.8.20-Beta"
