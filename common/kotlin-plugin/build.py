@@ -22,7 +22,7 @@ def main():
     parser.add_argument('--stage', metavar='DIR', type=Path)
     parser.add_argument('--kotlin-ide-version', default='1.8.20-dev-1103')
     parser.add_argument('--kotlin-standalone-version', default='1.7.21')
-    parser.add_argument('--intellij-version', default='223.7571.182')
+    parser.add_argument('--intellij-version', default='223.8214.52')
 
     args = parser.parse_args()
 
