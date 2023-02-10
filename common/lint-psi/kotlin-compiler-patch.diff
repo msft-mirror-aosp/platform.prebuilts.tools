@@ -21,10 +21,10 @@ index 914c096ceab0..6b84229ad10f 100644
              // class files for the previous build on the class path.
              //
 diff --git a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
-index 99b5300d44f..8ce4360c082 100644
+index 749c69ca4194..77fa6db62e9f 100644
 --- a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
 +++ b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
-@@ -384,7 +384,9 @@ class KotlinCoreEnvironment private constructor(
+@@ -378,7 +378,9 @@ class KotlinCoreEnvironment private constructor(
              is JvmModulePathRoot ->
                  if (root.file.isFile) findJarRoot(root.file) else findExistingRoot(root, "Java module root")
              is JavaSourceRoot ->
@@ -35,7 +35,7 @@ index 99b5300d44f..8ce4360c082 100644
              is VirtualJvmClasspathRoot -> root.file
              else ->
                  throw IllegalStateException("Unexpected root: $root")
-@@ -606,11 +608,15 @@ class KotlinCoreEnvironment private constructor(
+@@ -620,11 +622,15 @@ class KotlinCoreEnvironment private constructor(
                                  "(cp:\n  ${(Thread.currentThread().contextClassLoader as? UrlClassLoader)?.urls?.joinToString("\n  ") { it.file }})"
                      )
  
@@ -51,4 +51,48 @@ index 99b5300d44f..8ce4360c082 100644
          }
  
          @JvmStatic
+@@ -646,7 +652,6 @@ class KotlinCoreEnvironment private constructor(
+             CollectAdditionalSourcesExtension.registerExtensionPoint(project)
+             ProcessSourcesBeforeCompilingExtension.registerExtensionPoint(project)
+             ExtraImportsProviderExtension.registerExtensionPoint(project)
+-            IrGenerationExtension.registerExtensionPoint(project)
+             ScriptEvaluationExtension.registerExtensionPoint(project)
+             ShellExtension.registerExtensionPoint(project)
+             TypeResolutionInterceptor.registerExtensionPoint(project)
+diff --git a/prepare/ide-plugin-dependencies/kotlin-compiler-fe10-for-ide/build.gradle.kts b/prepare/ide-plugin-dependencies/kotlin-compiler-fe10-for-ide/build.gradle.kts
+index 6b14ece06fa0..65258f7bdbe0 100644
+--- a/prepare/ide-plugin-dependencies/kotlin-compiler-fe10-for-ide/build.gradle.kts
++++ b/prepare/ide-plugin-dependencies/kotlin-compiler-fe10-for-ide/build.gradle.kts
+@@ -8,7 +8,10 @@ val excludedCompilerModules = listOf(
+     ":compiler:cli",
+     ":compiler:cli-js",
+     ":compiler:javac-wrapper",
+-    ":compiler:incremental-compilation-impl"
++    ":compiler:incremental-compilation-impl",
++    ":compiler:backend.js",
++    ":compiler:backend.wasm",
++    ":js:js.dce",
+ )
+
+ val projects = fe10CompilerModules.asList() - excludedCompilerModules + listOf(":analysis:kt-references:kt-references-fe10")
+
+diff --git a/prepare/ide-plugin-dependencies/kotlin-compiler-ir-for-ide/build.gradle.kts b/prepare/ide-plugin-dependencies/kotlin-compiler-ir-for-ide/build.gradle.kts
+index 0574c7bcf195..20c064a0ba41 100644
+--- a/prepare/ide-plugin-dependencies/kotlin-compiler-ir-for-ide/build.gradle.kts
++++ b/prepare/ide-plugin-dependencies/kotlin-compiler-ir-for-ide/build.gradle.kts
+@@ -4,4 +4,13 @@ plugins {
+
+ val irCompilerModules: Array<String> by rootProject.extra
+
+-publishJarsForIde(irCompilerModules.asList())
++val excludeModules = listOf(
++    ":compiler:ir.backend.common",
++    ":compiler:ir.interpreter",
++    ":compiler:ir.serialization.js",
++    ":compiler:backend.js",
++    ":compiler:backend.wasm",
++    ":wasm:wasm.ir",
++)
++
++publishJarsForIde(irCompilerModules.asList() - excludeModules)
 
