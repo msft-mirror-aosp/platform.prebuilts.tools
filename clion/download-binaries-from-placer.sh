@@ -54,35 +54,27 @@ while (( "$#" )); do
   esac
 done
 
-if [ -n "$LINUX_RELEASE" ]; then
-  rm -r "$SCRIPT_DIR"/bin/clang/linux
-  mkdir -p "$SCRIPT_DIR"/bin/clang/linux
-  pushd "$SCRIPT_DIR"/bin/clang/linux
-  fileutil cp -R -resume /placer/prod/home/kokoro-dedicated/build_artifacts/prod/android-studio/clangd/linux/release/"$LINUX_RELEASE"/'*/*' .
-  chmod +x clangd
-  chmod +x clang-tidy
-  if [ $STRIP_BINARIES == 1 ]; then
-    echo "Stripping Linux binaries"
-    strip clangd
-    strip clang-tidy
-    strip libc++.so.1
+readonly BIN_DIR="${SCRIPT_DIR}/bin/clang"
+if [[ -n "${LINUX_RELEASE}" ]]; then
+  rm -rv "${BIN_DIR}/linux"
+  mkdir -pv "${BIN_DIR}/linux"
+  fileutil cp -R -resume "/placer/prod/home/kokoro-dedicated/build_artifacts/prod/android-studio/clangd/linux/release/${LINUX_RELEASE}/*/*" "${BIN_DIR}/linux"
+  rm -v "${BIN_DIR}/linux"/*.intoto.jsonl
+  chmod -v +x "${BIN_DIR}/linux"/{clangd,clang-tidy}
+  if [[ "${STRIP_BINARIES}" == 1 ]]; then
+    strip -v "${BIN_DIR}/linux"/{clangd,clang-tidy,libc++.so.1}
   fi
-  popd
 fi
-if [ -n "$MAC_RELEASE" ]; then
-  rm -r "$SCRIPT_DIR"/bin/clang/mac
-  mkdir -p "$SCRIPT_DIR"/bin/clang/mac
-  pushd "$SCRIPT_DIR"/bin/clang/mac
-  fileutil cp -R -resume /placer/prod/home/kokoro-dedicated/build_artifacts/prod/android-studio/clangd/mac/release/"$MAC_RELEASE"/'*/*' .
-  chmod +x clangd
-  chmod +x clang-tidy
-  popd
+if [[ -n "${MAC_RELEASE}" ]]; then
+  rm -rv "${BIN_DIR}/mac"
+  mkdir -pv "${BIN_DIR}/mac"
+  fileutil cp -R -resume "/placer/prod/home/kokoro-dedicated/build_artifacts/prod/android-studio/clangd/mac/release/${MAC_RELEASE}/*/*" "${BIN_DIR}/mac"
+  rm -v "${BIN_DIR}/mac"/*.intoto.jsonl
+  chmod -v +x "${BIN_DIR}/mac"/{clangd,clang-tidy}
 fi
-if [ -n "$WIN_RELEASE" ]; then
-  rm -r "$SCRIPT_DIR"/bin/clang/win
-  mkdir -p "$SCRIPT_DIR"/bin/clang/win
-  pushd "$SCRIPT_DIR"/bin/clang/win
-  fileutil cp -R -resume /placer/prod/home/kokoro-dedicated/build_artifacts/prod/android-studio/clangd/win/release/"$WIN_RELEASE"/'*/*' "$SCRIPT_DIR"/bin/clang/win
-  popd
+if [[ -n "${WIN_RELEASE}" ]]; then
+  rm -rv "${BIN_DIR}/win"
+  mkdir -pv "${BIN_DIR}/win"
+  fileutil cp -R -resume "/placer/prod/home/kokoro-dedicated/build_artifacts/prod/android-studio/clangd/win/release/${WIN_RELEASE}/*/*" "${BIN_DIR}/win"
+  rm -v "${BIN_DIR}/win"/*.intoto.jsonl
 fi
-
