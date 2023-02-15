@@ -57,12 +57,12 @@ done
 readonly BIN_DIR="${SCRIPT_DIR}/bin/clang"
 if [[ -n "${LINUX_RELEASE}" ]]; then
   rm -rv "${BIN_DIR}/linux"
-  mkdir -pv "${BIN_DIR}/linux"
-  fileutil cp -R -resume "/placer/prod/home/kokoro-dedicated/build_artifacts/prod/android-studio/clangd/linux/release/${LINUX_RELEASE}/*/*" "${BIN_DIR}/linux"
-  rm -v "${BIN_DIR}/linux"/*.intoto.jsonl
-  chmod -v +x "${BIN_DIR}/linux"/{clangd,clang-tidy}
+  mkdir -pv "${BIN_DIR}/linux/x64"
+  fileutil cp -R -resume "/placer/prod/home/kokoro-dedicated/build_artifacts/prod/android-studio/clangd/linux/release/${LINUX_RELEASE}/*/*" "${BIN_DIR}/linux/x64"
+  rm -v "${BIN_DIR}/linux/x64"/*.intoto.jsonl
+  chmod -v +x "${BIN_DIR}/linux/x64"/{clangd,clang-tidy}
   if [[ "${STRIP_BINARIES}" == 1 ]]; then
-    strip -v "${BIN_DIR}/linux"/{clangd,clang-tidy,libc++.so.1}
+    strip -v "${BIN_DIR}/linux/x64"/{clangd,clang-tidy,libc++.so.1}
   fi
 fi
 if [[ -n "${MAC_RELEASE}" ]]; then
@@ -74,7 +74,7 @@ if [[ -n "${MAC_RELEASE}" ]]; then
 fi
 if [[ -n "${WIN_RELEASE}" ]]; then
   rm -rv "${BIN_DIR}/win"
-  mkdir -pv "${BIN_DIR}/win"
-  fileutil cp -R -resume "/placer/prod/home/kokoro-dedicated/build_artifacts/prod/android-studio/clangd/win/release/${WIN_RELEASE}/*/*" "${BIN_DIR}/win"
-  rm -v "${BIN_DIR}/win"/*.intoto.jsonl
+  mkdir -pv "${BIN_DIR}/win/x64"
+  fileutil cp -R -resume "/placer/prod/home/kokoro-dedicated/build_artifacts/prod/android-studio/clangd/win/release/${WIN_RELEASE}/*/*" "${BIN_DIR}/win/x64"
+  rm -v "${BIN_DIR}/win/x64"/*.intoto.jsonl
 fi
