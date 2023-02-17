@@ -643,3 +643,10 @@ jvm_import(
     jars = ["repository/com/squareup/okio/okio/2.8.0/okio-2.8.0.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "Java-WebSocket-1.5.3",
+    jars = ["repository/org/java-websocket/Java-WebSocket/1.5.3/Java-WebSocket-1.5.3.jar"],
+    visibility = ["//visibility:public"],
+)
