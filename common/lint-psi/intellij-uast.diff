@@ -1,0 +1,175 @@
+diff --git a/plugins/kotlin/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/KotlinUastTypeMapper.kt b/plugins/kotlin/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/KotlinUastTypeMapper.kt
+index 4960c39ea2422..cddfefbea0754 100644
+--- a/plugins/kotlin/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/KotlinUastTypeMapper.kt
++++ b/plugins/kotlin/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/KotlinUastTypeMapper.kt
+@@ -223,7 +223,7 @@ object KotlinUastTypeMapper {
+                     return Variance.INVARIANT
+                 }
+ 
+-                if (parameterVariance == Variance.IN_VARIANCE && isMostPreciseContravariantArgument(projection.getType(), parameter)) {
++                if (parameterVariance == Variance.IN_VARIANCE && isMostPreciseContravariantArgument(projection.getType())) {
+                     return Variance.INVARIANT
+                 }
+             }
+diff --git a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastResolveProviderService.kt b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastResolveProviderService.kt
+index a86aca0425c52..3ec69f28547b0 100644
+--- a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastResolveProviderService.kt
++++ b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastResolveProviderService.kt
+@@ -137,8 +137,9 @@ interface FirKotlinUastResolveProviderService : BaseKotlinUastResolveProviderSer
+             val valueParameters = ktLambdaExpression.functionLiteral.getAnonymousFunctionSymbol().valueParameters
+             if (includeExplicitParameters && valueParameters.isEmpty()) {
+                 val expectedType = ktLambdaExpression.getExpectedType() as? KtFunctionalType
+-                val lambdaImplicitReceiverType = expectedType?.typeArguments?.get(0)?.type?.asPsiType(
++                val lambdaImplicitReceiverType = expectedType?.ownTypeArguments?.get(0)?.type?.asPsiType(
+                     ktLambdaExpression,
++                    allowErrorTypes = false,
+                     KtTypeMappingMode.DEFAULT_UAST,
+                     isAnnotationMethod = false
+                 ) ?: UastErrorType
+@@ -161,6 +162,7 @@ interface FirKotlinUastResolveProviderService : BaseKotlinUastResolveProviderSer
+             return valueParameters.map { p ->
+                 val psiType = p.returnType.asPsiType(
+                     ktLambdaExpression,
++                    allowErrorTypes = false,
+                     KtTypeMappingMode.DEFAULT_UAST,
+                     isAnnotationMethod = false
+                 ) ?: UastErrorType
+@@ -360,7 +362,7 @@ interface FirKotlinUastResolveProviderService : BaseKotlinUastResolveProviderSer
+                             buildClassType(enumClassId)
+                         }
+                     else ->
+-                        buildClassType(classOrObject.getClassOrObjectSymbol())
++                        classOrObject.getClassOrObjectSymbol()?.let(::buildClassType)
+                 } ?: return null
+                 val psiClass = toPsiClass(ktType, source = null, classOrObject, classOrObject.typeOwnerKind)
+                 return when (classOrObject) {
+@@ -419,7 +421,7 @@ interface FirKotlinUastResolveProviderService : BaseKotlinUastResolveProviderSer
+     override fun resolveToType(ktTypeReference: KtTypeReference, source: UElement, boxed: Boolean): PsiType? {
+         analyzeForUast(ktTypeReference) {
+             val ktType = ktTypeReference.getKtType()
+-            if (ktType is KtClassErrorType) return null
++            if (ktType is KtErrorType) return null
+             return toPsiType(ktType, source, ktTypeReference, ktTypeReference.typeOwnerKind, boxed)
+         }
+     }
+@@ -427,7 +429,7 @@ interface FirKotlinUastResolveProviderService : BaseKotlinUastResolveProviderSer
+     override fun resolveToType(ktTypeReference: KtTypeReference, containingLightDeclaration: PsiModifierListOwner?): PsiType? {
+         analyzeForUast(ktTypeReference) {
+             val ktType = ktTypeReference.getKtType()
+-            if (ktType is KtClassErrorType) return null
++            if (ktType is KtErrorType) return null
+             return toPsiType(ktType, containingLightDeclaration, ktTypeReference, ktTypeReference.typeOwnerKind)
+         }
+     }
+@@ -492,7 +494,7 @@ interface FirKotlinUastResolveProviderService : BaseKotlinUastResolveProviderSer
+         val sourcePsi = uLambdaExpression.sourcePsi
+         analyzeForUast(sourcePsi) {
+             val samType = sourcePsi.getExpectedType()
+-                ?.takeIf { it !is KtClassErrorType && it.isFunctionalInterfaceType }
++                ?.takeIf { it !is KtErrorType && it.isFunctionalInterfaceType }
+                 ?.lowerBoundIfFlexible()
+                 ?: return null
+             return toPsiType(samType, uLambdaExpression, sourcePsi, sourcePsi.typeOwnerKind)
+diff --git a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt
+index 61787ab95cb28..c66dfdd3862c0 100644
+--- a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt
++++ b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt
+@@ -12,7 +12,7 @@ import org.jetbrains.kotlin.analysis.api.calls.symbol
+ import org.jetbrains.kotlin.analysis.api.components.buildClassType
+ import org.jetbrains.kotlin.analysis.api.lifetime.KtAlwaysAccessibleLifetimeTokenFactory
+ import org.jetbrains.kotlin.analysis.api.symbols.*
+-import org.jetbrains.kotlin.analysis.api.types.KtClassErrorType
++import org.jetbrains.kotlin.analysis.api.types.KtErrorType
+ import org.jetbrains.kotlin.analysis.api.types.KtNonErrorClassType
+ import org.jetbrains.kotlin.analysis.api.types.KtType
+ import org.jetbrains.kotlin.analysis.api.types.KtTypeMappingMode
+@@ -97,7 +97,7 @@ internal fun KtAnalysisSession.toPsiMethod(
+             when {
+                 psi.isLocal ->
+                     handleLocalOrSynthetic(psi)
+-                overriddenUnwrappedSymbolOrigin(functionSymbol) == KtSymbolOrigin.LIBRARY ->
++                functionSymbol.unwrapFakeOverrides.origin == KtSymbolOrigin.LIBRARY ->
+                     // PSI to regular libraries should be handled by [DecompiledPsiDeclarationProvider]
+                     // That is, this one is a deserialized declaration.
+                     toPsiMethodForDeserialized(functionSymbol, context, psi)
+@@ -110,17 +110,6 @@ internal fun KtAnalysisSession.toPsiMethod(
+     }
+ }
+ 
+-private fun KtAnalysisSession.overriddenUnwrappedSymbolOrigin(ktSymbol: KtCallableSymbol): KtSymbolOrigin =
+-    when (val origin = ktSymbol.origin) {
+-        KtSymbolOrigin.INTERSECTION_OVERRIDE,
+-        KtSymbolOrigin.SUBSTITUTION_OVERRIDE -> {
+-            ktSymbol.originalOverriddenSymbol?.let {
+-                overriddenUnwrappedSymbolOrigin(it)
+-            } ?: origin
+-        }
+-        else -> origin
+-    }
+-
+ private fun KtAnalysisSession.toPsiMethodForDeserialized(
+     functionSymbol: KtFunctionLikeSymbol,
+     context: KtElement,
+@@ -211,7 +200,7 @@ internal fun KtAnalysisSession.toPsiType(
+     boxed: Boolean = false,
+     ktTypeMappingMode: KtTypeMappingMode = KtTypeMappingMode.DEFAULT_UAST,
+ ): PsiType {
+-    if (ktType is KtNonErrorClassType && ktType.typeArguments.isEmpty()) {
++    if (ktType is KtNonErrorClassType && ktType.ownTypeArguments.isEmpty()) {
+         fun PsiPrimitiveType.orBoxed() = if (boxed) getBoxedType(context) else this
+         val psiType = when (ktType.classId) {
+             StandardClassIds.Int -> PsiType.INT.orBoxed()
+@@ -231,6 +220,7 @@ internal fun KtAnalysisSession.toPsiType(
+     val psiTypeParent: PsiElement = containingLightDeclaration ?: context
+     return ktType.asPsiType(
+         psiTypeParent,
++        allowErrorTypes = false,
+         ktTypeMappingMode,
+         isAnnotationMethod = false
+     ) ?: UastErrorType
+@@ -255,13 +245,13 @@ internal fun KtAnalysisSession.receiverType(
+             else
+                 ktCall.partiallyAppliedSymbol.dispatchReceiver?.type
+     }
+-    if (ktType == null || ktType is KtClassErrorType) return null
++    if (ktType == null || ktType is KtErrorType) return null
+     return toPsiType(ktType, source, context, context.typeOwnerKind, boxed = true)
+ }
+ 
+ internal fun KtAnalysisSession.nullability(ktType: KtType?): TypeNullability? {
+     if (ktType == null) return null
+-    if (ktType is KtClassErrorType) return null
++    if (ktType is KtErrorType) return null
+     return if (ktType.canBeNull) TypeNullability.NULLABLE else TypeNullability.NOT_NULL
+ }
+ 
+@@ -281,17 +271,19 @@ internal fun KtAnalysisSession.nullability(ktExpression: KtExpression): TypeNull
+ /**
+  * Finds Java stub-based [PsiElement] for symbols that refer to declarations in [KtLibraryModule].
+  */
+-internal fun KtAnalysisSession.psiForUast(ktSymbol: KtSymbol, project: Project): PsiElement? {
+-    return when (ktSymbol.origin) {
+-        KtSymbolOrigin.LIBRARY -> {
+-            findPsi(ktSymbol, project) ?: ktSymbol.psi
+-        }
+-        KtSymbolOrigin.INTERSECTION_OVERRIDE,
+-        KtSymbolOrigin.SUBSTITUTION_OVERRIDE -> {
+-            (ktSymbol as? KtCallableSymbol)?.originalOverriddenSymbol?.let {
+-                psiForUast(it, project)
++internal tailrec fun KtAnalysisSession.psiForUast(symbol: KtSymbol, project: Project): PsiElement? {
++    if (symbol.origin == KtSymbolOrigin.LIBRARY) {
++        return findPsi(symbol, project) ?: symbol.psi
++    }
++
++    if (symbol is KtCallableSymbol) {
++        if (symbol.origin == KtSymbolOrigin.INTERSECTION_OVERRIDE || symbol.origin == KtSymbolOrigin.SUBSTITUTION_OVERRIDE) {
++            val originalSymbol = symbol.unwrapFakeOverrides
++            if (originalSymbol !== symbol) {
++                return psiForUast(originalSymbol, project)
+             }
+         }
+-        else -> ktSymbol.psi
+     }
++
++    return symbol.psi
+ }

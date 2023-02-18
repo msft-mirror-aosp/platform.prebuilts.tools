@@ -66,7 +66,10 @@ dependencies {
     "intellij-core-content"("com.jetbrains.intellij.platform:project-model:$intellijVersion") // safeAnalyzeUtils depends on it
 
     "kotlin-compiler-content"("org.jetbrains.kotlin:kotlin-jps-common-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
-    "kotlin-compiler-content"("org.jetbrains.kotlin:kotlin-compiler-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
+    "kotlin-compiler-content"("org.jetbrains.kotlin:kotlin-compiler-common-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
+    "kotlin-compiler-content"("org.jetbrains.kotlin:kotlin-compiler-fe10-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
+    "kotlin-compiler-content"("org.jetbrains.kotlin:kotlin-compiler-fir-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
+    "kotlin-compiler-content"("org.jetbrains.kotlin:kotlin-compiler-ir-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:kotlin-compiler-cli-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:kotlin-scripting-compiler:$kotlinVersion-for-lint")
     "kotlin-compiler-content"("io.javaslang:javaslang:2.0.6") // TODO: Somehow read this version directly from the Kotlin compiler build.
