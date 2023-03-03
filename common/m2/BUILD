@@ -144,6 +144,7 @@ filegroup(
         "repository/org/mockito/mockito-core/4.8.0/mockito-core-4.8.0.jar",
         "repository/net/bytebuddy/byte-buddy/1.12.14/byte-buddy-1.12.14.jar",
         "repository/net/bytebuddy/byte-buddy-agent/1.12.14/byte-buddy-agent-1.12.14.jar",
+        "repository/org/mockito/mockito-inline/4.8.0/mockito-inline-4.8.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -452,12 +453,12 @@ jvm_import(
         # This list can be computed by querying the deps of
         # @maven//:org.jetbrains.kotlin.kotlin-compiler_<VERSION>.
         "repository/org/jetbrains/annotations/13.0/annotations-13.0.jar",
-        "repository/org/jetbrains/intellij/deps/trove4j/1.0.20181211/trove4j-1.0.20181211.jar",
-        "repository/org/jetbrains/kotlin/kotlin-compiler/1.7.0/kotlin-compiler-1.7.0.jar",
-        "repository/org/jetbrains/kotlin/kotlin-reflect/1.7.0/kotlin-reflect-1.7.0.jar",
-        "repository/org/jetbrains/kotlin/kotlin-script-runtime/1.7.0/kotlin-script-runtime-1.7.0.jar",
-        "repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.7.0/kotlin-stdlib-common-1.7.0.jar",
-        "repository/org/jetbrains/kotlin/kotlin-stdlib/1.7.0/kotlin-stdlib-1.7.0.jar",
+        "repository/org/jetbrains/intellij/deps/trove4j/1.0.20200330/trove4j-1.0.20200330.jar",
+        "repository/org/jetbrains/kotlin/kotlin-compiler/1.7.20/kotlin-compiler-1.7.20.jar",
+        "repository/org/jetbrains/kotlin/kotlin-reflect/1.7.20/kotlin-reflect-1.7.20.jar",
+        "repository/org/jetbrains/kotlin/kotlin-script-runtime/1.7.20/kotlin-script-runtime-1.7.20.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.7.20/kotlin-stdlib-common-1.7.20.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib/1.7.20/kotlin-stdlib-1.7.20.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -473,7 +474,7 @@ jvm_import(
 jvm_import(
     name = "compose-compiler-hosted",
     jars = [
-        "repository/org/jetbrains/compose/compiler/compiler-hosted/1.2.0/compiler-hosted-1.2.0.jar",
+        "repository/org/jetbrains/compose/compiler/compiler-hosted/1.3.2/compiler-hosted-1.3.2.jar",
     ],
     visibility = ["//visibility:public"],
 )
