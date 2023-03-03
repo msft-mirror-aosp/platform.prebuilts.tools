@@ -50,7 +50,8 @@ package {
 
 java_import {
     name: "byte-buddy-prebuilt-jar",
-    jars: ["repository/net/bytebuddy/byte-buddy/1.9.3/byte-buddy-1.9.3.jar"],
+    jars: ["repository/net/bytebuddy/byte-buddy/1.12.16/byte-buddy-1.12.16.jar",
+            "repository/net/bytebuddy/byte-buddy-agent/1.12.16/byte-buddy-agent-1.12.16.jar"],
     sdk_version: "current",
 }
 
@@ -101,6 +102,18 @@ java_import {
 }
 
 java_import {
+    name: "mockito4-prebuilt-jar",
+    jars: ["repository/org/mockito/mockito-core/4.8.1/mockito-core-4.8.1.jar"],
+    sdk_version: "current",
+}
+
+java_import {
+    name: "inline-mockito4-prebuilt-jar",
+    jars: ["repository/org/mockito/mockito-inline/4.8.1/mockito-inline-4.8.1.jar"],
+    sdk_version: "current",
+}
+
+java_import {
     name: "objenesis-prebuilt-jar",
     jars: ["repository/org/objenesis/objenesis/2.5/objenesis-2.5.jar"],
 }
@@ -108,6 +121,13 @@ java_import {
 java_import {
     name: "truth-prebuilt-jar",
     jars: ["repository/com/google/truth/truth/1.0.1/truth-1.0.1.jar"],
+    sdk_version: "current",
+    host_supported: true,
+}
+
+java_import {
+    name: "truth-java8-extension-jar",
+    jars: ["repository/com/google/truth/extensions/truth-java8-extension/1.0.1/truth-java8-extension-1.0.1.jar"],
     sdk_version: "current",
     host_supported: true,
 }
@@ -173,8 +193,18 @@ java_library_static {
     name: "mockito-robolectric-prebuilt",
     static_libs: [
         "byte-buddy-prebuilt-jar",
-        "mockito2-prebuilt-jar",
+        "mockito4-prebuilt-jar",
         "objenesis-prebuilt-jar",
+    ],
+    sdk_version: "current",
+}
+
+java_library_static {
+    name: "inline-mockito-robolectric-prebuilt",
+    static_libs: [
+        "byte-buddy-prebuilt-jar",
+        "inline-mockito4-prebuilt-jar",
+        "objenesis",
     ],
     sdk_version: "current",
 }
@@ -280,6 +310,51 @@ java_import_host {
 java_import {
     name: "auto-factory-1.0-beta7",
     jars: ["repository/com/google/auto/factory/auto-factory/1.0-beta7/auto-factory-1.0-beta7.jar"],
+    host_supported: true,
+}
+
+java_import {
+    name: "auto-common-1.1.2",
+    jars: ["repository/com/google/auto/auto-common/1.1.2/auto-common-1.1.2.jar"],
+    host_supported: true,
+}
+
+java_import {
+    name: "auto-value-1.9",
+    jars: ["repository/com/google/auto/value/auto-value/1.9/auto-value-1.9.jar"],
+    host_supported: true,
+}
+
+java_plugin {
+    name: "auto_value_plugin_1.9",
+    static_libs: [
+        "auto-value-1.9",
+        "auto-common-1.1.2",
+        "escapevelocity",
+        "guava",
+        "javapoet",
+    ],
+    processor_class: "com.google.auto.value.processor.AutoValueProcessor",
+    visibility: ["//visibility:public"],
+}
+
+java_plugin {
+    name: "auto_value_builder_plugin_1.9",
+    static_libs: [
+        "auto-value-1.9",
+        "auto-common-1.1.2",
+        "escapevelocity",
+        "guava",
+        "javapoet",
+    ],
+    processor_class: "com.google.auto.value.processor.AutoBuilderProcessor",
+    visibility: ["//visibility:public"],
+}
+
+java_import {
+    name: "gson-prebuilt-jar-2.9.1",
+    jars: ["repository/com/google/code/gson/gson/2.9.1/gson-2.9.1.jar"],
+    sdk_version: "current",
     host_supported: true,
 }
 
