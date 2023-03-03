@@ -8,7 +8,7 @@
 #
 # Usage: ./update_src.sh
 
-version=1.5.7
+version=1.5.8
 mirror_url="https://android.googlesource.com/platform/prebuilts/tools/+/refs/heads/studio-main/common/m2/repository/org/bytedeco"
 
 mkdir -p /tmp/update_src
@@ -19,7 +19,6 @@ unzip -q javacpp-presets-platform-${version}-src.zip
 zip -r -q -y javacpp-presets-platform-ffmpeg-${version}-src.zip javacpp-presets-platform-${version}/ffmpeg
 popd
 mv -f /tmp/update_src/javacpp-presets-platform-ffmpeg-${version}-src.zip .
-mv -f /tmp/update_src/javacpp-presets-platform-${version}/ffmpeg/LICENSE.TXT ffmpeg-LICENSE.TXT
 mv -f /tmp/update_src/javacpp-presets-platform-${version}/ffmpeg/LICENSE.md ffmpeg-LICENSE.md
 mv -f /tmp/update_src/javacpp-presets-platform-${version}/ffmpeg/LICENSE.openh264 ffmpeg-LICENSE.openh264
 echo "Source code for JavaCPP Presets For FFmpeg can be downloaded from ${mirror_url}/javacpp-presets-platform-ffmpeg-${version}-src.zip" >ffmpeg-SOURCE_CODE.TXT
