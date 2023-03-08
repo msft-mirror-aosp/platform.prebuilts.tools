@@ -644,3 +644,21 @@ jvm_import(
     jars = ["repository/com/squareup/okio/okio/2.8.0/okio-2.8.0.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+filegroup(
+    name = "google-dexlib2_files",
+    srcs = ["repository/com/android/tools/smali/smali-dexlib2/3.0.0/smali-dexlib2-3.0.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+filegroup(
+    name = "google-baksmali_files",
+    # do not sort: must match IML order
+    srcs = [
+        "repository/com/android/tools/smali/smali-baksmali/3.0.0/smali-baksmali-3.0.0.jar",
+        "repository/com/android/tools/smali/smali-util/3.0.0/smali-util-3.0.0.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
