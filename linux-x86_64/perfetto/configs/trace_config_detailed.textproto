@@ -82,6 +82,12 @@ data_sources {
       ftrace_events: "gpu_mem/gpu_mem_total"
       ftrace_events: "fastrpc/fastrpc_dma_stat"
 
+      # Power events
+      ftrace_events: "power/suspend_resume"
+      ftrace_events: "power/cpu_frequency"
+      ftrace_events: "power/cpu_idle"
+      ftrace_events: "power/gpu_frequency"
+
       # Old (kernel) LMK
       ftrace_events: "lowmemorykiller/lowmemory_kill"
 
@@ -104,6 +110,7 @@ data_sources {
       atrace_categories: "sync"
       atrace_categories: "workq"
       atrace_categories: "res"
+      atrace_categories: "power"
 
     }
   }
@@ -159,5 +166,19 @@ data_sources {
 data_sources: {
   config: {
     name: "android.surfaceflinger.frametimeline"
+  }
+}
+
+data_sources: {
+  config {
+    name: "android.power"
+    target_buffer: 1
+    android_power_config {
+      battery_poll_ms: 1000
+      collect_power_rails: true
+      battery_counters: BATTERY_COUNTER_CAPACITY_PERCENT
+      battery_counters: BATTERY_COUNTER_CHARGE
+      battery_counters: BATTERY_COUNTER_CURRENT
+    }
   }
 }
