@@ -646,8 +646,26 @@ jvm_import(
 )
 
 # managed by go/iml_to_build
+filegroup(
+    name = "google-dexlib2_files",
+    srcs = ["repository/com/android/tools/smali/smali-dexlib2/3.0.0/smali-dexlib2-3.0.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+filegroup(
+    name = "google-baksmali_files",
+    # do not sort: must match IML order
+    srcs = [
+        "repository/com/android/tools/smali/smali-baksmali/3.0.0/smali-baksmali-3.0.0.jar",
+        "repository/com/android/tools/smali/smali-util/3.0.0/smali-util-3.0.0.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
 jvm_import(
-    name = "Java-WebSocket-1.5.3",
-    jars = ["repository/org/java-websocket/Java-WebSocket/1.5.3/Java-WebSocket-1.5.3.jar"],
+    name = "commonmark-0.20.0",
+    jars = ["repository/org/commonmark/commonmark/0.20.0/commonmark-0.20.0.jar"],
     visibility = ["//visibility:public"],
 )
