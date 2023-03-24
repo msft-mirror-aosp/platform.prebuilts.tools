@@ -313,17 +313,6 @@ filegroup(
 
 # managed by go/iml_to_build
 filegroup(
-    name = "baksmali_files",
-    # do not sort: must match IML order
-    srcs = [
-        "repository/org/smali/baksmali/2.5.2/baksmali-2.5.2.jar",
-        "repository/org/smali/util/2.5.2/util-2.5.2.jar",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-filegroup(
     name = "kotlinx-coroutines-guava_files",
     srcs = ["repository/org/jetbrains/kotlinx/kotlinx-coroutines-guava/1.6.4/kotlinx-coroutines-guava-1.6.4.jar"],
     visibility = ["//visibility:public"],
