@@ -106,10 +106,11 @@ def build_rust_ide(
     cmd = [
         # We don't need the Rust compiler, as it is already available in the platform
         "-PcompileNativeCode=false",
+        "-PbuildSearchableOptions=true",
+        "-PplatformVersion=223",
         "--console=rich",
         "--parallel",
         "--build-cache",
-        "assemble",
         "buildPlugin",
     ]
 
