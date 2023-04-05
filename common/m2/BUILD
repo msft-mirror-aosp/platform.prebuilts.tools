@@ -657,3 +657,24 @@ jvm_import(
     jars = ["repository/org/jetbrains/kotlinx/kotlinx-cli-jvm/0.3.1/kotlinx-cli-jvm-0.3.1.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "google-api-services-testing-v1-rev82-1.22.0",
+    jars = ["repository/com/google/apis/google-api-services-testing/v1-rev82-1.22.0/google-api-services-testing-v1-rev82-1.22.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "google-api-services-toolresults-v1beta3-rev82-1.22.0",
+    jars = ["repository/com/google/apis/google-api-services-toolresults/v1beta3-rev82-1.22.0/google-api-services-toolresults-v1beta3-rev82-1.22.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "google-api-services-storage-v1-rev82-1.22.0",
+    jars = ["repository/com/google/apis/google-api-services-storage/v1-rev82-1.22.0/google-api-services-storage-v1-rev82-1.22.0.jar"],
+    visibility = ["//visibility:public"],
+)
