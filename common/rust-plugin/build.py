@@ -106,10 +106,11 @@ def build_rust_ide(
     cmd = [
         # We don't need the Rust compiler, as it is already available in the platform
         "-PcompileNativeCode=false",
+        "-PbuildSearchableOptions=true",
+        "-PplatformVersion=223",
         "--console=rich",
         "--parallel",
         "--build-cache",
-        "assemble",
         "buildPlugin",
     ]
 
@@ -236,8 +237,8 @@ def write_jps_lib_xml(workspace: Path) -> None:
         f.write(f'    </CLASSES>\n')
         f.write(f'    <JAVADOC />\n')
         f.write(f'    <SOURCES>\n')
-        f.write(f'      <root url="file://$PROJECT_DIR$/../../../external/jetbrains/intellij-rust/src/main/"/>\n')
-        f.write(f'      <root url="file://$PROJECT_DIR$/../../../external/jetbrains/intellij-rust/src/gen/"/>\n')
+        f.write(f'      <root url="file://$PROJECT_DIR$/../../../external/jetbrains/rust/src/main/"/>\n')
+        f.write(f'      <root url="file://$PROJECT_DIR$/../../../external/jetbrains/rust/src/gen/"/>\n')
         #f.write(f'      <root url="jar://$PROJECT_DIR$/{src}!/" />\n')
         f.write(f'    </SOURCES>\n')
         f.write(f'  </library>\n')

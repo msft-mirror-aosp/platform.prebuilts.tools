@@ -102,8 +102,6 @@ import uuid
 import re
 import os
 
-import six
-
 
 #SWIG_VERSION is written as a single hex number, but the components of it are
 #meant to be interpreted in decimal. So, 0x030012 is swig 3.0.12, and not
@@ -162,6 +160,7 @@ LLDB_INVALID_OFFSET = _lldb.LLDB_INVALID_OFFSET
 LLDB_INVALID_LINE_NUMBER = _lldb.LLDB_INVALID_LINE_NUMBER
 LLDB_INVALID_COLUMN_NUMBER = _lldb.LLDB_INVALID_COLUMN_NUMBER
 LLDB_INVALID_QUEUE_ID = _lldb.LLDB_INVALID_QUEUE_ID
+LLDB_INVALID_CPU_ID = _lldb.LLDB_INVALID_CPU_ID
 LLDB_ARCH_DEFAULT = _lldb.LLDB_ARCH_DEFAULT
 LLDB_ARCH_DEFAULT_32BIT = _lldb.LLDB_ARCH_DEFAULT_32BIT
 LLDB_ARCH_DEFAULT_64BIT = _lldb.LLDB_ARCH_DEFAULT_64BIT
@@ -355,6 +354,7 @@ eSymbolContextLineEntry = _lldb.eSymbolContextLineEntry
 eSymbolContextSymbol = _lldb.eSymbolContextSymbol
 eSymbolContextEverything = _lldb.eSymbolContextEverything
 eSymbolContextVariable = _lldb.eSymbolContextVariable
+eSymbolContextLastItem = _lldb.eSymbolContextLastItem
 ePermissionsWritable = _lldb.ePermissionsWritable
 ePermissionsReadable = _lldb.ePermissionsReadable
 ePermissionsExecutable = _lldb.ePermissionsExecutable
@@ -541,8 +541,6 @@ eArgTypeRecognizerID = _lldb.eArgTypeRecognizerID
 eArgTypeConnectURL = _lldb.eArgTypeConnectURL
 eArgTypeTargetID = _lldb.eArgTypeTargetID
 eArgTypeStopHookID = _lldb.eArgTypeStopHookID
-eArgTypeReproducerProvider = _lldb.eArgTypeReproducerProvider
-eArgTypeReproducerSignal = _lldb.eArgTypeReproducerSignal
 eArgTypeLastArg = _lldb.eArgTypeLastArg
 eSymbolTypeAny = _lldb.eSymbolTypeAny
 eSymbolTypeInvalid = _lldb.eSymbolTypeInvalid
@@ -719,6 +717,10 @@ eTemplateArgumentKindTemplateExpansion = _lldb.eTemplateArgumentKindTemplateExpa
 eTemplateArgumentKindExpression = _lldb.eTemplateArgumentKindExpression
 eTemplateArgumentKindPack = _lldb.eTemplateArgumentKindPack
 eTemplateArgumentKindNullPtr = _lldb.eTemplateArgumentKindNullPtr
+eFormatterMatchExact = _lldb.eFormatterMatchExact
+eFormatterMatchRegex = _lldb.eFormatterMatchRegex
+eFormatterMatchCallback = _lldb.eFormatterMatchCallback
+eLastFormatterMatchType = _lldb.eLastFormatterMatchType
 eTypeOptionNone = _lldb.eTypeOptionNone
 eTypeOptionCascade = _lldb.eTypeOptionCascade
 eTypeOptionSkipPointers = _lldb.eTypeOptionSkipPointers
@@ -848,13 +850,20 @@ eSaveCoreUnspecified = _lldb.eSaveCoreUnspecified
 eSaveCoreFull = _lldb.eSaveCoreFull
 eSaveCoreDirtyOnly = _lldb.eSaveCoreDirtyOnly
 eSaveCoreStackOnly = _lldb.eSaveCoreStackOnly
-eTraceCounterTSC = _lldb.eTraceCounterTSC
 eTraceEventDisabledSW = _lldb.eTraceEventDisabledSW
 eTraceEventDisabledHW = _lldb.eTraceEventDisabledHW
 eTraceEventCPUChanged = _lldb.eTraceEventCPUChanged
+eTraceEventHWClockTick = _lldb.eTraceEventHWClockTick
+eTraceEventSyncPoint = _lldb.eTraceEventSyncPoint
 eTraceItemKindError = _lldb.eTraceItemKindError
 eTraceItemKindEvent = _lldb.eTraceItemKindEvent
 eTraceItemKindInstruction = _lldb.eTraceItemKindInstruction
+eTraceCursorSeekTypeBeginning = _lldb.eTraceCursorSeekTypeBeginning
+eTraceCursorSeekTypeCurrent = _lldb.eTraceCursorSeekTypeCurrent
+eTraceCursorSeekTypeEnd = _lldb.eTraceCursorSeekTypeEnd
+eDWIMPrintVerbosityNone = _lldb.eDWIMPrintVerbosityNone
+eDWIMPrintVerbosityExpression = _lldb.eDWIMPrintVerbosityExpression
+eDWIMPrintVerbosityFull = _lldb.eDWIMPrintVerbosityFull
 class SBAddress(_object):
     """
     A section + offset based address class.
@@ -3630,7 +3639,7 @@ class SBData(_object):
                 for x in range(*key.indices(self.__len__())):
                     list.append(self.__getitem__(x))
                 return list
-            if not (isinstance(key,six.integer_types)):
+            if not (isinstance(key, int)):
                 raise TypeError('must be int')
             key = key * self.item_size # SBData uses byte-based indexes, but we want to use itemsize-based indexes here
             error = SBError()
@@ -4056,6 +4065,14 @@ class SBDebugger(_object):
     def GetErrorFileHandle(self) -> "lldb::FileSP":
         """GetErrorFileHandle(SBDebugger self) -> lldb::FileSP"""
         return _lldb.SBDebugger_GetErrorFileHandle(self)
+
+
+    def GetSetting(self, setting: 'char const *'=None) -> "lldb::SBStructuredData":
+        """
+        GetSetting(SBDebugger self, char const * setting=None) -> SBStructuredData
+        GetSetting(SBDebugger self) -> SBStructuredData
+        """
+        return _lldb.SBDebugger_GetSetting(self, setting)
 
 
     def SetInputString(self, data: 'char const *') -> "lldb::SBError":
@@ -5773,18 +5790,7 @@ class SBFileSpec(_object):
         return _lldb.SBFileSpec___repr__(self)
 
 
-    def __get_fullpath__(self):
-        spec_dir = self.GetDirectory()
-        spec_file = self.GetFilename()
-        if spec_dir and spec_file:
-            return '%s/%s' % (spec_dir, spec_file)
-        elif spec_dir:
-            return spec_dir
-        elif spec_file:
-            return spec_file
-        return None
-
-    fullpath = property(__get_fullpath__, None, doc='''A read only property that returns the fullpath as a python string.''')
+    fullpath = property(str, None, doc='''A read only property that returns the fullpath as a python string.''')
     basename = property(GetFilename, None, doc='''A read only property that returns the path basename as a python string.''')
     dirname = property(GetDirectory, None, doc='''A read only property that returns the path directory name as a python string.''')
     exists = property(Exists, None, doc='''A read only property that returns a boolean value that indicates if the file exists.''')
@@ -6656,6 +6662,11 @@ class SBInstruction(_object):
     def GetComment(self, target: 'SBTarget') -> "char const *":
         """GetComment(SBInstruction self, SBTarget target) -> char const *"""
         return _lldb.SBInstruction_GetComment(self, target)
+
+
+    def GetControlFlowKind(self, target: 'SBTarget') -> "lldb::InstructionControlFlowKind":
+        """GetControlFlowKind(SBInstruction self, SBTarget target) -> lldb::InstructionControlFlowKind"""
+        return _lldb.SBInstruction_GetControlFlowKind(self, target)
 
 
     def GetData(self, target: 'SBTarget') -> "lldb::SBData":
@@ -7737,10 +7748,13 @@ class SBModule(_object):
         """
         IsFileBacked(SBModule self) -> bool
 
+
         Check if the module is file backed.
-            @return
-                True, if the module is backed by an object file on disk.
-                False, if the module is backed by an object file in memory.
+
+        @return
+
+            True, if the module is backed by an object file on disk.
+            False, if the module is backed by an object file in memory.
         """
         return _lldb.SBModule_IsFileBacked(self)
 
@@ -9468,7 +9482,7 @@ class SBProcess(_object):
         """
 
         Allocates a block of memory within the process, with size and
-        access permissions specified in the arguments. The permisssions
+        access permissions specified in the arguments. The permissions
         argument is an or-combination of zero or more of
         lldb.ePermissionsWritable, lldb.ePermissionsReadable, and
         lldb.ePermissionsExecutable. Returns the address
@@ -10594,6 +10608,16 @@ class SBSymbol(_object):
     def GetEndAddress(self) -> "lldb::SBAddress":
         """GetEndAddress(SBSymbol self) -> SBAddress"""
         return _lldb.SBSymbol_GetEndAddress(self)
+
+
+    def GetValue(self) -> "uint64_t":
+        """GetValue(SBSymbol self) -> uint64_t"""
+        return _lldb.SBSymbol_GetValue(self)
+
+
+    def GetSize(self) -> "uint64_t":
+        """GetSize(SBSymbol self) -> uint64_t"""
+        return _lldb.SBSymbol_GetSize(self)
 
 
     def GetPrologueByteSize(self) -> "uint32_t":
@@ -12002,7 +12026,7 @@ class SBTarget(_object):
 
         Returns true if the module has been loaded in this `SBTarget`.
         A module can be loaded either by the dynamic loader or by being manually
-        added to the target (see `SBTarget.AddModule` and the `target module add` command).
+        added to the target (see `SBTarget.AddModule` and the ``target module add`` command).
 
         :rtype: bool
 
@@ -13029,6 +13053,11 @@ class SBTrace(_object):
         except __builtin__.Exception:
             self.this = this
 
+    def CreateNewCursor(self, error: 'SBError', thread: 'SBThread') -> "lldb::SBTraceCursor":
+        """CreateNewCursor(SBTrace self, SBError error, SBThread thread) -> SBTraceCursor"""
+        return _lldb.SBTrace_CreateNewCursor(self, error, thread)
+
+
     def GetStartConfigurationHelp(self) -> "char const *":
         """GetStartConfigurationHelp(SBTrace self) -> char const *"""
         return _lldb.SBTrace_GetStartConfigurationHelp(self)
@@ -13072,6 +13101,126 @@ class SBTrace(_object):
     __del__ = lambda self: None
 SBTrace_swigregister = _lldb.SBTrace_swigregister
 SBTrace_swigregister(SBTrace)
+
+class SBTraceCursor(_object):
+    """Proxy of C++ lldb::SBTraceCursor class."""
+
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, SBTraceCursor, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, SBTraceCursor, name)
+    __repr__ = _swig_repr
+
+    def __init__(self, *args):
+        """
+        __init__(lldb::SBTraceCursor self) -> SBTraceCursor
+        __init__(lldb::SBTraceCursor self, lldb::TraceCursorSP trace_cursor_sp) -> SBTraceCursor
+        """
+        this = _lldb.new_SBTraceCursor(*args)
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+
+    def SetForwards(self, forwards: 'bool') -> "void":
+        """SetForwards(SBTraceCursor self, bool forwards)"""
+        return _lldb.SBTraceCursor_SetForwards(self, forwards)
+
+
+    def IsForwards(self) -> "bool":
+        """IsForwards(SBTraceCursor self) -> bool"""
+        return _lldb.SBTraceCursor_IsForwards(self)
+
+
+    def Next(self) -> "void":
+        """Next(SBTraceCursor self)"""
+        return _lldb.SBTraceCursor_Next(self)
+
+
+    def HasValue(self) -> "bool":
+        """HasValue(SBTraceCursor self) -> bool"""
+        return _lldb.SBTraceCursor_HasValue(self)
+
+
+    def GoToId(self, id: 'lldb::user_id_t') -> "bool":
+        """GoToId(SBTraceCursor self, lldb::user_id_t id) -> bool"""
+        return _lldb.SBTraceCursor_GoToId(self, id)
+
+
+    def HasId(self, id: 'lldb::user_id_t') -> "bool":
+        """HasId(SBTraceCursor self, lldb::user_id_t id) -> bool"""
+        return _lldb.SBTraceCursor_HasId(self, id)
+
+
+    def GetId(self) -> "lldb::user_id_t":
+        """GetId(SBTraceCursor self) -> lldb::user_id_t"""
+        return _lldb.SBTraceCursor_GetId(self)
+
+
+    def Seek(self, offset: 'int64_t', origin: 'lldb::TraceCursorSeekType') -> "bool":
+        """Seek(SBTraceCursor self, int64_t offset, lldb::TraceCursorSeekType origin) -> bool"""
+        return _lldb.SBTraceCursor_Seek(self, offset, origin)
+
+
+    def GetItemKind(self) -> "lldb::TraceItemKind":
+        """GetItemKind(SBTraceCursor self) -> lldb::TraceItemKind"""
+        return _lldb.SBTraceCursor_GetItemKind(self)
+
+
+    def IsError(self) -> "bool":
+        """IsError(SBTraceCursor self) -> bool"""
+        return _lldb.SBTraceCursor_IsError(self)
+
+
+    def GetError(self) -> "char const *":
+        """GetError(SBTraceCursor self) -> char const *"""
+        return _lldb.SBTraceCursor_GetError(self)
+
+
+    def IsEvent(self) -> "bool":
+        """IsEvent(SBTraceCursor self) -> bool"""
+        return _lldb.SBTraceCursor_IsEvent(self)
+
+
+    def GetEventType(self) -> "lldb::TraceEvent":
+        """GetEventType(SBTraceCursor self) -> lldb::TraceEvent"""
+        return _lldb.SBTraceCursor_GetEventType(self)
+
+
+    def GetEventTypeAsString(self) -> "char const *":
+        """GetEventTypeAsString(SBTraceCursor self) -> char const *"""
+        return _lldb.SBTraceCursor_GetEventTypeAsString(self)
+
+
+    def IsInstruction(self) -> "bool":
+        """IsInstruction(SBTraceCursor self) -> bool"""
+        return _lldb.SBTraceCursor_IsInstruction(self)
+
+
+    def GetLoadAddress(self) -> "lldb::addr_t":
+        """GetLoadAddress(SBTraceCursor self) -> lldb::addr_t"""
+        return _lldb.SBTraceCursor_GetLoadAddress(self)
+
+
+    def GetCPU(self) -> "lldb::cpu_id_t":
+        """GetCPU(SBTraceCursor self) -> lldb::cpu_id_t"""
+        return _lldb.SBTraceCursor_GetCPU(self)
+
+
+    def IsValid(self) -> "bool":
+        """IsValid(SBTraceCursor self) -> bool"""
+        return _lldb.SBTraceCursor_IsValid(self)
+
+
+    def __nonzero__(self):
+        return _lldb.SBTraceCursor___nonzero__(self)
+    __bool__ = __nonzero__
+
+
+    __swig_destroy__ = _lldb.delete_SBTraceCursor
+    __del__ = lambda self: None
+SBTraceCursor_swigregister = _lldb.SBTraceCursor_swigregister
+SBTraceCursor_swigregister(SBTraceCursor)
 
 class SBTypeMember(_object):
     """Represents a member of a type."""
@@ -13373,7 +13522,7 @@ class SBType(_object):
               function returns ``0``.
             * C++: Same as in C.
             * Objective-C: Same as in C. For Objective-C classes this always returns
-              `0`` as the actual size depends on runtime information.
+              ``0`` as the actual size depends on runtime information.
 
         """
         return _lldb.SBType_GetByteSize(self)
@@ -13714,7 +13863,7 @@ class SBType(_object):
 
             Language-specific behaviour:
 
-            * C: Returns a constant-size array `T[size]` for any non-void type.
+            * C: Returns a constant-size array ``T[size]`` for any non-void type.
             * C++: Same as in C.
             * Objective-C: Same as in C.
 
@@ -13754,8 +13903,8 @@ class SBType(_object):
         Returns the `BasicType` value that is most appropriate to this type.
 
             Returns `eBasicTypeInvalid` if no appropriate `BasicType` was found or this
-            type is invalid. See the `BasicType` documentation for the language-specific m
-            aning of each `BasicType` value.
+            type is invalid. See the `BasicType` documentation for the language-specific
+            meaning of each `BasicType` value.
 
             **Overload behaviour:** When called with a `BasicType` parameter, the
             following behaviour applies:
@@ -13901,8 +14050,8 @@ class SBType(_object):
         Returns the `BasicType` value that is most appropriate to this type.
 
             Returns `eBasicTypeInvalid` if no appropriate `BasicType` was found or this
-            type is invalid. See the `BasicType` documentation for the language-specific m
-            aning of each `BasicType` value.
+            type is invalid. See the `BasicType` documentation for the language-specific
+            meaning of each `BasicType` value.
 
             **Overload behaviour:** When called with a `BasicType` parameter, the
             following behaviour applies:
@@ -14014,8 +14163,8 @@ class SBType(_object):
 
             * C: Always returns ``0``.
             * C++: If this type is a class template instantiation then this returns the
-              number of template parameters that were used in this instantiation. This i
-              cludes both explicit and implicit template parameters.
+              number of template parameters that were used in this instantiation. This
+              includes both explicit and implicit template parameters.
             * Objective-C: Always returns ``0``.
 
         """
@@ -14208,8 +14357,8 @@ class SBType(_object):
         Returns the `BasicType` value that is most appropriate to this type.
 
             Returns `eBasicTypeInvalid` if no appropriate `BasicType` was found or this
-            type is invalid. See the `BasicType` documentation for the language-specific m
-            aning of each `BasicType` value.
+            type is invalid. See the `BasicType` documentation for the language-specific
+            meaning of each `BasicType` value.
 
             **Overload behaviour:** When called with a `BasicType` parameter, the
             following behaviour applies:
@@ -14238,8 +14387,8 @@ class SBType(_object):
         Returns the `BasicType` value that is most appropriate to this type.
 
             Returns `eBasicTypeInvalid` if no appropriate `BasicType` was found or this
-            type is invalid. See the `BasicType` documentation for the language-specific m
-            aning of each `BasicType` value.
+            type is invalid. See the `BasicType` documentation for the language-specific
+            meaning of each `BasicType` value.
 
             **Overload behaviour:** When called with a `BasicType` parameter, the
             following behaviour applies:
@@ -14268,8 +14417,8 @@ class SBType(_object):
         Returns the `BasicType` value that is most appropriate to this type.
 
             Returns `eBasicTypeInvalid` if no appropriate `BasicType` was found or this
-            type is invalid. See the `BasicType` documentation for the language-specific m
-            aning of each `BasicType` value.
+            type is invalid. See the `BasicType` documentation for the language-specific
+            meaning of each `BasicType` value.
 
             **Overload behaviour:** When called with a `BasicType` parameter, the
             following behaviour applies:
@@ -15138,6 +15287,7 @@ class SBTypeNameSpecifier(_object):
         __init__(lldb::SBTypeNameSpecifier self) -> SBTypeNameSpecifier
         __init__(lldb::SBTypeNameSpecifier self, char const * name, bool is_regex=False) -> SBTypeNameSpecifier
         __init__(lldb::SBTypeNameSpecifier self, char const * name) -> SBTypeNameSpecifier
+        __init__(lldb::SBTypeNameSpecifier self, char const * name, lldb::FormatterMatchType match_type) -> SBTypeNameSpecifier
         __init__(lldb::SBTypeNameSpecifier self, SBType type) -> SBTypeNameSpecifier
         __init__(lldb::SBTypeNameSpecifier self, SBTypeNameSpecifier rhs) -> SBTypeNameSpecifier
         """
@@ -15173,6 +15323,11 @@ class SBTypeNameSpecifier(_object):
     def GetType(self) -> "lldb::SBType":
         """GetType(SBTypeNameSpecifier self) -> SBType"""
         return _lldb.SBTypeNameSpecifier_GetType(self)
+
+
+    def GetMatchType(self) -> "lldb::FormatterMatchType":
+        """GetMatchType(SBTypeNameSpecifier self) -> lldb::FormatterMatchType"""
+        return _lldb.SBTypeNameSpecifier_GetMatchType(self)
 
 
     def IsRegex(self) -> "bool":
@@ -16549,6 +16704,11 @@ class SBValueList(_object):
     def GetFirstValueByName(self, name: 'char const *') -> "lldb::SBValue":
         """GetFirstValueByName(SBValueList self, char const * name) -> SBValue"""
         return _lldb.SBValueList_GetFirstValueByName(self, name)
+
+
+    def GetError(self) -> "lldb::SBError":
+        """GetError(SBValueList self) -> SBError"""
+        return _lldb.SBValueList_GetError(self)
 
 
     def __str__(self) -> "std::string":
