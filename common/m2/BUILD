@@ -222,14 +222,6 @@ filegroup(
 
 # managed by go/iml_to_build
 filegroup(
-    name = "dexlib2_files",
-    # do not sort: must match IML order
-    srcs = ["repository/org/smali/dexlib2/2.5.2/dexlib2-2.5.2.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-filegroup(
     name = "HdrHistogram_files",
     srcs = ["repository/org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar"],
     visibility = ["//visibility:public"],
