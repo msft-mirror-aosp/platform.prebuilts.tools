@@ -313,17 +313,6 @@ filegroup(
 
 # managed by go/iml_to_build
 filegroup(
-    name = "baksmali_files",
-    # do not sort: must match IML order
-    srcs = [
-        "repository/org/smali/baksmali/2.5.2/baksmali-2.5.2.jar",
-        "repository/org/smali/util/2.5.2/util-2.5.2.jar",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-filegroup(
     name = "kotlinx-coroutines-guava_files",
     srcs = ["repository/org/jetbrains/kotlinx/kotlinx-coroutines-guava/1.6.4/kotlinx-coroutines-guava-1.6.4.jar"],
     visibility = ["//visibility:public"],
@@ -512,8 +501,8 @@ jvm_import(
     name = "compose-desktop-animation",
     # do not sort: must match IML order
     jars = [
-        "repository/org/jetbrains/compose/animation/animation-core-desktop/1.1.1/animation-core-desktop-1.1.1.jar",
-        "repository/org/jetbrains/compose/animation/animation-desktop/1.1.1/animation-desktop-1.1.1.jar",
+        "repository/org/jetbrains/compose/animation/animation-core-desktop/1.3.1/animation-core-desktop-1.3.1.jar",
+        "repository/org/jetbrains/compose/animation/animation-desktop/1.3.1/animation-desktop-1.3.1.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -523,8 +512,8 @@ jvm_import(
     name = "compose-desktop-foundation",
     # do not sort: must match IML order
     jars = [
-        "repository/org/jetbrains/compose/foundation/foundation-layout-desktop/1.1.1/foundation-layout-desktop-1.1.1.jar",
-        "repository/org/jetbrains/compose/foundation/foundation-desktop/1.1.1/foundation-desktop-1.1.1.jar",
+        "repository/org/jetbrains/compose/foundation/foundation-layout-desktop/1.3.1/foundation-layout-desktop-1.3.1.jar",
+        "repository/org/jetbrains/compose/foundation/foundation-desktop/1.3.1/foundation-desktop-1.3.1.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -534,9 +523,9 @@ jvm_import(
     name = "compose-desktop-material",
     # do not sort: must match IML order
     jars = [
-        "repository/org/jetbrains/compose/material/material-desktop/1.1.1/material-desktop-1.1.1.jar",
-        "repository/org/jetbrains/compose/material/material-icons-core-desktop/1.1.1/material-icons-core-desktop-1.1.1.jar",
-        "repository/org/jetbrains/compose/material/material-ripple-desktop/1.1.1/material-ripple-desktop-1.1.1.jar",
+        "repository/org/jetbrains/compose/material/material-desktop/1.3.1/material-desktop-1.3.1.jar",
+        "repository/org/jetbrains/compose/material/material-icons-core-desktop/1.3.1/material-icons-core-desktop-1.3.1.jar",
+        "repository/org/jetbrains/compose/material/material-ripple-desktop/1.3.1/material-ripple-desktop-1.3.1.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -546,8 +535,8 @@ jvm_import(
     name = "compose-desktop-runtime",
     # do not sort: must match IML order
     jars = [
-        "repository/org/jetbrains/compose/runtime/runtime-desktop/1.1.1/runtime-desktop-1.1.1.jar",
-        "repository/org/jetbrains/compose/runtime/runtime-saveable-desktop/1.1.1/runtime-saveable-desktop-1.1.1.jar",
+        "repository/org/jetbrains/compose/runtime/runtime-desktop/1.3.1/runtime-desktop-1.3.1.jar",
+        "repository/org/jetbrains/compose/runtime/runtime-saveable-desktop/1.3.1/runtime-saveable-desktop-1.3.1.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -557,12 +546,12 @@ jvm_import(
     name = "compose-desktop-ui",
     # do not sort: must match IML order
     jars = [
-        "repository/org/jetbrains/compose/ui/ui-desktop/1.1.1/ui-desktop-1.1.1.jar",
-        "repository/org/jetbrains/compose/ui/ui-geometry-desktop/1.1.1/ui-geometry-desktop-1.1.1.jar",
-        "repository/org/jetbrains/compose/ui/ui-graphics-desktop/1.1.1/ui-graphics-desktop-1.1.1.jar",
-        "repository/org/jetbrains/compose/ui/ui-text-desktop/1.1.1/ui-text-desktop-1.1.1.jar",
-        "repository/org/jetbrains/compose/ui/ui-unit-desktop/1.1.1/ui-unit-desktop-1.1.1.jar",
-        "repository/org/jetbrains/compose/ui/ui-util-desktop/1.1.1/ui-util-desktop-1.1.1.jar",
+        "repository/org/jetbrains/compose/ui/ui-desktop/1.3.1/ui-desktop-1.3.1.jar",
+        "repository/org/jetbrains/compose/ui/ui-geometry-desktop/1.3.1/ui-geometry-desktop-1.3.1.jar",
+        "repository/org/jetbrains/compose/ui/ui-graphics-desktop/1.3.1/ui-graphics-desktop-1.3.1.jar",
+        "repository/org/jetbrains/compose/ui/ui-text-desktop/1.3.1/ui-text-desktop-1.3.1.jar",
+        "repository/org/jetbrains/compose/ui/ui-unit-desktop/1.3.1/ui-unit-desktop-1.3.1.jar",
+        "repository/org/jetbrains/compose/ui/ui-util-desktop/1.3.1/ui-util-desktop-1.3.1.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -572,11 +561,11 @@ jvm_import(
     name = "skiko",
     # do not sort: must match IML order
     jars = [
-        "repository/org/jetbrains/skiko/skiko-awt/0.7.16/skiko-awt-0.7.16.jar",
-        "repository/org/jetbrains/skiko/skiko-awt-runtime-linux-x64/0.7.16/skiko-awt-runtime-linux-x64-0.7.16.jar",
-        "repository/org/jetbrains/skiko/skiko-awt-runtime-macos-arm64/0.7.16/skiko-awt-runtime-macos-arm64-0.7.16.jar",
-        "repository/org/jetbrains/skiko/skiko-awt-runtime-macos-x64/0.7.16/skiko-awt-runtime-macos-x64-0.7.16.jar",
-        "repository/org/jetbrains/skiko/skiko-awt-runtime-windows-x64/0.7.16/skiko-awt-runtime-windows-x64-0.7.16.jar",
+        "repository/org/jetbrains/skiko/skiko-awt/0.7.55/skiko-awt-0.7.55.jar",
+        "repository/org/jetbrains/skiko/skiko-awt-runtime-linux-x64/0.7.55/skiko-awt-runtime-linux-x64-0.7.55.jar",
+        "repository/org/jetbrains/skiko/skiko-awt-runtime-macos-arm64/0.7.55/skiko-awt-runtime-macos-arm64-0.7.55.jar",
+        "repository/org/jetbrains/skiko/skiko-awt-runtime-macos-x64/0.7.55/skiko-awt-runtime-macos-x64-0.7.55.jar",
+        "repository/org/jetbrains/skiko/skiko-awt-runtime-windows-x64/0.7.55/skiko-awt-runtime-windows-x64-0.7.55.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -586,8 +575,8 @@ jvm_import(
     name = "compose-desktop-ui-test",
     # do not sort: must match IML order
     jars = [
-        "repository/org/jetbrains/compose/ui/ui-test-junit4-desktop/1.1.1/ui-test-junit4-desktop-1.1.1.jar",
-        "repository/org/jetbrains/compose/ui/ui-test-desktop/1.1.1/ui-test-desktop-1.1.1.jar",
+        "repository/org/jetbrains/compose/ui/ui-test-junit4-desktop/1.3.1/ui-test-junit4-desktop-1.3.1.jar",
+        "repository/org/jetbrains/compose/ui/ui-test-desktop/1.3.1/ui-test-desktop-1.3.1.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -646,8 +635,33 @@ jvm_import(
 )
 
 # managed by go/iml_to_build
+filegroup(
+    name = "google-dexlib2_files",
+    srcs = ["repository/com/android/tools/smali/smali-dexlib2/3.0.0/smali-dexlib2-3.0.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+filegroup(
+    name = "google-baksmali_files",
+    # do not sort: must match IML order
+    srcs = [
+        "repository/com/android/tools/smali/smali-baksmali/3.0.0/smali-baksmali-3.0.0.jar",
+        "repository/com/android/tools/smali/smali-util/3.0.0/smali-util-3.0.0.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
 jvm_import(
-    name = "Java-WebSocket-1.5.3",
-    jars = ["repository/org/java-websocket/Java-WebSocket/1.5.3/Java-WebSocket-1.5.3.jar"],
+    name = "commonmark-0.20.0",
+    jars = ["repository/org/commonmark/commonmark/0.20.0/commonmark-0.20.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "kotlinx-cli-jvm-0.3.1",
+    jars = ["repository/org/jetbrains/kotlinx/kotlinx-cli-jvm/0.3.1/kotlinx-cli-jvm-0.3.1.jar"],
     visibility = ["//visibility:public"],
 )
