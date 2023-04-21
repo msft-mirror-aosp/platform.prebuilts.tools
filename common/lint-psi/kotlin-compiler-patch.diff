@@ -77,10 +77,10 @@ index 6b14ece06fa0..65258f7bdbe0 100644
  val projects = fe10CompilerModules.asList() - excludedCompilerModules + listOf(":analysis:kt-references:kt-references-fe10")
 
 diff --git a/prepare/ide-plugin-dependencies/kotlin-compiler-ir-for-ide/build.gradle.kts b/prepare/ide-plugin-dependencies/kotlin-compiler-ir-for-ide/build.gradle.kts
-index 0574c7bcf195..20c064a0ba41 100644
+index 0574c7bcf195..5dcb381b998c 100644
 --- a/prepare/ide-plugin-dependencies/kotlin-compiler-ir-for-ide/build.gradle.kts
 +++ b/prepare/ide-plugin-dependencies/kotlin-compiler-ir-for-ide/build.gradle.kts
-@@ -4,4 +4,13 @@ plugins {
+@@ -4,4 +4,15 @@ plugins {
 
  val irCompilerModules: Array<String> by rootProject.extra
 
@@ -89,7 +89,9 @@ index 0574c7bcf195..20c064a0ba41 100644
 +    ":compiler:ir.backend.common",
 +    ":compiler:ir.interpreter",
 +    ":compiler:ir.serialization.js",
++    ":compiler:ir.serialization.jvm",
 +    ":compiler:backend.js",
++    ":compiler:backend.jvm",
 +    ":compiler:backend.wasm",
 +    ":wasm:wasm.ir",
 +)
