@@ -243,6 +243,7 @@ filegroup(
         "repository/org/ow2/asm/asm-commons/9.3/asm-commons-9.3.jar",
         "repository/org/ow2/asm/asm-tree/9.3/asm-tree-9.3.jar",
         "repository/org/ow2/asm/asm/9.3/asm-9.3.jar",
+        "repository/org/ow2/asm/asm-util/9.3/asm-util-9.3.jar",
     ],
     visibility = ["//visibility:public"],
 )
