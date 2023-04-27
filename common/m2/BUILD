@@ -243,6 +243,7 @@ filegroup(
         "repository/org/ow2/asm/asm-commons/9.3/asm-commons-9.3.jar",
         "repository/org/ow2/asm/asm-tree/9.3/asm-tree-9.3.jar",
         "repository/org/ow2/asm/asm/9.3/asm-9.3.jar",
+        "repository/org/ow2/asm/asm-util/9.3/asm-util-9.3.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -655,5 +656,26 @@ jvm_import(
 jvm_import(
     name = "kotlinx-cli-jvm-0.3.1",
     jars = ["repository/org/jetbrains/kotlinx/kotlinx-cli-jvm/0.3.1/kotlinx-cli-jvm-0.3.1.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "google-api-services-testing-v1-rev82-1.22.0",
+    jars = ["repository/com/google/apis/google-api-services-testing/v1-rev82-1.22.0/google-api-services-testing-v1-rev82-1.22.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "google-api-services-toolresults-v1beta3-rev82-1.22.0",
+    jars = ["repository/com/google/apis/google-api-services-toolresults/v1beta3-rev82-1.22.0/google-api-services-toolresults-v1beta3-rev82-1.22.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "google-api-services-storage-v1-rev82-1.22.0",
+    jars = ["repository/com/google/apis/google-api-services-storage/v1-rev82-1.22.0/google-api-services-storage-v1-rev82-1.22.0.jar"],
     visibility = ["//visibility:public"],
 )
