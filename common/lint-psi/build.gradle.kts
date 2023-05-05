@@ -62,6 +62,7 @@ tasks.jar { enabled = false }
 // This is where we decide which files go into which jars. See the README for details.
 dependencies {
     "intellij-core-content"("com.jetbrains.intellij.java:java-psi-impl:$intellijVersion")
+    "intellij-core-content"("com.jetbrains.intellij.platform:util-ex:$intellijVersion") { isTransitive = false } // Temporary for LazyKt (till 232)
     "intellij-core-content"("com.jetbrains.intellij.platform:jps-model-impl:$intellijVersion") // Contains JavaSdkUtil.
     "intellij-core-content"("com.jetbrains.intellij.platform:project-model:$intellijVersion") // safeAnalyzeUtils depends on it
 
@@ -139,7 +140,6 @@ tasks.withType<KotlinCompile> {
         jvmTarget = "17"
         freeCompilerArgs = listOf(
             "-Xjvm-default=all",
-            "-opt-in=org.jetbrains.kotlin.utils.addToStdlib.UnsafeCastFunction"
         )
         suppressWarnings = true
     }
