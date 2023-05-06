@@ -31,6 +31,36 @@ java_import(
     visibility = ["//visibility:public"],
 )
 
+java_import(
+    name = "com.google.apis.google-api-services-storage_v1-rev82-1.22.0",
+    jars = ["repository/com/google/apis/google-api-services-storage/v1-rev82-1.22.0/google-api-services-storage-v1-rev82-1.22.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+java_import(
+    name = "com.google.apis.google-api-services-testing_v1-rev82-1.22.0",
+    jars = ["repository/com/google/apis/google-api-services-testing/v1-rev82-1.22.0/google-api-services-testing-v1-rev82-1.22.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+java_import(
+    name = "com.google.apis.google-api-services-toolresults_v1beta3-rev82-1.22.0",
+    jars = ["repository/com/google/apis/google-api-services-toolresults/v1beta3-rev82-1.22.0/google-api-services-toolresults-v1beta3-rev82-1.22.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+java_import(
+    name = "com.google.api-client.google-api-client_1.22.0",
+    jars = ["repository/com/google/api-client/google-api-client/1.22.0/google-api-client-1.22.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+java_import(
+    name = "com.google.oauth-client.google-oauth-client_1.22.0",
+    jars = ["repository/com/google/oauth-client/google-oauth-client/1.22.0/google-oauth-client-1.22.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
 filegroup(
     name = "io.grpc.protoc-gen-grpc-java.1.45.1_exe",
     srcs = select({
@@ -603,17 +633,6 @@ filegroup(
 )
 
 # managed by go/iml_to_build
-filegroup(
-    name = "oauth2_files",
-    # do not sort: must match IML order
-    srcs = [
-        "repository/com/google/apis/google-api-services-oauth2/v2-rev150-1.22.0/google-api-services-oauth2-v2-rev150-1.22.0.jar",
-        "repository/com/google/auth/google-auth-library-oauth2-http/0.22.2/google-auth-library-oauth2-http-0.22.2.jar",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
 jvm_import(
     name = "moshi-1.6.0",
     jars = ["repository/com/squareup/moshi/moshi/1.6.0/moshi-1.6.0.jar"],
@@ -661,21 +680,57 @@ jvm_import(
 
 # managed by go/iml_to_build
 jvm_import(
-    name = "google-api-services-testing-v1-rev82-1.22.0",
-    jars = ["repository/com/google/apis/google-api-services-testing/v1-rev82-1.22.0/google-api-services-testing-v1-rev82-1.22.0.jar"],
+    name = "oauth2",
+    # do not sort: must match IML order
+    jars = [
+        "repository/com/google/apis/google-api-services-oauth2/v2-rev20200213-2.0.0/google-api-services-oauth2-v2-rev20200213-2.0.0.jar",
+        "repository/com/google/auth/google-auth-library-oauth2-http/1.4.0/google-auth-library-oauth2-http-1.4.0.jar",
+        "repository/com/google/oauth-client/google-oauth-client/1.34.1/google-oauth-client-1.34.1.jar",
+        "repository/com/google/oauth-client/google-oauth-client-java6/1.34.1/google-oauth-client-java6-1.34.1.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+filegroup(
+    name = "jetty_files",
+    # do not sort: must match IML order
+    srcs = [
+        "repository/org/mortbay/jetty/jetty/6.1.26/jetty-6.1.26.jar",
+        "repository/org/mortbay/jetty/jetty-util/6.1.26/jetty-util-6.1.26.jar",
+    ],
     visibility = ["//visibility:public"],
 )
 
 # managed by go/iml_to_build
 jvm_import(
-    name = "google-api-services-toolresults-v1beta3-rev82-1.22.0",
-    jars = ["repository/com/google/apis/google-api-services-toolresults/v1beta3-rev82-1.22.0/google-api-services-toolresults-v1beta3-rev82-1.22.0.jar"],
+    name = "google_api_services_testing",
+    # do not sort: must match IML order
+    jars = [
+        "repository/com/google/apis/google-api-services-testing/v1-rev20230411-2.0.0/google-api-services-testing-v1-rev20230411-2.0.0.jar",
+        "repository/com/google/apis/google-api-services-storage/v1-rev20230301-2.0.0/google-api-services-storage-v1-rev20230301-2.0.0.jar",
+        "repository/com/google/apis/google-api-services-toolresults/v1beta3-rev20230410-2.0.0/google-api-services-toolresults-v1beta3-rev20230410-2.0.0.jar",
+    ],
     visibility = ["//visibility:public"],
 )
 
 # managed by go/iml_to_build
-jvm_import(
-    name = "google-api-services-storage-v1-rev82-1.22.0",
-    jars = ["repository/com/google/apis/google-api-services-storage/v1-rev82-1.22.0/google-api-services-storage-v1-rev82-1.22.0.jar"],
+filegroup(
+    name = "cloudresourcemanager_files",
+    srcs = ["repository/com/google/apis/google-api-services-cloudresourcemanager/v3-rev20230416-2.0.0/google-api-services-cloudresourcemanager-v3-rev20230416-2.0.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+filegroup(
+    name = "google-api-client_files",
+    # do not sort: must match IML order
+    srcs = [
+        "repository/com/google/api-client/google-api-client/2.2.0/google-api-client-2.2.0.jar",
+        "repository/com/google/http-client/google-http-client-gson/1.42.3/google-http-client-gson-1.42.3.jar",
+        "repository/com/google/http-client/google-http-client/1.42.3/google-http-client-1.42.3.jar",
+        "repository/io/opencensus/opencensus-api/0.31.1/opencensus-api-0.31.1.jar",
+        "repository/io/opencensus/opencensus-contrib-http-util/0.31.1/opencensus-contrib-http-util-0.31.1.jar",
+    ],
     visibility = ["//visibility:public"],
 )
