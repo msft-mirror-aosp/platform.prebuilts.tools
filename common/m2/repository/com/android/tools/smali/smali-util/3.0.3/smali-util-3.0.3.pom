@@ -8,11 +8,11 @@
   <!-- do_not_remove: published-with-gradle-metadata -->
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.android.tools.smali</groupId>
-  <artifactId>smali-baksmali</artifactId>
-  <version>3.0.0</version>
-  <name>baksmali</name>
-  <description>baksmali is a disassembler for dalvik bytecode</description>
-  <url>http://smali.org</url>
+  <artifactId>smali-util</artifactId>
+  <version>3.0.3</version>
+  <name>util</name>
+  <description>This library contains random utilities used by smali/baksmali/dexlib2</description>
+  <url>https://github.com/google/smali</url>
   <licenses>
     <license>
       <name>The BSD 3-Clause License</name>
@@ -33,19 +33,19 @@
   <scm>
     <connection>scm:git:git://github.com/google/smali.git</connection>
     <developerConnection>scm:git:git@github.com:google/smali.git</developerConnection>
-    <url>https://github.com/google/smali/tree/master/baksmali</url>
+    <url>https://github.com/google/smali/tree/master/util</url>
   </scm>
   <dependencies>
     <dependency>
       <groupId>com.android.tools.smali</groupId>
       <artifactId>smali-dexlib2</artifactId>
-      <version>3.0.0</version>
-      <scope>compile</scope>
+      <version>3.0.3</version>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
-      <groupId>com.android.tools.smali</groupId>
-      <artifactId>smali-util</artifactId>
-      <version>3.0.0</version>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>jsr305</artifactId>
+      <version>3.0.2</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
