@@ -703,18 +703,6 @@ filegroup(
 )
 
 # managed by go/iml_to_build
-jvm_import(
-    name = "google_api_services_testing",
-    # do not sort: must match IML order
-    jars = [
-        "repository/com/google/apis/google-api-services-testing/v1-rev20230411-2.0.0/google-api-services-testing-v1-rev20230411-2.0.0.jar",
-        "repository/com/google/apis/google-api-services-storage/v1-rev20230301-2.0.0/google-api-services-storage-v1-rev20230301-2.0.0.jar",
-        "repository/com/google/apis/google-api-services-toolresults/v1beta3-rev20230410-2.0.0/google-api-services-toolresults-v1beta3-rev20230410-2.0.0.jar",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
 filegroup(
     name = "cloudresourcemanager_files",
     srcs = ["repository/com/google/apis/google-api-services-cloudresourcemanager/v3-rev20230416-2.0.0/google-api-services-cloudresourcemanager-v3-rev20230416-2.0.0.jar"],
@@ -731,6 +719,17 @@ filegroup(
         "repository/com/google/http-client/google-http-client/1.42.3/google-http-client-1.42.3.jar",
         "repository/io/opencensus/opencensus-api/0.31.1/opencensus-api-0.31.1.jar",
         "repository/io/opencensus/opencensus-contrib-http-util/0.31.1/opencensus-contrib-http-util-0.31.1.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+filegroup(
+    name = "google_api_services_testing_files",
+    # do not sort: must match IML order
+    srcs = [
+        "repository/com/google/apis/google-api-services-storage/v1-rev20230301-2.0.0/google-api-services-storage-v1-rev20230301-2.0.0.jar",
+        "repository/com/google/apis/google-api-services-toolresults/v1beta3-rev20230410-2.0.0/google-api-services-toolresults-v1beta3-rev20230410-2.0.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
