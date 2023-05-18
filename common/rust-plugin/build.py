@@ -15,6 +15,10 @@ import select
 import fcntl
 from typing import Tuple, List, Dict, TypedDict, NamedTuple, TypedDict
 from enum import Enum, auto
+from tqdm import tqdm
+import filecmp
+import re
+import fnmatch
 
 def main() -> None:
     """
@@ -49,6 +53,10 @@ def main() -> None:
                             ' info (informational messages, warnings, and errors),'
                             ' debug (debug messages, informational messages, warnings, and errors)'
                             ' gradle (use Gradle default logging)')
+    parser.add_argument('-k', '--keep-temporaries',
+                    action='store_true',
+                    default=False,
+                    help='Keep temporary build directory for debugging purposes. Default is to remove it.')
 
     args = parser.parse_args()
 
@@ -56,14 +64,46 @@ def main() -> None:
     script_dir : Path = Path(__file__).parent
     workspace : Path = script_dir.joinpath('../../../..').resolve(strict=True)
     rust_ide_dir : Path = workspace.joinpath('external/jetbrains/rust')
+    gitignore : Path = os.path.join(rust_ide_dir, ".gitignore")
+    ignore_patterns = read_gitignore(gitignore)
+    build_stage_dir = Path(os.path.abspath('rust-build-stage'))
+
+    # Clean up temporaries if they exist (and we're not preserving them).
+    if not args.keep_temporaries:
+        if os.path.exists(build_stage_dir):
+            print(f'\033[1;36mRemoving Temporary Build Directory\033[0m')
+            shutil.rmtree(build_stage_dir)
+
+    # Copy sources from original location in tree to a temporary build folder.
+    # Don't copy files matching .gitignore because we don't want stray build
+    # outputs from rust_ide_dir to be able to pollute our result.
+    print(f'\033[1;36mCopying Rust Sources\033[0m\n  {rust_ide_dir}\n  {build_stage_dir}')
+    copy_directory(
+        rust_ide_dir,
+        build_stage_dir,
+        ignore_patterns
+    )
+
+    # Disable bundled update of plugin by modifying XML that contains
+    # 'allow-bundled-update="true"'
+    # Don't modify build outputs if present since they should be
+    # propagated when the actual build is done.
+    print(f'\033[1;36mUpdate Plugin XML to Disallow Bundling\033[0m')
+    search_replace_in_xml(
+        build_stage_dir,
+        'allow-bundled-update="true"',
+        'allow-bundled-update="false"',
+        ignore_patterns +
+            # Also ignore this test file that has an unknown encoding
+            ['deps/clion-2022.3.1/bin/gdb/mac/lib/python3.10/test/xmltestdata/test.xml'])
 
     # Build.
     (plugin_zip, sources_zip) = build_rust_ide(
             args.clean_build,
             args.verbosity,
             workspace,
-            rust_ide_dir,
-            rust_ide_dir.joinpath('gradlew'),
+            build_stage_dir,
+            build_stage_dir.joinpath('gradlew'),
             {
                 'PATH': '/bin:/usr/bin',
                 'JAVA_HOME': str(compute_java_home(workspace)),
@@ -74,6 +114,12 @@ def main() -> None:
     copy_artifacts_to_prebuilts(workspace, plugin_zip, sources_zip)
     write_metadata_file(workspace)
     write_jps_lib_xml(workspace)
+
+    # Clean up temporaries if they exist (and we're not preserving them).
+    if not args.keep_temporaries:
+        if os.path.exists(build_stage_dir):
+            print(f'\033[1;36mRemoving Temporary Build Directory\033[0m')
+            shutil.rmtree(build_stage_dir)
 
 class Verbosity(Enum):
     quiet = "quiet"
@@ -137,6 +183,140 @@ def build_rust_ide(
     plugin_zip = plugin_zips[0]
     sources_zip = artifacts_dir.joinpath('rust-plugin-sources.zip')
     return ArtifactPaths(plugin_zip, sources_zip)
+
+def read_gitignore(gitignore_path):
+    """
+    Reads the .gitignore file and returns a list of patterns.
+
+    Args:
+        gitignore_path (str): Path to the .gitignore file.
+
+    Returns:
+        list: List of patterns read from the .gitignore file.
+    """
+    with open(gitignore_path, 'r') as gitignore_file:
+        patterns = gitignore_file.read().splitlines()
+
+    return patterns
+
+def filename_matches_patterns(filename, patterns):
+    """
+    Checks if a file matches any pattern from the given list of patterns.
+
+    Args:
+        filename (str): Name of the file to be checked.
+        patterns (list): List of patterns to match against.
+
+    Returns:
+        bool: True if the file matches any pattern, False otherwise.
+    """
+    for pattern in patterns:
+        if fnmatch.fnmatch(filename, pattern):
+            return True
+
+    return False
+
+def copy_directory(src_dir, dest_dir, ignore=[]):
+    """
+    Copy files from source directory to destination directory, preserving file attributes and displaying a progress bar for changed files.
+
+    Args:
+        src_dir (str): Path to the source directory.
+        dest_dir (str): Path to the destination directory.
+        ignore (list): List of .gitignore style patterns to ignore.
+    """
+
+    # Walk through the source directory recursively
+    changed_files = []
+    for root, dirs, files in os.walk(src_dir):
+        # Determine the corresponding destination directory structure
+        dest_root = os.path.join(dest_dir, os.path.relpath(root, src_dir))
+
+        # Create the destination directory if it doesn't exist
+        os.makedirs(dest_root, exist_ok=True)
+
+        for file_name in files:
+            src_file_path = os.path.join(root, file_name)
+            dest_file_path = os.path.join(dest_root, file_name)
+
+            if filename_matches_patterns(os.path.relpath(dest_file_path, dest_dir), ignore): continue
+
+            # Check if the destination file already exists
+            if os.path.exists(dest_file_path):
+                # Compare file size and timestamp to determine if the files are different
+                src_stat = os.stat(src_file_path)
+                dest_stat = os.stat(dest_file_path)
+                if src_stat.st_size == dest_stat.st_size and src_stat.st_mtime <= dest_stat.st_mtime:
+                    # Files are identical, skip copying
+                    continue
+
+            # Add the file to the list of changed files
+            changed_files.append((src_file_path, dest_file_path))
+
+    # Get the total number of changed files
+    file_count = len(changed_files)
+
+    # Initialize the progress bar
+    progress_bar = tqdm(
+        bar_format='  {percentage:.1f}% | {bar} {n}/{total} | ETA: {remaining}',
+        total=file_count,
+        leave=False,
+        unit=' file(s)')
+
+    # Copy the changed files and update the progress bar
+    for src_file_path, dest_file_path in changed_files:
+        # Copy the file and preserve attributes
+        shutil.copy2(src_file_path, dest_file_path)
+
+        # Preserve the executable attribute if it exists on the source file
+        if os.access(src_file_path, os.X_OK):
+            os.chmod(dest_file_path, 0o755)
+
+        # Update the progress bar
+        progress_bar.update(1)
+
+    # Close the progress bar
+    progress_bar.close()
+
+def search_replace_in_xml(directory, search_string, replace_string, ignore):
+    """
+    Search and replace a string for all *.xml files in a directory.
+
+    Args:
+        directory (str): Path to the directory containing the XML files.
+        search_string (str): The string to search for.
+        replace_string (str): The string to replace the search string with.
+        ignore (list): List of .gitignore style patterns to ignore.
+    """
+
+    # Iterate over all files in the directory
+    for root, dirs, files in os.walk(directory):
+        for filename in files:
+            # Check if the file has a .xml extension
+            if filename.endswith('.xml'):
+                # Create the full file path by joining the directory path and the filename
+                file_path = os.path.join(root, filename)
+                if filename_matches_patterns(os.path.relpath(file_path, directory), ignore): continue
+
+                # Open the file in read mode
+                try:
+                    with open(file_path, 'r') as file:
+                        # Read the content of the file
+                        content = file.read()
+                except UnicodeDecodeError:
+                    print_relevant_file(directory, "  Unknown Encoding", file_path)
+                    continue
+
+                # Perform the search and replace operation using regular expressions
+                updated_content = re.sub(search_string, replace_string, content)
+
+                if content != updated_content:
+                    print_relevant_file(directory, "  Modifing", file_path)
+
+                    # Open the file in write mode to overwrite the content
+                    with open(file_path, 'w') as file:
+                        # Write the updated content back to the file
+                        file.write(updated_content)
 
 def copy_artifacts_to_prebuilts(
     workspace: Path,
