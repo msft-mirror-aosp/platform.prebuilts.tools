@@ -9,9 +9,9 @@ set -eu
 # For the Kotlin version, see tools/idea/.idea/libraries/kotlinc_*.xml.
 # The git SHAs must also be updated to match the versions specified.
 export INTELLIJ_VERSION="231.8770.65"
-export KOTLIN_VERSION="1.8.21"
+export KOTLIN_VERSION="1.9.0-Beta"
 export INTELLIJ_SHA="d099cc4ae619e79b7501202e4774508b7f3046e2" # Apr 27, 2023, 231.8770.65
-export KOTLIN_SHA="ec1553ae4123974f50f4f18a1b6f2656cac2dde1" # v1.8.21, Apr 23, 2023, 1.8.21
+export KOTLIN_SHA="ec00c64bcc45aaef029e360f146d6695ec12140e" # May 22, 2023, 1.9.0-Beta
 
 export CLEAN_BUILD="${CLEAN_BUILD:-false}"
 
@@ -63,7 +63,6 @@ if [[ ! "${CUSTOM_KOTLIN_DIR:-}" ]]; then
 fi
 if [[ ! "${CUSTOM_INTELLIJ_DIR:-}" ]]; then
     git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/intellij-safe-analyze.diff"
-    git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/intellij-uast.diff"
 fi
 
 phase "Building Kotlin compiler"

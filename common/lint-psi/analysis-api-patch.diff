@@ -32,63 +32,24 @@ index 527966765db..16284fd6828 100644
      compilerConfig: CompilerConfiguration,
      project: Project,
      ktFiles: List<KtFile>,
-diff --git a/analysis/kt-references/kt-references-fe10/src/org/jetbrains/kotlin/references/fe10/base/KtFe10ReferenceResolutionHelper.kt b/analysis/kt-references/kt-references-fe10/src/org/jetbrains/kotlin/references/fe10/base/KtFe10ReferenceResolutionHelper.kt
-index e775f370e63..ff097a85c3f 100644
---- a/analysis/kt-references/kt-references-fe10/src/org/jetbrains/kotlin/references/fe10/base/KtFe10ReferenceResolutionHelper.kt
-+++ b/analysis/kt-references/kt-references-fe10/src/org/jetbrains/kotlin/references/fe10/base/KtFe10ReferenceResolutionHelper.kt
-@@ -40,4 +40,32 @@ interface KtFe10ReferenceResolutionHelper {
-     companion object {
-         fun getInstance() = ApplicationManager.getApplication().getService(KtFe10ReferenceResolutionHelper::class.java)
-     }
--}
-\ No newline at end of file
-+}
-+
-+/**
-+ * A dummy implementation of [KtFe10ReferenceResolutionHelper]
-+ *
-+ * The implementation in IDE, [KtFe10ReferenceResolutionHelperImpl], is not always available, e.g., in Android Lint CLI.
-+ */
-+object DummyKtFe10ReferenceResolutionHelper : KtFe10ReferenceResolutionHelper {
-+    override fun isInProjectOrLibSource(element: PsiElement, includeScriptsOutsideSourceRoots: Boolean): Boolean = false
-+
-+    override fun resolveImportReference(file: KtFile, fqName: FqName): Collection<DeclarationDescriptor> = emptyList()
-+
-+    override fun partialAnalyze(element: KtElement): BindingContext = BindingContext.EMPTY
-+
-+    override fun findDecompiledDeclaration(
-+        project: Project,
-+        referencedDescriptor: DeclarationDescriptor,
-+        builtInsSearchScope: GlobalSearchScope?
-+    ): KtDeclaration? = null
-+
-+    override fun findPsiDeclarations(
-+        declaration: DeclarationDescriptor,
-+        project: Project,
-+        resolveScope: GlobalSearchScope
-+    ): Collection<PsiElement> = emptyList()
-+
-+    override fun resolveKDocLink(element: KDocName): Collection<DeclarationDescriptor> = emptyList()
-+}
-+
 diff --git a/analysis/analysis-api-providers/src/org/jetbrains/kotlin/analysis/providers/impl/KotlinStaticDeclarationProvider.kt b/analysis/analysis-api-providers/src/org/jetbrains/kotlin/analysis/providers/impl/KotlinStaticDeclarationProvider.kt
-index 6ce884aa80cc..d26b78da1a49 100644
+index 265b7368cc87..72df0df7b893 100644
 --- a/analysis/analysis-api-providers/src/org/jetbrains/kotlin/analysis/providers/impl/KotlinStaticDeclarationProvider.kt
 +++ b/analysis/analysis-api-providers/src/org/jetbrains/kotlin/analysis/providers/impl/KotlinStaticDeclarationProvider.kt
-@@ -239,10 +239,12 @@ public class KotlinStaticDeclarationProviderFactory(
+@@ -253,6 +253,7 @@ public class KotlinStaticDeclarationProviderFactory(
              }
          }
-
--        loadBuiltIns().forEach { ktFileStub ->
--            addToFacadeFileMap(ktFileStub.psi)
--            // top-level functions and properties, built-in classes
--            ktFileStub.childrenStubs.forEach(::indexStub)
+ 
 +        if (System.getProperty("lint.use.fir.uast", "false").toBoolean()) {
-+            loadBuiltIns().forEach { ktFileStub ->
-+                addToFacadeFileMap(ktFileStub.psi)
-+                // top-level functions and properties, built-in classes
-+                ktFileStub.childrenStubs.forEach(::indexStub)
-+            }
+         loadBuiltIns().forEach { ktFileStub ->
+             val ktFile: KtFile = ktFileStub.psi
+             addToFacadeFileMap(ktFile)
+@@ -269,6 +270,7 @@ public class KotlinStaticDeclarationProviderFactory(
+             // top-level functions and properties, built-in classes
+             ktFileStub.childrenStubs.forEach(::indexStub)
          }
-
++        }
+ 
          // Indexing user source files
+         files.forEach {
+
