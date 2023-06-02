@@ -726,3 +726,14 @@ filegroup(
     ],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+filegroup(
+    name = "tomlj_files",
+    # do not sort: must match IML order
+    srcs = [
+        "repository/org/tomlj/tomlj/1.1.0/tomlj-1.1.0.jar",
+        "repository/org/antlr/antlr4-runtime/4.11.1/antlr4-runtime-4.11.1.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
