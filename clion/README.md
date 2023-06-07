@@ -1,4 +1,4 @@
-This directory contains clangd and clang-tidy binaries built from JetBrains'
+This directory contains clangd binaries built from JetBrains'
 fork of llvm-project. The specific folder structure is enforced by logic by
 `ClangUtils#getBuiltinClangToolPath()` defined in
 //tools/vendor/intellij/cidr/cidr-lang/src/com/jetbrains/cidr/lang/daemon/clang/ClangUtils.java.
