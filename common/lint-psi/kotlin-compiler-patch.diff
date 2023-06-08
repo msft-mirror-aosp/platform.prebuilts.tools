@@ -1,16 +1,16 @@
-diff --git a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt
-index 914c096ceab0..6b84229ad10f 100644
---- a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt
-+++ b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt
+diff --git a/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt b/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt
+index 914c096ceab0..b73bbbee6812 100644
+--- a/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt
++++ b/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt
 @@ -40,6 +40,7 @@ import org.jetbrains.kotlin.name.FqName
  import org.jetbrains.kotlin.resolve.jvm.KotlinCliJavaFileManager
  import org.jetbrains.kotlin.util.PerformanceCounter
  import org.jetbrains.kotlin.utils.addIfNotNull
 +import org.jetbrains.kotlin.utils.getOrPutNullable
  import java.util.*
- 
+
  // TODO: do not inherit from CoreJavaFileManager to avoid accidental usage of its methods which do not use caches/indices
-@@ -73,7 +74,8 @@ class KotlinCliJavaFileManagerImpl(private val myPsiManager: PsiManager) : CoreJ
+@@ -73,7 +73,8 @@ class KotlinCliJavaFileManagerImpl(private val myPsiManager: PsiManager) : CoreJ
      private fun findVirtualFileForTopLevelClass(classId: ClassId, searchScope: GlobalSearchScope): VirtualFile? {
          val relativeClassName = classId.relativeClassName.asString()
          val outerMostClassFqName = classId.packageFqName.child(classId.relativeClassName.pathSegments().first())
@@ -20,10 +20,10 @@ index 914c096ceab0..6b84229ad10f 100644
              // Search java sources first. For build tools, it makes sense to build new files passing all the
              // class files for the previous build on the class path.
              //
-diff --git a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
-index 749c69ca4194..77fa6db62e9f 100644
---- a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
-+++ b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
+diff --git a/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt b/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
+index 8c1a65f2fa8e..00954c9d5bd4 100644
+--- a/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
++++ b/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
 @@ -378,7 +378,9 @@ class KotlinCoreEnvironment private constructor(
              is JvmModulePathRoot ->
                  if (root.file.isFile) findJarRoot(root.file) else findExistingRoot(root, "Java module root")
@@ -35,7 +35,7 @@ index 749c69ca4194..77fa6db62e9f 100644
              is VirtualJvmClasspathRoot -> root.file
              else ->
                  throw IllegalStateException("Unexpected root: $root")
-@@ -620,11 +622,15 @@ class KotlinCoreEnvironment private constructor(
+@@ -633,11 +635,15 @@ class KotlinCoreEnvironment private constructor(
                                  "(cp:\n  ${(Thread.currentThread().contextClassLoader as? UrlClassLoader)?.urls?.joinToString("\n  ") { it.file }})"
                      )
  
@@ -51,7 +51,7 @@ index 749c69ca4194..77fa6db62e9f 100644
          }
  
          @JvmStatic
-@@ -646,7 +652,6 @@ class KotlinCoreEnvironment private constructor(
+@@ -661,7 +667,6 @@ class KotlinCoreEnvironment private constructor(
              CollectAdditionalSourcesExtension.registerExtensionPoint(project)
              ProcessSourcesBeforeCompilingExtension.registerExtensionPoint(project)
              ExtraImportsProviderExtension.registerExtensionPoint(project)

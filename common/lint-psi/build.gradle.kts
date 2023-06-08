@@ -5,7 +5,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("java")
-    kotlin("jvm") version "1.7.21" // Aim to match the Kotlin version below.
+    kotlin("jvm") version "1.8.0" // Aim to match the Kotlin version below.
 }
 
 val intellijVersion = getEnvOrError("INTELLIJ_VERSION")
@@ -133,6 +133,10 @@ tasks.named<Jar>("uast-kotlin-jar") {
 tasks.named<Jar>("uast-kotlin-sources-jar") {
     from(sourceSets["kotlinUastBaseSrc"].allSource)
     from(sourceSets["kotlinUastSrc"].allSource)
+}
+
+tasks.withType<JavaCompile> {
+    java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
 
 tasks.withType<KotlinCompile> {
