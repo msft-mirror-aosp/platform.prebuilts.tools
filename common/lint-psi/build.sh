@@ -60,10 +60,12 @@ phase "Applying patches if needed"
 if [[ ! "${CUSTOM_KOTLIN_DIR:-}" ]]; then
     git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/kotlin-compiler-patch.diff"
     git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/analysis-api-patch.diff"
+    git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/analysis-api-1.9.20.diff"
     git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/light-class-kts-interface.diff"
 fi
 if [[ ! "${CUSTOM_INTELLIJ_DIR:-}" ]]; then
     git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/intellij-safe-analyze.diff"
+    git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/uast-233.diff"
 fi
 
 phase "Building Kotlin compiler"
