@@ -301,13 +301,6 @@ jvm_import(
 
 # managed by go/iml_to_build
 filegroup(
-    name = "easymock_files",
-    srcs = ["repository/org/easymock/easymock/4.0.2/easymock-4.0.2.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-filegroup(
     name = "sqlite_files",
     srcs = ["repository/org/xerial/sqlite-jdbc/3.34.0/sqlite-jdbc-3.34.0.jar"],
     visibility = ["//visibility:public"],
