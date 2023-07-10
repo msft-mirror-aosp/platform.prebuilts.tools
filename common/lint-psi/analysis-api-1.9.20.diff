@@ -174,3 +174,124 @@ index 41151108578f..36100284e125 100644
              if (valueParameterSymbol.isVararg != psiParameter.isVarArgs) return false
              if (!isTheSameTypes(
                      psi,
+diff --git a/analysis/analysis-api-fe10/src/org/jetbrains/kotlin/analysis/api/descriptors/CliFe10AnalysisFacade.kt b/analysis/analysis-api-fe10/src/org/jetbrains/kotlin/analysis/api/descriptors/CliFe10AnalysisFacade.kt
+index 267278e15fb4..dc701fd8ee3e 100644
+--- a/analysis/analysis-api-fe10/src/org/jetbrains/kotlin/analysis/api/descriptors/CliFe10AnalysisFacade.kt
++++ b/analysis/analysis-api-fe10/src/org/jetbrains/kotlin/analysis/api/descriptors/CliFe10AnalysisFacade.kt
+@@ -73,12 +73,15 @@ class CliFe10AnalysisFacade(private val project: Project) : Fe10AnalysisFacade {
+     }
+ }
+ 
+-class KtFe10AnalysisHandlerExtension(private val useSiteModule: KtSourceModule) : AnalysisHandlerExtension {
++class KtFe10AnalysisHandlerExtension(
++    private val useSiteModule: KtSourceModule? = null
++) : AnalysisHandlerExtension {
+     internal companion object {
+         fun getInstance(area: AreaInstance, module: KtModule): KtFe10AnalysisHandlerExtension {
+-            return AnalysisHandlerExtension.extensionPointName.getExtensions(area)
++            val extensions = AnalysisHandlerExtension.extensionPointName.getExtensions(area)
+                 .filterIsInstance<KtFe10AnalysisHandlerExtension>()
+-                .firstOrNull { it.useSiteModule == module }
++            return extensions.firstOrNull { it.useSiteModule == module }
++                ?: extensions.singleOrNull { it.useSiteModule == null }
+                 ?: error(KtFe10AnalysisHandlerExtension::class.java.name + " should be registered")
+         }
+     }
+@@ -109,7 +112,9 @@ class KtFe10AnalysisHandlerExtension(private val useSiteModule: KtSourceModule)
+         bindingTrace: BindingTrace,
+         componentProvider: ComponentProvider
+     ): AnalysisResult? {
+-        if (module.name.asString().removeSurrounding("<", ">") != useSiteModule.moduleName) {
++        if (useSiteModule != null &&
++            module.name.asString().removeSurrounding("<", ">") != useSiteModule.moduleName
++        ) {
+             // there is no way to properly map KtModule to ModuleDescriptor,
+             // KtFe10AnalysisHandlerExtension is used only for tests, so just by name comparasion should work as all module names are different
+             return null
+@@ -135,4 +140,4 @@ class KtFe10AnalysisHandlerExtension(private val useSiteModule: KtSourceModule)
+         )
+         return super.doAnalysis(project, module, projectContext, files, bindingTrace, componentProvider)
+     }
+-}
+\ No newline at end of file
++}
+diff --git a/analysis/analysis-api-providers/src/org/jetbrains/kotlin/analysis/providers/impl/KotlinStaticPackageProvider.kt b/analysis/analysis-api-providers/src/org/jetbrains/kotlin/analysis/providers/impl/KotlinStaticPackageProvider.kt
+index c0c72ebde601..439b8f1a6bae 100644
+--- a/analysis/analysis-api-providers/src/org/jetbrains/kotlin/analysis/providers/impl/KotlinStaticPackageProvider.kt
++++ b/analysis/analysis-api-providers/src/org/jetbrains/kotlin/analysis/providers/impl/KotlinStaticPackageProvider.kt
+@@ -33,7 +33,7 @@ public class KotlinStaticPackageProvider(
+     }
+ 
+     override fun doesKotlinOnlyPackageExist(packageFqName: FqName): Boolean {
+-        return packageFqName in kotlinPackageToSubPackages
++        return packageFqName.isRoot || packageFqName in kotlinPackageToSubPackages
+     }
+ 
+     override fun getKotlinOnlySubPackagesFqNames(packageFqName: FqName, nameFilter: (Name) -> Boolean): Set<Name> {
+@@ -48,4 +48,4 @@ public class KotlinStaticPackageProviderFactory(
+     override fun createPackageProvider(searchScope: GlobalSearchScope): KotlinPackageProvider {
+         return KotlinStaticPackageProvider(project, searchScope, files)
+     }
+-}
+\ No newline at end of file
++}
+diff --git a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KtModuleProviderImpl.kt b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KtModuleProviderImpl.kt
+index a530b258fd0f..a29b645902de 100644
+--- a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KtModuleProviderImpl.kt
++++ b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KtModuleProviderImpl.kt
+@@ -16,6 +16,7 @@ import org.jetbrains.kotlin.analysis.low.level.api.fir.project.structure.LLFirBu
+ import org.jetbrains.kotlin.analysis.project.structure.*
+ import org.jetbrains.kotlin.platform.TargetPlatform
+ import org.jetbrains.kotlin.serialization.deserialization.builtins.BuiltInSerializerProtocol
++import org.jetbrains.kotlin.utils.KotlinExceptionWithAttachments
+ 
+ internal class KtModuleProviderImpl(
+     private val platform: TargetPlatform,
+@@ -36,6 +37,7 @@ internal class KtModuleProviderImpl(
+         LLFirBuiltinsSessionFactory.getInstance(project).getBuiltinsSession(platform).ktModule as KtBuiltinsModule
+     }
+ 
++    @OptIn(KtModuleStructureInternals::class)
+     override fun getKtModuleForKtElement(element: PsiElement): KtModule {
+         val containingFileAsPsiFile = element.containingFile
+             ?: return ktNotUnderContentRootModuleWithoutPsiFile
+@@ -56,9 +58,16 @@ internal class KtModuleProviderImpl(
+             return builtinsModule
+         }
+ 
+-        return mainModules.first { module ->
++        containingFileAsVirtualFile.analysisExtensionFileContextModule?.let { return it }
++
++        return mainModules.firstOrNull { module ->
+             containingFileAsVirtualFile in module.contentScope
+         }
++            ?: throw KotlinExceptionWithAttachments("Cannot find KtModule; see the attachment for more details.")
++                .withAttachment(
++                    containingFileAsVirtualFile.path,
++                    mainModules.joinToString(separator = System.lineSeparator()) { it.asDebugString() }
++                )
+     }
+ 
+     internal val binaryModules: List<KtBinaryModule> by lazy {
+@@ -72,4 +81,19 @@ internal class KtModuleProviderImpl(
+         addAll(files)
+         addAll(findJvmRootsForJavaFiles(files.filterIsInstance<PsiJavaFile>()))
+     }
+-}
+\ No newline at end of file
++}
++
++private fun KtModule.asDebugString(indent: Int = 0): String = buildString {
++    appendLine("$moduleDescription {")
++    appendLine("contentScope: $contentScope")
++    appendLine("directRegularDependencies:${System.lineSeparator()}")
++    directRegularDependencies.joinTo(this, separator = System.lineSeparator()) { dep ->
++        dep.asDebugString(indent + 1)
++    }
++    appendLine("directDependsOnDependencies:${System.lineSeparator()}")
++    directDependsOnDependencies.joinTo(this, separator = System.lineSeparator()) { dep ->
++        dep.asDebugString(indent + 1)
++    }
++    append("}")
++}.prependIndent("  ".repeat(indent))
++
