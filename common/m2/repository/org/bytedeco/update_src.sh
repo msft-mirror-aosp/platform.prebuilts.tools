@@ -8,7 +8,7 @@
 #
 # Usage: ./update_src.sh
 
-version=1.5.8
+version=1.5.9
 mirror_url="https://android.googlesource.com/platform/prebuilts/tools/+/refs/heads/studio-main/common/m2/repository/org/bytedeco"
 
 mkdir -p /tmp/update_src
