@@ -26,7 +26,7 @@ if [[ "${committish}" == "latest_idea_tag" ]]; then
   # This assumes that the version numbers embedded in the tags
   # will be monotonically increasing alphabetically.
   latest_idea_tag="$(echo "${tags}" \
-    | sort \
+    | sort -V \
     | tail -1)"
   echo "Latest idea tag found: '${latest_idea_tag}'"
   committish="${latest_idea_tag}"
