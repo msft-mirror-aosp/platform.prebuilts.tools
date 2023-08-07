@@ -60,7 +60,7 @@ if [[ -n "${LINUX_RELEASE}" ]]; then
   mkdir -pv "${BIN_DIR}/linux/x64"
   fileutil cp -R -resume "/placer/prod/home/kokoro-dedicated/build_artifacts/prod/android-studio/clangd/linux/release/${LINUX_RELEASE}/*/*" "${BIN_DIR}/linux/x64"
   rm -v "${BIN_DIR}/linux/x64"/*.intoto.jsonl
-  chmod -v +x "${BIN_DIR}/linux/x64"/{clangd}
+  chmod -v +x "${BIN_DIR}/linux/x64"/clangd
   if [[ "${STRIP_BINARIES}" == 1 ]]; then
     strip -v "${BIN_DIR}/linux/x64"/{clangd,libc++.so.1}
   fi
@@ -70,7 +70,7 @@ if [[ -n "${MAC_RELEASE}" ]]; then
   mkdir -pv "${BIN_DIR}/mac"
   fileutil cp -R -resume "/placer/prod/home/kokoro-dedicated/build_artifacts/prod/android-studio/clangd/mac/release/${MAC_RELEASE}/*/*" "${BIN_DIR}/mac"
   rm -v "${BIN_DIR}/mac"/*.intoto.jsonl
-  chmod -v +x "${BIN_DIR}/mac"/{clangd}
+  chmod -v +x "${BIN_DIR}/mac"/clangd
 fi
 if [[ -n "${WIN_RELEASE}" ]]; then
   rm -rv "${BIN_DIR}/win"
