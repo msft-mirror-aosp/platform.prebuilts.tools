@@ -722,9 +722,31 @@ eLanguageTypeFortran03 = _lldb.eLanguageTypeFortran03
 
 eLanguageTypeFortran08 = _lldb.eLanguageTypeFortran08
 
+eLanguageTypeRenderScript = _lldb.eLanguageTypeRenderScript
+
+eLanguageTypeBLISS = _lldb.eLanguageTypeBLISS
+
+eLanguageTypeKotlin = _lldb.eLanguageTypeKotlin
+
+eLanguageTypeZig = _lldb.eLanguageTypeZig
+
+eLanguageTypeCrystal = _lldb.eLanguageTypeCrystal
+
+eLanguageTypeC_plus_plus_17 = _lldb.eLanguageTypeC_plus_plus_17
+
+eLanguageTypeC_plus_plus_20 = _lldb.eLanguageTypeC_plus_plus_20
+
+eLanguageTypeC17 = _lldb.eLanguageTypeC17
+
+eLanguageTypeFortran18 = _lldb.eLanguageTypeFortran18
+
+eLanguageTypeAda2005 = _lldb.eLanguageTypeAda2005
+
+eLanguageTypeAda2012 = _lldb.eLanguageTypeAda2012
+
 eLanguageTypeMipsAssembler = _lldb.eLanguageTypeMipsAssembler
 
-eLanguageTypeExtRenderScript = _lldb.eLanguageTypeExtRenderScript
+eLanguageTypeMojo = _lldb.eLanguageTypeMojo
 
 eNumLanguageTypes = _lldb.eNumLanguageTypes
 
@@ -1600,6 +1622,12 @@ eDWIMPrintVerbosityExpression = _lldb.eDWIMPrintVerbosityExpression
 
 eDWIMPrintVerbosityFull = _lldb.eDWIMPrintVerbosityFull
 
+eWatchPointValueKindInvalid = _lldb.eWatchPointValueKindInvalid
+
+eWatchPointValueKindVariable = _lldb.eWatchPointValueKindVariable
+
+eWatchPointValueKindExpression = _lldb.eWatchPointValueKindExpression
+
 class SBAddress(object):
     r"""
     A section + offset based address class.
@@ -1650,23 +1678,19 @@ class SBAddress(object):
         _lldb.SBAddress_swiginit(self, _lldb.new_SBAddress(*args))
     __swig_destroy__ = _lldb.delete_SBAddress
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBAddress self) -> bool"""
-        return _lldb.SBAddress_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBAddress___nonzero__(self)
     __bool__ = __nonzero__
 
 
 
-    def __eq__(self, other):
-      return not self.__ne__(other)
-
-
     def __ne__(self, rhs: "SBAddress") -> "bool":
         r"""__ne__(SBAddress self, SBAddress rhs) -> bool"""
         return _lldb.SBAddress___ne__(self, rhs)
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBAddress self) -> bool"""
+        return _lldb.SBAddress_IsValid(self)
 
     def Clear(self) -> "void":
         r"""Clear(SBAddress self)"""
@@ -1680,6 +1704,10 @@ class SBAddress(object):
         r"""GetLoadAddress(SBAddress self, SBTarget target) -> lldb::addr_t"""
         return _lldb.SBAddress_GetLoadAddress(self, target)
 
+    def SetAddress(self, section: "SBSection", offset: "lldb::addr_t") -> "void":
+        r"""SetAddress(SBAddress self, SBSection section, lldb::addr_t offset)"""
+        return _lldb.SBAddress_SetAddress(self, section, offset)
+
     def SetLoadAddress(self, load_addr: "lldb::addr_t", target: "SBTarget") -> "void":
         r"""SetLoadAddress(SBAddress self, lldb::addr_t load_addr, SBTarget target)"""
         return _lldb.SBAddress_SetLoadAddress(self, load_addr, target)
@@ -1691,18 +1719,6 @@ class SBAddress(object):
     def GetDescription(self, description: "SBStream") -> "bool":
         r"""GetDescription(SBAddress self, SBStream description) -> bool"""
         return _lldb.SBAddress_GetDescription(self, description)
-
-    def GetSection(self) -> "lldb::SBSection":
-        r"""GetSection(SBAddress self) -> SBSection"""
-        return _lldb.SBAddress_GetSection(self)
-
-    def GetOffset(self) -> "lldb::addr_t":
-        r"""GetOffset(SBAddress self) -> lldb::addr_t"""
-        return _lldb.SBAddress_GetOffset(self)
-
-    def SetAddress(self, section: "SBSection", offset: "lldb::addr_t") -> "void":
-        r"""SetAddress(SBAddress self, SBSection section, lldb::addr_t offset)"""
-        return _lldb.SBAddress_SetAddress(self, section, offset)
 
     def GetSymbolContext(self, resolve_scope: "uint32_t") -> "lldb::SBSymbolContext":
         r"""
@@ -1716,6 +1732,14 @@ class SBAddress(object):
             :py:class:`SBTarget.ResolveLoadAddress`.
         """
         return _lldb.SBAddress_GetSymbolContext(self, resolve_scope)
+
+    def GetSection(self) -> "lldb::SBSection":
+        r"""GetSection(SBAddress self) -> SBSection"""
+        return _lldb.SBAddress_GetSection(self)
+
+    def GetOffset(self) -> "lldb::addr_t":
+        r"""GetOffset(SBAddress self) -> lldb::addr_t"""
+        return _lldb.SBAddress_GetOffset(self)
 
     def GetModule(self) -> "lldb::SBModule":
         r"""
@@ -1754,6 +1778,10 @@ class SBAddress(object):
     def __repr__(self) -> "std::string":
         r"""__repr__(SBAddress self) -> std::string"""
         return _lldb.SBAddress___repr__(self)
+
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
 
     __runtime_error_str = 'This resolves the SBAddress using the SBTarget from lldb.target so this property can ONLY be used in the interactive script interpreter (i.e. under the lldb script command). For things like Python based commands and breakpoint callbacks use GetLoadAddress instead.'
 
@@ -1815,6 +1843,7 @@ class SBAttachInfo(object):
         __init__(SBAttachInfo self, SBAttachInfo rhs) -> SBAttachInfo
         """
         _lldb.SBAttachInfo_swiginit(self, _lldb.new_SBAttachInfo(*args))
+    __swig_destroy__ = _lldb.delete_SBAttachInfo
 
     def GetProcessID(self) -> "lldb::pid_t":
         r"""GetProcessID(SBAttachInfo self) -> lldb::pid_t"""
@@ -1933,7 +1962,30 @@ class SBAttachInfo(object):
     def SetListener(self, listener: "SBListener") -> "void":
         r"""SetListener(SBAttachInfo self, SBListener listener)"""
         return _lldb.SBAttachInfo_SetListener(self, listener)
-    __swig_destroy__ = _lldb.delete_SBAttachInfo
+
+    def GetShadowListener(self) -> "lldb::SBListener":
+        r"""GetShadowListener(SBAttachInfo self) -> SBListener"""
+        return _lldb.SBAttachInfo_GetShadowListener(self)
+
+    def SetShadowListener(self, listener: "SBListener") -> "void":
+        r"""SetShadowListener(SBAttachInfo self, SBListener listener)"""
+        return _lldb.SBAttachInfo_SetShadowListener(self, listener)
+
+    def GetScriptedProcessClassName(self) -> "char const *":
+        r"""GetScriptedProcessClassName(SBAttachInfo self) -> char const *"""
+        return _lldb.SBAttachInfo_GetScriptedProcessClassName(self)
+
+    def SetScriptedProcessClassName(self, class_name: "char const *") -> "void":
+        r"""SetScriptedProcessClassName(SBAttachInfo self, char const * class_name)"""
+        return _lldb.SBAttachInfo_SetScriptedProcessClassName(self, class_name)
+
+    def GetScriptedProcessDictionary(self) -> "lldb::SBStructuredData":
+        r"""GetScriptedProcessDictionary(SBAttachInfo self) -> SBStructuredData"""
+        return _lldb.SBAttachInfo_GetScriptedProcessDictionary(self)
+
+    def SetScriptedProcessDictionary(self, dict: "SBStructuredData") -> "void":
+        r"""SetScriptedProcessDictionary(SBAttachInfo self, SBStructuredData dict)"""
+        return _lldb.SBAttachInfo_SetScriptedProcessDictionary(self, dict)
 
 # Register SBAttachInfo in _lldb:
 _lldb.SBAttachInfo_swigregister(SBAttachInfo)
@@ -1958,15 +2010,15 @@ class SBBlock(object):
         """
         return _lldb.SBBlock_IsInlined(self)
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBBlock self) -> bool"""
-        return _lldb.SBBlock_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBBlock___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBBlock self) -> bool"""
+        return _lldb.SBBlock_IsValid(self)
 
     def GetInlinedName(self) -> "char const *":
         r"""
@@ -2011,13 +2063,6 @@ class SBBlock(object):
         """
         return _lldb.SBBlock_GetParent(self)
 
-    def GetContainingInlinedBlock(self) -> "lldb::SBBlock":
-        r"""
-        GetContainingInlinedBlock(SBBlock self) -> SBBlock
-        Get the inlined block that is or contains this block.
-        """
-        return _lldb.SBBlock_GetContainingInlinedBlock(self)
-
     def GetSibling(self) -> "lldb::SBBlock":
         r"""
         GetSibling(SBBlock self) -> SBBlock
@@ -2048,16 +2093,23 @@ class SBBlock(object):
         r"""GetRangeIndexForBlockAddress(SBBlock self, SBAddress block_addr) -> uint32_t"""
         return _lldb.SBBlock_GetRangeIndexForBlockAddress(self, block_addr)
 
-    def GetDescription(self, description: "SBStream") -> "bool":
-        r"""GetDescription(SBBlock self, SBStream description) -> bool"""
-        return _lldb.SBBlock_GetDescription(self, description)
-
     def GetVariables(self, *args) -> "lldb::SBValueList":
         r"""
         GetVariables(SBBlock self, SBFrame frame, bool arguments, bool locals, bool statics, lldb::DynamicValueType use_dynamic) -> SBValueList
         GetVariables(SBBlock self, SBTarget target, bool arguments, bool locals, bool statics) -> SBValueList
         """
         return _lldb.SBBlock_GetVariables(self, *args)
+
+    def GetContainingInlinedBlock(self) -> "lldb::SBBlock":
+        r"""
+        GetContainingInlinedBlock(SBBlock self) -> SBBlock
+        Get the inlined block that is or contains this block.
+        """
+        return _lldb.SBBlock_GetContainingInlinedBlock(self)
+
+    def GetDescription(self, description: "SBStream") -> "bool":
+        r"""GetDescription(SBBlock self, SBStream description) -> bool"""
+        return _lldb.SBBlock_GetDescription(self, description)
 
     def __repr__(self) -> "std::string":
         r"""__repr__(SBBlock self) -> std::string"""
@@ -2211,15 +2263,15 @@ class SBBreakpoint(object):
         r"""GetID(SBBreakpoint self) -> lldb::break_id_t"""
         return _lldb.SBBreakpoint_GetID(self)
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBBreakpoint self) -> bool"""
-        return _lldb.SBBreakpoint_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBBreakpoint___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBBreakpoint self) -> bool"""
+        return _lldb.SBBreakpoint_IsValid(self)
 
     def ClearAllBreakpointSites(self) -> "void":
         r"""ClearAllBreakpointSites(SBBreakpoint self)"""
@@ -2344,6 +2396,14 @@ class SBBreakpoint(object):
         """
         return _lldb.SBBreakpoint_SetScriptCallbackFunction(self, *args)
 
+    def SetCommandLineCommands(self, commands: "SBStringList") -> "void":
+        r"""SetCommandLineCommands(SBBreakpoint self, SBStringList commands)"""
+        return _lldb.SBBreakpoint_SetCommandLineCommands(self, commands)
+
+    def GetCommandLineCommands(self, commands: "SBStringList") -> "bool":
+        r"""GetCommandLineCommands(SBBreakpoint self, SBStringList commands) -> bool"""
+        return _lldb.SBBreakpoint_GetCommandLineCommands(self, commands)
+
     def SetScriptCallbackBody(self, script_body_text: "char const *") -> "lldb::SBError":
         r"""
         SetScriptCallbackBody(SBBreakpoint self, char const * script_body_text) -> SBError
@@ -2358,14 +2418,6 @@ class SBBreakpoint(object):
             Returns true if the body compiles successfully, false if not.
         """
         return _lldb.SBBreakpoint_SetScriptCallbackBody(self, script_body_text)
-
-    def SetCommandLineCommands(self, commands: "SBStringList") -> "void":
-        r"""SetCommandLineCommands(SBBreakpoint self, SBStringList commands)"""
-        return _lldb.SBBreakpoint_SetCommandLineCommands(self, commands)
-
-    def GetCommandLineCommands(self, commands: "SBStringList") -> "bool":
-        r"""GetCommandLineCommands(SBBreakpoint self, SBStringList commands) -> bool"""
-        return _lldb.SBBreakpoint_GetCommandLineCommands(self, commands)
 
     def AddName(self, new_name: "char const *") -> "bool":
         r"""AddName(SBBreakpoint self, char const * new_name) -> bool"""
@@ -2402,14 +2454,6 @@ class SBBreakpoint(object):
         """
         return _lldb.SBBreakpoint_GetDescription(self, *args)
 
-    def AddLocation(self, address: "SBAddress") -> "lldb::SBError":
-        r"""AddLocation(SBBreakpoint self, SBAddress address) -> SBError"""
-        return _lldb.SBBreakpoint_AddLocation(self, address)
-
-    def SerializeToStructuredData(self) -> "lldb::SBStructuredData":
-        r"""SerializeToStructuredData(SBBreakpoint self) -> SBStructuredData"""
-        return _lldb.SBBreakpoint_SerializeToStructuredData(self)
-
     @staticmethod
     def EventIsBreakpointEvent(event: "SBEvent") -> "bool":
         r"""EventIsBreakpointEvent(SBEvent event) -> bool"""
@@ -2439,6 +2483,14 @@ class SBBreakpoint(object):
         r"""IsHardware(SBBreakpoint self) -> bool"""
         return _lldb.SBBreakpoint_IsHardware(self)
 
+    def AddLocation(self, address: "SBAddress") -> "lldb::SBError":
+        r"""AddLocation(SBBreakpoint self, SBAddress address) -> SBError"""
+        return _lldb.SBBreakpoint_AddLocation(self, address)
+
+    def SerializeToStructuredData(self) -> "lldb::SBStructuredData":
+        r"""SerializeToStructuredData(SBBreakpoint self) -> SBStructuredData"""
+        return _lldb.SBBreakpoint_SerializeToStructuredData(self)
+
     def __repr__(self) -> "std::string":
         r"""__repr__(SBBreakpoint self) -> std::string"""
         return _lldb.SBBreakpoint___repr__(self)
@@ -2455,8 +2507,11 @@ class SBBreakpoint(object):
             return 0
 
         def __getitem__(self, key):
-            if type(key) is int and key < len(self):
-                return self.sbbreakpoint.GetLocationAtIndex(key)
+            if isinstance(key, int):
+                count = len(self)
+                if -count <= key < count:
+                    key %= count
+                    return self.sbbreakpoint.GetLocationAtIndex(key)
             return None
 
     def get_locations_access_object(self):
@@ -2593,15 +2648,15 @@ class SBBreakpointLocation(object):
         r"""GetID(SBBreakpointLocation self) -> lldb::break_id_t"""
         return _lldb.SBBreakpointLocation_GetID(self)
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBBreakpointLocation self) -> bool"""
-        return _lldb.SBBreakpointLocation_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBBreakpointLocation___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBBreakpointLocation self) -> bool"""
+        return _lldb.SBBreakpointLocation_IsValid(self)
 
     def GetAddress(self) -> "lldb::SBAddress":
         r"""GetAddress(SBBreakpointLocation self) -> SBAddress"""
@@ -2648,13 +2703,13 @@ class SBBreakpointLocation(object):
         """
         return _lldb.SBBreakpointLocation_GetCondition(self)
 
-    def GetAutoContinue(self) -> "bool":
-        r"""GetAutoContinue(SBBreakpointLocation self) -> bool"""
-        return _lldb.SBBreakpointLocation_GetAutoContinue(self)
-
     def SetAutoContinue(self, auto_continue: "bool") -> "void":
         r"""SetAutoContinue(SBBreakpointLocation self, bool auto_continue)"""
         return _lldb.SBBreakpointLocation_SetAutoContinue(self, auto_continue)
+
+    def GetAutoContinue(self) -> "bool":
+        r"""GetAutoContinue(SBBreakpointLocation self) -> bool"""
+        return _lldb.SBBreakpointLocation_GetAutoContinue(self)
 
     def SetScriptCallbackFunction(self, *args) -> "lldb::SBError":
         r"""
@@ -2953,15 +3008,15 @@ class SBBroadcaster(object):
         _lldb.SBBroadcaster_swiginit(self, _lldb.new_SBBroadcaster(*args))
     __swig_destroy__ = _lldb.delete_SBBroadcaster
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBBroadcaster self) -> bool"""
-        return _lldb.SBBroadcaster_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBBroadcaster___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBBroadcaster self) -> bool"""
+        return _lldb.SBBroadcaster_IsValid(self)
 
     def Clear(self) -> "void":
         r"""Clear(SBBroadcaster self)"""
@@ -3002,6 +3057,10 @@ class SBBroadcaster(object):
     def __ne__(self, rhs: "SBBroadcaster") -> "bool":
         r"""__ne__(SBBroadcaster self, SBBroadcaster rhs) -> bool"""
         return _lldb.SBBroadcaster___ne__(self, rhs)
+
+    def __lt__(self, rhs: "SBBroadcaster") -> "bool":
+        r"""__lt__(SBBroadcaster self, SBBroadcaster rhs) -> bool"""
+        return _lldb.SBBroadcaster___lt__(self, rhs)
 
     def __eq__(self, rhs):
         if not isinstance(rhs, type(self)):
@@ -3100,47 +3159,23 @@ class SBCommandInterpreter(object):
         r"""EventIsCommandInterpreterEvent(SBEvent event) -> bool"""
         return _lldb.SBCommandInterpreter_EventIsCommandInterpreterEvent(event)
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBCommandInterpreter self) -> bool"""
-        return _lldb.SBCommandInterpreter_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBCommandInterpreter___nonzero__(self)
     __bool__ = __nonzero__
 
 
 
-    def GetIOHandlerControlSequence(self, ch: "char") -> "char const *":
-        r"""GetIOHandlerControlSequence(SBCommandInterpreter self, char ch) -> char const *"""
-        return _lldb.SBCommandInterpreter_GetIOHandlerControlSequence(self, ch)
-
-    def GetPromptOnQuit(self) -> "bool":
-        r"""GetPromptOnQuit(SBCommandInterpreter self) -> bool"""
-        return _lldb.SBCommandInterpreter_GetPromptOnQuit(self)
-
-    def SetPromptOnQuit(self, b: "bool") -> "void":
-        r"""SetPromptOnQuit(SBCommandInterpreter self, bool b)"""
-        return _lldb.SBCommandInterpreter_SetPromptOnQuit(self, b)
-
-    def AllowExitCodeOnQuit(self, b: "bool") -> "void":
-        r"""AllowExitCodeOnQuit(SBCommandInterpreter self, bool b)"""
-        return _lldb.SBCommandInterpreter_AllowExitCodeOnQuit(self, b)
-
-    def HasCustomQuitExitCode(self) -> "bool":
-        r"""HasCustomQuitExitCode(SBCommandInterpreter self) -> bool"""
-        return _lldb.SBCommandInterpreter_HasCustomQuitExitCode(self)
-
-    def GetQuitStatus(self) -> "int":
-        r"""GetQuitStatus(SBCommandInterpreter self) -> int"""
-        return _lldb.SBCommandInterpreter_GetQuitStatus(self)
-
-    def ResolveCommand(self, command_line: "char const *", result: "SBCommandReturnObject") -> "void":
-        r"""ResolveCommand(SBCommandInterpreter self, char const * command_line, SBCommandReturnObject result)"""
-        return _lldb.SBCommandInterpreter_ResolveCommand(self, command_line, result)
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBCommandInterpreter self) -> bool"""
+        return _lldb.SBCommandInterpreter_IsValid(self)
 
     def CommandExists(self, cmd: "char const *") -> "bool":
         r"""CommandExists(SBCommandInterpreter self, char const * cmd) -> bool"""
         return _lldb.SBCommandInterpreter_CommandExists(self, cmd)
+
+    def UserCommandExists(self, cmd: "char const *") -> "bool":
+        r"""UserCommandExists(SBCommandInterpreter self, char const * cmd) -> bool"""
+        return _lldb.SBCommandInterpreter_UserCommandExists(self, cmd)
 
     def AliasExists(self, cmd: "char const *") -> "bool":
         r"""AliasExists(SBCommandInterpreter self, char const * cmd) -> bool"""
@@ -3179,9 +3214,12 @@ class SBCommandInterpreter(object):
         r"""GetDebugger(SBCommandInterpreter self) -> SBDebugger"""
         return _lldb.SBCommandInterpreter_GetDebugger(self)
 
-    def SourceInitFileInHomeDirectory(self, result: "SBCommandReturnObject") -> "void":
-        r"""SourceInitFileInHomeDirectory(SBCommandInterpreter self, SBCommandReturnObject result)"""
-        return _lldb.SBCommandInterpreter_SourceInitFileInHomeDirectory(self, result)
+    def SourceInitFileInHomeDirectory(self, *args) -> "void":
+        r"""
+        SourceInitFileInHomeDirectory(SBCommandInterpreter self, SBCommandReturnObject result)
+        SourceInitFileInHomeDirectory(SBCommandInterpreter self, SBCommandReturnObject result, bool is_repl)
+        """
+        return _lldb.SBCommandInterpreter_SourceInitFileInHomeDirectory(self, *args)
 
     def SourceInitFileInCurrentWorkingDirectory(self, result: "SBCommandReturnObject") -> "void":
         r"""SourceInitFileInCurrentWorkingDirectory(SBCommandInterpreter self, SBCommandReturnObject result)"""
@@ -3206,13 +3244,45 @@ class SBCommandInterpreter(object):
         r"""HandleCompletionWithDescriptions(SBCommandInterpreter self, char const * current_line, uint32_t cursor_pos, int match_start_point, int max_return_elements, SBStringList matches, SBStringList descriptions) -> int"""
         return _lldb.SBCommandInterpreter_HandleCompletionWithDescriptions(self, current_line, cursor_pos, match_start_point, max_return_elements, matches, descriptions)
 
+    def WasInterrupted(self) -> "bool":
+        r"""WasInterrupted(SBCommandInterpreter self) -> bool"""
+        return _lldb.SBCommandInterpreter_WasInterrupted(self)
+
+    def InterruptCommand(self) -> "bool":
+        r"""InterruptCommand(SBCommandInterpreter self) -> bool"""
+        return _lldb.SBCommandInterpreter_InterruptCommand(self)
+
     def IsActive(self) -> "bool":
         r"""IsActive(SBCommandInterpreter self) -> bool"""
         return _lldb.SBCommandInterpreter_IsActive(self)
 
-    def WasInterrupted(self) -> "bool":
-        r"""WasInterrupted(SBCommandInterpreter self) -> bool"""
-        return _lldb.SBCommandInterpreter_WasInterrupted(self)
+    def GetIOHandlerControlSequence(self, ch: "char") -> "char const *":
+        r"""GetIOHandlerControlSequence(SBCommandInterpreter self, char ch) -> char const *"""
+        return _lldb.SBCommandInterpreter_GetIOHandlerControlSequence(self, ch)
+
+    def GetPromptOnQuit(self) -> "bool":
+        r"""GetPromptOnQuit(SBCommandInterpreter self) -> bool"""
+        return _lldb.SBCommandInterpreter_GetPromptOnQuit(self)
+
+    def SetPromptOnQuit(self, b: "bool") -> "void":
+        r"""SetPromptOnQuit(SBCommandInterpreter self, bool b)"""
+        return _lldb.SBCommandInterpreter_SetPromptOnQuit(self, b)
+
+    def AllowExitCodeOnQuit(self, allow: "bool") -> "void":
+        r"""AllowExitCodeOnQuit(SBCommandInterpreter self, bool allow)"""
+        return _lldb.SBCommandInterpreter_AllowExitCodeOnQuit(self, allow)
+
+    def HasCustomQuitExitCode(self) -> "bool":
+        r"""HasCustomQuitExitCode(SBCommandInterpreter self) -> bool"""
+        return _lldb.SBCommandInterpreter_HasCustomQuitExitCode(self)
+
+    def GetQuitStatus(self) -> "int":
+        r"""GetQuitStatus(SBCommandInterpreter self) -> int"""
+        return _lldb.SBCommandInterpreter_GetQuitStatus(self)
+
+    def ResolveCommand(self, command_line: "char const *", result: "SBCommandReturnObject") -> "void":
+        r"""ResolveCommand(SBCommandInterpreter self, char const * command_line, SBCommandReturnObject result)"""
+        return _lldb.SBCommandInterpreter_ResolveCommand(self, command_line, result)
 
 # Register SBCommandInterpreter in _lldb:
 _lldb.SBCommandInterpreter_swigregister(SBCommandInterpreter)
@@ -3253,9 +3323,12 @@ class SBCommandInterpreterRunOptions(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
-    def __init__(self):
-        r"""__init__(SBCommandInterpreterRunOptions self) -> SBCommandInterpreterRunOptions"""
-        _lldb.SBCommandInterpreterRunOptions_swiginit(self, _lldb.new_SBCommandInterpreterRunOptions())
+    def __init__(self, *args):
+        r"""
+        __init__(SBCommandInterpreterRunOptions self) -> SBCommandInterpreterRunOptions
+        __init__(SBCommandInterpreterRunOptions self, SBCommandInterpreterRunOptions rhs) -> SBCommandInterpreterRunOptions
+        """
+        _lldb.SBCommandInterpreterRunOptions_swiginit(self, _lldb.new_SBCommandInterpreterRunOptions(*args))
     __swig_destroy__ = _lldb.delete_SBCommandInterpreterRunOptions
 
     def GetStopOnContinue(self) -> "bool":
@@ -3290,6 +3363,14 @@ class SBCommandInterpreterRunOptions(object):
         r"""SetEchoCommands(SBCommandInterpreterRunOptions self, bool arg2)"""
         return _lldb.SBCommandInterpreterRunOptions_SetEchoCommands(self, arg2)
 
+    def GetEchoCommentCommands(self) -> "bool":
+        r"""GetEchoCommentCommands(SBCommandInterpreterRunOptions self) -> bool"""
+        return _lldb.SBCommandInterpreterRunOptions_GetEchoCommentCommands(self)
+
+    def SetEchoCommentCommands(self, echo: "bool") -> "void":
+        r"""SetEchoCommentCommands(SBCommandInterpreterRunOptions self, bool echo)"""
+        return _lldb.SBCommandInterpreterRunOptions_SetEchoCommentCommands(self, echo)
+
     def GetPrintResults(self) -> "bool":
         r"""GetPrintResults(SBCommandInterpreterRunOptions self) -> bool"""
         return _lldb.SBCommandInterpreterRunOptions_GetPrintResults(self)
@@ -3314,6 +3395,22 @@ class SBCommandInterpreterRunOptions(object):
         r"""SetAddToHistory(SBCommandInterpreterRunOptions self, bool arg2)"""
         return _lldb.SBCommandInterpreterRunOptions_SetAddToHistory(self, arg2)
 
+    def GetAutoHandleEvents(self) -> "bool":
+        r"""GetAutoHandleEvents(SBCommandInterpreterRunOptions self) -> bool"""
+        return _lldb.SBCommandInterpreterRunOptions_GetAutoHandleEvents(self)
+
+    def SetAutoHandleEvents(self, arg2: "bool") -> "void":
+        r"""SetAutoHandleEvents(SBCommandInterpreterRunOptions self, bool arg2)"""
+        return _lldb.SBCommandInterpreterRunOptions_SetAutoHandleEvents(self, arg2)
+
+    def GetSpawnThread(self) -> "bool":
+        r"""GetSpawnThread(SBCommandInterpreterRunOptions self) -> bool"""
+        return _lldb.SBCommandInterpreterRunOptions_GetSpawnThread(self)
+
+    def SetSpawnThread(self, arg2: "bool") -> "void":
+        r"""SetSpawnThread(SBCommandInterpreterRunOptions self, bool arg2)"""
+        return _lldb.SBCommandInterpreterRunOptions_SetSpawnThread(self, arg2)
+
 # Register SBCommandInterpreterRunOptions in _lldb:
 _lldb.SBCommandInterpreterRunOptions_swigregister(SBCommandInterpreterRunOptions)
 
@@ -3336,15 +3433,22 @@ class SBCommandReturnObject(object):
         _lldb.SBCommandReturnObject_swiginit(self, _lldb.new_SBCommandReturnObject(*args))
     __swig_destroy__ = _lldb.delete_SBCommandReturnObject
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBCommandReturnObject self) -> bool"""
-        return _lldb.SBCommandReturnObject_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBCommandReturnObject___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBCommandReturnObject self) -> bool"""
+        return _lldb.SBCommandReturnObject_IsValid(self)
+
+    def PutOutput(self, *args) -> "size_t":
+        r"""
+        PutOutput(SBCommandReturnObject self, SBFile file) -> size_t
+        PutOutput(SBCommandReturnObject self, lldb::FileSP BORROWED) -> size_t
+        """
+        return _lldb.SBCommandReturnObject_PutOutput(self, *args)
 
     def GetOutputSize(self) -> "size_t":
         r"""GetOutputSize(SBCommandReturnObject self) -> size_t"""
@@ -3353,27 +3457,6 @@ class SBCommandReturnObject(object):
     def GetErrorSize(self) -> "size_t":
         r"""GetErrorSize(SBCommandReturnObject self) -> size_t"""
         return _lldb.SBCommandReturnObject_GetErrorSize(self)
-
-    def GetOutput(self, *args) -> "char const *":
-        r"""
-        GetOutput(SBCommandReturnObject self) -> char const
-        GetOutput(SBCommandReturnObject self, bool only_if_no_immediate) -> char const *
-        """
-        return _lldb.SBCommandReturnObject_GetOutput(self, *args)
-
-    def GetError(self, *args) -> "char const *":
-        r"""
-        GetError(SBCommandReturnObject self) -> char const
-        GetError(SBCommandReturnObject self, bool if_no_immediate) -> char const *
-        """
-        return _lldb.SBCommandReturnObject_GetError(self, *args)
-
-    def PutOutput(self, *args) -> "size_t":
-        r"""
-        PutOutput(SBCommandReturnObject self, SBFile file) -> size_t
-        PutOutput(SBCommandReturnObject self, lldb::FileSP BORROWED) -> size_t
-        """
-        return _lldb.SBCommandReturnObject_PutOutput(self, *args)
 
     def PutError(self, *args) -> "size_t":
         r"""
@@ -3386,20 +3469,13 @@ class SBCommandReturnObject(object):
         r"""Clear(SBCommandReturnObject self)"""
         return _lldb.SBCommandReturnObject_Clear(self)
 
-    def SetStatus(self, status: "lldb::ReturnStatus") -> "void":
-        r"""SetStatus(SBCommandReturnObject self, lldb::ReturnStatus status)"""
-        return _lldb.SBCommandReturnObject_SetStatus(self, status)
-
-    def SetError(self, *args) -> "void":
-        r"""
-        SetError(SBCommandReturnObject self, SBError error, char const * fallback_error_cstr=None)
-        SetError(SBCommandReturnObject self, char const * error_cstr)
-        """
-        return _lldb.SBCommandReturnObject_SetError(self, *args)
-
     def GetStatus(self) -> "lldb::ReturnStatus":
         r"""GetStatus(SBCommandReturnObject self) -> lldb::ReturnStatus"""
         return _lldb.SBCommandReturnObject_GetStatus(self)
+
+    def SetStatus(self, status: "lldb::ReturnStatus") -> "void":
+        r"""SetStatus(SBCommandReturnObject self, lldb::ReturnStatus status)"""
+        return _lldb.SBCommandReturnObject_SetStatus(self, status)
 
     def Succeeded(self) -> "bool":
         r"""Succeeded(SBCommandReturnObject self) -> bool"""
@@ -3421,6 +3497,31 @@ class SBCommandReturnObject(object):
         r"""GetDescription(SBCommandReturnObject self, SBStream description) -> bool"""
         return _lldb.SBCommandReturnObject_GetDescription(self, description)
 
+    def PutCString(self, string: "char const *") -> "void":
+        r"""PutCString(SBCommandReturnObject self, char const * string)"""
+        return _lldb.SBCommandReturnObject_PutCString(self, string)
+
+    def GetOutput(self, *args) -> "char const *":
+        r"""
+        GetOutput(SBCommandReturnObject self) -> char const
+        GetOutput(SBCommandReturnObject self, bool only_if_no_immediate) -> char const *
+        """
+        return _lldb.SBCommandReturnObject_GetOutput(self, *args)
+
+    def GetError(self, *args) -> "char const *":
+        r"""
+        GetError(SBCommandReturnObject self) -> char const
+        GetError(SBCommandReturnObject self, bool only_if_no_immediate) -> char const *
+        """
+        return _lldb.SBCommandReturnObject_GetError(self, *args)
+
+    def SetError(self, *args) -> "void":
+        r"""
+        SetError(SBCommandReturnObject self, SBError error, char const * fallback_error_cstr=None)
+        SetError(SBCommandReturnObject self, char const * error_cstr)
+        """
+        return _lldb.SBCommandReturnObject_SetError(self, *args)
+
     def __repr__(self) -> "std::string":
         r"""__repr__(SBCommandReturnObject self) -> std::string"""
         return _lldb.SBCommandReturnObject___repr__(self)
@@ -3440,10 +3541,6 @@ class SBCommandReturnObject(object):
         SetImmediateErrorFile(SBCommandReturnObject self, lldb::FileSP BORROWED, bool transfer_ownership)
         """
         return _lldb.SBCommandReturnObject_SetImmediateErrorFile(self, *args)
-
-    def PutCString(self, string: "char const *") -> "void":
-        r"""PutCString(SBCommandReturnObject self, char const * string)"""
-        return _lldb.SBCommandReturnObject_PutCString(self, string)
 
     def Print(self, str: "char const *") -> "void":
         r"""Print(SBCommandReturnObject self, char const * str)"""
@@ -3486,15 +3583,15 @@ class SBCommunication(object):
         _lldb.SBCommunication_swiginit(self, _lldb.new_SBCommunication(*args))
     __swig_destroy__ = _lldb.delete_SBCommunication
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBCommunication self) -> bool"""
-        return _lldb.SBCommunication_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBCommunication___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBCommunication self) -> bool"""
+        return _lldb.SBCommunication_IsValid(self)
 
     def GetBroadcaster(self) -> "lldb::SBBroadcaster":
         r"""GetBroadcaster(SBCommunication self) -> SBBroadcaster"""
@@ -3607,15 +3704,15 @@ class SBCompileUnit(object):
         _lldb.SBCompileUnit_swiginit(self, _lldb.new_SBCompileUnit(*args))
     __swig_destroy__ = _lldb.delete_SBCompileUnit
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBCompileUnit self) -> bool"""
-        return _lldb.SBCompileUnit_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBCompileUnit___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBCompileUnit self) -> bool"""
+        return _lldb.SBCompileUnit_IsValid(self)
 
     def GetFileSpec(self) -> "lldb::SBFileSpec":
         r"""GetFileSpec(SBCompileUnit self) -> SBFileSpec"""
@@ -3686,10 +3783,6 @@ class SBCompileUnit(object):
         r"""GetLanguage(SBCompileUnit self) -> lldb::LanguageType"""
         return _lldb.SBCompileUnit_GetLanguage(self)
 
-    def GetDescription(self, description: "SBStream") -> "bool":
-        r"""GetDescription(SBCompileUnit self, SBStream description) -> bool"""
-        return _lldb.SBCompileUnit_GetDescription(self, description)
-
     def __eq__(self, rhs: "SBCompileUnit") -> "bool":
         r"""__eq__(SBCompileUnit self, SBCompileUnit rhs) -> bool"""
         return _lldb.SBCompileUnit___eq__(self, rhs)
@@ -3697,6 +3790,10 @@ class SBCompileUnit(object):
     def __ne__(self, rhs: "SBCompileUnit") -> "bool":
         r"""__ne__(SBCompileUnit self, SBCompileUnit rhs) -> bool"""
         return _lldb.SBCompileUnit___ne__(self, rhs)
+
+    def GetDescription(self, description: "SBStream") -> "bool":
+        r"""GetDescription(SBCompileUnit self, SBStream description) -> bool"""
+        return _lldb.SBCompileUnit_GetDescription(self, description)
 
     def __repr__(self) -> "std::string":
         r"""__repr__(SBCompileUnit self) -> std::string"""
@@ -3756,15 +3853,15 @@ class SBData(object):
         r"""Clear(SBData self)"""
         return _lldb.SBData_Clear(self)
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBData self) -> bool"""
-        return _lldb.SBData_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBData___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBData self) -> bool"""
+        return _lldb.SBData_IsValid(self)
 
     def GetByteSize(self) -> "size_t":
         r"""GetByteSize(SBData self) -> size_t"""
@@ -3830,13 +3927,13 @@ class SBData(object):
         r"""GetString(SBData self, SBError error, lldb::offset_t offset) -> char const *"""
         return _lldb.SBData_GetString(self, error, offset)
 
-    def GetDescription(self, description: "SBStream", base_addr: "lldb::addr_t") -> "bool":
-        r"""GetDescription(SBData self, SBStream description, lldb::addr_t base_addr) -> bool"""
-        return _lldb.SBData_GetDescription(self, description, base_addr)
-
     def ReadRawData(self, error: "SBError", offset: "lldb::offset_t", buf: "void *") -> "size_t":
         r"""ReadRawData(SBData self, SBError error, lldb::offset_t offset, void * buf) -> size_t"""
         return _lldb.SBData_ReadRawData(self, error, offset, buf)
+
+    def GetDescription(self, *args) -> "bool":
+        r"""GetDescription(SBData self, SBStream description, lldb::addr_t base_addr=18446744073709551615ULL) -> bool"""
+        return _lldb.SBData_GetDescription(self, *args)
 
     def SetData(self, error: "SBError", buf: "void const *", endian: "lldb::ByteOrder", addr_size: "uint8_t") -> "void":
         r"""SetData(SBData self, SBError error, void const * buf, lldb::ByteOrder endian, uint8_t addr_size)"""
@@ -4205,19 +4302,37 @@ class SBDebugger(object):
     eBroadcastBitError = _lldb.SBDebugger_eBroadcastBitError
     
 
+    def __init__(self, *args):
+        r"""
+        __init__(SBDebugger self) -> SBDebugger
+        __init__(SBDebugger self, SBDebugger rhs) -> SBDebugger
+        """
+        _lldb.SBDebugger_swiginit(self, _lldb.new_SBDebugger(*args))
+    __swig_destroy__ = _lldb.delete_SBDebugger
+
+    @staticmethod
+    def GetBroadcasterClass() -> "char const *":
+        r"""GetBroadcasterClass() -> char const *"""
+        return _lldb.SBDebugger_GetBroadcasterClass()
+
+    def GetBroadcaster(self) -> "lldb::SBBroadcaster":
+        r"""GetBroadcaster(SBDebugger self) -> SBBroadcaster"""
+        return _lldb.SBDebugger_GetBroadcaster(self)
+
     @staticmethod
     def GetProgressFromEvent(event: "SBEvent") -> "unsigned long long &, unsigned long long &, unsigned long long &, bool &":
         r"""GetProgressFromEvent(SBEvent event) -> char const *"""
         return _lldb.SBDebugger_GetProgressFromEvent(event)
 
     @staticmethod
+    def GetProgressDataFromEvent(event: "SBEvent") -> "lldb::SBStructuredData":
+        r"""GetProgressDataFromEvent(SBEvent event) -> SBStructuredData"""
+        return _lldb.SBDebugger_GetProgressDataFromEvent(event)
+
+    @staticmethod
     def GetDiagnosticFromEvent(event: "SBEvent") -> "lldb::SBStructuredData":
         r"""GetDiagnosticFromEvent(SBEvent event) -> SBStructuredData"""
         return _lldb.SBDebugger_GetDiagnosticFromEvent(event)
-
-    def GetBroadcaster(self) -> "lldb::SBBroadcaster":
-        r"""GetBroadcaster(SBDebugger self) -> SBBroadcaster"""
-        return _lldb.SBDebugger_GetBroadcaster(self)
 
     @staticmethod
     def Initialize() -> "void":
@@ -4233,6 +4348,11 @@ class SBDebugger(object):
     def PrintStackTraceOnError() -> "void":
         r"""PrintStackTraceOnError()"""
         return _lldb.SBDebugger_PrintStackTraceOnError()
+
+    @staticmethod
+    def PrintDiagnosticsOnError() -> "void":
+        r"""PrintDiagnosticsOnError()"""
+        return _lldb.SBDebugger_PrintDiagnosticsOnError()
 
     @staticmethod
     def Terminate() -> "void":
@@ -4258,27 +4378,23 @@ class SBDebugger(object):
         r"""MemoryPressureDetected()"""
         return _lldb.SBDebugger_MemoryPressureDetected()
 
-    def __init__(self, *args):
-        r"""
-        __init__(SBDebugger self) -> SBDebugger
-        __init__(SBDebugger self, SBDebugger rhs) -> SBDebugger
-        """
-        _lldb.SBDebugger_swiginit(self, _lldb.new_SBDebugger(*args))
-    __swig_destroy__ = _lldb.delete_SBDebugger
-
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBDebugger self) -> bool"""
-        return _lldb.SBDebugger_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBDebugger___nonzero__(self)
     __bool__ = __nonzero__
 
 
 
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBDebugger self) -> bool"""
+        return _lldb.SBDebugger_IsValid(self)
+
     def Clear(self) -> "void":
         r"""Clear(SBDebugger self)"""
         return _lldb.SBDebugger_Clear(self)
+
+    def GetSetting(self, setting: "char const *"=None) -> "lldb::SBStructuredData":
+        r"""GetSetting(SBDebugger self, char const * setting=None) -> SBStructuredData"""
+        return _lldb.SBDebugger_GetSetting(self, setting)
 
     def SetAsync(self, b: "bool") -> "void":
         r"""SetAsync(SBDebugger self, bool b)"""
@@ -4292,43 +4408,9 @@ class SBDebugger(object):
         r"""SkipLLDBInitFiles(SBDebugger self, bool b)"""
         return _lldb.SBDebugger_SkipLLDBInitFiles(self, b)
 
-    def SetOutputFileHandle(self, file, transfer_ownership):
-        "DEPRECATED, use SetOutputFile"
-        if file is None:
-            import sys
-            file = sys.stdout
-        self.SetOutputFile(SBFile.Create(file, borrow=True))
-
-    def SetInputFileHandle(self, file, transfer_ownership):
-        "DEPRECATED, use SetInputFile"
-        if file is None:
-            import sys
-            file = sys.stdin
-        self.SetInputFile(SBFile.Create(file, borrow=True))
-
-    def SetErrorFileHandle(self, file, transfer_ownership):
-        "DEPRECATED, use SetErrorFile"
-        if file is None:
-            import sys
-            file = sys.stderr
-        self.SetErrorFile(SBFile.Create(file, borrow=True))
-
-
-    def GetInputFileHandle(self) -> "lldb::FileSP":
-        r"""GetInputFileHandle(SBDebugger self) -> lldb::FileSP"""
-        return _lldb.SBDebugger_GetInputFileHandle(self)
-
-    def GetOutputFileHandle(self) -> "lldb::FileSP":
-        r"""GetOutputFileHandle(SBDebugger self) -> lldb::FileSP"""
-        return _lldb.SBDebugger_GetOutputFileHandle(self)
-
-    def GetErrorFileHandle(self) -> "lldb::FileSP":
-        r"""GetErrorFileHandle(SBDebugger self) -> lldb::FileSP"""
-        return _lldb.SBDebugger_GetErrorFileHandle(self)
-
-    def GetSetting(self, setting: "char const *"=None) -> "lldb::SBStructuredData":
-        r"""GetSetting(SBDebugger self, char const * setting=None) -> SBStructuredData"""
-        return _lldb.SBDebugger_GetSetting(self, setting)
+    def SkipAppInitFiles(self, b: "bool") -> "void":
+        r"""SkipAppInitFiles(SBDebugger self, bool b)"""
+        return _lldb.SBDebugger_SkipAppInitFiles(self, b)
 
     def SetInputString(self, data: "char const *") -> "lldb::SBError":
         r"""SetInputString(SBDebugger self, char const * data) -> SBError"""
@@ -4367,6 +4449,14 @@ class SBDebugger(object):
         r"""GetErrorFile(SBDebugger self) -> SBFile"""
         return _lldb.SBDebugger_GetErrorFile(self)
 
+    def SaveInputTerminalState(self) -> "void":
+        r"""SaveInputTerminalState(SBDebugger self)"""
+        return _lldb.SBDebugger_SaveInputTerminalState(self)
+
+    def RestoreInputTerminalState(self) -> "void":
+        r"""RestoreInputTerminalState(SBDebugger self)"""
+        return _lldb.SBDebugger_RestoreInputTerminalState(self)
+
     def GetCommandInterpreter(self) -> "lldb::SBCommandInterpreter":
         r"""GetCommandInterpreter(SBDebugger self) -> SBCommandInterpreter"""
         return _lldb.SBDebugger_GetCommandInterpreter(self)
@@ -4374,6 +4464,18 @@ class SBDebugger(object):
     def HandleCommand(self, command: "char const *") -> "void":
         r"""HandleCommand(SBDebugger self, char const * command)"""
         return _lldb.SBDebugger_HandleCommand(self, command)
+
+    def RequestInterrupt(self) -> "void":
+        r"""RequestInterrupt(SBDebugger self)"""
+        return _lldb.SBDebugger_RequestInterrupt(self)
+
+    def CancelInterruptRequest(self) -> "void":
+        r"""CancelInterruptRequest(SBDebugger self)"""
+        return _lldb.SBDebugger_CancelInterruptRequest(self)
+
+    def InterruptRequested(self) -> "bool":
+        r"""InterruptRequested(SBDebugger self) -> bool"""
+        return _lldb.SBDebugger_InterruptRequested(self)
 
     def GetListener(self) -> "lldb::SBListener":
         r"""GetListener(SBDebugger self) -> SBListener"""
@@ -4396,7 +4498,7 @@ class SBDebugger(object):
 
     def CreateTarget(self, *args) -> "lldb::SBTarget":
         r"""
-        CreateTarget(SBDebugger self, char const * filename, char const * target_triple, char const * platform_name, bool add_dependent_modules, SBError sb_error) -> SBTarget
+        CreateTarget(SBDebugger self, char const * filename, char const * target_triple, char const * platform_name, bool add_dependent_modules, SBError error) -> SBTarget
         CreateTarget(SBDebugger self, char const * filename) -> SBTarget
         """
         return _lldb.SBDebugger_CreateTarget(self, *args)
@@ -4512,6 +4614,14 @@ class SBDebugger(object):
         r"""GetUseColor(SBDebugger self) -> bool"""
         return _lldb.SBDebugger_GetUseColor(self)
 
+    def SetUseSourceCache(self, use_source_cache: "bool") -> "bool":
+        r"""SetUseSourceCache(SBDebugger self, bool use_source_cache) -> bool"""
+        return _lldb.SBDebugger_SetUseSourceCache(self, use_source_cache)
+
+    def GetUseSourceCache(self) -> "bool":
+        r"""GetUseSourceCache(SBDebugger self) -> bool"""
+        return _lldb.SBDebugger_GetUseSourceCache(self)
+
     @staticmethod
     def GetDefaultArchitecture(arch_name: "char *", arch_name_len: "size_t") -> "bool":
         r"""GetDefaultArchitecture(char * arch_name, size_t arch_name_len) -> bool"""
@@ -4525,6 +4635,10 @@ class SBDebugger(object):
     def GetScriptingLanguage(self, script_language_name: "char const *") -> "lldb::ScriptLanguage":
         r"""GetScriptingLanguage(SBDebugger self, char const * script_language_name) -> lldb::ScriptLanguage"""
         return _lldb.SBDebugger_GetScriptingLanguage(self, script_language_name)
+
+    def GetScriptInterpreterInfo(self, arg2: "lldb::ScriptLanguage") -> "lldb::SBStructuredData":
+        r"""GetScriptInterpreterInfo(SBDebugger self, lldb::ScriptLanguage arg2) -> SBStructuredData"""
+        return _lldb.SBDebugger_GetScriptInterpreterInfo(self, arg2)
 
     @staticmethod
     def GetVersionString() -> "char const *":
@@ -4551,13 +4665,17 @@ class SBDebugger(object):
         r"""StateIsStoppedState(lldb::StateType state) -> bool"""
         return _lldb.SBDebugger_StateIsStoppedState(state)
 
-    def EnableLog(self, channel: "char const *", types: "char const **") -> "bool":
-        r"""EnableLog(SBDebugger self, char const * channel, char const ** types) -> bool"""
-        return _lldb.SBDebugger_EnableLog(self, channel, types)
+    def EnableLog(self, channel: "char const *", categories: "char const **") -> "bool":
+        r"""EnableLog(SBDebugger self, char const * channel, char const ** categories) -> bool"""
+        return _lldb.SBDebugger_EnableLog(self, channel, categories)
 
     def SetLoggingCallback(self, log_callback: "lldb::LogOutputCallback") -> "void":
         r"""SetLoggingCallback(SBDebugger self, lldb::LogOutputCallback log_callback)"""
         return _lldb.SBDebugger_SetLoggingCallback(self, log_callback)
+
+    def SetDestroyCallback(self, destroy_callback: "lldb::SBDebuggerDestroyCallback") -> "void":
+        r"""SetDestroyCallback(SBDebugger self, lldb::SBDebuggerDestroyCallback destroy_callback)"""
+        return _lldb.SBDebugger_SetDestroyCallback(self, destroy_callback)
 
     def DispatchInput(self, data: "void const *") -> "void":
         r"""DispatchInput(SBDebugger self, void const * data)"""
@@ -4626,6 +4744,14 @@ class SBDebugger(object):
         r"""SetScriptLanguage(SBDebugger self, lldb::ScriptLanguage script_lang)"""
         return _lldb.SBDebugger_SetScriptLanguage(self, script_lang)
 
+    def GetREPLLanguage(self) -> "lldb::LanguageType":
+        r"""GetREPLLanguage(SBDebugger self) -> lldb::LanguageType"""
+        return _lldb.SBDebugger_GetREPLLanguage(self)
+
+    def SetREPLLanguage(self, repl_lang: "lldb::LanguageType") -> "void":
+        r"""SetREPLLanguage(SBDebugger self, lldb::LanguageType repl_lang)"""
+        return _lldb.SBDebugger_SetREPLLanguage(self, repl_lang)
+
     def GetCloseInputOnEOF(self) -> "bool":
         r"""GetCloseInputOnEOF(SBDebugger self) -> bool"""
         return _lldb.SBDebugger_GetCloseInputOnEOF(self)
@@ -4677,14 +4803,6 @@ class SBDebugger(object):
         r"""GetSyntheticForType(SBDebugger self, SBTypeNameSpecifier arg2) -> SBTypeSynthetic"""
         return _lldb.SBDebugger_GetSyntheticForType(self, arg2)
 
-    def GetScriptInterpreterInfo(self, arg2: "lldb::ScriptLanguage") -> "lldb::SBStructuredData":
-        r"""GetScriptInterpreterInfo(SBDebugger self, lldb::ScriptLanguage arg2) -> SBStructuredData"""
-        return _lldb.SBDebugger_GetScriptInterpreterInfo(self, arg2)
-
-    def __repr__(self) -> "std::string":
-        r"""__repr__(SBDebugger self) -> std::string"""
-        return _lldb.SBDebugger___repr__(self)
-
     def RunCommandInterpreter(self, auto_handle_events: "bool", spawn_thread: "bool", options: "SBCommandInterpreterRunOptions", num_errors: "int &", quit_requested: "bool &", stopped_for_crash: "bool &") -> "void":
         r"""
         RunCommandInterpreter(SBDebugger self, bool auto_handle_events, bool spawn_thread, SBCommandInterpreterRunOptions options, int & num_errors, bool & quit_requested, bool & stopped_for_crash)
@@ -4721,6 +4839,31 @@ class SBDebugger(object):
         r"""LoadTraceFromFile(SBDebugger self, SBError error, SBFileSpec trace_description_file) -> SBTrace"""
         return _lldb.SBDebugger_LoadTraceFromFile(self, error, trace_description_file)
 
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBDebugger self) -> std::string"""
+        return _lldb.SBDebugger___repr__(self)
+
+    def SetOutputFileHandle(self, file, transfer_ownership):
+        "DEPRECATED, use SetOutputFile"
+        if file is None:
+            import sys
+            file = sys.stdout
+        self.SetOutputFile(SBFile.Create(file, borrow=True))
+
+    def SetInputFileHandle(self, file, transfer_ownership):
+        "DEPRECATED, use SetInputFile"
+        if file is None:
+            import sys
+            file = sys.stdin
+        self.SetInputFile(SBFile.Create(file, borrow=True))
+
+    def SetErrorFileHandle(self, file, transfer_ownership):
+        "DEPRECATED, use SetErrorFile"
+        if file is None:
+            import sys
+            file = sys.stderr
+        self.SetErrorFile(SBFile.Create(file, borrow=True))
+
     def __iter__(self):
         '''Iterate over all targets in a lldb.SBDebugger object.'''
         return lldb_iter(self, 'GetNumTargets', 'GetTargetAtIndex')
@@ -4730,12 +4873,32 @@ class SBDebugger(object):
         return self.GetNumTargets()
 
 
+    def GetInputFileHandle(self) -> "lldb::FileSP":
+        r"""GetInputFileHandle(SBDebugger self) -> lldb::FileSP"""
+        return _lldb.SBDebugger_GetInputFileHandle(self)
+
+    def GetOutputFileHandle(self) -> "lldb::FileSP":
+        r"""GetOutputFileHandle(SBDebugger self) -> lldb::FileSP"""
+        return _lldb.SBDebugger_GetOutputFileHandle(self)
+
+    def GetErrorFileHandle(self) -> "lldb::FileSP":
+        r"""GetErrorFileHandle(SBDebugger self) -> lldb::FileSP"""
+        return _lldb.SBDebugger_GetErrorFileHandle(self)
+
 # Register SBDebugger in _lldb:
 _lldb.SBDebugger_swigregister(SBDebugger)
+
+def SBDebugger_GetBroadcasterClass() -> "char const *":
+    r"""SBDebugger_GetBroadcasterClass() -> char const *"""
+    return _lldb.SBDebugger_GetBroadcasterClass()
 
 def SBDebugger_GetProgressFromEvent(event: "SBEvent") -> "unsigned long long &, unsigned long long &, unsigned long long &, bool &":
     r"""SBDebugger_GetProgressFromEvent(SBEvent event) -> char const *"""
     return _lldb.SBDebugger_GetProgressFromEvent(event)
+
+def SBDebugger_GetProgressDataFromEvent(event: "SBEvent") -> "lldb::SBStructuredData":
+    r"""SBDebugger_GetProgressDataFromEvent(SBEvent event) -> SBStructuredData"""
+    return _lldb.SBDebugger_GetProgressDataFromEvent(event)
 
 def SBDebugger_GetDiagnosticFromEvent(event: "SBEvent") -> "lldb::SBStructuredData":
     r"""SBDebugger_GetDiagnosticFromEvent(SBEvent event) -> SBStructuredData"""
@@ -4752,6 +4915,10 @@ def SBDebugger_InitializeWithErrorHandling() -> "lldb::SBError":
 def SBDebugger_PrintStackTraceOnError() -> "void":
     r"""SBDebugger_PrintStackTraceOnError()"""
     return _lldb.SBDebugger_PrintStackTraceOnError()
+
+def SBDebugger_PrintDiagnosticsOnError() -> "void":
+    r"""SBDebugger_PrintDiagnosticsOnError()"""
+    return _lldb.SBDebugger_PrintDiagnosticsOnError()
 
 def SBDebugger_Terminate() -> "void":
     r"""SBDebugger_Terminate()"""
@@ -4826,15 +4993,15 @@ class SBDeclaration(object):
         _lldb.SBDeclaration_swiginit(self, _lldb.new_SBDeclaration(*args))
     __swig_destroy__ = _lldb.delete_SBDeclaration
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBDeclaration self) -> bool"""
-        return _lldb.SBDeclaration_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBDeclaration___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBDeclaration self) -> bool"""
+        return _lldb.SBDeclaration_IsValid(self)
 
     def GetFileSpec(self) -> "lldb::SBFileSpec":
         r"""GetFileSpec(SBDeclaration self) -> SBFileSpec"""
@@ -4847,10 +5014,6 @@ class SBDeclaration(object):
     def GetColumn(self) -> "uint32_t":
         r"""GetColumn(SBDeclaration self) -> uint32_t"""
         return _lldb.SBDeclaration_GetColumn(self)
-
-    def GetDescription(self, description: "SBStream") -> "bool":
-        r"""GetDescription(SBDeclaration self, SBStream description) -> bool"""
-        return _lldb.SBDeclaration_GetDescription(self, description)
 
     def SetFileSpec(self, filespec: "SBFileSpec") -> "void":
         r"""SetFileSpec(SBDeclaration self, SBFileSpec filespec)"""
@@ -4871,6 +5034,10 @@ class SBDeclaration(object):
     def __ne__(self, rhs: "SBDeclaration") -> "bool":
         r"""__ne__(SBDeclaration self, SBDeclaration rhs) -> bool"""
         return _lldb.SBDeclaration___ne__(self, rhs)
+
+    def GetDescription(self, description: "SBStream") -> "bool":
+        r"""GetDescription(SBDeclaration self, SBStream description) -> bool"""
+        return _lldb.SBDeclaration_GetDescription(self, description)
 
     def __repr__(self) -> "std::string":
         r"""__repr__(SBDeclaration self) -> std::string"""
@@ -4952,6 +5119,7 @@ class SBError(object):
         r"""
         __init__(SBError self) -> SBError
         __init__(SBError self, SBError rhs) -> SBError
+        __init__(SBError self, char const * message) -> SBError
         """
         _lldb.SBError_swiginit(self, _lldb.new_SBError(*args))
     __swig_destroy__ = _lldb.delete_SBError
@@ -5000,15 +5168,15 @@ class SBError(object):
         r"""SetErrorStringWithFormat(SBError self, char const * format, char * str1=None, char * str2=None, char * str3=None) -> int"""
         return _lldb.SBError_SetErrorStringWithFormat(self, format, str1, str2, str3)
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBError self) -> bool"""
-        return _lldb.SBError_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBError___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBError self) -> bool"""
+        return _lldb.SBError_IsValid(self)
 
     def GetDescription(self, description: "SBStream") -> "bool":
         r"""GetDescription(SBError self, SBStream description) -> bool"""
@@ -5051,13 +5219,13 @@ class SBEnvironment(object):
         _lldb.SBEnvironment_swiginit(self, _lldb.new_SBEnvironment(*args))
     __swig_destroy__ = _lldb.delete_SBEnvironment
 
-    def GetNumValues(self) -> "size_t":
-        r"""GetNumValues(SBEnvironment self) -> size_t"""
-        return _lldb.SBEnvironment_GetNumValues(self)
-
     def Get(self, name: "char const *") -> "char const *":
         r"""Get(SBEnvironment self, char const * name) -> char const *"""
         return _lldb.SBEnvironment_Get(self, name)
+
+    def GetNumValues(self) -> "size_t":
+        r"""GetNumValues(SBEnvironment self) -> size_t"""
+        return _lldb.SBEnvironment_GetNumValues(self)
 
     def GetNameAtIndex(self, index: "size_t") -> "char const *":
         r"""GetNameAtIndex(SBEnvironment self, size_t index) -> char const *"""
@@ -5197,22 +5365,19 @@ class SBEvent(object):
     __repr__ = _swig_repr
 
     def __init__(self, *args):
-        r"""
-        __init__(SBEvent self) -> SBEvent
-        __init__(SBEvent self, SBEvent rhs) -> SBEvent__init__(self, int type, str data) -> SBEvent (make an event that contains a C string)
-        """
+        r"""__init__(self, int type, str data) -> SBEvent (make an event that contains a C string)__init__(self, int type, str data) -> SBEvent (make an event that contains a C string)__init__(self, int type, str data) -> SBEvent (make an event that contains a C string)"""
         _lldb.SBEvent_swiginit(self, _lldb.new_SBEvent(*args))
     __swig_destroy__ = _lldb.delete_SBEvent
-
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBEvent self) -> bool"""
-        return _lldb.SBEvent_IsValid(self)
 
     def __nonzero__(self):
         return _lldb.SBEvent___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBEvent self) -> bool"""
+        return _lldb.SBEvent_IsValid(self)
 
     def GetDataFlavor(self) -> "char const *":
         r"""GetDataFlavor(SBEvent self) -> char const *"""
@@ -5243,9 +5408,12 @@ class SBEvent(object):
         r"""GetCStringFromEvent(SBEvent event) -> char const *"""
         return _lldb.SBEvent_GetCStringFromEvent(event)
 
-    def GetDescription(self, description: "SBStream") -> "bool":
-        r"""GetDescription(SBEvent self, SBStream description) -> bool"""
-        return _lldb.SBEvent_GetDescription(self, description)
+    def GetDescription(self, *args) -> "bool":
+        r"""
+        GetDescription(SBEvent self, SBStream description) -> bool
+        GetDescription(SBEvent self, SBStream description) -> bool
+        """
+        return _lldb.SBEvent_GetDescription(self, *args)
 
 # Register SBEvent in _lldb:
 _lldb.SBEvent_swigregister(SBEvent)
@@ -5338,7 +5506,10 @@ class SBExpressionOptions(object):
         return _lldb.SBExpressionOptions_GetIgnoreBreakpoints(self)
 
     def SetIgnoreBreakpoints(self, ignore: "bool"=True) -> "void":
-        r"""SetIgnoreBreakpoints(SBExpressionOptions self, bool ignore=True)"""
+        r"""
+        SetIgnoreBreakpoints(SBExpressionOptions self, bool ignore=True)
+        Sets whether to ignore breakpoint hits while running expressions.
+        """
         return _lldb.SBExpressionOptions_SetIgnoreBreakpoints(self, ignore)
 
     def GetFetchDynamicValue(self) -> "lldb::DynamicValueType":
@@ -5368,7 +5539,10 @@ class SBExpressionOptions(object):
         return _lldb.SBExpressionOptions_GetOneThreadTimeoutInMicroSeconds(self)
 
     def SetOneThreadTimeoutInMicroSeconds(self, timeout: "uint32_t"=0) -> "void":
-        r"""SetOneThreadTimeoutInMicroSeconds(SBExpressionOptions self, uint32_t timeout=0)"""
+        r"""
+        SetOneThreadTimeoutInMicroSeconds(SBExpressionOptions self, uint32_t timeout=0)
+        Sets the timeout in microseconds to run the expression on one thread before either timing out or trying all threads.
+        """
         return _lldb.SBExpressionOptions_SetOneThreadTimeoutInMicroSeconds(self, timeout)
 
     def GetTryAllThreads(self) -> "bool":
@@ -5387,7 +5561,10 @@ class SBExpressionOptions(object):
         return _lldb.SBExpressionOptions_GetStopOthers(self)
 
     def SetStopOthers(self, stop_others: "bool"=True) -> "void":
-        r"""SetStopOthers(SBExpressionOptions self, bool stop_others=True)"""
+        r"""
+        SetStopOthers(SBExpressionOptions self, bool stop_others=True)
+        Sets whether to stop other threads at all while running expressions.  If false, TryAllThreads does nothing.
+        """
         return _lldb.SBExpressionOptions_SetStopOthers(self, stop_others)
 
     def GetTrapExceptions(self) -> "bool":
@@ -5395,7 +5572,10 @@ class SBExpressionOptions(object):
         return _lldb.SBExpressionOptions_GetTrapExceptions(self)
 
     def SetTrapExceptions(self, trap_exceptions: "bool"=True) -> "void":
-        r"""SetTrapExceptions(SBExpressionOptions self, bool trap_exceptions=True)"""
+        r"""
+        SetTrapExceptions(SBExpressionOptions self, bool trap_exceptions=True)
+        Sets whether to abort expression evaluation if an exception is thrown while executing.  Don't set this to false unless you know the function you are calling traps all exceptions itself.
+        """
         return _lldb.SBExpressionOptions_SetTrapExceptions(self, trap_exceptions)
 
     def SetLanguage(self, language: "lldb::LanguageType") -> "void":
@@ -5503,34 +5683,73 @@ class SBFile(object):
     def __init__(self, *args):
         r"""
         __init__(SBFile self) -> SBFile
+        __init__(SBFile self, lldb::FileSP file_sp) -> SBFile
         __init__(SBFile self, int fd, char const * mode, bool transfer_ownership) -> SBFile
-        __init__(SBFile self, lldb::FileSP file) -> SBFile
         initialize a SBFile from a python file object
         """
         _lldb.SBFile_swiginit(self, _lldb.new_SBFile(*args))
+    __swig_destroy__ = _lldb.delete_SBFile
+
+    def Read(self, buf: "uint8_t *") -> "lldb::SBError":
+        r"""Read(buffer) -> SBError, bytes_read"""
+        return _lldb.SBFile_Read(self, buf)
+
+    def Write(self, buf: "uint8_t const *") -> "lldb::SBError":
+        r"""Write(buffer) -> SBError, written_read"""
+        return _lldb.SBFile_Write(self, buf)
+
+    def Flush(self) -> "lldb::SBError":
+        r"""Flush(SBFile self) -> SBError"""
+        return _lldb.SBFile_Flush(self)
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBFile self) -> bool"""
+        return _lldb.SBFile_IsValid(self)
+
+    def Close(self) -> "lldb::SBError":
+        r"""Close(SBFile self) -> SBError"""
+        return _lldb.SBFile_Close(self)
+
+    def __nonzero__(self):
+        return _lldb.SBFile___nonzero__(self)
+    __bool__ = __nonzero__
+
+
+
+    def GetFile(self) -> "lldb::FileSP":
+        r"""
+        GetFile(SBFile self) -> lldb::FileSP
+
+            Convert this SBFile into a python io.IOBase file object.
+
+            If the SBFile is itself a wrapper around a python file object,
+            this will return that original object.
+
+            The file returned from here should be considered borrowed,
+            in the sense that you may read and write to it, and flush it,
+            etc, but you should not close it.   If you want to close the
+            SBFile, call SBFile.Close().
+
+            If there is no underlying python file to unwrap, GetFile will
+            use the file descriptor, if available to create a new python
+            file object using ``open(fd, mode=..., closefd=False)``
+
+        """
+        return _lldb.SBFile_GetFile(self)
 
     @staticmethod
     def MakeBorrowed(BORROWED: "lldb::FileSP") -> "lldb::SBFile":
-        r"""
-        MakeBorrowed(lldb::FileSP BORROWED) -> SBFile
-        initialize a SBFile from a python file object
-        """
+        r"""MakeBorrowed(lldb::FileSP BORROWED) -> SBFile"""
         return _lldb.SBFile_MakeBorrowed(BORROWED)
 
     @staticmethod
     def MakeForcingIOMethods(FORCE_IO_METHODS: "lldb::FileSP") -> "lldb::SBFile":
-        r"""
-        MakeForcingIOMethods(lldb::FileSP FORCE_IO_METHODS) -> SBFile
-        initialize a SBFile from a python file object
-        """
+        r"""MakeForcingIOMethods(lldb::FileSP FORCE_IO_METHODS) -> SBFile"""
         return _lldb.SBFile_MakeForcingIOMethods(FORCE_IO_METHODS)
 
     @staticmethod
     def MakeBorrowedForcingIOMethods(BORROWED_FORCE_IO_METHODS: "lldb::FileSP") -> "lldb::SBFile":
-        r"""
-        MakeBorrowedForcingIOMethods(lldb::FileSP BORROWED_FORCE_IO_METHODS) -> SBFile
-        initialize a SBFile from a python file object
-        """
+        r"""MakeBorrowedForcingIOMethods(lldb::FileSP BORROWED_FORCE_IO_METHODS) -> SBFile"""
         return _lldb.SBFile_MakeBorrowedForcingIOMethods(BORROWED_FORCE_IO_METHODS)
 
     @classmethod
@@ -5555,92 +5774,20 @@ class SBFile(object):
             else:
                 return cls(file)
 
-    __swig_destroy__ = _lldb.delete_SBFile
-
-    def Read(self, buf: "uint8_t *") -> "lldb::SBError":
-        r"""
-        Read(buffer) -> SBError, bytes_read
-        initialize a SBFile from a python file object
-        """
-        return _lldb.SBFile_Read(self, buf)
-
-    def Write(self, buf: "uint8_t const *") -> "lldb::SBError":
-        r"""
-        Write(buffer) -> SBError, written_read
-        initialize a SBFile from a python file object
-        """
-        return _lldb.SBFile_Write(self, buf)
-
-    def Flush(self) -> "void":
-        r"""
-        Flush(SBFile self)
-        initialize a SBFile from a python file object
-        """
-        return _lldb.SBFile_Flush(self)
-
-    def IsValid(self) -> "bool":
-        r"""
-        IsValid(SBFile self) -> bool
-        initialize a SBFile from a python file object
-        """
-        return _lldb.SBFile_IsValid(self)
-
-    def __nonzero__(self):
-        return _lldb.SBFile___nonzero__(self)
-    __bool__ = __nonzero__
-
-
-
-    def Close(self) -> "lldb::SBError":
-        r"""
-        Close(SBFile self) -> SBError
-        initialize a SBFile from a python file object
-        """
-        return _lldb.SBFile_Close(self)
-
-    def GetFile(self) -> "lldb::FileSP":
-        r"""
-        GetFile(SBFile self) -> lldb::FileSP
-
-            Convert this SBFile into a python io.IOBase file object.
-
-            If the SBFile is itself a wrapper around a python file object,
-            this will return that original object.
-
-            The file returned from here should be considered borrowed,
-            in the sense that you may read and write to it, and flush it,
-            etc, but you should not close it.   If you want to close the
-            SBFile, call SBFile.Close().
-
-            If there is no underlying python file to unwrap, GetFile will
-            use the file descriptor, if available to create a new python
-            file object using ``open(fd, mode=..., closefd=False)``
-
-        """
-        return _lldb.SBFile_GetFile(self)
 
 # Register SBFile in _lldb:
 _lldb.SBFile_swigregister(SBFile)
 
 def SBFile_MakeBorrowed(BORROWED: "lldb::FileSP") -> "lldb::SBFile":
-    r"""
-    SBFile_MakeBorrowed(lldb::FileSP BORROWED) -> SBFile
-    initialize a SBFile from a python file object
-    """
+    r"""SBFile_MakeBorrowed(lldb::FileSP BORROWED) -> SBFile"""
     return _lldb.SBFile_MakeBorrowed(BORROWED)
 
 def SBFile_MakeForcingIOMethods(FORCE_IO_METHODS: "lldb::FileSP") -> "lldb::SBFile":
-    r"""
-    SBFile_MakeForcingIOMethods(lldb::FileSP FORCE_IO_METHODS) -> SBFile
-    initialize a SBFile from a python file object
-    """
+    r"""SBFile_MakeForcingIOMethods(lldb::FileSP FORCE_IO_METHODS) -> SBFile"""
     return _lldb.SBFile_MakeForcingIOMethods(FORCE_IO_METHODS)
 
 def SBFile_MakeBorrowedForcingIOMethods(BORROWED_FORCE_IO_METHODS: "lldb::FileSP") -> "lldb::SBFile":
-    r"""
-    SBFile_MakeBorrowedForcingIOMethods(lldb::FileSP BORROWED_FORCE_IO_METHODS) -> SBFile
-    initialize a SBFile from a python file object
-    """
+    r"""SBFile_MakeBorrowedForcingIOMethods(lldb::FileSP BORROWED_FORCE_IO_METHODS) -> SBFile"""
     return _lldb.SBFile_MakeBorrowedForcingIOMethods(BORROWED_FORCE_IO_METHODS)
 
 class SBFileSpec(object):
@@ -5678,6 +5825,12 @@ class SBFileSpec(object):
         _lldb.SBFileSpec_swiginit(self, _lldb.new_SBFileSpec(*args))
     __swig_destroy__ = _lldb.delete_SBFileSpec
 
+    def __nonzero__(self):
+        return _lldb.SBFileSpec___nonzero__(self)
+    __bool__ = __nonzero__
+
+
+
     def __eq__(self, rhs: "SBFileSpec") -> "bool":
         r"""__eq__(SBFileSpec self, SBFileSpec rhs) -> bool"""
         return _lldb.SBFileSpec___eq__(self, rhs)
@@ -5689,12 +5842,6 @@ class SBFileSpec(object):
     def IsValid(self) -> "bool":
         r"""IsValid(SBFileSpec self) -> bool"""
         return _lldb.SBFileSpec_IsValid(self)
-
-    def __nonzero__(self):
-        return _lldb.SBFileSpec___nonzero__(self)
-    __bool__ = __nonzero__
-
-
 
     def Exists(self) -> "bool":
         r"""Exists(SBFileSpec self) -> bool"""
@@ -5848,19 +5995,19 @@ class SBFrame(object):
         _lldb.SBFrame_swiginit(self, _lldb.new_SBFrame(*args))
     __swig_destroy__ = _lldb.delete_SBFrame
 
-    def IsEqual(self, rhs: "SBFrame") -> "bool":
-        r"""IsEqual(SBFrame self, SBFrame rhs) -> bool"""
-        return _lldb.SBFrame_IsEqual(self, rhs)
-
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBFrame self) -> bool"""
-        return _lldb.SBFrame_IsValid(self)
+    def IsEqual(self, that: "SBFrame") -> "bool":
+        r"""IsEqual(SBFrame self, SBFrame that) -> bool"""
+        return _lldb.SBFrame_IsEqual(self, that)
 
     def __nonzero__(self):
         return _lldb.SBFrame___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBFrame self) -> bool"""
+        return _lldb.SBFrame_IsValid(self)
 
     def GetFrameID(self) -> "uint32_t":
         r"""GetFrameID(SBFrame self) -> uint32_t"""
@@ -6055,6 +6202,10 @@ class SBFrame(object):
         r"""GetRegisters(SBFrame self) -> SBValueList"""
         return _lldb.SBFrame_GetRegisters(self)
 
+    def FindRegister(self, name: "char const *") -> "lldb::SBValue":
+        r"""FindRegister(SBFrame self, char const * name) -> SBValue"""
+        return _lldb.SBFrame_FindRegister(self, name)
+
     def FindVariable(self, *args) -> "lldb::SBValue":
         r"""
         FindVariable(SBFrame self, char const * var_name) -> SBValue
@@ -6065,14 +6216,10 @@ class SBFrame(object):
         """
         return _lldb.SBFrame_FindVariable(self, *args)
 
-    def FindRegister(self, name: "char const *") -> "lldb::SBValue":
-        r"""FindRegister(SBFrame self, char const * name) -> SBValue"""
-        return _lldb.SBFrame_FindRegister(self, name)
-
     def GetValueForVariablePath(self, *args) -> "lldb::SBValue":
         r"""
+        GetValueForVariablePath(SBFrame self, char const * var_expr_cstr, lldb::DynamicValueType use_dynamic) -> SBValue
         GetValueForVariablePath(SBFrame self, char const * var_path) -> SBValue
-        GetValueForVariablePath(SBFrame self, char const * var_path, lldb::DynamicValueType use_dynamic) -> SBValue
 
             Get a lldb.SBValue for a variable path.
 
@@ -6244,15 +6391,15 @@ class SBFunction(object):
         _lldb.SBFunction_swiginit(self, _lldb.new_SBFunction(*args))
     __swig_destroy__ = _lldb.delete_SBFunction
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBFunction self) -> bool"""
-        return _lldb.SBFunction_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBFunction___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBFunction self) -> bool"""
+        return _lldb.SBFunction_IsValid(self)
 
     def GetName(self) -> "char const *":
         r"""GetName(SBFunction self) -> char const *"""
@@ -6314,10 +6461,6 @@ class SBFunction(object):
         """
         return _lldb.SBFunction_GetIsOptimized(self)
 
-    def GetDescription(self, description: "SBStream") -> "bool":
-        r"""GetDescription(SBFunction self, SBStream description) -> bool"""
-        return _lldb.SBFunction_GetDescription(self, description)
-
     def __eq__(self, rhs: "SBFunction") -> "bool":
         r"""__eq__(SBFunction self, SBFunction rhs) -> bool"""
         return _lldb.SBFunction___eq__(self, rhs)
@@ -6325,6 +6468,10 @@ class SBFunction(object):
     def __ne__(self, rhs: "SBFunction") -> "bool":
         r"""__ne__(SBFunction self, SBFunction rhs) -> bool"""
         return _lldb.SBFunction___ne__(self, rhs)
+
+    def GetDescription(self, description: "SBStream") -> "bool":
+        r"""GetDescription(SBFunction self, SBStream description) -> bool"""
+        return _lldb.SBFunction_GetDescription(self, description)
 
     def __repr__(self) -> "std::string":
         r"""__repr__(SBFunction self) -> std::string"""
@@ -6391,9 +6538,9 @@ class SBHostOS(object):
         return _lldb.SBHostOS_ThreadCreated(name)
 
     @staticmethod
-    def ThreadCreate(name: "char const *", arg2: "lldb::thread_func_t", thread_arg: "void *", err: "SBError") -> "lldb::thread_t":
-        r"""ThreadCreate(char const * name, lldb::thread_func_t arg2, void * thread_arg, SBError err) -> lldb::thread_t"""
-        return _lldb.SBHostOS_ThreadCreate(name, arg2, thread_arg, err)
+    def ThreadCreate(name: "char const *", thread_function: "lldb::thread_func_t", thread_arg: "void *", err: "SBError") -> "lldb::thread_t":
+        r"""ThreadCreate(char const * name, lldb::thread_func_t thread_function, void * thread_arg, SBError err) -> lldb::thread_t"""
+        return _lldb.SBHostOS_ThreadCreate(name, thread_function, thread_arg, err)
 
     @staticmethod
     def ThreadCancel(thread: "lldb::thread_t", err: "SBError") -> "bool":
@@ -6438,9 +6585,9 @@ def SBHostOS_ThreadCreated(name: "char const *") -> "void":
     r"""SBHostOS_ThreadCreated(char const * name)"""
     return _lldb.SBHostOS_ThreadCreated(name)
 
-def SBHostOS_ThreadCreate(name: "char const *", arg2: "lldb::thread_func_t", thread_arg: "void *", err: "SBError") -> "lldb::thread_t":
-    r"""SBHostOS_ThreadCreate(char const * name, lldb::thread_func_t arg2, void * thread_arg, SBError err) -> lldb::thread_t"""
-    return _lldb.SBHostOS_ThreadCreate(name, arg2, thread_arg, err)
+def SBHostOS_ThreadCreate(name: "char const *", thread_function: "lldb::thread_func_t", thread_arg: "void *", err: "SBError") -> "lldb::thread_t":
+    r"""SBHostOS_ThreadCreate(char const * name, lldb::thread_func_t thread_function, void * thread_arg, SBError err) -> lldb::thread_t"""
+    return _lldb.SBHostOS_ThreadCreate(name, thread_function, thread_arg, err)
 
 def SBHostOS_ThreadCancel(thread: "lldb::thread_t", err: "SBError") -> "bool":
     r"""SBHostOS_ThreadCancel(lldb::thread_t thread, SBError err) -> bool"""
@@ -6467,15 +6614,15 @@ class SBInstruction(object):
         _lldb.SBInstruction_swiginit(self, _lldb.new_SBInstruction(*args))
     __swig_destroy__ = _lldb.delete_SBInstruction
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBInstruction self) -> bool"""
-        return _lldb.SBInstruction_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBInstruction___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBInstruction self) -> bool"""
+        return _lldb.SBInstruction_IsValid(self)
 
     def GetAddress(self) -> "lldb::SBAddress":
         r"""GetAddress(SBInstruction self) -> SBAddress"""
@@ -6592,15 +6739,15 @@ class SBInstructionList(object):
         _lldb.SBInstructionList_swiginit(self, _lldb.new_SBInstructionList(*args))
     __swig_destroy__ = _lldb.delete_SBInstructionList
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBInstructionList self) -> bool"""
-        return _lldb.SBInstructionList_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBInstructionList___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBInstructionList self) -> bool"""
+        return _lldb.SBInstructionList_IsValid(self)
 
     def GetSize(self) -> "size_t":
         r"""GetSize(SBInstructionList self) -> size_t"""
@@ -6610,8 +6757,8 @@ class SBInstructionList(object):
         r"""GetInstructionAtIndex(SBInstructionList self, uint32_t idx) -> SBInstruction"""
         return _lldb.SBInstructionList_GetInstructionAtIndex(self, idx)
 
-    def GetInstructionsCount(self, start: "SBAddress", end: "SBAddress", canSetBreakpoint: "bool") -> "size_t":
-        r"""GetInstructionsCount(SBInstructionList self, SBAddress start, SBAddress end, bool canSetBreakpoint) -> size_t"""
+    def GetInstructionsCount(self, start: "SBAddress", end: "SBAddress", canSetBreakpoint: "bool"=False) -> "size_t":
+        r"""GetInstructionsCount(SBInstructionList self, SBAddress start, SBAddress end, bool canSetBreakpoint=False) -> size_t"""
         return _lldb.SBInstructionList_GetInstructionsCount(self, start, end, canSetBreakpoint)
 
     def Clear(self) -> "void":
@@ -6654,7 +6801,9 @@ class SBInstructionList(object):
         '''Access instructions by integer index for array access or by lldb.SBAddress to find an instruction that matches a section offset address object.'''
         if type(key) is int:
     # Find an instruction by index
-            if key < len(self):
+            count = len(self)
+            if -count <= key < count:
+                key %= count
                 return self.GetInstructionAtIndex(key)
         elif type(key) is SBAddress:
     # Find an instruction using a lldb.SBAddress object
@@ -6716,6 +6865,7 @@ class SBLaunchInfo(object):
     def __init__(self, argv: "char const **"):
         r"""__init__(SBLaunchInfo self, char const ** argv) -> SBLaunchInfo"""
         _lldb.SBLaunchInfo_swiginit(self, _lldb.new_SBLaunchInfo(argv))
+    __swig_destroy__ = _lldb.delete_SBLaunchInfo
 
     def GetProcessID(self) -> "lldb::pid_t":
         r"""GetProcessID(SBLaunchInfo self) -> lldb::pid_t"""
@@ -6760,6 +6910,14 @@ class SBLaunchInfo(object):
     def SetListener(self, listener: "SBListener") -> "void":
         r"""SetListener(SBLaunchInfo self, SBListener listener)"""
         return _lldb.SBLaunchInfo_SetListener(self, listener)
+
+    def GetShadowListener(self) -> "lldb::SBListener":
+        r"""GetShadowListener(SBLaunchInfo self) -> SBListener"""
+        return _lldb.SBLaunchInfo_GetShadowListener(self)
+
+    def SetShadowListener(self, listener: "SBListener") -> "void":
+        r"""SetShadowListener(SBLaunchInfo self, SBListener listener)"""
+        return _lldb.SBLaunchInfo_SetShadowListener(self, listener)
 
     def GetNumArguments(self) -> "uint32_t":
         r"""GetNumArguments(SBLaunchInfo self) -> uint32_t"""
@@ -6892,7 +7050,6 @@ class SBLaunchInfo(object):
     def SetScriptedProcessDictionary(self, dict: "SBStructuredData") -> "void":
         r"""SetScriptedProcessDictionary(SBLaunchInfo self, SBStructuredData dict)"""
         return _lldb.SBLaunchInfo_SetScriptedProcessDictionary(self, dict)
-    __swig_destroy__ = _lldb.delete_SBLaunchInfo
 
 # Register SBLaunchInfo in _lldb:
 _lldb.SBLaunchInfo_swigregister(SBLaunchInfo)
@@ -6947,15 +7104,15 @@ class SBLineEntry(object):
         r"""GetEndAddress(SBLineEntry self) -> SBAddress"""
         return _lldb.SBLineEntry_GetEndAddress(self)
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBLineEntry self) -> bool"""
-        return _lldb.SBLineEntry_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBLineEntry___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBLineEntry self) -> bool"""
+        return _lldb.SBLineEntry_IsValid(self)
 
     def GetFileSpec(self) -> "lldb::SBFileSpec":
         r"""GetFileSpec(SBLineEntry self) -> SBFileSpec"""
@@ -6968,10 +7125,6 @@ class SBLineEntry(object):
     def GetColumn(self) -> "uint32_t":
         r"""GetColumn(SBLineEntry self) -> uint32_t"""
         return _lldb.SBLineEntry_GetColumn(self)
-
-    def GetDescription(self, description: "SBStream") -> "bool":
-        r"""GetDescription(SBLineEntry self, SBStream description) -> bool"""
-        return _lldb.SBLineEntry_GetDescription(self, description)
 
     def SetFileSpec(self, filespec: "SBFileSpec") -> "void":
         r"""SetFileSpec(SBLineEntry self, SBFileSpec filespec)"""
@@ -6992,6 +7145,10 @@ class SBLineEntry(object):
     def __ne__(self, rhs: "SBLineEntry") -> "bool":
         r"""__ne__(SBLineEntry self, SBLineEntry rhs) -> bool"""
         return _lldb.SBLineEntry___ne__(self, rhs)
+
+    def GetDescription(self, description: "SBStream") -> "bool":
+        r"""GetDescription(SBLineEntry self, SBStream description) -> bool"""
+        return _lldb.SBLineEntry_GetDescription(self, description)
 
     def __repr__(self) -> "std::string":
         r"""__repr__(SBLineEntry self) -> std::string"""
@@ -7047,22 +7204,22 @@ class SBListener(object):
         r"""Clear(SBListener self)"""
         return _lldb.SBListener_Clear(self)
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBListener self) -> bool"""
-        return _lldb.SBListener_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBListener___nonzero__(self)
     __bool__ = __nonzero__
 
 
 
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBListener self) -> bool"""
+        return _lldb.SBListener_IsValid(self)
+
     def StartListeningForEventClass(self, debugger: "SBDebugger", broadcaster_class: "char const *", event_mask: "uint32_t") -> "uint32_t":
         r"""StartListeningForEventClass(SBListener self, SBDebugger debugger, char const * broadcaster_class, uint32_t event_mask) -> uint32_t"""
         return _lldb.SBListener_StartListeningForEventClass(self, debugger, broadcaster_class, event_mask)
 
-    def StopListeningForEventClass(self, debugger: "SBDebugger", broadcaster_class: "char const *", event_mask: "uint32_t") -> "uint32_t":
-        r"""StopListeningForEventClass(SBListener self, SBDebugger debugger, char const * broadcaster_class, uint32_t event_mask) -> uint32_t"""
+    def StopListeningForEventClass(self, debugger: "SBDebugger", broadcaster_class: "char const *", event_mask: "uint32_t") -> "bool":
+        r"""StopListeningForEventClass(SBListener self, SBDebugger debugger, char const * broadcaster_class, uint32_t event_mask) -> bool"""
         return _lldb.SBListener_StopListeningForEventClass(self, debugger, broadcaster_class, event_mask)
 
     def StartListeningForEvents(self, broadcaster: "SBBroadcaster", event_mask: "uint32_t") -> "uint32_t":
@@ -7125,7 +7282,7 @@ class SBMemoryRegionInfo(object):
         r"""
         __init__(SBMemoryRegionInfo self) -> SBMemoryRegionInfo
         __init__(SBMemoryRegionInfo self, SBMemoryRegionInfo rhs) -> SBMemoryRegionInfo
-        __init__(SBMemoryRegionInfo self, char const * name, lldb::addr_t begin, lldb::addr_t end, uint32_t permissions, bool mapped, bool stack_memory) -> SBMemoryRegionInfo
+        __init__(SBMemoryRegionInfo self, char const * name, lldb::addr_t begin, lldb::addr_t end, uint32_t permissions, bool mapped, bool stack_memory=False) -> SBMemoryRegionInfo
         """
         _lldb.SBMemoryRegionInfo_swiginit(self, _lldb.new_SBMemoryRegionInfo(*args))
     __swig_destroy__ = _lldb.delete_SBMemoryRegionInfo
@@ -7265,28 +7422,6 @@ class SBMemoryRegionInfoList(object):
 # Register SBMemoryRegionInfoList in _lldb:
 _lldb.SBMemoryRegionInfoList_swigregister(SBMemoryRegionInfoList)
 
-
-# ==================================
-# Helper function for SBModule class
-# ==================================
-def in_range(symbol, section):
-    """Test whether a symbol is within the range of a section."""
-    symSA = symbol.GetStartAddress().GetFileAddress()
-    symEA = symbol.GetEndAddress().GetFileAddress()
-    secSA = section.GetFileAddress()
-    secEA = secSA + section.GetByteSize()
-
-    if symEA != LLDB_INVALID_ADDRESS:
-        if secSA <= symSA and symEA <= secEA:
-            return True
-        else:
-            return False
-    else:
-        if secSA <= symSA and symSA < secEA:
-            return True
-        else:
-            return False
-
 class SBModule(object):
     r"""
     Represents an executable image and its associated object and symbol files.
@@ -7382,15 +7517,15 @@ class SBModule(object):
         _lldb.SBModule_swiginit(self, _lldb.new_SBModule(*args))
     __swig_destroy__ = _lldb.delete_SBModule
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBModule self) -> bool"""
-        return _lldb.SBModule_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBModule___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBModule self) -> bool"""
+        return _lldb.SBModule_IsValid(self)
 
     def Clear(self) -> "void":
         r"""Clear(SBModule self)"""
@@ -7455,6 +7590,22 @@ class SBModule(object):
     def SetRemoteInstallFileSpec(self, file: "SBFileSpec") -> "bool":
         r"""SetRemoteInstallFileSpec(SBModule self, SBFileSpec file) -> bool"""
         return _lldb.SBModule_SetRemoteInstallFileSpec(self, file)
+
+    def GetByteOrder(self) -> "lldb::ByteOrder":
+        r"""GetByteOrder(SBModule self) -> lldb::ByteOrder"""
+        return _lldb.SBModule_GetByteOrder(self)
+
+    def GetAddressByteSize(self) -> "uint32_t":
+        r"""GetAddressByteSize(SBModule self) -> uint32_t"""
+        return _lldb.SBModule_GetAddressByteSize(self)
+
+    def GetTriple(self) -> "char const *":
+        r"""GetTriple(SBModule self) -> char const *"""
+        return _lldb.SBModule_GetTriple(self)
+
+    def GetUUIDBytes(self) -> "uint8_t const *":
+        r"""GetUUIDBytes(SBModule self) -> uint8_t const *"""
+        return _lldb.SBModule_GetUUIDBytes(self)
 
     def GetUUIDString(self) -> "char const *":
         r"""
@@ -7558,41 +7709,6 @@ class SBModule(object):
         """
         return _lldb.SBModule_FindFunctions(self, *args)
 
-    def FindFirstType(self, name: "char const *") -> "lldb::SBType":
-        r"""FindFirstType(SBModule self, char const * name) -> SBType"""
-        return _lldb.SBModule_FindFirstType(self, name)
-
-    def FindTypes(self, type: "char const *") -> "lldb::SBTypeList":
-        r"""FindTypes(SBModule self, char const * type) -> SBTypeList"""
-        return _lldb.SBModule_FindTypes(self, type)
-
-    def GetTypeByID(self, uid: "lldb::user_id_t") -> "lldb::SBType":
-        r"""GetTypeByID(SBModule self, lldb::user_id_t uid) -> SBType"""
-        return _lldb.SBModule_GetTypeByID(self, uid)
-
-    def GetBasicType(self, type: "lldb::BasicType") -> "lldb::SBType":
-        r"""GetBasicType(SBModule self, lldb::BasicType type) -> SBType"""
-        return _lldb.SBModule_GetBasicType(self, type)
-
-    def GetTypes(self, *args) -> "lldb::SBTypeList":
-        r"""
-        GetTypes(SBModule self, uint32_t type_mask=eTypeClassAny) -> SBTypeList
-
-            Get all types matching type_mask from debug info in this
-            module.
-
-            @param[in] type_mask
-                A bitfield that consists of one or more bits logically OR'ed
-                together from the lldb::TypeClass enumeration. This allows
-                you to request only structure types, or only class, struct
-                and union types. Passing in lldb::eTypeClassAny will return
-                all types found in the debug information for this module.
-
-            @return
-                A list of types in this module that match type_mask
-        """
-        return _lldb.SBModule_GetTypes(self, *args)
-
     def FindGlobalVariables(self, target: "SBTarget", name: "char const *", max_matches: "uint32_t") -> "lldb::SBValueList":
         r"""
         FindGlobalVariables(SBModule self, SBTarget target, char const * name, uint32_t max_matches) -> SBValueList
@@ -7632,17 +7748,40 @@ class SBModule(object):
         """
         return _lldb.SBModule_FindFirstGlobalVariable(self, target, name)
 
-    def GetByteOrder(self) -> "lldb::ByteOrder":
-        r"""GetByteOrder(SBModule self) -> lldb::ByteOrder"""
-        return _lldb.SBModule_GetByteOrder(self)
+    def FindFirstType(self, name: "char const *") -> "lldb::SBType":
+        r"""FindFirstType(SBModule self, char const * name) -> SBType"""
+        return _lldb.SBModule_FindFirstType(self, name)
 
-    def GetAddressByteSize(self) -> "uint32_t":
-        r"""GetAddressByteSize(SBModule self) -> uint32_t"""
-        return _lldb.SBModule_GetAddressByteSize(self)
+    def FindTypes(self, type: "char const *") -> "lldb::SBTypeList":
+        r"""FindTypes(SBModule self, char const * type) -> SBTypeList"""
+        return _lldb.SBModule_FindTypes(self, type)
 
-    def GetTriple(self) -> "char const *":
-        r"""GetTriple(SBModule self) -> char const *"""
-        return _lldb.SBModule_GetTriple(self)
+    def GetTypeByID(self, uid: "lldb::user_id_t") -> "lldb::SBType":
+        r"""GetTypeByID(SBModule self, lldb::user_id_t uid) -> SBType"""
+        return _lldb.SBModule_GetTypeByID(self, uid)
+
+    def GetBasicType(self, type: "lldb::BasicType") -> "lldb::SBType":
+        r"""GetBasicType(SBModule self, lldb::BasicType type) -> SBType"""
+        return _lldb.SBModule_GetBasicType(self, type)
+
+    def GetTypes(self, *args) -> "lldb::SBTypeList":
+        r"""
+        GetTypes(SBModule self, uint32_t type_mask=eTypeClassAny) -> SBTypeList
+
+            Get all types matching type_mask from debug info in this
+            module.
+
+            @param[in] type_mask
+                A bitfield that consists of one or more bits logically OR'ed
+                together from the lldb::TypeClass enumeration. This allows
+                you to request only structure types, or only class, struct
+                and union types. Passing in lldb::eTypeClassAny will return
+                all types found in the debug information for this module.
+
+            @return
+                A list of types in this module that match type_mask
+        """
+        return _lldb.SBModule_GetTypes(self, *args)
 
     def GetVersion(self) -> "uint32_t":
         r"""GetVersion(SBModule self) -> uint32_t"""
@@ -7729,7 +7868,8 @@ class SBModule(object):
         def __getitem__(self, key):
             count = len(self)
             if type(key) is int:
-                if key < count:
+                if -count <= key < count:
+                    key %= count
                     return self.sbmodule.GetSymbolAtIndex(key)
             elif type(key) is str:
                 matches = []
@@ -7790,7 +7930,8 @@ class SBModule(object):
         def __getitem__(self, key):
             count = len(self)
             if type(key) is int:
-                if key < count:
+                if -count <= key < count:
+                    key %= count
                     return self.sbmodule.GetSectionAtIndex(key)
             elif type(key) is str:
                 for idx in range(count):
@@ -7825,7 +7966,8 @@ class SBModule(object):
         def __getitem__(self, key):
             count = len(self)
             if type(key) is int:
-                if key < count:
+                if -count <= key < count:
+                    key %= count
                     return self.sbmodule.GetCompileUnitAtIndex(key)
             elif type(key) is str:
                 is_full_path = key[0] == '/'
@@ -7947,15 +8089,15 @@ class SBModuleSpec(object):
         _lldb.SBModuleSpec_swiginit(self, _lldb.new_SBModuleSpec(*args))
     __swig_destroy__ = _lldb.delete_SBModuleSpec
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBModuleSpec self) -> bool"""
-        return _lldb.SBModuleSpec_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBModuleSpec___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBModuleSpec self) -> bool"""
+        return _lldb.SBModuleSpec_IsValid(self)
 
     def Clear(self) -> "void":
         r"""Clear(SBModuleSpec self)"""
@@ -8175,9 +8317,9 @@ class SBPlatformShellCommand(object):
         r"""GetShell(SBPlatformShellCommand self) -> char const *"""
         return _lldb.SBPlatformShellCommand_GetShell(self)
 
-    def SetShell(self, shell_interpreter: "char const *") -> "void":
-        r"""SetShell(SBPlatformShellCommand self, char const * shell_interpreter)"""
-        return _lldb.SBPlatformShellCommand_SetShell(self, shell_interpreter)
+    def SetShell(self, shell: "char const *") -> "void":
+        r"""SetShell(SBPlatformShellCommand self, char const * shell)"""
+        return _lldb.SBPlatformShellCommand_SetShell(self, shell)
 
     def GetCommand(self) -> "char const *":
         r"""GetCommand(SBPlatformShellCommand self) -> char const *"""
@@ -8248,7 +8390,8 @@ class SBPlatform(object):
     def __init__(self, *args):
         r"""
         __init__(SBPlatform self) -> SBPlatform
-        __init__(SBPlatform self, char const * arg2) -> SBPlatform
+        __init__(SBPlatform self, char const * platform_name) -> SBPlatform
+        __init__(SBPlatform self, SBPlatform rhs) -> SBPlatform
         """
         _lldb.SBPlatform_swiginit(self, _lldb.new_SBPlatform(*args))
     __swig_destroy__ = _lldb.delete_SBPlatform
@@ -8258,15 +8401,15 @@ class SBPlatform(object):
         r"""GetHostPlatform() -> SBPlatform"""
         return _lldb.SBPlatform_GetHostPlatform()
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBPlatform self) -> bool"""
-        return _lldb.SBPlatform_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBPlatform___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBPlatform self) -> bool"""
+        return _lldb.SBPlatform_IsValid(self)
 
     def Clear(self) -> "void":
         r"""Clear(SBPlatform self)"""
@@ -8276,9 +8419,9 @@ class SBPlatform(object):
         r"""GetWorkingDirectory(SBPlatform self) -> char const *"""
         return _lldb.SBPlatform_GetWorkingDirectory(self)
 
-    def SetWorkingDirectory(self, arg2: "char const *") -> "bool":
-        r"""SetWorkingDirectory(SBPlatform self, char const * arg2) -> bool"""
-        return _lldb.SBPlatform_SetWorkingDirectory(self, arg2)
+    def SetWorkingDirectory(self, path: "char const *") -> "bool":
+        r"""SetWorkingDirectory(SBPlatform self, char const * path) -> bool"""
+        return _lldb.SBPlatform_SetWorkingDirectory(self, path)
 
     def GetName(self) -> "char const *":
         r"""GetName(SBPlatform self) -> char const *"""
@@ -8328,13 +8471,13 @@ class SBPlatform(object):
         r"""SetSDKRoot(SBPlatform self, char const * sysroot)"""
         return _lldb.SBPlatform_SetSDKRoot(self, sysroot)
 
-    def Get(self, src: "SBFileSpec", dst: "SBFileSpec") -> "lldb::SBError":
-        r"""Get(SBPlatform self, SBFileSpec src, SBFileSpec dst) -> SBError"""
-        return _lldb.SBPlatform_Get(self, src, dst)
-
     def Put(self, src: "SBFileSpec", dst: "SBFileSpec") -> "lldb::SBError":
         r"""Put(SBPlatform self, SBFileSpec src, SBFileSpec dst) -> SBError"""
         return _lldb.SBPlatform_Put(self, src, dst)
+
+    def Get(self, src: "SBFileSpec", dst: "SBFileSpec") -> "lldb::SBError":
+        r"""Get(SBPlatform self, SBFileSpec src, SBFileSpec dst) -> SBError"""
+        return _lldb.SBPlatform_Get(self, src, dst)
 
     def Install(self, src: "SBFileSpec", dst: "SBFileSpec") -> "lldb::SBError":
         r"""Install(SBPlatform self, SBFileSpec src, SBFileSpec dst) -> SBError"""
@@ -8441,15 +8584,15 @@ class SBProcess(object):
         r"""Clear(SBProcess self)"""
         return _lldb.SBProcess_Clear(self)
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBProcess self) -> bool"""
-        return _lldb.SBProcess_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBProcess___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBProcess self) -> bool"""
+        return _lldb.SBProcess_IsValid(self)
 
     def GetTarget(self) -> "lldb::SBTarget":
         r"""GetTarget(SBProcess self) -> SBTarget"""
@@ -8491,7 +8634,7 @@ class SBProcess(object):
 
     def ReportEventState(self, *args) -> "void":
         r"""
-        ReportEventState(SBProcess self, SBEvent event, SBFile out)
+        ReportEventState(SBProcess self, SBEvent event, SBFile file)
         ReportEventState(SBProcess self, SBEvent event, lldb::FileSP BORROWED)
         """
         return _lldb.SBProcess_ReportEventState(self, *args)
@@ -8575,8 +8718,8 @@ class SBProcess(object):
         r"""GetNumQueues(SBProcess self) -> uint32_t"""
         return _lldb.SBProcess_GetNumQueues(self)
 
-    def GetQueueAtIndex(self, index: "uint32_t") -> "lldb::SBQueue":
-        r"""GetQueueAtIndex(SBProcess self, uint32_t index) -> SBQueue"""
+    def GetQueueAtIndex(self, index: "size_t") -> "lldb::SBQueue":
+        r"""GetQueueAtIndex(SBProcess self, size_t index) -> SBQueue"""
         return _lldb.SBProcess_GetQueueAtIndex(self, index)
 
     def GetState(self) -> "lldb::StateType":
@@ -8627,12 +8770,18 @@ class SBProcess(object):
         return _lldb.SBProcess_Stop(self)
 
     def Kill(self) -> "lldb::SBError":
-        r"""Kill(SBProcess self) -> SBError"""
+        r"""
+        Kill(SBProcess self) -> SBError
+        Same as Destroy(self).
+        """
         return _lldb.SBProcess_Kill(self)
 
-    def Detach(self) -> "lldb::SBError":
-        r"""Detach(SBProcess self) -> SBError"""
-        return _lldb.SBProcess_Detach(self)
+    def Detach(self, *args) -> "lldb::SBError":
+        r"""
+        Detach(SBProcess self) -> SBError
+        Detach(SBProcess self, bool keep_stopped) -> SBError
+        """
+        return _lldb.SBProcess_Detach(self, *args)
 
     def Signal(self, signal: "int") -> "lldb::SBError":
         r"""
@@ -8644,6 +8793,10 @@ class SBProcess(object):
     def GetUnixSignals(self) -> "lldb::SBUnixSignals":
         r"""GetUnixSignals(SBProcess self) -> SBUnixSignals"""
         return _lldb.SBProcess_GetUnixSignals(self)
+
+    def SendAsyncInterrupt(self) -> "void":
+        r"""SendAsyncInterrupt(SBProcess self)"""
+        return _lldb.SBProcess_SendAsyncInterrupt(self)
 
     def GetStopID(self, include_expression_stops: "bool"=False) -> "uint32_t":
         r"""
@@ -8657,9 +8810,13 @@ class SBProcess(object):
         """
         return _lldb.SBProcess_GetStopID(self, include_expression_stops)
 
-    def SendAsyncInterrupt(self) -> "void":
-        r"""SendAsyncInterrupt(SBProcess self)"""
-        return _lldb.SBProcess_SendAsyncInterrupt(self)
+    def GetStopEventForStopID(self, stop_id: "uint32_t") -> "lldb::SBEvent":
+        r"""GetStopEventForStopID(SBProcess self, uint32_t stop_id) -> SBEvent"""
+        return _lldb.SBProcess_GetStopEventForStopID(self, stop_id)
+
+    def ForceScriptedState(self, new_state: "lldb::StateType") -> "void":
+        r"""ForceScriptedState(SBProcess self, lldb::StateType new_state)"""
+        return _lldb.SBProcess_ForceScriptedState(self, new_state)
 
     def ReadMemory(self, addr: "lldb::addr_t", buf: "void *", error: "SBError") -> "size_t":
         r"""
@@ -8785,6 +8942,11 @@ class SBProcess(object):
         r"""GetBroadcaster(SBProcess self) -> SBBroadcaster"""
         return _lldb.SBProcess_GetBroadcaster(self)
 
+    @staticmethod
+    def GetBroadcasterClass() -> "char const *":
+        r"""GetBroadcasterClass() -> char const *"""
+        return _lldb.SBProcess_GetBroadcasterClass()
+
     def GetDescription(self, description: "SBStream") -> "bool":
         r"""GetDescription(SBProcess self, SBStream description) -> bool"""
         return _lldb.SBProcess_GetDescription(self, description)
@@ -8800,9 +8962,12 @@ class SBProcess(object):
         r"""GetNumSupportedHardwareWatchpoints(SBProcess self, SBError error) -> uint32_t"""
         return _lldb.SBProcess_GetNumSupportedHardwareWatchpoints(self, error)
 
-    def LoadImage(self, image_spec: "SBFileSpec", error: "SBError") -> "uint32_t":
-        r"""LoadImage(SBProcess self, SBFileSpec image_spec, SBError error) -> uint32_t"""
-        return _lldb.SBProcess_LoadImage(self, image_spec, error)
+    def LoadImage(self, *args) -> "uint32_t":
+        r"""
+        LoadImage(SBProcess self, SBFileSpec remote_image_spec, SBError error) -> uint32_t
+        LoadImage(SBProcess self, SBFileSpec local_image_spec, SBFileSpec remote_image_spec, SBError error) -> uint32_t
+        """
+        return _lldb.SBProcess_LoadImage(self, *args)
 
     def LoadImageUsingPaths(self, image_spec: "SBFileSpec", paths: "SBStringList", loaded_path: "SBFileSpec", error: "SBError") -> "uint32_t":
         r"""
@@ -8819,9 +8984,9 @@ class SBProcess(object):
         r"""UnloadImage(SBProcess self, uint32_t image_token) -> SBError"""
         return _lldb.SBProcess_UnloadImage(self, image_token)
 
-    def SendEventData(self, event_data: "char const *") -> "lldb::SBError":
-        r"""SendEventData(SBProcess self, char const * event_data) -> SBError"""
-        return _lldb.SBProcess_SendEventData(self, event_data)
+    def SendEventData(self, data: "char const *") -> "lldb::SBError":
+        r"""SendEventData(SBProcess self, char const * data) -> SBError"""
+        return _lldb.SBProcess_SendEventData(self, data)
 
     def GetNumExtendedBacktraceTypes(self) -> "uint32_t":
         r"""
@@ -8900,9 +9065,29 @@ class SBProcess(object):
         """
         return _lldb.SBProcess_DeallocateMemory(self, ptr)
 
+    def GetScriptedImplementation(self) -> "lldb::ScriptedObject":
+        r"""
+
+        Returns the implementation object of the process plugin if available. None
+        otherwise.
+        """
+        return _lldb.SBProcess_GetScriptedImplementation(self)
+
     def __repr__(self) -> "std::string":
         r"""__repr__(SBProcess self) -> std::string"""
         return _lldb.SBProcess___repr__(self)
+
+    def WriteMemoryAsCString(self, addr, str, error):
+        '''
+          WriteMemoryAsCString(self, addr, str, error):
+            This functions the same as `WriteMemory` except a null-terminator is appended
+            to the end of the buffer if it is not there already.
+        '''
+        if not str or len(str) == 0:
+            return 0
+        if not str[-1] == '\0':
+            str += '\0'
+        return self.WriteMemory(addr, str, error)
 
     def __get_is_alive__(self):
         '''Returns "True" if the process is currently alive, "False" otherwise'''
@@ -8942,8 +9127,11 @@ class SBProcess(object):
             return 0
 
         def __getitem__(self, key):
-            if type(key) is int and key < len(self):
-                return self.sbprocess.GetThreadAtIndex(key)
+            if isinstance(key, int):
+                count = len(self)
+                if -count <= key < count:
+                    key %= count
+                    return self.sbprocess.GetThreadAtIndex(key)
             return None
 
     def get_threads_access_object(self):
@@ -9025,6 +9213,10 @@ def SBProcess_EventIsStructuredDataEvent(event: "SBEvent") -> "bool":
     r"""SBProcess_EventIsStructuredDataEvent(SBEvent event) -> bool"""
     return _lldb.SBProcess_EventIsStructuredDataEvent(event)
 
+def SBProcess_GetBroadcasterClass() -> "char const *":
+    r"""SBProcess_GetBroadcasterClass() -> char const *"""
+    return _lldb.SBProcess_GetBroadcasterClass()
+
 class SBProcessInfo(object):
     r"""
     Describes an existing process and any discoverable information that pertains to
@@ -9042,15 +9234,15 @@ class SBProcessInfo(object):
         _lldb.SBProcessInfo_swiginit(self, _lldb.new_SBProcessInfo(*args))
     __swig_destroy__ = _lldb.delete_SBProcessInfo
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBProcessInfo self) -> bool"""
-        return _lldb.SBProcessInfo_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBProcessInfo___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBProcessInfo self) -> bool"""
+        return _lldb.SBProcessInfo_IsValid(self)
 
     def GetName(self) -> "char const *":
         r"""GetName(SBProcessInfo self) -> char const *"""
@@ -9120,19 +9312,20 @@ class SBQueue(object):
         r"""
         __init__(SBQueue self) -> SBQueue
         __init__(SBQueue self, lldb::QueueSP const & queue_sp) -> SBQueue
+        __init__(SBQueue self, SBQueue rhs) -> SBQueue
         """
         _lldb.SBQueue_swiginit(self, _lldb.new_SBQueue(*args))
     __swig_destroy__ = _lldb.delete_SBQueue
-
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBQueue self) -> bool"""
-        return _lldb.SBQueue_IsValid(self)
 
     def __nonzero__(self):
         return _lldb.SBQueue___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBQueue self) -> bool"""
+        return _lldb.SBQueue_IsValid(self)
 
     def Clear(self) -> "void":
         r"""Clear(SBQueue self)"""
@@ -9155,15 +9348,6 @@ class SBQueue(object):
     def GetName(self) -> "char const *":
         r"""GetName(SBQueue self) -> char const *"""
         return _lldb.SBQueue_GetName(self)
-
-    def GetKind(self) -> "lldb::QueueKind":
-        r"""
-
-        Returns an lldb::QueueKind enumerated value (e.g. eQueueKindUnknown,
-        eQueueKindSerial, eQueueKindConcurrent) describing the type of this
-        queue.
-        """
-        return _lldb.SBQueue_GetKind(self)
 
     def GetIndexID(self) -> "uint32_t":
         r"""GetIndexID(SBQueue self) -> uint32_t"""
@@ -9189,6 +9373,15 @@ class SBQueue(object):
         r"""GetNumRunningItems(SBQueue self) -> uint32_t"""
         return _lldb.SBQueue_GetNumRunningItems(self)
 
+    def GetKind(self) -> "lldb::QueueKind":
+        r"""
+
+        Returns an lldb::QueueKind enumerated value (e.g. eQueueKindUnknown,
+        eQueueKindSerial, eQueueKindConcurrent) describing the type of this
+        queue.
+        """
+        return _lldb.SBQueue_GetKind(self)
+
 # Register SBQueue in _lldb:
 _lldb.SBQueue_swigregister(SBQueue)
 
@@ -9206,15 +9399,15 @@ class SBQueueItem(object):
         _lldb.SBQueueItem_swiginit(self, _lldb.new_SBQueueItem(*args))
     __swig_destroy__ = _lldb.delete_SBQueueItem
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBQueueItem self) -> bool"""
-        return _lldb.SBQueueItem_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBQueueItem___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBQueueItem self) -> bool"""
+        return _lldb.SBQueueItem_IsValid(self)
 
     def Clear(self) -> "void":
         r"""Clear(SBQueueItem self)"""
@@ -9336,15 +9529,15 @@ class SBSection(object):
         _lldb.SBSection_swiginit(self, _lldb.new_SBSection(*args))
     __swig_destroy__ = _lldb.delete_SBSection
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBSection self) -> bool"""
-        return _lldb.SBSection_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBSection___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBSection self) -> bool"""
+        return _lldb.SBSection_IsValid(self)
 
     def GetName(self) -> "char const *":
         r"""GetName(SBSection self) -> char const *"""
@@ -9419,10 +9612,6 @@ class SBSection(object):
         r"""GetAlignment(SBSection self) -> uint32_t"""
         return _lldb.SBSection_GetAlignment(self)
 
-    def GetDescription(self, description: "SBStream") -> "bool":
-        r"""GetDescription(SBSection self, SBStream description) -> bool"""
-        return _lldb.SBSection_GetDescription(self, description)
-
     def __eq__(self, rhs: "SBSection") -> "bool":
         r"""__eq__(SBSection self, SBSection rhs) -> bool"""
         return _lldb.SBSection___eq__(self, rhs)
@@ -9430,6 +9619,10 @@ class SBSection(object):
     def __ne__(self, rhs: "SBSection") -> "bool":
         r"""__ne__(SBSection self, SBSection rhs) -> bool"""
         return _lldb.SBSection___ne__(self, rhs)
+
+    def GetDescription(self, description: "SBStream") -> "bool":
+        r"""GetDescription(SBSection self, SBStream description) -> bool"""
+        return _lldb.SBSection_GetDescription(self, description)
 
     def __repr__(self) -> "std::string":
         r"""__repr__(SBSection self) -> std::string"""
@@ -9505,9 +9698,13 @@ class SBSourceManager(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
-    def __init__(self, rhs: "SBSourceManager"):
-        r"""__init__(SBSourceManager self, SBSourceManager rhs) -> SBSourceManager"""
-        _lldb.SBSourceManager_swiginit(self, _lldb.new_SBSourceManager(rhs))
+    def __init__(self, *args):
+        r"""
+        __init__(SBSourceManager self, SBDebugger debugger) -> SBSourceManager
+        __init__(SBSourceManager self, SBTarget target) -> SBSourceManager
+        __init__(SBSourceManager self, SBSourceManager rhs) -> SBSourceManager
+        """
+        _lldb.SBSourceManager_swiginit(self, _lldb.new_SBSourceManager(*args))
     __swig_destroy__ = _lldb.delete_SBSourceManager
 
     def DisplaySourceLinesWithLineNumbers(self, file: "SBFileSpec", line: "uint32_t", context_before: "uint32_t", context_after: "uint32_t", current_line_cstr: "char const *", s: "SBStream") -> "size_t":
@@ -9558,15 +9755,15 @@ class SBStream(object):
         _lldb.SBStream_swiginit(self, _lldb.new_SBStream())
     __swig_destroy__ = _lldb.delete_SBStream
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBStream self) -> bool"""
-        return _lldb.SBStream_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBStream___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBStream self) -> bool"""
+        return _lldb.SBStream_IsValid(self)
 
     def GetData(self) -> "char const *":
         r"""
@@ -9599,17 +9796,13 @@ class SBStream(object):
         """
         return _lldb.SBStream_RedirectToFile(self, *args)
 
-    def RedirectToFileHandle(self, file: "lldb::FileSP", transfer_fh_ownership: "bool") -> "void":
-        r"""DEPRECATED, use RedirectToFile"""
-        return _lldb.SBStream_RedirectToFileHandle(self, file, transfer_fh_ownership)
-
     def RedirectToFileDescriptor(self, fd: "int", transfer_fh_ownership: "bool") -> "void":
-        r"""DEPRECATED, use RedirectToFile"""
+        r"""RedirectToFileDescriptor(SBStream self, int fd, bool transfer_fh_ownership)"""
         return _lldb.SBStream_RedirectToFileDescriptor(self, fd, transfer_fh_ownership)
 
     def Clear(self) -> "void":
         r"""
-        DEPRECATED, use RedirectToFile
+        Clear(SBStream self)
 
             If the stream is redirected to a file, forget about the file and if
             ownership of the file was transferred to this object, close the file.
@@ -9617,12 +9810,16 @@ class SBStream(object):
         """
         return _lldb.SBStream_Clear(self)
 
-    def write(self, str: "char const *") -> "void":
+    def RedirectToFileHandle(self, file: "lldb::FileSP", transfer_fh_ownership: "bool") -> "void":
         r"""DEPRECATED, use RedirectToFile"""
+        return _lldb.SBStream_RedirectToFileHandle(self, file, transfer_fh_ownership)
+
+    def write(self, str: "char const *") -> "void":
+        r"""write(SBStream self, char const * str)"""
         return _lldb.SBStream_write(self, str)
 
     def flush(self) -> "void":
-        r"""DEPRECATED, use RedirectToFile"""
+        r"""flush(SBStream self)"""
         return _lldb.SBStream_flush(self)
 
 # Register SBStream in _lldb:
@@ -9642,15 +9839,15 @@ class SBStringList(object):
         _lldb.SBStringList_swiginit(self, _lldb.new_SBStringList(*args))
     __swig_destroy__ = _lldb.delete_SBStringList
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBStringList self) -> bool"""
-        return _lldb.SBStringList_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBStringList___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBStringList self) -> bool"""
+        return _lldb.SBStringList_IsValid(self)
 
     def AppendString(self, str: "char const *") -> "void":
         r"""AppendString(SBStringList self, char const * str)"""
@@ -9667,9 +9864,12 @@ class SBStringList(object):
         r"""GetSize(SBStringList self) -> uint32_t"""
         return _lldb.SBStringList_GetSize(self)
 
-    def GetStringAtIndex(self, idx: "size_t") -> "char const *":
-        r"""GetStringAtIndex(SBStringList self, size_t idx) -> char const *"""
-        return _lldb.SBStringList_GetStringAtIndex(self, idx)
+    def GetStringAtIndex(self, *args) -> "char const *":
+        r"""
+        GetStringAtIndex(SBStringList self, size_t idx) -> char const
+        GetStringAtIndex(SBStringList self, size_t idx) -> char const *
+        """
+        return _lldb.SBStringList_GetStringAtIndex(self, *args)
 
     def Clear(self) -> "void":
         r"""Clear(SBStringList self)"""
@@ -9706,19 +9906,34 @@ class SBStructuredData(object):
         _lldb.SBStructuredData_swiginit(self, _lldb.new_SBStructuredData(*args))
     __swig_destroy__ = _lldb.delete_SBStructuredData
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBStructuredData self) -> bool"""
-        return _lldb.SBStructuredData_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBStructuredData___nonzero__(self)
     __bool__ = __nonzero__
 
 
 
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBStructuredData self) -> bool"""
+        return _lldb.SBStructuredData_IsValid(self)
+
+    def SetFromJSON(self, *args) -> "lldb::SBError":
+        r"""
+        SetFromJSON(SBStructuredData self, SBStream stream) -> SBError
+        SetFromJSON(SBStructuredData self, char const * json) -> SBError
+        """
+        return _lldb.SBStructuredData_SetFromJSON(self, *args)
+
     def Clear(self) -> "void":
         r"""Clear(SBStructuredData self)"""
         return _lldb.SBStructuredData_Clear(self)
+
+    def GetAsJSON(self, stream: "SBStream") -> "lldb::SBError":
+        r"""GetAsJSON(SBStructuredData self, SBStream stream) -> SBError"""
+        return _lldb.SBStructuredData_GetAsJSON(self, stream)
+
+    def GetDescription(self, stream: "SBStream") -> "lldb::SBError":
+        r"""GetDescription(SBStructuredData self, SBStream stream) -> SBError"""
+        return _lldb.SBStructuredData_GetDescription(self, stream)
 
     def GetType(self) -> "lldb::StructuredDataType":
         r"""GetType(SBStructuredData self) -> lldb::StructuredDataType"""
@@ -9756,21 +9971,6 @@ class SBStructuredData(object):
         r"""GetStringValue(SBStructuredData self, char * dst) -> size_t"""
         return _lldb.SBStructuredData_GetStringValue(self, dst)
 
-    def GetAsJSON(self, stream: "SBStream") -> "lldb::SBError":
-        r"""GetAsJSON(SBStructuredData self, SBStream stream) -> SBError"""
-        return _lldb.SBStructuredData_GetAsJSON(self, stream)
-
-    def GetDescription(self, stream: "SBStream") -> "lldb::SBError":
-        r"""GetDescription(SBStructuredData self, SBStream stream) -> SBError"""
-        return _lldb.SBStructuredData_GetDescription(self, stream)
-
-    def SetFromJSON(self, *args) -> "lldb::SBError":
-        r"""
-        SetFromJSON(SBStructuredData self, SBStream stream) -> SBError
-        SetFromJSON(SBStructuredData self, char const * json) -> SBError
-        """
-        return _lldb.SBStructuredData_SetFromJSON(self, *args)
-
 # Register SBStructuredData in _lldb:
 _lldb.SBStructuredData_swigregister(SBStructuredData)
 
@@ -9790,15 +9990,15 @@ class SBSymbol(object):
         """
         _lldb.SBSymbol_swiginit(self, _lldb.new_SBSymbol(*args))
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBSymbol self) -> bool"""
-        return _lldb.SBSymbol_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBSymbol___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBSymbol self) -> bool"""
+        return _lldb.SBSymbol_IsValid(self)
 
     def GetName(self) -> "char const *":
         r"""GetName(SBSymbol self) -> char const *"""
@@ -9843,6 +10043,14 @@ class SBSymbol(object):
         r"""GetType(SBSymbol self) -> lldb::SymbolType"""
         return _lldb.SBSymbol_GetType(self)
 
+    def __eq__(self, rhs: "SBSymbol") -> "bool":
+        r"""__eq__(SBSymbol self, SBSymbol rhs) -> bool"""
+        return _lldb.SBSymbol___eq__(self, rhs)
+
+    def __ne__(self, rhs: "SBSymbol") -> "bool":
+        r"""__ne__(SBSymbol self, SBSymbol rhs) -> bool"""
+        return _lldb.SBSymbol___ne__(self, rhs)
+
     def GetDescription(self, description: "SBStream") -> "bool":
         r"""GetDescription(SBSymbol self, SBStream description) -> bool"""
         return _lldb.SBSymbol_GetDescription(self, description)
@@ -9854,14 +10062,6 @@ class SBSymbol(object):
     def IsSynthetic(self) -> "bool":
         r"""IsSynthetic(SBSymbol self) -> bool"""
         return _lldb.SBSymbol_IsSynthetic(self)
-
-    def __eq__(self, rhs: "SBSymbol") -> "bool":
-        r"""__eq__(SBSymbol self, SBSymbol rhs) -> bool"""
-        return _lldb.SBSymbol___eq__(self, rhs)
-
-    def __ne__(self, rhs: "SBSymbol") -> "bool":
-        r"""__ne__(SBSymbol self, SBSymbol rhs) -> bool"""
-        return _lldb.SBSymbol___ne__(self, rhs)
 
     def __repr__(self) -> "std::string":
         r"""__repr__(SBSymbol self) -> std::string"""
@@ -9946,15 +10146,15 @@ class SBSymbolContext(object):
         _lldb.SBSymbolContext_swiginit(self, _lldb.new_SBSymbolContext(*args))
     __swig_destroy__ = _lldb.delete_SBSymbolContext
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBSymbolContext self) -> bool"""
-        return _lldb.SBSymbolContext_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBSymbolContext___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBSymbolContext self) -> bool"""
+        return _lldb.SBSymbolContext_IsValid(self)
 
     def GetModule(self) -> "lldb::SBModule":
         r"""GetModule(SBSymbolContext self) -> SBModule"""
@@ -10060,15 +10260,15 @@ class SBSymbolContextList(object):
         _lldb.SBSymbolContextList_swiginit(self, _lldb.new_SBSymbolContextList(*args))
     __swig_destroy__ = _lldb.delete_SBSymbolContextList
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBSymbolContextList self) -> bool"""
-        return _lldb.SBSymbolContextList_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBSymbolContextList___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBSymbolContextList self) -> bool"""
+        return _lldb.SBSymbolContextList_IsValid(self)
 
     def GetSize(self) -> "uint32_t":
         r"""GetSize(SBSymbolContextList self) -> uint32_t"""
@@ -10078,16 +10278,16 @@ class SBSymbolContextList(object):
         r"""GetContextAtIndex(SBSymbolContextList self, uint32_t idx) -> SBSymbolContext"""
         return _lldb.SBSymbolContextList_GetContextAtIndex(self, idx)
 
+    def GetDescription(self, description: "SBStream") -> "bool":
+        r"""GetDescription(SBSymbolContextList self, SBStream description) -> bool"""
+        return _lldb.SBSymbolContextList_GetDescription(self, description)
+
     def Append(self, *args) -> "void":
         r"""
         Append(SBSymbolContextList self, SBSymbolContext sc)
         Append(SBSymbolContextList self, SBSymbolContextList sc_list)
         """
         return _lldb.SBSymbolContextList_Append(self, *args)
-
-    def GetDescription(self, description: "SBStream") -> "bool":
-        r"""GetDescription(SBSymbolContextList self, SBStream description) -> bool"""
-        return _lldb.SBSymbolContextList_GetDescription(self, description)
 
     def Clear(self) -> "void":
         r"""Clear(SBSymbolContextList self)"""
@@ -10107,8 +10307,9 @@ class SBSymbolContextList(object):
 
     def __getitem__(self, key):
         count = len(self)
-        if type(key) is int:
-            if key < count:
+        if isinstance(key, int):
+            if -count <= key < count:
+                key %= count
                 return self.GetContextAtIndex(key)
             else:
                 raise IndexError
@@ -10229,20 +10430,15 @@ class SBTarget(object):
         _lldb.SBTarget_swiginit(self, _lldb.new_SBTarget(*args))
     __swig_destroy__ = _lldb.delete_SBTarget
 
-    @staticmethod
-    def GetBroadcasterClassName() -> "char const *":
-        r"""GetBroadcasterClassName() -> char const *"""
-        return _lldb.SBTarget_GetBroadcasterClassName()
-
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBTarget self) -> bool"""
-        return _lldb.SBTarget_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBTarget___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBTarget self) -> bool"""
+        return _lldb.SBTarget_IsValid(self)
 
     @staticmethod
     def EventIsTargetEvent(event: "SBEvent") -> "bool":
@@ -10264,9 +10460,26 @@ class SBTarget(object):
         r"""GetModuleAtIndexFromEvent(uint32_t const idx, SBEvent event) -> SBModule"""
         return _lldb.SBTarget_GetModuleAtIndexFromEvent(idx, event)
 
+    @staticmethod
+    def GetBroadcasterClassName() -> "char const *":
+        r"""GetBroadcasterClassName() -> char const *"""
+        return _lldb.SBTarget_GetBroadcasterClassName()
+
     def GetProcess(self) -> "lldb::SBProcess":
         r"""GetProcess(SBTarget self) -> SBProcess"""
         return _lldb.SBTarget_GetProcess(self)
+
+    def SetCollectingStats(self, v: "bool") -> "void":
+        r"""SetCollectingStats(SBTarget self, bool v)"""
+        return _lldb.SBTarget_SetCollectingStats(self, v)
+
+    def GetCollectingStats(self) -> "bool":
+        r"""GetCollectingStats(SBTarget self) -> bool"""
+        return _lldb.SBTarget_GetCollectingStats(self)
+
+    def GetStatistics(self) -> "lldb::SBStructuredData":
+        r"""GetStatistics(SBTarget self) -> SBStructuredData"""
+        return _lldb.SBTarget_GetStatistics(self)
 
     def GetPlatform(self) -> "lldb::SBPlatform":
         r"""
@@ -10281,6 +10494,10 @@ class SBTarget(object):
                 A platform object.
         """
         return _lldb.SBTarget_GetPlatform(self)
+
+    def GetEnvironment(self) -> "lldb::SBEnvironment":
+        r"""GetEnvironment(SBTarget self) -> SBEnvironment"""
+        return _lldb.SBTarget_GetEnvironment(self)
 
     def Install(self) -> "lldb::SBError":
         r"""
@@ -10300,6 +10517,31 @@ class SBTarget(object):
                 installation.
         """
         return _lldb.SBTarget_Install(self)
+
+    def LoadCore(self, *args) -> "lldb::SBProcess":
+        r"""
+        LoadCore(SBTarget self, char const * core_file) -> SBProcess
+        LoadCore(SBTarget self, char const * core_file, SBError error) -> SBProcess
+
+            Load a core file
+
+            @param[in] core_file
+                File path of the core dump.
+
+            @param[out] error
+                An error explaining what went wrong if the operation fails.
+                (Optional)
+
+            @return
+                 A process object for the newly created core file.
+
+            For example,
+
+                process = target.LoadCore('./a.out.core')
+
+            loads a new core file and returns the process object.
+        """
+        return _lldb.SBTarget_LoadCore(self, *args)
 
     def LaunchSimple(self, argv: "char const **", envp: "char const **", working_directory: "char const *") -> "lldb::SBProcess":
         r"""
@@ -10400,31 +10642,6 @@ class SBTarget(object):
             run to completion if no user interaction is required.
         """
         return _lldb.SBTarget_Launch(self, *args)
-
-    def LoadCore(self, *args) -> "lldb::SBProcess":
-        r"""
-        LoadCore(SBTarget self, char const * core_file) -> SBProcess
-        LoadCore(SBTarget self, char const * core_file, SBError error) -> SBProcess
-
-            Load a core file
-
-            @param[in] core_file
-                File path of the core dump.
-
-            @param[out] error
-                An error explaining what went wrong if the operation fails.
-                (Optional)
-
-            @return
-                 A process object for the newly created core file.
-
-            For example,
-
-                process = target.LoadCore('./a.out.core')
-
-            loads a new core file and returns the process object.
-        """
-        return _lldb.SBTarget_LoadCore(self, *args)
 
     def Attach(self, attach_info: "SBAttachInfo", error: "SBError") -> "lldb::SBProcess":
         r"""Attach(SBTarget self, SBAttachInfo attach_info, SBError error) -> SBProcess"""
@@ -10612,8 +10829,8 @@ class SBTarget(object):
         r"""ClearSectionLoadAddress(SBTarget self, SBSection section) -> SBError"""
         return _lldb.SBTarget_ClearSectionLoadAddress(self, section)
 
-    def SetModuleLoadAddress(self, module: "SBModule", sections_offset: "int64_t") -> "lldb::SBError":
-        r"""SetModuleLoadAddress(SBTarget self, SBModule module, int64_t sections_offset) -> SBError"""
+    def SetModuleLoadAddress(self, module: "SBModule", sections_offset: "uint64_t") -> "lldb::SBError":
+        r"""SetModuleLoadAddress(SBTarget self, SBModule module, uint64_t sections_offset) -> SBError"""
         return _lldb.SBTarget_SetModuleLoadAddress(self, module, sections_offset)
 
     def ClearModuleLoadAddress(self, module: "SBModule") -> "lldb::SBError":
@@ -10640,22 +10857,6 @@ class SBTarget(object):
                 the symbol contexts for all the matches.
         """
         return _lldb.SBTarget_FindFunctions(self, *args)
-
-    def FindFirstType(self, type: "char const *") -> "lldb::SBType":
-        r"""FindFirstType(SBTarget self, char const * type) -> SBType"""
-        return _lldb.SBTarget_FindFirstType(self, type)
-
-    def FindTypes(self, type: "char const *") -> "lldb::SBTypeList":
-        r"""FindTypes(SBTarget self, char const * type) -> SBTypeList"""
-        return _lldb.SBTarget_FindTypes(self, type)
-
-    def GetBasicType(self, type: "lldb::BasicType") -> "lldb::SBType":
-        r"""GetBasicType(SBTarget self, lldb::BasicType type) -> SBType"""
-        return _lldb.SBTarget_GetBasicType(self, type)
-
-    def GetSourceManager(self) -> "lldb::SBSourceManager":
-        r"""GetSourceManager(SBTarget self) -> SBSourceManager"""
-        return _lldb.SBTarget_GetSourceManager(self)
 
     def FindFirstGlobalVariable(self, name: "char const *") -> "lldb::SBValue":
         r"""
@@ -10765,8 +10966,9 @@ class SBTarget(object):
     def BreakpointCreateByName(self, *args) -> "lldb::SBBreakpoint":
         r"""
         BreakpointCreateByName(SBTarget self, char const * symbol_name, char const * module_name=None) -> SBBreakpoint
-        BreakpointCreateByName(SBTarget self, char const * symbol_name, uint32_t func_name_type, SBFileSpecList module_list, SBFileSpecList comp_unit_list) -> SBBreakpoint
-        BreakpointCreateByName(SBTarget self, char const * symbol_name, uint32_t func_name_type, lldb::LanguageType symbol_language, SBFileSpecList module_list, SBFileSpecList comp_unit_list) -> SBBreakpoint
+        BreakpointCreateByName(SBTarget self, char const * symbol_name, SBFileSpecList module_list, SBFileSpecList comp_unit_list) -> SBBreakpoint
+        BreakpointCreateByName(SBTarget self, char const * symbol_name, uint32_t name_type_mask, SBFileSpecList module_list, SBFileSpecList comp_unit_list) -> SBBreakpoint
+        BreakpointCreateByName(SBTarget self, char const * symbol_name, uint32_t name_type_mask, lldb::LanguageType symbol_language, SBFileSpecList module_list, SBFileSpecList comp_unit_list) -> SBBreakpoint
         """
         return _lldb.SBTarget_BreakpointCreateByName(self, *args)
 
@@ -10781,6 +10983,7 @@ class SBTarget(object):
     def BreakpointCreateByRegex(self, *args) -> "lldb::SBBreakpoint":
         r"""
         BreakpointCreateByRegex(SBTarget self, char const * symbol_name_regex, char const * module_name=None) -> SBBreakpoint
+        BreakpointCreateByRegex(SBTarget self, char const * symbol_name_regex, SBFileSpecList module_list, SBFileSpecList comp_unit_list) -> SBBreakpoint
         BreakpointCreateByRegex(SBTarget self, char const * symbol_name_regex, lldb::LanguageType symbol_language, SBFileSpecList module_list, SBFileSpecList comp_unit_list) -> SBBreakpoint
         """
         return _lldb.SBTarget_BreakpointCreateByRegex(self, *args)
@@ -10788,7 +10991,7 @@ class SBTarget(object):
     def BreakpointCreateBySourceRegex(self, *args) -> "lldb::SBBreakpoint":
         r"""
         BreakpointCreateBySourceRegex(SBTarget self, char const * source_regex, SBFileSpec source_file, char const * module_name=None) -> SBBreakpoint
-        BreakpointCreateBySourceRegex(SBTarget self, char const * source_regex, SBFileSpecList module_list, SBFileSpecList file_list) -> SBBreakpoint
+        BreakpointCreateBySourceRegex(SBTarget self, char const * source_regex, SBFileSpecList module_list, SBFileSpecList source_file) -> SBBreakpoint
         BreakpointCreateBySourceRegex(SBTarget self, char const * source_regex, SBFileSpecList module_list, SBFileSpecList source_file, SBStringList func_names) -> SBBreakpoint
         """
         return _lldb.SBTarget_BreakpointCreateBySourceRegex(self, *args)
@@ -10801,13 +11004,9 @@ class SBTarget(object):
         r"""BreakpointCreateByAddress(SBTarget self, lldb::addr_t address) -> SBBreakpoint"""
         return _lldb.SBTarget_BreakpointCreateByAddress(self, address)
 
-    def GetEnvironment(self) -> "lldb::SBEnvironment":
-        r"""GetEnvironment(SBTarget self) -> SBEnvironment"""
-        return _lldb.SBTarget_GetEnvironment(self)
-
-    def BreakpointCreateBySBAddress(self, sb_address: "SBAddress") -> "lldb::SBBreakpoint":
-        r"""BreakpointCreateBySBAddress(SBTarget self, SBAddress sb_address) -> SBBreakpoint"""
-        return _lldb.SBTarget_BreakpointCreateBySBAddress(self, sb_address)
+    def BreakpointCreateBySBAddress(self, address: "SBAddress") -> "lldb::SBBreakpoint":
+        r"""BreakpointCreateBySBAddress(SBTarget self, SBAddress address) -> SBBreakpoint"""
+        return _lldb.SBTarget_BreakpointCreateBySBAddress(self, address)
 
     def BreakpointCreateFromScript(self, class_name: "char const *", extra_args: "SBStructuredData", module_list: "SBFileSpecList", file_list: "SBFileSpecList", request_hardware: "bool"=False) -> "lldb::SBBreakpoint":
         r"""
@@ -10874,49 +11073,9 @@ class SBTarget(object):
         """
         return _lldb.SBTarget_BreakpointCreateFromScript(self, class_name, extra_args, module_list, file_list, request_hardware)
 
-    def GetNumBreakpoints(self) -> "uint32_t":
-        r"""GetNumBreakpoints(SBTarget self) -> uint32_t"""
-        return _lldb.SBTarget_GetNumBreakpoints(self)
-
-    def GetBreakpointAtIndex(self, idx: "uint32_t") -> "lldb::SBBreakpoint":
-        r"""GetBreakpointAtIndex(SBTarget self, uint32_t idx) -> SBBreakpoint"""
-        return _lldb.SBTarget_GetBreakpointAtIndex(self, idx)
-
-    def BreakpointDelete(self, break_id: "lldb::break_id_t") -> "bool":
-        r"""BreakpointDelete(SBTarget self, lldb::break_id_t break_id) -> bool"""
-        return _lldb.SBTarget_BreakpointDelete(self, break_id)
-
-    def FindBreakpointByID(self, break_id: "lldb::break_id_t") -> "lldb::SBBreakpoint":
-        r"""FindBreakpointByID(SBTarget self, lldb::break_id_t break_id) -> SBBreakpoint"""
-        return _lldb.SBTarget_FindBreakpointByID(self, break_id)
-
-    def FindBreakpointsByName(self, name: "char const *", bkpt_list: "SBBreakpointList") -> "bool":
-        r"""FindBreakpointsByName(SBTarget self, char const * name, SBBreakpointList bkpt_list) -> bool"""
-        return _lldb.SBTarget_FindBreakpointsByName(self, name, bkpt_list)
-
-    def DeleteBreakpointName(self, name: "char const *") -> "void":
-        r"""DeleteBreakpointName(SBTarget self, char const * name)"""
-        return _lldb.SBTarget_DeleteBreakpointName(self, name)
-
-    def GetBreakpointNames(self, names: "SBStringList") -> "void":
-        r"""GetBreakpointNames(SBTarget self, SBStringList names)"""
-        return _lldb.SBTarget_GetBreakpointNames(self, names)
-
-    def EnableAllBreakpoints(self) -> "bool":
-        r"""EnableAllBreakpoints(SBTarget self) -> bool"""
-        return _lldb.SBTarget_EnableAllBreakpoints(self)
-
-    def DisableAllBreakpoints(self) -> "bool":
-        r"""DisableAllBreakpoints(SBTarget self) -> bool"""
-        return _lldb.SBTarget_DisableAllBreakpoints(self)
-
-    def DeleteAllBreakpoints(self) -> "bool":
-        r"""DeleteAllBreakpoints(SBTarget self) -> bool"""
-        return _lldb.SBTarget_DeleteAllBreakpoints(self)
-
     def BreakpointsCreateFromFile(self, *args) -> "lldb::SBError":
         r"""
-        BreakpointsCreateFromFile(SBTarget self, SBFileSpec source_file, SBBreakpointList bkpt_list) -> SBError
+        BreakpointsCreateFromFile(SBTarget self, SBFileSpec source_file, SBBreakpointList new_bps) -> SBError
         BreakpointsCreateFromFile(SBTarget self, SBFileSpec source_file, SBStringList matching_names, SBBreakpointList new_bps) -> SBError
 
             Read breakpoints from source_file and return the newly created
@@ -10941,8 +11100,64 @@ class SBTarget(object):
         r"""
         BreakpointsWriteToFile(SBTarget self, SBFileSpec dest_file) -> SBError
         BreakpointsWriteToFile(SBTarget self, SBFileSpec dest_file, SBBreakpointList bkpt_list, bool append=False) -> SBError
+
+            Write breakpoints listed in bkpt_list to dest_file.
+
+            @param[in] dest_file
+               The file to which to write the breakpoints.
+
+            @param[in] bkpt_list
+               Only write breakpoints from this list.
+
+            @param[in] append
+               If true, append the breakpoints in bkpt_list to the others
+               serialized in dest_file.  If dest_file doesn't exist, then a new
+               file will be created and the breakpoints in bkpt_list written to it.
+
+            @return
+                An SBError detailing any errors in writing in the breakpoints.
         """
         return _lldb.SBTarget_BreakpointsWriteToFile(self, *args)
+
+    def GetNumBreakpoints(self) -> "uint32_t":
+        r"""GetNumBreakpoints(SBTarget self) -> uint32_t"""
+        return _lldb.SBTarget_GetNumBreakpoints(self)
+
+    def GetBreakpointAtIndex(self, idx: "uint32_t") -> "lldb::SBBreakpoint":
+        r"""GetBreakpointAtIndex(SBTarget self, uint32_t idx) -> SBBreakpoint"""
+        return _lldb.SBTarget_GetBreakpointAtIndex(self, idx)
+
+    def BreakpointDelete(self, break_id: "lldb::break_id_t") -> "bool":
+        r"""BreakpointDelete(SBTarget self, lldb::break_id_t break_id) -> bool"""
+        return _lldb.SBTarget_BreakpointDelete(self, break_id)
+
+    def FindBreakpointByID(self, break_id: "lldb::break_id_t") -> "lldb::SBBreakpoint":
+        r"""FindBreakpointByID(SBTarget self, lldb::break_id_t break_id) -> SBBreakpoint"""
+        return _lldb.SBTarget_FindBreakpointByID(self, break_id)
+
+    def FindBreakpointsByName(self, name: "char const *", bkpt_list: "SBBreakpointList") -> "bool":
+        r"""FindBreakpointsByName(SBTarget self, char const * name, SBBreakpointList bkpt_list) -> bool"""
+        return _lldb.SBTarget_FindBreakpointsByName(self, name, bkpt_list)
+
+    def GetBreakpointNames(self, names: "SBStringList") -> "void":
+        r"""GetBreakpointNames(SBTarget self, SBStringList names)"""
+        return _lldb.SBTarget_GetBreakpointNames(self, names)
+
+    def DeleteBreakpointName(self, name: "char const *") -> "void":
+        r"""DeleteBreakpointName(SBTarget self, char const * name)"""
+        return _lldb.SBTarget_DeleteBreakpointName(self, name)
+
+    def EnableAllBreakpoints(self) -> "bool":
+        r"""EnableAllBreakpoints(SBTarget self) -> bool"""
+        return _lldb.SBTarget_EnableAllBreakpoints(self)
+
+    def DisableAllBreakpoints(self) -> "bool":
+        r"""DisableAllBreakpoints(SBTarget self) -> bool"""
+        return _lldb.SBTarget_DisableAllBreakpoints(self)
+
+    def DeleteAllBreakpoints(self) -> "bool":
+        r"""DeleteAllBreakpoints(SBTarget self) -> bool"""
+        return _lldb.SBTarget_DeleteAllBreakpoints(self)
 
     def GetNumWatchpoints(self) -> "uint32_t":
         r"""GetNumWatchpoints(SBTarget self) -> uint32_t"""
@@ -10960,6 +11175,10 @@ class SBTarget(object):
         r"""FindWatchpointByID(SBTarget self, lldb::watch_id_t watch_id) -> SBWatchpoint"""
         return _lldb.SBTarget_FindWatchpointByID(self, watch_id)
 
+    def WatchAddress(self, addr: "lldb::addr_t", size: "size_t", read: "bool", write: "bool", error: "SBError") -> "lldb::SBWatchpoint":
+        r"""WatchAddress(SBTarget self, lldb::addr_t addr, size_t size, bool read, bool write, SBError error) -> SBWatchpoint"""
+        return _lldb.SBTarget_WatchAddress(self, addr, size, read, write, error)
+
     def EnableAllWatchpoints(self) -> "bool":
         r"""EnableAllWatchpoints(SBTarget self) -> bool"""
         return _lldb.SBTarget_EnableAllWatchpoints(self)
@@ -10972,13 +11191,21 @@ class SBTarget(object):
         r"""DeleteAllWatchpoints(SBTarget self) -> bool"""
         return _lldb.SBTarget_DeleteAllWatchpoints(self)
 
-    def WatchAddress(self, addr: "lldb::addr_t", size: "size_t", read: "bool", write: "bool", error: "SBError") -> "lldb::SBWatchpoint":
-        r"""WatchAddress(SBTarget self, lldb::addr_t addr, size_t size, bool read, bool write, SBError error) -> SBWatchpoint"""
-        return _lldb.SBTarget_WatchAddress(self, addr, size, read, write, error)
-
     def GetBroadcaster(self) -> "lldb::SBBroadcaster":
         r"""GetBroadcaster(SBTarget self) -> SBBroadcaster"""
         return _lldb.SBTarget_GetBroadcaster(self)
+
+    def FindFirstType(self, type: "char const *") -> "lldb::SBType":
+        r"""FindFirstType(SBTarget self, char const * type) -> SBType"""
+        return _lldb.SBTarget_FindFirstType(self, type)
+
+    def FindTypes(self, type: "char const *") -> "lldb::SBTypeList":
+        r"""FindTypes(SBTarget self, char const * type) -> SBTypeList"""
+        return _lldb.SBTarget_FindTypes(self, type)
+
+    def GetBasicType(self, type: "lldb::BasicType") -> "lldb::SBType":
+        r"""GetBasicType(SBTarget self, lldb::BasicType type) -> SBType"""
+        return _lldb.SBTarget_GetBasicType(self, type)
 
     def CreateValueFromAddress(self, name: "char const *", addr: "SBAddress", type: "SBType") -> "lldb::SBValue":
         r"""
@@ -11008,6 +11235,10 @@ class SBTarget(object):
     def CreateValueFromExpression(self, name: "char const *", expr: "char const *") -> "lldb::SBValue":
         r"""CreateValueFromExpression(SBTarget self, char const * name, char const * expr) -> SBValue"""
         return _lldb.SBTarget_CreateValueFromExpression(self, name, expr)
+
+    def GetSourceManager(self) -> "lldb::SBSourceManager":
+        r"""GetSourceManager(SBTarget self) -> SBSourceManager"""
+        return _lldb.SBTarget_GetSourceManager(self)
 
     def ReadInstructions(self, *args) -> "lldb::SBInstructionList":
         r"""
@@ -11057,9 +11288,24 @@ class SBTarget(object):
         r"""FindSymbols(SBTarget self, char const * name, lldb::SymbolType type=eSymbolTypeAny) -> SBSymbolContextList"""
         return _lldb.SBTarget_FindSymbols(self, *args)
 
+    def __eq__(self, rhs: "SBTarget") -> "bool":
+        r"""__eq__(SBTarget self, SBTarget rhs) -> bool"""
+        return _lldb.SBTarget___eq__(self, rhs)
+
+    def __ne__(self, rhs: "SBTarget") -> "bool":
+        r"""__ne__(SBTarget self, SBTarget rhs) -> bool"""
+        return _lldb.SBTarget___ne__(self, rhs)
+
     def GetDescription(self, description: "SBStream", description_level: "lldb::DescriptionLevel") -> "bool":
         r"""GetDescription(SBTarget self, SBStream description, lldb::DescriptionLevel description_level) -> bool"""
         return _lldb.SBTarget_GetDescription(self, description, description_level)
+
+    def EvaluateExpression(self, *args) -> "lldb::SBValue":
+        r"""
+        EvaluateExpression(SBTarget self, char const * expr) -> SBValue
+        EvaluateExpression(SBTarget self, char const * expr, SBExpressionOptions options) -> SBValue
+        """
+        return _lldb.SBTarget_EvaluateExpression(self, *args)
 
     def GetStackRedZoneSize(self) -> "lldb::addr_t":
         r"""GetStackRedZoneSize(SBTarget self) -> lldb::addr_t"""
@@ -11086,37 +11332,6 @@ class SBTarget(object):
         r"""SetLaunchInfo(SBTarget self, SBLaunchInfo launch_info)"""
         return _lldb.SBTarget_SetLaunchInfo(self, launch_info)
 
-    def SetCollectingStats(self, v: "bool") -> "void":
-        r"""SetCollectingStats(SBTarget self, bool v)"""
-        return _lldb.SBTarget_SetCollectingStats(self, v)
-
-    def GetCollectingStats(self) -> "bool":
-        r"""GetCollectingStats(SBTarget self) -> bool"""
-        return _lldb.SBTarget_GetCollectingStats(self)
-
-    def GetStatistics(self) -> "lldb::SBStructuredData":
-        r"""GetStatistics(SBTarget self) -> SBStructuredData"""
-        return _lldb.SBTarget_GetStatistics(self)
-
-    def __eq__(self, rhs: "SBTarget") -> "bool":
-        r"""__eq__(SBTarget self, SBTarget rhs) -> bool"""
-        return _lldb.SBTarget___eq__(self, rhs)
-
-    def __ne__(self, rhs: "SBTarget") -> "bool":
-        r"""__ne__(SBTarget self, SBTarget rhs) -> bool"""
-        return _lldb.SBTarget___ne__(self, rhs)
-
-    def EvaluateExpression(self, *args) -> "lldb::SBValue":
-        r"""
-        EvaluateExpression(SBTarget self, char const * expr) -> SBValue
-        EvaluateExpression(SBTarget self, char const * expr, SBExpressionOptions options) -> SBValue
-        """
-        return _lldb.SBTarget_EvaluateExpression(self, *args)
-
-    def __repr__(self) -> "std::string":
-        r"""__repr__(SBTarget self) -> std::string"""
-        return _lldb.SBTarget___repr__(self)
-
     def GetTrace(self) -> "lldb::SBTrace":
         r"""GetTrace(SBTarget self) -> SBTrace"""
         return _lldb.SBTarget_GetTrace(self)
@@ -11124,6 +11339,10 @@ class SBTarget(object):
     def CreateTrace(self, error: "SBError") -> "lldb::SBTrace":
         r"""CreateTrace(SBTarget self, SBError error) -> SBTrace"""
         return _lldb.SBTarget_CreateTrace(self, error)
+
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBTarget self) -> std::string"""
+        return _lldb.SBTarget___repr__(self)
 
     class modules_access(object):
         '''A helper object that will lazily hand out lldb.SBModule objects for a target when supplied an index, or by full or partial path.'''
@@ -11138,7 +11357,8 @@ class SBTarget(object):
         def __getitem__(self, key):
             num_modules = self.sbtarget.GetNumModules()
             if type(key) is int:
-                if key < num_modules:
+                if -num_modules <= key < num_modules:
+                    key %= num_modules
                     return self.sbtarget.GetModuleAtIndex(key)
             elif type(key) is str:
                 if key.find('/') == -1:
@@ -11180,7 +11400,7 @@ class SBTarget(object):
 
     def get_modules_access_object(self):
         '''An accessor function that returns a modules_access() object which allows lazy module access from a lldb.SBTarget object.'''
-        return self.modules_access (self)
+        return self.modules_access(self)
 
     def get_modules_array(self):
         '''An accessor function that returns a list() that contains all modules in a lldb.SBTarget object.'''
@@ -11199,10 +11419,68 @@ class SBTarget(object):
         object.'''
         return lldb_iter(self, 'GetNumBreakpoints', 'GetBreakpointAtIndex')
 
+    class bkpts_access(object):
+        '''A helper object that will lazily hand out bkpts for a target when supplied an index.'''
+        def __init__(self, sbtarget):
+            self.sbtarget = sbtarget
+
+        def __len__(self):
+            if self.sbtarget:
+                return int(self.sbtarget.GetNumBreakpoints())
+            return 0
+
+        def __getitem__(self, key):
+            if isinstance(key, int):
+                count = len(self)
+                if -count <= key < count:
+                    key %= count
+                    return self.sbtarget.GetBreakpointAtIndex(key)
+            return None
+
+    def get_bkpts_access_object(self):
+        '''An accessor function that returns a bkpts_access() object which allows lazy bkpt access from a lldb.SBtarget object.'''
+        return self.bkpts_access(self)
+
+    def get_target_bkpts(self):
+        '''An accessor function that returns a list() that contains all bkpts in a lldb.SBtarget object.'''
+        bkpts = []
+        for idx in range(self.GetNumBreakpoints()):
+            bkpts.append(self.GetBreakpointAtIndex(idx))
+        return bkpts
+
     def watchpoint_iter(self):
         '''Returns an iterator over all watchpoints in a lldb.SBTarget
         object.'''
         return lldb_iter(self, 'GetNumWatchpoints', 'GetWatchpointAtIndex')
+
+    class watchpoints_access(object):
+        '''A helper object that will lazily hand out watchpoints for a target when supplied an index.'''
+        def __init__(self, sbtarget):
+            self.sbtarget = sbtarget
+
+        def __len__(self):
+            if self.sbtarget:
+                return int(self.sbtarget.GetNumWatchpoints())
+            return 0
+
+        def __getitem__(self, key):
+            if isinstance(key, int):
+                count = len(self)
+                if -count <= key < count:
+                    key %= count
+                    return self.sbtarget.GetWatchpointAtIndex(key)
+            return None
+
+    def get_watchpoints_access_object(self):
+        '''An accessor function that returns a watchpoints_access() object which allows lazy watchpoint access from a lldb.SBtarget object.'''
+        return self.watchpoints_access(self)
+
+    def get_target_watchpoints(self):
+        '''An accessor function that returns a list() that contains all watchpoints in a lldb.SBtarget object.'''
+        watchpoints = []
+        for idx in range(self.GetNumWatchpoints()):
+            bkpts.append(self.GetWatchpointAtIndex(idx))
+        return watchpoints
 
     modules = property(get_modules_array, None, doc='''A read only property that returns a list() of lldb.SBModule objects contained in this target. This list is a list all modules that the target currently is tracking (the main executable and all dependent shared libraries).''')
     module = property(get_modules_access_object, None, doc=r'''A read only property that returns an object that implements python operator overloading with the square brackets().\n    target.module[<int>] allows array access to any modules.\n    target.module[<str>] allows access to modules by basename, full path, or uuid string value.\n    target.module[uuid.UUID()] allows module access by UUID.\n    target.module[re] allows module access using a regular expression that matches the module full path.''')
@@ -11210,7 +11488,11 @@ class SBTarget(object):
     executable = property(GetExecutable, None, doc='''A read only property that returns an lldb object that represents the main executable module (lldb.SBModule) for this target.''')
     debugger = property(GetDebugger, None, doc='''A read only property that returns an lldb object that represents the debugger (lldb.SBDebugger) that owns this target.''')
     num_breakpoints = property(GetNumBreakpoints, None, doc='''A read only property that returns the number of breakpoints that this target has as an integer.''')
+    breakpoints = property(get_target_bkpts, None, doc='''A read only property that returns a list() of lldb.SBBreakpoint objects for all breakpoints in this target.''')
+    breakpoint = property(get_bkpts_access_object, None, doc='''A read only property that returns an object that can be used to access breakpoints as an array ("bkpt_12 = lldb.target.bkpt[12]").''')
     num_watchpoints = property(GetNumWatchpoints, None, doc='''A read only property that returns the number of watchpoints that this target has as an integer.''')
+    watchpoints = property(get_target_watchpoints, None, doc='''A read only property that returns a list() of lldb.SBwatchpoint objects for all watchpoints in this target.''')
+    watchpoint = property(get_watchpoints_access_object, None, doc='''A read only property that returns an object that can be used to access watchpoints as an array ("watchpoint_12 = lldb.target.watchpoint[12]").''')
     broadcaster = property(GetBroadcaster, None, doc='''A read only property that an lldb object that represents the broadcaster (lldb.SBBroadcaster) for this target.''')
     byte_order = property(GetByteOrder, None, doc='''A read only property that returns an lldb enumeration value (lldb.eByteOrderLittle, lldb.eByteOrderBig, lldb.eByteOrderInvalid) that represents the byte order for this target.''')
     addr_size = property(GetAddressByteSize, None, doc='''A read only property that returns the size in bytes of an address for this target.''')
@@ -11236,10 +11518,6 @@ class SBTarget(object):
 # Register SBTarget in _lldb:
 _lldb.SBTarget_swigregister(SBTarget)
 
-def SBTarget_GetBroadcasterClassName() -> "char const *":
-    r"""SBTarget_GetBroadcasterClassName() -> char const *"""
-    return _lldb.SBTarget_GetBroadcasterClassName()
-
 def SBTarget_EventIsTargetEvent(event: "SBEvent") -> "bool":
     r"""SBTarget_EventIsTargetEvent(SBEvent event) -> bool"""
     return _lldb.SBTarget_EventIsTargetEvent(event)
@@ -11255,6 +11533,10 @@ def SBTarget_GetNumModulesFromEvent(event: "SBEvent") -> "uint32_t":
 def SBTarget_GetModuleAtIndexFromEvent(idx: "uint32_t const", event: "SBEvent") -> "lldb::SBModule":
     r"""SBTarget_GetModuleAtIndexFromEvent(uint32_t const idx, SBEvent event) -> SBModule"""
     return _lldb.SBTarget_GetModuleAtIndexFromEvent(idx, event)
+
+def SBTarget_GetBroadcasterClassName() -> "char const *":
+    r"""SBTarget_GetBroadcasterClassName() -> char const *"""
+    return _lldb.SBTarget_GetBroadcasterClassName()
 
 class SBThread(object):
     r"""
@@ -11299,6 +11581,11 @@ class SBThread(object):
     eBroadcastBitThreadSelected = _lldb.SBThread_eBroadcastBitThreadSelected
     
 
+    @staticmethod
+    def GetBroadcasterClassName() -> "char const *":
+        r"""GetBroadcasterClassName() -> char const *"""
+        return _lldb.SBThread_GetBroadcasterClassName()
+
     def __init__(self, *args):
         r"""
         __init__(SBThread self) -> SBThread
@@ -11307,35 +11594,28 @@ class SBThread(object):
         _lldb.SBThread_swiginit(self, _lldb.new_SBThread(*args))
     __swig_destroy__ = _lldb.delete_SBThread
 
-    @staticmethod
-    def GetBroadcasterClassName() -> "char const *":
-        r"""GetBroadcasterClassName() -> char const *"""
-        return _lldb.SBThread_GetBroadcasterClassName()
+    def GetQueue(self) -> "lldb::SBQueue":
+        r"""
 
-    @staticmethod
-    def EventIsThreadEvent(event: "SBEvent") -> "bool":
-        r"""EventIsThreadEvent(SBEvent event) -> bool"""
-        return _lldb.SBThread_EventIsThreadEvent(event)
-
-    @staticmethod
-    def GetStackFrameFromEvent(event: "SBEvent") -> "lldb::SBFrame":
-        r"""GetStackFrameFromEvent(SBEvent event) -> SBFrame"""
-        return _lldb.SBThread_GetStackFrameFromEvent(event)
-
-    @staticmethod
-    def GetThreadFromEvent(event: "SBEvent") -> "lldb::SBThread":
-        r"""GetThreadFromEvent(SBEvent event) -> SBThread"""
-        return _lldb.SBThread_GetThreadFromEvent(event)
-
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBThread self) -> bool"""
-        return _lldb.SBThread_IsValid(self)
+        Return the SBQueue for this thread.  If this thread is not currently associated
+        with a libdispatch queue, the SBQueue object's IsValid() method will return false.
+        If this SBThread is actually a HistoryThread, we may be able to provide QueueID
+        and QueueName, but not provide an SBQueue.  Those individual attributes may have
+        been saved for the HistoryThread without enough information to reconstitute the
+        entire SBQueue at that time.
+        This method takes no arguments, returns an SBQueue.
+        """
+        return _lldb.SBThread_GetQueue(self)
 
     def __nonzero__(self):
         return _lldb.SBThread___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBThread self) -> bool"""
+        return _lldb.SBThread_IsValid(self)
 
     def Clear(self) -> "void":
         r"""Clear(SBThread self)"""
@@ -11467,30 +11747,20 @@ class SBThread(object):
         """
         return _lldb.SBThread_GetInfoItemByPathAsString(self, path, strm)
 
-    def GetQueue(self) -> "lldb::SBQueue":
-        r"""
-
-        Return the SBQueue for this thread.  If this thread is not currently associated
-        with a libdispatch queue, the SBQueue object's IsValid() method will return false.
-        If this SBThread is actually a HistoryThread, we may be able to provide QueueID
-        and QueueName, but not provide an SBQueue.  Those individual attributes may have
-        been saved for the HistoryThread without enough information to reconstitute the
-        entire SBQueue at that time.
-        This method takes no arguments, returns an SBQueue.
-        """
-        return _lldb.SBThread_GetQueue(self)
-
     def StepOver(self, *args) -> "void":
-        r"""StepOver(SBThread self, lldb::RunMode stop_other_threads=eOnlyDuringStepping)Do a source level single step over in the currently selected thread."""
+        r"""
+        StepOver(SBThread self, lldb::RunMode stop_other_threads=eOnlyDuringStepping)
+        StepOver(SBThread self, lldb::RunMode stop_other_threads, SBError error)
+        Do a source level single step over in the currently selected thread.
+        """
         return _lldb.SBThread_StepOver(self, *args)
 
     def StepInto(self, *args) -> "void":
         r"""
         StepInto(SBThread self, lldb::RunMode stop_other_threads=eOnlyDuringStepping)
         StepInto(SBThread self, char const * target_name, lldb::RunMode stop_other_threads=eOnlyDuringStepping)
-            Step the current thread from the current source line to the line given by end_line, stopping if
-            the thread steps into the function given by target_name.  If target_name is None, then stepping will stop
-            in any of the places we would normally stop.
+        StepInto(SBThread self, char const * target_name, uint32_t end_line, SBError error, lldb::RunMode stop_other_threads=eOnlyDuringStepping)
+
             Step the current thread from the current source line to the line given by end_line, stopping if
             the thread steps into the function given by target_name.  If target_name is None, then stepping will stop
             in any of the places we would normally stop.
@@ -11498,15 +11768,27 @@ class SBThread(object):
         return _lldb.SBThread_StepInto(self, *args)
 
     def StepOut(self, *args) -> "void":
-        r"""StepOut(SBThread self)Step out of the currently selected thread."""
+        r"""
+        StepOut(SBThread self)
+        StepOut(SBThread self, SBError error)
+        Step out of the currently selected thread.
+        """
         return _lldb.SBThread_StepOut(self, *args)
 
     def StepOutOfFrame(self, *args) -> "void":
-        r"""StepOutOfFrame(SBThread self, SBFrame frame)Step out of the specified frame."""
+        r"""
+        StepOutOfFrame(SBThread self, SBFrame frame)
+        StepOutOfFrame(SBThread self, SBFrame frame, SBError error)
+        Step out of the specified frame.
+        """
         return _lldb.SBThread_StepOutOfFrame(self, *args)
 
     def StepInstruction(self, *args) -> "void":
-        r"""StepInstruction(SBThread self, bool step_over)Do an instruction level single step in the currently selected thread."""
+        r"""
+        StepInstruction(SBThread self, bool step_over)
+        StepInstruction(SBThread self, bool step_over, SBError error)
+        Do an instruction level single step in the currently selected thread.
+        """
         return _lldb.SBThread_StepInstruction(self, *args)
 
     def StepOverUntil(self, frame: "SBFrame", file_spec: "SBFileSpec", line: "uint32_t") -> "lldb::SBError":
@@ -11608,9 +11890,32 @@ class SBThread(object):
         r"""SetSelectedFrame(SBThread self, uint32_t frame_idx) -> SBFrame"""
         return _lldb.SBThread_SetSelectedFrame(self, frame_idx)
 
+    @staticmethod
+    def EventIsThreadEvent(event: "SBEvent") -> "bool":
+        r"""EventIsThreadEvent(SBEvent event) -> bool"""
+        return _lldb.SBThread_EventIsThreadEvent(event)
+
+    @staticmethod
+    def GetStackFrameFromEvent(event: "SBEvent") -> "lldb::SBFrame":
+        r"""GetStackFrameFromEvent(SBEvent event) -> SBFrame"""
+        return _lldb.SBThread_GetStackFrameFromEvent(event)
+
+    @staticmethod
+    def GetThreadFromEvent(event: "SBEvent") -> "lldb::SBThread":
+        r"""GetThreadFromEvent(SBEvent event) -> SBThread"""
+        return _lldb.SBThread_GetThreadFromEvent(event)
+
     def GetProcess(self) -> "lldb::SBProcess":
         r"""GetProcess(SBThread self) -> SBProcess"""
         return _lldb.SBThread_GetProcess(self)
+
+    def __eq__(self, rhs: "SBThread") -> "bool":
+        r"""__eq__(SBThread self, SBThread rhs) -> bool"""
+        return _lldb.SBThread___eq__(self, rhs)
+
+    def __ne__(self, rhs: "SBThread") -> "bool":
+        r"""__ne__(SBThread self, SBThread rhs) -> bool"""
+        return _lldb.SBThread___ne__(self, rhs)
 
     def GetDescription(self, *args) -> "bool":
         r"""
@@ -11626,14 +11931,6 @@ class SBThread(object):
     def GetStatus(self, status: "SBStream") -> "bool":
         r"""GetStatus(SBThread self, SBStream status) -> bool"""
         return _lldb.SBThread_GetStatus(self, status)
-
-    def __eq__(self, rhs: "SBThread") -> "bool":
-        r"""__eq__(SBThread self, SBThread rhs) -> bool"""
-        return _lldb.SBThread___eq__(self, rhs)
-
-    def __ne__(self, rhs: "SBThread") -> "bool":
-        r"""__ne__(SBThread self, SBThread rhs) -> bool"""
-        return _lldb.SBThread___ne__(self, rhs)
 
     def GetExtendedBacktraceThread(self, type: "char const *") -> "lldb::SBThread":
         r"""
@@ -11724,8 +12021,11 @@ class SBThread(object):
             return 0
 
         def __getitem__(self, key):
-            if type(key) is int and key < self.sbthread.GetNumFrames():
-                return self.sbthread.GetFrameAtIndex(key)
+            if isinstance(key, int):
+                count = len(self)
+                if -count <= key < count:
+                    key %= count
+                    return self.sbthread.GetFrameAtIndex(key)
             return None
 
     def get_frames_access_object(self):
@@ -11800,15 +12100,15 @@ class SBThreadCollection(object):
         _lldb.SBThreadCollection_swiginit(self, _lldb.new_SBThreadCollection(*args))
     __swig_destroy__ = _lldb.delete_SBThreadCollection
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBThreadCollection self) -> bool"""
-        return _lldb.SBThreadCollection_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBThreadCollection___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBThreadCollection self) -> bool"""
+        return _lldb.SBThreadCollection_IsValid(self)
 
     def GetSize(self) -> "size_t":
         r"""GetSize(SBThreadCollection self) -> size_t"""
@@ -11837,16 +12137,10 @@ class SBThreadPlan(object):
         __init__(SBThreadPlan self, SBThreadPlan threadPlan) -> SBThreadPlan
         __init__(SBThreadPlan self, lldb::ThreadPlanSP const & lldb_object_sp) -> SBThreadPlan
         __init__(SBThreadPlan self, SBThread thread, char const * class_name) -> SBThreadPlan
+        __init__(SBThreadPlan self, SBThread thread, char const * class_name, SBStructuredData args_data) -> SBThreadPlan
         """
         _lldb.SBThreadPlan_swiginit(self, _lldb.new_SBThreadPlan(*args))
     __swig_destroy__ = _lldb.delete_SBThreadPlan
-
-    def IsValid(self, *args) -> "bool":
-        r"""
-        IsValid(SBThreadPlan self) -> bool
-        IsValid(SBThreadPlan self) -> bool
-        """
-        return _lldb.SBThreadPlan_IsValid(self, *args)
 
     def __nonzero__(self):
         return _lldb.SBThreadPlan___nonzero__(self)
@@ -11917,6 +12211,13 @@ class SBThreadPlan(object):
         r"""IsPlanStale(SBThreadPlan self) -> bool"""
         return _lldb.SBThreadPlan_IsPlanStale(self)
 
+    def IsValid(self, *args) -> "bool":
+        r"""
+        IsValid(SBThreadPlan self) -> bool
+        IsValid(SBThreadPlan self) -> bool
+        """
+        return _lldb.SBThreadPlan_IsValid(self, *args)
+
     def GetStopOthers(self) -> "bool":
         r"""
         GetStopOthers(SBThreadPlan self) -> bool
@@ -11925,24 +12226,39 @@ class SBThreadPlan(object):
         return _lldb.SBThreadPlan_GetStopOthers(self)
 
     def SetStopOthers(self, stop_others: "bool") -> "void":
-        r"""SetStopOthers(SBThreadPlan self, bool stop_others)"""
+        r"""
+        SetStopOthers(SBThreadPlan self, bool stop_others)
+        Set whether this plan will ask to stop other threads when it runs.
+        """
         return _lldb.SBThreadPlan_SetStopOthers(self, stop_others)
 
-    def QueueThreadPlanForStepOverRange(self, start_address: "SBAddress", range_size: "lldb::addr_t") -> "lldb::SBThreadPlan":
-        r"""QueueThreadPlanForStepOverRange(SBThreadPlan self, SBAddress start_address, lldb::addr_t range_size) -> SBThreadPlan"""
-        return _lldb.SBThreadPlan_QueueThreadPlanForStepOverRange(self, start_address, range_size)
+    def QueueThreadPlanForStepOverRange(self, *args) -> "lldb::SBThreadPlan":
+        r"""
+        QueueThreadPlanForStepOverRange(SBThreadPlan self, SBAddress start_address, lldb::addr_t range_size) -> SBThreadPlan
+        QueueThreadPlanForStepOverRange(SBThreadPlan self, SBAddress start_address, lldb::addr_t range_size, SBError error) -> SBThreadPlan
+        """
+        return _lldb.SBThreadPlan_QueueThreadPlanForStepOverRange(self, *args)
 
-    def QueueThreadPlanForStepInRange(self, start_address: "SBAddress", range_size: "lldb::addr_t") -> "lldb::SBThreadPlan":
-        r"""QueueThreadPlanForStepInRange(SBThreadPlan self, SBAddress start_address, lldb::addr_t range_size) -> SBThreadPlan"""
-        return _lldb.SBThreadPlan_QueueThreadPlanForStepInRange(self, start_address, range_size)
+    def QueueThreadPlanForStepInRange(self, *args) -> "lldb::SBThreadPlan":
+        r"""
+        QueueThreadPlanForStepInRange(SBThreadPlan self, SBAddress start_address, lldb::addr_t range_size) -> SBThreadPlan
+        QueueThreadPlanForStepInRange(SBThreadPlan self, SBAddress start_address, lldb::addr_t range_size, SBError error) -> SBThreadPlan
+        """
+        return _lldb.SBThreadPlan_QueueThreadPlanForStepInRange(self, *args)
 
-    def QueueThreadPlanForStepOut(self, frame_idx_to_step_to: "uint32_t", first_insn: "bool"=False) -> "lldb::SBThreadPlan":
-        r"""QueueThreadPlanForStepOut(SBThreadPlan self, uint32_t frame_idx_to_step_to, bool first_insn=False) -> SBThreadPlan"""
-        return _lldb.SBThreadPlan_QueueThreadPlanForStepOut(self, frame_idx_to_step_to, first_insn)
+    def QueueThreadPlanForStepOut(self, *args) -> "lldb::SBThreadPlan":
+        r"""
+        QueueThreadPlanForStepOut(SBThreadPlan self, uint32_t frame_idx_to_step_to, bool first_insn=False) -> SBThreadPlan
+        QueueThreadPlanForStepOut(SBThreadPlan self, uint32_t frame_idx_to_step_to, bool first_insn, SBError error) -> SBThreadPlan
+        """
+        return _lldb.SBThreadPlan_QueueThreadPlanForStepOut(self, *args)
 
-    def QueueThreadPlanForRunToAddress(self, address: "SBAddress") -> "lldb::SBThreadPlan":
-        r"""QueueThreadPlanForRunToAddress(SBThreadPlan self, SBAddress address) -> SBThreadPlan"""
-        return _lldb.SBThreadPlan_QueueThreadPlanForRunToAddress(self, address)
+    def QueueThreadPlanForRunToAddress(self, *args) -> "lldb::SBThreadPlan":
+        r"""
+        QueueThreadPlanForRunToAddress(SBThreadPlan self, SBAddress address) -> SBThreadPlan
+        QueueThreadPlanForRunToAddress(SBThreadPlan self, SBAddress address, SBError error) -> SBThreadPlan
+        """
+        return _lldb.SBThreadPlan_QueueThreadPlanForRunToAddress(self, *args)
 
     def QueueThreadPlanForStepScripted(self, *args) -> "lldb::SBThreadPlan":
         r"""
@@ -11965,17 +12281,22 @@ class SBTrace(object):
         r"""__init__(SBTrace self) -> SBTrace"""
         _lldb.SBTrace_swiginit(self, _lldb.new_SBTrace())
 
+    @staticmethod
+    def LoadTraceFromFile(error: "SBError", debugger: "SBDebugger", trace_description_file: "SBFileSpec") -> "lldb::SBTrace":
+        r"""LoadTraceFromFile(SBError error, SBDebugger debugger, SBFileSpec trace_description_file) -> SBTrace"""
+        return _lldb.SBTrace_LoadTraceFromFile(error, debugger, trace_description_file)
+
     def CreateNewCursor(self, error: "SBError", thread: "SBThread") -> "lldb::SBTraceCursor":
         r"""CreateNewCursor(SBTrace self, SBError error, SBThread thread) -> SBTraceCursor"""
         return _lldb.SBTrace_CreateNewCursor(self, error, thread)
 
-    def GetStartConfigurationHelp(self) -> "char const *":
-        r"""GetStartConfigurationHelp(SBTrace self) -> char const *"""
-        return _lldb.SBTrace_GetStartConfigurationHelp(self)
-
     def SaveToDisk(self, error: "SBError", bundle_dir: "SBFileSpec", compact: "bool"=False) -> "lldb::SBFileSpec":
         r"""SaveToDisk(SBTrace self, SBError error, SBFileSpec bundle_dir, bool compact=False) -> SBFileSpec"""
         return _lldb.SBTrace_SaveToDisk(self, error, bundle_dir, compact)
+
+    def GetStartConfigurationHelp(self) -> "char const *":
+        r"""GetStartConfigurationHelp(SBTrace self) -> char const *"""
+        return _lldb.SBTrace_GetStartConfigurationHelp(self)
 
     def Start(self, *args) -> "lldb::SBError":
         r"""
@@ -12005,8 +12326,12 @@ class SBTrace(object):
 # Register SBTrace in _lldb:
 _lldb.SBTrace_swigregister(SBTrace)
 
+def SBTrace_LoadTraceFromFile(error: "SBError", debugger: "SBDebugger", trace_description_file: "SBFileSpec") -> "lldb::SBTrace":
+    r"""SBTrace_LoadTraceFromFile(SBError error, SBDebugger debugger, SBFileSpec trace_description_file) -> SBTrace"""
+    return _lldb.SBTrace_LoadTraceFromFile(error, debugger, trace_description_file)
+
 class SBTraceCursor(object):
-    r"""Proxy of C++ lldb::SBTraceCursor class."""
+    r"""Represents a trace cursor."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
@@ -12113,15 +12438,15 @@ class SBTypeMember(object):
         _lldb.SBTypeMember_swiginit(self, _lldb.new_SBTypeMember(*args))
     __swig_destroy__ = _lldb.delete_SBTypeMember
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBTypeMember self) -> bool"""
-        return _lldb.SBTypeMember_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBTypeMember___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBTypeMember self) -> bool"""
+        return _lldb.SBTypeMember_IsValid(self)
 
     def GetName(self) -> "char const *":
         r"""GetName(SBTypeMember self) -> char const *"""
@@ -12146,6 +12471,10 @@ class SBTypeMember(object):
     def GetBitfieldSizeInBits(self) -> "uint32_t":
         r"""GetBitfieldSizeInBits(SBTypeMember self) -> uint32_t"""
         return _lldb.SBTypeMember_GetBitfieldSizeInBits(self)
+
+    def GetDescription(self, description: "SBStream", description_level: "lldb::DescriptionLevel") -> "bool":
+        r"""GetDescription(SBTypeMember self, SBStream description, lldb::DescriptionLevel description_level) -> bool"""
+        return _lldb.SBTypeMember_GetDescription(self, description, description_level)
 
     def __repr__(self) -> "std::string":
         r"""__repr__(SBTypeMember self) -> std::string"""
@@ -12175,15 +12504,15 @@ class SBTypeMemberFunction(object):
         _lldb.SBTypeMemberFunction_swiginit(self, _lldb.new_SBTypeMemberFunction(*args))
     __swig_destroy__ = _lldb.delete_SBTypeMemberFunction
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBTypeMemberFunction self) -> bool"""
-        return _lldb.SBTypeMemberFunction_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBTypeMemberFunction___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBTypeMemberFunction self) -> bool"""
+        return _lldb.SBTypeMemberFunction_IsValid(self)
 
     def GetName(self) -> "char const *":
         r"""GetName(SBTypeMemberFunction self) -> char const *"""
@@ -12329,15 +12658,15 @@ class SBType(object):
         _lldb.SBType_swiginit(self, _lldb.new_SBType(*args))
     __swig_destroy__ = _lldb.delete_SBType
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBType self) -> bool"""
-        return _lldb.SBType_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBType___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBType self) -> bool"""
+        return _lldb.SBType_IsValid(self)
 
     def GetByteSize(self) -> "uint64_t":
         r"""
@@ -12612,27 +12941,6 @@ class SBType(object):
         """
         return _lldb.SBType_GetUnqualifiedType(self)
 
-    def GetCanonicalType(self) -> "lldb::SBType":
-        r"""GetCanonicalType(SBType self) -> SBType"""
-        return _lldb.SBType_GetCanonicalType(self)
-
-    def GetEnumerationIntegerType(self) -> "lldb::SBType":
-        r"""
-        GetEnumerationIntegerType(SBType self) -> SBType
-        Returns the underlying integer type if this is an enumeration type.
-
-            If this type is an invalid `SBType` or not an enumeration type an invalid
-            `SBType` is returned.
-
-            Language-specific behaviour:
-
-            * C: Returns the underlying type for enums.
-            * C++: Same as in C but also returns the underlying type for scoped enums.
-            * Objective-C: Same as in C.
-
-        """
-        return _lldb.SBType_GetEnumerationIntegerType(self)
-
     def GetArrayElementType(self) -> "lldb::SBType":
         r"""
         GetArrayElementType(SBType self) -> SBType
@@ -12688,6 +12996,27 @@ class SBType(object):
 
         """
         return _lldb.SBType_GetVectorElementType(self)
+
+    def GetCanonicalType(self) -> "lldb::SBType":
+        r"""GetCanonicalType(SBType self) -> SBType"""
+        return _lldb.SBType_GetCanonicalType(self)
+
+    def GetEnumerationIntegerType(self) -> "lldb::SBType":
+        r"""
+        GetEnumerationIntegerType(SBType self) -> SBType
+        Returns the underlying integer type if this is an enumeration type.
+
+            If this type is an invalid `SBType` or not an enumeration type an invalid
+            `SBType` is returned.
+
+            Language-specific behaviour:
+
+            * C: Returns the underlying type for enums.
+            * C++: Same as in C but also returns the underlying type for scoped enums.
+            * Objective-C: Same as in C.
+
+        """
+        return _lldb.SBType_GetEnumerationIntegerType(self)
 
     def GetBasicType(self, *args) -> "lldb::SBType":
         r"""
@@ -12824,102 +13153,8 @@ class SBType(object):
         return _lldb.SBType_GetVirtualBaseClassAtIndex(self, idx)
 
     def GetEnumMembers(self) -> "lldb::SBTypeEnumMemberList":
-        r"""
-        GetEnumMembers(SBType self) -> SBTypeEnumMemberList
-        Returns the `BasicType` value that is most appropriate to this type.
-
-            Returns `eBasicTypeInvalid` if no appropriate `BasicType` was found or this
-            type is invalid. See the `BasicType` documentation for the language-specific
-            meaning of each `BasicType` value.
-
-            **Overload behaviour:** When called with a `BasicType` parameter, the
-            following behaviour applies:
-
-            Returns the `SBType` that represents the passed `BasicType` value. Returns
-            an invalid `SBType` if no fitting `SBType` could be created.
-
-            Language-specific behaviour:
-
-            * C: Returns the respective builtin type. Note that some types
-              (e.g. ``__uint128_t``) might even be successfully created even if they are
-              not available on the target platform. C++ and Objective-C specific types
-              might also be created even if the target program is not written in C++ or
-              Objective-C.
-            * C++: Same as in C.
-            * Objective-C: Same as in C.
-
-        """
+        r"""GetEnumMembers(SBType self) -> SBTypeEnumMemberList"""
         return _lldb.SBType_GetEnumMembers(self)
-
-    def GetModule(self) -> "lldb::SBModule":
-        r"""
-        GetModule(SBType self) -> SBModule
-        Returns the `SBModule` this `SBType` belongs to.
-
-            Returns no `SBModule` if this type does not belong to any specific
-            `SBModule` or this `SBType` is invalid. An invalid `SBModule` might also
-            indicate that once came from an `SBModule` but LLDB could no longer
-            determine the original module.
-
-        """
-        return _lldb.SBType_GetModule(self)
-
-    def GetName(self) -> "char const *":
-        r"""
-        GetName() -> string
-        Returns the name of this type.
-
-            Returns an empty string if an error occurred or this type is invalid.
-
-            Use this function when trying to match a specific type by name in a script.
-            The names returned by this function try to uniquely identify a name but
-            conflicts can occur (for example, if a C++ program contains two different
-            classes with the same name in different translation units. `GetName` can
-            return the same name for both class types.)
-
-
-            Language-specific behaviour:
-
-            * C: The name of the type. For structs the ``struct`` prefix is omitted.
-            * C++: Returns the qualified name of the type (including anonymous/inline
-              namespaces and all template arguments).
-            * Objective-C: Same as in C.
-
-        """
-        return _lldb.SBType_GetName(self)
-
-    def GetDisplayTypeName(self) -> "char const *":
-        r"""
-        GetDisplayTypeName() -> string
-        Returns the name of this type in a user-friendly format.
-
-            Returns an empty string if an error occurred or this type is invalid.
-
-            Use this function when displaying a type name to the user.
-
-            Language-specific behaviour:
-
-            * C: Returns the type name. For structs the ``struct`` prefix is omitted.
-            * C++: Returns the qualified name. Anonymous/inline namespaces are omitted.
-              Template arguments that match their default value might also be hidden
-              (this functionality depends on whether LLDB can determine the template's
-              default arguments).
-            * Objective-C: Same as in C.
-
-        """
-        return _lldb.SBType_GetDisplayTypeName(self)
-
-    def GetTypeClass(self) -> "lldb::TypeClass":
-        r"""
-        GetTypeClass() -> TypeClass
-        Returns the `TypeClass` for this type.
-
-            Returns an `eTypeClassInvalid` if this `SBType` is invalid.
-
-            See `TypeClass` for the language-specific meaning of each `TypeClass` value.
-
-        """
-        return _lldb.SBType_GetTypeClass(self)
 
     def GetNumberOfTemplateArguments(self) -> "uint32_t":
         r"""
@@ -13062,6 +13297,76 @@ class SBType(object):
         """
         return _lldb.SBType_GetMemberFunctionAtIndex(self, idx)
 
+    def GetModule(self) -> "lldb::SBModule":
+        r"""
+        GetModule(SBType self) -> SBModule
+        Returns the `SBModule` this `SBType` belongs to.
+
+            Returns no `SBModule` if this type does not belong to any specific
+            `SBModule` or this `SBType` is invalid. An invalid `SBModule` might also
+            indicate that once came from an `SBModule` but LLDB could no longer
+            determine the original module.
+
+        """
+        return _lldb.SBType_GetModule(self)
+
+    def GetName(self) -> "char const *":
+        r"""
+        GetName() -> string
+        Returns the name of this type.
+
+            Returns an empty string if an error occurred or this type is invalid.
+
+            Use this function when trying to match a specific type by name in a script.
+            The names returned by this function try to uniquely identify a name but
+            conflicts can occur (for example, if a C++ program contains two different
+            classes with the same name in different translation units. `GetName` can
+            return the same name for both class types.)
+
+
+            Language-specific behaviour:
+
+            * C: The name of the type. For structs the ``struct`` prefix is omitted.
+            * C++: Returns the qualified name of the type (including anonymous/inline
+              namespaces and all template arguments).
+            * Objective-C: Same as in C.
+
+        """
+        return _lldb.SBType_GetName(self)
+
+    def GetDisplayTypeName(self) -> "char const *":
+        r"""
+        GetDisplayTypeName() -> string
+        Returns the name of this type in a user-friendly format.
+
+            Returns an empty string if an error occurred or this type is invalid.
+
+            Use this function when displaying a type name to the user.
+
+            Language-specific behaviour:
+
+            * C: Returns the type name. For structs the ``struct`` prefix is omitted.
+            * C++: Returns the qualified name. Anonymous/inline namespaces are omitted.
+              Template arguments that match their default value might also be hidden
+              (this functionality depends on whether LLDB can determine the template's
+              default arguments).
+            * Objective-C: Same as in C.
+
+        """
+        return _lldb.SBType_GetDisplayTypeName(self)
+
+    def GetTypeClass(self) -> "lldb::TypeClass":
+        r"""
+        GetTypeClass() -> TypeClass
+        Returns the `TypeClass` for this type.
+
+            Returns an `eTypeClassInvalid` if this `SBType` is invalid.
+
+            See `TypeClass` for the language-specific meaning of each `TypeClass` value.
+
+        """
+        return _lldb.SBType_GetTypeClass(self)
+
     def IsTypeComplete(self) -> "bool":
         r"""
         IsTypeComplete(SBType self) -> bool
@@ -13102,88 +13407,20 @@ class SBType(object):
         """
         return _lldb.SBType_GetTypeFlags(self)
 
+    def GetDescription(self, description: "SBStream", description_level: "lldb::DescriptionLevel") -> "bool":
+        r"""GetDescription(SBType self, SBStream description, lldb::DescriptionLevel description_level) -> bool"""
+        return _lldb.SBType_GetDescription(self, description, description_level)
+
     def __eq__(self, rhs: "SBType") -> "bool":
-        r"""
-        __eq__(SBType self, SBType rhs) -> bool
-        Returns the `BasicType` value that is most appropriate to this type.
-
-            Returns `eBasicTypeInvalid` if no appropriate `BasicType` was found or this
-            type is invalid. See the `BasicType` documentation for the language-specific
-            meaning of each `BasicType` value.
-
-            **Overload behaviour:** When called with a `BasicType` parameter, the
-            following behaviour applies:
-
-            Returns the `SBType` that represents the passed `BasicType` value. Returns
-            an invalid `SBType` if no fitting `SBType` could be created.
-
-            Language-specific behaviour:
-
-            * C: Returns the respective builtin type. Note that some types
-              (e.g. ``__uint128_t``) might even be successfully created even if they are
-              not available on the target platform. C++ and Objective-C specific types
-              might also be created even if the target program is not written in C++ or
-              Objective-C.
-            * C++: Same as in C.
-            * Objective-C: Same as in C.
-
-        """
+        r"""__eq__(SBType self, SBType rhs) -> bool"""
         return _lldb.SBType___eq__(self, rhs)
 
     def __ne__(self, rhs: "SBType") -> "bool":
-        r"""
-        __ne__(SBType self, SBType rhs) -> bool
-        Returns the `BasicType` value that is most appropriate to this type.
-
-            Returns `eBasicTypeInvalid` if no appropriate `BasicType` was found or this
-            type is invalid. See the `BasicType` documentation for the language-specific
-            meaning of each `BasicType` value.
-
-            **Overload behaviour:** When called with a `BasicType` parameter, the
-            following behaviour applies:
-
-            Returns the `SBType` that represents the passed `BasicType` value. Returns
-            an invalid `SBType` if no fitting `SBType` could be created.
-
-            Language-specific behaviour:
-
-            * C: Returns the respective builtin type. Note that some types
-              (e.g. ``__uint128_t``) might even be successfully created even if they are
-              not available on the target platform. C++ and Objective-C specific types
-              might also be created even if the target program is not written in C++ or
-              Objective-C.
-            * C++: Same as in C.
-            * Objective-C: Same as in C.
-
-        """
+        r"""__ne__(SBType self, SBType rhs) -> bool"""
         return _lldb.SBType___ne__(self, rhs)
 
     def __repr__(self) -> "std::string":
-        r"""
-        __repr__(SBType self) -> std::string
-        Returns the `BasicType` value that is most appropriate to this type.
-
-            Returns `eBasicTypeInvalid` if no appropriate `BasicType` was found or this
-            type is invalid. See the `BasicType` documentation for the language-specific
-            meaning of each `BasicType` value.
-
-            **Overload behaviour:** When called with a `BasicType` parameter, the
-            following behaviour applies:
-
-            Returns the `SBType` that represents the passed `BasicType` value. Returns
-            an invalid `SBType` if no fitting `SBType` could be created.
-
-            Language-specific behaviour:
-
-            * C: Returns the respective builtin type. Note that some types
-              (e.g. ``__uint128_t``) might even be successfully created even if they are
-              not available on the target platform. C++ and Objective-C specific types
-              might also be created even if the target program is not written in C++ or
-              Objective-C.
-            * C++: Same as in C.
-            * Objective-C: Same as in C.
-
-        """
+        r"""__repr__(SBType self) -> std::string"""
         return _lldb.SBType___repr__(self)
 
     def template_arg_array(self):
@@ -13325,19 +13562,23 @@ class SBTypeList(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
-    def __init__(self):
-        r"""__init__(SBTypeList self) -> SBTypeList"""
-        _lldb.SBTypeList_swiginit(self, _lldb.new_SBTypeList())
-
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBTypeList self) -> bool"""
-        return _lldb.SBTypeList_IsValid(self)
+    def __init__(self, *args):
+        r"""
+        __init__(SBTypeList self) -> SBTypeList
+        __init__(SBTypeList self, SBTypeList rhs) -> SBTypeList
+        """
+        _lldb.SBTypeList_swiginit(self, _lldb.new_SBTypeList(*args))
+    __swig_destroy__ = _lldb.delete_SBTypeList
 
     def __nonzero__(self):
         return _lldb.SBTypeList___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBTypeList self) -> bool"""
+        return _lldb.SBTypeList_IsValid(self)
 
     def Append(self, type: "SBType") -> "void":
         r"""Append(SBTypeList self, SBType type)"""
@@ -13350,7 +13591,6 @@ class SBTypeList(object):
     def GetSize(self) -> "uint32_t":
         r"""GetSize(SBTypeList self) -> uint32_t"""
         return _lldb.SBTypeList_GetSize(self)
-    __swig_destroy__ = _lldb.delete_SBTypeList
 
     def __iter__(self):
         '''Iterate over all types in a lldb.SBTypeList object.'''
@@ -13377,15 +13617,15 @@ class SBTypeCategory(object):
         _lldb.SBTypeCategory_swiginit(self, _lldb.new_SBTypeCategory(*args))
     __swig_destroy__ = _lldb.delete_SBTypeCategory
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBTypeCategory self) -> bool"""
-        return _lldb.SBTypeCategory_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBTypeCategory___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBTypeCategory self) -> bool"""
+        return _lldb.SBTypeCategory_IsValid(self)
 
     def GetEnabled(self) -> "bool":
         r"""GetEnabled(SBTypeCategory self) -> bool"""
@@ -13511,6 +13751,14 @@ class SBTypeCategory(object):
         r"""DeleteTypeSynthetic(SBTypeCategory self, SBTypeNameSpecifier arg2) -> bool"""
         return _lldb.SBTypeCategory_DeleteTypeSynthetic(self, arg2)
 
+    def __eq__(self, rhs: "SBTypeCategory") -> "bool":
+        r"""__eq__(SBTypeCategory self, SBTypeCategory rhs) -> bool"""
+        return _lldb.SBTypeCategory___eq__(self, rhs)
+
+    def __ne__(self, rhs: "SBTypeCategory") -> "bool":
+        r"""__ne__(SBTypeCategory self, SBTypeCategory rhs) -> bool"""
+        return _lldb.SBTypeCategory___ne__(self, rhs)
+
     def __repr__(self) -> "std::string":
         r"""__repr__(SBTypeCategory self) -> std::string"""
         return _lldb.SBTypeCategory___repr__(self)
@@ -13534,7 +13782,8 @@ class SBTypeCategory(object):
         def __getitem__(self, key):
             num_items = len(self)
             if type(key) is int:
-                if key < num_items:
+                if -num_items <= key < num_items:
+                    key %= num_items
                     return self.get_at_index_function(self.sbcategory,key)
             elif type(key) is str:
                 return self.get_by_name_function(self.sbcategory,SBTypeNameSpecifier(key))
@@ -13620,15 +13869,15 @@ class SBTypeEnumMember(object):
         _lldb.SBTypeEnumMember_swiginit(self, _lldb.new_SBTypeEnumMember(*args))
     __swig_destroy__ = _lldb.delete_SBTypeEnumMember
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBTypeEnumMember self) -> bool"""
-        return _lldb.SBTypeEnumMember_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBTypeEnumMember___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBTypeEnumMember self) -> bool"""
+        return _lldb.SBTypeEnumMember_IsValid(self)
 
     def GetValueAsSigned(self) -> "int64_t":
         r"""GetValueAsSigned(SBTypeEnumMember self) -> int64_t"""
@@ -13690,15 +13939,15 @@ class SBTypeEnumMemberList(object):
         _lldb.SBTypeEnumMemberList_swiginit(self, _lldb.new_SBTypeEnumMemberList(*args))
     __swig_destroy__ = _lldb.delete_SBTypeEnumMemberList
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBTypeEnumMemberList self) -> bool"""
-        return _lldb.SBTypeEnumMemberList_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBTypeEnumMemberList___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBTypeEnumMemberList self) -> bool"""
+        return _lldb.SBTypeEnumMemberList_IsValid(self)
 
     def Append(self, entry: "SBTypeEnumMember") -> "void":
         r"""Append(SBTypeEnumMemberList self, SBTypeEnumMember entry)"""
@@ -13723,7 +13972,8 @@ class SBTypeEnumMemberList(object):
     def __getitem__(self, key):
       num_elements = self.GetSize()
       if type(key) is int:
-          if key < num_elements:
+          if -num_elements <= key < num_elements:
+              key %= num_elements
               return self.GetTypeEnumMemberAtIndex(key)
       elif type(key) is str:
           for idx in range(num_elements):
@@ -13750,19 +14000,15 @@ class SBTypeFilter(object):
         _lldb.SBTypeFilter_swiginit(self, _lldb.new_SBTypeFilter(*args))
     __swig_destroy__ = _lldb.delete_SBTypeFilter
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBTypeFilter self) -> bool"""
-        return _lldb.SBTypeFilter_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBTypeFilter___nonzero__(self)
     __bool__ = __nonzero__
 
 
 
-    def IsEqualTo(self, rhs: "SBTypeFilter") -> "bool":
-        r"""IsEqualTo(SBTypeFilter self, SBTypeFilter rhs) -> bool"""
-        return _lldb.SBTypeFilter_IsEqualTo(self, rhs)
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBTypeFilter self) -> bool"""
+        return _lldb.SBTypeFilter_IsValid(self)
 
     def GetNumberOfExpressionPaths(self) -> "uint32_t":
         r"""GetNumberOfExpressionPaths(SBTypeFilter self) -> uint32_t"""
@@ -13795,6 +14041,10 @@ class SBTypeFilter(object):
     def GetDescription(self, description: "SBStream", description_level: "lldb::DescriptionLevel") -> "bool":
         r"""GetDescription(SBTypeFilter self, SBStream description, lldb::DescriptionLevel description_level) -> bool"""
         return _lldb.SBTypeFilter_GetDescription(self, description, description_level)
+
+    def IsEqualTo(self, rhs: "SBTypeFilter") -> "bool":
+        r"""IsEqualTo(SBTypeFilter self, SBTypeFilter rhs) -> bool"""
+        return _lldb.SBTypeFilter_IsEqualTo(self, rhs)
 
     def __eq__(self, rhs: "SBTypeFilter") -> "bool":
         r"""__eq__(SBTypeFilter self, SBTypeFilter rhs) -> bool"""
@@ -13843,19 +14093,15 @@ class SBTypeFormat(object):
         _lldb.SBTypeFormat_swiginit(self, _lldb.new_SBTypeFormat(*args))
     __swig_destroy__ = _lldb.delete_SBTypeFormat
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBTypeFormat self) -> bool"""
-        return _lldb.SBTypeFormat_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBTypeFormat___nonzero__(self)
     __bool__ = __nonzero__
 
 
 
-    def IsEqualTo(self, rhs: "SBTypeFormat") -> "bool":
-        r"""IsEqualTo(SBTypeFormat self, SBTypeFormat rhs) -> bool"""
-        return _lldb.SBTypeFormat_IsEqualTo(self, rhs)
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBTypeFormat self) -> bool"""
+        return _lldb.SBTypeFormat_IsValid(self)
 
     def GetFormat(self) -> "lldb::Format":
         r"""GetFormat(SBTypeFormat self) -> lldb::Format"""
@@ -13884,6 +14130,10 @@ class SBTypeFormat(object):
     def GetDescription(self, description: "SBStream", description_level: "lldb::DescriptionLevel") -> "bool":
         r"""GetDescription(SBTypeFormat self, SBStream description, lldb::DescriptionLevel description_level) -> bool"""
         return _lldb.SBTypeFormat_GetDescription(self, description, description_level)
+
+    def IsEqualTo(self, rhs: "SBTypeFormat") -> "bool":
+        r"""IsEqualTo(SBTypeFormat self, SBTypeFormat rhs) -> bool"""
+        return _lldb.SBTypeFormat_IsEqualTo(self, rhs)
 
     def __eq__(self, rhs: "SBTypeFormat") -> "bool":
         r"""__eq__(SBTypeFormat self, SBTypeFormat rhs) -> bool"""
@@ -13920,19 +14170,15 @@ class SBTypeNameSpecifier(object):
         _lldb.SBTypeNameSpecifier_swiginit(self, _lldb.new_SBTypeNameSpecifier(*args))
     __swig_destroy__ = _lldb.delete_SBTypeNameSpecifier
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBTypeNameSpecifier self) -> bool"""
-        return _lldb.SBTypeNameSpecifier_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBTypeNameSpecifier___nonzero__(self)
     __bool__ = __nonzero__
 
 
 
-    def IsEqualTo(self, rhs: "SBTypeNameSpecifier") -> "bool":
-        r"""IsEqualTo(SBTypeNameSpecifier self, SBTypeNameSpecifier rhs) -> bool"""
-        return _lldb.SBTypeNameSpecifier_IsEqualTo(self, rhs)
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBTypeNameSpecifier self) -> bool"""
+        return _lldb.SBTypeNameSpecifier_IsValid(self)
 
     def GetName(self) -> "char const *":
         r"""GetName(SBTypeNameSpecifier self) -> char const *"""
@@ -13953,6 +14199,10 @@ class SBTypeNameSpecifier(object):
     def GetDescription(self, description: "SBStream", description_level: "lldb::DescriptionLevel") -> "bool":
         r"""GetDescription(SBTypeNameSpecifier self, SBStream description, lldb::DescriptionLevel description_level) -> bool"""
         return _lldb.SBTypeNameSpecifier_GetDescription(self, description, description_level)
+
+    def IsEqualTo(self, rhs: "SBTypeNameSpecifier") -> "bool":
+        r"""IsEqualTo(SBTypeNameSpecifier self, SBTypeNameSpecifier rhs) -> bool"""
+        return _lldb.SBTypeNameSpecifier_IsEqualTo(self, rhs)
 
     def __eq__(self, rhs: "SBTypeNameSpecifier") -> "bool":
         r"""__eq__(SBTypeNameSpecifier self, SBTypeNameSpecifier rhs) -> bool"""
@@ -14000,15 +14250,15 @@ class SBTypeSummaryOptions(object):
         _lldb.SBTypeSummaryOptions_swiginit(self, _lldb.new_SBTypeSummaryOptions(*args))
     __swig_destroy__ = _lldb.delete_SBTypeSummaryOptions
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBTypeSummaryOptions self) -> bool"""
-        return _lldb.SBTypeSummaryOptions_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBTypeSummaryOptions___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBTypeSummaryOptions self) -> bool"""
+        return _lldb.SBTypeSummaryOptions_IsValid(self)
 
     def GetLanguage(self) -> "lldb::LanguageType":
         r"""GetLanguage(SBTypeSummaryOptions self) -> lldb::LanguageType"""
@@ -14057,19 +14307,15 @@ class SBTypeSummary(object):
         _lldb.SBTypeSummary_swiginit(self, _lldb.new_SBTypeSummary(*args))
     __swig_destroy__ = _lldb.delete_SBTypeSummary
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBTypeSummary self) -> bool"""
-        return _lldb.SBTypeSummary_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBTypeSummary___nonzero__(self)
     __bool__ = __nonzero__
 
 
 
-    def IsEqualTo(self, rhs: "SBTypeSummary") -> "bool":
-        r"""IsEqualTo(SBTypeSummary self, SBTypeSummary rhs) -> bool"""
-        return _lldb.SBTypeSummary_IsEqualTo(self, rhs)
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBTypeSummary self) -> bool"""
+        return _lldb.SBTypeSummary_IsValid(self)
 
     def IsFunctionCode(self) -> "bool":
         r"""IsFunctionCode(SBTypeSummary self) -> bool"""
@@ -14110,6 +14356,14 @@ class SBTypeSummary(object):
     def GetDescription(self, description: "SBStream", description_level: "lldb::DescriptionLevel") -> "bool":
         r"""GetDescription(SBTypeSummary self, SBStream description, lldb::DescriptionLevel description_level) -> bool"""
         return _lldb.SBTypeSummary_GetDescription(self, description, description_level)
+
+    def DoesPrintValue(self, value: "SBValue") -> "bool":
+        r"""DoesPrintValue(SBTypeSummary self, SBValue value) -> bool"""
+        return _lldb.SBTypeSummary_DoesPrintValue(self, value)
+
+    def IsEqualTo(self, rhs: "SBTypeSummary") -> "bool":
+        r"""IsEqualTo(SBTypeSummary self, SBTypeSummary rhs) -> bool"""
+        return _lldb.SBTypeSummary_IsEqualTo(self, rhs)
 
     def __eq__(self, rhs: "SBTypeSummary") -> "bool":
         r"""__eq__(SBTypeSummary self, SBTypeSummary rhs) -> bool"""
@@ -14181,23 +14435,23 @@ class SBTypeSynthetic(object):
         _lldb.SBTypeSynthetic_swiginit(self, _lldb.new_SBTypeSynthetic(*args))
     __swig_destroy__ = _lldb.delete_SBTypeSynthetic
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBTypeSynthetic self) -> bool"""
-        return _lldb.SBTypeSynthetic_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBTypeSynthetic___nonzero__(self)
     __bool__ = __nonzero__
 
 
 
-    def IsEqualTo(self, rhs: "SBTypeSynthetic") -> "bool":
-        r"""IsEqualTo(SBTypeSynthetic self, SBTypeSynthetic rhs) -> bool"""
-        return _lldb.SBTypeSynthetic_IsEqualTo(self, rhs)
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBTypeSynthetic self) -> bool"""
+        return _lldb.SBTypeSynthetic_IsValid(self)
 
     def IsClassCode(self) -> "bool":
         r"""IsClassCode(SBTypeSynthetic self) -> bool"""
         return _lldb.SBTypeSynthetic_IsClassCode(self)
+
+    def IsClassName(self) -> "bool":
+        r"""IsClassName(SBTypeSynthetic self) -> bool"""
+        return _lldb.SBTypeSynthetic_IsClassName(self)
 
     def GetData(self) -> "char const *":
         r"""GetData(SBTypeSynthetic self) -> char const *"""
@@ -14222,6 +14476,10 @@ class SBTypeSynthetic(object):
     def GetDescription(self, description: "SBStream", description_level: "lldb::DescriptionLevel") -> "bool":
         r"""GetDescription(SBTypeSynthetic self, SBStream description, lldb::DescriptionLevel description_level) -> bool"""
         return _lldb.SBTypeSynthetic_GetDescription(self, description, description_level)
+
+    def IsEqualTo(self, rhs: "SBTypeSynthetic") -> "bool":
+        r"""IsEqualTo(SBTypeSynthetic self, SBTypeSynthetic rhs) -> bool"""
+        return _lldb.SBTypeSynthetic_IsEqualTo(self, rhs)
 
     def __eq__(self, rhs: "SBTypeSynthetic") -> "bool":
         r"""__eq__(SBTypeSynthetic self, SBTypeSynthetic rhs) -> bool"""
@@ -14282,15 +14540,15 @@ class SBUnixSignals(object):
         r"""Clear(SBUnixSignals self)"""
         return _lldb.SBUnixSignals_Clear(self)
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBUnixSignals self) -> bool"""
-        return _lldb.SBUnixSignals_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBUnixSignals___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBUnixSignals self) -> bool"""
+        return _lldb.SBUnixSignals_IsValid(self)
 
     def GetSignalAsCString(self, signo: "int32_t") -> "char const *":
         r"""GetSignalAsCString(SBUnixSignals self, int32_t signo) -> char const *"""
@@ -14402,15 +14660,15 @@ class SBValue(object):
         _lldb.SBValue_swiginit(self, _lldb.new_SBValue(*args))
     __swig_destroy__ = _lldb.delete_SBValue
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBValue self) -> bool"""
-        return _lldb.SBValue_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBValue___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBValue self) -> bool"""
+        return _lldb.SBValue_IsValid(self)
 
     def Clear(self) -> "void":
         r"""Clear(SBValue self)"""
@@ -14560,6 +14818,29 @@ class SBValue(object):
         r"""GetTypeSynthetic(SBValue self) -> SBTypeSynthetic"""
         return _lldb.SBValue_GetTypeSynthetic(self)
 
+    def CreateChildAtOffset(self, name: "char const *", offset: "uint32_t", type: "SBType") -> "lldb::SBValue":
+        r"""CreateChildAtOffset(SBValue self, char const * name, uint32_t offset, SBType type) -> SBValue"""
+        return _lldb.SBValue_CreateChildAtOffset(self, name, offset, type)
+
+    def Cast(self, type: "SBType") -> "lldb::SBValue":
+        r"""Cast(SBValue self, SBType type) -> SBValue"""
+        return _lldb.SBValue_Cast(self, type)
+
+    def CreateValueFromExpression(self, *args) -> "lldb::SBValue":
+        r"""
+        CreateValueFromExpression(SBValue self, char const * name, char const * expression) -> SBValue
+        CreateValueFromExpression(SBValue self, char const * name, char const * expression, SBExpressionOptions options) -> SBValue
+        """
+        return _lldb.SBValue_CreateValueFromExpression(self, *args)
+
+    def CreateValueFromAddress(self, name: "char const *", address: "lldb::addr_t", type: "SBType") -> "lldb::SBValue":
+        r"""CreateValueFromAddress(SBValue self, char const * name, lldb::addr_t address, SBType type) -> SBValue"""
+        return _lldb.SBValue_CreateValueFromAddress(self, name, address, type)
+
+    def CreateValueFromData(self, name: "char const *", data: "SBData", type: "SBType") -> "lldb::SBValue":
+        r"""CreateValueFromData(SBValue self, char const * name, SBData data, SBType type) -> SBValue"""
+        return _lldb.SBValue_CreateValueFromData(self, name, data, type)
+
     def GetChildAtIndex(self, *args) -> "lldb::SBValue":
         r"""
         GetChildAtIndex(SBValue self, uint32_t idx) -> SBValue
@@ -14621,33 +14902,6 @@ class SBValue(object):
         """
         return _lldb.SBValue_GetChildAtIndex(self, *args)
 
-    def CreateChildAtOffset(self, name: "char const *", offset: "uint32_t", type: "SBType") -> "lldb::SBValue":
-        r"""CreateChildAtOffset(SBValue self, char const * name, uint32_t offset, SBType type) -> SBValue"""
-        return _lldb.SBValue_CreateChildAtOffset(self, name, offset, type)
-
-    def Cast(self, type: "SBType") -> "lldb::SBValue":
-        r"""Cast(SBValue self, SBType type) -> SBValue"""
-        return _lldb.SBValue_Cast(self, type)
-
-    def CreateValueFromExpression(self, *args) -> "lldb::SBValue":
-        r"""
-        CreateValueFromExpression(SBValue self, char const * name, char const * expression) -> SBValue
-        CreateValueFromExpression(SBValue self, char const * name, char const * expression, SBExpressionOptions options) -> SBValue
-        """
-        return _lldb.SBValue_CreateValueFromExpression(self, *args)
-
-    def CreateValueFromAddress(self, name: "char const *", address: "lldb::addr_t", type: "SBType") -> "lldb::SBValue":
-        r"""CreateValueFromAddress(SBValue self, char const * name, lldb::addr_t address, SBType type) -> SBValue"""
-        return _lldb.SBValue_CreateValueFromAddress(self, name, address, type)
-
-    def CreateValueFromData(self, name: "char const *", data: "SBData", type: "SBType") -> "lldb::SBValue":
-        r"""CreateValueFromData(SBValue self, char const * name, SBData data, SBType type) -> SBValue"""
-        return _lldb.SBValue_CreateValueFromData(self, name, data, type)
-
-    def GetType(self) -> "lldb::SBType":
-        r"""GetType(SBValue self) -> SBType"""
-        return _lldb.SBValue_GetType(self)
-
     def GetIndexOfChildWithName(self, name: "char const *") -> "uint32_t":
         r"""
         GetIndexOfChildWithName(SBValue self, char const * name) -> uint32_t
@@ -14695,78 +14949,17 @@ class SBValue(object):
         """
         return _lldb.SBValue_GetValueForExpressionPath(self, expr_path)
 
-    def GetDeclaration(self) -> "lldb::SBDeclaration":
-        r"""GetDeclaration(SBValue self) -> SBDeclaration"""
-        return _lldb.SBValue_GetDeclaration(self)
-
-    def MightHaveChildren(self) -> "bool":
-        r"""MightHaveChildren(SBValue self) -> bool"""
-        return _lldb.SBValue_MightHaveChildren(self)
-
-    def IsRuntimeSupportValue(self) -> "bool":
-        r"""IsRuntimeSupportValue(SBValue self) -> bool"""
-        return _lldb.SBValue_IsRuntimeSupportValue(self)
-
-    def GetNumChildren(self, *args) -> "uint32_t":
-        r"""
-        GetNumChildren(SBValue self) -> uint32_t
-        GetNumChildren(SBValue self, uint32_t max) -> uint32_t
-        """
-        return _lldb.SBValue_GetNumChildren(self, *args)
-
-    def GetOpaqueType(self) -> "void *":
-        r"""GetOpaqueType(SBValue self) -> void *"""
-        return _lldb.SBValue_GetOpaqueType(self)
-
-    def Dereference(self) -> "lldb::SBValue":
-        r"""Dereference(SBValue self) -> SBValue"""
-        return _lldb.SBValue_Dereference(self)
-
     def AddressOf(self) -> "lldb::SBValue":
         r"""AddressOf(SBValue self) -> SBValue"""
         return _lldb.SBValue_AddressOf(self)
 
-    def TypeIsPointerType(self) -> "bool":
-        r"""TypeIsPointerType(SBValue self) -> bool"""
-        return _lldb.SBValue_TypeIsPointerType(self)
+    def GetLoadAddress(self) -> "lldb::addr_t":
+        r"""GetLoadAddress(SBValue self) -> lldb::addr_t"""
+        return _lldb.SBValue_GetLoadAddress(self)
 
-    def GetTarget(self) -> "lldb::SBTarget":
-        r"""GetTarget(SBValue self) -> SBTarget"""
-        return _lldb.SBValue_GetTarget(self)
-
-    def GetProcess(self) -> "lldb::SBProcess":
-        r"""GetProcess(SBValue self) -> SBProcess"""
-        return _lldb.SBValue_GetProcess(self)
-
-    def GetThread(self) -> "lldb::SBThread":
-        r"""GetThread(SBValue self) -> SBThread"""
-        return _lldb.SBValue_GetThread(self)
-
-    def GetFrame(self) -> "lldb::SBFrame":
-        r"""GetFrame(SBValue self) -> SBFrame"""
-        return _lldb.SBValue_GetFrame(self)
-
-    def Watch(self, resolve_location: "bool", read: "bool", write: "bool", error: "SBError") -> "lldb::SBWatchpoint":
-        r"""
-        Watch(SBValue self, bool resolve_location, bool read, bool write, SBError error) -> SBWatchpoint
-
-            Find and watch a variable.
-            It returns an SBWatchpoint, which may be invalid.
-        """
-        return _lldb.SBValue_Watch(self, resolve_location, read, write, error)
-
-    def WatchPointee(self, resolve_location: "bool", read: "bool", write: "bool", error: "SBError") -> "lldb::SBWatchpoint":
-        r"""
-        WatchPointee(SBValue self, bool resolve_location, bool read, bool write, SBError error) -> SBWatchpoint
-
-            Find and watch the location pointed to by a variable.
-            It returns an SBWatchpoint, which may be invalid.
-        """
-        return _lldb.SBValue_WatchPointee(self, resolve_location, read, write, error)
-
-    def GetDescription(self, description: "SBStream") -> "bool":
-        r"""GetDescription(SBValue self, SBStream description) -> bool"""
-        return _lldb.SBValue_GetDescription(self, description)
+    def GetAddress(self) -> "lldb::SBAddress":
+        r"""GetAddress(SBValue self) -> SBAddress"""
+        return _lldb.SBValue_GetAddress(self)
 
     def GetPointeeData(self, item_idx: "uint32_t"=0, item_count: "uint32_t"=1) -> "lldb::SBData":
         r"""
@@ -14813,17 +15006,64 @@ class SBValue(object):
         r"""Clone(SBValue self, char const * new_name) -> SBValue"""
         return _lldb.SBValue_Clone(self, new_name)
 
-    def GetLoadAddress(self) -> "lldb::addr_t":
-        r"""GetLoadAddress(SBValue self) -> lldb::addr_t"""
-        return _lldb.SBValue_GetLoadAddress(self)
+    def GetDeclaration(self) -> "lldb::SBDeclaration":
+        r"""GetDeclaration(SBValue self) -> SBDeclaration"""
+        return _lldb.SBValue_GetDeclaration(self)
 
-    def GetAddress(self) -> "lldb::SBAddress":
-        r"""GetAddress(SBValue self) -> SBAddress"""
-        return _lldb.SBValue_GetAddress(self)
+    def MightHaveChildren(self) -> "bool":
+        r"""MightHaveChildren(SBValue self) -> bool"""
+        return _lldb.SBValue_MightHaveChildren(self)
+
+    def IsRuntimeSupportValue(self) -> "bool":
+        r"""IsRuntimeSupportValue(SBValue self) -> bool"""
+        return _lldb.SBValue_IsRuntimeSupportValue(self)
+
+    def GetNumChildren(self, *args) -> "uint32_t":
+        r"""
+        GetNumChildren(SBValue self) -> uint32_t
+        GetNumChildren(SBValue self, uint32_t max) -> uint32_t
+        """
+        return _lldb.SBValue_GetNumChildren(self, *args)
+
+    def GetOpaqueType(self) -> "void *":
+        r"""GetOpaqueType(SBValue self) -> void *"""
+        return _lldb.SBValue_GetOpaqueType(self)
+
+    def GetTarget(self) -> "lldb::SBTarget":
+        r"""GetTarget(SBValue self) -> SBTarget"""
+        return _lldb.SBValue_GetTarget(self)
+
+    def GetProcess(self) -> "lldb::SBProcess":
+        r"""GetProcess(SBValue self) -> SBProcess"""
+        return _lldb.SBValue_GetProcess(self)
+
+    def GetThread(self) -> "lldb::SBThread":
+        r"""GetThread(SBValue self) -> SBThread"""
+        return _lldb.SBValue_GetThread(self)
+
+    def GetFrame(self) -> "lldb::SBFrame":
+        r"""GetFrame(SBValue self) -> SBFrame"""
+        return _lldb.SBValue_GetFrame(self)
+
+    def Dereference(self) -> "lldb::SBValue":
+        r"""Dereference(SBValue self) -> SBValue"""
+        return _lldb.SBValue_Dereference(self)
+
+    def TypeIsPointerType(self) -> "bool":
+        r"""TypeIsPointerType(SBValue self) -> bool"""
+        return _lldb.SBValue_TypeIsPointerType(self)
+
+    def GetType(self) -> "lldb::SBType":
+        r"""GetType(SBValue self) -> SBType"""
+        return _lldb.SBValue_GetType(self)
 
     def Persist(self) -> "lldb::SBValue":
         r"""Persist(SBValue self) -> SBValue"""
         return _lldb.SBValue_Persist(self)
+
+    def GetDescription(self, description: "SBStream") -> "bool":
+        r"""GetDescription(SBValue self, SBStream description) -> bool"""
+        return _lldb.SBValue_GetDescription(self, description)
 
     def GetExpressionPath(self, *args) -> "bool":
         r"""
@@ -14840,6 +15080,25 @@ class SBValue(object):
         EvaluateExpression(SBValue self, char const * expr, SBExpressionOptions options, char const * name) -> SBValue
         """
         return _lldb.SBValue_EvaluateExpression(self, *args)
+
+    def Watch(self, *args) -> "lldb::SBWatchpoint":
+        r"""
+        Watch(SBValue self, bool resolve_location, bool read, bool write, SBError error) -> SBWatchpoint
+        Watch(SBValue self, bool resolve_location, bool read, bool write) -> SBWatchpoint
+
+            Find and watch a variable.
+            It returns an SBWatchpoint, which may be invalid.
+        """
+        return _lldb.SBValue_Watch(self, *args)
+
+    def WatchPointee(self, resolve_location: "bool", read: "bool", write: "bool", error: "SBError") -> "lldb::SBWatchpoint":
+        r"""
+        WatchPointee(SBValue self, bool resolve_location, bool read, bool write, SBError error) -> SBWatchpoint
+
+            Find and watch the location pointed to by a variable.
+            It returns an SBWatchpoint, which may be invalid.
+        """
+        return _lldb.SBValue_WatchPointee(self, resolve_location, read, write, error)
 
     def __repr__(self) -> "std::string":
         r"""__repr__(SBValue self) -> std::string"""
@@ -14861,8 +15120,11 @@ class SBValue(object):
             return 0
 
         def __getitem__(self, key):
-            if type(key) is int and key < len(self):
-                return self.sbvalue.GetChildAtIndex(key)
+            if isinstance(key, int):
+                count = len(self)
+                if -count <= key < count:
+                    key %= count
+                    return self.sbvalue.GetChildAtIndex(key)
             return None
 
     def get_child_access_object(self):
@@ -15067,15 +15329,15 @@ class SBValueList(object):
         _lldb.SBValueList_swiginit(self, _lldb.new_SBValueList(*args))
     __swig_destroy__ = _lldb.delete_SBValueList
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBValueList self) -> bool"""
-        return _lldb.SBValueList_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBValueList___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBValueList self) -> bool"""
+        return _lldb.SBValueList_IsValid(self)
 
     def Clear(self) -> "void":
         r"""Clear(SBValueList self)"""
@@ -15096,13 +15358,13 @@ class SBValueList(object):
         r"""GetValueAtIndex(SBValueList self, uint32_t idx) -> SBValue"""
         return _lldb.SBValueList_GetValueAtIndex(self, idx)
 
-    def FindValueObjectByUID(self, uid: "lldb::user_id_t") -> "lldb::SBValue":
-        r"""FindValueObjectByUID(SBValueList self, lldb::user_id_t uid) -> SBValue"""
-        return _lldb.SBValueList_FindValueObjectByUID(self, uid)
-
     def GetFirstValueByName(self, name: "char const *") -> "lldb::SBValue":
         r"""GetFirstValueByName(SBValueList self, char const * name) -> SBValue"""
         return _lldb.SBValueList_GetFirstValueByName(self, name)
+
+    def FindValueObjectByUID(self, uid: "lldb::user_id_t") -> "lldb::SBValue":
+        r"""FindValueObjectByUID(SBValueList self, lldb::user_id_t uid) -> SBValue"""
+        return _lldb.SBValueList_FindValueObjectByUID(self, uid)
 
     def GetError(self) -> "lldb::SBError":
         r"""GetError(SBValueList self) -> SBError"""
@@ -15125,7 +15387,8 @@ class SBValueList(object):
     # Access with "int" to get Nth item in the list
     #------------------------------------------------------------
         if type(key) is int:
-            if key < count:
+            if -count <= key < count:
+                key %= count
                 return self.GetValueAtIndex(key)
     #------------------------------------------------------------
     # Access with "str" to get values by name
@@ -15168,15 +15431,15 @@ class SBVariablesOptions(object):
         _lldb.SBVariablesOptions_swiginit(self, _lldb.new_SBVariablesOptions(*args))
     __swig_destroy__ = _lldb.delete_SBVariablesOptions
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBVariablesOptions self) -> bool"""
-        return _lldb.SBVariablesOptions_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBVariablesOptions___nonzero__(self)
     __bool__ = __nonzero__
 
 
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBVariablesOptions self) -> bool"""
+        return _lldb.SBVariablesOptions_IsValid(self)
 
     def GetIncludeArguments(self) -> "bool":
         r"""GetIncludeArguments(SBVariablesOptions self) -> bool"""
@@ -15258,10 +15521,6 @@ class SBWatchpoint(object):
         _lldb.SBWatchpoint_swiginit(self, _lldb.new_SBWatchpoint(*args))
     __swig_destroy__ = _lldb.delete_SBWatchpoint
 
-    def IsValid(self) -> "bool":
-        r"""IsValid(SBWatchpoint self) -> bool"""
-        return _lldb.SBWatchpoint_IsValid(self)
-
     def __nonzero__(self):
         return _lldb.SBWatchpoint___nonzero__(self)
     __bool__ = __nonzero__
@@ -15275,6 +15534,10 @@ class SBWatchpoint(object):
     def __ne__(self, rhs: "SBWatchpoint") -> "bool":
         r"""__ne__(SBWatchpoint self, SBWatchpoint rhs) -> bool"""
         return _lldb.SBWatchpoint___ne__(self, rhs)
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBWatchpoint self) -> bool"""
+        return _lldb.SBWatchpoint_IsValid(self)
 
     def GetError(self) -> "lldb::SBError":
         r"""GetError(SBWatchpoint self) -> SBError"""
@@ -15340,6 +15603,10 @@ class SBWatchpoint(object):
         r"""GetDescription(SBWatchpoint self, SBStream description, lldb::DescriptionLevel level) -> bool"""
         return _lldb.SBWatchpoint_GetDescription(self, description, level)
 
+    def Clear(self) -> "void":
+        r"""Clear(SBWatchpoint self)"""
+        return _lldb.SBWatchpoint_Clear(self)
+
     @staticmethod
     def EventIsWatchpointEvent(event: "SBEvent") -> "bool":
         r"""EventIsWatchpointEvent(SBEvent event) -> bool"""
@@ -15354,6 +15621,53 @@ class SBWatchpoint(object):
     def GetWatchpointFromEvent(event: "SBEvent") -> "lldb::SBWatchpoint":
         r"""GetWatchpointFromEvent(SBEvent event) -> SBWatchpoint"""
         return _lldb.SBWatchpoint_GetWatchpointFromEvent(event)
+
+    def GetType(self) -> "lldb::SBType":
+        r"""
+        GetType(SBWatchpoint self) -> SBType
+
+            Returns the type recorded when the watchpoint was created. For variable
+            watchpoints it is the type of the watched variable. For expression
+            watchpoints it is the type of the provided expression.
+        """
+        return _lldb.SBWatchpoint_GetType(self)
+
+    def GetWatchValueKind(self) -> "lldb::WatchpointValueKind":
+        r"""
+        GetWatchValueKind(SBWatchpoint self) -> lldb::WatchpointValueKind
+
+            Returns the kind of value that was watched when the watchpoint was created.
+            Returns one of the following eWatchPointValueKindVariable,
+            eWatchPointValueKindExpression, eWatchPointValueKindInvalid.
+
+        """
+        return _lldb.SBWatchpoint_GetWatchValueKind(self)
+
+    def GetWatchSpec(self) -> "char const *":
+        r"""
+        GetWatchSpec(SBWatchpoint self) -> char const *
+
+            Get the spec for the watchpoint. For variable watchpoints this is the name
+            of the variable. For expression watchpoints it is empty
+            (may change in the future).
+        """
+        return _lldb.SBWatchpoint_GetWatchSpec(self)
+
+    def IsWatchingReads(self) -> "bool":
+        r"""
+        IsWatchingReads(SBWatchpoint self) -> bool
+
+            Returns true if the watchpoint is watching reads. Returns false otherwise.
+        """
+        return _lldb.SBWatchpoint_IsWatchingReads(self)
+
+    def IsWatchingWrites(self) -> "bool":
+        r"""
+        IsWatchingWrites(SBWatchpoint self) -> bool
+
+            Returns true if the watchpoint is watching writes. Returns false otherwise.
+        """
+        return _lldb.SBWatchpoint_IsWatchingWrites(self)
 
     def __repr__(self) -> "std::string":
         r"""__repr__(SBWatchpoint self) -> std::string"""
@@ -15373,6 +15687,28 @@ def SBWatchpoint_GetWatchpointEventTypeFromEvent(event: "SBEvent") -> "lldb::Wat
 def SBWatchpoint_GetWatchpointFromEvent(event: "SBEvent") -> "lldb::SBWatchpoint":
     r"""SBWatchpoint_GetWatchpointFromEvent(SBEvent event) -> SBWatchpoint"""
     return _lldb.SBWatchpoint_GetWatchpointFromEvent(event)
+
+
+# ==================================
+# Helper function for SBModule class
+# ==================================
+def in_range(symbol, section):
+    """Test whether a symbol is within the range of a section."""
+    symSA = symbol.GetStartAddress().GetFileAddress()
+    symEA = symbol.GetEndAddress().GetFileAddress()
+    secSA = section.GetFileAddress()
+    secEA = secSA + section.GetByteSize()
+
+    if symEA != LLDB_INVALID_ADDRESS:
+        if secSA <= symSA and symEA <= secEA:
+            return True
+        else:
+            return False
+    else:
+        if secSA <= symSA and symSA < secEA:
+            return True
+        else:
+            return False
 
 
 
