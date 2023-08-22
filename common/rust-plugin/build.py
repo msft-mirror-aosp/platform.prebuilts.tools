@@ -393,7 +393,7 @@ def write_jps_lib_xml(workspace: Path) -> None:
     - Retrieves the paths of the plugin's JAR files and source directories.
     - Creates the XML structure for the JPS library, including the 'CLASSES'
       and 'SOURCES' elements with the corresponding paths.
-    - Writes the XML structure to the '.idea/libraries/studio_plugin_rust.xml'
+    - Writes the XML structure to the '.idea/libraries/rust_plugin.xml'
       file in the project directory.
     """
     project_dir : Path = workspace.joinpath('tools/adt/idea')
@@ -406,11 +406,11 @@ def write_jps_lib_xml(workspace: Path) -> None:
     # print_relevant_file(workspace, 'Using sources zip:', src)
     # src = Path(os.path.relpath(src, project_dir))
 
-    outfile : Path = project_dir.joinpath(f'.idea/libraries/studio_plugin_rust.xml')
+    outfile : Path = project_dir.joinpath(f'.idea/libraries/rust_plugin.xml')
     print_relevant_file(workspace, 'Writing JPS library:', outfile)
     with open(outfile, 'w') as f:
         f.write(f'<component name="libraryTable">\n')
-        f.write(f'  <library name="studio-plugin-rust">\n')
+        f.write(f'  <library name="rust-plugin">\n')
         f.write(f'    <CLASSES>\n')
         for jar in jars:
             f.write(f'      <root url="jar://$PROJECT_DIR$/{jar}!/" />\n')

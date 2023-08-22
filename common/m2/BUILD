@@ -600,7 +600,7 @@ jvm_import(
 # managed by go/iml_to_build
 jvm_import(
     name = "trace-perfetto-library",
-    jars = ["repository/androidx/tracing/tracing-perfetto-common/1.0.0-alpha01/tracing-perfetto-common-1.0.0-alpha01.jar"],
+    jars = ["repository/androidx/tracing/tracing-perfetto-handshake/1.0.0-beta02/tracing-perfetto-handshake-1.0.0-beta02.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -735,5 +735,12 @@ filegroup(
         "repository/org/tomlj/tomlj/1.1.0/tomlj-1.1.0.jar",
         "repository/org/antlr/antlr4-runtime/4.11.1/antlr4-runtime-4.11.1.jar",
     ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+filegroup(
+    name = "google-api-services-sourcerepo_files",
+    srcs = ["repository/com/google/apis/google-api-services-sourcerepo/v1-rev20230123-2.0.0/google-api-services-sourcerepo-v1-rev20230123-2.0.0.jar"],
     visibility = ["//visibility:public"],
 )

@@ -14,5 +14,5 @@ Outputs from Building
 `prebuilts/tools/common/rust-plugin/METADATA`:
     Version information about the prebuilts from the last time
     they were updated.
-`tools/adt/idea/.idea/libraries/studio_plugin_rust.xml`:
+`tools/adt/idea/.idea/libraries/rust_plugin.xml`:
     IJ library definition that references this plugin.
