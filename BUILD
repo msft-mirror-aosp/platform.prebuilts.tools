@@ -60,11 +60,26 @@ studio_data(
 
 studio_data(
     name = "lldb-bundle",
-    files = glob(["common/lldb/**"]),
-    files_linux = glob(["linux-x86_64/lldb/**"]) + ["//prebuilts/python/linux-x86:linux-x86-bundle"],
-    files_mac = glob(["darwin-x86_64/lldb/**"]) + ["//prebuilts/python/darwin-x86:darwin-x86-bundle"],
-    files_mac_arm = glob(["darwin-x86_64/lldb/**"]) + ["//prebuilts/python/darwin-x86:darwin-x86-bundle"],
-    files_win = glob(["windows-x86_64/lldb/**"]) + ["//prebuilts/python/windows-x86:windows-x86-bundle"],
+    files = glob(
+        ["common/lldb/**"],
+        exclude = ["common/lldb/lldb.spdx.json"],
+    ),
+    files_linux = glob(
+        ["linux-x86_64/lldb/**"],
+        exclude = ["linux-x86_64/lldb/*.spdx.json"],
+    ) + ["//prebuilts/python/linux-x86:linux-x86-bundle"],
+    files_mac = glob(
+        ["darwin-x86_64/lldb/**"],
+        exclude = ["darwin-x86_64/lldb/*.spdx.json"],
+    ) + ["//prebuilts/python/darwin-x86:darwin-x86-bundle"],
+    files_mac_arm = glob(
+        ["darwin-x86_64/lldb/**"],
+        exclude = ["darwin-x86_64/lldb/*.spdx.json"],
+    ) + ["//prebuilts/python/darwin-x86:darwin-x86-bundle"],
+    files_win = glob(
+        ["windows-x86_64/lldb/**"],
+        exclude = ["windows-x86_64/lldb/*.spdx.json"],
+    ) + ["//prebuilts/python/windows-x86:windows-x86-bundle"],
     mappings = {
         "prebuilts/tools/common/lldb/": "",
         "prebuilts/tools/windows-x86_64/lldb/": "",
