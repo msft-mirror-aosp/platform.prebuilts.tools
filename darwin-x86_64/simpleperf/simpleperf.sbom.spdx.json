@@ -1,0 +1,72 @@
+{
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "spdxVersion": "SPDX-2.3",
+  "creationInfo": {
+    "created": "2023-08-16T23:16:01Z",
+    "creators": [
+      "Organization: Google LLC",
+      "Person: alyukhan@google.com"
+    ]
+  },
+  "name": "Simpleperf command line utility.",
+  "dataLicense": "CC0-1.0",
+  "documentNamespace": "https://spdx.google/AndroidStudio-7ea7dc3d-ad5a-46f9-aa82-21ff08de62b6",
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-PREBUILT-simpleperf",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "git+https://android.googlesource.com/platform/prebuilts/simpleperf@6a1c9b850a2bca20dde09421c078762a4c93af98#bin/darwin/x86_64",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:generic/simpleperf?vcs_url=git%2Bhttps://android.googlesource.com/platform/prebuilts/simpleperf%406a1c9b850a2bca20dde09421c078762a4c93af98",
+          "referenceType": "purl"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "Simpleperf",
+      "description": "Simpleperf command line utility",
+      "supplier": "Organization: Google LLC",
+      "versionInfo": "1.build.7649958"
+    },
+    {
+      "SPDXID": "SPDXRef-SOURCE-simpleperf",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "git+https://android.googlesource.com/platform/system/extras@0ad08ad25ba72abd587fa214b51bf0d88bb11b9b#simpleperf",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:generic/androidx?vcs_url=git%2Bhttps://android.googlesource.com/platform/system/extras%400ad08ad25ba72abd587fa214b51bf0d88bb11b9b",
+          "referenceType": "purl"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "Simpleperf",
+      "description": "Simpleperf command line utility",
+      "supplier": "Organization: Google LLC",
+      "versionInfo": "0ad08ad25ba72abd587fa214b51bf0d88bb11b9b"
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-PREBUILT-simpleperf"
+    },
+    {
+      "spdxElementId": "SPDXRef-PREBUILT-simpleperf",
+      "relationshipType": "GENERATED_FROM",
+      "relatedSpdxElement": "SPDXRef-SOURCE-simpleperf"
+    },
+    {
+      "spdxElementId": "SPDXRef-SOURCE-simpleperf",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "NOASSERTION",
+      "comment": "Dependencies are not analyzed."
+    }
+  ]
+}
