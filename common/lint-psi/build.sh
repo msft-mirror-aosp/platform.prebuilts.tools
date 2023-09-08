@@ -61,6 +61,7 @@ if [[ ! "${CUSTOM_KOTLIN_DIR:-}" ]]; then
     git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/kotlin-compiler-patch.diff"
     git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/analysis-api-patch.diff"
     git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/analysis-api-1.9.20.diff"
+    git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/analysis-api-2.0.diff"
     git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/light-class-kts-interface.diff"
 fi
 if [[ ! "${CUSTOM_INTELLIJ_DIR:-}" ]]; then
