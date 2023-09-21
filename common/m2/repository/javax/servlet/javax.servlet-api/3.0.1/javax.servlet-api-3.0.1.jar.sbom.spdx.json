@@ -3,7 +3,8 @@
   "spdxVersion" : "SPDX-2.3",
   "creationInfo" : {
     "created" : "2023-08-31T16:27:12Z",
-    "creators" : [ "Organization: Google LLC", "Person: alyukhan@google.com" ]
+    "creators" : [ "Organization: Google LLC", "Person: alyukhan@google.com" ],
+    "licenseListVersion" : "3.20"
   },
   "name" : "Java Servlet API",
   "dataLicense" : "CC0-1.0",
@@ -32,12 +33,13 @@
       "referenceLocator" : "pkg:maven/javax.servlet/javax.servlet-api@3.0.1?repository_url=plugins.gradle.org%2Fm2",
       "referenceType" : "purl"
     } ],
-    "filesAnalyzed" : false,
+    "filesAnalyzed" : true,
     "homepage" : "http://servlet-spec.java.net",
     "licenseConcluded" : "LicenseRef-Java-Servlet-API",
     "licenseDeclared" : "LicenseRef-Java-Servlet-API",
     "name" : "javax.servlet/javax.servlet-api@3.0.1",
-    "supplier" : "Organization: GlassFish Community"
+    "supplier" : "Organization: GlassFish Community",
+    "versionInfo" : "3.0.1"
   } ],
   "relationships" : [ {
     "spdxElementId" : "SPDXRef-DOCUMENT",
@@ -45,8 +47,8 @@
     "relatedSpdxElement" : "SPDXRef-PREBUILT-Java-Servlet-API"
   }, {
     "spdxElementId" : "SPDXRef-PREBUILT-Java-Servlet-API",
-    "relationshipType" : "DEPENDS_ON",
+    "relationshipType" : "CONTAINS",
     "relatedSpdxElement" : "NOASSERTION",
-    "comment" : "Dependencies are not analyzed."
+    "comment" : "The package may have other packages embedded in it, but the author has insufficient information to treat this as other than unknown at this point in time."
   } ]
 }
