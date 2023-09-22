@@ -1,8 +1,27 @@
+diff --git a/analysis/analysis-api-standalone/analysis-api-fir-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/project/structure/FirStandaloneServiceRegistrar.kt b/analysis/analysis-api-standalone/analysis-api-fir-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/project/structure/FirStandaloneServiceRegistrar.kt
+index bef504680fb2..6e6d46ac18fb 100644
+--- a/analysis/analysis-api-standalone/analysis-api-fir-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/project/structure/FirStandaloneServiceRegistrar.kt
++++ b/analysis/analysis-api-standalone/analysis-api-fir-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/project/structure/FirStandaloneServiceRegistrar.kt
+@@ -41,7 +41,6 @@ object FirStandaloneServiceRegistrar : AnalysisApiStandaloneServiceRegistrar {
+     }
+ 
+     override fun registerProjectExtensionPoints(project: MockProject) {
+-        IrGenerationExtension.registerExtensionPoint(project)
+         FirExtensionRegistrarAdapter.registerExtensionPoint(project)
+         LLFirSessionConfigurator.registerExtensionPoint(project)
+     }
+@@ -70,4 +69,4 @@ object FirStandaloneServiceRegistrar : AnalysisApiStandaloneServiceRegistrar {
+             registerExtension(PsiElementFinderImpl(project), disposable)
+         }
+     }
+-}
+\ No newline at end of file
++}
 diff --git a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KtModuleUtils.kt b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KtModuleUtils.kt
-index 527966765db..16284fd6828 100644
+index 4c0d25f4a100..e8dea7f4261a 100644
 --- a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KtModuleUtils.kt
 +++ b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KtModuleUtils.kt
-@@ -61,7 +61,8 @@ internal fun TargetPlatform.getAnalyzerServices(): PlatformDependentAnalyzerServ
+@@ -62,7 +62,8 @@ internal fun TargetPlatform.getAnalyzerServices(): PlatformDependentAnalyzerServ
   * Such source roots are either [KotlinSourceRoot] or [JavaSourceRoot], and thus
   * this util collects all `.kt` and `.java` files under source roots.
   */
@@ -12,44 +31,59 @@ index 527966765db..16284fd6828 100644
      compilerConfig: CompilerConfiguration,
      includeDirectoryRoot: Boolean = false,
  ): Set<String> {
-@@ -127,7 +128,8 @@ private fun collectSourceFilePaths(
+@@ -131,7 +132,8 @@ private fun collectSourceFilePaths(
      )
  }
-
+ 
 -internal inline fun <reified T : PsiFileSystemItem> getPsiFilesFromPaths(
 +// Expose to use at AA FE1.0
 +public inline fun <reified T : PsiFileSystemItem> getPsiFilesFromPaths(
      project: Project,
      paths: Collection<String>,
  ): List<T> {
-@@ -146,7 +148,8 @@ internal inline fun <reified T : PsiFileSystemItem> getPsiFilesFromPaths(
+@@ -150,7 +152,8 @@ internal inline fun <reified T : PsiFileSystemItem> getPsiFilesFromPaths(
      }
  }
-
+ 
 -internal fun buildKtModuleProviderByCompilerConfiguration(
 +// Expose to use at AA FE1.0
 +public fun buildKtModuleProviderByCompilerConfiguration(
      compilerConfig: CompilerConfiguration,
      project: Project,
      ktFiles: List<KtFile>,
-diff --git a/analysis/analysis-api-providers/src/org/jetbrains/kotlin/analysis/providers/impl/KotlinStaticDeclarationProvider.kt b/analysis/analysis-api-providers/src/org/jetbrains/kotlin/analysis/providers/impl/KotlinStaticDeclarationProvider.kt
-index 265b7368cc87..72df0df7b893 100644
---- a/analysis/analysis-api-providers/src/org/jetbrains/kotlin/analysis/providers/impl/KotlinStaticDeclarationProvider.kt
-+++ b/analysis/analysis-api-providers/src/org/jetbrains/kotlin/analysis/providers/impl/KotlinStaticDeclarationProvider.kt
-@@ -253,6 +253,7 @@ public class KotlinStaticDeclarationProviderFactory(
-             }
-         }
- 
-+        if (System.getProperty("lint.use.fir.uast", "false").toBoolean()) {
-         loadBuiltIns().forEach { ktFileStub ->
-             val ktFile: KtFile = ktFileStub.psi
-             addToFacadeFileMap(ktFile)
-@@ -269,6 +270,7 @@ public class KotlinStaticDeclarationProviderFactory(
-             // top-level functions and properties, built-in classes
-             ktFileStub.childrenStubs.forEach(::indexStub)
-         }
-+        }
- 
-         // Indexing user source files
-         files.forEach {
+diff --git a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/api/standalone/StandaloneAnalysisAPISessionBuilder.kt b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/api/standalone/StandaloneAnalysisAPISessionBuilder.kt
+index 8bb2abafb093..1f8fe89e4a18 100644
+--- a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/api/standalone/StandaloneAnalysisAPISessionBuilder.kt
++++ b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/api/standalone/StandaloneAnalysisAPISessionBuilder.kt
+@@ -45,6 +45,7 @@ public class StandaloneAnalysisAPISessionBuilder(
+     applicationDisposable: Disposable,
+     projectDisposable: Disposable,
+     unitTestMode: Boolean,
++    compilerConfiguration: CompilerConfiguration = CompilerConfiguration(),
+     classLoader: ClassLoader = MockProject::class.java.classLoader
+ ) {
+     init {
+@@ -61,6 +62,7 @@ public class StandaloneAnalysisAPISessionBuilder(
+             projectDisposable,
+             applicationDisposable,
+             unitTestMode,
++            compilerConfiguration,
+             classLoader = classLoader
+         )
 
+@@ -227,6 +229,7 @@ public inline fun buildStandaloneAnalysisAPISession(
+     projectDisposable: Disposable = Disposer.newDisposable("StandaloneAnalysisAPISession.project"),
+     unitTestMode: Boolean = false,
+     withPsiDeclarationFromBinaryModuleProvider: Boolean = false,
++    compilerConfiguration: CompilerConfiguration = CompilerConfiguration(),
+     classLoader: ClassLoader = MockProject::class.java.classLoader,
+     init: StandaloneAnalysisAPISessionBuilder.() -> Unit
+ ): StandaloneAnalysisAPISession {
+@@ -237,6 +240,7 @@ public inline fun buildStandaloneAnalysisAPISession(
+         applicationDisposable,
+         projectDisposable,
+         unitTestMode,
++        compilerConfiguration,
+         classLoader
+     ).apply(init).build(
+         withPsiDeclarationFromBinaryModuleProvider,

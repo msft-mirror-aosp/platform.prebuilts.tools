@@ -1,16 +1,16 @@
 diff --git a/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt b/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt
-index 914c096ceab0..b73bbbee6812 100644
+index c808c727b080..925721f0b31c 100644
 --- a/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt
 +++ b/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt
-@@ -40,6 +40,7 @@ import org.jetbrains.kotlin.name.FqName
+@@ -41,6 +41,7 @@ import org.jetbrains.kotlin.name.FqName
  import org.jetbrains.kotlin.resolve.jvm.KotlinCliJavaFileManager
  import org.jetbrains.kotlin.util.PerformanceCounter
  import org.jetbrains.kotlin.utils.addIfNotNull
 +import org.jetbrains.kotlin.utils.getOrPutNullable
- import java.util.*
-
+ 
  // TODO: do not inherit from CoreJavaFileManager to avoid accidental usage of its methods which do not use caches/indices
-@@ -73,7 +73,8 @@ class KotlinCliJavaFileManagerImpl(private val myPsiManager: PsiManager) : CoreJ
+ // Currently, the only relevant usage of this class as CoreJavaFileManager is at CoreJavaDirectoryService.getPackage,
+@@ -73,7 +74,8 @@ class KotlinCliJavaFileManagerImpl(private val myPsiManager: PsiManager) : CoreJ
      private fun findVirtualFileForTopLevelClass(classId: ClassId, searchScope: GlobalSearchScope): VirtualFile? {
          val relativeClassName = classId.relativeClassName.asString()
          val outerMostClassFqName = classId.packageFqName.child(classId.relativeClassName.pathSegments().first())
@@ -21,10 +21,10 @@ index 914c096ceab0..b73bbbee6812 100644
              // class files for the previous build on the class path.
              //
 diff --git a/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt b/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
-index 8c1a65f2fa8e..00954c9d5bd4 100644
+index f3d4b631f3c7..ea9cbe45c250 100644
 --- a/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
 +++ b/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
-@@ -378,7 +378,9 @@ class KotlinCoreEnvironment private constructor(
+@@ -382,7 +382,9 @@ class KotlinCoreEnvironment private constructor(
              is JvmModulePathRoot ->
                  if (root.file.isFile) findJarRoot(root.file) else findExistingRoot(root, "Java module root")
              is JavaSourceRoot ->
@@ -35,23 +35,7 @@ index 8c1a65f2fa8e..00954c9d5bd4 100644
              is VirtualJvmClasspathRoot -> root.file
              else ->
                  throw IllegalStateException("Unexpected root: $root")
-@@ -633,11 +635,15 @@ class KotlinCoreEnvironment private constructor(
-                                 "(cp:\n  ${(Thread.currentThread().contextClassLoader as? UrlClassLoader)?.urls?.joinToString("\n  ") { it.file }})"
-                     )
- 
-+            try {
-             CoreApplicationEnvironment.registerExtensionPointAndExtensions(
-                 FileSystems.getDefault().getPath(pluginRoot.path),
-                 configFilePath,
-                 ApplicationManager.getApplication().extensionArea
-             )
-+            } catch (e: RuntimeException) {
-+              // IDEA-311845: ExpiredPluginsState reads bin/idea.properties
-+            }
-         }
- 
-         @JvmStatic
-@@ -661,7 +667,6 @@ class KotlinCoreEnvironment private constructor(
+@@ -665,7 +671,6 @@ class KotlinCoreEnvironment private constructor(
              CollectAdditionalSourcesExtension.registerExtensionPoint(project)
              ProcessSourcesBeforeCompilingExtension.registerExtensionPoint(project)
              ExtraImportsProviderExtension.registerExtensionPoint(project)

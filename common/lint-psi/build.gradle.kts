@@ -62,9 +62,8 @@ tasks.jar { enabled = false }
 // This is where we decide which files go into which jars. See the README for details.
 dependencies {
     "intellij-core-content"("com.jetbrains.intellij.java:java-psi-impl:$intellijVersion")
-    "intellij-core-content"("com.jetbrains.intellij.platform:util-ex:$intellijVersion") { isTransitive = false } // Temporary for LazyKt (till 232)
-    "intellij-core-content"("com.jetbrains.intellij.platform:jps-model-impl:$intellijVersion") // Contains JavaSdkUtil.
-    "intellij-core-content"("com.jetbrains.intellij.platform:project-model:$intellijVersion") // safeAnalyzeUtils depends on it
+    "intellij-core-content"("com.jetbrains.intellij.platform:jps-model-impl:$intellijVersion") { isTransitive = false } // Contains JavaSdkUtil.
+    "intellij-core-content"("com.jetbrains.intellij.platform:project-model:$intellijVersion") // includes transitive for render-resources / previewlib/cli
 
     "kotlin-compiler-content"("org.jetbrains.kotlin:kotlin-jps-common-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:kotlin-compiler-common-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
@@ -136,12 +135,12 @@ tasks.named<Jar>("uast-kotlin-sources-jar") {
 }
 
 tasks.withType<JavaCompile> {
-    java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+    java.toolchain.languageVersion.set(JavaLanguageVersion.of(11))
 }
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "11"
         freeCompilerArgs = listOf(
             "-Xjvm-default=all",
         )
