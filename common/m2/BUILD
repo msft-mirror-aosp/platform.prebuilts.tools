@@ -712,6 +712,7 @@ filegroup(
         "repository/com/google/http-client/google-http-client/1.42.3/google-http-client-1.42.3.jar",
         "repository/io/opencensus/opencensus-api/0.31.1/opencensus-api-0.31.1.jar",
         "repository/io/opencensus/opencensus-contrib-http-util/0.31.1/opencensus-contrib-http-util-0.31.1.jar",
+        "repository/com/google/oauth-client/google-oauth-client/1.34.1/google-oauth-client-1.34.1.jar",
     ],
     visibility = ["//visibility:public"],
 )

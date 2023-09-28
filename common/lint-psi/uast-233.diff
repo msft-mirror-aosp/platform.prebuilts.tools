@@ -39,3 +39,24 @@ index 669638dd7b10e..aa94796248e02 100644
                  } ?: return null
                  val psiClass = toPsiClass(ktType, source = null, classOrObject, classOrObject.typeOwnerKind)
                  return when (classOrObject) {
+diff --git a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt
+index bf353dbf479bf..0308e065c383c 100644
+--- a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt
++++ b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt
+@@ -11,7 +11,6 @@ import org.jetbrains.kotlin.analysis.api.calls.KtCallableMemberCall
+ import org.jetbrains.kotlin.analysis.api.calls.symbol
+ import org.jetbrains.kotlin.analysis.api.components.buildClassType
+ import org.jetbrains.kotlin.analysis.api.getModule
+-import org.jetbrains.kotlin.analysis.api.lifetime.KtAlwaysAccessibleLifetimeTokenFactory
+ import org.jetbrains.kotlin.analysis.api.symbols.*
+ import org.jetbrains.kotlin.analysis.api.types.*
+ import org.jetbrains.kotlin.analysis.project.structure.KtSourceModule
+@@ -39,7 +38,7 @@ internal inline fun <R> analyzeForUast(
+     useSiteKtElement: KtElement,
+     action: KtAnalysisSession.() -> R
+ ): R =
+-    analyze(useSiteKtElement, KtAlwaysAccessibleLifetimeTokenFactory, action)
++    analyze(useSiteKtElement, action)
+ 
+ internal fun KtAnalysisSession.containingKtClass(
+     ktConstructorSymbol: KtConstructorSymbol,
