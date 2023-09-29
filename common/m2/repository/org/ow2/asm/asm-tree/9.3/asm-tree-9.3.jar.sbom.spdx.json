@@ -2,8 +2,9 @@
   "SPDXID" : "SPDXRef-DOCUMENT",
   "spdxVersion" : "SPDX-2.3",
   "creationInfo" : {
-    "created" : "2023-09-28T22:45:13Z",
-    "creators" : [ "Organization: Google LLC", "Person: alyukhan@google.com" ]
+    "created" : "2023-08-31T16:25:25Z",
+    "creators" : [ "Organization: Google LLC", "Person: alyukhan@google.com" ],
+    "licenseListVersion" : "3.20"
   },
   "name" : "asm-tree",
   "dataLicense" : "CC0-1.0",
@@ -13,7 +14,7 @@
     "name" : "BSD-3-Clause",
     "seeAlsos" : [ "https://asm.ow2.io/license.html" ]
   } ],
-  "documentNamespace" : "https://spdx.google/AndroidStudio-a0fd4639-0329-47e4-b21f-08a0231450ba",
+  "documentNamespace" : "https://spdx.google/AndroidStudio-cf9782fd-da38-4a26-9422-a8f659653904",
   "packages" : [ {
     "SPDXID" : "SPDXRef-PREBUILT-asm-tree",
     "checksums" : [ {
@@ -23,7 +24,7 @@
       "algorithm" : "SHA1",
       "checksumValue" : "78d2ecd61318b5a58cd04fb237636c0e86b77d97"
     } ],
-    "comment" : "This component was downloaded from a maven repository.",
+    "comment" : "This component was downloaded from a maven repo.",
     "copyrightText" : "NOASSERTION",
     "description" : "Tree API of ASM, a very small and fast Java bytecode manipulation framework",
     "downloadLocation" : "https://plugins.gradle.org/m2/org/ow2/asm/asm-tree/9.3/asm-tree-9.3.jar",
@@ -32,13 +33,13 @@
       "referenceLocator" : "pkg:maven/org.ow2.asm/asm-tree@9.3?repository_url=plugins.gradle.org%2Fm2",
       "referenceType" : "purl"
     } ],
-    "filesAnalyzed" : false,
+    "filesAnalyzed" : true,
     "homepage" : "http://asm.ow2.io/",
     "licenseConcluded" : "LicenseRef-asm-tree",
     "licenseDeclared" : "LicenseRef-asm-tree",
     "name" : "org.ow2.asm/asm-tree@9.3",
-    "versionInfo": "9.3",
-    "supplier" : "Organization: OW2"
+    "supplier" : "Organization: OW2",
+    "versionInfo" : "9.3"
   } ],
   "relationships" : [ {
     "spdxElementId" : "SPDXRef-DOCUMENT",
@@ -46,8 +47,8 @@
     "relatedSpdxElement" : "SPDXRef-PREBUILT-asm-tree"
   }, {
     "spdxElementId" : "SPDXRef-PREBUILT-asm-tree",
-    "relationshipType" : "DEPENDS_ON",
+    "relationshipType" : "CONTAINS",
     "relatedSpdxElement" : "NOASSERTION",
-    "comment" : "Dependencies are not analyzed."
+    "comment" : "The package may have other packages embedded in it, but the author has insufficient information to treat this as other than unknown at this point in time."
   } ]
 }
