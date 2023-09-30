@@ -61,17 +61,6 @@ license {
 }
 
 license {
-    name: "m2_truth_license",
-    visibility: [":__subpackages__"],
-    license_kinds: [
-        "SPDX-license-identifier-Apache-2.0",
-    ],
-    license_text: [
-        "repository/com/google/truth/LICENSE.txt",
-    ]
-}
-
-license {
     name: "m2_guava_license",
     visibility: [":__subpackages__"],
     license_kinds: [
@@ -246,22 +235,6 @@ java_import {
 }
 
 java_import {
-    name: "truth-prebuilt-jar",
-    jars: ["repository/com/google/truth/truth/1.0.1/truth-1.0.1.jar"],
-    sdk_version: "current",
-    host_supported: true,
-    licenses: ["m2_truth_license"]
-}
-
-java_import {
-    name: "truth-java8-extension-jar",
-    jars: ["repository/com/google/truth/extensions/truth-java8-extension/1.0.1/truth-java8-extension-1.0.1.jar"],
-    sdk_version: "current",
-    host_supported: true,
-    licenses: ["m2_truth_license"]
-}
-
-java_import {
     name: "rxjava",
     jars: [
         "repository/io/reactivex/rxjava2/rxjava/2.2.9/rxjava-2.2.9.jar",
@@ -328,29 +301,6 @@ java_library_static {
         "objenesis",
     ],
     sdk_version: "current",
-}
-
-java_library_static {
-    name: "truth-prebuilt",
-    static_libs: [
-        "truth-prebuilt-jar",
-        "asm-9.2",
-        "diffutils-prebuilt-jar",
-        "guava",
-    ],
-    host_supported: true,
-    sdk_version: "current",
-    licenses: [
-        "m2_truth_license",
-        "m2_guava_license",
-        "m2_java_diff_license",
-    ]
-}
-
-// Wrapper for the above. TODO: Remove.
-java_library_host {
-    name: "truth-host-prebuilt",
-    static_libs: ["truth-prebuilt"],
 }
 
 license {
