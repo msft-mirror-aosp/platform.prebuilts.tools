@@ -61,17 +61,6 @@ license {
 }
 
 license {
-    name: "m2_truth_license",
-    visibility: [":__subpackages__"],
-    license_kinds: [
-        "SPDX-license-identifier-Apache-2.0",
-    ],
-    license_text: [
-        "repository/com/google/truth/LICENSE.txt",
-    ]
-}
-
-license {
     name: "m2_guava_license",
     visibility: [":__subpackages__"],
     license_kinds: [
@@ -173,6 +162,17 @@ license {
     ]
 }
 
+license {
+    name: "m2_turbine_license",
+    visibility: [":__subpackages__"],
+    license_kinds: [
+        "SPDX-license-identifier-Apache-2.0",
+    ],
+    license_text: [
+        "repository/com/google/turbine/LICENSE"
+    ]
+}
+
 java_import {
     name: "byte-buddy-prebuilt-jar",
     jars: ["repository/net/bytebuddy/byte-buddy/1.12.16/byte-buddy-1.12.16.jar",
@@ -227,22 +227,6 @@ java_import {
     name: "inline-mockito4-prebuilt-jar",
     jars: ["repository/org/mockito/mockito-inline/4.8.1/mockito-inline-4.8.1.jar"],
     sdk_version: "current",
-}
-
-java_import {
-    name: "truth-prebuilt-jar",
-    jars: ["repository/com/google/truth/truth/1.0.1/truth-1.0.1.jar"],
-    sdk_version: "current",
-    host_supported: true,
-    licenses: ["m2_truth_license"]
-}
-
-java_import {
-    name: "truth-java8-extension-jar",
-    jars: ["repository/com/google/truth/extensions/truth-java8-extension/1.0.1/truth-java8-extension-1.0.1.jar"],
-    sdk_version: "current",
-    host_supported: true,
-    licenses: ["m2_truth_license"]
 }
 
 java_import {
@@ -314,29 +298,6 @@ java_library_static {
     sdk_version: "current",
 }
 
-java_library_static {
-    name: "truth-prebuilt",
-    static_libs: [
-        "truth-prebuilt-jar",
-        "asm-9.2",
-        "diffutils-prebuilt-jar",
-        "guava",
-    ],
-    host_supported: true,
-    sdk_version: "current",
-    licenses: [
-        "m2_truth_license",
-        "m2_guava_license",
-        "m2_java_diff_license",
-    ]
-}
-
-// Wrapper for the above. TODO: Remove.
-java_library_host {
-    name: "truth-host-prebuilt",
-    static_libs: ["truth-prebuilt"],
-}
-
 license {
     name: "m2_clikt_license",
     visibility: [":__subpackages__"],
@@ -354,6 +315,7 @@ java_import {
     jars: [
 	"repository/com/github/ajalt/clikt/clikt-jvm/3.5.3/clikt-jvm-3.5.3.jar",
         "repository/com/google/guava/guava/23.0/guava-23.0.jar",
+        "repository/com/google/turbine/0.1/turbine-0.1.jar",
         "repository/javax/xml/bind/jaxb-api/2.2.12-b140109.1041/jaxb-api-2.2.12-b140109.1041.jar",
         "repository/org/jetbrains/trove4j/trove4j/20160824/trove4j-20160824.jar",
         "repository/org/ow2/asm/asm/6.1.1/asm-6.1.1.jar",
@@ -362,6 +324,7 @@ java_import {
     licenses: [
         "m2_clikt_license",
         "m2_guava_license",
+        "m2_turbine_license"
     ],
 }
 
@@ -388,7 +351,7 @@ java_import {
 java_import {
   name: "wire-runtime-prebuilt-jar",
   jars: [
-    "repository/com/squareup/wire/wire-runtime-jvm/4.4.1/wire-runtime-jvm-4.4.1.jar",
+    "repository/com/squareup/wire/wire-runtime-jvm/4.7.0/wire-runtime-jvm-4.7.0.jar",
   ],
 }
 
