@@ -514,91 +514,6 @@ filegroup(
 
 # managed by go/iml_to_build
 jvm_import(
-    name = "compose-desktop-animation",
-    # do not sort: must match IML order
-    jars = [
-        "repository/org/jetbrains/compose/animation/animation-core-desktop/1.3.1/animation-core-desktop-1.3.1.jar",
-        "repository/org/jetbrains/compose/animation/animation-desktop/1.3.1/animation-desktop-1.3.1.jar",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
-    name = "compose-desktop-foundation",
-    # do not sort: must match IML order
-    jars = [
-        "repository/org/jetbrains/compose/foundation/foundation-layout-desktop/1.3.1/foundation-layout-desktop-1.3.1.jar",
-        "repository/org/jetbrains/compose/foundation/foundation-desktop/1.3.1/foundation-desktop-1.3.1.jar",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
-    name = "compose-desktop-material",
-    # do not sort: must match IML order
-    jars = [
-        "repository/org/jetbrains/compose/material/material-desktop/1.3.1/material-desktop-1.3.1.jar",
-        "repository/org/jetbrains/compose/material/material-icons-core-desktop/1.3.1/material-icons-core-desktop-1.3.1.jar",
-        "repository/org/jetbrains/compose/material/material-ripple-desktop/1.3.1/material-ripple-desktop-1.3.1.jar",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
-    name = "compose-desktop-runtime",
-    # do not sort: must match IML order
-    jars = [
-        "repository/org/jetbrains/compose/runtime/runtime-desktop/1.3.1/runtime-desktop-1.3.1.jar",
-        "repository/org/jetbrains/compose/runtime/runtime-saveable-desktop/1.3.1/runtime-saveable-desktop-1.3.1.jar",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
-    name = "compose-desktop-ui",
-    # do not sort: must match IML order
-    jars = [
-        "repository/org/jetbrains/compose/ui/ui-desktop/1.3.1/ui-desktop-1.3.1.jar",
-        "repository/org/jetbrains/compose/ui/ui-geometry-desktop/1.3.1/ui-geometry-desktop-1.3.1.jar",
-        "repository/org/jetbrains/compose/ui/ui-graphics-desktop/1.3.1/ui-graphics-desktop-1.3.1.jar",
-        "repository/org/jetbrains/compose/ui/ui-text-desktop/1.3.1/ui-text-desktop-1.3.1.jar",
-        "repository/org/jetbrains/compose/ui/ui-unit-desktop/1.3.1/ui-unit-desktop-1.3.1.jar",
-        "repository/org/jetbrains/compose/ui/ui-util-desktop/1.3.1/ui-util-desktop-1.3.1.jar",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
-    name = "skiko",
-    # do not sort: must match IML order
-    jars = [
-        "repository/org/jetbrains/skiko/skiko-awt/0.7.55/skiko-awt-0.7.55.jar",
-        "repository/org/jetbrains/skiko/skiko-awt-runtime-linux-x64/0.7.55/skiko-awt-runtime-linux-x64-0.7.55.jar",
-        "repository/org/jetbrains/skiko/skiko-awt-runtime-macos-arm64/0.7.55/skiko-awt-runtime-macos-arm64-0.7.55.jar",
-        "repository/org/jetbrains/skiko/skiko-awt-runtime-macos-x64/0.7.55/skiko-awt-runtime-macos-x64-0.7.55.jar",
-        "repository/org/jetbrains/skiko/skiko-awt-runtime-windows-x64/0.7.55/skiko-awt-runtime-windows-x64-0.7.55.jar",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
-    name = "compose-desktop-ui-test",
-    # do not sort: must match IML order
-    jars = [
-        "repository/org/jetbrains/compose/ui/ui-test-junit4-desktop/1.3.1/ui-test-junit4-desktop-1.3.1.jar",
-        "repository/org/jetbrains/compose/ui/ui-test-desktop/1.3.1/ui-test-desktop-1.3.1.jar",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
     name = "trace-perfetto-library",
     jars = ["repository/androidx/tracing/tracing-perfetto-handshake/1.0.0-beta02/tracing-perfetto-handshake-1.0.0-beta02.jar"],
     visibility = ["//visibility:public"],
@@ -743,5 +658,55 @@ filegroup(
 filegroup(
     name = "google-api-services-sourcerepo_files",
     srcs = ["repository/com/google/apis/google-api-services-sourcerepo/v1-rev20230123-2.0.0/google-api-services-sourcerepo-v1-rev20230123-2.0.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+filegroup(
+    name = "jewel_files",
+    # do not sort: must match IML order
+    srcs = [
+        "repository/org/jetbrains/jewel/jewel-core/0.7.2/jewel-core-0.7.2.jar",
+        "repository/org/jetbrains/jewel/jewel-int-ui-core/0.7.2/jewel-int-ui-core-0.7.2.jar",
+        "repository/org/jetbrains/jewel/jewel-int-ui-standalone/0.7.2/jewel-int-ui-standalone-0.7.2.jar",
+        "repository/org/jetbrains/jewel/jewel-ide-laf-bridge/0.7.2/jewel-ide-laf-bridge-0.7.2.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+filegroup(
+    name = "compose-desktop_files",
+    # do not sort: must match IML order
+    srcs = [
+        "repository/org/jetbrains/compose/animation/animation-desktop/1.5.2/animation-desktop-1.5.2.jar",
+        "repository/org/jetbrains/compose/animation/animation-core-desktop/1.5.2/animation-core-desktop-1.5.2.jar",
+        "repository/org/jetbrains/compose/runtime/runtime-saveable-desktop/1.5.2/runtime-saveable-desktop-1.5.2.jar",
+        "repository/org/jetbrains/compose/runtime/runtime-desktop/1.5.2/runtime-desktop-1.5.2.jar",
+        "repository/org/jetbrains/compose/foundation/foundation-layout-desktop/1.5.2/foundation-layout-desktop-1.5.2.jar",
+        "repository/org/jetbrains/compose/foundation/foundation-desktop/1.5.2/foundation-desktop-1.5.2.jar",
+        "repository/org/jetbrains/compose/ui/ui-unit-desktop/1.5.2/ui-unit-desktop-1.5.2.jar",
+        "repository/org/jetbrains/compose/ui/ui-text-desktop/1.5.2/ui-text-desktop-1.5.2.jar",
+        "repository/org/jetbrains/compose/ui/ui-util-desktop/1.5.2/ui-util-desktop-1.5.2.jar",
+        "repository/org/jetbrains/compose/ui/ui-graphics-desktop/1.5.2/ui-graphics-desktop-1.5.2.jar",
+        "repository/org/jetbrains/compose/ui/ui-geometry-desktop/1.5.2/ui-geometry-desktop-1.5.2.jar",
+        "repository/org/jetbrains/compose/ui/ui-desktop/1.5.2/ui-desktop-1.5.2.jar",
+        "repository/org/jetbrains/skiko/skiko-awt/0.7.77/skiko-awt-0.7.77.jar",
+        "repository/org/jetbrains/skiko/skiko-awt-runtime-linux-x64/0.7.77/skiko-awt-runtime-linux-x64-0.7.77.jar",
+        "repository/org/jetbrains/skiko/skiko-awt-runtime-macos-arm64/0.7.77/skiko-awt-runtime-macos-arm64-0.7.77.jar",
+        "repository/org/jetbrains/skiko/skiko-awt-runtime-macos-x64/0.7.77/skiko-awt-runtime-macos-x64-0.7.77.jar",
+        "repository/org/jetbrains/skiko/skiko-awt-runtime-windows-x64/0.7.77/skiko-awt-runtime-windows-x64-0.7.77.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+filegroup(
+    name = "compose-desktop-test_files",
+    # do not sort: must match IML order
+    srcs = [
+        "repository/org/jetbrains/compose/ui/ui-test-junit4-desktop/1.5.2/ui-test-junit4-desktop-1.5.2.jar",
+        "repository/org/jetbrains/compose/ui/ui-test-desktop/1.5.2/ui-test-desktop-1.5.2.jar",
+    ],
     visibility = ["//visibility:public"],
 )
