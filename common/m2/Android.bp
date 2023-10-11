@@ -174,6 +174,11 @@ license {
 }
 
 java_import {
+    name: "apache-commons-lang3",
+    jars: ["repository/org/apache/commons/commons-lang3/3.4/commons-lang3-3.4.jar"],
+}
+
+java_import {
     name: "byte-buddy-prebuilt-jar",
     jars: ["repository/net/bytebuddy/byte-buddy/1.12.16/byte-buddy-1.12.16.jar",
             "repository/net/bytebuddy/byte-buddy-agent/1.12.16/byte-buddy-agent-1.12.16.jar"],
@@ -376,13 +381,6 @@ java_import {
     jars: [
         "repository/com/squareup/javawriter/2.1.1/javawriter-2.1.1.jar",
     ],
-}
-
-// TODO: remove in favor of kotlinx_metadata_jvm
-java_import {
-    name: "kotlinx-metadata-jvm",
-    jars: ["repository/org/jetbrains/kotlinx/kotlinx-metadata-jvm/0.1.0/kotlinx-metadata-jvm-0.1.0.jar"],
-    host_supported: true,
 }
 
 java_import_host {
