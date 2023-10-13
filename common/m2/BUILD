@@ -657,13 +657,6 @@ filegroup(
 
 # managed by go/iml_to_build
 filegroup(
-    name = "google-api-services-sourcerepo_files",
-    srcs = ["repository/com/google/apis/google-api-services-sourcerepo/v1-rev20230123-2.0.0/google-api-services-sourcerepo-v1-rev20230123-2.0.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-filegroup(
     name = "jewel_files",
     # do not sort: must match IML order
     srcs = [
@@ -709,5 +702,12 @@ filegroup(
         "repository/org/jetbrains/compose/ui/ui-test-junit4-desktop/1.5.2/ui-test-junit4-desktop-1.5.2.jar",
         "repository/org/jetbrains/compose/ui/ui-test-desktop/1.5.2/ui-test-desktop-1.5.2.jar",
     ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+filegroup(
+    name = "google-api-services-sourcerepo_files",
+    srcs = ["repository/com/google/apis/google-api-services-sourcerepo/v1-rev20230123-2.0.0/google-api-services-sourcerepo-v1-rev20230123-2.0.0.jar"],
     visibility = ["//visibility:public"],
 )
