@@ -63,12 +63,12 @@ java_import(
 )
 
 filegroup(
-    name = "io.grpc.protoc-gen-grpc-java.1.45.1_exe",
+    name = "io.grpc.protoc-gen-grpc-java.1.57.0_exe",
     srcs = select({
-        "//prebuilts/tools/common/m2:osx-arm64": ["repository/io/grpc/protoc-gen-grpc-java/1.45.1/protoc-gen-grpc-java-1.45.1-osx-aarch_64.exe"],
-        "//prebuilts/tools/common/m2:osx-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.45.1/protoc-gen-grpc-java-1.45.1-osx-x86_64.exe"],
-        "//prebuilts/tools/common/m2:windows-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.45.1/protoc-gen-grpc-java-1.45.1-windows-x86_64.exe"],
-        "//prebuilts/tools/common/m2:linux-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.45.1/protoc-gen-grpc-java-1.45.1-linux-x86_64.exe"],
+        "//prebuilts/tools/common/m2:osx-arm64": ["repository/io/grpc/protoc-gen-grpc-java/1.57.0/protoc-gen-grpc-java-1.57.0-osx-aarch_64.exe"],
+        "//prebuilts/tools/common/m2:osx-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.57.0/protoc-gen-grpc-java-1.57.0-osx-x86_64.exe"],
+        "//prebuilts/tools/common/m2:windows-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.57.0/protoc-gen-grpc-java-1.57.0-windows-x86_64.exe"],
+        "//prebuilts/tools/common/m2:linux-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.57.0/protoc-gen-grpc-java-1.57.0-linux-x86_64.exe"],
     }),
     visibility = ["//visibility:public"],
 )
@@ -136,6 +136,38 @@ java_import(
 filegroup(
     name = "com.google.protobuf.protobuf-java.3.19.6.include_include",
     srcs = glob(["repository/com/google/protobuf/protobuf-java/3.19.6/**/*.proto"]),
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "com.google.protobuf.protoc.3.22.3_exe",
+    srcs = select({
+        "//prebuilts/tools/common/m2:osx-arm64": ["repository/com/google/protobuf/protoc/3.22.3/protoc-3.22.3-osx-aarch_64.exe"],
+        "//prebuilts/tools/common/m2:osx-x86_64": ["repository/com/google/protobuf/protoc/3.22.3/protoc-3.22.3-osx-x86_64.exe"],
+        "//prebuilts/tools/common/m2:windows-x86_64": ["repository/com/google/protobuf/protoc/3.22.3/protoc-3.22.3-windows-x86_64.exe"],
+        "//prebuilts/tools/common/m2:linux-x86_64": ["repository/com/google/protobuf/protoc/3.22.3/protoc-3.22.3-linux-x86_64.exe"],
+    }),
+    visibility = ["//visibility:public"],
+)
+
+java_import(
+    name = "com.google.protobuf.protobuf-java-util.3.22.3",
+    jars = ["repository/com/google/protobuf/protobuf-java-util/3.22.3/protobuf-java-util-3.22.3.jar"],
+    visibility = ["//visibility:public"],
+)
+
+java_import(
+    name = "com.google.protobuf.protobuf-java.3.22.3",
+    jars = ["repository/com/google/protobuf/protobuf-java/3.22.3/protobuf-java-3.22.3.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# Manually extrated proto files from the jar
+# So bazel can consume them without wrapping the
+# proto compiler in a extract jar step.
+filegroup(
+    name = "com.google.protobuf.protobuf-java.3.22.3.include_include",
+    srcs = glob(["repository/com/google/protobuf/protobuf-java/3.22.3/**/*.proto"]),
     visibility = ["//visibility:public"],
 )
 
