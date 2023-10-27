@@ -702,8 +702,8 @@ filegroup(
 )
 
 # managed by go/iml_to_build
-filegroup(
-    name = "google-api-services-sourcerepo_files",
-    srcs = ["repository/com/google/apis/google-api-services-sourcerepo/v1-rev20230123-2.0.0/google-api-services-sourcerepo-v1-rev20230123-2.0.0.jar"],
+jvm_import(
+    name = "google-api-services-sourcerepo",
+    jars = ["repository/com/google/apis/google-api-services-sourcerepo/v1-rev20230123-2.0.0/google-api-services-sourcerepo-v1-rev20230123-2.0.0.jar"],
     visibility = ["//visibility:public"],
 )
