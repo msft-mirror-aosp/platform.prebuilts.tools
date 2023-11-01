@@ -684,23 +684,30 @@ filegroup(
 )
 
 # managed by go/iml_to_build
-filegroup(
-    name = "jewel_files",
+jvm_import(
+    name = "google-api-services-sourcerepo",
+    jars = ["repository/com/google/apis/google-api-services-sourcerepo/v1-rev20230123-2.0.0/google-api-services-sourcerepo-v1-rev20230123-2.0.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "jewel-ide",
     # do not sort: must match IML order
-    srcs = [
-        "repository/org/jetbrains/jewel/jewel-core/0.7.2/jewel-core-0.7.2.jar",
-        "repository/org/jetbrains/jewel/jewel-int-ui-core/0.7.2/jewel-int-ui-core-0.7.2.jar",
-        "repository/org/jetbrains/jewel/jewel-int-ui-standalone/0.7.2/jewel-int-ui-standalone-0.7.2.jar",
-        "repository/org/jetbrains/jewel/jewel-ide-laf-bridge/0.7.2/jewel-ide-laf-bridge-0.7.2.jar",
+    jars = [
+        "repository/org/jetbrains/jewel/jewel-ui/0.8.1/jewel-ui-0.8.1.jar",
+        "repository/org/jetbrains/jewel/jewel-foundation/0.8.1/jewel-foundation-0.8.1.jar",
+        "repository/org/jetbrains/jewel/jewel-ide-laf-bridge/0.8.1-ij-232/jewel-ide-laf-bridge-0.8.1-ij-232.jar",
+        "repository/org/jetbrains/jewel/jewel-ide-laf-bridge-platform-specific/0.8.1-ij-232/jewel-ide-laf-bridge-platform-specific-0.8.1-ij-232.jar",
     ],
     visibility = ["//visibility:public"],
 )
 
 # managed by go/iml_to_build
-filegroup(
-    name = "compose-desktop_files",
+jvm_import(
+    name = "compose-desktop",
     # do not sort: must match IML order
-    srcs = [
+    jars = [
         "repository/org/jetbrains/compose/animation/animation-desktop/1.5.2/animation-desktop-1.5.2.jar",
         "repository/org/jetbrains/compose/animation/animation-core-desktop/1.5.2/animation-core-desktop-1.5.2.jar",
         "repository/org/jetbrains/compose/runtime/runtime-saveable-desktop/1.5.2/runtime-saveable-desktop-1.5.2.jar",
@@ -723,19 +730,19 @@ filegroup(
 )
 
 # managed by go/iml_to_build
-filegroup(
-    name = "compose-desktop-test_files",
-    # do not sort: must match IML order
-    srcs = [
-        "repository/org/jetbrains/compose/ui/ui-test-junit4-desktop/1.5.2/ui-test-junit4-desktop-1.5.2.jar",
-        "repository/org/jetbrains/compose/ui/ui-test-desktop/1.5.2/ui-test-desktop-1.5.2.jar",
-    ],
+jvm_import(
+    name = "jewel-standalone",
+    jars = ["repository/org/jetbrains/jewel/jewel-int-ui-standalone/0.8.1/jewel-int-ui-standalone-0.8.1.jar"],
     visibility = ["//visibility:public"],
 )
 
 # managed by go/iml_to_build
 jvm_import(
-    name = "google-api-services-sourcerepo",
-    jars = ["repository/com/google/apis/google-api-services-sourcerepo/v1-rev20230123-2.0.0/google-api-services-sourcerepo-v1-rev20230123-2.0.0.jar"],
+    name = "compose-desktop-test",
+    # do not sort: must match IML order
+    jars = [
+        "repository/org/jetbrains/compose/ui/ui-test-junit4-desktop/1.5.2/ui-test-junit4-desktop-1.5.2.jar",
+        "repository/org/jetbrains/compose/ui/ui-test-desktop/1.5.2/ui-test-desktop-1.5.2.jar",
+    ],
     visibility = ["//visibility:public"],
 )
