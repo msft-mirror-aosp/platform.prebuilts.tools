@@ -695,10 +695,10 @@ jvm_import(
     name = "jewel-ide",
     # do not sort: must match IML order
     jars = [
-        "repository/org/jetbrains/jewel/jewel-ui/0.8.1/jewel-ui-0.8.1.jar",
         "repository/org/jetbrains/jewel/jewel-foundation/0.8.1/jewel-foundation-0.8.1.jar",
         "repository/org/jetbrains/jewel/jewel-ide-laf-bridge/0.8.1-ij-232/jewel-ide-laf-bridge-0.8.1-ij-232.jar",
         "repository/org/jetbrains/jewel/jewel-ide-laf-bridge-platform-specific/0.8.1-ij-232/jewel-ide-laf-bridge-platform-specific-0.8.1-ij-232.jar",
+        "repository/org/jetbrains/jewel/jewel-ui/0.8.1/jewel-ui-0.8.1.jar",
     ],
     visibility = ["//visibility:public"],
 )
