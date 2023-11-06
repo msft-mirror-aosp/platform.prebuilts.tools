@@ -62,6 +62,12 @@ java_import(
     visibility = ["//visibility:public"],
 )
 
+java_import(
+    name = "io.grpc.grpc-api.1.57.0",
+    jars = ["repository/io/grpc/grpc-api/1.57.0/grpc-api-1.57.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
 filegroup(
     name = "io.grpc.protoc-gen-grpc-java.1.57.0_exe",
     srcs = select({
