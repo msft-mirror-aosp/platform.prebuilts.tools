@@ -62,6 +62,12 @@ java_import(
     visibility = ["//visibility:public"],
 )
 
+java_import(
+    name = "io.grpc.grpc-api.1.57.0",
+    jars = ["repository/io/grpc/grpc-api/1.57.0/grpc-api-1.57.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
 filegroup(
     name = "io.grpc.protoc-gen-grpc-java.1.57.0_exe",
     srcs = select({
@@ -695,10 +701,10 @@ jvm_import(
     name = "jewel-ide",
     # do not sort: must match IML order
     jars = [
-        "repository/org/jetbrains/jewel/jewel-ui/0.8.1/jewel-ui-0.8.1.jar",
-        "repository/org/jetbrains/jewel/jewel-foundation/0.8.1/jewel-foundation-0.8.1.jar",
-        "repository/org/jetbrains/jewel/jewel-ide-laf-bridge/0.8.1-ij-232/jewel-ide-laf-bridge-0.8.1-ij-232.jar",
-        "repository/org/jetbrains/jewel/jewel-ide-laf-bridge-platform-specific/0.8.1-ij-232/jewel-ide-laf-bridge-platform-specific-0.8.1-ij-232.jar",
+        "repository/org/jetbrains/jewel/jewel-foundation/0.9.0/jewel-foundation-0.9.0.jar",
+        "repository/org/jetbrains/jewel/jewel-ide-laf-bridge/0.9.0-ij-232/jewel-ide-laf-bridge-0.9.0-ij-232.jar",
+        "repository/org/jetbrains/jewel/jewel-ide-laf-bridge-platform-specific/0.9.0-ij-232/jewel-ide-laf-bridge-platform-specific-0.9.0-ij-232.jar",
+        "repository/org/jetbrains/jewel/jewel-ui/0.9.0/jewel-ui-0.9.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -708,23 +714,23 @@ jvm_import(
     name = "compose-desktop",
     # do not sort: must match IML order
     jars = [
-        "repository/org/jetbrains/compose/animation/animation-desktop/1.5.2/animation-desktop-1.5.2.jar",
-        "repository/org/jetbrains/compose/animation/animation-core-desktop/1.5.2/animation-core-desktop-1.5.2.jar",
-        "repository/org/jetbrains/compose/runtime/runtime-saveable-desktop/1.5.2/runtime-saveable-desktop-1.5.2.jar",
-        "repository/org/jetbrains/compose/runtime/runtime-desktop/1.5.2/runtime-desktop-1.5.2.jar",
-        "repository/org/jetbrains/compose/foundation/foundation-layout-desktop/1.5.2/foundation-layout-desktop-1.5.2.jar",
-        "repository/org/jetbrains/compose/foundation/foundation-desktop/1.5.2/foundation-desktop-1.5.2.jar",
-        "repository/org/jetbrains/compose/ui/ui-unit-desktop/1.5.2/ui-unit-desktop-1.5.2.jar",
-        "repository/org/jetbrains/compose/ui/ui-text-desktop/1.5.2/ui-text-desktop-1.5.2.jar",
-        "repository/org/jetbrains/compose/ui/ui-util-desktop/1.5.2/ui-util-desktop-1.5.2.jar",
-        "repository/org/jetbrains/compose/ui/ui-graphics-desktop/1.5.2/ui-graphics-desktop-1.5.2.jar",
-        "repository/org/jetbrains/compose/ui/ui-geometry-desktop/1.5.2/ui-geometry-desktop-1.5.2.jar",
-        "repository/org/jetbrains/compose/ui/ui-desktop/1.5.2/ui-desktop-1.5.2.jar",
-        "repository/org/jetbrains/skiko/skiko-awt/0.7.77/skiko-awt-0.7.77.jar",
-        "repository/org/jetbrains/skiko/skiko-awt-runtime-linux-x64/0.7.77/skiko-awt-runtime-linux-x64-0.7.77.jar",
-        "repository/org/jetbrains/skiko/skiko-awt-runtime-macos-arm64/0.7.77/skiko-awt-runtime-macos-arm64-0.7.77.jar",
-        "repository/org/jetbrains/skiko/skiko-awt-runtime-macos-x64/0.7.77/skiko-awt-runtime-macos-x64-0.7.77.jar",
-        "repository/org/jetbrains/skiko/skiko-awt-runtime-windows-x64/0.7.77/skiko-awt-runtime-windows-x64-0.7.77.jar",
+        "repository/org/jetbrains/compose/animation/animation-desktop/1.5.10/animation-desktop-1.5.10.jar",
+        "repository/org/jetbrains/compose/animation/animation-core-desktop/1.5.10/animation-core-desktop-1.5.10.jar",
+        "repository/org/jetbrains/compose/runtime/runtime-saveable-desktop/1.5.10/runtime-saveable-desktop-1.5.10.jar",
+        "repository/org/jetbrains/compose/runtime/runtime-desktop/1.5.10/runtime-desktop-1.5.10.jar",
+        "repository/org/jetbrains/compose/foundation/foundation-layout-desktop/1.5.10/foundation-layout-desktop-1.5.10.jar",
+        "repository/org/jetbrains/compose/foundation/foundation-desktop/1.5.10/foundation-desktop-1.5.10.jar",
+        "repository/org/jetbrains/compose/ui/ui-unit-desktop/1.5.10/ui-unit-desktop-1.5.10.jar",
+        "repository/org/jetbrains/compose/ui/ui-text-desktop/1.5.10/ui-text-desktop-1.5.10.jar",
+        "repository/org/jetbrains/compose/ui/ui-util-desktop/1.5.10/ui-util-desktop-1.5.10.jar",
+        "repository/org/jetbrains/compose/ui/ui-graphics-desktop/1.5.10/ui-graphics-desktop-1.5.10.jar",
+        "repository/org/jetbrains/compose/ui/ui-geometry-desktop/1.5.10/ui-geometry-desktop-1.5.10.jar",
+        "repository/org/jetbrains/compose/ui/ui-desktop/1.5.10/ui-desktop-1.5.10.jar",
+        "repository/org/jetbrains/skiko/skiko-awt/0.7.85/skiko-awt-0.7.85.jar",
+        "repository/org/jetbrains/skiko/skiko-awt-runtime-linux-x64/0.7.85/skiko-awt-runtime-linux-x64-0.7.85.jar",
+        "repository/org/jetbrains/skiko/skiko-awt-runtime-macos-arm64/0.7.85/skiko-awt-runtime-macos-arm64-0.7.85.jar",
+        "repository/org/jetbrains/skiko/skiko-awt-runtime-macos-x64/0.7.85/skiko-awt-runtime-macos-x64-0.7.85.jar",
+        "repository/org/jetbrains/skiko/skiko-awt-runtime-windows-x64/0.7.85/skiko-awt-runtime-windows-x64-0.7.85.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -732,7 +738,7 @@ jvm_import(
 # managed by go/iml_to_build
 jvm_import(
     name = "jewel-standalone",
-    jars = ["repository/org/jetbrains/jewel/jewel-int-ui-standalone/0.8.1/jewel-int-ui-standalone-0.8.1.jar"],
+    jars = ["repository/org/jetbrains/jewel/jewel-int-ui-standalone/0.9.0/jewel-int-ui-standalone-0.9.0.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -741,8 +747,8 @@ jvm_import(
     name = "compose-desktop-test",
     # do not sort: must match IML order
     jars = [
-        "repository/org/jetbrains/compose/ui/ui-test-junit4-desktop/1.5.2/ui-test-junit4-desktop-1.5.2.jar",
-        "repository/org/jetbrains/compose/ui/ui-test-desktop/1.5.2/ui-test-desktop-1.5.2.jar",
+        "repository/org/jetbrains/compose/ui/ui-test-junit4-desktop/1.5.10/ui-test-junit4-desktop-1.5.10.jar",
+        "repository/org/jetbrains/compose/ui/ui-test-desktop/1.5.10/ui-test-desktop-1.5.10.jar",
     ],
     visibility = ["//visibility:public"],
 )
