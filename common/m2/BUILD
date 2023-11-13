@@ -513,7 +513,7 @@ jvm_import(
 jvm_import(
     name = "compose-compiler-hosted",
     jars = [
-        "repository/org/jetbrains/compose/compiler/compiler-hosted/1.4.5/compiler-hosted-1.4.5.jar",
+        "repository/org/jetbrains/compose/compiler/compiler-hosted/1.4.8.1-dev03/compiler-hosted-1.4.8.1-dev03.jar",
     ],
     visibility = ["//visibility:public"],
 )
