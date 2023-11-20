@@ -356,7 +356,7 @@ filegroup(
 # managed by go/iml_to_build
 filegroup(
     name = "aapt-proto_files",
-    srcs = ["repository/com/android/tools/build/aapt2-proto/0.3.1/aapt2-proto-0.3.1.jar"],
+    srcs = ["repository/com/android/tools/build/aapt2-proto/8.1.0-10154469/aapt2-proto-8.1.0-10154469.jar"],
     visibility = ["//visibility:public"],
 )
 
