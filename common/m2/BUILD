@@ -700,10 +700,10 @@ jvm_import(
     name = "jewel-ide",
     # do not sort: must match IML order
     jars = [
-        "repository/org/jetbrains/jewel/jewel-foundation/0.9.0/jewel-foundation-0.9.0.jar",
-        "repository/org/jetbrains/jewel/jewel-ide-laf-bridge/0.9.0-ij-232/jewel-ide-laf-bridge-0.9.0-ij-232.jar",
-        "repository/org/jetbrains/jewel/jewel-ide-laf-bridge-platform-specific/0.9.0-ij-232/jewel-ide-laf-bridge-platform-specific-0.9.0-ij-232.jar",
-        "repository/org/jetbrains/jewel/jewel-ui/0.9.0/jewel-ui-0.9.0.jar",
+        "repository/org/jetbrains/jewel/jewel-foundation/0.10.0/jewel-foundation-0.10.0.jar",
+        "repository/org/jetbrains/jewel/jewel-ide-laf-bridge/0.10.0-ij-232/jewel-ide-laf-bridge-0.10.0-ij-232.jar",
+        "repository/org/jetbrains/jewel/jewel-ide-laf-bridge-platform-specific/0.10.0-ij-232/jewel-ide-laf-bridge-platform-specific-0.10.0-ij-232.jar",
+        "repository/org/jetbrains/jewel/jewel-ui/0.10.0/jewel-ui-0.10.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -737,7 +737,7 @@ jvm_import(
 # managed by go/iml_to_build
 jvm_import(
     name = "jewel-standalone",
-    jars = ["repository/org/jetbrains/jewel/jewel-int-ui-standalone/0.9.0/jewel-int-ui-standalone-0.9.0.jar"],
+    jars = ["repository/org/jetbrains/jewel/jewel-int-ui-standalone/0.10.0/jewel-int-ui-standalone-0.10.0.jar"],
     visibility = ["//visibility:public"],
 )
 
