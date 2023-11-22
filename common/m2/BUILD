@@ -207,10 +207,9 @@ filegroup(
     name = "mockito_files",
     # do not sort: must match IML order
     srcs = [
-        "repository/org/mockito/mockito-core/4.8.0/mockito-core-4.8.0.jar",
-        "repository/net/bytebuddy/byte-buddy/1.12.14/byte-buddy-1.12.14.jar",
-        "repository/net/bytebuddy/byte-buddy-agent/1.12.14/byte-buddy-agent-1.12.14.jar",
-        "repository/org/mockito/mockito-inline/4.8.0/mockito-inline-4.8.0.jar",
+        "repository/org/mockito/mockito-core/5.6.0/mockito-core-5.6.0.jar",
+        "repository/net/bytebuddy/byte-buddy/1.14.8/byte-buddy-1.14.8.jar",
+        "repository/net/bytebuddy/byte-buddy-agent/1.14.8/byte-buddy-agent-1.14.8.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -357,7 +356,7 @@ filegroup(
 # managed by go/iml_to_build
 filegroup(
     name = "aapt-proto_files",
-    srcs = ["repository/com/android/tools/build/aapt2-proto/0.3.1/aapt2-proto-0.3.1.jar"],
+    srcs = ["repository/com/android/tools/build/aapt2-proto/8.1.0-10154469/aapt2-proto-8.1.0-10154469.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -701,10 +700,10 @@ jvm_import(
     name = "jewel-ide",
     # do not sort: must match IML order
     jars = [
-        "repository/org/jetbrains/jewel/jewel-foundation/0.9.0/jewel-foundation-0.9.0.jar",
-        "repository/org/jetbrains/jewel/jewel-ide-laf-bridge/0.9.0-ij-232/jewel-ide-laf-bridge-0.9.0-ij-232.jar",
-        "repository/org/jetbrains/jewel/jewel-ide-laf-bridge-platform-specific/0.9.0-ij-232/jewel-ide-laf-bridge-platform-specific-0.9.0-ij-232.jar",
-        "repository/org/jetbrains/jewel/jewel-ui/0.9.0/jewel-ui-0.9.0.jar",
+        "repository/org/jetbrains/jewel/jewel-foundation/0.10.0/jewel-foundation-0.10.0.jar",
+        "repository/org/jetbrains/jewel/jewel-ide-laf-bridge/0.10.0-ij-232/jewel-ide-laf-bridge-0.10.0-ij-232.jar",
+        "repository/org/jetbrains/jewel/jewel-ide-laf-bridge-platform-specific/0.10.0-ij-232/jewel-ide-laf-bridge-platform-specific-0.10.0-ij-232.jar",
+        "repository/org/jetbrains/jewel/jewel-ui/0.10.0/jewel-ui-0.10.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -738,7 +737,7 @@ jvm_import(
 # managed by go/iml_to_build
 jvm_import(
     name = "jewel-standalone",
-    jars = ["repository/org/jetbrains/jewel/jewel-int-ui-standalone/0.9.0/jewel-int-ui-standalone-0.9.0.jar"],
+    jars = ["repository/org/jetbrains/jewel/jewel-int-ui-standalone/0.10.0/jewel-int-ui-standalone-0.10.0.jar"],
     visibility = ["//visibility:public"],
 )
 
