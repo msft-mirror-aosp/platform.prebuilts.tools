@@ -5,14 +5,14 @@
 #
 # Usage:
 #
-#   download-binaries-from-placer.sh [--strip] [--linux <build#>] [--mac <build#>] [--win <build#>]
+#   download-binaries-from-placer.sh [--nostrip] [--linux <build#>] [--mac <build#>] [--win <build#>]
 #
 # To find the release number, go to http://go/as-clangd-kokoro and find the
 # successful builds that you have triggered.
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 # Stripping, if enabled,  is only done for linux binaries.
-STRIP_BINARIES=0
+STRIP_BINARIES=1
 
 while (( "$#" )); do
   case "$1" in
@@ -43,12 +43,12 @@ while (( "$#" )); do
         exit 1
       fi
       ;;
-    --strip)
-        STRIP_BINARIES=1
+    --nostrip)
+        STRIP_BINARIES=0
         shift 1
       ;;
     -*|--*=)
-      echo "Usage: download-binaries-from-placer.sh [--strip] [--linux <build#>] [--mac <build#>] [--win <build#>]" >&2
+      echo "Usage: download-binaries-from-placer.sh [--nostrip] [--linux <build#>] [--mac <build#>] [--win <build#>]" >&2
       exit 1
       ;;
   esac
@@ -63,6 +63,8 @@ if [[ -n "${LINUX_RELEASE}" ]]; then
   chmod -v +x "${BIN_DIR}/linux/x64"/clangd
   if [[ "${STRIP_BINARIES}" == 1 ]]; then
     strip -v "${BIN_DIR}/linux/x64"/{clangd,libc++.so.1}
+  else
+    echo "Stripping is disabled"
   fi
 fi
 if [[ -n "${MAC_RELEASE}" ]]; then
