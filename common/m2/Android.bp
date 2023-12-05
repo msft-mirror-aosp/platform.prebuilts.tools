@@ -192,6 +192,14 @@ java_library_static {
     sdk_version: "current",
 }
 
+// Compatibility wrapper to inline with main
+java_library_static {
+    name: "truth",
+    static_libs: ["truth-prebuilt"],
+    host_supported: true,
+    sdk_version: "current",
+}
+
 java_library_static {
     name: "truth-prebuilt",
     static_libs: [
