@@ -5,7 +5,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("java")
-    kotlin("jvm") version "1.8.0" // Aim to match the Kotlin version below.
+    kotlin("jvm") version "1.9.0" // Aim to match the Kotlin version below.
 }
 
 val intellijVersion = getEnvOrError("INTELLIJ_VERSION")
@@ -143,6 +143,10 @@ tasks.withType<KotlinCompile> {
         jvmTarget = "11"
         freeCompilerArgs = listOf(
             "-Xjvm-default=all",
+            "-Xcontext-receivers",
+            "-opt-in=org.jetbrains.kotlin.analysis.api.lifetime.KtAllowProhibitedAnalyzeFromWriteAction",
+            "-api-version=1.9",      // Until the entire build target is 2.0?
+            "-language-version=1.9", // Until the entire build target is 2.0?
         )
         suppressWarnings = true
     }

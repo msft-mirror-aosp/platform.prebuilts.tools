@@ -18,10 +18,10 @@ index bef504680fb2..6e6d46ac18fb 100644
 \ No newline at end of file
 +}
 diff --git a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KtModuleUtils.kt b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KtModuleUtils.kt
-index 4c0d25f4a100..e8dea7f4261a 100644
+index 48a21aa00c780..d0ff0999f07fb 100644
 --- a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KtModuleUtils.kt
 +++ b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KtModuleUtils.kt
-@@ -62,7 +62,8 @@ internal fun TargetPlatform.getAnalyzerServices(): PlatformDependentAnalyzerServ
+@@ -55,7 +55,8 @@ internal fun TargetPlatform.getAnalyzerServices(): PlatformDependentAnalyzerServ
   * Such source roots are either [KotlinSourceRoot] or [JavaSourceRoot], and thus
   * this util collects all `.kt` and `.java` files under source roots.
   */
@@ -30,32 +30,32 @@ index 4c0d25f4a100..e8dea7f4261a 100644
 +public fun getSourceFilePaths(
      compilerConfig: CompilerConfiguration,
      includeDirectoryRoot: Boolean = false,
- ): Set<String> {
-@@ -131,7 +132,8 @@ private fun collectSourceFilePaths(
-     )
+ ): Set<Path> {
+@@ -127,7 +128,8 @@ internal fun Path.hasSuitableExtensionToAnalyse(): Boolean {
+             extension == JavaFileType.DEFAULT_EXTENSION
  }
- 
+
 -internal inline fun <reified T : PsiFileSystemItem> getPsiFilesFromPaths(
 +// Expose to use at AA FE1.0
 +public inline fun <reified T : PsiFileSystemItem> getPsiFilesFromPaths(
-     project: Project,
-     paths: Collection<String>,
+     kotlinCoreProjectEnvironment: KotlinCoreProjectEnvironment,
+     paths: Collection<Path>,
  ): List<T> {
-@@ -150,7 +152,8 @@ internal inline fun <reified T : PsiFileSystemItem> getPsiFilesFromPaths(
+@@ -146,7 +148,8 @@ internal inline fun <reified T : PsiFileSystemItem> getPsiFilesFromPaths(
      }
  }
- 
+
 -internal fun buildKtModuleProviderByCompilerConfiguration(
 +// Expose to use at AA FE1.0
 +public fun buildKtModuleProviderByCompilerConfiguration(
+     kotlinCoreProjectEnvironment: KotlinCoreProjectEnvironment,
      compilerConfig: CompilerConfiguration,
-     project: Project,
      ktFiles: List<KtFile>,
 diff --git a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/api/standalone/StandaloneAnalysisAPISessionBuilder.kt b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/api/standalone/StandaloneAnalysisAPISessionBuilder.kt
-index 8bb2abafb093..1f8fe89e4a18 100644
+index 770a1029c6c05..7de41f2cfb47b 100644
 --- a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/api/standalone/StandaloneAnalysisAPISessionBuilder.kt
 +++ b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/api/standalone/StandaloneAnalysisAPISessionBuilder.kt
-@@ -45,6 +45,7 @@ public class StandaloneAnalysisAPISessionBuilder(
+@@ -47,6 +47,7 @@ public class StandaloneAnalysisAPISessionBuilder(
      applicationDisposable: Disposable,
      projectDisposable: Disposable,
      unitTestMode: Boolean,
@@ -63,23 +63,23 @@ index 8bb2abafb093..1f8fe89e4a18 100644
      classLoader: ClassLoader = MockProject::class.java.classLoader
  ) {
      init {
-@@ -61,6 +62,7 @@ public class StandaloneAnalysisAPISessionBuilder(
+@@ -63,6 +64,7 @@ public class StandaloneAnalysisAPISessionBuilder(
              projectDisposable,
              applicationDisposable,
-             unitTestMode,
+             KotlinCoreApplicationEnvironmentMode.fromUnitTestModeFlag(unitTestMode),
 +            compilerConfiguration,
              classLoader = classLoader
          )
-
-@@ -227,6 +229,7 @@ public inline fun buildStandaloneAnalysisAPISession(
+ 
+@@ -233,6 +235,7 @@ public inline fun buildStandaloneAnalysisAPISession(
      projectDisposable: Disposable = Disposer.newDisposable("StandaloneAnalysisAPISession.project"),
      unitTestMode: Boolean = false,
      withPsiDeclarationFromBinaryModuleProvider: Boolean = false,
 +    compilerConfiguration: CompilerConfiguration = CompilerConfiguration(),
      classLoader: ClassLoader = MockProject::class.java.classLoader,
-     init: StandaloneAnalysisAPISessionBuilder.() -> Unit
+     init: StandaloneAnalysisAPISessionBuilder.() -> Unit,
  ): StandaloneAnalysisAPISession {
-@@ -237,6 +240,7 @@ public inline fun buildStandaloneAnalysisAPISession(
+@@ -243,6 +246,7 @@ public inline fun buildStandaloneAnalysisAPISession(
          applicationDisposable,
          projectDisposable,
          unitTestMode,
