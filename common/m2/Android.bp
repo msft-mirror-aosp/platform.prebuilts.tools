@@ -162,6 +162,17 @@ license {
     ]
 }
 
+license {
+    name: "m2_turbine_license",
+    visibility: [":__subpackages__"],
+    license_kinds: [
+        "SPDX-license-identifier-Apache-2.0",
+    ],
+    license_text: [
+        "repository/com/google/turbine/LICENSE"
+    ]
+}
+
 java_import {
     name: "apache-commons-lang3",
     jars: ["repository/org/apache/commons/commons-lang3/3.4/commons-lang3-3.4.jar"],
@@ -340,6 +351,7 @@ java_import {
     jars: [
 	"repository/com/github/ajalt/clikt/clikt-jvm/3.5.3/clikt-jvm-3.5.3.jar",
         "repository/com/google/guava/guava/23.0/guava-23.0.jar",
+        "repository/com/google/turbine/0.2.1/turbine-0.2.1.jar",
         "repository/javax/xml/bind/jaxb-api/2.2.12-b140109.1041/jaxb-api-2.2.12-b140109.1041.jar",
         "repository/org/jetbrains/trove4j/trove4j/20160824/trove4j-20160824.jar",
         "repository/org/ow2/asm/asm/6.1.1/asm-6.1.1.jar",
@@ -348,6 +360,7 @@ java_import {
     licenses: [
         "m2_clikt_license",
         "m2_guava_license",
+        "m2_turbine_license"
     ],
 }
 
