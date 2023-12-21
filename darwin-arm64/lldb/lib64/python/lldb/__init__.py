@@ -116,6 +116,21 @@ def lldb_iter(obj, getsize, getelem):
     for i in range(size()):
         yield elem(i)
 
+def __int__(self):
+  pass
+
+def __hex__(self):
+  pass
+
+def __oct__(self):
+  pass
+
+def __len__(self):
+  pass
+
+def __iter__(self):
+  pass
+
 INT32_MAX = _lldb.INT32_MAX
 
 UINT32_MAX = _lldb.UINT32_MAX
@@ -744,9 +759,15 @@ eLanguageTypeAda2005 = _lldb.eLanguageTypeAda2005
 
 eLanguageTypeAda2012 = _lldb.eLanguageTypeAda2012
 
-eLanguageTypeMipsAssembler = _lldb.eLanguageTypeMipsAssembler
+eLanguageTypeHIP = _lldb.eLanguageTypeHIP
+
+eLanguageTypeAssembly = _lldb.eLanguageTypeAssembly
+
+eLanguageTypeC_sharp = _lldb.eLanguageTypeC_sharp
 
 eLanguageTypeMojo = _lldb.eLanguageTypeMojo
+
+eLanguageTypeMipsAssembler = _lldb.eLanguageTypeMipsAssembler
 
 eNumLanguageTypes = _lldb.eNumLanguageTypes
 
@@ -976,6 +997,8 @@ eArgTypeTargetID = _lldb.eArgTypeTargetID
 
 eArgTypeStopHookID = _lldb.eArgTypeStopHookID
 
+eArgTypeCompletionType = _lldb.eArgTypeCompletionType
+
 eArgTypeLastArg = _lldb.eArgTypeLastArg
 
 eSymbolTypeAny = _lldb.eSymbolTypeAny
@@ -1158,6 +1181,8 @@ eSectionTypeDWARFDebugLocListsDwo = _lldb.eSectionTypeDWARFDebugLocListsDwo
 
 eSectionTypeDWARFDebugTuIndex = _lldb.eSectionTypeDWARFDebugTuIndex
 
+eSectionTypeCTF = _lldb.eSectionTypeCTF
+
 eEmulateInstructionOptionNone = _lldb.eEmulateInstructionOptionNone
 
 eEmulateInstructionOptionAutoAdvancePC = _lldb.eEmulateInstructionOptionAutoAdvancePC
@@ -1267,6 +1292,10 @@ eStructuredDataTypeBoolean = _lldb.eStructuredDataTypeBoolean
 eStructuredDataTypeString = _lldb.eStructuredDataTypeString
 
 eStructuredDataTypeDictionary = _lldb.eStructuredDataTypeDictionary
+
+eStructuredDataTypeSignedInteger = _lldb.eStructuredDataTypeSignedInteger
+
+eStructuredDataTypeUnsignedInteger = _lldb.eStructuredDataTypeUnsignedInteger
 
 eTypeClassInvalid = _lldb.eTypeClassInvalid
 
@@ -1628,6 +1657,60 @@ eWatchPointValueKindVariable = _lldb.eWatchPointValueKindVariable
 
 eWatchPointValueKindExpression = _lldb.eWatchPointValueKindExpression
 
+eNoCompletion = _lldb.eNoCompletion
+
+eSourceFileCompletion = _lldb.eSourceFileCompletion
+
+eDiskFileCompletion = _lldb.eDiskFileCompletion
+
+eDiskDirectoryCompletion = _lldb.eDiskDirectoryCompletion
+
+eSymbolCompletion = _lldb.eSymbolCompletion
+
+eModuleCompletion = _lldb.eModuleCompletion
+
+eSettingsNameCompletion = _lldb.eSettingsNameCompletion
+
+ePlatformPluginCompletion = _lldb.ePlatformPluginCompletion
+
+eArchitectureCompletion = _lldb.eArchitectureCompletion
+
+eVariablePathCompletion = _lldb.eVariablePathCompletion
+
+eRegisterCompletion = _lldb.eRegisterCompletion
+
+eBreakpointCompletion = _lldb.eBreakpointCompletion
+
+eProcessPluginCompletion = _lldb.eProcessPluginCompletion
+
+eDisassemblyFlavorCompletion = _lldb.eDisassemblyFlavorCompletion
+
+eTypeLanguageCompletion = _lldb.eTypeLanguageCompletion
+
+eFrameIndexCompletion = _lldb.eFrameIndexCompletion
+
+eModuleUUIDCompletion = _lldb.eModuleUUIDCompletion
+
+eStopHookIDCompletion = _lldb.eStopHookIDCompletion
+
+eThreadIndexCompletion = _lldb.eThreadIndexCompletion
+
+eWatchpointIDCompletion = _lldb.eWatchpointIDCompletion
+
+eBreakpointNameCompletion = _lldb.eBreakpointNameCompletion
+
+eProcessIDCompletion = _lldb.eProcessIDCompletion
+
+eProcessNameCompletion = _lldb.eProcessNameCompletion
+
+eRemoteDiskFileCompletion = _lldb.eRemoteDiskFileCompletion
+
+eRemoteDiskDirectoryCompletion = _lldb.eRemoteDiskDirectoryCompletion
+
+eTypeCategoryNameCompletion = _lldb.eTypeCategoryNameCompletion
+
+eCustomCompletion = _lldb.eCustomCompletion
+
 class SBAddress(object):
     r"""
     A section + offset based address class.
@@ -1781,6 +1864,12 @@ class SBAddress(object):
 
     def __eq__(self, other):
       return not self.__ne__(other)
+
+    def __len__(self):
+        pass
+
+    def __iter__(self):
+        pass
 
 
     __runtime_error_str = 'This resolves the SBAddress using the SBTarget from lldb.target so this property can ONLY be used in the interactive script interpreter (i.e. under the lldb script command). For things like Python based commands and breakpoint callbacks use GetLoadAddress instead.'
@@ -1987,6 +2076,25 @@ class SBAttachInfo(object):
         r"""SetScriptedProcessDictionary(SBAttachInfo self, SBStructuredData dict)"""
         return _lldb.SBAttachInfo_SetScriptedProcessDictionary(self, dict)
 
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __len__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __iter__(self):
+      pass
+
+
 # Register SBAttachInfo in _lldb:
 _lldb.SBAttachInfo_swigregister(SBAttachInfo)
 
@@ -2114,6 +2222,21 @@ class SBBlock(object):
     def __repr__(self) -> "std::string":
         r"""__repr__(SBBlock self) -> std::string"""
         return _lldb.SBBlock___repr__(self)
+
+    def __int__(self):
+        pass
+
+    def __len__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
+
+    def __iter__(self):
+        pass
 
     def get_range_at_index(self, idx):
         if idx < self.GetNumRanges():
@@ -2536,6 +2659,15 @@ class SBBreakpoint(object):
         object.'''
         return self.GetNumLocations()
 
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
+
     locations = property(get_breakpoint_location_list, None, doc='''A read only property that returns a list() of lldb.SBBreakpointLocation objects for this breakpoint.''')
     location = property(get_locations_access_object, None, doc='''A read only property that returns an object that can access locations by index (not location ID) (location = bkpt.location[12]).''')
     id = property(GetID, None, doc='''A read only property that returns the ID of this breakpoint.''')
@@ -2618,6 +2750,27 @@ class SBBreakpointList(object):
     def Clear(self) -> "void":
         r"""Clear(SBBreakpointList self)"""
         return _lldb.SBBreakpointList_Clear(self)
+
+    def __eq__(self, other):
+        return not self.__ne__(other)
+
+    def __int__(self):
+        pass
+
+    def __len__(self):
+        '''Return the number of breakpoints in a lldb.SBBreakpointList object.'''
+        return self.GetSize()
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
+
+    def __iter__(self):
+        '''Iterate over all breakpoints in a lldb.SBBreakpointList object.'''
+        return lldb_iter(self, 'GetSize', 'GetBreakpointAtIndex')
+
 
 # Register SBBreakpointList in _lldb:
 _lldb.SBBreakpointList_swigregister(SBBreakpointList)
@@ -2792,6 +2945,25 @@ class SBBreakpointLocation(object):
     def __repr__(self) -> "std::string":
         r"""__repr__(SBBreakpointLocation self) -> std::string"""
         return _lldb.SBBreakpointLocation___repr__(self)
+
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __len__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __iter__(self):
+      pass
+
 
 # Register SBBreakpointLocation in _lldb:
 _lldb.SBBreakpointLocation_swigregister(SBBreakpointLocation)
@@ -2978,6 +3150,25 @@ class SBBreakpointName(object):
         r"""__repr__(SBBreakpointName self) -> std::string"""
         return _lldb.SBBreakpointName___repr__(self)
 
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __len__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __iter__(self):
+      pass
+
+
 # Register SBBreakpointName in _lldb:
 _lldb.SBBreakpointName_swigregister(SBBreakpointName)
 
@@ -3061,6 +3252,25 @@ class SBBroadcaster(object):
     def __lt__(self, rhs: "SBBroadcaster") -> "bool":
         r"""__lt__(SBBroadcaster self, SBBroadcaster rhs) -> bool"""
         return _lldb.SBBroadcaster___lt__(self, rhs)
+
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __len__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __iter__(self):
+      pass
+
 
     def __eq__(self, rhs):
         if not isinstance(rhs, type(self)):
@@ -3284,6 +3494,25 @@ class SBCommandInterpreter(object):
         r"""ResolveCommand(SBCommandInterpreter self, char const * command_line, SBCommandReturnObject result)"""
         return _lldb.SBCommandInterpreter_ResolveCommand(self, command_line, result)
 
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __len__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __iter__(self):
+      pass
+
+
 # Register SBCommandInterpreter in _lldb:
 _lldb.SBCommandInterpreter_swigregister(SBCommandInterpreter)
 
@@ -3411,6 +3640,25 @@ class SBCommandInterpreterRunOptions(object):
         r"""SetSpawnThread(SBCommandInterpreterRunOptions self, bool arg2)"""
         return _lldb.SBCommandInterpreterRunOptions_SetSpawnThread(self, arg2)
 
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __len__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __iter__(self):
+      pass
+
+
 # Register SBCommandInterpreterRunOptions in _lldb:
 _lldb.SBCommandInterpreterRunOptions_swigregister(SBCommandInterpreterRunOptions)
 
@@ -3525,6 +3773,25 @@ class SBCommandReturnObject(object):
     def __repr__(self) -> "std::string":
         r"""__repr__(SBCommandReturnObject self) -> std::string"""
         return _lldb.SBCommandReturnObject___repr__(self)
+
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __len__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __iter__(self):
+      pass
+
 
     def SetImmediateOutputFile(self, *args) -> "void":
         r"""
@@ -3649,6 +3916,25 @@ class SBCommunication(object):
     def SetReadThreadBytesReceivedCallback(self, callback: "lldb::SBCommunication::ReadThreadBytesReceived", callback_baton: "void *") -> "bool":
         r"""SetReadThreadBytesReceivedCallback(SBCommunication self, lldb::SBCommunication::ReadThreadBytesReceived callback, void * callback_baton) -> bool"""
         return _lldb.SBCommunication_SetReadThreadBytesReceivedCallback(self, callback, callback_baton)
+
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __len__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __iter__(self):
+      pass
+
 
 # Register SBCommunication in _lldb:
 _lldb.SBCommunication_swigregister(SBCommunication)
@@ -3798,6 +4084,15 @@ class SBCompileUnit(object):
     def __repr__(self) -> "std::string":
         r"""__repr__(SBCompileUnit self) -> std::string"""
         return _lldb.SBCompileUnit___repr__(self)
+
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
 
     def __iter__(self):
         '''Iterate over all line entries in a lldb.SBCompileUnit object.'''
@@ -4005,6 +4300,23 @@ class SBData(object):
         r"""__repr__(SBData self) -> std::string"""
         return _lldb.SBData___repr__(self)
 
+    def __eq__(self, other):
+        return not self.__ne__(other)
+
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
+
+    def __len__(self):
+        return self.GetByteSize()
+
+    def __iter__(self):
+        pass
 
     class read_data_helper:
         def __init__(self, sbdata, readerfunc, item_size):
@@ -4864,6 +5176,15 @@ class SBDebugger(object):
             file = sys.stderr
         self.SetErrorFile(SBFile.Create(file, borrow=True))
 
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
+
     def __iter__(self):
         '''Iterate over all targets in a lldb.SBDebugger object.'''
         return lldb_iter(self, 'GetNumTargets', 'GetTargetAtIndex')
@@ -5043,6 +5364,21 @@ class SBDeclaration(object):
         r"""__repr__(SBDeclaration self) -> std::string"""
         return _lldb.SBDeclaration___repr__(self)
 
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
+
+    def __len__(self):
+        pass
+
+    def __iter__(self):
+        pass
+
     file = property(GetFileSpec, None, doc='''A read only property that returns an lldb object that represents the file (lldb.SBFileSpec) for this line entry.''')
     line = property(GetLine, None, doc='''A read only property that returns the 1 based line number for this line entry, a return value of zero indicates that no line information is available.''')
     column = property(GetColumn, None, doc='''A read only property that returns the 1 based column number for this line entry, a return value of zero indicates that no column information is available.''')
@@ -5186,6 +5522,24 @@ class SBError(object):
         r"""__repr__(SBError self) -> std::string"""
         return _lldb.SBError___repr__(self)
 
+    def __eq__(self, other):
+        return not self.__ne__(other)
+
+    def __int__(self):
+        return self.GetError()
+
+    def __hex__(self):
+        return self.GetError()
+
+    def __oct__(self):
+        return self.GetError()
+
+    def __len__(self):
+        pass
+
+    def __iter__(self):
+        pass
+
     value = property(GetError, None, doc='''A read only property that returns the same result as GetError().''')
     fail = property(Fail, None, doc='''A read only property that returns the same result as Fail().''')
     success = property(Success, None, doc='''A read only property that returns the same result as Success().''')
@@ -5258,6 +5612,25 @@ class SBEnvironment(object):
     def Clear(self) -> "void":
         r"""Clear(SBEnvironment self)"""
         return _lldb.SBEnvironment_Clear(self)
+
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __len__(self):
+      pass
+
+    def __iter__(self):
+      pass
+
 
 # Register SBEnvironment in _lldb:
 _lldb.SBEnvironment_swigregister(SBEnvironment)
@@ -5362,7 +5735,6 @@ class SBEvent(object):
     """
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""__init__(self, int type, str data) -> SBEvent (make an event that contains a C string)__init__(self, int type, str data) -> SBEvent (make an event that contains a C string)__init__(self, int type, str data) -> SBEvent (make an event that contains a C string)"""
@@ -5415,6 +5787,29 @@ class SBEvent(object):
         """
         return _lldb.SBEvent_GetDescription(self, *args)
 
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBEvent self) -> std::string"""
+        return _lldb.SBEvent___repr__(self)
+
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __len__(self):
+      pass
+
+    def __iter__(self):
+      pass
+
+
 # Register SBEvent in _lldb:
 _lldb.SBEvent_swigregister(SBEvent)
 
@@ -5455,6 +5850,21 @@ class SBExecutionContext(object):
     def GetFrame(self) -> "lldb::SBFrame":
         r"""GetFrame(SBExecutionContext self) -> SBFrame"""
         return _lldb.SBExecutionContext_GetFrame(self)
+
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
+
+    def __len__(self):
+        pass
+
+    def __iter__(self):
+        pass
 
     target = property(GetTarget, None, doc='''A read only property that returns the same result as GetTarget().''')
     process = property(GetProcess, None, doc='''A read only property that returns the same result as GetProcess().''')
@@ -5671,6 +6081,25 @@ class SBExpressionOptions(object):
         """
         return _lldb.SBExpressionOptions_SetAllowJIT(self, allow)
 
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __len__(self):
+      pass
+
+    def __iter__(self):
+      pass
+
+
 # Register SBExpressionOptions in _lldb:
 _lldb.SBExpressionOptions_swigregister(SBExpressionOptions)
 
@@ -5751,6 +6180,24 @@ class SBFile(object):
     def MakeBorrowedForcingIOMethods(BORROWED_FORCE_IO_METHODS: "lldb::FileSP") -> "lldb::SBFile":
         r"""MakeBorrowedForcingIOMethods(lldb::FileSP BORROWED_FORCE_IO_METHODS) -> SBFile"""
         return _lldb.SBFile_MakeBorrowedForcingIOMethods(BORROWED_FORCE_IO_METHODS)
+
+    def __eq__(self, other):
+        return not self.__ne__(other)
+
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
+
+    def __len__(self):
+        pass
+
+    def __iter__(self):
+        pass
 
     @classmethod
     def Create(cls, file, borrow=False, force_io_methods=False):
@@ -5888,6 +6335,24 @@ class SBFileSpec(object):
         r"""__repr__(SBFileSpec self) -> std::string"""
         return _lldb.SBFileSpec___repr__(self)
 
+    def __eq__(self, other):
+        return not self.__ne__(other)
+
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
+
+    def __len__(self):
+        pass
+
+    def __iter__(self):
+        pass
+
     fullpath = property(str, None, doc='''A read only property that returns the fullpath as a python string.''')
     basename = property(GetFilename, None, doc='''A read only property that returns the path basename as a python string.''')
     dirname = property(GetDirectory, None, doc='''A read only property that returns the path directory name as a python string.''')
@@ -5905,7 +6370,6 @@ class SBFileSpecList(object):
     r"""Represents a list of :py:class:`SBFileSpec`."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
@@ -5942,6 +6406,31 @@ class SBFileSpecList(object):
     def GetFileSpecAtIndex(self, idx: "uint32_t") -> "lldb::SBFileSpec const":
         r"""GetFileSpecAtIndex(SBFileSpecList self, uint32_t idx) -> SBFileSpec"""
         return _lldb.SBFileSpecList_GetFileSpecAtIndex(self, idx)
+
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBFileSpecList self) -> std::string"""
+        return _lldb.SBFileSpecList___repr__(self)
+
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __len__(self):
+      '''Return the number of FileSpec in a lldb.SBFileSpecList object.'''
+      return self.GetSize()
+
+    def __iter__(self):
+      '''Iterate over all FileSpecs in a lldb.SBFileSpecList object.'''
+      return lldb_iter(self, 'GetSize', 'GetFileSpecAtIndex')
+
 
 # Register SBFileSpecList in _lldb:
 _lldb.SBFileSpecList_swigregister(SBFileSpecList)
@@ -6272,6 +6761,24 @@ class SBFrame(object):
         r"""__repr__(SBFrame self) -> std::string"""
         return _lldb.SBFrame___repr__(self)
 
+    def __eq__(self, other):
+        return not self.__ne__(other)
+
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
+
+    def __len__(self):
+        pass
+
+    def __iter__(self):
+        pass
+
     def get_all_variables(self):
         return self.GetVariables(True,True,True,True)
 
@@ -6477,6 +6984,24 @@ class SBFunction(object):
         r"""__repr__(SBFunction self) -> std::string"""
         return _lldb.SBFunction___repr__(self)
 
+    def __eq__(self, other):
+        return not self.__ne__(other)
+
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
+
+    def __len__(self):
+        pass
+
+    def __iter__(self):
+        pass
+
     def get_instructions_from_current_target (self):
         return self.GetInstructions (target)
 
@@ -6556,6 +7081,25 @@ class SBHostOS(object):
     def ThreadJoin(thread: "lldb::thread_t", result: "lldb::thread_result_t *", err: "SBError") -> "bool":
         r"""ThreadJoin(lldb::thread_t thread, lldb::thread_result_t * result, SBError err) -> bool"""
         return _lldb.SBHostOS_ThreadJoin(thread, result, err)
+
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __len__(self):
+      pass
+
+    def __iter__(self):
+      pass
+
 
     def __init__(self):
         r"""__init__(SBHostOS self) -> SBHostOS"""
@@ -6691,6 +7235,26 @@ class SBInstruction(object):
         r"""__repr__(SBInstruction self) -> std::string"""
         return _lldb.SBInstruction___repr__(self)
 
+    def __eq__(self, other):
+        return not self.__ne__(other)
+
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        """ Returns the address of the instruction. """
+        return self.GetAddress()
+
+    def __oct__(self):
+        pass
+
+    def __len__(self):
+        """ Returns the size of the instruction. """
+        return self.GetByteSize()
+
+    def __iter__(self):
+        pass
+
     def __mnemonic_property__ (self):
         return self.GetMnemonic (target)
     def __operands_property__ (self):
@@ -6788,6 +7352,15 @@ class SBInstructionList(object):
         r"""__repr__(SBInstructionList self) -> std::string"""
         return _lldb.SBInstructionList___repr__(self)
 
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
+
     def __iter__(self):
         '''Iterate over all instructions in a lldb.SBInstructionList
         object.'''
@@ -6839,6 +7412,25 @@ class SBLanguageRuntime(object):
     def GetNameForLanguageType(language: "lldb::LanguageType") -> "char const *":
         r"""GetNameForLanguageType(lldb::LanguageType language) -> char const *"""
         return _lldb.SBLanguageRuntime_GetNameForLanguageType(language)
+
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __len__(self):
+      pass
+
+    def __iter__(self):
+      pass
+
 
     def __init__(self):
         r"""__init__(SBLanguageRuntime self) -> SBLanguageRuntime"""
@@ -7051,6 +7643,25 @@ class SBLaunchInfo(object):
         r"""SetScriptedProcessDictionary(SBLaunchInfo self, SBStructuredData dict)"""
         return _lldb.SBLaunchInfo_SetScriptedProcessDictionary(self, dict)
 
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __len__(self):
+      pass
+
+    def __iter__(self):
+      pass
+
+
 # Register SBLaunchInfo in _lldb:
 _lldb.SBLaunchInfo_swigregister(SBLaunchInfo)
 
@@ -7153,6 +7764,24 @@ class SBLineEntry(object):
     def __repr__(self) -> "std::string":
         r"""__repr__(SBLineEntry self) -> std::string"""
         return _lldb.SBLineEntry___repr__(self)
+
+    def __eq__(self, other):
+        return not self.__ne__(other)
+
+    def __int__(self):
+        return self.GetLine()
+
+    def __hex__(self):
+        return self.GetStartAddress()
+
+    def __oct__(self):
+        pass
+
+    def __len__(self):
+        pass
+
+    def __iter__(self):
+        pass
 
     file = property(GetFileSpec, None, doc='''A read only property that returns an lldb object that represents the file (lldb.SBFileSpec) for this line entry.''')
     line = property(GetLine, None, doc='''A read only property that returns the 1 based line number for this line entry, a return value of zero indicates that no line information is available.''')
@@ -7270,6 +7899,25 @@ class SBListener(object):
         r"""HandleBroadcastEvent(SBListener self, SBEvent event) -> bool"""
         return _lldb.SBListener_HandleBroadcastEvent(self, event)
 
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __len__(self):
+      pass
+
+    def __iter__(self):
+      pass
+
+
 # Register SBListener in _lldb:
 _lldb.SBListener_swigregister(SBListener)
 
@@ -7379,6 +8027,25 @@ class SBMemoryRegionInfo(object):
         r"""__repr__(SBMemoryRegionInfo self) -> std::string"""
         return _lldb.SBMemoryRegionInfo___repr__(self)
 
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __hex__(self):
+      return self.GetRegionBase()
+
+    def __oct__(self):
+      pass
+
+    def __len__(self):
+      return self.GetRegionEnd() - self.GetRegionBase()
+
+    def __iter__(self):
+      pass
+
+
 # Register SBMemoryRegionInfo in _lldb:
 _lldb.SBMemoryRegionInfo_swigregister(SBMemoryRegionInfo)
 
@@ -7418,6 +8085,27 @@ class SBMemoryRegionInfoList(object):
     def Clear(self) -> "void":
         r"""Clear(SBMemoryRegionInfoList self)"""
         return _lldb.SBMemoryRegionInfoList_Clear(self)
+
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __len__(self):
+      '''Return the number of memory region info in a lldb.SBMemoryRegionInfoList object.'''
+      return self.GetSize()
+
+    def __iter__(self):
+      '''Iterate over all the memory regions in a lldb.SBMemoryRegionInfoList object.'''
+      return lldb_iter(self, 'GetSize', 'GetMemoryRegionAtIndex')
+
 
 # Register SBMemoryRegionInfoList in _lldb:
 _lldb.SBMemoryRegionInfoList_swigregister(SBMemoryRegionInfoList)
@@ -7831,6 +8519,18 @@ class SBModule(object):
         r"""__repr__(SBModule self) -> std::string"""
         return _lldb.SBModule___repr__(self)
 
+    def __eq__(self, other):
+        return not self.__ne__(other)
+
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
+
     def __len__(self):
         '''Return the number of symbols in a lldb.SBModule object.'''
         return self.GetNumSymbols()
@@ -8182,6 +8882,22 @@ class SBModuleSpec(object):
         r"""SetUUIDBytes(SBModuleSpec self, uint8_t const * uuid, size_t uuid_len) -> bool"""
         return _lldb.SBModuleSpec_SetUUIDBytes(self, uuid, uuid_len)
 
+    def GetObjectOffset(self) -> "uint64_t":
+        r"""GetObjectOffset(SBModuleSpec self) -> uint64_t"""
+        return _lldb.SBModuleSpec_GetObjectOffset(self)
+
+    def SetObjectOffset(self, object_offset: "uint64_t") -> "void":
+        r"""SetObjectOffset(SBModuleSpec self, uint64_t object_offset)"""
+        return _lldb.SBModuleSpec_SetObjectOffset(self, object_offset)
+
+    def GetObjectSize(self) -> "uint64_t":
+        r"""GetObjectSize(SBModuleSpec self) -> uint64_t"""
+        return _lldb.SBModuleSpec_GetObjectSize(self)
+
+    def SetObjectSize(self, object_size: "uint64_t") -> "void":
+        r"""SetObjectSize(SBModuleSpec self, uint64_t object_size)"""
+        return _lldb.SBModuleSpec_SetObjectSize(self, object_size)
+
     def GetDescription(self, description: "SBStream") -> "bool":
         r"""GetDescription(SBModuleSpec self, SBStream description) -> bool"""
         return _lldb.SBModuleSpec_GetDescription(self, description)
@@ -8189,6 +8905,25 @@ class SBModuleSpec(object):
     def __repr__(self) -> "std::string":
         r"""__repr__(SBModuleSpec self) -> std::string"""
         return _lldb.SBModuleSpec___repr__(self)
+
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __len__(self):
+      pass
+
+    def __iter__(self):
+      pass
+
 
 # Register SBModuleSpec in _lldb:
 _lldb.SBModuleSpec_swigregister(SBModuleSpec)
@@ -8242,6 +8977,27 @@ class SBModuleSpecList(object):
         r"""__repr__(SBModuleSpecList self) -> std::string"""
         return _lldb.SBModuleSpecList___repr__(self)
 
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __len__(self):
+      '''Return the number of ModuleSpec in a lldb.SBModuleSpecList object.'''
+      return self.GetSize()
+
+    def __iter__(self):
+      '''Iterate over all ModuleSpecs in a lldb.SBModuleSpecList object.'''
+      return lldb_iter(self, 'GetSize', 'GetSpecAtIndex')
+
+
 # Register SBModuleSpecList in _lldb:
 _lldb.SBModuleSpecList_swigregister(SBModuleSpecList)
 
@@ -8290,6 +9046,25 @@ class SBPlatformConnectOptions(object):
     def SetLocalCacheDirectory(self, path: "char const *") -> "void":
         r"""SetLocalCacheDirectory(SBPlatformConnectOptions self, char const * path)"""
         return _lldb.SBPlatformConnectOptions_SetLocalCacheDirectory(self, path)
+
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __len__(self):
+      pass
+
+    def __iter__(self):
+      pass
+
 
 # Register SBPlatformConnectOptions in _lldb:
 _lldb.SBPlatformConnectOptions_swigregister(SBPlatformConnectOptions)
@@ -8356,6 +9131,25 @@ class SBPlatformShellCommand(object):
     def GetOutput(self) -> "char const *":
         r"""GetOutput(SBPlatformShellCommand self) -> char const *"""
         return _lldb.SBPlatformShellCommand_GetOutput(self)
+
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __len__(self):
+      pass
+
+    def __iter__(self):
+      pass
+
 
 # Register SBPlatformShellCommand in _lldb:
 _lldb.SBPlatformShellCommand_swigregister(SBPlatformShellCommand)
@@ -8514,6 +9308,29 @@ class SBPlatform(object):
     def GetEnvironment(self) -> "lldb::SBEnvironment":
         r"""GetEnvironment(SBPlatform self) -> SBEnvironment"""
         return _lldb.SBPlatform_GetEnvironment(self)
+
+    def SetLocateModuleCallback(self, callback: "lldb::SBPlatformLocateModuleCallback") -> "lldb::SBError":
+        r"""SetLocateModuleCallback(SBPlatform self, lldb::SBPlatformLocateModuleCallback callback) -> SBError"""
+        return _lldb.SBPlatform_SetLocateModuleCallback(self, callback)
+
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __len__(self):
+      pass
+
+    def __iter__(self):
+      pass
+
 
 # Register SBPlatform in _lldb:
 _lldb.SBPlatform_swigregister(SBPlatform)
@@ -8944,7 +9761,7 @@ class SBProcess(object):
 
     @staticmethod
     def GetBroadcasterClass() -> "char const *":
-        r"""GetBroadcasterClass() -> char const *"""
+        r"""Get default process broadcaster class name (lldb.process)."""
         return _lldb.SBProcess_GetBroadcasterClass()
 
     def GetDescription(self, description: "SBStream") -> "bool":
@@ -9065,7 +9882,7 @@ class SBProcess(object):
         """
         return _lldb.SBProcess_DeallocateMemory(self, ptr)
 
-    def GetScriptedImplementation(self) -> "lldb::ScriptedObject":
+    def GetScriptedImplementation(self) -> "lldb::SBScriptObject":
         r"""
 
         Returns the implementation object of the process plugin if available. None
@@ -9154,6 +9971,14 @@ class SBProcess(object):
         '''Return the number of threads in a lldb.SBProcess object.'''
         return self.GetNumThreads()
 
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
 
     threads = property(get_process_thread_list, None, doc='''A read only property that returns a list() of lldb.SBThread objects for this process.''')
     thread = property(get_threads_access_object, None, doc='''A read only property that returns an object that can access threads by thread index (thread = lldb.process.thread[12]).''')
@@ -9214,7 +10039,7 @@ def SBProcess_EventIsStructuredDataEvent(event: "SBEvent") -> "bool":
     return _lldb.SBProcess_EventIsStructuredDataEvent(event)
 
 def SBProcess_GetBroadcasterClass() -> "char const *":
-    r"""SBProcess_GetBroadcasterClass() -> char const *"""
+    r"""Get default process broadcaster class name (lldb.process)."""
     return _lldb.SBProcess_GetBroadcasterClass()
 
 class SBProcessInfo(object):
@@ -9299,6 +10124,25 @@ class SBProcessInfo(object):
         """
         return _lldb.SBProcessInfo_GetTriple(self)
 
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __len__(self):
+      pass
+
+    def __iter__(self):
+      pass
+
+
 # Register SBProcessInfo in _lldb:
 _lldb.SBProcessInfo_swigregister(SBProcessInfo)
 
@@ -9311,7 +10155,6 @@ class SBQueue(object):
     def __init__(self, *args):
         r"""
         __init__(SBQueue self) -> SBQueue
-        __init__(SBQueue self, lldb::QueueSP const & queue_sp) -> SBQueue
         __init__(SBQueue self, SBQueue rhs) -> SBQueue
         """
         _lldb.SBQueue_swiginit(self, _lldb.new_SBQueue(*args))
@@ -9382,6 +10225,25 @@ class SBQueue(object):
         """
         return _lldb.SBQueue_GetKind(self)
 
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __len__(self):
+      pass
+
+    def __iter__(self):
+      pass
+
+
 # Register SBQueue in _lldb:
 _lldb.SBQueue_swigregister(SBQueue)
 
@@ -9391,12 +10253,9 @@ class SBQueueItem(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
-    def __init__(self, *args):
-        r"""
-        __init__(SBQueueItem self) -> SBQueueItem
-        __init__(SBQueueItem self, lldb::QueueItemSP const & queue_item_sp) -> SBQueueItem
-        """
-        _lldb.SBQueueItem_swiginit(self, _lldb.new_SBQueueItem(*args))
+    def __init__(self):
+        r"""__init__(SBQueueItem self) -> SBQueueItem"""
+        _lldb.SBQueueItem_swiginit(self, _lldb.new_SBQueueItem())
     __swig_destroy__ = _lldb.delete_SBQueueItem
 
     def __nonzero__(self):
@@ -9429,13 +10288,28 @@ class SBQueueItem(object):
         r"""SetAddress(SBQueueItem self, SBAddress addr)"""
         return _lldb.SBQueueItem_SetAddress(self, addr)
 
-    def SetQueueItem(self, queue_item_sp: "lldb::QueueItemSP const &") -> "void":
-        r"""SetQueueItem(SBQueueItem self, lldb::QueueItemSP const & queue_item_sp)"""
-        return _lldb.SBQueueItem_SetQueueItem(self, queue_item_sp)
-
     def GetExtendedBacktraceThread(self, type: "char const *") -> "lldb::SBThread":
         r"""GetExtendedBacktraceThread(SBQueueItem self, char const * type) -> SBThread"""
         return _lldb.SBQueueItem_GetExtendedBacktraceThread(self, type)
+
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __hex__(self):
+      return self.GetAddress()
+
+    def __oct__(self):
+      pass
+
+    def __len__(self):
+      pass
+
+    def __iter__(self):
+      pass
+
 
 # Register SBQueueItem in _lldb:
 _lldb.SBQueueItem_swigregister(SBQueueItem)
@@ -9466,6 +10340,25 @@ class SBReproducer(object):
         r"""SetWorkingDirectory(char const * path)"""
         return _lldb.SBReproducer_SetWorkingDirectory(path)
 
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __len__(self):
+      pass
+
+    def __iter__(self):
+      pass
+
+
     def __init__(self):
         r"""__init__(SBReproducer self) -> SBReproducer"""
         _lldb.SBReproducer_swiginit(self, _lldb.new_SBReproducer())
@@ -9489,6 +10382,67 @@ def SBReproducer_SetAutoGenerate(b: "bool") -> "bool":
 def SBReproducer_SetWorkingDirectory(path: "char const *") -> "void":
     r"""SBReproducer_SetWorkingDirectory(char const * path)"""
     return _lldb.SBReproducer_SetWorkingDirectory(path)
+
+class SBScriptObject(object):
+    r"""Proxy of C++ lldb::SBScriptObject class."""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, *args):
+        r"""
+        __init__(SBScriptObject self, lldb::ScriptObjectPtr const ptr, lldb::ScriptLanguage lang) -> SBScriptObject
+        __init__(SBScriptObject self, SBScriptObject rhs) -> SBScriptObject
+        """
+        _lldb.SBScriptObject_swiginit(self, _lldb.new_SBScriptObject(*args))
+    __swig_destroy__ = _lldb.delete_SBScriptObject
+
+    def __nonzero__(self):
+        return _lldb.SBScriptObject___nonzero__(self)
+    __bool__ = __nonzero__
+
+
+
+    def __ne__(self, rhs: "SBScriptObject") -> "bool":
+        r"""__ne__(SBScriptObject self, SBScriptObject rhs) -> bool"""
+        return _lldb.SBScriptObject___ne__(self, rhs)
+
+    def IsValid(self) -> "bool":
+        r"""IsValid(SBScriptObject self) -> bool"""
+        return _lldb.SBScriptObject_IsValid(self)
+
+    def GetPointer(self) -> "lldb::ScriptObjectPtr":
+        r"""GetPointer(SBScriptObject self) -> lldb::ScriptObjectPtr"""
+        return _lldb.SBScriptObject_GetPointer(self)
+
+    def GetLanguage(self) -> "lldb::ScriptLanguage":
+        r"""GetLanguage(SBScriptObject self) -> lldb::ScriptLanguage"""
+        return _lldb.SBScriptObject_GetLanguage(self)
+
+    def __eq__(self, other):
+        return not self.__ne__(other)
+
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
+
+    def __len__(self):
+        pass
+
+    def __iter__(self):
+        pass
+
+    ptr = property(GetPointer, None, doc='''A read only property that returns the underlying script object.''')
+    lang = property(GetLanguage, None, doc='''A read only property that returns the script language associated with with this script object.''')
+
+
+# Register SBScriptObject in _lldb:
+_lldb.SBScriptObject_swigregister(SBScriptObject)
 
 class SBSection(object):
     r"""
@@ -9628,6 +10582,18 @@ class SBSection(object):
         r"""__repr__(SBSection self) -> std::string"""
         return _lldb.SBSection___repr__(self)
 
+    def __eq__(self, other):
+        return not self.__ne__(other)
+
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
+
     def __iter__(self):
         '''Iterate over all subsections in a lldb.SBSection object.'''
         return lldb_iter(self, 'GetNumSubSections', 'GetSubSectionAtIndex')
@@ -9714,6 +10680,25 @@ class SBSourceManager(object):
     def DisplaySourceLinesWithLineNumbersAndColumn(self, file: "SBFileSpec", line: "uint32_t", column: "uint32_t", context_before: "uint32_t", context_after: "uint32_t", current_line_cstr: "char const *", s: "SBStream") -> "size_t":
         r"""DisplaySourceLinesWithLineNumbersAndColumn(SBSourceManager self, SBFileSpec file, uint32_t line, uint32_t column, uint32_t context_before, uint32_t context_after, char const * current_line_cstr, SBStream s) -> size_t"""
         return _lldb.SBSourceManager_DisplaySourceLinesWithLineNumbersAndColumn(self, file, line, column, context_before, context_after, current_line_cstr, s)
+
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __len__(self):
+      pass
+
+    def __iter__(self):
+      pass
+
 
 # Register SBSourceManager in _lldb:
 _lldb.SBSourceManager_swigregister(SBSourceManager)
@@ -9810,6 +10795,25 @@ class SBStream(object):
         """
         return _lldb.SBStream_Clear(self)
 
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __len__(self):
+      return self.GetSize()
+
+    def __iter__(self):
+      pass
+
+
     def RedirectToFileHandle(self, file: "lldb::FileSP", transfer_fh_ownership: "bool") -> "void":
         r"""DEPRECATED, use RedirectToFile"""
         return _lldb.SBStream_RedirectToFileHandle(self, file, transfer_fh_ownership)
@@ -9875,6 +10879,15 @@ class SBStringList(object):
         r"""Clear(SBStringList self)"""
         return _lldb.SBStringList_Clear(self)
 
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
+
     def __iter__(self):
         '''Iterate over all strings in a lldb.SBStringList object.'''
         return lldb_iter(self, 'GetSize', 'GetStringAtIndex')
@@ -9895,13 +10908,12 @@ class SBStructuredData(object):
     """
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
         __init__(SBStructuredData self) -> SBStructuredData
         __init__(SBStructuredData self, SBStructuredData rhs) -> SBStructuredData
-        __init__(SBStructuredData self, lldb::EventSP const & event_sp) -> SBStructuredData
+        __init__(SBStructuredData self, SBScriptObject obj, SBDebugger debugger) -> SBStructuredData
         """
         _lldb.SBStructuredData_swiginit(self, _lldb.new_SBStructuredData(*args))
     __swig_destroy__ = _lldb.delete_SBStructuredData
@@ -9955,6 +10967,14 @@ class SBStructuredData(object):
         r"""GetItemAtIndex(SBStructuredData self, size_t idx) -> SBStructuredData"""
         return _lldb.SBStructuredData_GetItemAtIndex(self, idx)
 
+    def GetUnsignedIntegerValue(self, fail_value: "uint64_t"=0) -> "uint64_t":
+        r"""GetUnsignedIntegerValue(SBStructuredData self, uint64_t fail_value=0) -> uint64_t"""
+        return _lldb.SBStructuredData_GetUnsignedIntegerValue(self, fail_value)
+
+    def GetSignedIntegerValue(self, fail_value: "int64_t"=0) -> "int64_t":
+        r"""GetSignedIntegerValue(SBStructuredData self, int64_t fail_value=0) -> int64_t"""
+        return _lldb.SBStructuredData_GetSignedIntegerValue(self, fail_value)
+
     def GetIntegerValue(self, fail_value: "uint64_t"=0) -> "uint64_t":
         r"""GetIntegerValue(SBStructuredData self, uint64_t fail_value=0) -> uint64_t"""
         return _lldb.SBStructuredData_GetIntegerValue(self, fail_value)
@@ -9970,6 +10990,35 @@ class SBStructuredData(object):
     def GetStringValue(self, dst: "char *") -> "size_t":
         r"""GetStringValue(SBStructuredData self, char * dst) -> size_t"""
         return _lldb.SBStructuredData_GetStringValue(self, dst)
+
+    def GetGenericValue(self) -> "lldb::SBScriptObject":
+        r"""GetGenericValue(SBStructuredData self) -> SBScriptObject"""
+        return _lldb.SBStructuredData_GetGenericValue(self)
+
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBStructuredData self) -> std::string"""
+        return _lldb.SBStructuredData___repr__(self)
+
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      return self.GetSignedInteger()
+
+    def __hex__(self):
+      return hex(self.GetSignedInteger())
+
+    def __oct__(self):
+      return oct(self.GetSignedInteger())
+
+    def __len__(self):
+      '''Return the number of element in a lldb.SBStructuredData object.'''
+      return self.GetSize()
+
+    def __iter__(self):
+        '''Iterate over all the elements in a lldb.SBStructuredData object.'''
+        return lldb_iter(self, 'GetSize', 'GetItemAtIndex')
+
 
 # Register SBStructuredData in _lldb:
 _lldb.SBStructuredData_swigregister(SBStructuredData)
@@ -10066,6 +11115,24 @@ class SBSymbol(object):
     def __repr__(self) -> "std::string":
         r"""__repr__(SBSymbol self) -> std::string"""
         return _lldb.SBSymbol___repr__(self)
+
+    def __eq__(self, other):
+        return not self.__ne__(other)
+
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        return self.GetStartAddress()
+
+    def __oct__(self):
+        pass
+
+    def __len__(self):
+        pass
+
+    def __iter__(self):
+        pass
 
     def get_instructions_from_current_target (self):
         return self.GetInstructions (target)
@@ -10216,6 +11283,24 @@ class SBSymbolContext(object):
         r"""__repr__(SBSymbolContext self) -> std::string"""
         return _lldb.SBSymbolContext___repr__(self)
 
+    def __eq__(self, other):
+        return not self.__ne__(other)
+
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
+
+    def __len__(self):
+        pass
+
+    def __iter__(self):
+        pass
+
     module = property(GetModule, SetModule, doc='''A read/write property that allows the getting/setting of the module (lldb.SBModule) in this symbol context.''')
     compile_unit = property(GetCompileUnit, SetCompileUnit, doc='''A read/write property that allows the getting/setting of the compile unit (lldb.SBCompileUnit) in this symbol context.''')
     function = property(GetFunction, SetFunction, doc='''A read/write property that allows the getting/setting of the function (lldb.SBFunction) in this symbol context.''')
@@ -10304,6 +11389,15 @@ class SBSymbolContextList(object):
 
     def __len__(self):
         return int(self.GetSize())
+
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
 
     def __getitem__(self, key):
         count = len(self)
@@ -10792,6 +11886,14 @@ class SBTarget(object):
     def GetABIName(self) -> "char const *":
         r"""GetABIName(SBTarget self) -> char const *"""
         return _lldb.SBTarget_GetABIName(self)
+
+    def GetLabel(self) -> "char const *":
+        r"""GetLabel(SBTarget self) -> char const *"""
+        return _lldb.SBTarget_GetLabel(self)
+
+    def SetLabel(self, label: "char const *") -> "lldb::SBError":
+        r"""SetLabel(SBTarget self, char const * label) -> SBError"""
+        return _lldb.SBTarget_SetLabel(self, label)
 
     def GetDataByteSize(self) -> "uint32_t":
         r"""
@@ -11343,6 +12445,24 @@ class SBTarget(object):
     def __repr__(self) -> "std::string":
         r"""__repr__(SBTarget self) -> std::string"""
         return _lldb.SBTarget___repr__(self)
+
+    def __eq__(self, other):
+        return not self.__ne__(other)
+
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
+
+    def __len__(self):
+        pass
+
+    def __iter__(self):
+        pass
 
     class modules_access(object):
         '''A helper object that will lazily hand out lldb.SBModule objects for a target when supplied an index, or by full or partial path.'''
@@ -12002,6 +13122,18 @@ class SBThread(object):
         r"""__repr__(SBThread self) -> std::string"""
         return _lldb.SBThread___repr__(self)
 
+    def __eq__(self, other):
+        return not self.__ne__(other)
+
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
+
     def __iter__(self):
         '''Iterate over all frames in a lldb.SBThread object.'''
         return lldb_iter(self, 'GetNumFrames', 'GetFrameAtIndex')
@@ -12118,6 +13250,27 @@ class SBThreadCollection(object):
         r"""GetThreadAtIndex(SBThreadCollection self, size_t idx) -> SBThread"""
         return _lldb.SBThreadCollection_GetThreadAtIndex(self, idx)
 
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __iter__(self):
+        '''Iterate over all threads in a lldb.SBThreadCollection object.'''
+        return lldb_iter(self, 'GetSize', 'GetThreadAtIndex')
+
+    def __len__(self):
+        '''Return the number of threads in a lldb.SBThreadCollection object.'''
+        return self.GetSize()
+
+
 # Register SBThreadCollection in _lldb:
 _lldb.SBThreadCollection_swigregister(SBThreadCollection)
 
@@ -12129,13 +13282,11 @@ class SBThreadPlan(object):
     """
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         r"""
         __init__(SBThreadPlan self) -> SBThreadPlan
         __init__(SBThreadPlan self, SBThreadPlan threadPlan) -> SBThreadPlan
-        __init__(SBThreadPlan self, lldb::ThreadPlanSP const & lldb_object_sp) -> SBThreadPlan
         __init__(SBThreadPlan self, SBThread thread, char const * class_name) -> SBThreadPlan
         __init__(SBThreadPlan self, SBThread thread, char const * class_name, SBStructuredData args_data) -> SBThreadPlan
         """
@@ -12268,6 +13419,29 @@ class SBThreadPlan(object):
         """
         return _lldb.SBThreadPlan_QueueThreadPlanForStepScripted(self, *args)
 
+    def __repr__(self) -> "std::string":
+        r"""__repr__(SBThreadPlan self) -> std::string"""
+        return _lldb.SBThreadPlan___repr__(self)
+
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __len__(self):
+      pass
+
+    def __iter__(self):
+      pass
+
+
 # Register SBThreadPlan in _lldb:
 _lldb.SBThreadPlan_swigregister(SBThreadPlan)
 
@@ -12321,6 +13495,25 @@ class SBTrace(object):
     def IsValid(self) -> "bool":
         r"""IsValid(SBTrace self) -> bool"""
         return _lldb.SBTrace_IsValid(self)
+
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __len__(self):
+      pass
+
+    def __iter__(self):
+      pass
+
     __swig_destroy__ = _lldb.delete_SBTrace
 
 # Register SBTrace in _lldb:
@@ -12336,12 +13529,9 @@ class SBTraceCursor(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
-    def __init__(self, *args):
-        r"""
-        __init__(SBTraceCursor self) -> SBTraceCursor
-        __init__(SBTraceCursor self, lldb::TraceCursorSP trace_cursor_sp) -> SBTraceCursor
-        """
-        _lldb.SBTraceCursor_swiginit(self, _lldb.new_SBTraceCursor(*args))
+    def __init__(self):
+        r"""__init__(SBTraceCursor self) -> SBTraceCursor"""
+        _lldb.SBTraceCursor_swiginit(self, _lldb.new_SBTraceCursor())
 
     def SetForwards(self, forwards: "bool") -> "void":
         r"""SetForwards(SBTraceCursor self, bool forwards)"""
@@ -12420,6 +13610,25 @@ class SBTraceCursor(object):
     __bool__ = __nonzero__
 
 
+
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __len__(self):
+      pass
+
+    def __iter__(self):
+      pass
+
     __swig_destroy__ = _lldb.delete_SBTraceCursor
 
 # Register SBTraceCursor in _lldb:
@@ -12479,6 +13688,24 @@ class SBTypeMember(object):
     def __repr__(self) -> "std::string":
         r"""__repr__(SBTypeMember self) -> std::string"""
         return _lldb.SBTypeMember___repr__(self)
+
+    def __eq__(self, other):
+        return not self.__ne__(other)
+
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
+
+    def __len__(self):
+        pass
+
+    def __iter__(self):
+        pass
 
     name = property(GetName, None, doc='''A read only property that returns the name for this member as a string.''')
     type = property(GetType, None, doc='''A read only property that returns an lldb object that represents the type (lldb.SBType) for this member.''')
@@ -12553,6 +13780,25 @@ class SBTypeMemberFunction(object):
     def __repr__(self) -> "std::string":
         r"""__repr__(SBTypeMemberFunction self) -> std::string"""
         return _lldb.SBTypeMemberFunction___repr__(self)
+
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __len__(self):
+      pass
+
+    def __iter__(self):
+      pass
+
 
 # Register SBTypeMemberFunction in _lldb:
 _lldb.SBTypeMemberFunction_swigregister(SBTypeMemberFunction)
@@ -13432,6 +14678,24 @@ class SBType(object):
             return template_args
         return None
 
+    def __eq__(self, other):
+        return not self.__ne__(other)
+
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
+
+    def __len__(self):
+        return self.GetByteSize()
+
+    def __iter__(self):
+        pass
+
     module = property(GetModule, None, doc='''A read only property that returns the module in which type is defined.''')
     name = property(GetName, None, doc='''A read only property that returns the name for this type as a string.''')
     size = property(GetByteSize, None, doc='''A read only property that returns size in bytes for this type as an integer.''')
@@ -13591,6 +14855,18 @@ class SBTypeList(object):
     def GetSize(self) -> "uint32_t":
         r"""GetSize(SBTypeList self) -> uint32_t"""
         return _lldb.SBTypeList_GetSize(self)
+
+    def __eq__(self, other):
+        return not self.__ne__(other)
+
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
 
     def __iter__(self):
         '''Iterate over all types in a lldb.SBTypeList object.'''
@@ -13763,6 +15039,23 @@ class SBTypeCategory(object):
         r"""__repr__(SBTypeCategory self) -> std::string"""
         return _lldb.SBTypeCategory___repr__(self)
 
+    def __eq__(self, other):
+        return not self.__ne__(other)
+
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
+
+    def __len__(self):
+        pass
+
+    def __iter__(self):
+        pass
 
     class formatters_access_class(object):
         '''A helper object that will lazily hand out formatters for a specific category.'''
@@ -13903,6 +15196,26 @@ class SBTypeEnumMember(object):
         r"""__repr__(SBTypeEnumMember self) -> std::string"""
         return _lldb.SBTypeEnumMember___repr__(self)
 
+    def __eq__(self, other):
+        return not self.__ne__(other)
+
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
+
+    def __iter__(self):
+        '''Iterate over all members in a lldb.SBTypeEnumMemberList object.'''
+        return lldb_iter(self, 'GetSize', 'GetTypeEnumMemberAtIndex')
+
+    def __len__(self):
+        '''Return the number of members in a lldb.SBTypeEnumMemberList object.'''
+        return self.GetSize()
+
     name = property(GetName, None, doc='''A read only property that returns the name for this enum member as a string.''')
     type = property(GetType, None, doc='''A read only property that returns an lldb object that represents the type (lldb.SBType) for this enum member.''')
     signed = property(GetValueAsSigned, None, doc='''A read only property that returns the value of this enum member as a signed integer.''')
@@ -13960,6 +15273,18 @@ class SBTypeEnumMemberList(object):
     def GetSize(self) -> "uint32_t":
         r"""GetSize(SBTypeEnumMemberList self) -> uint32_t"""
         return _lldb.SBTypeEnumMemberList_GetSize(self)
+
+    def __eq__(self, other):
+        return not self.__ne__(other)
+
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
 
     def __iter__(self):
         '''Iterate over all members in a lldb.SBTypeEnumMemberList object.'''
@@ -14058,6 +15383,24 @@ class SBTypeFilter(object):
         r"""__repr__(SBTypeFilter self) -> std::string"""
         return _lldb.SBTypeFilter___repr__(self)
 
+    def __eq__(self, other):
+        return not self.__ne__(other)
+
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
+
+    def __len__(self):
+        pass
+
+    def __iter__(self):
+        pass
+
     options = property(GetOptions, SetOptions)
     count = property(GetNumberOfExpressionPaths)
 
@@ -14147,6 +15490,24 @@ class SBTypeFormat(object):
         r"""__repr__(SBTypeFormat self) -> std::string"""
         return _lldb.SBTypeFormat___repr__(self)
 
+    def __eq__(self, other):
+        return not self.__ne__(other)
+
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
+
+    def __len__(self):
+        pass
+
+    def __iter__(self):
+        pass
+
     format = property(GetFormat, SetFormat)
     options = property(GetOptions, SetOptions)
 
@@ -14216,6 +15577,24 @@ class SBTypeNameSpecifier(object):
         r"""__repr__(SBTypeNameSpecifier self) -> std::string"""
         return _lldb.SBTypeNameSpecifier___repr__(self)
 
+    def __eq__(self, other):
+        return not self.__ne__(other)
+
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
+
+    def __len__(self):
+        pass
+
+    def __iter__(self):
+        pass
+
     name = property(GetName)
     is_regex = property(IsRegex)
 
@@ -14275,6 +15654,25 @@ class SBTypeSummaryOptions(object):
     def SetCapping(self, arg2: "lldb::TypeSummaryCapping") -> "void":
         r"""SetCapping(SBTypeSummaryOptions self, lldb::TypeSummaryCapping arg2)"""
         return _lldb.SBTypeSummaryOptions_SetCapping(self, arg2)
+
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __len__(self):
+      pass
+
+    def __iter__(self):
+      pass
+
 
 # Register SBTypeSummaryOptions in _lldb:
 _lldb.SBTypeSummaryOptions_swigregister(SBTypeSummaryOptions)
@@ -14376,6 +15774,24 @@ class SBTypeSummary(object):
     def __repr__(self) -> "std::string":
         r"""__repr__(SBTypeSummary self) -> std::string"""
         return _lldb.SBTypeSummary___repr__(self)
+
+    def __eq__(self, other):
+        return not self.__ne__(other)
+
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
+
+    def __len__(self):
+        pass
+
+    def __iter__(self):
+        pass
 
     options = property(GetOptions, SetOptions)
     is_summary_string = property(IsSummaryString)
@@ -14493,6 +15909,24 @@ class SBTypeSynthetic(object):
         r"""__repr__(SBTypeSynthetic self) -> std::string"""
         return _lldb.SBTypeSynthetic___repr__(self)
 
+    def __eq__(self, other):
+        return not self.__ne__(other)
+
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
+
+    def __len__(self):
+        pass
+
+    def __iter__(self):
+        pass
+
     options = property(GetOptions, SetOptions)
     contains_code = property(IsClassCode, None)
     synthetic_data = property(GetData, None)
@@ -14589,6 +16023,25 @@ class SBUnixSignals(object):
     def GetSignalAtIndex(self, index: "int32_t") -> "int32_t":
         r"""GetSignalAtIndex(SBUnixSignals self, int32_t index) -> int32_t"""
         return _lldb.SBUnixSignals_GetSignalAtIndex(self, index)
+
+    def __iter__(self):
+        '''Iterate over all signals in a lldb.SBUnixSignals object.'''
+        return lldb_iter(self, 'GetNumSignals', 'GetSignalAtIndex')
+
+    def __len__(self):
+        return int(self.GetNumSignals())
+
+    def __eq__(self, other):
+        return not self.__ne__(other)
+
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
 
     def get_unix_signals_list(self):
         signals = []
@@ -15139,6 +16592,15 @@ class SBValue(object):
             children.append(accessor[idx])
         return children
 
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        return self.GetAddress()
+
+    def __oct__(self):
+        pass
+
     def __iter__(self):
         '''Iterate over all child values of a lldb.SBValue object.'''
         return lldb_iter(self, 'GetNumChildren', 'GetChildAtIndex')
@@ -15381,6 +16843,18 @@ class SBValueList(object):
     def __len__(self):
         return int(self.GetSize())
 
+    def __eq__(self, other):
+        return not self.__ne__(other)
+
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
+
     def __getitem__(self, key):
         count = len(self)
     #------------------------------------------------------------
@@ -15496,6 +16970,25 @@ class SBVariablesOptions(object):
     def SetUseDynamic(self, arg2: "lldb::DynamicValueType") -> "void":
         r"""SetUseDynamic(SBVariablesOptions self, lldb::DynamicValueType arg2)"""
         return _lldb.SBVariablesOptions_SetUseDynamic(self, arg2)
+
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __len__(self):
+      pass
+
+    def __iter__(self):
+      pass
+
 
 # Register SBVariablesOptions in _lldb:
 _lldb.SBVariablesOptions_swigregister(SBVariablesOptions)
@@ -15673,6 +17166,25 @@ class SBWatchpoint(object):
         r"""__repr__(SBWatchpoint self) -> std::string"""
         return _lldb.SBWatchpoint___repr__(self)
 
+    def __eq__(self, other):
+      return not self.__ne__(other)
+
+    def __int__(self):
+      pass
+
+    def __hex__(self):
+      return self.GetWatchAddress()
+
+    def __oct__(self):
+      pass
+
+    def __len__(self):
+      return self.GetWatchSize()
+
+    def __iter__(self):
+      pass
+
+
 # Register SBWatchpoint in _lldb:
 _lldb.SBWatchpoint_swigregister(SBWatchpoint)
 
@@ -15733,6 +17245,24 @@ class declaration(object):
         self.line = line
         self.col = col
 
+    def __eq__(self, other):
+        return not self.__ne__(other)
+
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
+
+    def __len__(self):
+        pass
+
+    def __iter__(self):
+        pass
+
 class value_iter(object):
     '''Allows iterating over the children of an :py:class:`SBValue`.'''
     def __iter__(self):
@@ -15748,8 +17278,24 @@ class value_iter(object):
     def next(self):
         return self.__next__()
 
+    def __eq__(self, other):
+        return not self.__ne__(other)
+
+    def __int__(self):
+        pass
+
+    def __hex__(self):
+        pass
+
+    def __oct__(self):
+        pass
+
+    def __len__(self):
+        return self.length
+
     def __init__(self,value):
         self.index = 0
+        self.length = 0
         self.sbvalue = value
         if type(self.sbvalue) is value:
             self.sbvalue = self.sbvalue.sbvalue
@@ -15989,6 +17535,21 @@ class SBSyntheticValueProvider(object):
     def has_children(self):
         return False
 
+    def __int__(self):
+      pass
+
+    def __hex__(self):
+      pass
+
+    def __oct__(self):
+      pass
+
+    def __len__(self):
+      return self.num_children()
+
+    def __iter__(self):
+      '''Iterate over all children in a lldb.SBSyntheticValueProvider object.'''
+      return lldb_iter(self, 'num_children', 'get_child_at_index')
 
 
 
