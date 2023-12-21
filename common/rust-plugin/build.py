@@ -153,7 +153,7 @@ def build_rust_ide(
         # We don't need the Rust compiler, as it is already available in the platform
         "-PcompileNativeCode=false",
         "-PbuildSearchableOptions=true",
-        "-PplatformVersion=223",
+        "-PplatformVersion=232",
         "--console=rich",
         "--parallel",
         "--build-cache",
@@ -401,10 +401,10 @@ def write_jps_lib_xml(workspace: Path) -> None:
     jars = [os.path.relpath(jar, project_dir) for jar in jars_sorted]
 
     rust_prebuilts : Path = workspace.joinpath('prebuilts/tools/common/rust-plugin')
-    # TODO(jomof) Rust plugin has implemented a source jar but it is past our current revision. Reenable when we move the revision forward.
-    # src = next(rust_prebuilts.joinpath('intellij-rust/lib/src').glob('intellij-rust-*.jar'))
-    # print_relevant_file(workspace, 'Using sources zip:', src)
-    # src = Path(os.path.relpath(src, project_dir))
+
+    src = next(rust_prebuilts.joinpath('intellij-rust/lib/src').glob('intellij-rust-*.jar'))
+    print_relevant_file(workspace, 'Using sources zip:', src)
+    src = Path(os.path.relpath(src, project_dir))
 
     outfile : Path = project_dir.joinpath(f'.idea/libraries/rust_plugin.xml')
     print_relevant_file(workspace, 'Writing JPS library:', outfile)
@@ -418,8 +418,8 @@ def write_jps_lib_xml(workspace: Path) -> None:
         f.write(f'    <JAVADOC />\n')
         f.write(f'    <SOURCES>\n')
         f.write(f'      <root url="file://$PROJECT_DIR$/../../../external/jetbrains/rust/src/main/"/>\n')
-        f.write(f'      <root url="file://$PROJECT_DIR$/../../../external/jetbrains/rust/src/gen/"/>\n')
-        #f.write(f'      <root url="jar://$PROJECT_DIR$/{src}!/" />\n')
+        f.write(f'      <root url="file://$PROJECT_DIR$/../../../external/jetbrains/rust/src/232/"/>\n')
+        f.write(f'      <root url="jar://$PROJECT_DIR$/{src}!/" />\n')
         f.write(f'    </SOURCES>\n')
         f.write(f'  </library>\n')
         f.write(f'</component>')
