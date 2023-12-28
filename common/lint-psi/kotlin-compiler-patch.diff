@@ -66,9 +66,9 @@ index 0574c7bcf195..5dcb381b998c 100644
 +++ b/prepare/ide-plugin-dependencies/kotlin-compiler-ir-for-ide/build.gradle.kts
 @@ -4,4 +4,15 @@ plugins {
 
- val irCompilerModules: Array<String> by rootProject.extra
+ val irCompilerModulesForIDE: Array<String> by rootProject.extra
 
--publishJarsForIde(irCompilerModules.asList())
+-publishJarsForIde(irCompilerModulesForIDE.asList())
 +val excludeModules = listOf(
 +    ":compiler:ir.backend.common",
 +    ":compiler:ir.interpreter",
@@ -80,5 +80,20 @@ index 0574c7bcf195..5dcb381b998c 100644
 +    ":wasm:wasm.ir",
 +)
 +
-+publishJarsForIde(irCompilerModules.asList() - excludeModules)
++publishJarsForIde(irCompilerModulesForIDE.asList() - excludeModules)
+diff --git a/gradle.properties b/gradle.properties
+index 4c194c5968d79..1005c672674b0 100644
+--- a/gradle.properties
++++ b/gradle.properties
+@@ -26,8 +26,8 @@ systemProp.org.gradle.internal.http.connectionTimeout=90000
+ systemProp.org.gradle.internal.http.socketTimeout=90000
+ 
+ cacheRedirectorEnabled=true
+-defaultSnapshotVersion=2.0.255-SNAPSHOT
+-kotlinLanguageVersion=2.0
++defaultSnapshotVersion=1.9.255-SNAPSHOT
++kotlinLanguageVersion=1.9
+ 
+ # Should be less or equal to the Kotlin stdlib version used inside IntelliJ IDEA repository, see KT-62510.
+ # IntelliJ IDEA Kotlin stdlib version can be found at https://github.com/JetBrains/intellij-community/blob/master/.idea/libraries/kotlin_stdlib.xml
 
