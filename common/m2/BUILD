@@ -489,14 +489,18 @@ jvm_import(
     name = "kotlin-compiler",
     jars = [
         # This list can be computed by querying the deps of
-        # @maven//:org.jetbrains.kotlin.kotlin-compiler_<VERSION>.
+        # @maven//:org.jetbrains.kotlin.kotlin-compiler_<VERSION>
+        # then resolving any duplicate versions to the highest version present.
         "repository/org/jetbrains/annotations/13.0/annotations-13.0.jar",
         "repository/org/jetbrains/intellij/deps/trove4j/1.0.20200330/trove4j-1.0.20200330.jar",
-        "repository/org/jetbrains/kotlin/kotlin-compiler/1.8.21/kotlin-compiler-1.8.21.jar",
+        "repository/org/jetbrains/kotlin/kotlin-compiler/1.9.21/kotlin-compiler-1.9.21.jar",
         "repository/org/jetbrains/kotlin/kotlin-reflect/1.6.10/kotlin-reflect-1.6.10.jar",
-        "repository/org/jetbrains/kotlin/kotlin-script-runtime/1.8.21/kotlin-script-runtime-1.8.21.jar",
-        "repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.8.21/kotlin-stdlib-common-1.8.21.jar",
-        "repository/org/jetbrains/kotlin/kotlin-stdlib/1.8.21/kotlin-stdlib-1.8.21.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.9.21/kotlin-stdlib-jdk8-1.9.21.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib/1.9.21/kotlin-stdlib-1.9.21.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.9.21/kotlin-stdlib-jdk7-1.9.21.jar",
+        "repository/org/jetbrains/kotlin/kotlin-script-runtime/1.9.21/kotlin-script-runtime-1.9.21.jar",
+        "repository/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.5.0/kotlinx-coroutines-core-jvm-1.5.0.jar",
+        "repository/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.5.0/kotlinx-coroutines-core-1.5.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -504,7 +508,7 @@ jvm_import(
 jvm_import(
     name = "jvm-abi-gen-plugin",
     jars = [
-        "repository/org/jetbrains/kotlin/jvm-abi-gen/1.8.21/jvm-abi-gen-1.8.21.jar",
+        "repository/org/jetbrains/kotlin/jvm-abi-gen/1.9.21/jvm-abi-gen-1.9.21.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -512,7 +516,7 @@ jvm_import(
 jvm_import(
     name = "compose-compiler-hosted",
     jars = [
-        "repository/org/jetbrains/compose/compiler/compiler-hosted/1.4.8.1-dev03/compiler-hosted-1.4.8.1-dev03.jar",
+        "repository/androidx/compose/compiler/compiler-hosted/1.5.7/compiler-hosted-1.5.7.jar",
     ],
     visibility = ["//visibility:public"],
 )
