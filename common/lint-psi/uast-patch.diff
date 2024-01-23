@@ -1,3 +1,18 @@
+diff --git a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/internal/baseKotlinInternalUastUtils.kt b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/internal/baseKotlinInternalUastUtils.kt
+index 95df8f3957e9e..d5475be37afbd 100644
+--- a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/internal/baseKotlinInternalUastUtils.kt
++++ b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/internal/baseKotlinInternalUastUtils.kt
+@@ -37,7 +37,9 @@ inline fun <reified T : UDeclaration, reified P : PsiElement> unwrap(element: P)
+ fun unwrapFakeFileForLightClass(file: PsiFile): PsiFile {
+     return when (file) {
+         is FakeFileForLightClass -> file.ktFile
+-        is PsiCompiledElement -> (file.mirror as? KtFile) ?: file
++        is PsiCompiledElement ->
++          // .mirror triggers decompilation, which is not available in CLI
++          file // (file.mirror as? KtFile) ?: file
+         else -> file
+     }
+ }
 diff --git a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastLanguagePlugin.kt b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastLanguagePlugin.kt
 index 5744ea428fefc..5972f09c93051 100644
 --- a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastLanguagePlugin.kt

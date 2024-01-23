@@ -52,26 +52,26 @@ index 48a21aa00c780..d0ff0999f07fb 100644
      compilerConfig: CompilerConfiguration,
      ktFiles: List<KtFile>,
 diff --git a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/api/standalone/StandaloneAnalysisAPISessionBuilder.kt b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/api/standalone/StandaloneAnalysisAPISessionBuilder.kt
-index 770a1029c6c05..7de41f2cfb47b 100644
+index dc64e55bc44f9..bc8e67a0b4679 100644
 --- a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/api/standalone/StandaloneAnalysisAPISessionBuilder.kt
 +++ b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/api/standalone/StandaloneAnalysisAPISessionBuilder.kt
-@@ -47,6 +47,7 @@ public class StandaloneAnalysisAPISessionBuilder(
-     applicationDisposable: Disposable,
+@@ -46,6 +46,7 @@ import kotlin.contracts.contract
+ public class StandaloneAnalysisAPISessionBuilder(
      projectDisposable: Disposable,
      unitTestMode: Boolean,
 +    compilerConfiguration: CompilerConfiguration = CompilerConfiguration(),
      classLoader: ClassLoader = MockProject::class.java.classLoader
  ) {
      init {
-@@ -63,6 +64,7 @@ public class StandaloneAnalysisAPISessionBuilder(
+@@ -61,6 +62,7 @@ public class StandaloneAnalysisAPISessionBuilder(
+         StandaloneProjectFactory.createProjectEnvironment(
              projectDisposable,
-             applicationDisposable,
              KotlinCoreApplicationEnvironmentMode.fromUnitTestModeFlag(unitTestMode),
 +            compilerConfiguration,
              classLoader = classLoader
          )
- 
-@@ -233,6 +235,7 @@ public inline fun buildStandaloneAnalysisAPISession(
+
+@@ -230,6 +232,7 @@ public inline fun buildStandaloneAnalysisAPISession(
      projectDisposable: Disposable = Disposer.newDisposable("StandaloneAnalysisAPISession.project"),
      unitTestMode: Boolean = false,
      withPsiDeclarationFromBinaryModuleProvider: Boolean = false,
@@ -79,8 +79,8 @@ index 770a1029c6c05..7de41f2cfb47b 100644
      classLoader: ClassLoader = MockProject::class.java.classLoader,
      init: StandaloneAnalysisAPISessionBuilder.() -> Unit,
  ): StandaloneAnalysisAPISession {
-@@ -243,6 +246,7 @@ public inline fun buildStandaloneAnalysisAPISession(
-         applicationDisposable,
+@@ -239,6 +242,7 @@ public inline fun buildStandaloneAnalysisAPISession(
+     return StandaloneAnalysisAPISessionBuilder(
          projectDisposable,
          unitTestMode,
 +        compilerConfiguration,
@@ -120,18 +120,52 @@ index 00000000000..ddb42aff005
 +    }
 +}
 diff --git a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/session/KtAnalysisSessionProvider.kt b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/session/KtAnalysisSessionProvider.kt
-index b8487abe271..eb9c5191692 100644
+index 9f82f10dceb7f..396e1ced34eed 100644
 --- a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/session/KtAnalysisSessionProvider.kt
 +++ b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/session/KtAnalysisSessionProvider.kt
-@@ -31,6 +31,11 @@ public abstract class KtAnalysisSessionProvider(public val project: Project) : D
- 
-     public abstract fun getAnalysisSession(useSiteKtElement: KtElement): KtAnalysisSession
- 
+@@ -35,6 +35,11 @@ public abstract class KtAnalysisSessionProvider(public val project: Project) : D
+     @Suppress("LeakingThis")
+     public val noWriteActionInAnalyseCallChecker: NoWriteActionInAnalyseCallChecker = NoWriteActionInAnalyseCallChecker(this)
+
 +    @Suppress("UNUSED_PARAMETER")
 +    @Deprecated("Needed for binary compatibility, see KTIJ-27188")
 +    public fun getAnalysisSession(useSiteKtElement: KtElement, factory: KtLifetimeTokenFactory): KtAnalysisSession =
 +        getAnalysisSession(useSiteKtElement)
 +
+     public abstract fun getAnalysisSession(useSiteKtElement: KtElement): KtAnalysisSession
+
      public abstract fun getAnalysisSessionByUseSiteKtModule(useSiteKtModule: KtModule): KtAnalysisSession
- 
-     public inline fun <R> analyseInDependedAnalysisSession(
+diff --git a/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/parameters/SymbolLightParameterCommon.kt b/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/parameters/SymbolLightParameterCommon.kt
+index 9c9b3678c2738..c18903ae12b35 100644
+--- a/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/parameters/SymbolLightParameterCommon.kt
++++ b/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/parameters/SymbolLightParameterCommon.kt
+@@ -33,7 +33,7 @@ internal abstract class SymbolLightParameterCommon(
+         parameterSymbolPointer = with(ktAnalysisSession) { parameterSymbol.createPointer() },
+         parameterDeclaration = parameterSymbol.sourcePsiSafe(),
+         containingMethod = containingMethod,
+-        kotlinOrigin = parameterSymbol.psiSafe(),
++        kotlinOrigin = parameterSymbol.sourcePsiSafe(), // KT-64772
+     )
+
+     private val _name: String by lazyPub {
+diff --git a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KtStandaloneProjectStructureProvider.kt b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KtStandaloneProjectStructureProvider.kt
+index 0e744e91d83a4..166a89592539d 100644
+--- a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KtStandaloneProjectStructureProvider.kt
++++ b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KtStandaloneProjectStructureProvider.kt
+@@ -44,7 +44,8 @@ internal class KtStandaloneProjectStructureProvider(
+             ?: return ktNotUnderContentRootModuleWithoutPsiFile
+
+         val virtualFile = containingFile.virtualFile
+-            ?: error("${containingFile.name} is not a physical file")
++            // KT-65107
++            ?: return ktNotUnderContentRootModuleWithoutPsiFile
+
+         if (virtualFile.extension == BuiltInSerializerProtocol.BUILTINS_FILE_EXTENSION) {
+             return builtinsModule
+@@ -73,4 +74,4 @@ internal class KtStandaloneProjectStructureProvider(
+             addAll(findJvmRootsForJavaFiles(files.filterIsInstance<PsiJavaFile>()))
+         }
+     }
+-}
+\ No newline at end of file
++}
