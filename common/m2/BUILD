@@ -302,11 +302,11 @@ filegroup(
     name = "asm-tools_files",
     # do not sort: must match IML order
     srcs = [
-        "repository/org/ow2/asm/asm-analysis/9.3/asm-analysis-9.3.jar",
-        "repository/org/ow2/asm/asm-commons/9.3/asm-commons-9.3.jar",
-        "repository/org/ow2/asm/asm-tree/9.3/asm-tree-9.3.jar",
-        "repository/org/ow2/asm/asm/9.3/asm-9.3.jar",
-        "repository/org/ow2/asm/asm-util/9.3/asm-util-9.3.jar",
+        "repository/org/ow2/asm/asm-analysis/9.6/asm-analysis-9.6.jar",
+        "repository/org/ow2/asm/asm-commons/9.6/asm-commons-9.6.jar",
+        "repository/org/ow2/asm/asm-tree/9.6/asm-tree-9.6.jar",
+        "repository/org/ow2/asm/asm/9.6/asm-9.6.jar",
+        "repository/org/ow2/asm/asm-util/9.6/asm-util-9.6.jar",
     ],
     visibility = ["//visibility:public"],
 )
