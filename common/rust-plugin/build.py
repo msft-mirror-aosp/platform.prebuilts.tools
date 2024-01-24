@@ -20,6 +20,8 @@ import filecmp
 import re
 import fnmatch
 
+targetIntellijPlatform : str = "233"
+
 def main() -> None:
     """
     This script builds the Rust IDE plugin for IntelliJ-based IDEs from source,
@@ -153,7 +155,7 @@ def build_rust_ide(
         # We don't need the Rust compiler, as it is already available in the platform
         "-PcompileNativeCode=false",
         "-PbuildSearchableOptions=true",
-        "-PplatformVersion=232",
+        "-PplatformVersion="+targetIntellijPlatform,
         "--console=rich",
         "--parallel",
         "--build-cache",
@@ -418,8 +420,8 @@ def write_jps_lib_xml(workspace: Path) -> None:
         f.write(f'    <JAVADOC />\n')
         f.write(f'    <SOURCES>\n')
         f.write(f'      <root url="file://$PROJECT_DIR$/../../../external/jetbrains/rust/src/main/"/>\n')
-        f.write(f'      <root url="file://$PROJECT_DIR$/../../../external/jetbrains/rust/src/232/"/>\n')
-        f.write(f'      <root url="jar://$PROJECT_DIR$/{src}!/" />\n')
+        f.write(f'      <root url="file://$PROJECT_DIR$/../../../external/jetbrains/rust/src/{targetIntellijPlatform}/"/>\n')
+        # f.write(f'      <root url="jar://$PROJECT_DIR$/{src}!/" />\n')
         f.write(f'    </SOURCES>\n')
         f.write(f'  </library>\n')
         f.write(f'</component>')
