@@ -538,7 +538,7 @@ filegroup(
 # managed by go/iml_to_build
 filegroup(
     name = "jetbrains.kotlinx.coroutines.test_files",
-    srcs = ["repository/org/jetbrains/kotlinx/kotlinx-coroutines-test-jvm/1.6.4/kotlinx-coroutines-test-jvm-1.6.4.jar"],
+    srcs = ["repository/org/jetbrains/kotlinx/kotlinx-coroutines-test-jvm/1.8.0-RC2/kotlinx-coroutines-test-jvm-1.8.0-RC2.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -704,10 +704,10 @@ jvm_import(
     name = "jewel-ide",
     # do not sort: must match IML order
     jars = [
-        "repository/org/jetbrains/jewel/jewel-foundation/0.12.0/jewel-foundation-0.12.0.jar",
-        "repository/org/jetbrains/jewel/jewel-ide-laf-bridge/0.12.0-ij-233/jewel-ide-laf-bridge-0.12.0-ij-233.jar",
-        "repository/org/jetbrains/jewel/jewel-ide-laf-bridge-platform-specific/0.12.0-ij-233/jewel-ide-laf-bridge-platform-specific-0.12.0-ij-233.jar",
-        "repository/org/jetbrains/jewel/jewel-ui/0.12.0/jewel-ui-0.12.0.jar",
+        "repository/org/jetbrains/jewel/jewel-foundation/0.13.2/jewel-foundation-0.13.2.jar",
+        "repository/org/jetbrains/jewel/jewel-ide-laf-bridge/0.13.2-ij-233/jewel-ide-laf-bridge-0.13.2-ij-233.jar",
+        "repository/org/jetbrains/jewel/jewel-ide-laf-bridge-platform-specific/0.13.2-ij-233/jewel-ide-laf-bridge-platform-specific-0.13.2-ij-233.jar",
+        "repository/org/jetbrains/jewel/jewel-ui/0.13.2/jewel-ui-0.13.2.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -717,18 +717,18 @@ jvm_import(
     name = "compose-desktop",
     # do not sort: must match IML order
     jars = [
-        "repository/org/jetbrains/compose/animation/animation-desktop/1.5.11/animation-desktop-1.5.11.jar",
-        "repository/org/jetbrains/compose/animation/animation-core-desktop/1.5.11/animation-core-desktop-1.5.11.jar",
-        "repository/org/jetbrains/compose/runtime/runtime-saveable-desktop/1.5.11/runtime-saveable-desktop-1.5.11.jar",
-        "repository/org/jetbrains/compose/runtime/runtime-desktop/1.5.11/runtime-desktop-1.5.11.jar",
-        "repository/org/jetbrains/compose/foundation/foundation-layout-desktop/1.5.11/foundation-layout-desktop-1.5.11.jar",
-        "repository/org/jetbrains/compose/foundation/foundation-desktop/1.5.11/foundation-desktop-1.5.11.jar",
-        "repository/org/jetbrains/compose/ui/ui-unit-desktop/1.5.11/ui-unit-desktop-1.5.11.jar",
-        "repository/org/jetbrains/compose/ui/ui-text-desktop/1.5.11/ui-text-desktop-1.5.11.jar",
-        "repository/org/jetbrains/compose/ui/ui-util-desktop/1.5.11/ui-util-desktop-1.5.11.jar",
-        "repository/org/jetbrains/compose/ui/ui-graphics-desktop/1.5.11/ui-graphics-desktop-1.5.11.jar",
-        "repository/org/jetbrains/compose/ui/ui-geometry-desktop/1.5.11/ui-geometry-desktop-1.5.11.jar",
-        "repository/org/jetbrains/compose/ui/ui-desktop/1.5.11/ui-desktop-1.5.11.jar",
+        "repository/org/jetbrains/compose/animation/animation-desktop/1.6.0-dev1369/animation-desktop-1.6.0-dev1369.jar",
+        "repository/org/jetbrains/compose/animation/animation-core-desktop/1.6.0-dev1369/animation-core-desktop-1.6.0-dev1369.jar",
+        "repository/org/jetbrains/compose/runtime/runtime-saveable-desktop/1.6.0-dev1369/runtime-saveable-desktop-1.6.0-dev1369.jar",
+        "repository/org/jetbrains/compose/runtime/runtime-desktop/1.6.0-dev1369/runtime-desktop-1.6.0-dev1369.jar",
+        "repository/org/jetbrains/compose/foundation/foundation-layout-desktop/1.6.0-dev1369/foundation-layout-desktop-1.6.0-dev1369.jar",
+        "repository/org/jetbrains/compose/foundation/foundation-desktop/1.6.0-dev1369/foundation-desktop-1.6.0-dev1369.jar",
+        "repository/org/jetbrains/compose/ui/ui-unit-desktop/1.6.0-dev1369/ui-unit-desktop-1.6.0-dev1369.jar",
+        "repository/org/jetbrains/compose/ui/ui-text-desktop/1.6.0-dev1369/ui-text-desktop-1.6.0-dev1369.jar",
+        "repository/org/jetbrains/compose/ui/ui-util-desktop/1.6.0-dev1369/ui-util-desktop-1.6.0-dev1369.jar",
+        "repository/org/jetbrains/compose/ui/ui-graphics-desktop/1.6.0-dev1369/ui-graphics-desktop-1.6.0-dev1369.jar",
+        "repository/org/jetbrains/compose/ui/ui-geometry-desktop/1.6.0-dev1369/ui-geometry-desktop-1.6.0-dev1369.jar",
+        "repository/org/jetbrains/compose/ui/ui-desktop/1.6.0-dev1369/ui-desktop-1.6.0-dev1369.jar",
         "repository/org/jetbrains/skiko/skiko-awt/0.7.85.4/skiko-awt-0.7.85.4.jar",
         "repository/org/jetbrains/skiko/skiko-awt-runtime-linux-x64/0.7.85.4/skiko-awt-runtime-linux-x64-0.7.85.4.jar",
         "repository/org/jetbrains/skiko/skiko-awt-runtime-macos-arm64/0.7.85.4/skiko-awt-runtime-macos-arm64-0.7.85.4.jar",
@@ -741,7 +741,7 @@ jvm_import(
 # managed by go/iml_to_build
 jvm_import(
     name = "jewel-standalone",
-    jars = ["repository/org/jetbrains/jewel/jewel-int-ui-standalone/0.12.0/jewel-int-ui-standalone-0.12.0.jar"],
+    jars = ["repository/org/jetbrains/jewel/jewel-int-ui-standalone/0.13.2/jewel-int-ui-standalone-0.13.2.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -750,8 +750,8 @@ jvm_import(
     name = "compose-desktop-test",
     # do not sort: must match IML order
     jars = [
-        "repository/org/jetbrains/compose/ui/ui-test-junit4-desktop/1.5.11/ui-test-junit4-desktop-1.5.11.jar",
-        "repository/org/jetbrains/compose/ui/ui-test-desktop/1.5.11/ui-test-desktop-1.5.11.jar",
+        "repository/org/jetbrains/compose/ui/ui-test-junit4-desktop/1.6.0-dev1369/ui-test-junit4-desktop-1.6.0-dev1369.jar",
+        "repository/org/jetbrains/compose/ui/ui-test-desktop/1.6.0-dev1369/ui-test-desktop-1.6.0-dev1369.jar",
     ],
     visibility = ["//visibility:public"],
 )
