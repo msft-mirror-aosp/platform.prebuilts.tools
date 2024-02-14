@@ -62,7 +62,10 @@ studio_data(
     name = "lldb-bundle",
     files = glob(
         ["common/lldb/**"],
-        exclude = ["common/lldb/lldb.spdx.json"],
+        exclude = [
+            "common/lldb/lldb.spdx.json",
+            "common/lldb/android/riscv64/lldb-server",
+        ],
     ),
     files_linux = glob(
         ["linux-x86_64/lldb/**"],
