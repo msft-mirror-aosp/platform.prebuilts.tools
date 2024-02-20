@@ -135,19 +135,6 @@ index 9f82f10dceb7f..396e1ced34eed 100644
      public abstract fun getAnalysisSession(useSiteKtElement: KtElement): KtAnalysisSession
 
      public abstract fun getAnalysisSessionByUseSiteKtModule(useSiteKtModule: KtModule): KtAnalysisSession
-diff --git a/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/parameters/SymbolLightParameterCommon.kt b/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/parameters/SymbolLightParameterCommon.kt
-index 9c9b3678c2738..c18903ae12b35 100644
---- a/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/parameters/SymbolLightParameterCommon.kt
-+++ b/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/parameters/SymbolLightParameterCommon.kt
-@@ -33,7 +33,7 @@ internal abstract class SymbolLightParameterCommon(
-         parameterSymbolPointer = with(ktAnalysisSession) { parameterSymbol.createPointer() },
-         parameterDeclaration = parameterSymbol.sourcePsiSafe(),
-         containingMethod = containingMethod,
--        kotlinOrigin = parameterSymbol.psiSafe(),
-+        kotlinOrigin = parameterSymbol.sourcePsiSafe(), // KT-64772
-     )
-
-     private val _name: String by lazyPub {
 diff --git a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KtStandaloneProjectStructureProvider.kt b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KtStandaloneProjectStructureProvider.kt
 index 0e744e91d83a4..166a89592539d 100644
 --- a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KtStandaloneProjectStructureProvider.kt
@@ -169,3 +156,16 @@ index 0e744e91d83a4..166a89592539d 100644
 -}
 \ No newline at end of file
 +}
+diff --git a/analysis/low-level-api-fir/src/org/jetbrains/kotlin/analysis/low/level/api/fir/sessions/LLFirAbstractSessionFactory.kt b/analysis/low-level-api-fir/src/org/jetbrains/kotlin/analysis/low/level/api/fir/sessions/LLFirAbstractSessionFactory.kt
+index 6917e6e67fba..6632da005d90 100644
+--- a/analysis/low-level-api-fir/src/org/jetbrains/kotlin/analysis/low/level/api/fir/sessions/LLFirAbstractSessionFactory.kt
++++ b/analysis/low-level-api-fir/src/org/jetbrains/kotlin/analysis/low/level/api/fir/sessions/LLFirAbstractSessionFactory.kt
+@@ -435,6 +435,8 @@ internal abstract class LLFirAbstractSessionFactory(protected val project: Proje
+             register(FirLazyDeclarationResolver::class, FirDummyCompilerLazyDeclarationResolver)
+             registerCommonComponents(ProjectStructureProvider.getInstance(project).libraryLanguageVersionSettings)
+             registerCommonComponentsAfterExtensionsAreConfigured()
++            // KT-65788
++            registerResolveComponents()
+
+             val kotlinScopeProvider = FirKotlinScopeProvider(::wrapScopeWithJvmMapped)
+             register(FirKotlinScopeProvider::class, kotlinScopeProvider)
