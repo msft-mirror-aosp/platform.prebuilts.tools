@@ -671,19 +671,6 @@ filegroup(
 
 # managed by go/iml_to_build
 filegroup(
-    name = "google_api_services_testing_files",
-    # do not sort: must match IML order
-    srcs = [
-        "repository/com/google/apis/google-api-services-cloudbilling/v1-rev20240119-2.0.0/google-api-services-cloudbilling-v1-rev20240119-2.0.0.jar",
-        "repository/com/google/apis/google-api-services-monitoring/v3-rev20230806-2.0.0/google-api-services-monitoring-v3-rev20230806-2.0.0.jar",
-        "repository/com/google/apis/google-api-services-storage/v1-rev20230301-2.0.0/google-api-services-storage-v1-rev20230301-2.0.0.jar",
-        "repository/com/google/apis/google-api-services-toolresults/v1beta3-rev20230410-2.0.0/google-api-services-toolresults-v1beta3-rev20230410-2.0.0.jar",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-filegroup(
     name = "tomlj_files",
     # do not sort: must match IML order
     srcs = [
@@ -753,6 +740,20 @@ jvm_import(
     jars = [
         "repository/org/jetbrains/compose/ui/ui-test-junit4-desktop/1.6.0-dev1369/ui-test-junit4-desktop-1.6.0-dev1369.jar",
         "repository/org/jetbrains/compose/ui/ui-test-desktop/1.6.0-dev1369/ui-test-desktop-1.6.0-dev1369.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "google_api_services_testing",
+    # do not sort: must match IML order
+    jars = [
+        "repository/com/google/apis/google-api-services-cloudbilling/v1-rev20240119-2.0.0/google-api-services-cloudbilling-v1-rev20240119-2.0.0.jar",
+        "repository/com/google/apis/google-api-services-monitoring/v3-rev20230806-2.0.0/google-api-services-monitoring-v3-rev20230806-2.0.0.jar",
+        "repository/com/google/apis/google-api-services-storage/v1-rev20230301-2.0.0/google-api-services-storage-v1-rev20230301-2.0.0.jar",
+        "repository/com/google/apis/google-api-services-toolresults/v1beta3-rev20230410-2.0.0/google-api-services-toolresults-v1beta3-rev20230410-2.0.0.jar",
+        "repository/com/google/apis/google-api-services-testing/v1-rev20240213-2.0.0/google-api-services-testing-v1-rev20240213-2.0.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
