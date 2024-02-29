@@ -21,21 +21,10 @@ index c808c727b080..925721f0b31c 100644
              // class files for the previous build on the class path.
              //
 diff --git a/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt b/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
-index f3d4b631f3c7..ea9cbe45c250 100644
+index 20a1d0927b3a0..38d0ff68f5b75 100644
 --- a/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
 +++ b/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
-@@ -382,7 +382,9 @@ class KotlinCoreEnvironment private constructor(
-             is JvmModulePathRoot ->
-                 if (root.file.isFile) findJarRoot(root.file) else findExistingRoot(root, "Java module root")
-             is JavaSourceRoot ->
--                findExistingRoot(root, "Java source root")
-+                // Partial cherry pick of https://github.com/JetBrains/kotlin/pull/3649 supporting .srcjar roots.
-+                if (root.file.isFile && root.file.path.endsWith(".srcjar")) findJarRoot(root.file)
-+                else findExistingRoot(root, "Java source root")
-             is VirtualJvmClasspathRoot -> root.file
-             else ->
-                 throw IllegalStateException("Unexpected root: $root")
-@@ -665,7 +671,6 @@ class KotlinCoreEnvironment private constructor(
+@@ -716,7 +716,6 @@ class KotlinCoreEnvironment private constructor(
              CollectAdditionalSourcesExtension.registerExtensionPoint(project)
              ProcessSourcesBeforeCompilingExtension.registerExtensionPoint(project)
              ExtraImportsProviderExtension.registerExtensionPoint(project)
