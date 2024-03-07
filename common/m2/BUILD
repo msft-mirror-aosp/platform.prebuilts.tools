@@ -1,5 +1,4 @@
 load("//tools/adt/idea/studio:studio.bzl", "studio_data")
-load("//tools/base/app-inspection:app_inspection.bzl", "app_inspection_aar_import")
 load("//tools/base/bazel:jvm_import.bzl", "jvm_import")
 
 config_setting(
@@ -94,10 +93,15 @@ jvm_import(
     visibility = ["//visibility:public"],
 )
 
-app_inspection_aar_import(
+aar_import(
     name = "androidx.inspection.inspection.1.0.0",
     aar = "repository/androidx/inspection/inspection/1.0.0/inspection-1.0.0.aar",
-    pom = "repository/androidx/inspection/inspection/1.0.0/inspection-1.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+aar_import(
+    name = "androidx-monitor",
+    aar = "repository/androidx/test/monitor/1.6.1/monitor-1.6.1.aar",
     visibility = ["//visibility:public"],
 )
 
