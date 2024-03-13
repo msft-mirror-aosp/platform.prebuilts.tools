@@ -61,12 +61,11 @@ java_genrule_host {
         "repository/com/almworks/sqlite4java/sqlite4java-win32-x86/0.282/sqlite4java-win32-x86-0.282.dll",
     ],
     tools: ["soong_zip"],
-    cmd: "D=$(genDir)/sqlite-native && mkdir $$D && cp $(in) $$D && " +
-        "mkdir $$D/linux-x86_64 && mv $$D/*linux-amd64* $$D/linux-x86_64/libsqlite4java.so && " +
-        "mkdir $$D/linux-x86 && mv $$D/*linux-i386* $$D/linux-x86/libsqlite4java.so && " +
-        "mkdir $$D/mac-x86_64 && mv $$D/*osx* $$D/mac-x86_64/libsqlite4java.jnilib && " +
-        "mkdir $$D/windows-x86_64 && mv $$D/*win32-x64* $$D/windows-x86_64/sqlite4java.dll && " +
-        "mkdir $$D/windows-x86 && mv $$D/*win32-x86* $$D/windows-x86/sqlite4java.dll && " +
+    cmd: "D=$(genDir)/sqlite-native && " +
+        "mkdir -p $$D/sqlite4java && " +
+        "cp $(in) $$D && " +
+        "mkdir $$D/sqlite4java/linux-amd64 && " +
+        "mv $$D/*-linux-amd64* $$D/sqlite4java/linux-amd64/libsqlite4java.so && " +
         "$(location soong_zip) -o $(out) -C $$D -D $$D",
 }
 
