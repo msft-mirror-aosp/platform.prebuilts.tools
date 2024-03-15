@@ -1,4 +1,4 @@
-# Copyright (C) 2019 The Android Open Source Project
+# Copyright (C) 2023 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -36,6 +36,18 @@ buffers {
 # procfs polling
 buffers {
   size_kb: 8192
+  fill_policy: RING_BUFFER
+}
+
+# heapprofd memory
+buffers {
+  size_kb: 32768
+  fill_policy: RING_BUFFER
+}
+
+# java hprof memory
+buffers {
+  size_kb: 65536
   fill_policy: RING_BUFFER
 }
 
@@ -102,7 +114,6 @@ data_sources {
       atrace_categories: "sched"
       atrace_categories: "freq"
       atrace_categories: "gfx"
-      atrace_categories: "video"
       atrace_categories: "view"
       atrace_categories: "webview"
       atrace_categories: "input"
@@ -112,7 +123,6 @@ data_sources {
       atrace_categories: "workq"
       atrace_categories: "res"
       atrace_categories: "power"
-      atrace_categories: "network"
 
     }
   }
@@ -165,6 +175,34 @@ data_sources {
   }
 }
 
+data_sources {
+  config {
+    name: "android.heapprofd"
+    target_buffer: 2
+    heapprofd_config {
+      sampling_interval_bytes: 16384
+      process_cmdline: "system_server"
+      process_cmdline: "com.android.systemui"
+      process_cmdline: "com.google.android.apps.nexuslauncher"
+      process_cmdline: "/system/bin/surfaceflinger"
+      no_startup: true
+      shmem_size_bytes: 16777216
+    }
+  }
+}
+
+data_sources {
+  config {
+    name: "android.java_hprof"
+    target_buffer: 3
+    java_hprof_config {
+      process_cmdline: "system_server"
+      process_cmdline: "com.android.systemui"
+      process_cmdline: "com.google.android.apps.nexuslauncher"
+    }
+  }
+}
+
 data_sources: {
   config: {
     name: "android.surfaceflinger.frametimeline"
@@ -182,11 +220,5 @@ data_sources: {
       battery_counters: BATTERY_COUNTER_CHARGE
       battery_counters: BATTERY_COUNTER_CURRENT
     }
-  }
-}
-
-data_sources: {
-  config: {
-    name: "track_event"
   }
 }
