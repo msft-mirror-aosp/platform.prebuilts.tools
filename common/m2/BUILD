@@ -1,5 +1,4 @@
 load("//tools/adt/idea/studio:studio.bzl", "studio_data")
-load("//tools/base/app-inspection:app_inspection.bzl", "app_inspection_aar_import")
 load("//tools/base/bazel:jvm_import.bzl", "jvm_import")
 
 config_setting(
@@ -94,10 +93,15 @@ jvm_import(
     visibility = ["//visibility:public"],
 )
 
-app_inspection_aar_import(
+aar_import(
     name = "androidx.inspection.inspection.1.0.0",
     aar = "repository/androidx/inspection/inspection/1.0.0/inspection-1.0.0.aar",
-    pom = "repository/androidx/inspection/inspection/1.0.0/inspection-1.0.0.pom",
+    visibility = ["//visibility:public"],
+)
+
+aar_import(
+    name = "androidx-monitor",
+    aar = "repository/androidx/test/monitor/1.6.1/monitor-1.6.1.aar",
     visibility = ["//visibility:public"],
 )
 
@@ -717,7 +721,7 @@ jvm_import(
         "repository/org/jetbrains/compose/ui/ui-graphics-desktop/1.6.0-dev1369/ui-graphics-desktop-1.6.0-dev1369.jar",
         "repository/org/jetbrains/compose/ui/ui-geometry-desktop/1.6.0-dev1369/ui-geometry-desktop-1.6.0-dev1369.jar",
         "repository/org/jetbrains/compose/ui/ui-desktop/1.6.0-dev1369/ui-desktop-1.6.0-dev1369.jar",
-        "repository/org/jetbrains/skiko/skiko-awt/0.7.85.4/skiko-awt-0.7.85.4.jar",
+        "repository/org/jetbrains/skiko/skiko-awt/0.7.85.5/skiko-awt-0.7.85.5.jar",
         "repository/org/jetbrains/skiko/skiko-awt-runtime-linux-x64/0.7.85.4/skiko-awt-runtime-linux-x64-0.7.85.4.jar",
         "repository/org/jetbrains/skiko/skiko-awt-runtime-macos-arm64/0.7.85.4/skiko-awt-runtime-macos-arm64-0.7.85.4.jar",
         "repository/org/jetbrains/skiko/skiko-awt-runtime-macos-x64/0.7.85.4/skiko-awt-runtime-macos-x64-0.7.85.4.jar",

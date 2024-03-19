@@ -128,3 +128,38 @@ index e6256dbbb08a..cf4cbfbaf63c 100644
  }
  
  class KotlinStaticPsiDeclarationProviderFactory(
+diff --git a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/builder/KtSourceModuleBuilder.kt b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/builder/KtSourceModuleBuilder.kt
+index 6c8339e502d0..aec66eb3c63c 100644
+--- a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/builder/KtSourceModuleBuilder.kt
++++ b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/builder/KtSourceModuleBuilder.kt
+@@ -32,6 +32,7 @@ public class KtSourceModuleBuilder(
+         LanguageVersionSettingsImpl(LanguageVersion.LATEST_STABLE, ApiVersion.LATEST)
+ 
+     private val sourceRoots: MutableList<Path> = mutableListOf()
++    private val sourceVirtualFiles: MutableList<VirtualFile> = mutableListOf()
+ 
+     public fun addSourceRoot(path: Path) {
+         sourceRoots.add(path)
+@@ -41,6 +42,14 @@ public class KtSourceModuleBuilder(
+         sourceRoots.addAll(paths)
+     }
+ 
++    public fun addSourceVirtualFile(virtualFile: VirtualFile) {
++        sourceVirtualFiles.add(virtualFile)
++    }
++
++    public fun addSourceVirtualFiles(virtualFiles: Collection<VirtualFile>) {
++        sourceVirtualFiles.addAll(virtualFiles)
++    }
++
+     override fun build(): KtSourceModule {
+         val virtualFiles = collectVirtualFilesByRoots()
+         val psiManager = PsiManager.getInstance(kotlinCoreProjectEnvironment.project)
+@@ -73,6 +82,7 @@ public class KtSourceModuleBuilder(
+                     add(virtualFile)
+                 }
+             }
++            addAll(sourceVirtualFiles)
+         }
+     }
+ }
