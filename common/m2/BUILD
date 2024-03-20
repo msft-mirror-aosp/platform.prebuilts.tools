@@ -636,6 +636,7 @@ jvm_import(
         "repository/com/google/auth/google-auth-library-oauth2-http/1.4.0/google-auth-library-oauth2-http-1.4.0.jar",
         "repository/com/google/oauth-client/google-oauth-client/1.34.1/google-oauth-client-1.34.1.jar",
         "repository/com/google/oauth-client/google-oauth-client-java6/1.34.1/google-oauth-client-java6-1.34.1.jar",
+        "repository/com/google/auth/google-auth-library-credentials/1.4.0/google-auth-library-credentials-1.4.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
