@@ -197,6 +197,11 @@ java_import_host {
     name: "google-auth-library-credentials-0.13.0",
     jars: ["repository/com/google/auth/google-auth-library-credentials/0.13.0/google-auth-library-credentials-0.13.0.jar"],
     licenses: ["m2_google_auth_0.13.0_license"],
+    target: {
+        windows: {
+            enabled: true,
+        },
+    },
 }
 
 java_import_host {
@@ -268,7 +273,12 @@ java_import {
     host_supported: true,
     jars: ["repository/io/grpc/grpc-netty-shaded/1.56.0/grpc-netty-shaded-1.56.0.jar"],
     visibility: ["//external/grpc-grpc-java/netty/shaded"],
-    licenses: ["m2_grpc_netty_shaded_1.56.0_license"]
+    licenses: ["m2_grpc_netty_shaded_1.56.0_license"],
+    target: {
+        windows: {
+            enabled: true,
+        },
+    },
 }
 
 java_import_host {
@@ -393,6 +403,11 @@ java_import_host {
     name: "com.google.api.grpc_proto-google-common-protos-prebuilt-jar",
     jars: ["repository/com/google/api/grpc/proto-google-common-protos/1.14.0/proto-google-common-protos-1.14.0.jar"],
     licenses: ["m2_api_grpc_license"],
+    target: {
+        windows: {
+            enabled: true,
+        },
+    },
 }
 
 java_import {
