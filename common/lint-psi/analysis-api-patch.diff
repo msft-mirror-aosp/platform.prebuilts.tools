@@ -156,16 +156,3 @@ index 0e744e91d83a4..166a89592539d 100644
 -}
 \ No newline at end of file
 +}
-diff --git a/analysis/low-level-api-fir/src/org/jetbrains/kotlin/analysis/low/level/api/fir/sessions/LLFirAbstractSessionFactory.kt b/analysis/low-level-api-fir/src/org/jetbrains/kotlin/analysis/low/level/api/fir/sessions/LLFirAbstractSessionFactory.kt
-index 6917e6e67fba..6632da005d90 100644
---- a/analysis/low-level-api-fir/src/org/jetbrains/kotlin/analysis/low/level/api/fir/sessions/LLFirAbstractSessionFactory.kt
-+++ b/analysis/low-level-api-fir/src/org/jetbrains/kotlin/analysis/low/level/api/fir/sessions/LLFirAbstractSessionFactory.kt
-@@ -435,6 +435,8 @@ internal abstract class LLFirAbstractSessionFactory(protected val project: Proje
-             register(FirLazyDeclarationResolver::class, FirDummyCompilerLazyDeclarationResolver)
-             registerCommonComponents(ProjectStructureProvider.getInstance(project).libraryLanguageVersionSettings)
-             registerCommonComponentsAfterExtensionsAreConfigured()
-+            // KT-65788
-+            registerResolveComponents()
-
-             val kotlinScopeProvider = FirKotlinScopeProvider(::wrapScopeWithJvmMapped)
-             register(FirKotlinScopeProvider::class, kotlinScopeProvider)
