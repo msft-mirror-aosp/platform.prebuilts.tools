@@ -774,3 +774,23 @@ jvm_import(
     ],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "libgoogle_auth_transitive_deps",
+    # do not sort: must match IML order
+    jars = [
+        "repository/androidx/annotation/annotation-jvm/1.7.1/annotation-jvm-1.7.1.jar",
+        "repository/com/google/api-client/google-api-client/1.35.2/google-api-client-1.35.2.jar",
+        "repository/com/google/apis/google-api-services-cloudresourcemanager/v1beta1-rev577-1.25.0/google-api-services-cloudresourcemanager-v1beta1-rev577-1.25.0.jar",
+        "repository/com/google/apis/google-api-services-oauth2/v2-rev157-1.25.0/google-api-services-oauth2-v2-rev157-1.25.0.jar",
+        "repository/com/google/http-client/google-http-client-apache-v2/1.42.0/google-http-client-apache-v2-1.42.0.jar",
+        "repository/com/google/http-client/google-http-client-gson/1.43.3/google-http-client-gson-1.43.3.jar",
+        "repository/com/google/http-client/google-http-client/1.43.3/google-http-client-1.43.3.jar",
+        "repository/com/google/oauth-client/google-oauth-client-java6/1.35.0/google-oauth-client-java6-1.35.0.jar",
+        "repository/com/google/oauth-client/google-oauth-client/1.35.0/google-oauth-client-1.35.0.jar",
+        "repository/com/google/auth/google-auth-library-credentials/1.4.0/google-auth-library-credentials-1.4.0.jar",
+        "repository/com/google/auth/google-auth-library-oauth2-http/1.4.0/google-auth-library-oauth2-http-1.4.0.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
