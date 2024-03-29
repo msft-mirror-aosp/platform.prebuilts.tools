@@ -794,3 +794,15 @@ jvm_import(
     ],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "mockwebserver",
+    # do not sort: must match IML order
+    jars = [
+        "repository/com/squareup/okhttp3/okhttp/3.12.0/okhttp-3.12.0.jar",
+        "repository/com/squareup/okhttp3/mockwebserver/3.12.0/mockwebserver-3.12.0.jar",
+        "repository/com/squareup/okio/okio/1.15.0/okio-1.15.0.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
