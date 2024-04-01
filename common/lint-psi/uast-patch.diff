@@ -14,16 +14,18 @@ index 95df8f3957e9e..d5475be37afbd 100644
      }
  }
 diff --git a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastLanguagePlugin.kt b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastLanguagePlugin.kt
-index 5744ea428fefc..5972f09c93051 100644
+index 29c72b392eb2b9..e96e4b79049ca9 100644
 --- a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastLanguagePlugin.kt
 +++ b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastLanguagePlugin.kt
-@@ -46,7 +46,8 @@ class FirKotlinUastLanguagePlugin : UastLanguagePlugin {
- 
+@@ -46,7 +46,10 @@ class FirKotlinUastLanguagePlugin : UastLanguagePlugin {
+
              // Disable UAST for script files in K2 until scripting support is properly implemented in the K2 plugin.
              // UAST should not analyze script files.
--            return !ktFile.isScript() || Registry.`is`("kotlin.k2.scripting.enabled", false)
-+            //return !ktFile.isScript() || Registry.`is`("kotlin.k2.scripting.enabled", false)
+-            return !ktFile.isScript() || isK2ScriptingEnabled
++            // Lint doesn't need full resolution, but just a UAST tree for .kts
++            // Skip this check until 242
++            //return !ktFile.isScript() || isK2ScriptingEnabled
 +            return true
          }
- 
-     override fun convertElement(element: PsiElement, parent: UElement?, requiredType: Class<out UElement>?): UElement? {
+
+     private val isK2ScriptingEnabled: Boolean
