@@ -8,9 +8,9 @@ set -eu
 # For the IntelliJ version, see tools/idea/build.txt.
 # For the Kotlin version, see tools/idea/.idea/libraries/kotlinc_*.xml.
 # The git SHAs must also be updated to match the versions specified.
-export INTELLIJ_VERSION="233.11799.241"
+export INTELLIJ_VERSION="241.14494.240"
 export KOTLIN_VERSION="2.0.0-Beta5"
-export INTELLIJ_SHA="d2a6e82bfbe694a6a94c6eeec195c9a4a6f43aa7" # Dec 1, 2023, 233.11799.241
+export INTELLIJ_SHA="c047a5caf941e5522efcf339eef7b660afa2e300" # Mar 27, 2024, 241.14494.240
 export KOTLIN_SHA="988f66ce303c25b242e4c919257a44821ccf22b2" # Mar 19, 2024, 2.0.0-Beta5
 
 export CLEAN_BUILD="${CLEAN_BUILD:-false}"
@@ -63,7 +63,6 @@ if [[ ! "${CUSTOM_KOTLIN_DIR:-}" ]]; then
 fi
 if [[ ! "${CUSTOM_INTELLIJ_DIR:-}" ]]; then
     git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/uast-patch.diff"
-    git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/uast-241.diff"
     git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/uast-242.diff"
 fi
 
