@@ -41,7 +41,7 @@ license {
 java_import_host {
     name: "google-api-java-client-assembly",
     jars: [
-    	"libs/commons-logging-1.2.jar",
+        "libs/commons-logging-1.2.jar",
         "libs/google-api-client-1.33.2.jar",
         "libs/google-api-client-java6-1.33.2.jar",
         "libs/google-http-client-1.41.2.jar",
@@ -53,4 +53,9 @@ java_import_host {
         "libs/httpcore-4.4.15.jar",
         "libs/jsr305-3.0.2.jar",
     ],
+    target: {
+        windows: {
+            enabled: true,
+        },
+    },
 }
