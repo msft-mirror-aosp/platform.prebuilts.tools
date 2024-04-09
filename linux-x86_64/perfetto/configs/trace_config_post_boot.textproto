@@ -40,6 +40,7 @@ data_sources: {
         ftrace_config {
             ftrace_events: "sched/sched_switch"
             ftrace_events: "power/suspend_resume"
+            ftrace_events: "sched/sched_wakeup"
             ftrace_events: "sched/sched_wakeup_new"
             ftrace_events: "sched/sched_waking"
             ftrace_events: "power/cpu_frequency"
@@ -59,7 +60,6 @@ data_sources: {
             ftrace_events: "sched/sched_blocked_reason"
             ftrace_events: "workqueue/*"
             ftrace_events: "f2fs/f2fs_iostat"
-            ftrace_events: "f2fs/f2fs_write_end"
             ftrace_events: "vmscan/*"
             ftrace_events: "ftrace/print"
             ftrace_events: "power/wakeup_source_activate"
@@ -86,11 +86,7 @@ data_sources: {
             atrace_apps: "*"
             buffer_size_kb: 16384
             drain_period_ms: 250
-            throttle_rss_stat: true
             symbolize_ksyms: true
-            ksyms_mem_policy: KSYMS_RETAIN
-            disable_generic_events: true
-            compact_sched { enabled: true }
             preserve_ftrace_buffer: true
         }
     }
