@@ -1,0 +1,3906 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "org.jetbrains.kotlin",
+    "module": "kotlin-gradle-plugin-api",
+    "version": "2.0.0-RC1",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.4"
+    }
+  },
+  "variants": [
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-sources.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-sources.jar",
+          "size": 63725,
+          "sha512": "282e0f98039f6bcc8a389c69998540d5861a23c097d74bac501c2bf3be137bfd043c289f1d254af80880d4bea9ddf5662e9927a7b6324d63b00d3d90e24d5a96",
+          "sha256": "3a96d758cd5157989cdc7a995724f4eb74642e64feac8503991b4085cd16f02a",
+          "sha1": "91ff65c039d5bcfda445013c62bab66891d69c2f",
+          "md5": "837462ae40cc51f724c0713ec196bb15"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-javadoc.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-javadoc.jar",
+          "size": 641797,
+          "sha512": "337a2665942658ce349cf09b053c9c60cf9b270bc9c6c188e83e8f91f20799068371d05aa6f1443a9b35ee03fa77ab834cf4bfa3e21e3553de6b264a36d94351",
+          "sha256": "2f99c9f322e6e75c278aff430eeab8e9d39accd2a62b942552c06f1b5b7b7490",
+          "sha1": "492013219ff67b01f980f812c36a91d06c28335b",
+          "md5": "6072f5e731f122467b45cd9767a71c7d"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElementsWithFixedAttribute",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugins-bom",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ],
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugin-annotations",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-native-utils",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-tooling-core",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        }
+      ],
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1.jar",
+          "size": 244671,
+          "sha512": "0578199faad8bd4222c05a887c0d0b9fa79c7a15c1b7753ada2bbdfdfdfd182577940f999c54a8e756861c1c264afdc67f53f54b55cd916d44f89542da6958ec",
+          "sha256": "e6c8a63afd9f90cd856cb35d0a5895f6aeaceacac551973a29676e9cb0bfb67d",
+          "sha1": "7365e092dc2b24ff6520c04f1c442329372ce0d7",
+          "md5": "fc9c91ea277fa4cf745b5794d07adbcc"
+        }
+      ]
+    },
+    {
+      "name": "apiElementsWithFixedAttribute",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugins-bom",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ],
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugin-annotations",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-native-utils",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-tooling-core",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        }
+      ],
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1.jar",
+          "size": 244671,
+          "sha512": "0578199faad8bd4222c05a887c0d0b9fa79c7a15c1b7753ada2bbdfdfdfd182577940f999c54a8e756861c1c264afdc67f53f54b55cd916d44f89542da6958ec",
+          "sha256": "e6c8a63afd9f90cd856cb35d0a5895f6aeaceacac551973a29676e9cb0bfb67d",
+          "sha1": "7365e092dc2b24ff6520c04f1c442329372ce0d7",
+          "md5": "fc9c91ea277fa4cf745b5794d07adbcc"
+        }
+      ]
+    },
+    {
+      "name": "gradle70JavadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.plugin.api-version": "7.0",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle70-javadoc.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle70-javadoc.jar",
+          "size": 641770,
+          "sha512": "b93084a6becbe2bc07a13bcb579b6215b22f9d40f56435d968551c418abbfa13fbfb74542dfadfcecc9f37c3550f3b73d9e8438fa4c2ab54f770ef6e712ddc9f",
+          "sha256": "d948bf496277f16901dbbe4aff72e5fafd061db952d84fa386e133e143f89e85",
+          "sha1": "48ad2b8c3ff49a506f1e52d05eb2a448bc25ecd7",
+          "md5": "050d555422c7009b8903af9153d9133a"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle70",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle70SourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.plugin.api-version": "7.0",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle70-sources.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle70-sources.jar",
+          "size": 68090,
+          "sha512": "56cfd7040a82357c05bbfce236f24d7b7a7e51ce4e5717ccc0cf8ccadeb4bb44241562a7ee56cb13a754b921e305efe8776c899b6885cf408330148c0f4672d9",
+          "sha256": "97940be8ede61c1a113b9150dd25b992883cba92fd68e543021b62c0050b6a05",
+          "sha1": "6c56c33d066a949dfe17baa51c711f1aa673750d",
+          "md5": "0f1857e6e54b72d5100325ee7a9aa550"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle70",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle70ApiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.plugin.api-version": "7.0",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugins-bom",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ],
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugin-annotations",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-native-utils",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-tooling-core",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        }
+      ],
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle70.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle70.jar",
+          "size": 244671,
+          "sha512": "0578199faad8bd4222c05a887c0d0b9fa79c7a15c1b7753ada2bbdfdfdfd182577940f999c54a8e756861c1c264afdc67f53f54b55cd916d44f89542da6958ec",
+          "sha256": "e6c8a63afd9f90cd856cb35d0a5895f6aeaceacac551973a29676e9cb0bfb67d",
+          "sha1": "7365e092dc2b24ff6520c04f1c442329372ce0d7",
+          "md5": "fc9c91ea277fa4cf745b5794d07adbcc"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle70",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle70RuntimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.plugin.api-version": "7.0",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugins-bom",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ],
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugin-annotations",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-native-utils",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-tooling-core",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        }
+      ],
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle70.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle70.jar",
+          "size": 244671,
+          "sha512": "0578199faad8bd4222c05a887c0d0b9fa79c7a15c1b7753ada2bbdfdfdfd182577940f999c54a8e756861c1c264afdc67f53f54b55cd916d44f89542da6958ec",
+          "sha256": "e6c8a63afd9f90cd856cb35d0a5895f6aeaceacac551973a29676e9cb0bfb67d",
+          "sha1": "7365e092dc2b24ff6520c04f1c442329372ce0d7",
+          "md5": "fc9c91ea277fa4cf745b5794d07adbcc"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle70",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle71JavadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.plugin.api-version": "7.1",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle71-javadoc.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle71-javadoc.jar",
+          "size": 641771,
+          "sha512": "8448699bac4d115381ae05fecf4687553db1be522666bcb0079edb9dbeb94764805165f3b9d2649d84ffa0fbfb9b5621e77b1e7eadd95350f83b4cb02cae8743",
+          "sha256": "4aa255745f59bf30a2db2ae25aaf05613babb15dc4f5abb1dd1b721fbeb3c9f9",
+          "sha1": "8c24000d1e8f73e40e4d9039c64b205b894c0823",
+          "md5": "c8ecb743107856417074f2dba75b3b06"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle71",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle71SourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.plugin.api-version": "7.1",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle71-sources.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle71-sources.jar",
+          "size": 68090,
+          "sha512": "56cfd7040a82357c05bbfce236f24d7b7a7e51ce4e5717ccc0cf8ccadeb4bb44241562a7ee56cb13a754b921e305efe8776c899b6885cf408330148c0f4672d9",
+          "sha256": "97940be8ede61c1a113b9150dd25b992883cba92fd68e543021b62c0050b6a05",
+          "sha1": "6c56c33d066a949dfe17baa51c711f1aa673750d",
+          "md5": "0f1857e6e54b72d5100325ee7a9aa550"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle71",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle71ApiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.plugin.api-version": "7.1",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugins-bom",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ],
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugin-annotations",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-native-utils",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-tooling-core",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        }
+      ],
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle71.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle71.jar",
+          "size": 244671,
+          "sha512": "0578199faad8bd4222c05a887c0d0b9fa79c7a15c1b7753ada2bbdfdfdfd182577940f999c54a8e756861c1c264afdc67f53f54b55cd916d44f89542da6958ec",
+          "sha256": "e6c8a63afd9f90cd856cb35d0a5895f6aeaceacac551973a29676e9cb0bfb67d",
+          "sha1": "7365e092dc2b24ff6520c04f1c442329372ce0d7",
+          "md5": "fc9c91ea277fa4cf745b5794d07adbcc"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle71",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle71RuntimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.plugin.api-version": "7.1",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugins-bom",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ],
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugin-annotations",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-native-utils",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-tooling-core",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        }
+      ],
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle71.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle71.jar",
+          "size": 244671,
+          "sha512": "0578199faad8bd4222c05a887c0d0b9fa79c7a15c1b7753ada2bbdfdfdfd182577940f999c54a8e756861c1c264afdc67f53f54b55cd916d44f89542da6958ec",
+          "sha256": "e6c8a63afd9f90cd856cb35d0a5895f6aeaceacac551973a29676e9cb0bfb67d",
+          "sha1": "7365e092dc2b24ff6520c04f1c442329372ce0d7",
+          "md5": "fc9c91ea277fa4cf745b5794d07adbcc"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle71",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle74JavadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.plugin.api-version": "7.4",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle74-javadoc.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle74-javadoc.jar",
+          "size": 641784,
+          "sha512": "3d95236f724f58eea49799ca17d3428c5bd8b5cacdb6ceaa3d38c074bf78857c8458af14bb5f37d8cd99ef3ef52ab8fe13abe1f41989ff82d000e80291625523",
+          "sha256": "e1c6263ab09493285c97040985d295a72621b0ace3c0e2b3c0a85e96c2d542cd",
+          "sha1": "0c2ae367cefbcc4e6645af4a67914f870dde9c2c",
+          "md5": "bbbe276fd28eed790a34c15856a1d9f1"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle74",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle74SourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.plugin.api-version": "7.4",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle74-sources.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle74-sources.jar",
+          "size": 68090,
+          "sha512": "56cfd7040a82357c05bbfce236f24d7b7a7e51ce4e5717ccc0cf8ccadeb4bb44241562a7ee56cb13a754b921e305efe8776c899b6885cf408330148c0f4672d9",
+          "sha256": "97940be8ede61c1a113b9150dd25b992883cba92fd68e543021b62c0050b6a05",
+          "sha1": "6c56c33d066a949dfe17baa51c711f1aa673750d",
+          "md5": "0f1857e6e54b72d5100325ee7a9aa550"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle74",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle74ApiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.plugin.api-version": "7.4",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugins-bom",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ],
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugin-annotations",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-native-utils",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-tooling-core",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        }
+      ],
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle74.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle74.jar",
+          "size": 244671,
+          "sha512": "0578199faad8bd4222c05a887c0d0b9fa79c7a15c1b7753ada2bbdfdfdfd182577940f999c54a8e756861c1c264afdc67f53f54b55cd916d44f89542da6958ec",
+          "sha256": "e6c8a63afd9f90cd856cb35d0a5895f6aeaceacac551973a29676e9cb0bfb67d",
+          "sha1": "7365e092dc2b24ff6520c04f1c442329372ce0d7",
+          "md5": "fc9c91ea277fa4cf745b5794d07adbcc"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle74",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle74RuntimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.plugin.api-version": "7.4",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugins-bom",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ],
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugin-annotations",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-native-utils",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-tooling-core",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        }
+      ],
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle74.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle74.jar",
+          "size": 244671,
+          "sha512": "0578199faad8bd4222c05a887c0d0b9fa79c7a15c1b7753ada2bbdfdfdfd182577940f999c54a8e756861c1c264afdc67f53f54b55cd916d44f89542da6958ec",
+          "sha256": "e6c8a63afd9f90cd856cb35d0a5895f6aeaceacac551973a29676e9cb0bfb67d",
+          "sha1": "7365e092dc2b24ff6520c04f1c442329372ce0d7",
+          "md5": "fc9c91ea277fa4cf745b5794d07adbcc"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle74",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle75JavadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.plugin.api-version": "7.5",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle75-javadoc.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle75-javadoc.jar",
+          "size": 641788,
+          "sha512": "dcfa1c0e789d767cff74f55955afe4da75d741f0dd9a50683c35a854934856d55adda89f4855ac00a38a87ae7abb2990571d1ec731a76a98db33813e3d5a5b15",
+          "sha256": "ecbf9639f269c32944f0c280672e6b29aec2c1d25749641369b54998f9a2328b",
+          "sha1": "d99f2c739c86090b770265980aa6094bcb37cb2d",
+          "md5": "54776b588ca5a08681012948cf0b55d2"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle75",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle75SourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.plugin.api-version": "7.5",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle75-sources.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle75-sources.jar",
+          "size": 68090,
+          "sha512": "56cfd7040a82357c05bbfce236f24d7b7a7e51ce4e5717ccc0cf8ccadeb4bb44241562a7ee56cb13a754b921e305efe8776c899b6885cf408330148c0f4672d9",
+          "sha256": "97940be8ede61c1a113b9150dd25b992883cba92fd68e543021b62c0050b6a05",
+          "sha1": "6c56c33d066a949dfe17baa51c711f1aa673750d",
+          "md5": "0f1857e6e54b72d5100325ee7a9aa550"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle75",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle75ApiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.plugin.api-version": "7.5",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugins-bom",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ],
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugin-annotations",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-native-utils",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-tooling-core",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        }
+      ],
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle75.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle75.jar",
+          "size": 244671,
+          "sha512": "0578199faad8bd4222c05a887c0d0b9fa79c7a15c1b7753ada2bbdfdfdfd182577940f999c54a8e756861c1c264afdc67f53f54b55cd916d44f89542da6958ec",
+          "sha256": "e6c8a63afd9f90cd856cb35d0a5895f6aeaceacac551973a29676e9cb0bfb67d",
+          "sha1": "7365e092dc2b24ff6520c04f1c442329372ce0d7",
+          "md5": "fc9c91ea277fa4cf745b5794d07adbcc"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle75",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle75RuntimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.plugin.api-version": "7.5",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugins-bom",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ],
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugin-annotations",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-native-utils",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-tooling-core",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        }
+      ],
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle75.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle75.jar",
+          "size": 244671,
+          "sha512": "0578199faad8bd4222c05a887c0d0b9fa79c7a15c1b7753ada2bbdfdfdfd182577940f999c54a8e756861c1c264afdc67f53f54b55cd916d44f89542da6958ec",
+          "sha256": "e6c8a63afd9f90cd856cb35d0a5895f6aeaceacac551973a29676e9cb0bfb67d",
+          "sha1": "7365e092dc2b24ff6520c04f1c442329372ce0d7",
+          "md5": "fc9c91ea277fa4cf745b5794d07adbcc"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle75",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle76JavadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.plugin.api-version": "7.6",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle76-javadoc.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle76-javadoc.jar",
+          "size": 641789,
+          "sha512": "6cbd1a35a89bec064d5db082a7eaffae1fd284161b2ee4ec69796531b762e36b1682ac51a7014ffcfc0dcf9c6ac908ad55ffbed5319a1540ee6b80835882ce55",
+          "sha256": "4c84b9eeeec8416095cdfa0b6a5fd78fc2d284e09239e0937fa242499464089f",
+          "sha1": "7df33fd441ffe86bd5379fe5e81a89034fc3e2e2",
+          "md5": "a5851755ab97f45f1ca4843af1464456"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle76",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle76SourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.plugin.api-version": "7.6",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle76-sources.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle76-sources.jar",
+          "size": 68090,
+          "sha512": "56cfd7040a82357c05bbfce236f24d7b7a7e51ce4e5717ccc0cf8ccadeb4bb44241562a7ee56cb13a754b921e305efe8776c899b6885cf408330148c0f4672d9",
+          "sha256": "97940be8ede61c1a113b9150dd25b992883cba92fd68e543021b62c0050b6a05",
+          "sha1": "6c56c33d066a949dfe17baa51c711f1aa673750d",
+          "md5": "0f1857e6e54b72d5100325ee7a9aa550"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle76",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle76ApiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.plugin.api-version": "7.6",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugins-bom",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ],
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugin-annotations",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-native-utils",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-tooling-core",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        }
+      ],
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle76.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle76.jar",
+          "size": 244671,
+          "sha512": "0578199faad8bd4222c05a887c0d0b9fa79c7a15c1b7753ada2bbdfdfdfd182577940f999c54a8e756861c1c264afdc67f53f54b55cd916d44f89542da6958ec",
+          "sha256": "e6c8a63afd9f90cd856cb35d0a5895f6aeaceacac551973a29676e9cb0bfb67d",
+          "sha1": "7365e092dc2b24ff6520c04f1c442329372ce0d7",
+          "md5": "fc9c91ea277fa4cf745b5794d07adbcc"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle76",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle76RuntimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.plugin.api-version": "7.6",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugins-bom",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ],
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugin-annotations",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-native-utils",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-tooling-core",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        }
+      ],
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle76.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle76.jar",
+          "size": 244671,
+          "sha512": "0578199faad8bd4222c05a887c0d0b9fa79c7a15c1b7753ada2bbdfdfdfd182577940f999c54a8e756861c1c264afdc67f53f54b55cd916d44f89542da6958ec",
+          "sha256": "e6c8a63afd9f90cd856cb35d0a5895f6aeaceacac551973a29676e9cb0bfb67d",
+          "sha1": "7365e092dc2b24ff6520c04f1c442329372ce0d7",
+          "md5": "fc9c91ea277fa4cf745b5794d07adbcc"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle76",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle80JavadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.plugin.api-version": "8.0",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle80-javadoc.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle80-javadoc.jar",
+          "size": 641770,
+          "sha512": "83d8dfdde76ca1d447338559ba98955521c0da9875af2e868a50f3f236c40261ac8cadceb0cce08088c0a562f3abcdcf94d795fad53c8a1cc38cb407ffa98ee2",
+          "sha256": "de51d50b23d3e48b9aaa05a3d17df6fa57a157d2450e520c649c3976d01c32e6",
+          "sha1": "aec9bbf6080cdb99ef51fed1aaae87f1c1e7a3fa",
+          "md5": "9293049f4ebaa1a424deb2415ee9d48a"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle80",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle80SourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.plugin.api-version": "8.0",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle80-sources.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle80-sources.jar",
+          "size": 68090,
+          "sha512": "56cfd7040a82357c05bbfce236f24d7b7a7e51ce4e5717ccc0cf8ccadeb4bb44241562a7ee56cb13a754b921e305efe8776c899b6885cf408330148c0f4672d9",
+          "sha256": "97940be8ede61c1a113b9150dd25b992883cba92fd68e543021b62c0050b6a05",
+          "sha1": "6c56c33d066a949dfe17baa51c711f1aa673750d",
+          "md5": "0f1857e6e54b72d5100325ee7a9aa550"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle80",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle80ApiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.plugin.api-version": "8.0",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugins-bom",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ],
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugin-annotations",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-native-utils",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-tooling-core",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        }
+      ],
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle80.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle80.jar",
+          "size": 244671,
+          "sha512": "0578199faad8bd4222c05a887c0d0b9fa79c7a15c1b7753ada2bbdfdfdfd182577940f999c54a8e756861c1c264afdc67f53f54b55cd916d44f89542da6958ec",
+          "sha256": "e6c8a63afd9f90cd856cb35d0a5895f6aeaceacac551973a29676e9cb0bfb67d",
+          "sha1": "7365e092dc2b24ff6520c04f1c442329372ce0d7",
+          "md5": "fc9c91ea277fa4cf745b5794d07adbcc"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle80",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle80RuntimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.plugin.api-version": "8.0",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugins-bom",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ],
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugin-annotations",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-native-utils",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-tooling-core",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        }
+      ],
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle80.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle80.jar",
+          "size": 244671,
+          "sha512": "0578199faad8bd4222c05a887c0d0b9fa79c7a15c1b7753ada2bbdfdfdfd182577940f999c54a8e756861c1c264afdc67f53f54b55cd916d44f89542da6958ec",
+          "sha256": "e6c8a63afd9f90cd856cb35d0a5895f6aeaceacac551973a29676e9cb0bfb67d",
+          "sha1": "7365e092dc2b24ff6520c04f1c442329372ce0d7",
+          "md5": "fc9c91ea277fa4cf745b5794d07adbcc"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle80",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle81JavadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.plugin.api-version": "8.1",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle81-javadoc.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle81-javadoc.jar",
+          "size": 641771,
+          "sha512": "f68c6edaa4648595ec29ce17602091aacb6f04b66a0ec842723ca8ad28f610401bf514998745b045405c7ac86e98d0ab09753aa0bdb03ef18fb77ca7f4258adf",
+          "sha256": "ae8a0b2863b9cdee2f4f6befb83ef34dda57b4cfccf960270d1b0d1bf548e4a1",
+          "sha1": "04b4f26f0fb1d3d3f2be3976dfb50baa09754c8c",
+          "md5": "53a8b9262b684ec88ff744feff917ae1"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle81",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle81SourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.plugin.api-version": "8.1",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle81-sources.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle81-sources.jar",
+          "size": 68090,
+          "sha512": "56cfd7040a82357c05bbfce236f24d7b7a7e51ce4e5717ccc0cf8ccadeb4bb44241562a7ee56cb13a754b921e305efe8776c899b6885cf408330148c0f4672d9",
+          "sha256": "97940be8ede61c1a113b9150dd25b992883cba92fd68e543021b62c0050b6a05",
+          "sha1": "6c56c33d066a949dfe17baa51c711f1aa673750d",
+          "md5": "0f1857e6e54b72d5100325ee7a9aa550"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle81",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle81ApiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.plugin.api-version": "8.1",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugins-bom",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ],
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugin-annotations",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-native-utils",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-tooling-core",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        }
+      ],
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle81.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle81.jar",
+          "size": 244671,
+          "sha512": "0578199faad8bd4222c05a887c0d0b9fa79c7a15c1b7753ada2bbdfdfdfd182577940f999c54a8e756861c1c264afdc67f53f54b55cd916d44f89542da6958ec",
+          "sha256": "e6c8a63afd9f90cd856cb35d0a5895f6aeaceacac551973a29676e9cb0bfb67d",
+          "sha1": "7365e092dc2b24ff6520c04f1c442329372ce0d7",
+          "md5": "fc9c91ea277fa4cf745b5794d07adbcc"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle81",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle81RuntimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.plugin.api-version": "8.1",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugins-bom",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ],
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugin-annotations",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-native-utils",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-tooling-core",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        }
+      ],
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle81.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle81.jar",
+          "size": 244671,
+          "sha512": "0578199faad8bd4222c05a887c0d0b9fa79c7a15c1b7753ada2bbdfdfdfd182577940f999c54a8e756861c1c264afdc67f53f54b55cd916d44f89542da6958ec",
+          "sha256": "e6c8a63afd9f90cd856cb35d0a5895f6aeaceacac551973a29676e9cb0bfb67d",
+          "sha1": "7365e092dc2b24ff6520c04f1c442329372ce0d7",
+          "md5": "fc9c91ea277fa4cf745b5794d07adbcc"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle81",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle82JavadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.plugin.api-version": "8.2",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle82-javadoc.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle82-javadoc.jar",
+          "size": 641769,
+          "sha512": "c11531404b715f8bdd4d7aa867c576a95f2874fd5533647bd60db4524c46344161d652a36c893b5f750ad8ea0bf86135127388b6c655a93b2e7a315b32b33ebc",
+          "sha256": "b96f8fb25aae239d2e5291988794d01b74791716a88066ba0a6b16d693798b47",
+          "sha1": "53b80f8a88e40b869904d62f71917f6b628c64f5",
+          "md5": "39c75fc3a58d5fca5e85764dc8a3b82c"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle82",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle82SourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.plugin.api-version": "8.2",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle82-sources.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle82-sources.jar",
+          "size": 68090,
+          "sha512": "56cfd7040a82357c05bbfce236f24d7b7a7e51ce4e5717ccc0cf8ccadeb4bb44241562a7ee56cb13a754b921e305efe8776c899b6885cf408330148c0f4672d9",
+          "sha256": "97940be8ede61c1a113b9150dd25b992883cba92fd68e543021b62c0050b6a05",
+          "sha1": "6c56c33d066a949dfe17baa51c711f1aa673750d",
+          "md5": "0f1857e6e54b72d5100325ee7a9aa550"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle82",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle82ApiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.plugin.api-version": "8.2",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugins-bom",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ],
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugin-annotations",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-native-utils",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-tooling-core",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        }
+      ],
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle82.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle82.jar",
+          "size": 244671,
+          "sha512": "0578199faad8bd4222c05a887c0d0b9fa79c7a15c1b7753ada2bbdfdfdfd182577940f999c54a8e756861c1c264afdc67f53f54b55cd916d44f89542da6958ec",
+          "sha256": "e6c8a63afd9f90cd856cb35d0a5895f6aeaceacac551973a29676e9cb0bfb67d",
+          "sha1": "7365e092dc2b24ff6520c04f1c442329372ce0d7",
+          "md5": "fc9c91ea277fa4cf745b5794d07adbcc"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle82",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle82RuntimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.plugin.api-version": "8.2",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugins-bom",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ],
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugin-annotations",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-native-utils",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-tooling-core",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        }
+      ],
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle82.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle82.jar",
+          "size": 244671,
+          "sha512": "0578199faad8bd4222c05a887c0d0b9fa79c7a15c1b7753ada2bbdfdfdfd182577940f999c54a8e756861c1c264afdc67f53f54b55cd916d44f89542da6958ec",
+          "sha256": "e6c8a63afd9f90cd856cb35d0a5895f6aeaceacac551973a29676e9cb0bfb67d",
+          "sha1": "7365e092dc2b24ff6520c04f1c442329372ce0d7",
+          "md5": "fc9c91ea277fa4cf745b5794d07adbcc"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle82",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle85JavadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.plugin.api-version": "8.5",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle85-javadoc.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle85-javadoc.jar",
+          "size": 641676,
+          "sha512": "235a4289a7647b8fc571f2dfe7f3559e76d88003b37b4c716c5a6845fe348847681d22fb9cbea074ae0a0a909508020a0c858f266791d6e4dea7a1da1ce06296",
+          "sha256": "18afa9067a70e2ff4602b88cac7ae27c912057d893f7c026de0eba7402fb6357",
+          "sha1": "0ba71577015b9cb9ecf928a8c5e2e1c3fad26600",
+          "md5": "ea90cb0565caa7cd6a7055548acbbd97"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle85",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle85SourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.plugin.api-version": "8.5",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle85-sources.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle85-sources.jar",
+          "size": 68090,
+          "sha512": "56cfd7040a82357c05bbfce236f24d7b7a7e51ce4e5717ccc0cf8ccadeb4bb44241562a7ee56cb13a754b921e305efe8776c899b6885cf408330148c0f4672d9",
+          "sha256": "97940be8ede61c1a113b9150dd25b992883cba92fd68e543021b62c0050b6a05",
+          "sha1": "6c56c33d066a949dfe17baa51c711f1aa673750d",
+          "md5": "0f1857e6e54b72d5100325ee7a9aa550"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle85",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle85ApiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.plugin.api-version": "8.5",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugins-bom",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ],
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugin-annotations",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-native-utils",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-tooling-core",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        }
+      ],
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle85.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle85.jar",
+          "size": 244671,
+          "sha512": "0578199faad8bd4222c05a887c0d0b9fa79c7a15c1b7753ada2bbdfdfdfd182577940f999c54a8e756861c1c264afdc67f53f54b55cd916d44f89542da6958ec",
+          "sha256": "e6c8a63afd9f90cd856cb35d0a5895f6aeaceacac551973a29676e9cb0bfb67d",
+          "sha1": "7365e092dc2b24ff6520c04f1c442329372ce0d7",
+          "md5": "fc9c91ea277fa4cf745b5794d07adbcc"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle85",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    },
+    {
+      "name": "gradle85RuntimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.plugin.api-version": "8.5",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugins-bom",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ],
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-gradle-plugin-annotations",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-native-utils",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-tooling-core",
+          "version": {
+            "requires": "2.0.0-RC1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-reflect"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk8"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-jdk7"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-script-runtime"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            }
+          ]
+        }
+      ],
+      "files": [
+        {
+          "name": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle85.jar",
+          "url": "kotlin-gradle-plugin-api-2.0.0-RC1-gradle85.jar",
+          "size": 244671,
+          "sha512": "0578199faad8bd4222c05a887c0d0b9fa79c7a15c1b7753ada2bbdfdfdfd182577940f999c54a8e756861c1c264afdc67f53f54b55cd916d44f89542da6958ec",
+          "sha256": "e6c8a63afd9f90cd856cb35d0a5895f6aeaceacac551973a29676e9cb0bfb67d",
+          "sha1": "7365e092dc2b24ff6520c04f1c442329372ce0d7",
+          "md5": "fc9c91ea277fa4cf745b5794d07adbcc"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-gradle-plugin-api-gradle85",
+          "version": "2.0.0-RC1"
+        }
+      ]
+    }
+  ]
+}
