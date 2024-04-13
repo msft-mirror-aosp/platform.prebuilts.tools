@@ -798,3 +798,10 @@ jvm_import(
     ],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+filegroup(
+    name = "gradle-declarative-dsl_files",
+    srcs = ["repository/org/gradle/gradle-declarative-dsl-core/8.8-20240328140806+0000/gradle-declarative-dsl-core-8.8-20240328140806+0000.jar"],
+    visibility = ["//visibility:public"],
+)
