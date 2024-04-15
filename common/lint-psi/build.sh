@@ -9,9 +9,9 @@ set -eu
 # For the Kotlin version, see tools/idea/.idea/libraries/kotlinc_*.xml.
 # The git SHAs must also be updated to match the versions specified.
 export INTELLIJ_VERSION="241.14494.240"
-export KOTLIN_VERSION="2.0.0-Beta5"
+export KOTLIN_VERSION="2.0.0-RC1"
 export INTELLIJ_SHA="c047a5caf941e5522efcf339eef7b660afa2e300" # Mar 27, 2024, 241.14494.240
-export KOTLIN_SHA="988f66ce303c25b242e4c919257a44821ccf22b2" # Mar 19, 2024, 2.0.0-Beta5
+export KOTLIN_SHA="56b953d175e28b51127c2cf7de5af4aa57adcaa6" # Apr 7, 2024, 2.0.0-RC1
 
 export CLEAN_BUILD="${CLEAN_BUILD:-false}"
 
