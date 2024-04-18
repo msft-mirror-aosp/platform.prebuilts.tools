@@ -675,17 +675,6 @@ filegroup(
 )
 
 # managed by go/iml_to_build
-filegroup(
-    name = "tomlj_files",
-    # do not sort: must match IML order
-    srcs = [
-        "repository/org/tomlj/tomlj/1.1.0/tomlj-1.1.0.jar",
-        "repository/org/antlr/antlr4-runtime/4.11.1/antlr4-runtime-4.11.1.jar",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
 jvm_import(
     name = "google-api-services-sourcerepo",
     jars = ["repository/com/google/apis/google-api-services-sourcerepo/v1-rev20230123-2.0.0/google-api-services-sourcerepo-v1-rev20230123-2.0.0.jar"],
@@ -697,10 +686,13 @@ jvm_import(
     name = "jewel-ide",
     # do not sort: must match IML order
     jars = [
-        "repository/org/jetbrains/jewel/jewel-foundation/0.13.2/jewel-foundation-0.13.2.jar",
-        "repository/org/jetbrains/jewel/jewel-ide-laf-bridge/0.13.2-ij-233/jewel-ide-laf-bridge-0.13.2-ij-233.jar",
-        "repository/org/jetbrains/jewel/jewel-ide-laf-bridge-platform-specific/0.13.2-ij-233/jewel-ide-laf-bridge-platform-specific-0.13.2-ij-233.jar",
-        "repository/org/jetbrains/jewel/jewel-ui/0.13.2/jewel-ui-0.13.2.jar",
+        "repository/org/jetbrains/jewel/jewel-foundation-241/0.17.3/jewel-foundation-241-0.17.3.jar",
+        "repository/org/jetbrains/jewel/jewel-ide-laf-bridge-241/0.17.3/jewel-ide-laf-bridge-241-0.17.3.jar",
+        "repository/org/jetbrains/jewel/jewel-ui-241/0.17.3/jewel-ui-241-0.17.3.jar",
+        "repository/org/jetbrains/jewel/jewel-markdown-core-241/0.17.3/jewel-markdown-core-241-0.17.3.jar",
+        "repository/org/jetbrains/jewel/jewel-markdown-extension-gfm-alerts-241/0.17.3/jewel-markdown-extension-gfm-alerts-241-0.17.3.jar",
+        "repository/org/jetbrains/jewel/jewel-markdown-ide-laf-bridge-styling-241/0.17.3/jewel-markdown-ide-laf-bridge-styling-241-0.17.3.jar",
+        "repository/org/commonmark/commonmark/0.22.0/commonmark-0.22.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -710,23 +702,27 @@ jvm_import(
     name = "compose-desktop",
     # do not sort: must match IML order
     jars = [
-        "repository/org/jetbrains/compose/animation/animation-desktop/1.6.0-dev1369/animation-desktop-1.6.0-dev1369.jar",
-        "repository/org/jetbrains/compose/animation/animation-core-desktop/1.6.0-dev1369/animation-core-desktop-1.6.0-dev1369.jar",
-        "repository/org/jetbrains/compose/runtime/runtime-saveable-desktop/1.6.0-dev1369/runtime-saveable-desktop-1.6.0-dev1369.jar",
-        "repository/org/jetbrains/compose/runtime/runtime-desktop/1.6.0-dev1369/runtime-desktop-1.6.0-dev1369.jar",
-        "repository/org/jetbrains/compose/foundation/foundation-layout-desktop/1.6.0-dev1369/foundation-layout-desktop-1.6.0-dev1369.jar",
-        "repository/org/jetbrains/compose/foundation/foundation-desktop/1.6.0-dev1369/foundation-desktop-1.6.0-dev1369.jar",
-        "repository/org/jetbrains/compose/ui/ui-unit-desktop/1.6.0-dev1369/ui-unit-desktop-1.6.0-dev1369.jar",
-        "repository/org/jetbrains/compose/ui/ui-text-desktop/1.6.0-dev1369/ui-text-desktop-1.6.0-dev1369.jar",
-        "repository/org/jetbrains/compose/ui/ui-util-desktop/1.6.0-dev1369/ui-util-desktop-1.6.0-dev1369.jar",
-        "repository/org/jetbrains/compose/ui/ui-graphics-desktop/1.6.0-dev1369/ui-graphics-desktop-1.6.0-dev1369.jar",
-        "repository/org/jetbrains/compose/ui/ui-geometry-desktop/1.6.0-dev1369/ui-geometry-desktop-1.6.0-dev1369.jar",
-        "repository/org/jetbrains/compose/ui/ui-desktop/1.6.0-dev1369/ui-desktop-1.6.0-dev1369.jar",
-        "repository/org/jetbrains/skiko/skiko-awt/0.7.85.5/skiko-awt-0.7.85.5.jar",
-        "repository/org/jetbrains/skiko/skiko-awt-runtime-linux-x64/0.7.85.4/skiko-awt-runtime-linux-x64-0.7.85.4.jar",
-        "repository/org/jetbrains/skiko/skiko-awt-runtime-macos-arm64/0.7.85.4/skiko-awt-runtime-macos-arm64-0.7.85.4.jar",
-        "repository/org/jetbrains/skiko/skiko-awt-runtime-macos-x64/0.7.85.4/skiko-awt-runtime-macos-x64-0.7.85.4.jar",
-        "repository/org/jetbrains/skiko/skiko-awt-runtime-windows-x64/0.7.85.4/skiko-awt-runtime-windows-x64-0.7.85.4.jar",
+        "repository/org/jetbrains/compose/animation/animation-desktop/1.6.10-dev1584/animation-desktop-1.6.10-dev1584.jar",
+        "repository/org/jetbrains/compose/animation/animation-core-desktop/1.6.10-dev1584/animation-core-desktop-1.6.10-dev1584.jar",
+        "repository/org/jetbrains/compose/runtime/runtime-saveable-desktop/1.6.10-dev1584/runtime-saveable-desktop-1.6.10-dev1584.jar",
+        "repository/org/jetbrains/compose/runtime/runtime-desktop/1.6.10-dev1584/runtime-desktop-1.6.10-dev1584.jar",
+        "repository/org/jetbrains/compose/foundation/foundation-layout-desktop/1.6.10-dev1584/foundation-layout-desktop-1.6.10-dev1584.jar",
+        "repository/org/jetbrains/compose/foundation/foundation-desktop/1.6.10-dev1584/foundation-desktop-1.6.10-dev1584.jar",
+        "repository/org/jetbrains/compose/ui/ui-unit-desktop/1.6.10-dev1584/ui-unit-desktop-1.6.10-dev1584.jar",
+        "repository/org/jetbrains/compose/ui/ui-text-desktop/1.6.10-dev1584/ui-text-desktop-1.6.10-dev1584.jar",
+        "repository/org/jetbrains/compose/ui/ui-util-desktop/1.6.10-dev1584/ui-util-desktop-1.6.10-dev1584.jar",
+        "repository/org/jetbrains/compose/ui/ui-graphics-desktop/1.6.10-dev1584/ui-graphics-desktop-1.6.10-dev1584.jar",
+        "repository/org/jetbrains/compose/ui/ui-geometry-desktop/1.6.10-dev1584/ui-geometry-desktop-1.6.10-dev1584.jar",
+        "repository/org/jetbrains/compose/ui/ui-desktop/1.6.10-dev1584/ui-desktop-1.6.10-dev1584.jar",
+        "repository/org/jetbrains/skiko/skiko-awt/0.8.1/skiko-awt-0.8.1.jar",
+        "repository/org/jetbrains/skiko/skiko-awt-runtime-linux-x64/0.8.1/skiko-awt-runtime-linux-x64-0.8.1.jar",
+        "repository/org/jetbrains/skiko/skiko-awt-runtime-macos-arm64/0.8.1/skiko-awt-runtime-macos-arm64-0.8.1.jar",
+        "repository/org/jetbrains/skiko/skiko-awt-runtime-macos-x64/0.8.1/skiko-awt-runtime-macos-x64-0.8.1.jar",
+        "repository/org/jetbrains/skiko/skiko-awt-runtime-windows-x64/0.8.1/skiko-awt-runtime-windows-x64-0.8.1.jar",
+        "repository/androidx/collection/collection-jvm/1.4.0/collection-jvm-1.4.0.jar",
+        "repository/androidx/lifecycle/lifecycle-runtime-desktop/2.8.0-alpha04/lifecycle-runtime-desktop-2.8.0-alpha04.jar",
+        "repository/androidx/lifecycle/lifecycle-common-jvm/2.8.0-alpha04/lifecycle-common-jvm-2.8.0-alpha04.jar",
+        "repository/androidx/arch/core/core-common/2.2.0/core-common-2.2.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -734,7 +730,7 @@ jvm_import(
 # managed by go/iml_to_build
 jvm_import(
     name = "jewel-standalone",
-    jars = ["repository/org/jetbrains/jewel/jewel-int-ui-standalone/0.13.2/jewel-int-ui-standalone-0.13.2.jar"],
+    jars = ["repository/org/jetbrains/jewel/jewel-int-ui-standalone-241/0.17.3/jewel-int-ui-standalone-241-0.17.3.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -743,8 +739,8 @@ jvm_import(
     name = "compose-desktop-test",
     # do not sort: must match IML order
     jars = [
-        "repository/org/jetbrains/compose/ui/ui-test-junit4-desktop/1.6.0-dev1369/ui-test-junit4-desktop-1.6.0-dev1369.jar",
-        "repository/org/jetbrains/compose/ui/ui-test-desktop/1.6.0-dev1369/ui-test-desktop-1.6.0-dev1369.jar",
+        "repository/org/jetbrains/compose/ui/ui-test-junit4-desktop/1.6.10-dev1584/ui-test-junit4-desktop-1.6.10-dev1584.jar",
+        "repository/org/jetbrains/compose/ui/ui-test-desktop/1.6.10-dev1584/ui-test-desktop-1.6.10-dev1584.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -807,5 +803,12 @@ jvm_import(
         "repository/com/squareup/okhttp3/mockwebserver/3.12.0/mockwebserver-3.12.0.jar",
         "repository/com/squareup/okio/okio/1.15.0/okio-1.15.0.jar",
     ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+filegroup(
+    name = "gradle-declarative-dsl_files",
+    srcs = ["repository/org/gradle/gradle-declarative-dsl-core/8.8-20240328140806+0000/gradle-declarative-dsl-core-8.8-20240328140806+0000.jar"],
     visibility = ["//visibility:public"],
 )

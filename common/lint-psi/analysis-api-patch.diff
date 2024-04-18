@@ -135,24 +135,3 @@ index 9f82f10dceb7f..396e1ced34eed 100644
      public abstract fun getAnalysisSession(useSiteKtElement: KtElement): KtAnalysisSession
 
      public abstract fun getAnalysisSessionByUseSiteKtModule(useSiteKtModule: KtModule): KtAnalysisSession
-diff --git a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KtStandaloneProjectStructureProvider.kt b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KtStandaloneProjectStructureProvider.kt
-index 0e744e91d83a4..166a89592539d 100644
---- a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KtStandaloneProjectStructureProvider.kt
-+++ b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KtStandaloneProjectStructureProvider.kt
-@@ -44,7 +44,8 @@ internal class KtStandaloneProjectStructureProvider(
-             ?: return ktNotUnderContentRootModuleWithoutPsiFile
-
-         val virtualFile = containingFile.virtualFile
--            ?: error("${containingFile.name} is not a physical file")
-+            // KT-65107
-+            ?: return ktNotUnderContentRootModuleWithoutPsiFile
-
-         if (virtualFile.extension == BuiltInSerializerProtocol.BUILTINS_FILE_EXTENSION) {
-             return builtinsModule
-@@ -73,4 +74,4 @@ internal class KtStandaloneProjectStructureProvider(
-             addAll(findJvmRootsForJavaFiles(files.filterIsInstance<PsiJavaFile>()))
-         }
-     }
--}
-\ No newline at end of file
-+}
