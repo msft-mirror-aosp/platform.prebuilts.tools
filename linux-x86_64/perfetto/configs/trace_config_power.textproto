@@ -12,144 +12,110 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# proto-message: TraceConfig
-incremental_state_config {
-  clear_period_ms: 10000
-}
-
-# Enable periodic flushing of the trace buffer into the output file.
-write_into_file: true
-
-# Writes the userspace buffer into the file every 1s.
-file_write_period_ms: 1000
-
-# See b/126487238 - we need to guarantee ordering of events.
-flush_period_ms: 10000
-
-# The trace buffers needs to be big enough to hold |file_write_period_ms| of
-# trace data. The trace buffer sizing depends on the number of trace categories
-# enabled and the device activity.
-
-# RSS events
-buffers {
-  size_kb: 32768
+buffers: {
+  size_kb: 260096
   fill_policy: RING_BUFFER
 }
-
-# process stats
-buffers {
-  size_kb: 4096
+buffers: {
+  size_kb: 2048
   fill_policy: RING_BUFFER
 }
-
-# package list
-buffers {
-  size_kb: 512
-  fill_policy: RING_BUFFER
+data_sources: {
+  config {
+    name: "linux.process_stats"
+    target_buffer: 1
+    process_stats_config {
+      scan_all_processes_on_start: true
+    }
+  }
 }
-
-data_sources {
+data_sources: {
+  config {
+    name: "linux.sys_stats"
+    target_buffer: 0
+    sys_stats_config {
+      psi_period_ms: 100
+    }
+  }
+}
+data_sources: {
+  config {
+    name: "android.surfaceflinger.frametimeline"
+  }
+}
+data_sources: {
   config {
     name: "android.power"
     target_buffer: 0
     android_power_config {
       battery_poll_ms: 500
-
-      battery_counters: BATTERY_COUNTER_CHARGE
-      battery_counters: BATTERY_COUNTER_CAPACITY_PERCENT
-      battery_counters: BATTERY_COUNTER_CURRENT
-      battery_counters: BATTERY_COUNTER_CURRENT_AVG
-
       collect_power_rails: true
     }
   }
 }
-
-data_sources {
-  config {
-    name: "linux.ftrace"
-    target_buffer: 0
-    ftrace_config {
-      # These parameters affect only the kernel trace buffer size and how
-      # frequently it gets moved into the userspace buffer defined above.
-      buffer_size_kb: 16384
-      drain_period_ms: 250
-
-      # Store certain high-volume "sched" ftrace events in a denser format
-      # (falling back to the default format if not supported by the tracer).
-      compact_sched {
-        enabled: true
-      }
-
-      symbolize_ksyms: true
-
-      # We need to do process tracking to ensure kernel ftrace events targeted at short-lived
-      # threads are associated correctly
-      ftrace_events: "sched/sched_process_exit"
-      ftrace_events: "sched/sched_process_free"
-
-      ftrace_events: "power/suspend_resume"
-      ftrace_events: "power/cpu_frequency"
-      ftrace_events: "power/cpu_idle"
-
-      ftrace_events: "power/wakeup_source_activate"
-      ftrace_events: "power/wakeup_source_deactivate"
-
-      # Old (kernel) LMK
-      ftrace_events: "lowmemorykiller/lowmemory_kill"
-
-      # New (userspace) LMK
-      atrace_apps: "*"
-      atrace_categories: "am"
-      atrace_categories: "wm"
-      atrace_categories: "ss"
-      atrace_categories: "sched"
-      atrace_categories: "freq"
-      atrace_categories: "idle"
-      atrace_categories: "gfx"
-      atrace_categories: "view"
-      atrace_categories: "hal"
-      atrace_categories: "aidl"
-      atrace_categories: "binder_driver"
-      atrace_categories: "sync"
-      atrace_categories: "irq"
-      atrace_categories: "workq"
-      atrace_categories: "power"
-      atrace_categories: "network"
-    }
-  }
-}
-
 data_sources: {
   config {
-    name: "android.system_property"
-    target_buffer: 0
-    android_system_property_config {
-      property_name: "debug.tracing.battery_stats.data_conn"
-      property_name: "debug.tracing.battery_stats.mobile_radio"
-      property_name: "debug.tracing.battery_stats.phone_scanning"
-      property_name: "debug.tracing.battery_stats.phone_signal_strength"
-      property_name: "debug.tracing.battery_stats.wifi"
-      property_name: "debug.tracing.battery_stats.wifi_radio"
-      property_name: "debug.tracing.battery_stats.wifi_scan"
-      property_name: "debug.tracing.battery_stats.wifi_signal_strength"
+    name: "linux.ftrace"
+    ftrace_config {
+      ftrace_events: "sched/sched_switch"
+      ftrace_events: "power/suspend_resume"
+      ftrace_events: "sched/sched_wakeup_new"
+      ftrace_events: "sched/sched_waking"
+      ftrace_events: "power/cpu_frequency"
+      ftrace_events: "power/cpu_idle"
+      ftrace_events: "mm_event/mm_event_record"
+      ftrace_events: "kmem/rss_stat"
+      ftrace_events: "ion/ion_stat"
+      ftrace_events: "dmabuf_heap/dma_heap_stat"
+      ftrace_events: "kmem/ion_heap_grow"
+      ftrace_events: "kmem/ion_heap_shrink"
+      ftrace_events: "sched/sched_process_exit"
+      ftrace_events: "sched/sched_process_free"
+      ftrace_events: "task/task_newtask"
+      ftrace_events: "task/task_rename"
+      ftrace_events: "lowmemorykiller/lowmemory_kill"
+      ftrace_events: "oom/oom_score_adj_update"
+      ftrace_events: "sched/sched_blocked_reason"
+      ftrace_events: "workqueue/*"
+      ftrace_events: "vmscan/*"
+      ftrace_events: "ftrace/print"
+      ftrace_events: "power/wakeup_source_activate"
+      ftrace_events: "power/wakeup_source_deactivate"
+      atrace_categories: "aidl"
+      atrace_categories: "am"
+      atrace_categories: "dalvik"
+      atrace_categories: "binder_driver"
+      atrace_categories: "bionic"
+      atrace_categories: "camera"
+      atrace_categories: "gfx"
+      atrace_categories: "hal"
+      atrace_categories: "input"
+      atrace_categories: "network"
+      atrace_categories: "pm"
+      atrace_categories: "power"
+      atrace_categories: "res"
+      atrace_categories: "sm"
+      atrace_categories: "ss"
+      atrace_categories: "video"
+      atrace_categories: "view"
+      atrace_categories: "wm"
+      atrace_apps: "lmkd"
+      atrace_apps: "*"
+      buffer_size_kb: 16384
+      drain_period_ms: 250
+      throttle_rss_stat: true
+      symbolize_ksyms: true
+      ksyms_mem_policy: KSYMS_RETAIN
+      disable_generic_events: true
+      compact_sched { enabled: true }
     }
   }
 }
-
-data_sources {
-  config {
-    name: "linux.process_stats"
-      target_buffer: 1
-      process_stats_config {
-        scan_all_processes_on_start: true
-    }
-  }
-}
-
-data_sources {
-  config {
-    name: "android.packages_list"
-    target_buffer: 2
-  }
+duration_ms: 1800000
+write_into_file: true
+file_write_period_ms: 5000
+max_file_size_bytes: 1000000000
+flush_period_ms: 30000
+incremental_state_config {
+  clear_period_ms: 5000
 }
