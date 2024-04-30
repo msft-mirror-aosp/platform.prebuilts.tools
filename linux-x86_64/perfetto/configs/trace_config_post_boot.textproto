@@ -35,6 +35,27 @@ data_sources: {
     }
 }
 data_sources: {
+  config {
+    name: "linux.sys_stats"
+    target_buffer: 1
+    sys_stats_config {
+      meminfo_period_ms: 1000
+      meminfo_counters: MEMINFO_ACTIVE_ANON
+      meminfo_counters: MEMINFO_ACTIVE_FILE
+      meminfo_counters: MEMINFO_INACTIVE_ANON
+      meminfo_counters: MEMINFO_INACTIVE_FILE
+      meminfo_counters: MEMINFO_KERNEL_STACK
+      meminfo_counters: MEMINFO_MLOCKED
+      meminfo_counters: MEMINFO_SHMEM
+      meminfo_counters: MEMINFO_SLAB
+      meminfo_counters: MEMINFO_SLAB_UNRECLAIMABLE
+      meminfo_counters: MEMINFO_VMALLOC_USED
+      meminfo_counters: MEMINFO_MEM_FREE
+      meminfo_counters: MEMINFO_SWAP_FREE
+    }
+  }
+}
+data_sources: {
     config {
         name: "linux.ftrace"
         ftrace_config {
