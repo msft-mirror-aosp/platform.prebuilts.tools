@@ -85,4 +85,15 @@ index 4c194c5968d79..1005c672674b0 100644
  
  # Should be less or equal to the Kotlin stdlib version used inside IntelliJ IDEA repository, see KT-62510.
  # IntelliJ IDEA Kotlin stdlib version can be found at https://github.com/JetBrains/intellij-community/blob/master/.idea/libraries/kotlin_stdlib.xml
-
+diff --git a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/firFindMainClass.kt b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/firFindMainClass.kt
+index adbf9170f4389..ec3076816bb57 100644
+--- a/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/firFindMainClass.kt
++++ b/compiler/cli/src/org/jetbrains/kotlin/cli/jvm/compiler/firFindMainClass.kt
+@@ -54,6 +54,7 @@ fun findMainClass(fir: List<FirFile>): FqName? {
+     }
+ }
+ 
++@Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
+ private class FirMainClassFinder(
+     private var groupedMainFunctions: MutableMap<FirDeclaration, MutableList<FirSimpleFunction>>
+ ) : FirVisitor<Unit, Pair<FirDeclaration, FirRegularClass?>>() {
