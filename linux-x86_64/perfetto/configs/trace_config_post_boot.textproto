@@ -16,10 +16,16 @@ buffers: {
     size_kb: 204800
     fill_policy: RING_BUFFER
 }
+
 buffers: {
     size_kb: 204800
     fill_policy: RING_BUFFER
 }
+
+sys_stats_config {
+    psi_period_ms: 100
+}
+
 data_sources: {
     config {
         name: "linux.process_stats"
