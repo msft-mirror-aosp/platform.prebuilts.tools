@@ -4,7 +4,7 @@ IMPORTANT: Update PREBUILT file with the sha1 of ART
 
 Checkout Android AOSP
 $ source build/envsetup.sh
-$ lunch full-eng
+$ lunch full-trunk_staging-eng
 $ export SOONG_ALLOW_MISSING_DEPENDENCIES=true
 $ time m -j16 build-art-host
 
@@ -23,3 +23,9 @@ cp -r framework $art
 cp -r com.android.i18n $art
 mkdir $art/usr
 cp -r usr/share $art
+
+Try to run a sample HelloWorld to make sure art can run:
+
+javac -source 1.9 -target 1.9 HelloWorld.java
+java -cp $AndroidSdk/build-tools/34.0.0/lib/d8.jar com.android.tools.r8.D8 --min-api 1 --output dex.jar HelloWorld.class
+bin/art --64  -Xbootclasspath:framework/core-libart-hostdex.jar:framework/core-oj-hostdex.jar:framework/core-icu4j-hostdex.jar -classpath dex.jar HelloWorld
