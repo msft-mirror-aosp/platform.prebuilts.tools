@@ -812,3 +812,11 @@ filegroup(
     srcs = ["repository/org/gradle/gradle-declarative-dsl-core/8.8-20240328140806+0000/gradle-declarative-dsl-core-8.8-20240328140806+0000.jar"],
     visibility = ["//visibility:public"],
 )
+
+jvm_import(
+    name = "clikt",
+    jars = [
+        "repository/com/github/ajalt/clikt/clikt-jvm/3.5.3/clikt-jvm-3.5.3.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
