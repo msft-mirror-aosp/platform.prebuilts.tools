@@ -615,13 +615,6 @@ filegroup(
 
 # managed by go/iml_to_build
 jvm_import(
-    name = "commonmark-0.20.0",
-    jars = ["repository/org/commonmark/commonmark/0.20.0/commonmark-0.20.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
     name = "kotlinx-cli-jvm-0.3.1",
     jars = ["repository/org/jetbrains/kotlinx/kotlinx-cli-jvm/0.3.1/kotlinx-cli-jvm-0.3.1.jar"],
     visibility = ["//visibility:public"],
@@ -822,5 +815,12 @@ jvm_import(
     jars = [
         "repository/com/github/ajalt/clikt/clikt-jvm/3.5.3/clikt-jvm-3.5.3.jar",
     ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "commonmark-0.22.0",
+    jars = ["repository/org/commonmark/commonmark/0.22.0/commonmark-0.22.0.jar"],
     visibility = ["//visibility:public"],
 )
