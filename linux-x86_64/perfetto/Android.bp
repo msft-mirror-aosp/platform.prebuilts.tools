@@ -11,16 +11,23 @@ package {
 }
 
 cc_prebuilt_binary {
-  name: "perfetto_trace_processor_shell_prebuilt",
-  srcs: ["trace_processor_shell"],
-  host_supported: true,
-  device_supported: false,
+    name: "perfetto_trace_processor_shell_prebuilt",
+    srcs: ["trace_processor_shell"],
+    host_supported: true,
+    device_supported: false,
 }
 
 filegroup {
     name: "perfetto_artifacts",
-    srcs: ["trace_processor_shell",
-           "configs/trace_config_detailed.textproto",
-           "configs/long_trace_config.textproto",
-           "configs/long_trace_binder_config.textproto"],
+    srcs: [
+        "trace_processor_shell",
+        "configs/trace_config_detailed.textproto",
+        "configs/trace_config_detailed_heapdump.textproto",
+        "configs/trace_config_post_boot.textproto",
+        "configs/trace_config_power.textproto",
+        "configs/trace_config_boot_time.textproto",
+        "configs/trace_config_boot_time_stop.textproto",
+        "configs/long_trace_config.textproto",
+        "configs/long_trace_binder_config.textproto",
+    ],
 }

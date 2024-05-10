@@ -61,17 +61,6 @@ license {
 }
 
 license {
-    name: "m2_truth_license",
-    visibility: [":__subpackages__"],
-    license_kinds: [
-        "SPDX-license-identifier-Apache-2.0",
-    ],
-    license_text: [
-        "repository/com/google/truth/LICENSE.txt",
-    ]
-}
-
-license {
     name: "m2_guava_license",
     visibility: [":__subpackages__"],
     license_kinds: [
@@ -141,6 +130,17 @@ license {
 }
 
 license {
+    name: "m2_google_auth_1.23.0_license",
+    visibility: [":__subpackages__"],
+    license_kinds: [
+        "SPDX-license-identifier-BSD-3-Clause",
+    ],
+    license_text: [
+        "repository/com/google/auth/google-auth-library-oauth2-http/1.23.0/LICENSE"
+    ]
+}
+
+license {
     name: "m2_grpc_netty_shaded_1.16.1_license",
     visibility: [":__subpackages__"],
     license_kinds: [
@@ -148,6 +148,17 @@ license {
     ],
     license_text: [
         "repository/io/grpc/grpc-netty-shaded/1.16.1/LICENSE"
+    ]
+}
+
+license {
+    name: "m2_grpc_netty_shaded_1.56.0_license",
+    visibility: [":__subpackages__"],
+    license_kinds: [
+        "SPDX-license-identifier-Apache-2.0",
+    ],
+    license_text: [
+        "repository/io/grpc/grpc-netty-shaded/1.56.0/LICENSE"
     ]
 }
 
@@ -162,9 +173,26 @@ license {
     ]
 }
 
+license {
+    name: "m2_turbine_license",
+    visibility: [":__subpackages__"],
+    license_kinds: [
+        "SPDX-license-identifier-Apache-2.0",
+    ],
+    license_text: [
+        "repository/com/google/turbine/LICENSE"
+    ]
+}
+
+java_import {
+    name: "apache-commons-lang3",
+    jars: ["repository/org/apache/commons/commons-lang3/3.4/commons-lang3-3.4.jar"],
+}
+
 java_import {
     name: "byte-buddy-prebuilt-jar",
-    jars: ["repository/net/bytebuddy/byte-buddy/1.12.10/byte-buddy-1.12.10.jar"],
+    jars: ["repository/net/bytebuddy/byte-buddy/1.12.16/byte-buddy-1.12.16.jar",
+            "repository/net/bytebuddy/byte-buddy-agent/1.12.16/byte-buddy-agent-1.12.16.jar"],
     sdk_version: "current",
 }
 
@@ -180,12 +208,34 @@ java_import_host {
     name: "google-auth-library-credentials-0.13.0",
     jars: ["repository/com/google/auth/google-auth-library-credentials/0.13.0/google-auth-library-credentials-0.13.0.jar"],
     licenses: ["m2_google_auth_0.13.0_license"],
+    target: {
+        windows: {
+            enabled: true,
+        },
+    },
+}
+
+java_import_host {
+    name: "google-auth-library-credentials-1.23.0",
+    jars: ["repository/com/google/auth/google-auth-library-credentials/1.23.0/google-auth-library-credentials-1.23.0.jar"],
+    licenses: ["m2_google_auth_1.23.0_license"],
+    target: {
+        windows: {
+            enabled: true,
+        },
+    },
 }
 
 java_import_host {
     name: "google-auth-library-oauth2-http-0.13.0",
     jars: ["repository/com/google/auth/google-auth-library-oauth2-http/0.13.0/google-auth-library-oauth2-http-0.13.0.jar"],
     licenses: ["m2_google_auth_0.13.0_license"],
+}
+
+java_import_host {
+    name: "google-auth-library-oauth2-http-1.23.0",
+    jars: ["repository/com/google/auth/google-auth-library-oauth2-http/1.23.0/google-auth-library-oauth2-http-1.23.0.jar"],
+    licenses: ["m2_google_auth_1.23.0_license"],
 }
 
 java_import_host {
@@ -207,24 +257,20 @@ java_import {
 
 java_import {
     name: "mockito4-prebuilt-jar",
-    jars: ["repository/org/mockito/mockito-core/4.6.1/mockito-core-4.6.1.jar"],
+    jars: ["repository/org/mockito/mockito-core/4.8.1/mockito-core-4.8.1.jar"],
     sdk_version: "current",
 }
 
 java_import {
-    name: "truth-prebuilt-jar",
-    jars: ["repository/com/google/truth/truth/1.0.1/truth-1.0.1.jar"],
+    name: "inline-mockito4-prebuilt-jar",
+    jars: ["repository/org/mockito/mockito-inline/4.8.1/mockito-inline-4.8.1.jar"],
     sdk_version: "current",
-    host_supported: true,
-    licenses: ["m2_truth_license"]
 }
 
-java_import {
-    name: "truth-java8-extension-jar",
-    jars: ["repository/com/google/truth/extensions/truth-java8-extension/1.0.1/truth-java8-extension-1.0.1.jar"],
+java_import_host {
+    name: "truth-1.4.0-prebuilt",
+    jars: ["repository/com/google/truth/truth/1.4.0/truth-1.4.0.jar"],
     sdk_version: "current",
-    host_supported: true,
-    licenses: ["m2_truth_license"]
 }
 
 java_import {
@@ -248,6 +294,19 @@ java_import {
     jars: ["repository/io/grpc/grpc-netty-shaded/1.16.1/grpc-netty-shaded-1.16.1.jar"],
     visibility: ["//external/grpc-grpc-java/netty/shaded"],
     licenses: ["m2_grpc_netty_shaded_1.16.1_license"]
+}
+
+java_import {
+    name: "grpc-netty-shaded-1.56.0-jar",
+    host_supported: true,
+    jars: ["repository/io/grpc/grpc-netty-shaded/1.56.0/grpc-netty-shaded-1.56.0.jar"],
+    visibility: ["//external/grpc-grpc-java/netty/shaded"],
+    licenses: ["m2_grpc_netty_shaded_1.56.0_license"],
+    target: {
+        windows: {
+            enabled: true,
+        },
+    },
 }
 
 java_import_host {
@@ -279,37 +338,42 @@ java_library_static {
 }
 
 java_library_static {
-    name: "truth-prebuilt",
+    name: "inline-mockito-robolectric-prebuilt",
     static_libs: [
-        "truth-prebuilt-jar",
-        "asm-9.2",
-        "diffutils-prebuilt-jar",
-        "guava",
+        "byte-buddy-prebuilt-jar",
+        "inline-mockito4-prebuilt-jar",
+        "objenesis",
     ],
-    host_supported: true,
     sdk_version: "current",
-    licenses: [
-        "m2_truth_license",
-        "m2_guava_license",
-        "m2_java_diff_license",
-    ]
 }
 
-// Wrapper for the above. TODO: Remove.
-java_library_host {
-    name: "truth-host-prebuilt",
-    static_libs: ["truth-prebuilt"],
+license {
+    name: "m2_clikt_license",
+    visibility: [":__subpackages__"],
+    license_kinds: [
+        "SPDX-license-identifier-Apache-2.0",
+    ],
+    license_text: [
+        "repository/com/github/ajalt/clikt/LICENSE.txt",
+    ]
 }
 
 java_import {
     name: "metalava-tools-common-m2-deps",
     host_supported: true,
     jars: [
+	"repository/com/github/ajalt/clikt/clikt-jvm/3.5.3/clikt-jvm-3.5.3.jar",
+        "repository/com/google/guava/guava/32.1.1-jre/guava-32.1.1-jre.jar",
+        "repository/com/google/turbine/0.2.1/turbine-0.2.1.jar",
+        "repository/javax/xml/bind/jaxb-api/2.2.12-b140109.1041/jaxb-api-2.2.12-b140109.1041.jar",
+        "repository/org/jetbrains/trove4j/trove4j/20160824/trove4j-20160824.jar",
         "repository/org/ow2/asm/asm/6.1.1/asm-6.1.1.jar",
         "repository/org/ow2/asm/asm-tree/6.1.1/asm-tree-6.1.1.jar",
-        "repository/com/google/guava/guava/23.0/guava-23.0.jar",
-        "repository/org/jetbrains/trove4j/trove4j/20160824/trove4j-20160824.jar",
-        "repository/javax/xml/bind/jaxb-api/2.2.12-b140109.1041/jaxb-api-2.2.12-b140109.1041.jar",
+    ],
+    licenses: [
+        "m2_clikt_license",
+        "m2_guava_license",
+        "m2_turbine_license"
     ],
 }
 
@@ -336,7 +400,7 @@ java_import {
 java_import {
   name: "wire-runtime-prebuilt-jar",
   jars: [
-    "repository/com/squareup/wire/wire-runtime-jvm/4.4.1/wire-runtime-jvm-4.4.1.jar",
+    "repository/com/squareup/wire/wire-runtime-jvm/4.7.0/wire-runtime-jvm-4.7.0.jar",
   ],
 }
 
@@ -363,17 +427,60 @@ java_import {
     ],
 }
 
-// TODO: remove in favor of kotlinx_metadata_jvm
-java_import {
-    name: "kotlinx-metadata-jvm",
-    jars: ["repository/org/jetbrains/kotlinx/kotlinx-metadata-jvm/0.1.0/kotlinx-metadata-jvm-0.1.0.jar"],
-    host_supported: true,
-}
-
 java_import_host {
     name: "com.google.api.grpc_proto-google-common-protos-prebuilt-jar",
     jars: ["repository/com/google/api/grpc/proto-google-common-protos/1.14.0/proto-google-common-protos-1.14.0.jar"],
     licenses: ["m2_api_grpc_license"],
+    target: {
+        windows: {
+            enabled: true,
+        },
+    },
+}
+
+java_import {
+    name: "auto-common-1.1.2",
+    jars: ["repository/com/google/auto/auto-common/1.1.2/auto-common-1.1.2.jar"],
+    host_supported: true,
+}
+
+java_import {
+    name: "auto-value-1.9",
+    jars: ["repository/com/google/auto/value/auto-value/1.9/auto-value-1.9.jar"],
+    host_supported: true,
+}
+
+java_plugin {
+    name: "auto_value_plugin_1.9",
+    static_libs: [
+        "auto-value-1.9",
+        "auto-common-1.1.2",
+        "escapevelocity",
+        "guava",
+        "javapoet",
+    ],
+    processor_class: "com.google.auto.value.processor.AutoValueProcessor",
+    visibility: ["//visibility:public"],
+}
+
+java_plugin {
+    name: "auto_value_builder_plugin_1.9",
+    static_libs: [
+        "auto-value-1.9",
+        "auto-common-1.1.2",
+        "escapevelocity",
+        "guava",
+        "javapoet",
+    ],
+    processor_class: "com.google.auto.value.processor.AutoBuilderProcessor",
+    visibility: ["//visibility:public"],
+}
+
+java_import {
+    name: "gson-prebuilt-jar-2.9.1",
+    jars: ["repository/com/google/code/gson/gson/2.9.1/gson-2.9.1.jar"],
+    sdk_version: "current",
+    host_supported: true,
 }
 
 java_import {
@@ -489,4 +596,9 @@ java_import {
     host_supported: true,
     jars: ["repository/javax/annotation/javax.annotation-api/1.3.2/javax.annotation-api-1.3.2.jar"],
     sdk_version: "current",
+    target: {
+        windows: {
+            enabled: true,
+        },
+    },
 }
