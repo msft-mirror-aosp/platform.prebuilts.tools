@@ -615,13 +615,6 @@ filegroup(
 
 # managed by go/iml_to_build
 jvm_import(
-    name = "commonmark-0.20.0",
-    jars = ["repository/org/commonmark/commonmark/0.20.0/commonmark-0.20.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
     name = "kotlinx-cli-jvm-0.3.1",
     jars = ["repository/org/jetbrains/kotlinx/kotlinx-cli-jvm/0.3.1/kotlinx-cli-jvm-0.3.1.jar"],
     visibility = ["//visibility:public"],
@@ -686,12 +679,12 @@ jvm_import(
     name = "jewel-ide",
     # do not sort: must match IML order
     jars = [
-        "repository/org/jetbrains/jewel/jewel-foundation-241/0.18.1/jewel-foundation-241-0.18.1.jar",
-        "repository/org/jetbrains/jewel/jewel-ide-laf-bridge-241/0.18.1/jewel-ide-laf-bridge-241-0.18.1.jar",
-        "repository/org/jetbrains/jewel/jewel-ui-241/0.18.1/jewel-ui-241-0.18.1.jar",
-        "repository/org/jetbrains/jewel/jewel-markdown-core-241/0.18.1/jewel-markdown-core-241-0.18.1.jar",
-        "repository/org/jetbrains/jewel/jewel-markdown-extension-gfm-alerts-241/0.18.1/jewel-markdown-extension-gfm-alerts-241-0.18.1.jar",
-        "repository/org/jetbrains/jewel/jewel-markdown-ide-laf-bridge-styling-241/0.18.1/jewel-markdown-ide-laf-bridge-styling-241-0.18.1.jar",
+        "repository/org/jetbrains/jewel/jewel-foundation-241/0.19.3/jewel-foundation-241-0.19.3.jar",
+        "repository/org/jetbrains/jewel/jewel-ide-laf-bridge-241/0.19.3/jewel-ide-laf-bridge-241-0.19.3.jar",
+        "repository/org/jetbrains/jewel/jewel-ui-241/0.19.3/jewel-ui-241-0.19.3.jar",
+        "repository/org/jetbrains/jewel/jewel-markdown-core-241/0.19.3/jewel-markdown-core-241-0.19.3.jar",
+        "repository/org/jetbrains/jewel/jewel-markdown-extension-gfm-alerts-241/0.19.3/jewel-markdown-extension-gfm-alerts-241-0.19.3.jar",
+        "repository/org/jetbrains/jewel/jewel-markdown-ide-laf-bridge-styling-241/0.19.3/jewel-markdown-ide-laf-bridge-styling-241-0.19.3.jar",
         "repository/org/commonmark/commonmark/0.22.0/commonmark-0.22.0.jar",
     ],
     visibility = ["//visibility:public"],
@@ -730,7 +723,11 @@ jvm_import(
 # managed by go/iml_to_build
 jvm_import(
     name = "jewel-standalone",
-    jars = ["repository/org/jetbrains/jewel/jewel-int-ui-standalone-241/0.18.1/jewel-int-ui-standalone-241-0.18.1.jar"],
+    # do not sort: must match IML order
+    jars = [
+        "repository/org/jetbrains/jewel/jewel-int-ui-standalone-241/0.19.3/jewel-int-ui-standalone-241-0.19.3.jar",
+        "repository/org/jetbrains/jewel/jewel-markdown-int-ui-standalone-styling-241/0.19.3/jewel-markdown-int-ui-standalone-styling-241-0.19.3.jar",
+    ],
     visibility = ["//visibility:public"],
 )
 
@@ -818,5 +815,12 @@ jvm_import(
     jars = [
         "repository/com/github/ajalt/clikt/clikt-jvm/3.5.3/clikt-jvm-3.5.3.jar",
     ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "commonmark-0.22.0",
+    jars = ["repository/org/commonmark/commonmark/0.22.0/commonmark-0.22.0.jar"],
     visibility = ["//visibility:public"],
 )
