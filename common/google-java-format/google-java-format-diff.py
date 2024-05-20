@@ -1,13 +1,13 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 #
-#===- google-java-format-diff.py - google-java-format Diff Reformatter -----===#
+# ===- google-java-format-diff.py - google-java-format Diff Reformatter -----===#
 #
 #                     The LLVM Compiler Infrastructure
 #
 # This file is distributed under the University of Illinois Open Source
 # License. See LICENSE.TXT for details.
 #
-#===------------------------------------------------------------------------===#
+# ===------------------------------------------------------------------------===#
 
 """
 google-java-format Diff Reformatter
@@ -20,6 +20,10 @@ Example usage for git/svn users:
   git diff -U0 HEAD^ | google-java-format-diff.py -p1 -i
   svn diff --diff-cmd=diff -x-U0 | google-java-format-diff.py -i
 
+For perforce users:
+
+  P4DIFF="git --no-pager diff --no-index" p4 diff | ./google-java-format-diff.py -i -p7
+
 """
 
 import argparse
@@ -27,11 +31,35 @@ import difflib
 import re
 import string
 import subprocess
-import StringIO
+import io
 import sys
-from distutils.spawn import find_executable
+from concurrent.futures import ThreadPoolExecutor,wait,FIRST_EXCEPTION
+from shutil import which
 
-binary = find_executable('google-java-format') or '/usr/bin/google-java-format'
+def _apply_format(filename, lines, base_command, args):
+  """Apply format on filename."""
+  if args.i and args.verbose:
+    print('Formatting', filename)
+
+  command = base_command[:]
+  command.extend(lines)
+  command.append(filename)
+  p = subprocess.Popen(command, stdout=subprocess.PIPE,
+                       stderr=None, stdin=subprocess.PIPE)
+  stdout, _ = p.communicate()
+  if p.returncode != 0:
+    sys.exit(p.returncode)
+
+  if not args.i:
+    with open(filename) as f:
+      code = f.readlines()
+    formatted_code = io.StringIO(stdout.decode('utf-8')).readlines()
+    diff = difflib.unified_diff(code, formatted_code,
+                                filename, filename,
+                                '(before formatting)', '(after formatting)')
+    diff_string = ''.join(diff)
+    if len(diff_string) > 0:
+      sys.stdout.write(diff_string)
 
 def main():
   parser = argparse.ArgumentParser(description=
@@ -55,6 +83,17 @@ def main():
                       help='use AOSP style instead of Google Style (4-space indentation)')
   parser.add_argument('--skip-sorting-imports', action='store_true',
                       help='do not fix the import order')
+  parser.add_argument('--skip-removing-unused-imports', action='store_true',
+                      help='do not remove ununsed imports')
+  parser.add_argument(
+      '--skip-javadoc-formatting',
+      action='store_true',
+      default=False,
+      help='do not reformat javadoc')
+  parser.add_argument('-b', '--binary', help='path to google-java-format binary')
+  parser.add_argument('--google-java-format-jar', metavar='ABSOLUTE_PATH', default=None,
+                      help='use a custom google-java-format jar')
+
   args = parser.parse_args()
 
   # Extract changed lines for each file.
@@ -62,7 +101,7 @@ def main():
   lines_by_file = {}
 
   for line in sys.stdin:
-    match = re.search('^\+\+\+\ (.*?/){%s}(\S*)' % args.p, line)
+    match = re.search(r'^\+\+\+\ (.*?/){%s}(\S*)' % args.p, line)
     if match:
       filename = match.group(2)
     if filename == None:
@@ -75,7 +114,7 @@ def main():
       if not re.match('^%s$' % args.iregex, filename, re.IGNORECASE):
         continue
 
-    match = re.search('^@@.*\+(\d+)(,(\d+))?', line)
+    match = re.search(r'^@@.*\+(\d+)(,(\d+))?', line)
     if match:
       start_line = int(match.group(1))
       line_count = 1
@@ -87,35 +126,37 @@ def main():
       lines_by_file.setdefault(filename, []).extend(
           ['-lines', str(start_line) + ':' + str(end_line)])
 
-  # Reformat files containing changes in place.
-  for filename, lines in lines_by_file.iteritems():
-    if args.i and args.verbose:
-      print 'Formatting', filename
-    command = [binary]
-    if args.i:
-      command.append('-i')
-    if args.aosp:
-      command.append('--aosp')
-    if args.skip_sorting_imports:
-      command.append('--skip-sorting-imports')
-    command.extend(lines)
-    command.append(filename)
-    p = subprocess.Popen(command, stdout=subprocess.PIPE,
-                         stderr=None, stdin=subprocess.PIPE)
-    stdout, stderr = p.communicate()
-    if p.returncode != 0:
-      sys.exit(p.returncode);
+  if args.binary:
+    base_command = [args.binary]
+  elif args.google_java_format_jar:
+    base_command = ['java', '-jar', args.google_java_format_jar]
+  else:
+    binary = which('google-java-format') or '/usr/bin/google-java-format'
+    base_command = [binary]
 
-    if not args.i:
-      with open(filename) as f:
-        code = f.readlines()
-      formatted_code = StringIO.StringIO(stdout).readlines()
-      diff = difflib.unified_diff(code, formatted_code,
-                                  filename, filename,
-                                  '(before formatting)', '(after formatting)')
-      diff_string = string.join(diff, '')
-      if len(diff_string) > 0:
-        sys.stdout.write(diff_string)
+  if args.i:
+    base_command.append('-i')
+  if args.aosp:
+    base_command.append('--aosp')
+  if args.skip_sorting_imports:
+    base_command.append('--skip-sorting-imports')
+  if args.skip_removing_unused_imports:
+    base_command.append('--skip-removing-unused-imports')
+  if args.skip_javadoc_formatting:
+    base_command.append('--skip-javadoc-formatting')
+
+  with ThreadPoolExecutor() as executor:
+    format_futures = []
+    for filename, lines in lines_by_file.items():
+      format_futures.append(
+          executor.submit(_apply_format, filename, lines, base_command, args)
+      )
+
+    done, _ = wait(format_futures, return_when=FIRST_EXCEPTION)
+    for future in done:
+      if exception := future.exception():
+        executor.shutdown(wait=True, cancel_futures=True)
+        sys.exit(exception.args[0])
 
 if __name__ == '__main__':
   main()
