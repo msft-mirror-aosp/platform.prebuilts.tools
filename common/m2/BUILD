@@ -1,30 +1,6 @@
 load("//tools/adt/idea/studio:studio.bzl", "studio_data")
 load("//tools/base/bazel:jvm_import.bzl", "jvm_import")
 
-config_setting(
-    name = "osx-arm64",
-    values = {"host_cpu": "darwin_arm64"},
-    visibility = ["//visibility:public"],
-)
-
-config_setting(
-    name = "osx-x86_64",
-    values = {"host_cpu": "darwin"},
-    visibility = ["//visibility:public"],
-)
-
-config_setting(
-    name = "windows-x86_64",
-    values = {"host_cpu": "x64_windows"},
-    visibility = ["//visibility:public"],
-)
-
-config_setting(
-    name = "linux-x86_64",
-    values = {"host_cpu": "k8"},
-    visibility = ["//visibility:public"],
-)
-
 java_import(
     name = "org.jetbrains.kotlin.kotlin-gradle-plugin.1.5.21",
     jars = ["repository/org/jetbrains/kotlin/kotlin-gradle-plugin/1.5.21/kotlin-gradle-plugin-1.5.21.jar"],
@@ -70,10 +46,10 @@ java_import(
 filegroup(
     name = "io.grpc.protoc-gen-grpc-java.1.57.0_exe",
     srcs = select({
-        "//prebuilts/tools/common/m2:osx-arm64": ["repository/io/grpc/protoc-gen-grpc-java/1.57.0/protoc-gen-grpc-java-1.57.0-osx-aarch_64.exe"],
-        "//prebuilts/tools/common/m2:osx-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.57.0/protoc-gen-grpc-java-1.57.0-osx-x86_64.exe"],
-        "//prebuilts/tools/common/m2:windows-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.57.0/protoc-gen-grpc-java-1.57.0-windows-x86_64.exe"],
-        "//prebuilts/tools/common/m2:linux-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.57.0/protoc-gen-grpc-java-1.57.0-linux-x86_64.exe"],
+        "//tools/base/bazel/platforms:macos-arm64": ["repository/io/grpc/protoc-gen-grpc-java/1.57.0/protoc-gen-grpc-java-1.57.0-osx-aarch_64.exe"],
+        "//tools/base/bazel/platforms:macos-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.57.0/protoc-gen-grpc-java-1.57.0-osx-x86_64.exe"],
+        "@platforms//os:windows": ["repository/io/grpc/protoc-gen-grpc-java/1.57.0/protoc-gen-grpc-java-1.57.0-windows-x86_64.exe"],
+        "@platforms//os:linux": ["repository/io/grpc/protoc-gen-grpc-java/1.57.0/protoc-gen-grpc-java-1.57.0-linux-x86_64.exe"],
     }),
     visibility = ["//visibility:public"],
 )
@@ -120,10 +96,10 @@ java_import(
 filegroup(
     name = "com.google.protobuf.protoc.3.19.6_exe",
     srcs = select({
-        "//prebuilts/tools/common/m2:osx-arm64": ["repository/com/google/protobuf/protoc/3.19.6/protoc-3.19.6-osx-aarch_64.exe"],
-        "//prebuilts/tools/common/m2:osx-x86_64": ["repository/com/google/protobuf/protoc/3.19.6/protoc-3.19.6-osx-x86_64.exe"],
-        "//prebuilts/tools/common/m2:windows-x86_64": ["repository/com/google/protobuf/protoc/3.19.6/protoc-3.19.6-windows-x86_64.exe"],
-        "//prebuilts/tools/common/m2:linux-x86_64": ["repository/com/google/protobuf/protoc/3.19.6/protoc-3.19.6-linux-x86_64.exe"],
+        "//tools/base/bazel/platforms:macos-arm64": ["repository/com/google/protobuf/protoc/3.19.6/protoc-3.19.6-osx-aarch_64.exe"],
+        "//tools/base/bazel/platforms:macos-x86_64": ["repository/com/google/protobuf/protoc/3.19.6/protoc-3.19.6-osx-x86_64.exe"],
+        "@platforms//os:windows": ["repository/com/google/protobuf/protoc/3.19.6/protoc-3.19.6-windows-x86_64.exe"],
+        "@platforms//os:linux": ["repository/com/google/protobuf/protoc/3.19.6/protoc-3.19.6-linux-x86_64.exe"],
     }),
     visibility = ["//visibility:public"],
 )
@@ -152,10 +128,10 @@ filegroup(
 filegroup(
     name = "com.google.protobuf.protoc.3.22.3_exe",
     srcs = select({
-        "//prebuilts/tools/common/m2:osx-arm64": ["repository/com/google/protobuf/protoc/3.22.3/protoc-3.22.3-osx-aarch_64.exe"],
-        "//prebuilts/tools/common/m2:osx-x86_64": ["repository/com/google/protobuf/protoc/3.22.3/protoc-3.22.3-osx-x86_64.exe"],
-        "//prebuilts/tools/common/m2:windows-x86_64": ["repository/com/google/protobuf/protoc/3.22.3/protoc-3.22.3-windows-x86_64.exe"],
-        "//prebuilts/tools/common/m2:linux-x86_64": ["repository/com/google/protobuf/protoc/3.22.3/protoc-3.22.3-linux-x86_64.exe"],
+        "//tools/base/bazel/platforms:macos-arm64": ["repository/com/google/protobuf/protoc/3.22.3/protoc-3.22.3-osx-aarch_64.exe"],
+        "//tools/base/bazel/platforms:macos-x86_64": ["repository/com/google/protobuf/protoc/3.22.3/protoc-3.22.3-osx-x86_64.exe"],
+        "@platforms//os:windows": ["repository/com/google/protobuf/protoc/3.22.3/protoc-3.22.3-windows-x86_64.exe"],
+        "@platforms//os:linux": ["repository/com/google/protobuf/protoc/3.22.3/protoc-3.22.3-linux-x86_64.exe"],
     }),
     visibility = ["//visibility:public"],
 )
