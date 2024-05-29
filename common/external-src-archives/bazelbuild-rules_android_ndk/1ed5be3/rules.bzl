@@ -28,6 +28,9 @@ def _android_ndk_repository_impl(ctx):
         fail("Either the ANDROID_NDK_HOME environment variable or the " +
              "path attribute of android_ndk_repository must be set.")
 
+    if ndk_path.startswith("$WORKSPACE_ROOT"):
+        ndk_path = str(ctx.workspace_root) + ndk_path[15:]
+
     if ctx.os.name == "linux":
         clang_directory = "toolchains/llvm/prebuilt/linux-x86_64"
     elif ctx.os.name == "mac os x":
