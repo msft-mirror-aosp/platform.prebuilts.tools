@@ -32,6 +32,7 @@ def _android_ndk_repository_impl(ctx):
         ndk_path = str(ctx.workspace_root) + ndk_path[15:]
 
     is_windows = False
+    executable_extension = ""
     if ctx.os.name == "linux":
         clang_directory = "toolchains/llvm/prebuilt/linux-x86_64"
     elif ctx.os.name == "mac os x":
@@ -40,6 +41,7 @@ def _android_ndk_repository_impl(ctx):
     elif ctx.os.name.startswith("windows"):
         clang_directory = "toolchains/llvm/prebuilt/windows-x86_64"
         is_windows = True
+        executable_extension = ".exe"
     else:
         fail("Unsupported operating system: " + ctx.os.name)
 
@@ -86,6 +88,7 @@ def _android_ndk_repository_impl(ctx):
             "{api_level}": str(api_level),
             "{clang_resource_directory}": clang_resource_directory,
             "{sysroot_directory}": sysroot_directory,
+            "{executable_extension}": executable_extension,
         },
         executable = False,
     )
