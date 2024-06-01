@@ -526,7 +526,10 @@ filegroup(
     name = "all",
     testonly = True,
     srcs = glob(["**/*"]),
-    visibility = ["//tools/base/bazel:__pkg__"],
+    visibility = [
+        "//tools/base/bazel:__pkg__",
+        "//tools/vendor/google3/aswb:__subpackages__",
+    ],
 )
 
 # managed by go/iml_to_build
