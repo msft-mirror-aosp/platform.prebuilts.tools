@@ -526,7 +526,10 @@ filegroup(
     name = "all",
     testonly = True,
     srcs = glob(["**/*"]),
-    visibility = ["//tools/base/bazel:__pkg__"],
+    visibility = [
+        "//tools/base/bazel:__pkg__",
+        "//tools/vendor/google3/aswb:__subpackages__",
+    ],
 )
 
 # managed by go/iml_to_build
@@ -782,7 +785,11 @@ jvm_import(
 # managed by go/iml_to_build
 filegroup(
     name = "gradle-declarative-dsl_files",
-    srcs = ["repository/org/gradle/gradle-declarative-dsl-core/8.8-20240328140806+0000/gradle-declarative-dsl-core-8.8-20240328140806+0000.jar"],
+    # do not sort: must match IML order
+    srcs = [
+        "repository/org/gradle/gradle-declarative-dsl-core/8.9-20240529002035+0000/gradle-declarative-dsl-core-8.9-20240529002035+0000.jar",
+        "repository/org/gradle/gradle-declarative-dsl-tooling-models/8.9-20240529002035+0000/gradle-declarative-dsl-tooling-models-8.9-20240529002035+0000.jar",
+    ],
     visibility = ["//visibility:public"],
 )
 
