@@ -14,6 +14,14 @@ diff --git a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/F
 index 1a8d7bde0b1c..5b8fbb92fdc9 100644
 --- a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastResolveProviderService.kt
 +++ b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastResolveProviderService.kt
+@@ -250,6 +250,7 @@ interface FirKotlinUastResolveProviderService : BaseKotlinUastResolveProviderSer
+                 ?.symbol
+                 ?.let { return toPsiMethod(it, ktElement) }
+             return when (ktElement) {
++                is KtBinaryExpression,
+                 is KtPrefixExpression,
+                 is KtPostfixExpression -> {
+                     ktCallInfo.singleCallOrNull<KtCompoundVariableAccessCall>()
 @@ -268,11 +268,12 @@ interface FirKotlinUastResolveProviderService : BaseKotlinUastResolveProviderSer
              val variableAccessCall = ktSimpleNameExpression.resolveCall()?.singleCallOrNull<KtSimpleVariableAccessCall>() ?: return null
              val propertySymbol = variableAccessCall.symbol as? KtSyntheticJavaPropertySymbol ?: return null
@@ -32,3 +40,110 @@ index 1a8d7bde0b1c..5b8fbb92fdc9 100644
              }
          }
      }
+diff --git a/plugins/kotlin/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/kotlinInternalUastUtils.kt b/plugins/kotlin/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/kotlinInternalUastUtils.kt
+index 73fbfea28e6c..1bb018c3946f 100644
+--- a/plugins/kotlin/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/kotlinInternalUastUtils.kt
++++ b/plugins/kotlin/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/kotlinInternalUastUtils.kt
+@@ -497,7 +497,7 @@ private fun resolveContainingDeserializedClass(context: KtElement, memberDescrip
+             val declaredPsiType = containingDeclaration.defaultType.toPsiType(
+                 null as PsiModifierListOwner?,
+                 context,
+-                PsiTypeConversionConfiguration(TypeOwnerKind.DECLARATION)
++                PsiTypeConversionConfiguration(TypeOwnerKind.DECLARATION, isBoxed = true)
+             )
+             (declaredPsiType as? PsiClassType)?.resolve() ?: return null
+         }
+diff --git a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt
+index a98dbaff41e3c..f6b56ab4b78d6 100644
+--- a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt
++++ b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt
+@@ -98,7 +98,10 @@ internal fun toPsiMethod(
+         }
+     }
+     return when (val psi = psiForUast(functionSymbol, context.project)) {
+-        null -> null
++        null -> {
++            // Lint/UAST CLI: try `fake` creation for a deserialized declaration
++            toPsiMethodForDeserialized(functionSymbol, context, psi)
++        }
+         is PsiMethod -> psi
+         is KtClassOrObject -> {
+             // For synthetic members in enum classes, `psi` points to their containing enum class.
+@@ -141,7 +144,7 @@ context(KtAnalysisSession)
+ private fun toPsiMethodForDeserialized(
+     functionSymbol: KtFunctionLikeSymbol,
+     context: KtElement,
+-    psi: KtFunction,
++    psi: KtFunction?,
+ ): PsiMethod? {
+ 
+     fun equalSignatures(psiMethod: PsiMethod): Boolean {
+@@ -179,16 +182,28 @@ private fun toPsiMethodForDeserialized(
+         return psiMethodReturnType == symbolReturnType
+     }
+ 
+-    // NB: no fake generation for member functions, as deserialized source PSI for built-ins can trigger FIR build/resolution
+-    fun PsiClass.lookup(fake: Boolean): PsiMethod? {
++    fun PsiClass.lookup(): PsiMethod? {
+         val candidates =
+             if (functionSymbol is KtConstructorSymbol)
+                 constructors.filter { it.parameterList.parameters.size == functionSymbol.valueParameters.size }
+             else
+-                methods.filter { it.name == psi.name }
++                methods.filter { it.name == psi?.name }
+         return when (candidates.size) {
+-            0 -> if (fake) UastFakeDeserializedSourceLightMethod(psi, this) else null
+-            1 -> candidates.single()
++            0 -> {
++                if (psi != null) {
++                    UastFakeDeserializedSourceLightMethod(psi, this@lookup)
++                } else if (functionSymbol is KtFunctionSymbol) {
++                    UastFakeDeserializedSymbolLightMethod(
++                        functionSymbol.createPointer(),
++                        functionSymbol.name.identifier,
++                        this@lookup,
++                        context
++                    )
++                } else null
++            }
++            1 -> {
++                candidates.single()
++            }
+             else -> {
+                 candidates.firstOrNull { equalSignatures(it) } ?: candidates.first()
+             }
+@@ -196,17 +211,29 @@ private fun toPsiMethodForDeserialized(
+     }
+ 
+     // Deserialized member function
+-    return psi.containingClass()?.getClassId()?.let { classId ->
++    val classId = psi?.containingClass()?.getClassId()
++        ?: functionSymbol.callableIdIfNonLocal?.classId
++    if (classId != null) {
+         toPsiClass(
+             buildClassType(classId),
+             source = null,
+             context,
+             TypeOwnerKind.DECLARATION,
+-            isBoxed = false
+-        )?.lookup(fake = false)
+-    } ?:
++        )?.lookup()?.let { return it }
++    }
+     // Deserialized top-level function
+-    psi.containingKtFile.findFacadeClass()?.lookup(fake = true)
++    return if (psi != null) {
++        // Lint/UAST IDE: with deserialized PSI
++        psi.containingKtFile.findFacadeClass()?.lookup()
++    } else if (functionSymbol is KtFunctionSymbol) {
++        // Lint/UAST CLI: attempt to find the binary class
++        //   with the facade fq name from the resolved symbol
++        functionSymbol.getContainingJvmClassName()?.let { fqName ->
++            JavaPsiFacade.getInstance(context.project)
++                .findClass(fqName, context.resolveScope)
++                ?.lookup()
++        }
++    } else null
+ }
+ 
+ context(KtAnalysisSession)
