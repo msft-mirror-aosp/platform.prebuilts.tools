@@ -586,6 +586,13 @@ java_import_host {
     ],
 }
 
+java_plugin {
+    name: "dialer-dagger2-compiler",
+    visibility: ["//packages/apps/Dialer"],
+    static_libs: ["dialer-dagger2-compiler-deps"],
+    processor_class: "dagger.internal.codegen.ComponentProcessor",
+}
+
 java_import_host {
     name: "jopt-simple-4.9",
     jars: ["repository/net/sf/jopt-simple/jopt-simple/4.9/jopt-simple-4.9.jar"],
