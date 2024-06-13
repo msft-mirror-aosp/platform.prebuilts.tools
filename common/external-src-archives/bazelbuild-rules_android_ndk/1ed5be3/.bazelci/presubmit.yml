@@ -1,0 +1,63 @@
+---
+buildifier: latest
+bazel: last_green
+
+basic_example: &basic_example
+  working_directory: examples/basic
+  build_flags:
+    - "--incompatible_disallow_empty_glob"
+    - "--incompatible_enable_android_toolchain_resolution"
+    - "--android_platforms=//:arm64-v8a,//:x86"
+    - "--enable_bzlmod=False"
+  build_targets:
+    - "//java/com/app:app"
+
+basic_example_bzlmod: &basic_example_bzlmod
+  working_directory: examples/basic
+  build_flags:
+    - "--incompatible_disallow_empty_glob"
+    - "--incompatible_enable_android_toolchain_resolution"
+    - "--android_platforms=//:arm64-v8a,//:x86"
+    - "--enable_bzlmod=True"
+  build_targets:
+    - "//java/com/app:app"
+
+cpu_features: &cpu_features
+  working_directory: examples/cpu_features
+  build_flags:
+    - "--incompatible_disallow_empty_glob"
+    - "--incompatible_enable_android_toolchain_resolution"
+    - "--platforms=//:arm64-v8a"
+  build_targets:
+    - "//:all"
+
+ubuntu2004: &ubuntu2004
+  platform: ubuntu2004
+  environment:
+    ANDROID_NDK_HOME: /opt/android-ndk-r25b
+
+macos: &macos
+  platform: macos
+  environment:
+    ANDROID_NDK_HOME: /Users/buildkite/android-ndk-r25b
+
+tasks:
+  basic_example_ubuntu2004:
+    name: Basic Example
+    <<: [*ubuntu2004, *basic_example]
+  basic_example_bzlmod_ubuntu2004:
+    name: Basic Example Bzlmod
+    <<: [*ubuntu2004, *basic_example_bzlmod]
+  basic_example_macos:
+    name: Basic Example
+    <<: [*macos, *basic_example]
+  basic_example_bzlmod_macos:
+    name: Basic Example Bzlmod
+    <<: [*macos, *basic_example_bzlmod]
+
+  cpu_features_ubuntu2004:
+    name: CPU Features
+    <<: [*ubuntu2004, *cpu_features]
+  cpu_features_macos:
+    name: CPU Features
+    <<: [*macos, *cpu_features]

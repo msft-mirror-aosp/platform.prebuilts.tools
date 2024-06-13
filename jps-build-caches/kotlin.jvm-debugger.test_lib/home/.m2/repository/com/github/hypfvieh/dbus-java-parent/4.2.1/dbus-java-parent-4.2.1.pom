@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+
+    <groupId>com.github.hypfvieh</groupId>
+    <artifactId>dbus-java-parent</artifactId>
+    <version>4.2.1</version>
+
+    <name>${project.artifactId}</name>
+    <url>https://github.com/hypfvieh/dbus-java</url>
+
+    <description>DBus-Java library module parent</description>
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <junit5.version>5.9.0</junit5.version>
+        <pmd.version>6.49.0</pmd.version>
+        <parentDir>${project.basedir}</parentDir>
+    </properties>
+
+    <modules>
+        <module>dbus-java-core</module>
+        <module>dbus-java-osgi</module>
+        <module>dbus-java-utils</module>
+        <module>dbus-java-transport-jnr-unixsocket</module>
+        <module>dbus-java-transport-tcp</module>
+        <module>dbus-java-bom</module>
+        <module>dbus-java-tests</module>
+        <module>dbus-java-examples</module>
+    </modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+            </plugin>
+                        
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+            
+        </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>versions-maven-plugin</artifactId>
+                    <version>2.11.0</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.4.0</version>
+                    <configuration>
+                        <doclint>none</doclint>
+                        <!--  required because multi-release artifact will fuck up javadoc generation -->
+                        <failOnError>false</failOnError>
+                        <failOnWarnings>false</failOnWarnings>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>attach-javadocs</id>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>3.0.0</version>
+                    <executions>
+                        <execution>
+                            <id>enforce-maven</id>
+                            <goals>
+                                <goal>enforce</goal>
+                            </goals>
+                            <configuration>
+                                <rules>
+                                    <requireMavenVersion>
+                                        <version>3.5.0</version>
+                                    </requireMavenVersion>
+                                    <requireJavaVersion>
+                                        <version>${maven.compiler.source}</version>
+                                    </requireJavaVersion>
+                                    <requireOS>
+                                        <family>unix</family>
+                                    </requireOS>
+                                </rules>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.2.2</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>test-jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            </manifest>
+                        </archive>
+                    </configuration>
+                </plugin>
+                
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.0.0-M6</version>
+                    <configuration>
+                        <forkCount>1</forkCount>
+                        <reuseForks>false</reuseForks>
+                        <systemPropertyVariables>
+                            <logback.configurationFile>${basedir}/src/test/resources/logback.xml</logback.configurationFile>
+                        </systemPropertyVariables>
+                    </configuration>
+                </plugin>
+                
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.10.1</version>
+                    <executions>
+                        <execution>
+                            <id>compile</id>
+                            <goals>
+                                <goal>compile</goal>
+                            </goals>
+                            <configuration>
+                                <release>${maven.compiler.source}</release>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>3.0.0-M5</version>
+                    <configuration>
+                        <autoVersionSubmodules>true</autoVersionSubmodules>
+                        <releaseProfiles>release</releaseProfiles>
+                        <goals>deploy</goals>
+                        <pushChanges>false</pushChanges>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.2.1</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <goals>
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <!-- http://maven.apache.org/plugins/maven-pmd-plugin/ -->
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-pmd-plugin</artifactId>
+                    <version>3.16.0</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>net.sourceforge.pmd</groupId>
+                            <artifactId>pmd-core</artifactId>
+                            <version>${pmd.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>net.sourceforge.pmd</groupId>
+                            <artifactId>pmd-java</artifactId>
+                            <version>${pmd.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>net.sourceforge.pmd</groupId>
+                            <artifactId>pmd-javascript</artifactId>
+                            <version>${pmd.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>net.sourceforge.pmd</groupId>
+                            <artifactId>pmd-jsp</artifactId>
+                            <version>${pmd.version}</version>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <rulesets>
+                            <ruleset>${parentDir}/src/main/resources/pmd_rules.xml</ruleset>
+                        </rulesets>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>3.0.0-M2</version>
+                </plugin>
+
+                <plugin>
+                     <groupId>org.apache.maven.plugins</groupId>
+                     <artifactId>maven-site-plugin</artifactId>
+                     <version>3.12.0</version>
+                </plugin>
+                <plugin>
+                     <groupId>org.apache.maven.plugins</groupId>
+                     <artifactId>maven-project-info-reports-plugin</artifactId>
+                     <version>3.3.0</version>
+                </plugin>
+                <plugin>
+                     <groupId>org.apache.maven.plugins</groupId>
+                     <artifactId>maven-clean-plugin</artifactId>
+                     <version>3.2.0</version>
+                </plugin>
+                <plugin>
+                     <groupId>org.apache.maven.plugins</groupId>
+                     <artifactId>maven-resources-plugin</artifactId>
+                     <version>3.2.0</version>
+                </plugin>
+                <plugin>
+                     <groupId>org.apache.maven.plugins</groupId>
+                     <artifactId>maven-install-plugin</artifactId>
+                     <version>3.0.0-M1</version>
+                </plugin>
+            </plugins>
+            
+        </pluginManagement>
+
+    </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <reportSets>
+                    <reportSet>
+                        <id>non-aggregate</id>
+                        <reports>
+                            <report>javadoc</report>
+                        </reports>
+                    </reportSet>
+                    <reportSet>
+                        <id>aggregate</id>
+                        <reports>
+                            <report>aggregate</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+            </plugin>
+        </plugins>    
+    </reporting>
+
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+	    <site>
+	      <id>local</id>
+	      <url>file://${java.io.tmpdir}/site-prepared</url>
+	    </site>
+    </distributionManagement>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>2.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>1.4.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-core</artifactId>
+                <version>1.4.0</version>
+            </dependency>
+
+            <!-- JUnit testing framework. -->
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>${junit5.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-params</artifactId>
+                <version>${junit5.version}</version>
+            </dependency>
+
+            <!-- needed for IDE support -->
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>${junit5.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.junit.platform</groupId>
+                <artifactId>junit-platform-launcher</artifactId>
+                <version>1.9.0</version>
+            </dependency>
+            
+            <!-- Base dependencies for submodules -->
+            
+            <dependency>
+                <groupId>com.github.jnr</groupId>
+                <artifactId>jnr-unixsocket</artifactId>
+                <version>0.38.17</version>
+            </dependency>
+
+        </dependencies>        
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+
+        <!-- JUnit testing framework. -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- needed for IDE support -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-launcher</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <scm>
+        <connection>scm:git:https://github.com/hypfvieh/dbus-java.git</connection>
+        <developerConnection>scm:git:https://github.com/hypfvieh/dbus-java.git</developerConnection>
+        <url>https://github.com/hypfvieh/dbus-java.git</url>
+        <tag>dbus-java-parent-4.2.1</tag>
+    </scm>
+
+    <licenses>
+        <license>
+	       <name>MIT License</name>
+	       <url>https://github.com/hypfvieh/dbus-java/blob/master/LICENSE</url>
+	   </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>hypfvieh</id>
+            <name>David M.</name>
+            <email>hypfvieh@googlemail.com</email>
+        </developer>
+    </developers>
+
+    <contributors>
+        <contributor>
+            <name>Matthew Johnson</name>
+            <email>src@matthew.ath.cx</email>
+        </contributor>
+    
+        <contributor>
+            <name>thjomnx</name>
+            <url>https://github.com/thjomnx</url>
+        </contributor>
+        <contributor>
+            <name>RafalSumislawski</name>
+            <url>https://github.com/RafalSumislawski</url>
+        </contributor>
+        <contributor>
+            <name>lbeuster</name>
+            <url>https://github.com/lbeuster</url>
+        </contributor>
+        <contributor>
+            <name>littlefreaky</name>
+            <url>https://github.com/littlefreaky</url>
+        </contributor>
+        <contributor>
+            <name>sshort</name>
+            <url>https://github.com/sshort</url>
+        </contributor>
+        <contributor>
+            <name>michivi</name>
+            <url>https://github.com/michivi</url>
+        </contributor>
+        <contributor>
+            <name>rm5248</name>
+            <url>https://github.com/rm5248</url>
+        </contributor>
+        <contributor>
+            <name>chris-melman</name>
+            <url>https://github.com/chris-melman</url>
+        </contributor>
+        <contributor>
+            <name>mk868</name>
+            <url>https://github.com/mk868</url>
+        </contributor>
+
+    </contributors>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <properties>
+                <gpg.executable>gpg2</gpg.executable>
+            </properties>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>3.0.1</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>build-native-transport</id>
+            <activation>
+                <jdk>[16,)</jdk>
+            </activation>
+            <modules>
+                <module>dbus-java-transport-native-unixsocket</module>
+            </modules>            
+        </profile>
+    </profiles>
+</project>
