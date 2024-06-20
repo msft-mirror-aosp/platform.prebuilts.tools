@@ -1,25 +1,266 @@
 diff --git a/analysis/symbol-light-classes/src/org/jetbrains/kotlin/analysis/providers/PsiDeclarationAndKtSymbolEqualityChecker.kt b/analysis/symbol-light-classes/src/org/jetbrains/kotlin/analysis/providers/PsiDeclarationAndKtSymbolEqualityChecker.kt
-index 1913665003df..dee5f63014e1 100644
+index b09cea5d43427..dd90283328980 100644
 --- a/analysis/symbol-light-classes/src/org/jetbrains/kotlin/analysis/providers/PsiDeclarationAndKtSymbolEqualityChecker.kt
 +++ b/analysis/symbol-light-classes/src/org/jetbrains/kotlin/analysis/providers/PsiDeclarationAndKtSymbolEqualityChecker.kt
-@@ -29,7 +29,7 @@ internal object PsiDeclarationAndKtSymbolEqualityChecker {
+@@ -10,10 +10,7 @@ import com.intellij.psi.PsiEllipsisType
+ import com.intellij.psi.PsiMethod
+ import com.intellij.psi.PsiType
+ import org.jetbrains.kotlin.analysis.api.KtAnalysisSession
+-import org.jetbrains.kotlin.analysis.api.symbols.KtCallableSymbol
+-import org.jetbrains.kotlin.analysis.api.symbols.KtConstructorSymbol
+-import org.jetbrains.kotlin.analysis.api.symbols.KtFunctionLikeSymbol
+-import org.jetbrains.kotlin.analysis.api.symbols.receiverType
++import org.jetbrains.kotlin.analysis.api.symbols.*
+ import org.jetbrains.kotlin.analysis.api.types.KtType
+ import org.jetbrains.kotlin.analysis.api.types.KtTypeMappingMode
+
+@@ -28,7 +25,7 @@ internal object PsiDeclarationAndKtSymbolEqualityChecker {
      }
- 
+
      private fun KtAnalysisSession.returnTypesMatch(psi: PsiMethod, symbol: KtCallableSymbol): Boolean {
 -        if (symbol is KtConstructorSymbol) return true
 +        if (symbol is KtConstructorSymbol) return psi.isConstructor
          return psi.returnType?.let {
              isTheSameTypes(
                  psi,
-@@ -41,6 +41,8 @@ internal object PsiDeclarationAndKtSymbolEqualityChecker {
+@@ -40,8 +37,13 @@ internal object PsiDeclarationAndKtSymbolEqualityChecker {
      }
- 
+
      private fun typeParametersMatch(psi: PsiMethod, symbol: KtCallableSymbol): Boolean {
+-        if (psi.typeParameters.size != symbol.typeParameters.size) return false
+-        psi.typeParameters.zip(symbol.typeParameters) { psiTypeParameter, typeParameterSymbol ->
 +        // PsiMethod for constructor won't have type parameters
 +        if (symbol is KtConstructorSymbol) return psi.isConstructor
-         if (psi.typeParameters.size != symbol.typeParameters.size) return false
-         psi.typeParameters.zip(symbol.typeParameters) { psiTypeParameter, typeParameterSymbol ->
++        val symbolTypeParameters = symbol.typeParameters.takeIf { it.isNotEmpty() }
++            ?: symbol.receiverParameter?.owningCallableSymbol?.typeParameters
++            ?: emptyList()
++        if (psi.typeParameters.size != symbolTypeParameters.size) return false
++        psi.typeParameters.zip(symbolTypeParameters) { psiTypeParameter, typeParameterSymbol ->
              if (psiTypeParameter.name != typeParameterSymbol.name.asString()) return false
+             // TODO: type parameter bounds comparison
+         }
+@@ -49,13 +51,17 @@ internal object PsiDeclarationAndKtSymbolEqualityChecker {
+     }
+
+     private fun KtAnalysisSession.valueParametersMatch(psi: PsiMethod, symbol: KtFunctionLikeSymbol): Boolean {
+-        val valueParameterCount = if (symbol.isExtension) symbol.valueParameters.size + 1 else symbol.valueParameters.size
++        val isExtension = when (symbol) {
++            is KtPropertyAccessorSymbol -> symbol.receiverParameter != null
++            else -> symbol.isExtension
++        }
++        val valueParameterCount = if (isExtension) symbol.valueParameters.size + 1 else symbol.valueParameters.size
+         if (psi.parameterList.parametersCount != valueParameterCount) return false
+-        if (symbol.isExtension) {
++        if (isExtension) {
+             val psiParameter = psi.parameterList.parameters[0]
+             if (symbol.receiverType?.let { isTheSameTypes(psi, psiParameter.type, it) } != true) return false
+         }
+-        val offset = if (symbol.isExtension) 1 else 0
++        val offset = if (isExtension) 1 else 0
+         symbol.valueParameters.forEachIndexed { index, valueParameterSymbol ->
+             val psiParameter = psi.parameterList.parameters[index + offset]
+             // The type of `vararg` value param at last v.s. non-last is mapped differently:
+diff --git a/analysis/symbol-light-classes/src/org/jetbrains/kotlin/analysis/providers/DecompiledPsiDeclarationProvider.kt b/analysis/symbol-light-classes/src/org/jetbrains/kotlin/analysis/providers/DecompiledPsiDeclarationProvider.kt
+index 550be9ac99022..c193e43792be8 100644
+--- a/analysis/symbol-light-classes/src/org/jetbrains/kotlin/analysis/providers/DecompiledPsiDeclarationProvider.kt
++++ b/analysis/symbol-light-classes/src/org/jetbrains/kotlin/analysis/providers/DecompiledPsiDeclarationProvider.kt
+@@ -8,6 +8,7 @@ package org.jetbrains.kotlin.analysis.providers
+ import com.intellij.openapi.project.Project
+ import com.intellij.psi.PsiElement
+ import com.intellij.psi.PsiField
++import com.intellij.psi.PsiMethod
+ import com.intellij.psi.search.GlobalSearchScope
+ import org.jetbrains.kotlin.analysis.api.KtAnalysisSession
+ import org.jetbrains.kotlin.analysis.api.symbols.*
+@@ -30,11 +31,17 @@ object DecompiledPsiDeclarationProvider {
+         project: Project
+     ): PsiElement? {
+         val classId = constructorSymbol.containingClassIdIfNonLocal ?: return null
+-        val psiClass = project.createPsiDeclarationProvider(constructorSymbol.scope(project))
++        val candidates = project.createPsiDeclarationProvider(constructorSymbol.scope(project))
+             ?.getClassesByClassId(classId)
+-            ?.firstOrNull() ?: return null
+-        return psiClass.constructors.find { psiMethod ->
+-            representsTheSameDeclaration(psiMethod, constructorSymbol)
++            ?.firstOrNull()
++            ?.constructors
++            ?: return null
++        return if (candidates.size == 1)
++            candidates.single()
++        else {
++            candidates.find { psiMethod ->
++                representsTheSameDeclaration(psiMethod, constructorSymbol)
++            }
+         }
+     }
+ 
+@@ -42,32 +49,36 @@ object DecompiledPsiDeclarationProvider {
+         functionLikeSymbol: KtFunctionLikeSymbol,
+         project: Project
+     ): PsiElement? {
+-        return functionLikeSymbol.callableIdIfNonLocal?.let {
+-            val candidates = project.createPsiDeclarationProvider(functionLikeSymbol.scope(project))
+-                ?.getFunctions(it)
+-            if (candidates?.size == 1)
+-                candidates.single()
+-            else
+-                candidates?.find { psiMethod ->
+-                    representsTheSameDeclaration(psiMethod, functionLikeSymbol)
+-                }
++        val candidates = project.createPsiDeclarationProvider(functionLikeSymbol.scope(project))
++            ?.getFunctions(functionLikeSymbol)
++        return if (candidates?.size == 1)
++            candidates.single()
++        else
++            candidates?.find { psiMethod ->
++                representsTheSameDeclaration(psiMethod, functionLikeSymbol)
+         }
+     }
+ 
+-    private fun providePsiForProperty(
++    private fun KtAnalysisSession.providePsiForProperty(
+         variableLikeSymbol: KtVariableLikeSymbol,
+         project: Project
+     ): PsiElement? {
+-        return variableLikeSymbol.callableIdIfNonLocal?.let {
+-            val candidates = project.createPsiDeclarationProvider(variableLikeSymbol.scope(project))
+-                ?.getProperties(it)
+-            if (candidates?.size == 1)
+-                candidates.single()
+-            else {
+-                // Weigh [PsiField]
+-                candidates?.firstOrNull { psiMember -> psiMember is PsiField }
+-                    ?: candidates?.firstOrNull()
++        val candidates = project.createPsiDeclarationProvider(variableLikeSymbol.scope(project))
++            ?.getProperties(variableLikeSymbol)
++        if (candidates?.size == 1)
++            return candidates.single()
++        else {
++            // Weigh [PsiField]
++            candidates?.firstOrNull { psiMember -> psiMember is PsiField }?.let { return it }
++            if (variableLikeSymbol is KtPropertySymbol) {
++                val getterSymbol = variableLikeSymbol.getter
++                val setterSymbol = variableLikeSymbol.setter
++                candidates?.filterIsInstance<PsiMethod>()?.firstOrNull { psiMethod ->
++                    (getterSymbol != null && representsTheSameDeclaration(psiMethod, getterSymbol) ||
++                            setterSymbol != null && representsTheSameDeclaration(psiMethod, setterSymbol))
++                }?.let { return it }
+             }
++            return candidates?.firstOrNull()
+         }
+     }
+ 
+diff --git a/analysis/symbol-light-classes/src/org/jetbrains/kotlin/analysis/providers/KotlinPsiDeclarationProvider.kt b/analysis/symbol-light-classes/src/org/jetbrains/kotlin/analysis/providers/KotlinPsiDeclarationProvider.kt
+index 4e039b618dc35..d1dd0a4e3a5f4 100644
+--- a/analysis/symbol-light-classes/src/org/jetbrains/kotlin/analysis/providers/KotlinPsiDeclarationProvider.kt
++++ b/analysis/symbol-light-classes/src/org/jetbrains/kotlin/analysis/providers/KotlinPsiDeclarationProvider.kt
+@@ -10,7 +10,8 @@ import com.intellij.psi.PsiClass
+ import com.intellij.psi.PsiMember
+ import com.intellij.psi.PsiMethod
+ import com.intellij.psi.search.GlobalSearchScope
+-import org.jetbrains.kotlin.name.CallableId
++import org.jetbrains.kotlin.analysis.api.symbols.KtFunctionLikeSymbol
++import org.jetbrains.kotlin.analysis.api.symbols.KtVariableLikeSymbol
+ import org.jetbrains.kotlin.name.ClassId
+ 
+ /**
+@@ -24,8 +25,8 @@ abstract class KotlinPsiDeclarationProvider {
+      */
+     abstract fun getClassesByClassId(classId: ClassId): Collection<PsiClass>
+ 
+-    abstract fun getProperties(callableId: CallableId): Collection<PsiMember>
+-    abstract fun getFunctions(callableId: CallableId): Collection<PsiMethod>
++    abstract fun getProperties(variableLikeSymbol: KtVariableLikeSymbol): Collection<PsiMember>
++    abstract fun getFunctions(functionLikeSymbol: KtFunctionLikeSymbol): Collection<PsiMethod>
+ }
+ 
+ abstract class KotlinPsiDeclarationProviderFactory {
+diff --git a/analysis/symbol-light-classes/src/org/jetbrains/kotlin/analysis/providers/impl/KotlinStaticPsiDeclarationFromBinaryModuleProvider.kt b/analysis/symbol-light-classes/src/org/jetbrains/kotlin/analysis/providers/impl/KotlinStaticPsiDeclarationFromBinaryModuleProvider.kt
+index cf4cbfbaf63cc..87a50f6977494 100644
+--- a/analysis/symbol-light-classes/src/org/jetbrains/kotlin/analysis/providers/impl/KotlinStaticPsiDeclarationFromBinaryModuleProvider.kt
++++ b/analysis/symbol-light-classes/src/org/jetbrains/kotlin/analysis/providers/impl/KotlinStaticPsiDeclarationFromBinaryModuleProvider.kt
+@@ -9,13 +9,18 @@ import com.intellij.openapi.project.Project
+ import com.intellij.psi.*
+ import com.intellij.psi.impl.file.impl.JavaFileManager
+ import com.intellij.psi.search.GlobalSearchScope
++import org.jetbrains.kotlin.analysis.api.annotations.toFilter
++import org.jetbrains.kotlin.analysis.api.symbols.*
+ import org.jetbrains.kotlin.analysis.providers.KotlinPsiDeclarationProvider
+ import org.jetbrains.kotlin.analysis.providers.KotlinPsiDeclarationProviderFactory
+ import org.jetbrains.kotlin.analysis.providers.createPackagePartProvider
+ import org.jetbrains.kotlin.asJava.classes.lazyPub
+ import org.jetbrains.kotlin.builtins.jvm.JavaToKotlinClassMap
++import org.jetbrains.kotlin.descriptors.annotations.AnnotationUseSiteTarget.PROPERTY_GETTER
++import org.jetbrains.kotlin.descriptors.annotations.AnnotationUseSiteTarget.PROPERTY_SETTER
++import org.jetbrains.kotlin.light.classes.symbol.annotations.getJvmNameFromAnnotation
++import org.jetbrains.kotlin.light.classes.symbol.annotations.toOptionalFilter
+ import org.jetbrains.kotlin.load.kotlin.PackagePartProvider
+-import org.jetbrains.kotlin.name.CallableId
+ import org.jetbrains.kotlin.name.ClassId
+ import org.jetbrains.kotlin.name.FqName
+ import org.jetbrains.kotlin.name.Name
+@@ -65,13 +70,23 @@ private class KotlinStaticPsiDeclarationFromBinaryModuleProvider(
+         return listOfNotNull(javaFileManager.findClass(classId.asFqNameString(), scope))
+     }
+ 
+-    override fun getProperties(callableId: CallableId): Collection<PsiMember> {
++    override fun getProperties(variableLikeSymbol: KtVariableLikeSymbol): Collection<PsiMember> {
++        val callableId = variableLikeSymbol.callableIdIfNonLocal ?: return emptyList()
+         val classes = callableId.classId?.let { classId ->
+             val classFromCurrentClassId = getClassesByClassId(classId)
+             // property in companion object is actually materialized at the containing class.
+             val classFromOuterClassID = classId.outerClassId?.let { getClassesByClassId(it) } ?: emptyList()
+             classFromCurrentClassId + classFromOuterClassID
+         } ?: getClassesInPackage(callableId.packageName)
++        if (classes.isEmpty()) return emptyList()
++
++        val propertySymbol = variableLikeSymbol as? KtPropertySymbol
++        val getterJvmName =
++            propertySymbol?.getter?.getJvmNameFromAnnotation(PROPERTY_GETTER.toOptionalFilter())
++                ?: propertySymbol?.getJvmNameFromAnnotation(PROPERTY_GETTER.toFilter())
++        val setterJvmName =
++            propertySymbol?.setter?.getJvmNameFromAnnotation(PROPERTY_SETTER.toOptionalFilter())
++                ?: propertySymbol?.getJvmNameFromAnnotation(PROPERTY_SETTER.toFilter())
+         return classes.flatMap { psiClass ->
+             psiClass.children
+                 .filterIsInstance<PsiMember>()
+@@ -82,6 +97,7 @@ private class KotlinStaticPsiDeclarationFromBinaryModuleProvider(
+                     // PsiField a.k.a. backing field
+                     if (name == id) return@filter true
+                     // PsiMethod, i.e., accessors
++                    if (name == getterJvmName || name == setterJvmName) return@filter true
+                     val nameWithoutPrefix = name.nameWithoutAccessorPrefix ?: return@filter false
+                     // E.g., getJVM_FIELD -> JVM_FIELD
+                     nameWithoutPrefix == id ||
+@@ -102,11 +118,26 @@ private class KotlinStaticPsiDeclarationFromBinaryModuleProvider(
+             else -> null
+         }
+ 
+-    override fun getFunctions(callableId: CallableId): Collection<PsiMethod> {
++    override fun getFunctions(functionLikeSymbol: KtFunctionLikeSymbol): Collection<PsiMethod> {
++        val callableId = functionLikeSymbol.callableIdIfNonLocal ?: return emptyList()
+         val classes = callableId.classId?.let { classId ->
+             getClassesByClassId(classId)
+         } ?: getClassesInPackage(callableId.packageName)
+-        val id = callableId.callableName.identifier
++        if (classes.isEmpty()) return emptyList()
++
++        val jvmName = when (functionLikeSymbol) {
++            is KtPropertyGetterSymbol -> {
++                functionLikeSymbol.getJvmNameFromAnnotation(PROPERTY_GETTER.toOptionalFilter())
++            }
++            is KtPropertySetterSymbol -> {
++                functionLikeSymbol.getJvmNameFromAnnotation(PROPERTY_SETTER.toOptionalFilter())
++            }
++            else -> {
++                functionLikeSymbol.getJvmNameFromAnnotation()
++            }
++        }
++        val id = jvmName ?: callableId.callableName.identifier
++
+         return classes.flatMap { psiClass ->
+             psiClass.methods.filter { psiMethod ->
+                 psiMethod.name == id ||
 diff --git a/analysis/analysis-api-fir/src/org/jetbrains/kotlin/analysis/api/fir/components/KtFirCallResolver.kt b/analysis/analysis-api-fir/src/org/jetbrains/kotlin/analysis/api/fir/components/KtFirCallResolver.kt
 index ec76e64b8007b..66eaf9d0a59b3 100644
 --- a/analysis/analysis-api-fir/src/org/jetbrains/kotlin/analysis/api/fir/components/KtFirCallResolver.kt
