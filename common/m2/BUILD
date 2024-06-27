@@ -810,3 +810,10 @@ jvm_import(
     jars = ["repository/org/commonmark/commonmark/0.22.0/commonmark-0.22.0.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+filegroup(
+    name = "opentest4j_files",
+    srcs = ["repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar"],
+    visibility = ["//visibility:public"],
+)
