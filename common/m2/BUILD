@@ -187,9 +187,9 @@ filegroup(
     name = "mockito_files",
     # do not sort: must match IML order
     srcs = [
-        "repository/org/mockito/mockito-core/5.6.0/mockito-core-5.6.0.jar",
-        "repository/net/bytebuddy/byte-buddy/1.14.8/byte-buddy-1.14.8.jar",
-        "repository/net/bytebuddy/byte-buddy-agent/1.14.8/byte-buddy-agent-1.14.8.jar",
+        "repository/org/mockito/mockito-core/5.12.0/mockito-core-5.12.0.jar",
+        "repository/net/bytebuddy/byte-buddy/1.14.15/byte-buddy-1.14.15.jar",
+        "repository/net/bytebuddy/byte-buddy-agent/1.14.15/byte-buddy-agent-1.14.15.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -605,10 +605,10 @@ jvm_import(
     # do not sort: must match IML order
     jars = [
         "repository/com/google/apis/google-api-services-oauth2/v2-rev20200213-2.0.0/google-api-services-oauth2-v2-rev20200213-2.0.0.jar",
-        "repository/com/google/auth/google-auth-library-oauth2-http/1.4.0/google-auth-library-oauth2-http-1.4.0.jar",
+        "repository/com/google/auth/google-auth-library-oauth2-http/1.24.0/google-auth-library-oauth2-http-1.24.0.jar",
         "repository/com/google/oauth-client/google-oauth-client/1.34.1/google-oauth-client-1.34.1.jar",
         "repository/com/google/oauth-client/google-oauth-client-java6/1.34.1/google-oauth-client-java6-1.34.1.jar",
-        "repository/com/google/auth/google-auth-library-credentials/1.4.0/google-auth-library-credentials-1.4.0.jar",
+        "repository/com/google/auth/google-auth-library-credentials/1.24.0/google-auth-library-credentials-1.24.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
