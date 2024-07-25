@@ -817,3 +817,10 @@ filegroup(
     srcs = ["repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+filegroup(
+    name = "mockito-kotlin_files",
+    srcs = ["repository/org/mockito/kotlin/mockito-kotlin/5.4.0/mockito-kotlin-5.4.0.jar"],
+    visibility = ["//visibility:public"],
+)
