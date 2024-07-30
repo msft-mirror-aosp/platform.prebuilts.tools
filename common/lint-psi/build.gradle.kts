@@ -8,7 +8,8 @@ plugins {
     kotlin("jvm") version "1.9.0" // Aim to match the Kotlin version below.
 }
 
-val intellijVersion = getEnvOrError("INTELLIJ_VERSION")
+// TODO: go back to release version
+val intellijVersion = "${getEnvOrError("INTELLIJ_VERSION")}-EAP-SNAPSHOT"
 val kotlinVersion = getEnvOrError("KOTLIN_VERSION")
 val intellijDir = getEnvOrError("INTELLIJ_DIR")
 val kotlinDir = getEnvOrError("KOTLIN_DIR")
@@ -74,11 +75,9 @@ dependencies {
     "kotlin-compiler-content"("org.jetbrains.kotlin:kotlin-scripting-compiler:$kotlinVersion-for-lint")
     "kotlin-compiler-content"("io.javaslang:javaslang:2.0.6") // TODO: Somehow read this version directly from the Kotlin compiler build.
 
-    "kotlin-compiler-content"("org.jetbrains.kotlin:analysis-api-providers-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
-    "kotlin-compiler-content"("org.jetbrains.kotlin:analysis-project-structure-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
+    "kotlin-compiler-content"("org.jetbrains.kotlin:analysis-api-platform-interface-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:analysis-api-standalone-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlinx:kotlinx-collections-immutable-jvm:0.3.4")
-    "kotlin-compiler-content"("org.jetbrains.kotlin:kt-references-fe10-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:high-level-api-fe10-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:high-level-api-fir-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:high-level-api-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
@@ -144,9 +143,8 @@ tasks.withType<KotlinCompile> {
         freeCompilerArgs = listOf(
             "-Xjvm-default=all",
             "-Xcontext-receivers",
-            "-opt-in=org.jetbrains.kotlin.analysis.api.lifetime.KtAllowProhibitedAnalyzeFromWriteAction",
-            "-api-version=1.9",      // Until the entire build target is 2.0?
-            "-language-version=1.9", // Until the entire build target is 2.0?
+            "-opt-in=org.jetbrains.kotlin.analysis.api.permissions.KaAllowProhibitedAnalyzeFromWriteAction",
+            "-opt-in=org.jetbrains.kotlin.analysis.api.KaIdeApi",
         )
         suppressWarnings = true
     }
@@ -231,6 +229,7 @@ fun getEnvOrError(name: String): String {
 repositories {
     maven("https://cache-redirector.jetbrains.com/repo1.maven.org/maven2") // Substitute for mavenCentral().
     maven("https://www.jetbrains.com/intellij-repository/releases")
+    maven("https://www.jetbrains.com/intellij-repository/snapshots")
     maven("https://cache-redirector.jetbrains.com/intellij-dependencies")
     maven("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/kotlin-ide-plugin-dependencies")
     maven("$kotlinDir/build/repo")
