@@ -33,7 +33,7 @@ buffers {
   fill_policy: RING_BUFFER
 }
 
-# procfs polling
+# procfs polling and linux system info from sysfs
 buffers {
   size_kb: 8192
   fill_policy: RING_BUFFER
@@ -95,6 +95,13 @@ data_sources {
       proc_stats_poll_ms: 10000
       proc_stats_cache_ttl_ms: 60000
     }
+  }
+}
+
+data_sources {
+  config {
+    name: "linux.system_info"
+    target_buffer: 1
   }
 }
 
