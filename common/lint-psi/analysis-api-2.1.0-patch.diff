@@ -1,3 +1,16 @@
+diff --git a/analysis/analysis-api-fir/src/org/jetbrains/kotlin/analysis/api/fir/components/KaFirExpressionTypeProvider.kt b/analysis/analysis-api-fir/src/org/jetbrains/kotlin/analysis/api/fir/components/KaFirExpressionTypeProvider.kt
+index dc107d213ef0..d8db8458fd45 100644
+--- a/analysis/analysis-api-fir/src/org/jetbrains/kotlin/analysis/api/fir/components/KaFirExpressionTypeProvider.kt
++++ b/analysis/analysis-api-fir/src/org/jetbrains/kotlin/analysis/api/fir/components/KaFirExpressionTypeProvider.kt
+@@ -244,7 +244,7 @@ internal class KaFirExpressionTypeProvider(
+                     is FirNamedArgumentExpression, is FirSpreadArgumentExpression ->
+                         arg.psi == argumentExpression.parent
+                     else ->
+-                        arg.psi == argumentExpression
++                        arg.psi == argumentExpression.unwrap()
+                 }
+             }?.value ?: return null
+         return if (firParameterForExpression.isVararg)
 diff --git a/analysis/analysis-api-fe10/src/org/jetbrains/kotlin/analysis/api/descriptors/components/KaFe10SymbolRelationProvider.kt b/analysis/analysis-api-fe10/src/org/jetbrains/kotlin/analysis/api/descriptors/components/KaFe10SymbolRelationProvider.kt
 index 158b7d8aafee..7b3299463dcd 100644
 --- a/analysis/analysis-api-fe10/src/org/jetbrains/kotlin/analysis/api/descriptors/components/KaFe10SymbolRelationProvider.kt
