@@ -830,3 +830,10 @@ jvm_import(
     jars = ["repository/org/brotli/dec/0.1.2/dec-0.1.2.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "junit-jupiter-api-5.9.2",
+    jars = ["repository/org/junit/jupiter/junit-jupiter-api/5.9.2/junit-jupiter-api-5.9.2.jar"],
+    visibility = ["//visibility:public"],
+)
