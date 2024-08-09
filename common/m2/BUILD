@@ -43,6 +43,11 @@ java_import(
     visibility = ["//visibility:public"],
 )
 
+exports_files(
+    ["repository/com/google/api/grpc/proto-google-common-protos/2.17.0/proto-google-common-protos-2.17.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
 filegroup(
     name = "io.grpc.protoc-gen-grpc-java.1.57.0_exe",
     srcs = select({
