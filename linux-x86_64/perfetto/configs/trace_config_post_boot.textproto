@@ -40,6 +40,15 @@ data_sources: {
         name: "android.surfaceflinger.frametimeline"
     }
 }
+data_sources {
+  config {
+    name: "track_event"
+    track_event_config {
+      disabled_categories:"*"
+      enabled_categories: "servicemanager"
+    }
+  }
+}
 data_sources: {
   config {
     name: "linux.sys_stats"
