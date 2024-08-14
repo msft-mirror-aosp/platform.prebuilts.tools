@@ -824,3 +824,10 @@ filegroup(
     srcs = ["repository/org/mockito/kotlin/mockito-kotlin/5.4.0/mockito-kotlin-5.4.0.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "brotli-dec-0.1.2",
+    jars = ["repository/org/brotli/dec/0.1.2/dec-0.1.2.jar"],
+    visibility = ["//visibility:public"],
+)
