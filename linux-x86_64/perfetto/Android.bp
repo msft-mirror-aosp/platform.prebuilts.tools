@@ -11,7 +11,7 @@ package {
 }
 
 cc_prebuilt_binary {
-    name: "perfetto_trace_processor_shell_prebuilt",
+    name: "perfetto_trace_processor_shell",
     srcs: ["trace_processor_shell"],
     host_supported: true,
     device_supported: false,
@@ -22,6 +22,7 @@ filegroup {
     srcs: [
         "trace_processor_shell",
         "configs/trace_config_detailed.textproto",
+        "configs/trace_config_multi_user_cuj_tests.textproto",
         "configs/trace_config_detailed_heapdump.textproto",
         "configs/trace_config_post_boot.textproto",
         "configs/trace_config_power.textproto",
@@ -30,4 +31,59 @@ filegroup {
         "configs/long_trace_config.textproto",
         "configs/long_trace_binder_config.textproto",
     ],
+}
+
+prebuilt_etc {
+    name: "trace_config_detailed.textproto",
+    src: "configs/trace_config_detailed.textproto",
+}
+
+prebuilt_etc {
+    name: "long_trace_config.textproto",
+    src: "configs/long_trace_config.textproto",
+}
+
+prebuilt_etc {
+    name: "long_trace_binder_config.textproto",
+    src: "configs/long_trace_binder_config.textproto",
+}
+
+prebuilt_etc {
+    name: "trace_config.textproto",
+    src: "configs/trace_config.textproto",
+}
+
+prebuilt_etc {
+    name: "trace_config_experimental.textproto",
+    src: "configs/trace_config_experimental.textproto",
+}
+
+prebuilt_etc {
+    name: "trace_config_multi_user_cuj_tests.textproto",
+    src: "configs/trace_config_multi_user_cuj_tests.textproto",
+}
+
+prebuilt_etc {
+    name: "trace_config_detailed_heapdump.textproto",
+    src: "configs/trace_config_detailed_heapdump.textproto",
+}
+
+prebuilt_etc {
+    name: "trace_config_post_boot.textproto",
+    src: "configs/trace_config_post_boot.textproto",
+}
+
+prebuilt_etc {
+    name: "trace_config_power.textproto",
+    src: "configs/trace_config_power.textproto",
+}
+
+prebuilt_etc {
+    name: "trace_config_boot_time.textproto",
+    src: "configs/trace_config_boot_time.textproto",
+}
+
+prebuilt_etc {
+    name: "trace_config_boot_time_stop.textproto",
+    src: "configs/trace_config_boot_time_stop.textproto",
 }
