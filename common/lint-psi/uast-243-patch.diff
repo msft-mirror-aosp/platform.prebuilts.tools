@@ -1,3 +1,34 @@
+diff --git a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/psi/UastFakeDeserializedSymbolLightMethod.kt b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/psi/UastFakeDeserializedSymbolLightMethod.kt
+index b86ef9937603a3..45a597d148e0e2 100644
+--- a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/psi/UastFakeDeserializedSymbolLightMethod.kt
++++ b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/psi/UastFakeDeserializedSymbolLightMethod.kt
+@@ -7,6 +7,7 @@ import com.intellij.psi.impl.light.LightParameterListBuilder
+ import org.jetbrains.kotlin.analysis.api.KaExperimentalApi
+ import org.jetbrains.kotlin.analysis.api.annotations.annotations
+ import org.jetbrains.kotlin.analysis.api.symbols.KaNamedFunctionSymbol
++import org.jetbrains.kotlin.analysis.api.symbols.KaSymbolLocation
+ import org.jetbrains.kotlin.analysis.api.symbols.pointers.KaSymbolPointer
+ import org.jetbrains.kotlin.analysis.api.symbols.receiverType
+ import org.jetbrains.kotlin.analysis.api.types.KaTypeNullability
+@@ -39,6 +40,18 @@ internal class UastFakeDeserializedSymbolLightMethod(
+     LightModifierList(context.manager),
+     containingClass
+ ) {
++
++    init {
++        analyzeForUast(context) {
++            val functionSymbol = original.restoreSymbol()
++            if (functionSymbol?.location == KaSymbolLocation.TOP_LEVEL ||
++                functionSymbol?.isStatic == true
++            ) {
++                addModifier(PsiModifier.STATIC)
++            }
++        }
++    }
++
+     private val _isSuspend = UastLazyPart<Boolean>()
+ 
+     override fun isSuspendFunction(): Boolean =
 diff --git a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt
 index ca95ca0f95d8..9658f68ed861 100644
 --- a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt
