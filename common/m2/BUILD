@@ -87,12 +87,6 @@ java_import(
     visibility = ["//visibility:public"],
 )
 
-java_import(
-    name = "com.google.android.gms.play-services-location.11.8.0",
-    jars = ["repository/com/google/android/gms/play-services-location/11.8.0/play-services-location-11.8.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
 filegroup(
     name = "com.google.protobuf.protoc.3.19.6_exe",
     srcs = select({
