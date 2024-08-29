@@ -819,3 +819,10 @@ jvm_import(
     jars = ["repository/org/junit/jupiter/junit-jupiter-api/5.9.2/junit-jupiter-api-5.9.2.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "grpc-inprocess",
+    jars = ["repository/io/grpc/grpc-inprocess/1.63.0/grpc-inprocess-1.63.0.jar"],
+    visibility = ["//visibility:public"],
+)
