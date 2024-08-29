@@ -43,6 +43,11 @@ java_import(
     visibility = ["//visibility:public"],
 )
 
+exports_files(
+    ["repository/com/google/api/grpc/proto-google-common-protos/2.17.0/proto-google-common-protos-2.17.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
 filegroup(
     name = "io.grpc.protoc-gen-grpc-java.1.57.0_exe",
     srcs = select({
@@ -87,12 +92,6 @@ java_import(
     visibility = ["//visibility:public"],
 )
 
-java_import(
-    name = "com.google.android.gms.play-services-location.11.8.0",
-    jars = ["repository/com/google/android/gms/play-services-location/11.8.0/play-services-location-11.8.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
 filegroup(
     name = "com.google.protobuf.protoc.3.19.6_exe",
     srcs = select({
@@ -116,15 +115,6 @@ java_import(
     visibility = ["//visibility:public"],
 )
 
-# Manually extrated proto files from the jar
-# So bazel can consume them without wrapping the
-# proto compiler in a extract jar step.
-filegroup(
-    name = "com.google.protobuf.protobuf-java.3.19.6.include_include",
-    srcs = glob(["repository/com/google/protobuf/protobuf-java/3.19.6/**/*.proto"]),
-    visibility = ["//visibility:public"],
-)
-
 filegroup(
     name = "com.google.protobuf.protoc.3.22.3_exe",
     srcs = select({
@@ -145,15 +135,6 @@ java_import(
 java_import(
     name = "com.google.protobuf.protobuf-java.3.22.3",
     jars = ["repository/com/google/protobuf/protobuf-java/3.22.3/protobuf-java-3.22.3.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# Manually extrated proto files from the jar
-# So bazel can consume them without wrapping the
-# proto compiler in a extract jar step.
-filegroup(
-    name = "com.google.protobuf.protobuf-java.3.22.3.include_include",
-    srcs = glob(["repository/com/google/protobuf/protobuf-java/3.22.3/**/*.proto"]),
     visibility = ["//visibility:public"],
 )
 
@@ -829,5 +810,12 @@ filegroup(
 jvm_import(
     name = "brotli-dec-0.1.2",
     jars = ["repository/org/brotli/dec/0.1.2/dec-0.1.2.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "junit-jupiter-api-5.9.2",
+    jars = ["repository/org/junit/jupiter/junit-jupiter-api/5.9.2/junit-jupiter-api-5.9.2.jar"],
     visibility = ["//visibility:public"],
 )
