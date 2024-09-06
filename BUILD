@@ -92,7 +92,7 @@ studio_data(
         "prebuilts/python/windows-x86/x64/Lib/": "lib/",
         "prebuilts/python/windows-x86/x64/DLLs/": "dlls/",
         "prebuilts/python/linux-x86/lib/python3.11/": "lib/python3.11/",
-        "prebuilts/python/darwin-x86/lib/python3.10/": "lib/python3.10/",
+        "prebuilts/python/darwin-x86/lib/python3.11/": "lib/python3.11/",
     },
     visibility = ["//visibility:public"],
 )
