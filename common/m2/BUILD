@@ -322,13 +322,6 @@ filegroup(
 )
 
 # managed by go/iml_to_build
-filegroup(
-    name = "kotlinx-coroutines-guava_files",
-    srcs = ["repository/org/jetbrains/kotlinx/kotlinx-coroutines-guava/1.6.4/kotlinx-coroutines-guava-1.6.4.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
 jvm_import(
     name = "JUnit4",
     # do not sort: must match IML order
