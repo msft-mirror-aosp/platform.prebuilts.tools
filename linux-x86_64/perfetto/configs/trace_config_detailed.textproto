@@ -47,6 +47,17 @@ buffers {
 
 data_sources {
   config {
+    name: "track_event"
+    track_event_config {
+      disabled_categories:"*"
+      enabled_categories: "servicemanager"
+    }
+  }
+  producer_name_regex_filter: "/system/bin/servicemanager"
+}
+
+data_sources {
+  config {
     name: "linux.ftrace"
     target_buffer: 0
     ftrace_config {
