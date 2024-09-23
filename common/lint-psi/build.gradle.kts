@@ -72,7 +72,7 @@ dependencies {
     "kotlin-compiler-content"("org.jetbrains.kotlin:kotlin-compiler-ir-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:kotlin-compiler-cli-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:kotlin-scripting-compiler:$kotlinVersion-for-lint")
-    "kotlin-compiler-content"("io.javaslang:javaslang:2.0.6") // TODO: Somehow read this version directly from the Kotlin compiler build.
+    "kotlin-compiler-content"("io.vavr:vavr:0.10.4") // TODO: Somehow read this version directly from the Kotlin compiler build.
 
     "kotlin-compiler-content"("org.jetbrains.kotlin:analysis-api-platform-interface-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:analysis-api-standalone-for-ide:$kotlinVersion-for-lint") { isTransitive = false }

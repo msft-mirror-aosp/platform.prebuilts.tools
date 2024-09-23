@@ -47,7 +47,7 @@ index 41f52b1126ac1..1a90618a2e061 100644
                          interface="org.jetbrains.kotlin.plugin.references.SimpleNameReferenceExtension"
                          area="IDEA_PROJECT" dynamic="true"/>
 diff --git a/prepare/ide-plugin-dependencies/kotlin-compiler-fe10-for-ide/build.gradle.kts b/prepare/ide-plugin-dependencies/kotlin-compiler-fe10-for-ide/build.gradle.kts
-index 6b14ece06fa0..65258f7bdbe0 100644
+index aeef202c737a7..268417a8aff9f 100644
 --- a/prepare/ide-plugin-dependencies/kotlin-compiler-fe10-for-ide/build.gradle.kts
 +++ b/prepare/ide-plugin-dependencies/kotlin-compiler-fe10-for-ide/build.gradle.kts
 @@ -8,7 +8,10 @@ val excludedCompilerModules = listOf(
@@ -60,9 +60,8 @@ index 6b14ece06fa0..65258f7bdbe0 100644
 +    ":compiler:backend.wasm",
 +    ":js:js.dce",
  )
-
- val projects = fe10CompilerModules.asList() - excludedCompilerModules
-
+ 
+ val extraCompilerModules = listOf(
 diff --git a/prepare/ide-plugin-dependencies/kotlin-compiler-ir-for-ide/build.gradle.kts b/prepare/ide-plugin-dependencies/kotlin-compiler-ir-for-ide/build.gradle.kts
 index 0574c7bcf195..5dcb381b998c 100644
 --- a/prepare/ide-plugin-dependencies/kotlin-compiler-ir-for-ide/build.gradle.kts

@@ -35,66 +35,54 @@ index 38cbb45f8a77a..ff5446f89efd1 100644
      ).apply(init).build()
  }
 diff --git a/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/annotations/symbolAnnotationsUtils.kt b/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/annotations/symbolAnnotationsUtils.kt
-index bd0d415acd96d..4aac8ae7831dd 100644
+index 94f86190f7543..1ac1f4d8ebd9c 100644
 --- a/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/annotations/symbolAnnotationsUtils.kt
 +++ b/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/annotations/symbolAnnotationsUtils.kt
-@@ -32,7 +32,8 @@ import org.jetbrains.kotlin.resolve.deprecation.DeprecationLevelValue
- /**
-  * @return [AnnotationUseSiteTargetFilter] which allows [this] and [NoAnnotationUseSiteTargetFilter] filter
+@@ -34,7 +34,8 @@ internal fun KaAnnotatedSymbol.hasJvmSyntheticAnnotation(): Boolean {
+     return JVM_SYNTHETIC_ANNOTATION_CLASS_ID in annotations
+ }
+ 
+-internal fun KaAnnotatedSymbol.getJvmNameFromAnnotation(): String? {
++// Expose to use at KotlinStaticPsiDeclarationFromBinaryModuleProvider
++fun KaAnnotatedSymbol.getJvmNameFromAnnotation(): String? {
+     val annotation = findAnnotation(JvmStandardClassIds.Annotations.JvmName)
+     return annotation?.let {
+         (it.arguments.firstOrNull()?.expression as? KaAnnotationValue.ConstantValue)?.value?.value as? String
+diff --git a/analysis/analysis-api-fe10/src/org/jetbrains/kotlin/references/fe10/base/DummyKtFe10ReferenceResolutionHelper.kt b/analysis/analysis-api-fe10/src/org/jetbrains/kotlin/references/fe10/base/DummyKtFe10ReferenceResolutionHelper.kt
+index 86b2211414366..8ad8da1a3bcbd 100644
+--- a/analysis/analysis-api-fe10/src/org/jetbrains/kotlin/references/fe10/base/DummyKtFe10ReferenceResolutionHelper.kt
++++ b/analysis/analysis-api-fe10/src/org/jetbrains/kotlin/references/fe10/base/DummyKtFe10ReferenceResolutionHelper.kt
+@@ -22,7 +22,8 @@ import org.jetbrains.kotlin.resolve.BindingContext
+  * The actual implementation in IDE, [KtFe10ReferenceResolutionHelperImpl], is not always available, e.g., in Android Lint CLI.
+  * Other CLI clients that use reference resolution via PSI utils may need to register this dummy implementation too.
   */
--internal fun AnnotationUseSiteTarget?.toOptionalFilter(): AnnotationUseSiteTargetFilter {
-+// Expose to use at KotlinStaticPsiDeclarationFromBinaryModuleProvider
-+fun AnnotationUseSiteTarget?.toOptionalFilter(): AnnotationUseSiteTargetFilter {
-     if (this == null) return NoAnnotationUseSiteTargetFilter
- 
-     return annotationUseSiteTargetFilterOf(NoAnnotationUseSiteTargetFilter, toFilter())
-@@ -51,7 +52,8 @@ internal fun KaAnnotatedSymbol.hasJvmSyntheticAnnotation(
-     return hasAnnotation(JVM_SYNTHETIC_ANNOTATION_CLASS_ID, useSiteTargetFilter)
- }
- 
--internal fun KaAnnotatedSymbol.getJvmNameFromAnnotation(
-+// Expose to use at KotlinStaticPsiDeclarationFromBinaryModuleProvider
-+fun KaAnnotatedSymbol.getJvmNameFromAnnotation(
-     useSiteTargetFilter: AnnotationUseSiteTargetFilter = AnyAnnotationUseSiteTargetFilter,
- ): String? {
-     val annotation = findAnnotation(JvmStandardClassIds.Annotations.JvmName, useSiteTargetFilter)
-diff --git a/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/annotations/AnnotationUseSiteTargetFilter.kt b/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/annotations/AnnotationUseSiteTargetFilter.kt
-index b82a339e7bfd5..34242d9ff6f96 100644
---- a/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/annotations/AnnotationUseSiteTargetFilter.kt
-+++ b/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/annotations/AnnotationUseSiteTargetFilter.kt
-@@ -7,11 +7,13 @@ package org.jetbrains.kotlin.light.classes.symbol.annotations
+-internal object DummyKtFe10ReferenceResolutionHelper : KtFe10ReferenceResolutionHelper {
++// Expose to be registered at FE10UastEnvironment
++object DummyKtFe10ReferenceResolutionHelper : KtFe10ReferenceResolutionHelper {
+     override fun isInProjectOrLibSource(element: PsiElement, includeScriptsOutsideSourceRoots: Boolean): Boolean = false
 
- import org.jetbrains.kotlin.descriptors.annotations.AnnotationUseSiteTarget
+     override fun resolveImportReference(file: KtFile, fqName: FqName): Collection<DeclarationDescriptor> = emptyList()
+diff --git a/analysis/analysis-api-fe10/src/org/jetbrains/kotlin/analysis/api/descriptors/CliFe10AnalysisFacade.kt b/analysis/analysis-api-fe10/src/org/jetbrains/kotlin/analysis/api/descriptors/CliFe10AnalysisFacade.kt
+index 1dfbffba1173e..4550e4a81a930 100644
+--- a/analysis/analysis-api-fe10/src/org/jetbrains/kotlin/analysis/api/descriptors/CliFe10AnalysisFacade.kt
++++ b/analysis/analysis-api-fe10/src/org/jetbrains/kotlin/analysis/api/descriptors/CliFe10AnalysisFacade.kt
+@@ -35,7 +35,8 @@ import org.jetbrains.kotlin.resolve.lazy.ResolveSession
+ import org.jetbrains.kotlin.types.checker.KotlinTypeRefiner
+ import org.jetbrains.kotlin.util.CancellationChecker
 
--internal fun interface AnnotationUseSiteTargetFilter {
-+// Expose to use at KotlinStaticPsiDeclarationFromBinaryModuleProvider
-+fun interface AnnotationUseSiteTargetFilter {
-     fun isAllowed(useSiteTarget: AnnotationUseSiteTarget?): Boolean
+-internal class CliFe10AnalysisFacade : Fe10AnalysisFacade {
++// Expose to be registered at FE10UastEnvironment
++class CliFe10AnalysisFacade : Fe10AnalysisFacade {
+     override fun getAnalysisContext(element: KtElement, token: KaLifetimeToken): Fe10AnalysisContext {
+         val handler = getHandler(element)
+         return getAnalysisContext(handler, token)
+@@ -78,7 +79,8 @@ internal class CliFe10AnalysisFacade : Fe10AnalysisFacade {
+         this ?: error("Resolution is not performed")
  }
 
--internal fun AnnotationUseSiteTarget?.toFilter(): AnnotationUseSiteTargetFilter = when (this) {
-+// Expose to use at KotlinStaticPsiDeclarationFromBinaryModuleProvider
-+fun AnnotationUseSiteTarget?.toFilter(): AnnotationUseSiteTargetFilter = when (this) {
-     null -> NoAnnotationUseSiteTargetFilter
-     AnnotationUseSiteTarget.FIELD -> FieldAnnotationUseSiteTargetFilter
-     AnnotationUseSiteTarget.FILE -> FileAnnotationUseSiteTargetFilter
-@@ -68,4 +70,4 @@ internal object SetterParameterAnnotationUseSiteTargetFilter : AnnotationUseSite
- internal object PropertyDelegateFieldAnnotationUseSiteTargetFilter : AnnotationUseSiteTargetFilter {
-     override fun isAllowed(useSiteTarget: AnnotationUseSiteTarget?): Boolean =
-         useSiteTarget == AnnotationUseSiteTarget.PROPERTY_DELEGATE_FIELD
--}
-\ No newline at end of file
-+}
-diff --git a/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/projectStructure/PluginStructureProvider.kt b/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/projectStructure/PluginStructureProvider.kt
-index e5a743e6d03ef..0f3757f7b901e 100644
---- a/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/projectStructure/PluginStructureProvider.kt
-+++ b/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/projectStructure/PluginStructureProvider.kt
-@@ -49,6 +49,8 @@ object PluginStructureProvider {
-     private class ResourceDataLoader(val classLoader: ClassLoader) : DataLoader {
-         override val pool: ZipFilePool? get() = null
-         override fun load(path: String): InputStream? = classLoader.getResource(path)?.openStream()
-+        // KT-70264
-+        fun load(path: String, pluginDescriptorSourceOnly: Boolean): InputStream? = load(path)
-         override fun toString(): String = "resources data loader"
-     }
- 
+-internal class KaFe10AnalysisHandlerExtension(
++// Expose to be registered at FE10UastEnvironment
++class KaFe10AnalysisHandlerExtension(
+     private val useSiteModule: KaSourceModule? = null
+ ) : AnalysisHandlerExtension {
+     internal companion object {
