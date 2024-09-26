@@ -819,3 +819,10 @@ jvm_import(
     jars = ["repository/io/grpc/grpc-inprocess/1.63.0/grpc-inprocess-1.63.0.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "jopt-simple-4.9",
+    jars = ["repository/net/sf/jopt-simple/jopt-simple/4.9/jopt-simple-4.9.jar"],
+    visibility = ["//visibility:public"],
+)
