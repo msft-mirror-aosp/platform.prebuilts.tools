@@ -828,3 +828,10 @@ jvm_import(
     jars = ["repository/net/sf/jopt-simple/jopt-simple/4.9/jopt-simple-4.9.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "junit-platform-commons-1.10.1",
+    jars = ["repository/org/junit/platform/junit-platform-commons/1.10.1/junit-platform-commons-1.10.1.jar"],
+    visibility = ["//visibility:public"],
+)
