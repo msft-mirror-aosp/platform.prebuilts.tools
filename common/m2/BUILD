@@ -707,7 +707,7 @@ jvm_import(
     jars = [
         "repository/com/google/apis/google-api-services-storage/v1-rev20230301-2.0.0/google-api-services-storage-v1-rev20230301-2.0.0.jar",
         "repository/com/google/apis/google-api-services-toolresults/v1beta3-rev20230410-2.0.0/google-api-services-toolresults-v1beta3-rev20230410-2.0.0.jar",
-        "repository/com/google/apis/google-api-services-testing/v1-rev20240213-2.0.0/google-api-services-testing-v1-rev20240213-2.0.0.jar",
+        "repository/com/google/apis/google-api-services-testing/v1-rev20240917-2.0.0/google-api-services-testing-v1-rev20240917-2.0.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -721,7 +721,7 @@ jvm_import(
         "repository/com/google/apis/google-api-services-monitoring/v3-rev20230806-2.0.0/google-api-services-monitoring-v3-rev20230806-2.0.0.jar",
         "repository/com/google/apis/google-api-services-storage/v1-rev20230301-2.0.0/google-api-services-storage-v1-rev20230301-2.0.0.jar",
         "repository/com/google/apis/google-api-services-toolresults/v1beta3-rev20230410-2.0.0/google-api-services-toolresults-v1beta3-rev20230410-2.0.0.jar",
-        "repository/com/google/apis/google-api-services-testing/v1-rev20240213-2.0.0/google-api-services-testing-v1-rev20240213-2.0.0.jar",
+        "repository/com/google/apis/google-api-services-testing/v1-rev20240917-2.0.0/google-api-services-testing-v1-rev20240917-2.0.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
