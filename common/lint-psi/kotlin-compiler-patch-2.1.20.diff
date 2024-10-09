@@ -1,0 +1,146 @@
+diff --git a/compiler/fir/raw-fir/light-tree2fir/src/org/jetbrains/kotlin/fir/lightTree/converter/LightTreeRawFirDeclarationBuilder.kt b/compiler/fir/raw-fir/light-tree2fir/src/org/jetbrains/kotlin/fir/lightTree/converter/LightTreeRawFirDeclarationBuilder.kt
+index c491af8db783..272689a0caed 100644
+--- a/compiler/fir/raw-fir/light-tree2fir/src/org/jetbrains/kotlin/fir/lightTree/converter/LightTreeRawFirDeclarationBuilder.kt
++++ b/compiler/fir/raw-fir/light-tree2fir/src/org/jetbrains/kotlin/fir/lightTree/converter/LightTreeRawFirDeclarationBuilder.kt
+@@ -12,7 +12,10 @@ import org.jetbrains.kotlin.*
+ import org.jetbrains.kotlin.ElementTypeUtils.isExpression
+ import org.jetbrains.kotlin.KtNodeTypes.*
+ import org.jetbrains.kotlin.builtins.StandardNames
+-import org.jetbrains.kotlin.descriptors.*
++import org.jetbrains.kotlin.descriptors.ClassKind
++import org.jetbrains.kotlin.descriptors.Modality
++import org.jetbrains.kotlin.descriptors.Visibilities
++import org.jetbrains.kotlin.descriptors.Visibility
+ import org.jetbrains.kotlin.descriptors.annotations.AnnotationUseSiteTarget
+ import org.jetbrains.kotlin.descriptors.annotations.AnnotationUseSiteTarget.*
+ import org.jetbrains.kotlin.fir.*
+@@ -629,18 +632,10 @@ class LightTreeRawFirDeclarationBuilder(
+                             DataClassMembersGenerator(
+                                 classNode,
+                                 this,
++                                firPrimaryConstructor,
+                                 zippedParameters,
+                                 context.packageFqName,
+                                 context.className,
+-                                createClassTypeRefWithSourceKind = { firPrimaryConstructor.returnTypeRef.copyWithNewSourceKind(it) },
+-                                createParameterTypeRefWithSourceKind = { property, kind -> property.returnTypeRef.copyWithNewSourceKind(kind) },
+-                                addValueParameterAnnotations = { valueParam ->
+-                                    valueParam.forEachChildren {
+-                                        if (it.tokenType == MODIFIER_LIST) convertAnnotationList(it).filterTo(annotations) {
+-                                            it.useSiteTarget.appliesToPrimaryConstructorParameter()
+-                                        }
+-                                    }
+-                                },
+                             ).generate()
+                         }
+ 
+diff --git a/compiler/fir/raw-fir/psi2fir/src/org/jetbrains/kotlin/fir/builder/PsiRawFirBuilder.kt b/compiler/fir/raw-fir/psi2fir/src/org/jetbrains/kotlin/fir/builder/PsiRawFirBuilder.kt
+index 6c169665395c..cd5f07c8e0eb 100644
+--- a/compiler/fir/raw-fir/psi2fir/src/org/jetbrains/kotlin/fir/builder/PsiRawFirBuilder.kt
++++ b/compiler/fir/raw-fir/psi2fir/src/org/jetbrains/kotlin/fir/builder/PsiRawFirBuilder.kt
+@@ -1632,19 +1632,10 @@ open class PsiRawFirBuilder(
+                                 DataClassMembersGenerator(
+                                     classOrObject,
+                                     this,
++                                    firPrimaryConstructor,
+                                     zippedParameters,
+                                     context.packageFqName,
+                                     context.className,
+-                                    createClassTypeRefWithSourceKind = { firPrimaryConstructor.returnTypeRef.copyWithNewSourceKind(it) },
+-                                    createParameterTypeRefWithSourceKind = { property, newKind ->
+-                                        property.returnTypeRef.copyWithNewSourceKind(newKind)
+-                                    },
+-                                    addValueParameterAnnotations = {
+-                                        addAnnotationsFrom(
+-                                            it as KtParameter,
+-                                            isFromPrimaryConstructor = true,
+-                                        )
+-                                    },
+                                 ).generate()
+                             }
+ 
+diff --git a/compiler/fir/raw-fir/raw-fir.common/src/org/jetbrains/kotlin/fir/builder/AbstractRawFirBuilder.kt b/compiler/fir/raw-fir/raw-fir.common/src/org/jetbrains/kotlin/fir/builder/AbstractRawFirBuilder.kt
+index 2eb0b5d0d536..2877fc579e48 100644
+--- a/compiler/fir/raw-fir/raw-fir.common/src/org/jetbrains/kotlin/fir/builder/AbstractRawFirBuilder.kt
++++ b/compiler/fir/raw-fir/raw-fir.common/src/org/jetbrains/kotlin/fir/builder/AbstractRawFirBuilder.kt
+@@ -1066,12 +1066,10 @@ abstract class AbstractRawFirBuilder<T>(val baseSession: FirSession, val context
+     inner class DataClassMembersGenerator(
+         private val source: T,
+         private val classBuilder: FirRegularClassBuilder,
++        private val firPrimaryConstructor: FirConstructor,
+         private val zippedParameters: List<Pair<T, FirProperty>>,
+         private val packageFqName: FqName,
+         private val classFqName: FqName,
+-        private val createClassTypeRefWithSourceKind: (KtFakeSourceElementKind) -> FirTypeRef,
+-        private val createParameterTypeRefWithSourceKind: (FirProperty, KtFakeSourceElementKind) -> FirTypeRef,
+-        private val addValueParameterAnnotations: FirValueParameterBuilder.(T) -> Unit,
+     ) {
+         fun generate() {
+             if (classBuilder.classKind != ClassKind.OBJECT) {
+@@ -1114,10 +1112,8 @@ abstract class AbstractRawFirBuilder<T>(val baseSession: FirSession, val context
+                     currentDispatchReceiverType(),
+                     zippedParameters,
+                     isFromLibrary = false,
+-                    createClassTypeRefWithSourceKind,
+-                    createParameterTypeRefWithSourceKind,
++                    firPrimaryConstructor,
+                     { src, kind -> src?.toFirSourceElement(kind) },
+-                    addValueParameterAnnotations,
+                     { it.isVararg },
+                 )
+             )
+@@ -1259,10 +1255,8 @@ fun <TBase, TSource : TBase, TParameter : TBase> FirRegularClassBuilder.createDa
+     dispatchReceiver: ConeClassLikeType?,
+     zippedParameters: List<Pair<TParameter, FirProperty>>,
+     isFromLibrary: Boolean,
+-    createClassTypeRefWithSourceKind: (KtFakeSourceElementKind) -> FirTypeRef,
+-    createParameterTypeRefWithSourceKind: (FirProperty, KtFakeSourceElementKind) -> FirTypeRef,
++    firConstructor: FirConstructor,
+     toFirSource: (TBase?, KtFakeSourceElementKind) -> KtSourceElement?,
+-    addValueParameterAnnotations: FirValueParameterBuilder.(TParameter) -> Unit,
+     isVararg: (TParameter) -> Boolean,
+ ): FirSimpleFunction {
+     fun generateComponentAccess(
+@@ -1291,7 +1285,7 @@ fun <TBase, TSource : TBase, TParameter : TBase> FirRegularClassBuilder.createDa
+     val declarationOrigin = if (isFromLibrary) FirDeclarationOrigin.Library else FirDeclarationOrigin.Synthetic.DataClassMember
+ 
+     return buildSimpleFunction {
+-        val classTypeRef = createClassTypeRefWithSourceKind(KtFakeSourceElementKind.DataClassGeneratedMembers)
++        val classTypeRef = firConstructor.returnTypeRef.copyWithNewSourceKind(KtFakeSourceElementKind.DataClassGeneratedMembers)
+         this.source = toFirSource(sourceElement, KtFakeSourceElementKind.DataClassGeneratedMembers)
+         moduleData = this@createDataClassCopyFunction.moduleData
+         origin = declarationOrigin
+@@ -1307,11 +1301,11 @@ fun <TBase, TSource : TBase, TParameter : TBase> FirRegularClassBuilder.createDa
+         } else {
+             FirDeclarationStatusImpl(Visibilities.Unknown, Modality.FINAL)
+         }
++
+         for ((ktParameter, firProperty) in zippedParameters) {
+             val propertyName = firProperty.name
+             val parameterSource = toFirSource(ktParameter, KtFakeSourceElementKind.DataClassGeneratedMembers)
+-            val propertyReturnTypeRef =
+-                createParameterTypeRefWithSourceKind(firProperty, KtFakeSourceElementKind.DataClassGeneratedMembers)
++            val propertyReturnTypeRef = firProperty.returnTypeRef.copyWithNewSourceKind(KtFakeSourceElementKind.DataClassGeneratedMembers)
+             valueParameters += buildValueParameter {
+                 resolvePhase = this@createDataClassCopyFunction.resolvePhase
+                 source = parameterSource
+@@ -1325,9 +1319,15 @@ fun <TBase, TSource : TBase, TParameter : TBase> FirRegularClassBuilder.createDa
+                 isCrossinline = false
+                 isNoinline = false
+                 this.isVararg = isVararg(ktParameter)
+-                addValueParameterAnnotations(ktParameter)
+-                for (annotation in annotations) {
+-                    annotation.replaceUseSiteTarget(null)
++                annotations += firProperty.correspondingValueParameterFromPrimaryConstructor?.annotations.orEmpty().map {
++                    // We may avoid redundant resolve by propagating suitable annotations as they are
++                    if (it.useSiteTarget == null)
++                        it
++                    else
++                        buildAnnotationCallCopy(it as FirAnnotationCall) {
++                            useSiteTarget = null
++                            containingDeclarationSymbol = this@buildValueParameter.symbol
++                        }
+                 }
+             }
+         }
+
