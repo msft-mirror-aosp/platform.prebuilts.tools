@@ -19,9 +19,6 @@ maven_library(
     jar_name = "intellij-core-mvn.jar",
     notice = "NOTICE",
     visibility = ["//visibility:public"],
-    deps = [
-        "@maven//:org.jetbrains.intellij.deps.trove4j",
-    ],
 )
 
 # managed by go/iml_to_build
