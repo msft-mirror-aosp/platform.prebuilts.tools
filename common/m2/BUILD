@@ -836,3 +836,14 @@ jvm_import(
     jars = ["repository/org/junit/platform/junit-platform-commons/1.10.1/junit-platform-commons-1.10.1.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+filegroup(
+    name = "junit4_files",
+    # do not sort: must match IML order
+    srcs = [
+        "repository/junit/junit/4.13.2/junit-4.13.2.jar",
+        "repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
