@@ -439,6 +439,8 @@ studio_data(
 # It is declared here manually in order to avoid affecting version resolution
 # for the main maven repo---because for various reasons our compiler version
 # might not match the version of the kotlin-stdlib we want on the classpath.
+# Note, the versions of 'jvm-abi-gen-plugin' and 'kotlin-compose-compiler-plugin'
+# must be consistent with the Kotlin compiler version.
 jvm_import(
     name = "kotlin-compiler",
     jars = [
@@ -447,14 +449,13 @@ jvm_import(
         # then resolving any duplicate versions to the highest version present.
         "repository/org/jetbrains/annotations/13.0/annotations-13.0.jar",
         "repository/org/jetbrains/intellij/deps/trove4j/1.0.20200330/trove4j-1.0.20200330.jar",
-        "repository/org/jetbrains/kotlin/kotlin-compiler/1.9.21/kotlin-compiler-1.9.21.jar",
+        "repository/org/jetbrains/kotlin/kotlin-compiler/2.0.21/kotlin-compiler-2.0.21.jar",
         "repository/org/jetbrains/kotlin/kotlin-reflect/1.6.10/kotlin-reflect-1.6.10.jar",
-        "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.9.21/kotlin-stdlib-jdk8-1.9.21.jar",
-        "repository/org/jetbrains/kotlin/kotlin-stdlib/1.9.21/kotlin-stdlib-1.9.21.jar",
-        "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.9.21/kotlin-stdlib-jdk7-1.9.21.jar",
-        "repository/org/jetbrains/kotlin/kotlin-script-runtime/1.9.21/kotlin-script-runtime-1.9.21.jar",
-        "repository/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.5.0/kotlinx-coroutines-core-jvm-1.5.0.jar",
-        "repository/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.5.0/kotlinx-coroutines-core-1.5.0.jar",
+        "repository/org/jetbrains/kotlin/kotlin-script-runtime/2.0.21/kotlin-script-runtime-2.0.21.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/2.0.21/kotlin-stdlib-jdk7-2.0.21.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/2.0.21/kotlin-stdlib-jdk8-2.0.21.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib/2.0.21/kotlin-stdlib-2.0.21.jar",
+        "repository/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.6.4/kotlinx-coroutines-core-jvm-1.6.4.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -462,15 +463,15 @@ jvm_import(
 jvm_import(
     name = "jvm-abi-gen-plugin",
     jars = [
-        "repository/org/jetbrains/kotlin/jvm-abi-gen/1.9.21/jvm-abi-gen-1.9.21.jar",
+        "repository/org/jetbrains/kotlin/jvm-abi-gen/2.0.21/jvm-abi-gen-2.0.21.jar",
     ],
     visibility = ["//visibility:public"],
 )
 
 jvm_import(
-    name = "compose-compiler-hosted",
+    name = "kotlin-compose-compiler-plugin",
     jars = [
-        "repository/androidx/compose/compiler/compiler-hosted/1.5.7/compiler-hosted-1.5.7.jar",
+        "repository/org/jetbrains/kotlin/kotlin-compose-compiler-plugin/2.0.21/kotlin-compose-compiler-plugin-2.0.21.jar",
     ],
     visibility = ["//visibility:public"],
 )
