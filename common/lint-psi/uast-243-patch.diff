@@ -1,3 +1,19 @@
+diff --git a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/expressions/KotlinUFunctionCallExpression.kt b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/expressions/KotlinUFunctionCallExpression.kt
+index b5374b1dfbc112..e497ff47044348 100644
+--- a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/expressions/KotlinUFunctionCallExpression.kt
++++ b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/expressions/KotlinUFunctionCallExpression.kt
+@@ -143,6 +143,11 @@ class KotlinUFunctionCallExpression(
+     }
+ 
+     override fun getExpressionType(): PsiType? {
++        if (sourcePsi !is KtExpression) {
++            // E.g., constructor(...) : this(...)
++            // [KtConstructorDelegationCall] is a subtype of [KtCallElement], but not [KtExpression]
++            return null
++        }
+         super<KotlinUElementWithType>.getExpressionType()?.let { return it }
+         for (resolveResult in multiResolve()) {
+             val psiMethod = resolveResult.element
 diff --git a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/psi/UastFakeDeserializedSymbolLightMethod.kt b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/psi/UastFakeDeserializedSymbolLightMethod.kt
 index b86ef9937603a3..45a597d148e0e2 100644
 --- a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/psi/UastFakeDeserializedSymbolLightMethod.kt
@@ -51,7 +67,7 @@ index ca95ca0f95d8..9658f68ed861 100644
  
  context(KaSession)
 diff --git a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastResolveProviderService.kt b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastResolveProviderService.kt
-index 467deea95e7606..cd5a6abd1de20a 100644
+index 467deea95e7606..f5365995b5a86c 100644
 --- a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastResolveProviderService.kt
 +++ b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastResolveProviderService.kt
 @@ -9,7 +9,6 @@ import com.intellij.util.SmartList
@@ -62,7 +78,29 @@ index 467deea95e7606..cd5a6abd1de20a 100644
  import org.jetbrains.kotlin.analysis.api.projectStructure.KaLibraryModule
  import org.jetbrains.kotlin.analysis.api.projectStructure.KaModuleProvider
  import org.jetbrains.kotlin.analysis.api.projectStructure.KaSourceModule
-@@ -783,23 +782,6 @@ interface FirKotlinUastResolveProviderService : BaseKotlinUastResolveProviderSer
+@@ -616,12 +615,20 @@ interface FirKotlinUastResolveProviderService : BaseKotlinUastResolveProviderSer
+         if (ktExpression is KtLoopExpression || ktExpression is KtWhenEntry)
+             return null
+ 
++        // Obvious constructor calls
++        val parent = ktExpression.parent
++        // E.g. class Sub : Base(...)
++        if (ktExpression is KtSuperTypeCallEntry || parent is KtSuperTypeCallEntry)
++            return null
++        // E.g. constructor(...) : this(...)
++        if (ktExpression is KtConstructorDelegationCall || parent is KtConstructorDelegationCall)
++            return null
++
+         analyzeForUast(ktExpression) {
+             val ktType = ktExpression.expressionType ?: return null
+             // Again, Analysis API returns [Unit] for statements, so we need to filter out
+             // some cases that are not actually expression's return type.
+             if (ktType.isUnit) {
+-                val parent = ktExpression.parent
+                 // E.g., AnnotationTarget.FIELD, reference to enum class is resolved to the constructor call,
+                 // and then returned as Unit expression type. Same for path segments in a fully qualified name
+                 if ((parent is KtQualifiedExpression || parent is KtDoubleColonExpression) &&
+@@ -783,23 +790,6 @@ interface FirKotlinUastResolveProviderService : BaseKotlinUastResolveProviderSer
      }
  
      override fun evaluate(uExpression: UExpression): Any? {
