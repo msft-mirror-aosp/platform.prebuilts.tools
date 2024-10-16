@@ -67,7 +67,7 @@ index ca95ca0f95d8..9658f68ed861 100644
  
  context(KaSession)
 diff --git a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastResolveProviderService.kt b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastResolveProviderService.kt
-index 467deea95e7606..f5365995b5a86c 100644
+index 467deea95e7606..ae159943fa47f8 100644
 --- a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastResolveProviderService.kt
 +++ b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastResolveProviderService.kt
 @@ -9,7 +9,6 @@ import com.intellij.util.SmartList
@@ -78,7 +78,34 @@ index 467deea95e7606..f5365995b5a86c 100644
  import org.jetbrains.kotlin.analysis.api.projectStructure.KaLibraryModule
  import org.jetbrains.kotlin.analysis.api.projectStructure.KaModuleProvider
  import org.jetbrains.kotlin.analysis.api.projectStructure.KaSourceModule
-@@ -616,12 +615,20 @@ interface FirKotlinUastResolveProviderService : BaseKotlinUastResolveProviderSer
+@@ -28,6 +27,7 @@ import org.jetbrains.kotlin.name.SpecialNames
+ import org.jetbrains.kotlin.name.StandardClassIds
+ import org.jetbrains.kotlin.psi.*
+ import org.jetbrains.kotlin.psi.psiUtil.parents
++import org.jetbrains.kotlin.utils.yieldIfNotNull
+ import org.jetbrains.uast.*
+ import org.jetbrains.uast.analysis.KotlinExtensionConstants.LAMBDA_THIS_PARAMETER_NAME
+ import org.jetbrains.uast.kotlin.internal.*
+@@ -221,14 +221,14 @@ interface FirKotlinUastResolveProviderService : BaseKotlinUastResolveProviderSer
+         if (candidates.isEmpty()) return emptySequence()
+         return sequence {
+             candidates.forEach { candidatePointer ->
+-                analyzeForUast(ktExpression) {
++                val psi = analyzeForUast(ktExpression) {
+                     val candidate = candidatePointer.restoreSymbol() ?: return@forEach
+-                    val psi = when (candidate) {
++                    when (candidate) {
+                         is KaVariableSymbol -> psiForUast(candidate)
+                         is KaFunctionSymbol -> toPsiMethod(candidate, ktExpression)
+-                    }?: return@forEach
+-                    yield(psi)
++                    }
+                 }
++                yieldIfNotNull(psi)
+             }
+         }
+     }
+@@ -616,12 +616,20 @@ interface FirKotlinUastResolveProviderService : BaseKotlinUastResolveProviderSer
          if (ktExpression is KtLoopExpression || ktExpression is KtWhenEntry)
              return null
  
@@ -100,7 +127,7 @@ index 467deea95e7606..f5365995b5a86c 100644
                  // E.g., AnnotationTarget.FIELD, reference to enum class is resolved to the constructor call,
                  // and then returned as Unit expression type. Same for path segments in a fully qualified name
                  if ((parent is KtQualifiedExpression || parent is KtDoubleColonExpression) &&
-@@ -783,23 +790,6 @@ interface FirKotlinUastResolveProviderService : BaseKotlinUastResolveProviderSer
+@@ -783,23 +791,6 @@ interface FirKotlinUastResolveProviderService : BaseKotlinUastResolveProviderSer
      }
  
      override fun evaluate(uExpression: UExpression): Any? {
@@ -308,3 +335,60 @@ index 000000000000..864c6c917a91
 +    }
 +}
 \ No newline at end of file
+diff --git a/plugins/kotlin/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/KotlinUastTypeMapper.kt b/plugins/kotlin/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/KotlinUastTypeMapper.kt
+index 68aecf26f38c..354b6450986e 100644
+--- a/plugins/kotlin/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/KotlinUastTypeMapper.kt
++++ b/plugins/kotlin/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/internal/KotlinUastTypeMapper.kt
+@@ -112,9 +112,7 @@ object KotlinUastTypeMapper {
+
+         for (i in 0 until type.argumentsCount()) {
+             val projection = type.getArgument(i)
+-            if (projection.isStarProjection()) continue
+-
+-            val argument = projection.getType()
++            val argument = projection.getType() ?: continue
+
+             if (argument.isNullableNothing() ||
+                 argument.isNothing() && typeConstructor.getParameter(i).getVariance() != TypeVariance.IN
+@@ -182,19 +180,20 @@ object KotlinUastTypeMapper {
+         mapType: (KotlinTypeMarker, JvmSignatureWriter, TypeMappingMode) -> Type
+     ) {
+         for ((parameter, argument) in parameters.zip(arguments)) {
+-            if (argument.isStarProjection() ||
++            val argumentType = argument.getType()
++            if (argumentType == null ||
+                 // In<Nothing, Foo> == In<*, Foo> -> In<?, Foo>
+-                argument.getType().isNothing() && parameter.getVariance() == TypeVariance.IN
++                argumentType.isNothing() && parameter.getVariance() == TypeVariance.IN
+             ) {
+                 signatureVisitor.writeUnboundedWildcard()
+             } else {
+-                val argumentMode = mode.updateArgumentModeFromAnnotations(argument.getType(), this)
++                val argumentMode = mode.updateArgumentModeFromAnnotations(argumentType, this)
+                 val projectionKind = getVarianceForWildcard(parameter, argument, argumentMode)
+
+                 signatureVisitor.writeTypeArgument(projectionKind)
+
+                 mapType(
+-                    argument.getType(), signatureVisitor,
++                    argumentType, signatureVisitor,
+                     argumentMode.toGenericArgumentMode(
+                         getEffectiveVariance(parameter.getVariance().convertVariance(), argument.getVariance().convertVariance())
+                     )
+@@ -220,12 +219,13 @@ object KotlinUastTypeMapper {
+         }
+
+         if (projectionKind == Variance.INVARIANT || projectionKind == parameterVariance) {
+-            if (mode.skipDeclarationSiteWildcardsIfPossible && !projection.isStarProjection()) {
+-                if (parameterVariance == Variance.OUT_VARIANCE && isMostPreciseCovariantArgument(projection.getType())) {
++            val type = projection.getType()
++            if (mode.skipDeclarationSiteWildcardsIfPossible && type != null) {
++                if (parameterVariance == Variance.OUT_VARIANCE && isMostPreciseCovariantArgument(type)) {
+                     return Variance.INVARIANT
+                 }
+
+-                if (parameterVariance == Variance.IN_VARIANCE && isMostPreciseContravariantArgument(projection.getType())) {
++                if (parameterVariance == Variance.IN_VARIANCE && isMostPreciseContravariantArgument(type)) {
+                     return Variance.INVARIANT
+                 }
+             }
