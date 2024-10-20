@@ -819,7 +819,7 @@ jvm_import(
 # managed by go/iml_to_build
 jvm_import(
     name = "grpc-inprocess",
-    jars = ["repository/io/grpc/grpc-inprocess/1.63.0/grpc-inprocess-1.63.0.jar"],
+    jars = ["repository/io/grpc/grpc-inprocess/1.66.0/grpc-inprocess-1.66.0.jar"],
     visibility = ["//visibility:public"],
 )
 
