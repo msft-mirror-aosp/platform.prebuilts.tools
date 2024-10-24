@@ -18,6 +18,13 @@ cc_prebuilt_binary {
 }
 
 filegroup {
+    name: "trace_processor_shell_prebuilt",
+    srcs: [
+        "trace_processor_shell",
+    ],
+}
+
+filegroup {
     name: "perfetto_artifacts",
     srcs: [
         "trace_processor_shell",
@@ -28,6 +35,7 @@ filegroup {
         "configs/trace_config_power.textproto",
         "configs/trace_config_boot_time.textproto",
         "configs/trace_config_boot_time_stop.textproto",
+        "configs/trace_config_systemui_heap_profile.textproto",
         "configs/long_trace_config.textproto",
         "configs/long_trace_binder_config.textproto",
     ],
