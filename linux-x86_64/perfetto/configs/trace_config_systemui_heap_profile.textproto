@@ -1,4 +1,4 @@
-# Copyright (C) 2019 The Android Open Source Project
+# Copyright (C) 2024 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -208,6 +208,7 @@ data_sources: {
     }
   }
 }
+
 data_sources: {
         config {
           name: "linux.perf"
@@ -221,9 +222,22 @@ data_sources: {
               # Don't use PERF_CLOCK_BOOTTIME, tracepoints are not compatible.
             }
             callstack_sampling {
-              kernel_frames: false
+              kernel_frames: true
             }
             max_daemon_memory_kb: 524288
+    }
+  }
+}
+
+data_sources {
+  config {
+    name: "android.heapprofd"
+    target_buffer: 2
+    heapprofd_config {
+      sampling_interval_bytes: 16384
+      process_cmdline: "com.android.systemui"
+      no_startup: true
+      shmem_size_bytes: 16777216
     }
   }
 }
