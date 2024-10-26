@@ -209,26 +209,6 @@ data_sources: {
   }
 }
 
-data_sources: {
-        config {
-          name: "linux.perf"
-          target_buffer: 2
-          perf_event_config {
-            timebase {
-              tracepoint {
-                name: "binder:binder_transaction"
-              }
-              period: 1
-              # Don't use PERF_CLOCK_BOOTTIME, tracepoints are not compatible.
-            }
-            callstack_sampling {
-              kernel_frames: true
-            }
-            max_daemon_memory_kb: 524288
-    }
-  }
-}
-
 data_sources {
   config {
     name: "android.heapprofd"
