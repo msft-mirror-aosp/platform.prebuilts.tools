@@ -10,12 +10,13 @@ filegroup(
 studio_data(
     name = "trace-processor-daemon-bundle",
     files_linux = glob(["linux/*"]),
-    files_mac = glob(["darwin/*"]),
-    files_mac_arm = glob(["darwin/*"]),
+    files_mac = glob(["darwin-x86_64/*"]),
+    files_mac_arm = glob(["darwin-arm64/*"]),
     files_win = glob(["windows/*"]),
     mappings = {
         "prebuilts/tools/common/trace-processor-daemon/linux/": "trace_processor_daemon/",
-        "prebuilts/tools/common/trace-processor-daemon/darwin/": "trace_processor_daemon/",
+        "prebuilts/tools/common/trace-processor-daemon/darwin-arm64/": "trace_processor_daemon/",
+        "prebuilts/tools/common/trace-processor-daemon/darwin-x86_64/": "trace_processor_daemon/",
         "prebuilts/tools/common/trace-processor-daemon/windows/": "trace_processor_daemon/",
     },
     visibility = ["//visibility:public"],
