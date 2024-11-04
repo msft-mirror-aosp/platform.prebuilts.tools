@@ -633,13 +633,13 @@ jvm_import(
     name = "jewel-ide",
     # do not sort: must match IML order
     jars = [
-        "repository/org/jetbrains/jewel/jewel-foundation-242/0.26.2/jewel-foundation-242-0.26.2.jar",
-        "repository/org/jetbrains/jewel/jewel-ide-laf-bridge-242/0.26.2/jewel-ide-laf-bridge-242-0.26.2.jar",
-        "repository/org/jetbrains/jewel/jewel-ui-242/0.26.2/jewel-ui-242-0.26.2.jar",
-        "repository/org/jetbrains/jewel/jewel-markdown-core-242/0.26.2/jewel-markdown-core-242-0.26.2.jar",
-        "repository/org/jetbrains/jewel/jewel-markdown-extension-autolink-242/0.26.2/jewel-markdown-extension-autolink-242-0.26.2.jar",
-        "repository/org/jetbrains/jewel/jewel-markdown-extension-gfm-alerts-242/0.26.2/jewel-markdown-extension-gfm-alerts-242-0.26.2.jar",
-        "repository/org/jetbrains/jewel/jewel-markdown-ide-laf-bridge-styling-242/0.26.2/jewel-markdown-ide-laf-bridge-styling-242-0.26.2.jar",
+        "repository/org/jetbrains/jewel/jewel-foundation-243/0.26.2/jewel-foundation-243-0.26.2.jar",
+        "repository/org/jetbrains/jewel/jewel-ide-laf-bridge-243/0.26.2/jewel-ide-laf-bridge-243-0.26.2.jar",
+        "repository/org/jetbrains/jewel/jewel-ui-243/0.26.2/jewel-ui-243-0.26.2.jar",
+        "repository/org/jetbrains/jewel/jewel-markdown-core-243/0.26.2/jewel-markdown-core-243-0.26.2.jar",
+        "repository/org/jetbrains/jewel/jewel-markdown-extension-autolink-243/0.26.2/jewel-markdown-extension-autolink-243-0.26.2.jar",
+        "repository/org/jetbrains/jewel/jewel-markdown-extension-gfm-alerts-243/0.26.2/jewel-markdown-extension-gfm-alerts-243-0.26.2.jar",
+        "repository/org/jetbrains/jewel/jewel-markdown-ide-laf-bridge-styling-243/0.26.2/jewel-markdown-ide-laf-bridge-styling-243-0.26.2.jar",
         "repository/org/commonmark/commonmark/0.22.0/commonmark-0.22.0.jar",
     ],
     visibility = ["//visibility:public"],
@@ -684,8 +684,8 @@ jvm_import(
     name = "jewel-standalone",
     # do not sort: must match IML order
     jars = [
-        "repository/org/jetbrains/jewel/jewel-int-ui-standalone-242/0.26.2/jewel-int-ui-standalone-242-0.26.2.jar",
-        "repository/org/jetbrains/jewel/jewel-markdown-int-ui-standalone-styling-242/0.26.2/jewel-markdown-int-ui-standalone-styling-242-0.26.2.jar",
+        "repository/org/jetbrains/jewel/jewel-int-ui-standalone-243/0.26.2/jewel-int-ui-standalone-243-0.26.2.jar",
+        "repository/org/jetbrains/jewel/jewel-markdown-int-ui-standalone-styling-243/0.26.2/jewel-markdown-int-ui-standalone-styling-243-0.26.2.jar",
     ],
     visibility = ["//visibility:public"],
 )
