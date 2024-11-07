@@ -5,10 +5,11 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("java")
-    kotlin("jvm") version "1.9.0" // Aim to match the Kotlin version below.
+    kotlin("jvm") version "2.0.0" // Aim to match the Kotlin version below.
 }
 
-val intellijVersion = getEnvOrError("INTELLIJ_VERSION")
+// TODO: go back to release version
+val intellijVersion = "${getEnvOrError("INTELLIJ_VERSION")}-EAP-SNAPSHOT"
 val kotlinVersion = getEnvOrError("KOTLIN_VERSION")
 val intellijDir = getEnvOrError("INTELLIJ_DIR")
 val kotlinDir = getEnvOrError("KOTLIN_DIR")
@@ -144,8 +145,6 @@ tasks.withType<KotlinCompile> {
             "-Xcontext-receivers",
             "-opt-in=org.jetbrains.kotlin.analysis.api.permissions.KaAllowProhibitedAnalyzeFromWriteAction",
             "-opt-in=org.jetbrains.kotlin.analysis.api.KaIdeApi",
-            "-api-version=1.9",      // Until the entire build target is 2.0?
-            "-language-version=1.9", // Until the entire build target is 2.0?
         )
         suppressWarnings = true
     }
@@ -230,6 +229,7 @@ fun getEnvOrError(name: String): String {
 repositories {
     maven("https://cache-redirector.jetbrains.com/repo1.maven.org/maven2") // Substitute for mavenCentral().
     maven("https://www.jetbrains.com/intellij-repository/releases")
+    maven("https://www.jetbrains.com/intellij-repository/snapshots")
     maven("https://cache-redirector.jetbrains.com/intellij-dependencies")
     maven("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/kotlin-ide-plugin-dependencies")
     maven("$kotlinDir/build/repo")
