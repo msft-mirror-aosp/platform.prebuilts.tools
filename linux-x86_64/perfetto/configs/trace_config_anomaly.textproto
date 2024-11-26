@@ -208,16 +208,22 @@ data_sources: {
     }
   }
 }
-
-data_sources {
-  config {
-    name: "android.heapprofd"
-    target_buffer: 2
-    heapprofd_config {
-      sampling_interval_bytes: 16384
-      process_cmdline: "com.android.systemui"
-      no_startup: true
-      shmem_size_bytes: 16777216
+data_sources: {
+        config {
+          name: "linux.perf"
+          target_buffer: 2
+          perf_event_config {
+            timebase {
+              tracepoint {
+                name: "binder:binder_transaction"
+              }
+              period: 1
+              # Don't use PERF_CLOCK_BOOTTIME, tracepoints are not compatible.
+            }
+            callstack_sampling {
+              kernel_frames: false
+            }
+            max_daemon_memory_kb: 524288
     }
   }
 }
