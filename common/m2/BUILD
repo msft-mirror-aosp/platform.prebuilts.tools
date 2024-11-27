@@ -138,6 +138,17 @@ java_import(
     visibility = ["//visibility:public"],
 )
 
+filegroup(
+    name = "com.google.protobuf.protoc.3.24.4_exe",
+    srcs = select({
+        "//tools/base/bazel/platforms:macos-arm64": ["repository/com/google/protobuf/protoc/3.24.4/protoc-3.24.4-osx-aarch_64.exe"],
+        "//tools/base/bazel/platforms:macos-x86_64": ["repository/com/google/protobuf/protoc/3.24.4/protoc-3.24.4-osx-x86_64.exe"],
+        "@platforms//os:windows": ["repository/com/google/protobuf/protoc/3.24.4/protoc-3.24.4-windows-x86_64.exe"],
+        "@platforms//os:linux": ["repository/com/google/protobuf/protoc/3.24.4/protoc-3.24.4-linux-x86_64.exe"],
+    }),
+    visibility = ["//visibility:public"],
+)
+
 # managed by go/iml_to_build
 filegroup(
     name = "truth_files",
