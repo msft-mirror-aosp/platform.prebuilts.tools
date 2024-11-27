@@ -630,79 +630,6 @@ jvm_import(
 
 # managed by go/iml_to_build
 jvm_import(
-    name = "jewel-ide",
-    # do not sort: must match IML order
-    jars = [
-        "repository/org/jetbrains/jewel/jewel-foundation-243/0.26.2/jewel-foundation-243-0.26.2.jar",
-        "repository/org/jetbrains/jewel/jewel-ide-laf-bridge-243/0.26.2/jewel-ide-laf-bridge-243-0.26.2.jar",
-        "repository/org/jetbrains/jewel/jewel-ui-243/0.26.2/jewel-ui-243-0.26.2.jar",
-        "repository/org/jetbrains/jewel/jewel-markdown-core-243/0.26.2/jewel-markdown-core-243-0.26.2.jar",
-        "repository/org/jetbrains/jewel/jewel-markdown-extension-autolink-243/0.26.2/jewel-markdown-extension-autolink-243-0.26.2.jar",
-        "repository/org/jetbrains/jewel/jewel-markdown-extension-gfm-alerts-243/0.26.2/jewel-markdown-extension-gfm-alerts-243-0.26.2.jar",
-        "repository/org/jetbrains/jewel/jewel-markdown-ide-laf-bridge-styling-243/0.26.2/jewel-markdown-ide-laf-bridge-styling-243-0.26.2.jar",
-        "repository/org/commonmark/commonmark/0.22.0/commonmark-0.22.0.jar",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
-    name = "compose-desktop",
-    # do not sort: must match IML order
-    jars = [
-        "repository/org/jetbrains/compose/animation/animation-desktop/1.7.0/animation-desktop-1.7.0.jar",
-        "repository/org/jetbrains/compose/animation/animation-core-desktop/1.7.0/animation-core-desktop-1.7.0.jar",
-        "repository/org/jetbrains/compose/components/components-resources/1.7.0/components-resources-1.7.0.jar",
-        "repository/org/jetbrains/compose/components/components-resources-desktop/1.7.0/components-resources-desktop-1.7.0.jar",
-        "repository/org/jetbrains/compose/runtime/runtime-saveable-desktop/1.7.0/runtime-saveable-desktop-1.7.0.jar",
-        "repository/org/jetbrains/compose/runtime/runtime-desktop/1.7.0/runtime-desktop-1.7.0.jar",
-        "repository/org/jetbrains/compose/foundation/foundation-layout-desktop/1.7.0/foundation-layout-desktop-1.7.0.jar",
-        "repository/org/jetbrains/compose/foundation/foundation-desktop/1.7.0/foundation-desktop-1.7.0.jar",
-        "repository/org/jetbrains/compose/ui/ui-unit-desktop/1.7.0/ui-unit-desktop-1.7.0.jar",
-        "repository/org/jetbrains/compose/ui/ui-text-desktop/1.7.0/ui-text-desktop-1.7.0.jar",
-        "repository/org/jetbrains/compose/ui/ui-util-desktop/1.7.0/ui-util-desktop-1.7.0.jar",
-        "repository/org/jetbrains/compose/ui/ui-graphics-desktop/1.7.0/ui-graphics-desktop-1.7.0.jar",
-        "repository/org/jetbrains/compose/ui/ui-geometry-desktop/1.7.0/ui-geometry-desktop-1.7.0.jar",
-        "repository/org/jetbrains/compose/ui/ui-desktop/1.7.0/ui-desktop-1.7.0.jar",
-        "repository/org/jetbrains/skiko/skiko-awt/0.8.17/skiko-awt-0.8.17.jar",
-        "repository/org/jetbrains/skiko/skiko-awt-runtime-linux-x64/0.8.17/skiko-awt-runtime-linux-x64-0.8.17.jar",
-        "repository/org/jetbrains/skiko/skiko-awt-runtime-macos-arm64/0.8.17/skiko-awt-runtime-macos-arm64-0.8.17.jar",
-        "repository/org/jetbrains/skiko/skiko-awt-runtime-macos-x64/0.8.17/skiko-awt-runtime-macos-x64-0.8.17.jar",
-        "repository/org/jetbrains/skiko/skiko-awt-runtime-windows-x64/0.8.17/skiko-awt-runtime-windows-x64-0.8.17.jar",
-        "repository/org/jetbrains/androidx/lifecycle/lifecycle-runtime-compose-desktop/2.8.3/lifecycle-runtime-compose-desktop-2.8.3.jar",
-        "repository/androidx/collection/collection-jvm/1.4.0/collection-jvm-1.4.0.jar",
-        "repository/androidx/arch/core/core-common/2.2.0/core-common-2.2.0.jar",
-        "repository/androidx/lifecycle/lifecycle-runtime-desktop/2.8.5/lifecycle-runtime-desktop-2.8.5.jar",
-        "repository/androidx/lifecycle/lifecycle-common-jvm/2.8.5/lifecycle-common-jvm-2.8.5.jar",
-        "repository/androidx/lifecycle/lifecycle-viewmodel-desktop/2.8.5/lifecycle-viewmodel-desktop-2.8.5.jar",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
-    name = "jewel-standalone",
-    # do not sort: must match IML order
-    jars = [
-        "repository/org/jetbrains/jewel/jewel-int-ui-standalone-243/0.26.2/jewel-int-ui-standalone-243-0.26.2.jar",
-        "repository/org/jetbrains/jewel/jewel-markdown-int-ui-standalone-styling-243/0.26.2/jewel-markdown-int-ui-standalone-styling-243-0.26.2.jar",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
-    name = "compose-desktop-test",
-    # do not sort: must match IML order
-    jars = [
-        "repository/org/jetbrains/compose/ui/ui-test-junit4-desktop/1.7.0/ui-test-junit4-desktop-1.7.0.jar",
-        "repository/org/jetbrains/compose/ui/ui-test-desktop/1.7.0/ui-test-desktop-1.7.0.jar",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
     name = "google_api_services_testing",
     # do not sort: must match IML order
     jars = [
@@ -844,6 +771,79 @@ filegroup(
     srcs = [
         "repository/junit/junit/4.13.2/junit-4.13.2.jar",
         "repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "jewel-ide",
+    # do not sort: must match IML order
+    jars = [
+        "repository/org/jetbrains/jewel/jewel-foundation-243/0.27.0/jewel-foundation-243-0.27.0.jar",
+        "repository/org/jetbrains/jewel/jewel-ide-laf-bridge-243/0.27.0/jewel-ide-laf-bridge-243-0.27.0.jar",
+        "repository/org/jetbrains/jewel/jewel-ui-243/0.27.0/jewel-ui-243-0.27.0.jar",
+        "repository/org/jetbrains/jewel/jewel-markdown-core-243/0.27.0/jewel-markdown-core-243-0.27.0.jar",
+        "repository/org/jetbrains/jewel/jewel-markdown-extension-autolink-243/0.27.0/jewel-markdown-extension-autolink-243-0.27.0.jar",
+        "repository/org/jetbrains/jewel/jewel-markdown-extension-gfm-alerts-243/0.27.0/jewel-markdown-extension-gfm-alerts-243-0.27.0.jar",
+        "repository/org/jetbrains/jewel/jewel-markdown-ide-laf-bridge-styling-243/0.27.0/jewel-markdown-ide-laf-bridge-styling-243-0.27.0.jar",
+        "repository/org/commonmark/commonmark/0.22.0/commonmark-0.22.0.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "compose-desktop",
+    # do not sort: must match IML order
+    jars = [
+        "repository/org/jetbrains/compose/animation/animation-desktop/1.7.1/animation-desktop-1.7.1.jar",
+        "repository/org/jetbrains/compose/animation/animation-core-desktop/1.7.1/animation-core-desktop-1.7.1.jar",
+        "repository/org/jetbrains/compose/components/components-resources/1.7.1/components-resources-1.7.1.jar",
+        "repository/org/jetbrains/compose/components/components-resources-desktop/1.7.1/components-resources-desktop-1.7.1.jar",
+        "repository/org/jetbrains/compose/runtime/runtime-saveable-desktop/1.7.1/runtime-saveable-desktop-1.7.1.jar",
+        "repository/org/jetbrains/compose/runtime/runtime-desktop/1.7.1/runtime-desktop-1.7.1.jar",
+        "repository/org/jetbrains/compose/foundation/foundation-layout-desktop/1.7.1/foundation-layout-desktop-1.7.1.jar",
+        "repository/org/jetbrains/compose/foundation/foundation-desktop/1.7.1/foundation-desktop-1.7.1.jar",
+        "repository/org/jetbrains/compose/ui/ui-unit-desktop/1.7.1/ui-unit-desktop-1.7.1.jar",
+        "repository/org/jetbrains/compose/ui/ui-text-desktop/1.7.1/ui-text-desktop-1.7.1.jar",
+        "repository/org/jetbrains/compose/ui/ui-util-desktop/1.7.1/ui-util-desktop-1.7.1.jar",
+        "repository/org/jetbrains/compose/ui/ui-graphics-desktop/1.7.1/ui-graphics-desktop-1.7.1.jar",
+        "repository/org/jetbrains/compose/ui/ui-geometry-desktop/1.7.1/ui-geometry-desktop-1.7.1.jar",
+        "repository/org/jetbrains/compose/ui/ui-desktop/1.7.1/ui-desktop-1.7.1.jar",
+        "repository/org/jetbrains/skiko/skiko-awt/0.8.18/skiko-awt-0.8.18.jar",
+        "repository/org/jetbrains/skiko/skiko-awt-runtime-linux-x64/0.8.18/skiko-awt-runtime-linux-x64-0.8.18.jar",
+        "repository/org/jetbrains/skiko/skiko-awt-runtime-macos-arm64/0.8.18/skiko-awt-runtime-macos-arm64-0.8.18.jar",
+        "repository/org/jetbrains/skiko/skiko-awt-runtime-macos-x64/0.8.18/skiko-awt-runtime-macos-x64-0.8.18.jar",
+        "repository/org/jetbrains/skiko/skiko-awt-runtime-windows-x64/0.8.18/skiko-awt-runtime-windows-x64-0.8.18.jar",
+        "repository/org/jetbrains/androidx/lifecycle/lifecycle-runtime-compose-desktop/2.8.3/lifecycle-runtime-compose-desktop-2.8.3.jar",
+        "repository/androidx/collection/collection-jvm/1.4.0/collection-jvm-1.4.0.jar",
+        "repository/androidx/arch/core/core-common/2.2.0/core-common-2.2.0.jar",
+        "repository/androidx/lifecycle/lifecycle-runtime-desktop/2.8.5/lifecycle-runtime-desktop-2.8.5.jar",
+        "repository/androidx/lifecycle/lifecycle-common-jvm/2.8.5/lifecycle-common-jvm-2.8.5.jar",
+        "repository/androidx/lifecycle/lifecycle-viewmodel-desktop/2.8.5/lifecycle-viewmodel-desktop-2.8.5.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "jewel-standalone",
+    # do not sort: must match IML order
+    jars = [
+        "repository/org/jetbrains/jewel/jewel-int-ui-standalone-243/0.27.0/jewel-int-ui-standalone-243-0.27.0.jar",
+        "repository/org/jetbrains/jewel/jewel-markdown-int-ui-standalone-styling-243/0.27.0/jewel-markdown-int-ui-standalone-styling-243-0.27.0.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "compose-desktop-test",
+    # do not sort: must match IML order
+    jars = [
+        "repository/org/jetbrains/compose/ui/ui-test-junit4-desktop/1.7.1/ui-test-junit4-desktop-1.7.1.jar",
+        "repository/org/jetbrains/compose/ui/ui-test-desktop/1.7.1/ui-test-desktop-1.7.1.jar",
     ],
     visibility = ["//visibility:public"],
 )
