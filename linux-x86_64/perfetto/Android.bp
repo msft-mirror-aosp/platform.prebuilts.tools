@@ -27,8 +27,10 @@ filegroup {
 filegroup {
     name: "perfetto_artifacts",
     srcs: [
+        ":heap_profile",
         "trace_processor_shell",
         "configs/trace_config_detailed.textproto",
+        "configs/trace_config_anomaly.textproto",
         "configs/trace_config_multi_user_cuj_tests.textproto",
         "configs/trace_config_detailed_heapdump.textproto",
         "configs/trace_config_post_boot.textproto",
