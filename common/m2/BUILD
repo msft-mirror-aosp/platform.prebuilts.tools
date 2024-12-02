@@ -720,13 +720,6 @@ jvm_import(
 )
 
 # managed by go/iml_to_build
-jvm_import(
-    name = "commonmark-0.22.0",
-    jars = ["repository/org/commonmark/commonmark/0.22.0/commonmark-0.22.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
 filegroup(
     name = "opentest4j_files",
     srcs = ["repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar"],
@@ -798,7 +791,7 @@ jvm_import(
         "repository/org/jetbrains/jewel/jewel-markdown-extension-autolink-243/0.27.0/jewel-markdown-extension-autolink-243-0.27.0.jar",
         "repository/org/jetbrains/jewel/jewel-markdown-extension-gfm-alerts-243/0.27.0/jewel-markdown-extension-gfm-alerts-243-0.27.0.jar",
         "repository/org/jetbrains/jewel/jewel-markdown-ide-laf-bridge-styling-243/0.27.0/jewel-markdown-ide-laf-bridge-styling-243-0.27.0.jar",
-        "repository/org/commonmark/commonmark/0.22.0/commonmark-0.22.0.jar",
+        "repository/org/commonmark/commonmark/0.24.0/commonmark-0.24.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
