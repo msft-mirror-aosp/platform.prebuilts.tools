@@ -749,13 +749,6 @@ jvm_import(
 
 # managed by go/iml_to_build
 jvm_import(
-    name = "grpc-inprocess",
-    jars = ["repository/io/grpc/grpc-inprocess/1.66.0/grpc-inprocess-1.66.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
     name = "jopt-simple-4.9",
     jars = ["repository/net/sf/jopt-simple/jopt-simple/4.9/jopt-simple-4.9.jar"],
     visibility = ["//visibility:public"],
@@ -849,5 +842,19 @@ jvm_import(
         "repository/org/jetbrains/compose/ui/ui-test-junit4-desktop/1.7.1/ui-test-junit4-desktop-1.7.1.jar",
         "repository/org/jetbrains/compose/ui/ui-test-desktop/1.7.1/ui-test-desktop-1.7.1.jar",
     ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "grpc-inprocess-1.66.0",
+    jars = ["repository/io/grpc/grpc-inprocess/1.66.0/grpc-inprocess-1.66.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "protobuf-java-util-3.22.3",
+    jars = ["repository/com/google/protobuf/protobuf-java-util/3.22.3/protobuf-java-util-3.22.3.jar"],
     visibility = ["//visibility:public"],
 )
