@@ -1,0 +1,153 @@
+diff --git a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/api/standalone/StandaloneAnalysisAPISessionBuilder.kt b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/api/standalone/StandaloneAnalysisAPISessionBuilder.kt
+index 1de7e936438a..8d46bacda96a 100644
+--- a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/api/standalone/StandaloneAnalysisAPISessionBuilder.kt
++++ b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/api/standalone/StandaloneAnalysisAPISessionBuilder.kt
+@@ -13,6 +13,7 @@ import com.intellij.openapi.project.Project
+ import com.intellij.openapi.util.Disposer
+ import com.intellij.psi.PsiFile
+ import com.intellij.psi.search.GlobalSearchScope
++import org.jetbrains.kotlin.analysis.api.KaExperimentalApi
+ import org.jetbrains.kotlin.analysis.api.platform.KotlinPlatformSettings
+ import org.jetbrains.kotlin.analysis.api.platform.declarations.KotlinAnnotationsResolverFactory
+ import org.jetbrains.kotlin.analysis.api.platform.declarations.KotlinDeclarationProviderFactory
+@@ -46,7 +47,6 @@ import org.jetbrains.kotlin.analysis.api.standalone.base.services.LLStandaloneFi
+ import org.jetbrains.kotlin.analysis.low.level.api.fir.api.services.LLFirElementByPsiElementChooser
+ import org.jetbrains.kotlin.analysis.project.structure.builder.KtModuleProviderBuilder
+ import org.jetbrains.kotlin.analysis.project.structure.builder.buildProjectStructureProvider
+-import org.jetbrains.kotlin.analysis.project.structure.impl.KaSourceModuleImpl
+ import org.jetbrains.kotlin.analysis.project.structure.impl.buildKtModuleProviderByCompilerConfiguration
+ import org.jetbrains.kotlin.analysis.project.structure.impl.getPsiFilesFromPaths
+ import org.jetbrains.kotlin.analysis.project.structure.impl.getSourceFilePaths
+@@ -197,6 +197,7 @@ public class StandaloneAnalysisAPISessionBuilder(
+         )
+     }
+ 
++    @OptIn(KaExperimentalApi::class)
+     public fun build(): StandaloneAnalysisAPISession {
+         StandaloneProjectFactory.registerServicesForProjectEnvironment(
+             kotlinCoreProjectEnvironment,
+@@ -215,8 +216,7 @@ public class StandaloneAnalysisAPISessionBuilder(
+         return StandaloneAnalysisAPISession(kotlinCoreProjectEnvironment) {
+             projectStructureProvider.allModules.mapNotNull { ktModule ->
+                 if (ktModule !is KaSourceModule) return@mapNotNull null
+-                check(ktModule is KaSourceModuleImpl)
+-                ktModule to ktModule.sourceRoots.filterIsInstance<PsiFile>()
++                ktModule to ktModule.psiRoots.filterIsInstance<PsiFile>()
+             }.toMap()
+         }
+     }
+diff --git a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KaSourceModuleImpl.kt b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KaSourceModuleImpl.kt
+index 638ce9b2dd83..167da9060f64 100644
+--- a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KaSourceModuleImpl.kt
++++ b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KaSourceModuleImpl.kt
+@@ -24,7 +24,8 @@ internal class KaSourceModuleImpl(
+     override val project: Project,
+     override val name: String,
+     override val languageVersionSettings: LanguageVersionSettings,
+-    internal val sourceRoots: List<PsiFileSystemItem>,
++    @KaExperimentalApi
++    override val psiRoots: List<PsiFileSystemItem>,
+ ) : KaSourceModule, KtModuleWithPlatform {
+     @KaExperimentalApi
+     override val stableModuleName: String? get() = name
+diff --git a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KotlinStandaloneProjectStructureProvider.kt b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KotlinStandaloneProjectStructureProvider.kt
+index 1acd0a014ea9..f12d11b3abe4 100644
+--- a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KotlinStandaloneProjectStructureProvider.kt
++++ b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/project/structure/impl/KotlinStandaloneProjectStructureProvider.kt
+@@ -9,11 +9,13 @@ import com.intellij.openapi.project.Project
+ import com.intellij.psi.PsiElement
+ import com.intellij.psi.PsiFileSystemItem
+ import com.intellij.psi.PsiJavaFile
++import org.jetbrains.kotlin.analysis.api.KaExperimentalApi
+ import org.jetbrains.kotlin.analysis.api.platform.projectStructure.asDebugString
+ import org.jetbrains.kotlin.analysis.api.projectStructure.KaBuiltinsModule
+ import org.jetbrains.kotlin.analysis.api.projectStructure.KaLibraryModule
+ import org.jetbrains.kotlin.analysis.api.projectStructure.KaModule
+ import org.jetbrains.kotlin.analysis.api.projectStructure.KaNotUnderContentRootModule
++import org.jetbrains.kotlin.analysis.api.projectStructure.KaSourceModule
+ import org.jetbrains.kotlin.analysis.api.projectStructure.allDirectDependencies
+ import org.jetbrains.kotlin.analysis.api.standalone.base.projectStructure.KotlinStaticProjectStructureProvider
+ import org.jetbrains.kotlin.analysis.api.standalone.base.projectStructure.StandaloneProjectFactory.findJvmRootsForJavaFiles
+@@ -76,9 +78,10 @@ internal class KotlinStandaloneProjectStructureProvider(
+             .filterIsInstance<KaLibraryModule>()
+     }
+ 
++    @OptIn(KaExperimentalApi::class)
+     override val allSourceFiles: List<PsiFileSystemItem> by lazy {
+         buildList {
+-            val files = allModules.mapNotNull { (it as? KaSourceModuleImpl)?.sourceRoots }.flatten()
++            val files = allModules.mapNotNull { (it as? KaSourceModule)?.psiRoots }.flatten()
+             addAll(files)
+             addAll(findJvmRootsForJavaFiles(files.filterIsInstance<PsiJavaFile>()))
+         }
+diff --git a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/projectStructure/KaModule.kt b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/projectStructure/KaModule.kt
+index 5060fd391502..e3ef0b832236 100644
+--- a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/projectStructure/KaModule.kt
++++ b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/projectStructure/KaModule.kt
+@@ -10,6 +10,7 @@ package org.jetbrains.kotlin.analysis.api.projectStructure
+ import com.intellij.openapi.project.Project
+ import com.intellij.openapi.vfs.VirtualFile
+ import com.intellij.psi.PsiFile
++import com.intellij.psi.PsiFileSystemItem
+ import com.intellij.psi.search.GlobalSearchScope
+ import org.jetbrains.kotlin.analysis.api.KaExperimentalApi
+ import org.jetbrains.kotlin.analysis.api.KaPlatformInterface
+@@ -110,6 +111,10 @@ public interface KaSourceModule : KaModule {
+      * A set of Kotlin settings, like API version, supported features and flags.
+      */
+     public val languageVersionSettings: LanguageVersionSettings
++
++    @KaExperimentalApi
++    public val psiRoots: List<PsiFileSystemItem>
++        get() = listOf()
+ }
+ 
+ /**
+diff --git a/analysis/analysis-test-framework/tests/org/jetbrains/kotlin/analysis/test/framework/projectStructure/KaSourceModuleByCompilerConfiguration.kt b/analysis/analysis-test-framework/tests/org/jetbrains/kotlin/analysis/test/framework/projectStructure/KaSourceModuleByCompilerConfiguration.kt
+index 68f9dac96f82..4aaea105299d 100644
+--- a/analysis/analysis-test-framework/tests/org/jetbrains/kotlin/analysis/test/framework/projectStructure/KaSourceModuleByCompilerConfiguration.kt
++++ b/analysis/analysis-test-framework/tests/org/jetbrains/kotlin/analysis/test/framework/projectStructure/KaSourceModuleByCompilerConfiguration.kt
+@@ -8,7 +8,9 @@ package org.jetbrains.kotlin.analysis.test.framework.projectStructure
+ import com.intellij.openapi.project.Project
+ import com.intellij.openapi.vfs.VirtualFile
+ import com.intellij.psi.PsiFile
++import com.intellij.psi.PsiFileSystemItem
+ import com.intellij.psi.search.GlobalSearchScope
++import org.jetbrains.kotlin.analysis.api.KaExperimentalApi
+ import org.jetbrains.kotlin.analysis.api.platform.projectStructure.computeTransitiveDependsOnDependencies
+ import org.jetbrains.kotlin.analysis.api.projectStructure.KaLibraryModule
+ import org.jetbrains.kotlin.analysis.api.projectStructure.KaLibrarySourceModule
+@@ -127,6 +129,10 @@ class KaSourceModuleByCompilerConfiguration(
+ 
+     override val contentScope: GlobalSearchScope =
+         GlobalSearchScope.filesScope(project, psiFiles.map { it.virtualFile })
++
++    @KaExperimentalApi
++    override val psiRoots: List<PsiFileSystemItem>
++        get() = psiFiles
+ }
+ 
+ class KaScriptModuleByCompilerConfiguration(
+diff --git a/analysis/analysis-test-framework/tests/org/jetbrains/kotlin/analysis/test/framework/projectStructure/KaSourceModuleImpl.kt b/analysis/analysis-test-framework/tests/org/jetbrains/kotlin/analysis/test/framework/projectStructure/KaSourceModuleImpl.kt
+index b0dd11f8a17a..70fed4e8cb3a 100644
+--- a/analysis/analysis-test-framework/tests/org/jetbrains/kotlin/analysis/test/framework/projectStructure/KaSourceModuleImpl.kt
++++ b/analysis/analysis-test-framework/tests/org/jetbrains/kotlin/analysis/test/framework/projectStructure/KaSourceModuleImpl.kt
+@@ -6,7 +6,9 @@
+ package org.jetbrains.kotlin.analysis.test.framework.projectStructure
+ 
+ import com.intellij.openapi.project.Project
++import com.intellij.psi.PsiFileSystemItem
+ import com.intellij.psi.search.GlobalSearchScope
++import org.jetbrains.kotlin.analysis.api.KaExperimentalApi
+ import org.jetbrains.kotlin.analysis.api.projectStructure.KaModule
+ import org.jetbrains.kotlin.analysis.api.projectStructure.KaSourceModule
+ import org.jetbrains.kotlin.config.LanguageVersionSettings
+@@ -24,4 +26,8 @@ class KaSourceModuleImpl(
+     override val directFriendDependencies: MutableList<KaModule> = mutableListOf()
+ 
+     override fun toString(): String = name
++
++    @KaExperimentalApi
++    override val psiRoots: List<PsiFileSystemItem>
++        get() = listOf()
+ }

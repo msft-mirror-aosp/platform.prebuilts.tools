@@ -1,3 +1,75 @@
+diff --git a/compiler/cli/cli-base/build.gradle.kts b/compiler/cli/cli-base/build.gradle.kts
+index 80ba1367ddf6d..2f90ca210a0da 100644
+--- a/compiler/cli/cli-base/build.gradle.kts
++++ b/compiler/cli/cli-base/build.gradle.kts
+@@ -12,7 +12,6 @@ dependencies {
+     api(project(":compiler:backend.jvm"))
+     api(project(":compiler:light-classes"))
+     api(project(":compiler:javac-wrapper"))
+-    api(project(":compiler:ir.serialization.jvm"))
+     api(project(":js:js.translator"))
+     api(project(":native:frontend.native"))
+     api(project(":wasm:wasm.frontend"))
+diff --git a/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/TopDownAnalyzerFacadeForJVM.kt b/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/TopDownAnalyzerFacadeForJVM.kt
+index 93bc8e1a00d4..271652ec25b1 100644
+--- a/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/TopDownAnalyzerFacadeForJVM.kt
++++ b/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/TopDownAnalyzerFacadeForJVM.kt
+@@ -36,12 +36,13 @@ import org.jetbrains.kotlin.incremental.components.EnumWhenTracker
+ import org.jetbrains.kotlin.incremental.components.ExpectActualTracker
+ import org.jetbrains.kotlin.incremental.components.InlineConstTracker
+ import org.jetbrains.kotlin.incremental.components.LookupTracker
+-import org.jetbrains.kotlin.ir.backend.jvm.jvmLibrariesProvidedByDefault
+ import org.jetbrains.kotlin.javac.components.JavacBasedClassFinder
+ import org.jetbrains.kotlin.javac.components.JavacBasedSourceElementFactory
+ import org.jetbrains.kotlin.javac.components.StubJavaResolverCache
+ import org.jetbrains.kotlin.konan.properties.propertyList
+ import org.jetbrains.kotlin.library.KLIB_PROPERTY_DEPENDS
++import org.jetbrains.kotlin.library.KOTLIN_JS_STDLIB_NAME
++import org.jetbrains.kotlin.library.KOTLIN_NATIVE_STDLIB_NAME
+ import org.jetbrains.kotlin.library.KotlinLibrary
+ import org.jetbrains.kotlin.library.metadata.KlibMetadataFactories
+ import org.jetbrains.kotlin.library.metadata.NullFlexibleTypeDeserializer
+@@ -341,7 +342,7 @@ private fun getModuleDescriptorByLibrary(
+ 
+     val dependencies = current.manifestProperties.propertyList(KLIB_PROPERTY_DEPENDS, escapeInQuotes = true).mapNotNull {
+         mapping[it] ?: run {
+-            assert(it in jvmLibrariesProvidedByDefault) { "Unknown library $it" }
++            assert(it == KOTLIN_NATIVE_STDLIB_NAME || it == KOTLIN_JS_STDLIB_NAME) { "Unknown library $it" }
+             null
+         }
+     }
+diff --git a/compiler/ir/serialization.jvm/src/org/jetbrains/kotlin/ir/backend/jvm/JvmLibraryResolver.kt b/compiler/ir/serialization.jvm/src/org/jetbrains/kotlin/ir/backend/jvm/JvmLibraryResolver.kt
+index bb36cdd9ceae..7d049a4782ee 100644
+--- a/compiler/ir/serialization.jvm/src/org/jetbrains/kotlin/ir/backend/jvm/JvmLibraryResolver.kt
++++ b/compiler/ir/serialization.jvm/src/org/jetbrains/kotlin/ir/backend/jvm/JvmLibraryResolver.kt
+@@ -6,17 +6,12 @@
+ package org.jetbrains.kotlin.ir.backend.jvm
+ 
+ import org.jetbrains.kotlin.konan.file.File
+-import org.jetbrains.kotlin.library.KotlinLibrary
+-import org.jetbrains.kotlin.library.KotlinLibraryProperResolverWithAttributes
+-import org.jetbrains.kotlin.library.RequiredUnresolvedLibrary
+-import org.jetbrains.kotlin.library.UnresolvedLibrary
++import org.jetbrains.kotlin.library.*
+ import org.jetbrains.kotlin.library.impl.createKotlinLibraryComponents
+ import org.jetbrains.kotlin.library.metadata.resolver.KotlinLibraryResolveResult
+ import org.jetbrains.kotlin.library.metadata.resolver.impl.libraryResolver
+ import org.jetbrains.kotlin.util.Logger
+ 
+-val jvmLibrariesProvidedByDefault = setOf("stdlib", "kotlin")
+-
+ class JvmLibraryResolver(
+     directLibs: List<String>,
+     distributionKlib: String?,
+@@ -34,7 +29,7 @@ class JvmLibraryResolver(
+ 
+     // We do not need stdlib in klib form.
+     override fun isProvidedByDefault(unresolved: UnresolvedLibrary): Boolean =
+-        unresolved.path in jvmLibrariesProvidedByDefault
++        unresolved.path == KOTLIN_NATIVE_STDLIB_NAME || unresolved.path == KOTLIN_JS_STDLIB_NAME
+ }
+ 
+ // TODO: This is a temporary set of library resolver policies for jvm compiler.
 diff --git a/compiler/fir/raw-fir/light-tree2fir/src/org/jetbrains/kotlin/fir/lightTree/converter/LightTreeRawFirDeclarationBuilder.kt b/compiler/fir/raw-fir/light-tree2fir/src/org/jetbrains/kotlin/fir/lightTree/converter/LightTreeRawFirDeclarationBuilder.kt
 index c491af8db783..272689a0caed 100644
 --- a/compiler/fir/raw-fir/light-tree2fir/src/org/jetbrains/kotlin/fir/lightTree/converter/LightTreeRawFirDeclarationBuilder.kt

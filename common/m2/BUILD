@@ -138,6 +138,17 @@ java_import(
     visibility = ["//visibility:public"],
 )
 
+filegroup(
+    name = "com.google.protobuf.protoc.3.24.4_exe",
+    srcs = select({
+        "//tools/base/bazel/platforms:macos-arm64": ["repository/com/google/protobuf/protoc/3.24.4/protoc-3.24.4-osx-aarch_64.exe"],
+        "//tools/base/bazel/platforms:macos-x86_64": ["repository/com/google/protobuf/protoc/3.24.4/protoc-3.24.4-osx-x86_64.exe"],
+        "@platforms//os:windows": ["repository/com/google/protobuf/protoc/3.24.4/protoc-3.24.4-windows-x86_64.exe"],
+        "@platforms//os:linux": ["repository/com/google/protobuf/protoc/3.24.4/protoc-3.24.4-linux-x86_64.exe"],
+    }),
+    visibility = ["//visibility:public"],
+)
+
 # managed by go/iml_to_build
 filegroup(
     name = "truth_files",
@@ -709,13 +720,6 @@ jvm_import(
 )
 
 # managed by go/iml_to_build
-jvm_import(
-    name = "commonmark-0.22.0",
-    jars = ["repository/org/commonmark/commonmark/0.22.0/commonmark-0.22.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
 filegroup(
     name = "opentest4j_files",
     srcs = ["repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar"],
@@ -787,7 +791,7 @@ jvm_import(
         "repository/org/jetbrains/jewel/jewel-markdown-extension-autolink-243/0.27.0/jewel-markdown-extension-autolink-243-0.27.0.jar",
         "repository/org/jetbrains/jewel/jewel-markdown-extension-gfm-alerts-243/0.27.0/jewel-markdown-extension-gfm-alerts-243-0.27.0.jar",
         "repository/org/jetbrains/jewel/jewel-markdown-ide-laf-bridge-styling-243/0.27.0/jewel-markdown-ide-laf-bridge-styling-243-0.27.0.jar",
-        "repository/org/commonmark/commonmark/0.22.0/commonmark-0.22.0.jar",
+        "repository/org/commonmark/commonmark/0.24.0/commonmark-0.24.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
