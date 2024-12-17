@@ -700,17 +700,6 @@ jvm_import(
     visibility = ["//visibility:public"],
 )
 
-# managed by go/iml_to_build
-filegroup(
-    name = "gradle-declarative-dsl_files",
-    # do not sort: must match IML order
-    srcs = [
-        "repository/org/gradle/gradle-declarative-dsl-core/8.9-20240529002035+0000/gradle-declarative-dsl-core-8.9-20240529002035+0000.jar",
-        "repository/org/gradle/gradle-declarative-dsl-tooling-models/8.9-20240529002035+0000/gradle-declarative-dsl-tooling-models-8.9-20240529002035+0000.jar",
-    ],
-    visibility = ["//visibility:public"],
-)
-
 jvm_import(
     name = "clikt",
     jars = [
