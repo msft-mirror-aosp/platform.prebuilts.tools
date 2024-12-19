@@ -858,3 +858,10 @@ jvm_import(
     jars = ["repository/com/google/protobuf/protobuf-java-util/3.22.3/protobuf-java-util-3.22.3.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "google-api-services-drive-v3-rev20241027-2.0.0",
+    jars = ["repository/com/google/apis/google-api-services-drive/v3-rev20241027-2.0.0/google-api-services-drive-v3-rev20241027-2.0.0.jar"],
+    visibility = ["//visibility:public"],
+)
