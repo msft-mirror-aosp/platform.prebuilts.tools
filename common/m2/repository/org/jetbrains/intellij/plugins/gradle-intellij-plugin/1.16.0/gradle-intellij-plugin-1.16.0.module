@@ -1,0 +1,309 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "org.jetbrains.intellij.plugins",
+    "module": "gradle-intellij-plugin",
+    "version": "1.16.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.2.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 11,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "gradle.plugin.org.jetbrains.gradle.plugin.idea-ext",
+          "module": "gradle-idea-ext",
+          "version": {
+            "requires": "1.1.7"
+          }
+        },
+        {
+          "group": "com.squareup.retrofit2",
+          "module": "retrofit",
+          "version": {
+            "requires": "2.9.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "gradle-intellij-plugin-1.16.0.jar",
+          "url": "gradle-intellij-plugin-1.16.0.jar",
+          "size": 915484,
+          "sha512": "83afe8e10513519f6fc21ebd9917d1b82ea455cb84352f548c7f590f1df59f660dcb05fda5b2e46ba744a60844ad8b9960f53a47244548a7cf184704a0100998",
+          "sha256": "b942cd14485e49d75fb7151892d961f83500b384180c359c8387c25a45deb5ae",
+          "sha1": "518de7c0e8276ed730a348fc545b1d716ae8936d",
+          "md5": "9cb11823f78dfbfca09f3db09eadc7ba"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 11,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains",
+          "module": "annotations",
+          "version": {
+            "requires": "24.0.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.intellij.plugins",
+          "module": "structure-base",
+          "version": {
+            "requires": "3.262"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "*"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.intellij.plugins",
+          "module": "structure-intellij",
+          "version": {
+            "requires": "3.262"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "*"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.intellij",
+          "module": "plugin-repository-rest-client",
+          "version": {
+            "requires": "2.0.38"
+          },
+          "excludes": [
+            {
+              "group": "org.slf4j",
+              "module": "*"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "*"
+            }
+          ]
+        },
+        {
+          "group": "com.fasterxml.jackson.core",
+          "module": "jackson-databind",
+          "version": {
+            "requires": "2.15.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-serialization-json",
+          "version": {
+            "requires": "1.6.0"
+          }
+        },
+        {
+          "group": "javax.xml.bind",
+          "module": "jaxb-api",
+          "version": {
+            "requires": "2.4.0-b180830.0359"
+          }
+        },
+        {
+          "group": "com.googlecode.plist",
+          "module": "dd-plist",
+          "version": {
+            "requires": "1.27"
+          }
+        },
+        {
+          "group": "gradle.plugin.org.jetbrains.gradle.plugin.idea-ext",
+          "module": "gradle-idea-ext",
+          "version": {
+            "requires": "1.1.7"
+          }
+        },
+        {
+          "group": "com.squareup.retrofit2",
+          "module": "retrofit",
+          "version": {
+            "requires": "2.9.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "gradle-intellij-plugin-1.16.0.jar",
+          "url": "gradle-intellij-plugin-1.16.0.jar",
+          "size": 915484,
+          "sha512": "83afe8e10513519f6fc21ebd9917d1b82ea455cb84352f548c7f590f1df59f660dcb05fda5b2e46ba744a60844ad8b9960f53a47244548a7cf184704a0100998",
+          "sha256": "b942cd14485e49d75fb7151892d961f83500b384180c359c8387c25a45deb5ae",
+          "sha1": "518de7c0e8276ed730a348fc545b1d716ae8936d",
+          "md5": "9cb11823f78dfbfca09f3db09eadc7ba"
+        }
+      ]
+    },
+    {
+      "name": "testFixturesApiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 11,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.intellij.plugins",
+          "module": "gradle-intellij-plugin",
+          "version": {
+            "requires": "1.16.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "gradle-intellij-plugin-1.16.0-test-fixtures.jar",
+          "url": "gradle-intellij-plugin-1.16.0-test-fixtures.jar",
+          "size": 9995,
+          "sha512": "b0607987fc1b3069e881e2cbf74342ae213ed1c173735bcee1506ed289391b86491bbcedb57d37360d795c44185efb7415dd74973ded62d186ebc8066a50481a",
+          "sha256": "c83afcf85e0503e0ba0489233d5e1784d8c7b2e6c59afb7d7761cc7a9baa3da8",
+          "sha1": "7c608c2cf90e54c5a4aeea9ff9fab435d372ff3d",
+          "md5": "30744088cc75158961072625e10e1e0f"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.intellij.plugins",
+          "name": "gradle-intellij-plugin-test-fixtures",
+          "version": "1.16.0"
+        }
+      ]
+    },
+    {
+      "name": "testFixturesRuntimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 11,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-test",
+          "version": {
+            "requires": "1.8.20"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-test-junit",
+          "version": {
+            "requires": "1.8.20"
+          }
+        },
+        {
+          "group": "org.jetbrains",
+          "module": "annotations",
+          "version": {
+            "requires": "24.0.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.intellij.plugins",
+          "module": "gradle-intellij-plugin",
+          "version": {
+            "requires": "1.16.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "gradle-intellij-plugin-1.16.0-test-fixtures.jar",
+          "url": "gradle-intellij-plugin-1.16.0-test-fixtures.jar",
+          "size": 9995,
+          "sha512": "b0607987fc1b3069e881e2cbf74342ae213ed1c173735bcee1506ed289391b86491bbcedb57d37360d795c44185efb7415dd74973ded62d186ebc8066a50481a",
+          "sha256": "c83afcf85e0503e0ba0489233d5e1784d8c7b2e6c59afb7d7761cc7a9baa3da8",
+          "sha1": "7c608c2cf90e54c5a4aeea9ff9fab435d372ff3d",
+          "md5": "30744088cc75158961072625e10e1e0f"
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.intellij.plugins",
+          "name": "gradle-intellij-plugin-test-fixtures",
+          "version": "1.16.0"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "gradle-intellij-plugin-1.16.0-javadoc.jar",
+          "url": "gradle-intellij-plugin-1.16.0-javadoc.jar",
+          "size": 2300217,
+          "sha512": "89084443c423b08a2c936dcc945ecd0e135ef90a2f205bc6e42c3cc29e7117ffb6bee9c6ddac0342f81de25c0443aa8383adefa897a7c1300cf1044371dc6d04",
+          "sha256": "5923c98db8ff16fba0df27f521a4c3ade993430713f22a886451577867ecb3b4",
+          "sha1": "a6e055859480eb085246823319bf4ed4e0384355",
+          "md5": "f9947829c4e0a90497c73f1aeb821209"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "gradle-intellij-plugin-1.16.0-sources.jar",
+          "url": "gradle-intellij-plugin-1.16.0-sources.jar",
+          "size": 124478,
+          "sha512": "5082d3462889bd71dc84adfe7287fe0410b4a68bd0add65cb89675eb511a052706d1f472502f6fdbe958f2169b64019f1c2594a47ec4340c8014a02c57e35eb1",
+          "sha256": "a9043684a5293f25a6b1ddeda44a3b2deb2d0a26912d9dcc602bcc07b6a56d98",
+          "sha1": "c72338d79e6a56c47ab2a8bc1f3eee96bb128fc9",
+          "md5": "d7cab6175fc7539a61dbc84436017346"
+        }
+      ]
+    }
+  ]
+}

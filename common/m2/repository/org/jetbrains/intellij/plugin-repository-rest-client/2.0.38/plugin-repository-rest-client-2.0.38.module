@@ -1,0 +1,175 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "org.jetbrains.intellij",
+    "module": "plugin-repository-rest-client",
+    "version": "2.0.38",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.1.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 11,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "files": [
+        {
+          "name": "plugin-repository-rest-client-2.0.38.jar",
+          "url": "plugin-repository-rest-client-2.0.38.jar",
+          "size": 133707,
+          "sha512": "0c4c214031b1af1a435763665ca52061415f3d4f5e61e75dd2f145871ce044c0c6996d86fd8986e6beb4c0e923392d2a7588a1c3a811e288ddc74a8cdf6e5944",
+          "sha256": "2e74706e43a9c1a9da79dd6ccb73012581482e8ca18163b19972b4a0ad82d152",
+          "sha1": "f3f6e142a8a7f6a9b2304bad0df3c6d2a4ff92d0",
+          "md5": "5519b8f84ff57e1c6952e7872509b990"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 11,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "software.amazon.awssdk",
+          "module": "bom",
+          "version": {
+            "requires": "2.17.188"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "1.8.21"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "1.8.21"
+          }
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-api",
+          "version": {
+            "requires": "1.7.26"
+          }
+        },
+        {
+          "group": "com.squareup.retrofit2",
+          "module": "retrofit",
+          "version": {
+            "requires": "2.9.0"
+          },
+          "excludes": [
+            {
+              "group": "*",
+              "module": "okhttp"
+            }
+          ]
+        },
+        {
+          "group": "com.squareup.retrofit2",
+          "module": "converter-jaxb",
+          "version": {
+            "requires": "2.9.0"
+          }
+        },
+        {
+          "group": "com.squareup.retrofit2",
+          "module": "converter-jackson",
+          "version": {
+            "requires": "2.9.0"
+          }
+        },
+        {
+          "group": "com.fasterxml.jackson.core",
+          "module": "jackson-databind",
+          "version": {
+            "requires": "2.13.5"
+          }
+        },
+        {
+          "group": "com.squareup.okhttp3",
+          "module": "okhttp",
+          "version": {
+            "requires": "4.4.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-reflect",
+          "version": {
+            "requires": "1.8.21"
+          },
+          "reason": "otherwise `jackson-module-kotlin` would bring kotlin-reflect:1.4.21"
+        },
+        {
+          "group": "com.fasterxml.jackson.module",
+          "module": "jackson-module-kotlin",
+          "version": {
+            "requires": "2.13.5"
+          }
+        },
+        {
+          "group": "com.sun.xml.bind",
+          "module": "jaxb-impl",
+          "version": {
+            "requires": "2.3.2"
+          }
+        },
+        {
+          "group": "com.sun.xml.bind",
+          "module": "jaxb-core",
+          "version": {
+            "requires": "2.3.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.intellij",
+          "module": "blockmap",
+          "version": {
+            "requires": "1.0.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "plugin-repository-rest-client-2.0.38.jar",
+          "url": "plugin-repository-rest-client-2.0.38.jar",
+          "size": 133707,
+          "sha512": "0c4c214031b1af1a435763665ca52061415f3d4f5e61e75dd2f145871ce044c0c6996d86fd8986e6beb4c0e923392d2a7588a1c3a811e288ddc74a8cdf6e5944",
+          "sha256": "2e74706e43a9c1a9da79dd6ccb73012581482e8ca18163b19972b4a0ad82d152",
+          "sha1": "f3f6e142a8a7f6a9b2304bad0df3c6d2a4ff92d0",
+          "md5": "5519b8f84ff57e1c6952e7872509b990"
+        }
+      ]
+    }
+  ]
+}

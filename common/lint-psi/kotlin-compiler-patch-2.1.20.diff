@@ -1,3 +1,24 @@
+diff --git a/analysis/analysis-api/testData/components/typeProvider/typeReference/catchParameterType_typealias.txt b/analysis/analysis-api/testData/components/typeProvider/typeReference/catchParameterType_typealias.txt
+new file mode 100644
+index 000000000000..3ee4943daace
+--- /dev/null
++++ b/analysis/analysis-api/testData/components/typeProvider/typeReference/catchParameterType_typealias.txt
+@@ -0,0 +1,2 @@
++KtTypeReference: MyUnknownException
++KaType: Unknown: Symbol not found for Unknown
+diff --git a/analysis/low-level-api-fir/src/org/jetbrains/kotlin/analysis/low/level/api/fir/file/structure/FirElementsRecorder.kt b/analysis/low-level-api-fir/src/org/jetbrains/kotlin/analysis/low/level/api/fir/file/structure/FirElementsRecorder.kt
+index 3657e92f6b55..aa16ab9bb40b 100644
+--- a/analysis/low-level-api-fir/src/org/jetbrains/kotlin/analysis/low/level/api/fir/file/structure/FirElementsRecorder.kt
++++ b/analysis/low-level-api-fir/src/org/jetbrains/kotlin/analysis/low/level/api/fir/file/structure/FirElementsRecorder.kt
+@@ -123,6 +123,8 @@ internal open class FirElementsRecorder : FirVisitor<Unit, MutableMap<KtElement,
+                 it is KtRealPsiSourceElement ||
+                         it.kind == KtFakeSourceElementKind.ReferenceInAtomicQualifiedAccess ||
+                         it.kind == KtFakeSourceElementKind.FromUseSiteTarget ||
++                        // To allow type retrieval from erroneous typealias even though it is erroneous
++                        it.kind == KtFakeSourceElementKind.ErroneousTypealiasExpansion ||
+                         // For secondary constructors without explicit delegated constructor call, the PSI tree always create an empty
+                         // KtConstructorDelegationCall. In this case, the source in FIR has this fake source kind.
+                         it.kind == KtFakeSourceElementKind.ImplicitConstructor ||
 diff --git a/compiler/cli/cli-base/build.gradle.kts b/compiler/cli/cli-base/build.gradle.kts
 index 80ba1367ddf6d..2f90ca210a0da 100644
 --- a/compiler/cli/cli-base/build.gradle.kts
