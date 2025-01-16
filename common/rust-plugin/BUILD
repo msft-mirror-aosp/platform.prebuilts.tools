@@ -4,6 +4,7 @@ load("//tools/base/bazel:jvm_import.bzl", "jvm_import")
 intellij_plugin_import(
     name = "rust-plugin",
     files = glob(["intellij-rust/**"]),
+    id = "org.rust.lang",
     strip_prefix = "prebuilts/tools/common/rust-plugin/intellij-rust/",
     target_dir = "intellij-rust",
     visibility = ["//visibility:public"],

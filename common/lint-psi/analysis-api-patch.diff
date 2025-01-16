@@ -1,3 +1,18 @@
+diff --git a/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/SymbolKotlinAsJavaSupport.kt b/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/SymbolKotlinAsJavaSupport.kt
+index 70b042465dc37..e68118232a2c4 100644
+--- a/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/SymbolKotlinAsJavaSupport.kt
++++ b/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/SymbolKotlinAsJavaSupport.kt
+@@ -68,8 +68,8 @@ fun <T> withMultiplatformLightClassSupport(block: () -> T): T {
+         return block()
+     }
+ 
+-    require(ApplicationManager.getApplication().isReadAccessAllowed) { "The method can only run inside a read action" }
+-    require(!ApplicationManager.getApplication().isWriteAccessAllowed) { "The method cannot be run inside a write action" }
++    // require(ApplicationManager.getApplication().isReadAccessAllowed) { "The method can only run inside a read action" }
++    // require(!ApplicationManager.getApplication().isWriteAccessAllowed) { "The method cannot be run inside a write action" }
+ 
+     try {
+         KMP_CACHE.set(WeakHashMap())
 diff --git a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/api/standalone/StandaloneAnalysisAPISessionBuilder.kt b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/api/standalone/StandaloneAnalysisAPISessionBuilder.kt
 index 38cbb45f8a77a..ff5446f89efd1 100644
 --- a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/api/standalone/StandaloneAnalysisAPISessionBuilder.kt
