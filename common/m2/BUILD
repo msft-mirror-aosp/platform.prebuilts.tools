@@ -859,6 +859,18 @@ jvm_import(
     visibility = ["//visibility:public"],
 )
 
+java_import(
+    name = "com.google.protobuf.protobuf-java-util.3.25.5",
+    jars = ["repository/com/google/protobuf/protobuf-java-util/3.25.5/protobuf-java-util-3.25.5.jar"],
+    visibility = ["//visibility:public"],
+)
+
+java_import(
+    name = "com.google.protobuf.protobuf-java.3.25.5",
+    jars = ["repository/com/google/protobuf/protobuf-java/3.25.5/protobuf-java-3.25.5.jar"],
+    visibility = ["//visibility:public"],
+)
+
 # managed by go/iml_to_build
 jvm_import(
     name = "google-api-services-drive-v3-rev20241027-2.0.0",
