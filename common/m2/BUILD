@@ -38,8 +38,8 @@ java_import(
 )
 
 java_import(
-    name = "io.grpc.grpc-api.1.57.0",
-    jars = ["repository/io/grpc/grpc-api/1.57.0/grpc-api-1.57.0.jar"],
+    name = "io.grpc.grpc-api.1.69.1",
+    jars = ["repository/io/grpc/grpc-api/1.69.1/grpc-api-1.69.1.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -52,7 +52,7 @@ filegroup(
     name = "io.grpc.protoc-gen-grpc-java.1.57.0_exe",
     srcs = select({
         "//tools/base/bazel/platforms:macos-arm64": ["repository/io/grpc/protoc-gen-grpc-java/1.57.0/protoc-gen-grpc-java-1.57.0-osx-aarch_64.exe"],
-        "//tools/base/bazel/platforms:macos-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.57.0/protoc-gen-grpc-java-1.57.0-osx-x86_64.exe"],
+        "//tools/base/bazel/platforms:macos-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.69.1/protoc-gen-grpc-java-1.57.0-osx-x86_64.exe"],
         "@platforms//os:windows": ["repository/io/grpc/protoc-gen-grpc-java/1.57.0/protoc-gen-grpc-java-1.57.0-windows-x86_64.exe"],
         "@platforms//os:linux": ["repository/io/grpc/protoc-gen-grpc-java/1.57.0/protoc-gen-grpc-java-1.57.0-linux-x86_64.exe"],
     }),
@@ -836,8 +836,8 @@ jvm_import(
 
 # managed by go/iml_to_build
 jvm_import(
-    name = "grpc-inprocess-1.66.0",
-    jars = ["repository/io/grpc/grpc-inprocess/1.66.0/grpc-inprocess-1.66.0.jar"],
+    name = "grpc-inprocess-1.69.1",
+    jars = ["repository/io/grpc/grpc-inprocess/1.69.1/grpc-inprocess-1.69.1.jar"],
     visibility = ["//visibility:public"],
 )
 
