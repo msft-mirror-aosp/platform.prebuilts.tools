@@ -1,3 +1,4 @@
+load("@rules_android//rules:rules.bzl", "aar_import")
 load("//tools/adt/idea/studio:studio.bzl", "studio_data")
 load("//tools/base/bazel:jvm_import.bzl", "jvm_import")
 load("//tools/base/bazel:merge_archives.bzl", "merge_jars")
@@ -99,12 +100,9 @@ jvm_import(
     visibility = ["//visibility:public"],
 )
 
-aar_import(
-    name = "androidx.inspection.inspection.1.0.0",
-    aar = "repository/androidx/inspection/inspection/1.0.0/inspection-1.0.0.aar",
-    visibility = ["//visibility:public"],
-)
-
+# ImportDepsChecker was disabled for this target with a patch to rules_android in
+# tools/base/bazel/toplevel.MODULE.bazel. For details, see b/405144196 and
+# https://github.com/bazelbuild/rules_android/issues/332
 aar_import(
     name = "androidx-monitor",
     aar = "repository/androidx/test/monitor/1.6.1/monitor-1.6.1.aar",
@@ -112,15 +110,31 @@ aar_import(
 )
 
 aar_import(
+    name = "androidx.inspection.inspection.1.0.0",
+    aar = "repository/androidx/inspection/inspection/1.0.0/inspection-1.0.0.aar",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@maven//:androidx.annotation.annotation",
+    ],
+)
+
+aar_import(
     name = "androidx-sqlite-2.5.0-beta01",
     aar = "repository/androidx/sqlite/sqlite-android/2.5.0-beta01/sqlite-android-2.5.0-beta01.aar",
     visibility = ["//visibility:public"],
+    deps = [
+        "@maven//:androidx.annotation.annotation",
+        "@maven//:org.jetbrains.kotlin.kotlin-stdlib",
+    ],
 )
 
 aar_import(
     name = "androidx-sqlite-bundled-2.5.0-beta01",
     aar = "repository/androidx/sqlite/sqlite-bundled-android/2.5.0-beta01/sqlite-bundled-android-2.5.0-beta01.aar",
     visibility = ["//visibility:public"],
+    deps = [
+        ":androidx-sqlite-2.5.0-beta01",
+    ],
 )
 
 java_import(
