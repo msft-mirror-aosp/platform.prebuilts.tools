@@ -700,17 +700,6 @@ jvm_import(
     visibility = ["//visibility:public"],
 )
 
-# managed by go/iml_to_build
-filegroup(
-    name = "gradle-declarative-dsl_files",
-    # do not sort: must match IML order
-    srcs = [
-        "repository/org/gradle/gradle-declarative-dsl-core/8.9-20240529002035+0000/gradle-declarative-dsl-core-8.9-20240529002035+0000.jar",
-        "repository/org/gradle/gradle-declarative-dsl-tooling-models/8.9-20240529002035+0000/gradle-declarative-dsl-tooling-models-8.9-20240529002035+0000.jar",
-    ],
-    visibility = ["//visibility:public"],
-)
-
 jvm_import(
     name = "clikt",
     jars = [
@@ -856,5 +845,24 @@ jvm_import(
 jvm_import(
     name = "protobuf-java-util-3.22.3",
     jars = ["repository/com/google/protobuf/protobuf-java-util/3.22.3/protobuf-java-util-3.22.3.jar"],
+    visibility = ["//visibility:public"],
+)
+
+java_import(
+    name = "com.google.protobuf.protobuf-java-util.3.25.5",
+    jars = ["repository/com/google/protobuf/protobuf-java-util/3.25.5/protobuf-java-util-3.25.5.jar"],
+    visibility = ["//visibility:public"],
+)
+
+java_import(
+    name = "com.google.protobuf.protobuf-java.3.25.5",
+    jars = ["repository/com/google/protobuf/protobuf-java/3.25.5/protobuf-java-3.25.5.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "google-api-services-drive-v3-rev20241027-2.0.0",
+    jars = ["repository/com/google/apis/google-api-services-drive/v3-rev20241027-2.0.0/google-api-services-drive-v3-rev20241027-2.0.0.jar"],
     visibility = ["//visibility:public"],
 )
