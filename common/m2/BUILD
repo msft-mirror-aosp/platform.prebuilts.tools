@@ -52,7 +52,7 @@ filegroup(
     name = "io.grpc.protoc-gen-grpc-java.1.57.0_exe",
     srcs = select({
         "//tools/base/bazel/platforms:macos-arm64": ["repository/io/grpc/protoc-gen-grpc-java/1.57.0/protoc-gen-grpc-java-1.57.0-osx-aarch_64.exe"],
-        "//tools/base/bazel/platforms:macos-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.69.1/protoc-gen-grpc-java-1.57.0-osx-x86_64.exe"],
+        "//tools/base/bazel/platforms:macos-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.57.0/protoc-gen-grpc-java-1.57.0-osx-x86_64.exe"],
         "@platforms//os:windows": ["repository/io/grpc/protoc-gen-grpc-java/1.57.0/protoc-gen-grpc-java-1.57.0-windows-x86_64.exe"],
         "@platforms//os:linux": ["repository/io/grpc/protoc-gen-grpc-java/1.57.0/protoc-gen-grpc-java-1.57.0-linux-x86_64.exe"],
     }),
