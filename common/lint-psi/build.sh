@@ -8,10 +8,10 @@ set -eu
 # For the IntelliJ version, see tools/idea/build.txt.
 # For the Kotlin version, see tools/idea/.idea/libraries/kotlinc_*.xml.
 # The git SHAs must also be updated to match the versions specified.
-export INTELLIJ_VERSION="243.21565.23"
-export KOTLIN_VERSION="2.1.0"
-export INTELLIJ_SHA="abdffa318aa3781044a9087d1e6bcc66b7fe0976" # Oct 29, 2024, 243.21565.23
-export KOTLIN_SHA="5dd9cea66ee526f0251c9b1d2543229202622f6b" # Nov 25, 2024, 2.1.0
+export INTELLIJ_VERSION="243.23654.189"
+export KOTLIN_VERSION="2.1.20-Beta2"
+export INTELLIJ_SHA="b5468f52954eba521835401a602350cc89e4d1c8" # Jan 28, 2025, 243.23654.189
+export KOTLIN_SHA="92e78de5e689f0028c698c8456cfc6eca7ed2740" # Jan 29, 2025, 2.1.20-Beta2
 
 export CLEAN_BUILD="${CLEAN_BUILD:-false}"
 
@@ -59,9 +59,8 @@ fi
 phase "Applying patches if needed"
 if [[ ! "${CUSTOM_KOTLIN_DIR:-}" ]]; then
     git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/kotlin-compiler-patch.diff"
-    git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/kotlin-compiler-patch-2.1.20.diff"
     git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/analysis-api-patch.diff"
-    git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/analysis-api-patch-2.1.20.diff"
+    git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/analysis-api-patch-compat.diff"
 fi
 if [[ ! "${CUSTOM_INTELLIJ_DIR:-}" ]]; then
     git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/uast-patch.diff"

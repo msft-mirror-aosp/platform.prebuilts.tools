@@ -8,8 +8,7 @@ plugins {
     kotlin("jvm") version "2.0.0" // Aim to match the Kotlin version below.
 }
 
-// TODO: go back to release version
-val intellijVersion = "${getEnvOrError("INTELLIJ_VERSION")}-EAP-SNAPSHOT"
+val intellijVersion = getEnvOrError("INTELLIJ_VERSION")
 val kotlinVersion = getEnvOrError("KOTLIN_VERSION")
 val intellijDir = getEnvOrError("INTELLIJ_DIR")
 val kotlinDir = getEnvOrError("KOTLIN_DIR")
@@ -78,10 +77,10 @@ dependencies {
     "kotlin-compiler-content"("org.jetbrains.kotlin:analysis-api-platform-interface-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:analysis-api-standalone-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlinx:kotlinx-collections-immutable-jvm:0.3.4")
-    "kotlin-compiler-content"("org.jetbrains.kotlin:high-level-api-fe10-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
-    "kotlin-compiler-content"("org.jetbrains.kotlin:high-level-api-fir-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
-    "kotlin-compiler-content"("org.jetbrains.kotlin:high-level-api-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
-    "kotlin-compiler-content"("org.jetbrains.kotlin:high-level-api-impl-base-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
+    "kotlin-compiler-content"("org.jetbrains.kotlin:analysis-api-fe10-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
+    "kotlin-compiler-content"("org.jetbrains.kotlin:analysis-api-k2-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
+    "kotlin-compiler-content"("org.jetbrains.kotlin:analysis-api-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
+    "kotlin-compiler-content"("org.jetbrains.kotlin:analysis-api-impl-base-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:low-level-api-fir-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:symbol-light-classes-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
 
@@ -229,7 +228,7 @@ fun getEnvOrError(name: String): String {
 repositories {
     maven("https://cache-redirector.jetbrains.com/repo1.maven.org/maven2") // Substitute for mavenCentral().
     maven("https://www.jetbrains.com/intellij-repository/releases")
-    maven("https://www.jetbrains.com/intellij-repository/snapshots")
+    // maven("https://www.jetbrains.com/intellij-repository/snapshots")
     maven("https://cache-redirector.jetbrains.com/intellij-dependencies")
     maven("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/kotlin-ide-plugin-dependencies")
     maven("$kotlinDir/build/repo")
