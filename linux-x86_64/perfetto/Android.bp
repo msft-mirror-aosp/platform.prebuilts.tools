@@ -22,6 +22,7 @@ filegroup {
     srcs: [
         ":heap_profile",
         "trace_processor_shell",
+        "configs/trace_config_oom.textproto",
         "configs/trace_config_detailed.textproto",
         "configs/trace_config_multi_user_cuj_tests.textproto",
         "configs/trace_config_detailed_heapdump.textproto",
@@ -93,4 +94,9 @@ prebuilt_etc {
 prebuilt_etc {
     name: "trace_config_adservices.textproto",
     src: "configs/trace_config_adservices.textproto",
+}
+
+prebuilt_etc {
+    name: "trace_config_oom.textproto",
+    src: "configs/trace_config_oom.textproto",
 }
