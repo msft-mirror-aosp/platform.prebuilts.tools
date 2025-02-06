@@ -38,8 +38,8 @@ java_import(
 )
 
 java_import(
-    name = "io.grpc.grpc-api.1.57.0",
-    jars = ["repository/io/grpc/grpc-api/1.57.0/grpc-api-1.57.0.jar"],
+    name = "io.grpc.grpc-api.1.69.1",
+    jars = ["repository/io/grpc/grpc-api/1.69.1/grpc-api-1.69.1.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -836,8 +836,8 @@ jvm_import(
 
 # managed by go/iml_to_build
 jvm_import(
-    name = "grpc-inprocess-1.66.0",
-    jars = ["repository/io/grpc/grpc-inprocess/1.66.0/grpc-inprocess-1.66.0.jar"],
+    name = "grpc-inprocess-1.69.1",
+    jars = ["repository/io/grpc/grpc-inprocess/1.69.1/grpc-inprocess-1.69.1.jar"],
     visibility = ["//visibility:public"],
 )
 
