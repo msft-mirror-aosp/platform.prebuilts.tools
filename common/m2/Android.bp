@@ -369,6 +369,16 @@ java_library_static {
     sdk_version: "current",
 }
 
+java_library_static {
+    name: "inline-mockito5-robolectric-prebuilt",
+    static_libs: [
+        "byte-buddy-prebuilt-jar",
+        "mockito5-prebuilt-jar",
+        "objenesis",
+    ],
+    sdk_version: "current",
+}
+
 license {
     name: "m2_clikt_license",
     visibility: [":__subpackages__"],
