@@ -1,0 +1,202 @@
+diff --git a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/calls/KaCall.kt b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/calls/KaCall.kt
+new file mode 100644
+index 000000000000..78f34ed70469
+--- /dev/null
++++ b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/calls/KaCall.kt
+@@ -0,0 +1,76 @@
++/*
++ * Copyright 2010-2024 JetBrains s.r.o. and Kotlin Programming Language contributors.
++ * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
++ */
++package org.jetbrains.kotlin.analysis.api.calls
++
++import org.jetbrains.kotlin.analysis.api.resolution.*
++import org.jetbrains.kotlin.analysis.api.signatures.KaCallableSignature
++import org.jetbrains.kotlin.analysis.api.symbols.KaCallableSymbol
++import org.jetbrains.kotlin.analysis.api.symbols.KaConstructorSymbol
++
++@Deprecated(
++    "The API has been moved into `org.jetbrains.kotlin.analysis.api.resolution` package",
++    level = DeprecationLevel.HIDDEN,
++)
++public val KaCallInfo.calls: List<KaCall> get() = calls
++
++@Deprecated(
++    "The API has been moved into `org.jetbrains.kotlin.analysis.api.resolution` package",
++    level = DeprecationLevel.HIDDEN,
++)
++public inline fun <reified T : KaCall> KaCallInfo.singleCallOrNull(): T? = singleCallOrNull()
++
++@Deprecated(
++    "The API has been moved into `org.jetbrains.kotlin.analysis.api.resolution` package",
++    level = DeprecationLevel.HIDDEN,
++)
++public fun KaCallInfo.singleFunctionCallOrNull(): KaFunctionCall<*>? = singleFunctionCallOrNull()
++
++@Deprecated(
++    "The API has been moved into `org.jetbrains.kotlin.analysis.api.resolution` package",
++    level = DeprecationLevel.HIDDEN,
++)
++public fun KaCallInfo.singleVariableAccessCall(): KaVariableAccessCall? = singleVariableAccessCall()
++
++@Deprecated(
++    "The API has been moved into `org.jetbrains.kotlin.analysis.api.resolution` package",
++    level = DeprecationLevel.HIDDEN,
++)
++public fun KaCallInfo.singleConstructorCallOrNull(): KaFunctionCall<KaConstructorSymbol>? = singleConstructorCallOrNull()
++
++@Deprecated(
++    "The API has been moved into `org.jetbrains.kotlin.analysis.api.resolution` package",
++    level = DeprecationLevel.HIDDEN,
++)
++public inline fun <reified T : KaCall> KaCallInfo.successfulCallOrNull(): T? = successfulCallOrNull()
++
++@Deprecated(
++    "The API has been moved into `org.jetbrains.kotlin.analysis.api.resolution` package",
++    level = DeprecationLevel.HIDDEN,
++)
++public fun KaCallInfo.successfulFunctionCallOrNull(): KaFunctionCall<*>? = successfulFunctionCallOrNull()
++
++@Deprecated(
++    "The API has been moved into `org.jetbrains.kotlin.analysis.api.resolution` package",
++    level = DeprecationLevel.HIDDEN,
++)
++public fun KaCallInfo.successfulVariableAccessCall(): KaVariableAccessCall? = successfulVariableAccessCall()
++
++@Deprecated(
++    "The API has been moved into `org.jetbrains.kotlin.analysis.api.resolution` package",
++    level = DeprecationLevel.HIDDEN,
++)
++public fun KaCallInfo.successfulConstructorCallOrNull(): KaFunctionCall<KaConstructorSymbol>? = successfulConstructorCallOrNull()
++
++@Deprecated(
++    "The API has been moved into `org.jetbrains.kotlin.analysis.api.resolution` package",
++    level = DeprecationLevel.HIDDEN,
++)
++public val <S : KaCallableSymbol, C : KaCallableSignature<S>> KaPartiallyAppliedSymbol<S, C>.symbol: S get() = symbol
++
++@Deprecated(
++    "The API has been moved into `org.jetbrains.kotlin.analysis.api.resolution` package",
++    level = DeprecationLevel.HIDDEN,
++)
++public val <S : KaCallableSymbol, C : KaCallableSignature<S>> KaCallableMemberCall<S, C>.symbol: S get() = symbol
+diff --git a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotated.kt b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotated.kt
+index 23d0e41dd9a6..0a66ffeb9f0e 100644
+--- a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotated.kt
++++ b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotated.kt
+@@ -5,6 +5,8 @@
+ 
+ package org.jetbrains.kotlin.analysis.api.annotations
+ 
++import org.jetbrains.kotlin.name.ClassId
++
+ /**
+  * [KaAnnotated] represents an entity which may have annotations applied to it. All [types][org.jetbrains.kotlin.analysis.api.types.KaType]s
+  * and almost all [symbols][org.jetbrains.kotlin.analysis.api.symbols.KaSymbol] can have annotations.
+@@ -15,3 +17,30 @@ public interface KaAnnotated {
+      */
+     public val annotations: KaAnnotationList
+ }
++
++/**
++ * Checks if entity has annotation with specified [classId].
++ *
++ * @see [KaAnnotationList.contains]
++ */
++@Deprecated("Use 'annotations' instead.", replaceWith = ReplaceWith("classId in annotations"))
++public fun KaAnnotated.hasAnnotation(classId: ClassId): Boolean {
++    return annotations.contains(classId)
++}
++/**
++ * A list of annotations applied with specified [classId].
++ *
++ * @see [KaAnnotationList.classIds]
++ */
++@Deprecated("Use 'annotations' instead.", replaceWith = ReplaceWith("annotations[classId]"))
++public fun KaAnnotated.annotationsByClassId(classId: ClassId): List<KaAnnotation> {
++    return annotations[classId]
++}
++/**
++ * A list of annotations applied.
++ *
++ * @see [KaAnnotationList.classIds]
++ */
++@Deprecated("Use 'annotations' instead.", replaceWith = ReplaceWith("annotations.classIds"))
++public val KaAnnotated.annotationClassIds: Collection<ClassId>
++    get() = annotations.classIds
+diff --git a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotation.kt b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotation.kt
+index 64e57d01bd67..9f1840e65dc2 100644
+--- a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotation.kt
++++ b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotation.kt
+@@ -51,6 +51,19 @@ public interface KaAnnotation : KaLifetimeOwner {
+      */
+     public val useSiteTarget: AnnotationUseSiteTarget?
+ 
++   /**
++     * This property can be used to optimize some argument processing logic.
++     * For example, if you have [KaAnnotationApplicationInfo] from [KaAnnotated.annotationInfos] and [hasArguments] is **false**,
++     * then you can avoid [KaAnnotated.annotationsByClassId] call,
++     * because effectively you already have all necessary information in [KaAnnotationApplicationInfo]
++     */
++    @Deprecated("Use 'arguments.isNotEmpty()' instead.", replaceWith = ReplaceWith("arguments.isNotEmpty()"))
++    public val hasArguments: Boolean
++        get() = arguments.isNotEmpty()
++    @Deprecated("Use 'arguments.isNotEmpty()' instead.", replaceWith = ReplaceWith("arguments.isNotEmpty()"))
++    public val isCallWithArguments: Boolean
++        get() = arguments.isNotEmpty()
++
+     /**
+      * The list of annotation arguments passed to the [annotation constructor](https://kotlinlang.org/docs/annotations.html#constructors) in
+      * the form of [KaNamedAnnotationValue]s.
+diff --git a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/components/KaTypeProvider.kt b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/components/KaTypeProvider.kt
+index a3fbd5f56236..064e85479aa4 100644
+--- a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/components/KaTypeProvider.kt
++++ b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/components/KaTypeProvider.kt
+@@ -122,6 +122,11 @@ public interface KaTypeProvider : KaSessionComponent {
+     public val Array<KaType>.commonSupertype: KaType
+         get() = asList().commonSupertype
+ 
++    @Deprecated("Use 'commonSupertype' instead.", replaceWith = ReplaceWith("types.commonSupertype"))
++    public fun commonSuperType(types: Collection<KaType>): KaType? {
++        return if (types.isEmpty()) null else types.commonSupertype
++    }
++
+     /**
+      * Resolves the given [KtTypeReference] to its corresponding [KaType].
+      *
+diff --git a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/symbols/KaSymbolProvider.kt b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/symbols/KaSymbolProvider.kt
+index bd8225a01ba7..0dcdd0f9a1da 100644
+--- a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/symbols/KaSymbolProvider.kt
++++ b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/symbols/KaSymbolProvider.kt
+@@ -72,6 +72,13 @@ public interface KaSymbolProvider : KaSessionComponent {
+      */
+     public val KtEnumEntry.symbol: KaEnumEntrySymbol
+ 
++    @Deprecated("This API is unsafe. Use 'symbol' instead", replaceWith = ReplaceWith("symbol as KaAnonymousFunctionSymbol"))
++    public val KtNamedFunction.anonymousSymbol: KaAnonymousFunctionSymbol
++        get() = symbol as KaAnonymousFunctionSymbol
++
++    @Deprecated("Use 'symbol' instead", replaceWith = ReplaceWith("symbol as KaAnonymousFunctionSymbol"))
++    public fun KtNamedFunction.getAnonymousFunctionSymbol(): KaAnonymousFunctionSymbol = symbol as KaAnonymousFunctionSymbol
++
+     /**
+      * A [KaAnonymousFunctionSymbol] for the given [KtFunctionLiteral].
+      */
+diff --git a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/types/typeUtils.kt b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/types/typeUtils.kt
+index bc7f38253fd0..36784cddbd47 100644
+--- a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/types/typeUtils.kt
++++ b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/types/typeUtils.kt
+@@ -13,6 +13,13 @@ import org.jetbrains.kotlin.analysis.api.symbols.KaClassLikeSymbol
+ public val KaType.symbol: KaClassLikeSymbol?
+     get() = (this as? KaClassType)?.symbol
+ 
++/**
++ * Returns a [KaClassLikeSymbol] for this [KtType] if the type represents a uniquely resolvable class/object/type alias.
++ */
++@Deprecated("Use 'symbol' instead.", ReplaceWith("this.symbol"))
++public val KaType.classSymbol: KaClassLikeSymbol?
++    get() = symbol
++
+ /**
+  * Returns the [KaType]'s [abbreviated type][KaType.abbreviation], or the type itself if it doesn't have an abbreviated type.
+  *

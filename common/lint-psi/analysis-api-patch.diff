@@ -14,41 +14,41 @@ index 70b042465dc37..e68118232a2c4 100644
      try {
          KMP_CACHE.set(WeakHashMap())
 diff --git a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/api/standalone/StandaloneAnalysisAPISessionBuilder.kt b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/api/standalone/StandaloneAnalysisAPISessionBuilder.kt
-index 38cbb45f8a77a..ff5446f89efd1 100644
+index 9e1745fe471..401c98f0e55 100644
 --- a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/api/standalone/StandaloneAnalysisAPISessionBuilder.kt
 +++ b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/api/standalone/StandaloneAnalysisAPISessionBuilder.kt
-@@ -64,6 +64,7 @@ import kotlin.contracts.contract
+@@ -67,6 +67,7 @@ import kotlin.contracts.contract
  public class StandaloneAnalysisAPISessionBuilder(
      projectDisposable: Disposable,
      unitTestMode: Boolean,
 +    compilerConfiguration: CompilerConfiguration = CompilerConfiguration(),
-     classLoader: ClassLoader = MockProject::class.java.classLoader
  ) {
      init {
-@@ -79,6 +80,7 @@ public class StandaloneAnalysisAPISessionBuilder(
+         // We depend on swing (indirectly through PSI or something), so we want to declare headless mode,
+@@ -81,6 +82,7 @@ public class StandaloneAnalysisAPISessionBuilder(
          StandaloneProjectFactory.createProjectEnvironment(
              projectDisposable,
              KotlinCoreApplicationEnvironmentMode.fromUnitTestModeFlag(unitTestMode),
 +            compilerConfiguration,
-             classLoader = classLoader
          )
  
-@@ -251,6 +253,7 @@ internal object StandaloneSessionServiceRegistrar : AnalysisApiSimpleServiceRegi
+     private val serviceRegistrars = listOf(FirStandaloneServiceRegistrar, StandaloneSessionServiceRegistrar)
+@@ -246,6 +248,7 @@ internal object StandaloneSessionServiceRegistrar : AnalysisApiSimpleServiceRegi
  public inline fun buildStandaloneAnalysisAPISession(
      projectDisposable: Disposable = Disposer.newDisposable("StandaloneAnalysisAPISession.project"),
      unitTestMode: Boolean = false,
 +    compilerConfiguration: CompilerConfiguration = CompilerConfiguration(),
-     classLoader: ClassLoader = MockProject::class.java.classLoader,
      init: StandaloneAnalysisAPISessionBuilder.() -> Unit,
  ): StandaloneAnalysisAPISession {
-@@ -260,6 +263,7 @@ public inline fun buildStandaloneAnalysisAPISession(
+     contract {
+@@ -254,6 +257,7 @@ public inline fun buildStandaloneAnalysisAPISession(
      return StandaloneAnalysisAPISessionBuilder(
          projectDisposable,
          unitTestMode,
 +        compilerConfiguration,
-         classLoader
      ).apply(init).build()
  }
+ 
 diff --git a/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/annotations/symbolAnnotationsUtils.kt b/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/annotations/symbolAnnotationsUtils.kt
 index 94f86190f7543..1ac1f4d8ebd9c 100644
 --- a/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/annotations/symbolAnnotationsUtils.kt
@@ -101,3 +101,17 @@ index 1dfbffba1173e..4550e4a81a930 100644
      private val useSiteModule: KaSourceModule? = null
  ) : AnalysisHandlerExtension {
      internal companion object {
+diff --git a/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/declarations/KotlinStandaloneDeclarationProvider.kt b/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/declarations/KotlinStandaloneDeclarationProvider.kt
+index b9901e77f84..15f48bc5343 100644
+--- a/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/declarations/KotlinStandaloneDeclarationProvider.kt
++++ b/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/declarations/KotlinStandaloneDeclarationProvider.kt
+@@ -501,7 +501,8 @@ class KotlinStandaloneDeclarationProviderFactory(
+  *
+  * **Note**: shared stubs **MUST NOT** store psi
+  */
+-internal class KotlinFakeClsStubsCache {
++// Expose to be registered at FE10UastEnvironment
++class KotlinFakeClsStubsCache {
+     private val fakeFileClsStubs = ConcurrentHashMap<String, Map<VirtualFile, KotlinFileStubImpl>>()
+     private val fakeBuiltInsClsStubs = ConcurrentHashMap<VirtualFile, KotlinFileStubImpl?>()
+
