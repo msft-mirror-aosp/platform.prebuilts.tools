@@ -44,6 +44,7 @@ filegroup {
         "configs/long_trace_config.textproto",
         "configs/long_trace_binder_config.textproto",
         "configs/trace_config_adservices.textproto",
+        "metrics-v2/memory_per_process-avg_rss_and_swap.textproto",
     ],
 }
 
@@ -110,4 +111,9 @@ prebuilt_etc {
 prebuilt_etc {
     name: "trace_config_oom.textproto",
     src: "configs/trace_config_oom.textproto",
+}
+
+prebuilt_etc {
+    name: "memory_per_process-avg_rss_and_swap.textproto",
+    src: "metrics-v2/memory_per_process-avg_rss_and_swap.textproto",
 }
