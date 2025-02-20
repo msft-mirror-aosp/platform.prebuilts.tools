@@ -64,6 +64,10 @@ dependencies {
     "intellij-core-content"("com.jetbrains.intellij.java:java-psi-impl:$intellijVersion")
     "intellij-core-content"("com.jetbrains.intellij.platform:jps-model-impl:$intellijVersion") { isTransitive = false } // Contains JavaSdkUtil.
     "intellij-core-content"("com.jetbrains.intellij.platform:project-model:$intellijVersion") // includes transitive for render-resources / previewlib/cli
+    //Dcl depends on GeneratedParserUtilBase from analysis-impl. This class imports com.intellij.lang.LanguageBraceMatching that comes from analysis artifact
+    "intellij-core-content"("com.jetbrains.intellij.platform:analysis:$intellijVersion")  { isTransitive = false }
+    "intellij-core-content"("com.jetbrains.intellij.platform:analysis-impl:$intellijVersion")  { isTransitive = false }
+
 
     "kotlin-compiler-content"("org.jetbrains.kotlin:kotlin-jps-common-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:kotlin-compiler-common-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
