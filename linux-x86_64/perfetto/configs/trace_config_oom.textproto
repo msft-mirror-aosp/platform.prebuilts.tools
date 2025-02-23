@@ -36,8 +36,19 @@ trigger_config {
     stop_delay_ms: 500
   }
 }
+
 data_sources {
   config {
     name: "android.packages_list"
+  }
+}
+
+data_sources {
+  config {
+    name: "linux.process_stats"
+    process_stats_config {
+      proc_stats_poll_ms: 600000
+      record_process_age: true
+    }
   }
 }
