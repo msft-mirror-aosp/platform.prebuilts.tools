@@ -271,6 +271,7 @@ java_import {
 
 java_import {
     name: "mockito4-prebuilt-jar",
+    host_supported: true,
     jars: ["repository/org/mockito/mockito-core/4.8.1/mockito-core-4.8.1.jar"],
     sdk_version: "current",
 }
@@ -349,6 +350,7 @@ java_import_host {
 
 java_library_static {
     name: "mockito-robolectric-prebuilt",
+    host_supported: true,
     static_libs: [
         "byte-buddy-prebuilt-jar",
         "mockito4-prebuilt-jar",
@@ -362,6 +364,16 @@ java_library_static {
     static_libs: [
         "byte-buddy-prebuilt-jar",
         "inline-mockito4-prebuilt-jar",
+        "objenesis",
+    ],
+    sdk_version: "current",
+}
+
+java_library_static {
+    name: "inline-mockito5-robolectric-prebuilt",
+    static_libs: [
+        "byte-buddy-prebuilt-jar",
+        "mockito5-prebuilt-jar",
         "objenesis",
     ],
     sdk_version: "current",
@@ -385,10 +397,21 @@ java_import {
         "repository/com/github/ajalt/clikt/clikt-jvm/3.5.3/clikt-jvm-3.5.3.jar",
         "repository/com/google/guava/guava/32.1.1-jre/guava-32.1.1-jre.jar",
         "repository/com/google/turbine/0.2.1/turbine-0.2.1.jar",
+        "repository/com/fasterxml/jackson/core/jackson-annotations/2.15.0/jackson-annotations-2.15.0.jar",
+        "repository/com/fasterxml/jackson/core/jackson-core/2.15.0/jackson-core-2.15.0.jar",
+        "repository/com/fasterxml/jackson/core/jackson-databind/2.15.0/jackson-databind-2.15.0.jar",
+        "repository/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.15.0/jackson-dataformat-xml-2.15.0.jar",
+        "repository/com/fasterxml/jackson/module/jackson-module-kotlin/2.15.0/jackson-module-kotlin-2.15.0.jar",
+        "repository/com/fasterxml/woodstox/woodstox-core/6.5.1/woodstox-core-6.5.1.jar",
         "repository/javax/xml/bind/jaxb-api/2.2.12-b140109.1041/jaxb-api-2.2.12-b140109.1041.jar",
+        "repository/org/codehaus/woodstox/stax2-api/4.2.1/stax2-api-4.2.1.jar",
         "repository/org/jetbrains/trove4j/trove4j/20160824/trove4j-20160824.jar",
         "repository/org/ow2/asm/asm/6.1.1/asm-6.1.1.jar",
         "repository/org/ow2/asm/asm-tree/6.1.1/asm-tree-6.1.1.jar",
+    ],
+    static_libs: [
+        // Needed for jackson-module-kotlin.
+        "kotlin-reflect",
     ],
     licenses: [
         "m2_clikt_license",
@@ -549,7 +572,28 @@ java_import {
 
 java_import {
     name: "kotlin-compiler-embeddable",
-    jars: ["repository/org/jetbrains/kotlin/kotlin-compiler-embeddable/1.9.23/kotlin-compiler-embeddable-1.9.23.jar"],
+    jars: ["repository/org/jetbrains/kotlin/kotlin-compiler-embeddable/2.0.21/kotlin-compiler-embeddable-2.0.21.jar"],
+    sdk_version: "current",
+    host_supported: true,
+}
+
+java_import {
+    name: "kotlin-compiler-runner",
+    jars: ["repository/org/jetbrains/kotlin/kotlin-compiler-runner/2.0.21/kotlin-compiler-runner-2.0.21.jar"],
+    sdk_version: "current",
+    host_supported: true,
+}
+
+java_import {
+    name: "kotlin-daemon-client",
+    jars: ["repository/org/jetbrains/kotlin/kotlin-daemon-client/2.0.21/kotlin-daemon-client-2.0.21.jar"],
+    sdk_version: "current",
+    host_supported: true,
+}
+
+java_import {
+    name: "kotlin-daemon-embeddable",
+    jars: ["repository/org/jetbrains/kotlin/kotlin-daemon-embeddable/2.0.21/kotlin-daemon-embeddable-2.0.21.jar"],
     sdk_version: "current",
     host_supported: true,
 }
