@@ -1,5 +1,6 @@
 load("//tools/adt/idea/studio:studio.bzl", "studio_data")
 load("//tools/base/bazel:jvm_import.bzl", "jvm_import")
+load("//tools/base/bazel:merge_archives.bzl", "merge_jars")
 
 java_import(
     name = "org.jetbrains.kotlin.kotlin-gradle-plugin.1.5.21",
@@ -803,20 +804,52 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
-# managed by go/iml_to_build
-jvm_import(
+# Up until 251, Jewel libraries depend on IDE version and merged here to be included depending on an IDE version
+merge_jars(
     name = "jewel-ide",
-    # do not sort: must match IML order
-    jars = [
-        "repository/org/jetbrains/jewel/jewel-foundation-243/0.27.0/jewel-foundation-243-0.27.0.jar",
-        "repository/org/jetbrains/jewel/jewel-ide-laf-bridge-243/0.27.0/jewel-ide-laf-bridge-243-0.27.0.jar",
-        "repository/org/jetbrains/jewel/jewel-ui-243/0.27.0/jewel-ui-243-0.27.0.jar",
-        "repository/org/jetbrains/jewel/jewel-markdown-core-243/0.27.0/jewel-markdown-core-243-0.27.0.jar",
-        "repository/org/jetbrains/jewel/jewel-markdown-extension-autolink-243/0.27.0/jewel-markdown-extension-autolink-243-0.27.0.jar",
-        "repository/org/jetbrains/jewel/jewel-markdown-extension-gfm-alerts-243/0.27.0/jewel-markdown-extension-gfm-alerts-243-0.27.0.jar",
-        "repository/org/jetbrains/jewel/jewel-markdown-ide-laf-bridge-styling-243/0.27.0/jewel-markdown-ide-laf-bridge-styling-243-0.27.0.jar",
-        "repository/org/commonmark/commonmark/0.24.0/commonmark-0.24.0.jar",
-    ],
+    out = "jewel-ide.jar",
+    jars = select({
+        "//conditions:default": [
+            "repository/org/jetbrains/jewel/jewel-foundation-243/0.27.0/jewel-foundation-243-0.27.0.jar",
+            "repository/org/jetbrains/jewel/jewel-ide-laf-bridge-243/0.27.0/jewel-ide-laf-bridge-243-0.27.0.jar",
+            "repository/org/jetbrains/jewel/jewel-ui-243/0.27.0/jewel-ui-243-0.27.0.jar",
+            "repository/org/jetbrains/jewel/jewel-markdown-core-243/0.27.0/jewel-markdown-core-243-0.27.0.jar",
+            "repository/org/jetbrains/jewel/jewel-markdown-extension-autolink-243/0.27.0/jewel-markdown-extension-autolink-243-0.27.0.jar",
+            "repository/org/jetbrains/jewel/jewel-markdown-extension-gfm-alerts-243/0.27.0/jewel-markdown-extension-gfm-alerts-243-0.27.0.jar",
+            "repository/org/jetbrains/jewel/jewel-markdown-ide-laf-bridge-styling-243/0.27.0/jewel-markdown-ide-laf-bridge-styling-243-0.27.0.jar",
+            "repository/org/commonmark/commonmark/0.24.0/commonmark-0.24.0.jar",
+        ],
+        "@intellij//:intellij_ce_2024_1": [
+            "repository/org/jetbrains/jewel/jewel-foundation-241/0.27.0/jewel-foundation-241-0.27.0.jar",
+            "repository/org/jetbrains/jewel/jewel-ide-laf-bridge-241/0.27.0/jewel-ide-laf-bridge-241-0.27.0.jar",
+            "repository/org/jetbrains/jewel/jewel-ui-241/0.27.0/jewel-ui-241-0.27.0.jar",
+            "repository/org/jetbrains/jewel/jewel-markdown-core-241/0.27.0/jewel-markdown-core-241-0.27.0.jar",
+            "repository/org/jetbrains/jewel/jewel-markdown-extension-autolink-241/0.27.0/jewel-markdown-extension-autolink-241-0.27.0.jar",
+            "repository/org/jetbrains/jewel/jewel-markdown-extension-gfm-alerts-241/0.27.0/jewel-markdown-extension-gfm-alerts-241-0.27.0.jar",
+            "repository/org/jetbrains/jewel/jewel-markdown-ide-laf-bridge-styling-241/0.27.0/jewel-markdown-ide-laf-bridge-styling-241-0.27.0.jar",
+            "repository/org/commonmark/commonmark/0.24.0/commonmark-0.24.0.jar",
+        ],
+        "@intellij//:intellij_ce_2024_2": [
+            "repository/org/jetbrains/jewel/jewel-foundation-242/0.27.0/jewel-foundation-242-0.27.0.jar",
+            "repository/org/jetbrains/jewel/jewel-ide-laf-bridge-242/0.27.0/jewel-ide-laf-bridge-242-0.27.0.jar",
+            "repository/org/jetbrains/jewel/jewel-ui-242/0.27.0/jewel-ui-242-0.27.0.jar",
+            "repository/org/jetbrains/jewel/jewel-markdown-core-242/0.27.0/jewel-markdown-core-242-0.27.0.jar",
+            "repository/org/jetbrains/jewel/jewel-markdown-extension-autolink-242/0.27.0/jewel-markdown-extension-autolink-242-0.27.0.jar",
+            "repository/org/jetbrains/jewel/jewel-markdown-extension-gfm-alerts-242/0.27.0/jewel-markdown-extension-gfm-alerts-242-0.27.0.jar",
+            "repository/org/jetbrains/jewel/jewel-markdown-ide-laf-bridge-styling-242/0.27.0/jewel-markdown-ide-laf-bridge-styling-242-0.27.0.jar",
+            "repository/org/commonmark/commonmark/0.24.0/commonmark-0.24.0.jar",
+        ],
+        "@intellij//:intellij_ce_2024_3": [
+            "repository/org/jetbrains/jewel/jewel-foundation-243/0.27.0/jewel-foundation-243-0.27.0.jar",
+            "repository/org/jetbrains/jewel/jewel-ide-laf-bridge-243/0.27.0/jewel-ide-laf-bridge-243-0.27.0.jar",
+            "repository/org/jetbrains/jewel/jewel-ui-243/0.27.0/jewel-ui-243-0.27.0.jar",
+            "repository/org/jetbrains/jewel/jewel-markdown-core-243/0.27.0/jewel-markdown-core-243-0.27.0.jar",
+            "repository/org/jetbrains/jewel/jewel-markdown-extension-autolink-243/0.27.0/jewel-markdown-extension-autolink-243-0.27.0.jar",
+            "repository/org/jetbrains/jewel/jewel-markdown-extension-gfm-alerts-243/0.27.0/jewel-markdown-extension-gfm-alerts-243-0.27.0.jar",
+            "repository/org/jetbrains/jewel/jewel-markdown-ide-laf-bridge-styling-243/0.27.0/jewel-markdown-ide-laf-bridge-styling-243-0.27.0.jar",
+            "repository/org/commonmark/commonmark/0.24.0/commonmark-0.24.0.jar",
+        ],
+    }),
     visibility = ["//visibility:public"],
 )
 
