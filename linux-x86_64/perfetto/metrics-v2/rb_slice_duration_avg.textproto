@@ -12,43 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-buffers: {
-  size_kb: 255000
-  fill_policy: DISCARD
-}
-
-data_sources: {
-  config {
-    name: "android.java_hprof.oom"
-    java_hprof_config {
-      process_cmdline: "*"
-    }
+metric_definition {
+  name: "rb_slice_duration_avg"
+  simple_slices: {
+    slice_name_glob: "rb_slice_*"
+    process_name_glob: "com.android.adservices"
   }
-}
-
-data_source_stop_timeout_ms: 100000
-
-trigger_config {
-  trigger_mode: START_TRACING
-  trigger_timeout_ms: 120000
-  triggers {
-    name: "com.android.telemetry.art-outofmemory"
-    stop_delay_ms: 500
-  }
-}
-
-data_sources {
-  config {
-    name: "android.packages_list"
-  }
-}
-
-data_sources {
-  config {
-    name: "linux.process_stats"
-    process_stats_config {
-      proc_stats_poll_ms: 600000
-      record_process_age: true
-    }
+  aggregation {
+    function: AVG
+    value: dur
+    dimensions: ["name"]   # Corresponds to GROUP BY name
   }
 }
