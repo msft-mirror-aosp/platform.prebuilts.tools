@@ -19,29 +19,19 @@ metric_spec: {
   dimensions: "process_name"
   value: "total_runtime"
   query: {
-    id: "duration_per_thread"
-    inner_query: {
-      simple_slices: {
-        process_name_glob: "com.android.systemui"
-      }
-      select_columns: { column_name: "dur" }
-      select_columns: { column_name: "slice_name" }
-      select_columns: { column_name: "thread_name" }
-      select_columns: { column_name: "process_name" }
+    id: "group_by_simple_slices_source"
+    simple_slices {
+      process_name_glob: "com.android.systemui"
     }
-    group_by: {
+    group_by {
       column_names: "slice_name"
       column_names: "thread_name"
       column_names: "process_name"
-      aggregates: {
+      aggregates {
         column_name: "dur"
         op: SUM
-        result_column_name: "total_runtime"
+        result_column_name: "total_time"
       }
     }
-    select_columns: { column_name: "slice_name" }
-    select_columns: { column_name: "thread_name" }
-    select_columns: { column_name: "process_name" }
-    select_columns: { column_name: "total_runtime" }
   }
 }
