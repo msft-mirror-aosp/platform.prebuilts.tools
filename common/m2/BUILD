@@ -124,6 +124,12 @@ aar_import(
 )
 
 java_import(
+    name = "androidx-sqlite-bundled-jvm-2.5.0-beta01",
+    jars = ["repository/androidx/sqlite/sqlite-bundled-jvm/2.5.0-beta01/sqlite-bundled-jvm-2.5.0-beta01.jar"],
+    visibility = ["//visibility:public"],
+)
+
+java_import(
     name = "javax.annotation.javax.annotation-api.1.3.2",
     jars = ["repository/javax/annotation/javax.annotation-api/1.3.2/javax.annotation-api-1.3.2.jar"],
     visibility = ["//visibility:public"],
