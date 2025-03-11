@@ -69,7 +69,9 @@ filegroup(
 filegroup(
     name = "io.grpc.protoc-gen-grpc-java.1.66.0_exe",
     srcs = select({
-        "//tools/base/bazel/platforms:macos-arm64": ["repository/io/grpc/protoc-gen-grpc-java/1.66.0/protoc-gen-grpc-java-1.66.0-osx-aarch_64.exe"],
+        # Apply older versions of protoc binary to ensure compatibility with arm macOS CI machines
+        # TODO(b/402775012) Update protoc binary after updating arm macOS CI machines
+        "//tools/base/bazel/platforms:macos-arm64": ["repository/io/grpc/protoc-gen-grpc-java/1.57.0/protoc-gen-grpc-java-1.57.0-osx-aarch_64.exe"],
         "//tools/base/bazel/platforms:macos-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.66.0/protoc-gen-grpc-java-1.66.0-osx-x86_64.exe"],
         "@platforms//os:windows": ["repository/io/grpc/protoc-gen-grpc-java/1.66.0/protoc-gen-grpc-java-1.66.0-windows-x86_64.exe"],
         "@platforms//os:linux": ["repository/io/grpc/protoc-gen-grpc-java/1.66.0/protoc-gen-grpc-java-1.66.0-linux-x86_64.exe"],
