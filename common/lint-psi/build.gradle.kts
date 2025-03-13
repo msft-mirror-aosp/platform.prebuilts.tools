@@ -8,7 +8,8 @@ plugins {
     kotlin("jvm") version "2.0.0" // Aim to match the Kotlin version below.
 }
 
-val intellijVersion = getEnvOrError("INTELLIJ_VERSION")
+// TODO: go back to release version
+val intellijVersion = "${getEnvOrError("INTELLIJ_VERSION")}-EAP-SNAPSHOT"
 val kotlinVersion = getEnvOrError("KOTLIN_VERSION")
 val intellijDir = getEnvOrError("INTELLIJ_DIR")
 val kotlinDir = getEnvOrError("KOTLIN_DIR")
@@ -232,7 +233,7 @@ fun getEnvOrError(name: String): String {
 repositories {
     maven("https://cache-redirector.jetbrains.com/repo1.maven.org/maven2") // Substitute for mavenCentral().
     maven("https://www.jetbrains.com/intellij-repository/releases")
-    // maven("https://www.jetbrains.com/intellij-repository/snapshots")
+    maven("https://www.jetbrains.com/intellij-repository/snapshots")
     maven("https://cache-redirector.jetbrains.com/intellij-dependencies")
     maven("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/kotlin-ide-plugin-dependencies")
     maven("$kotlinDir/build/repo")
