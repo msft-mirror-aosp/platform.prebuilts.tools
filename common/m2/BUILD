@@ -69,9 +69,7 @@ filegroup(
 filegroup(
     name = "io.grpc.protoc-gen-grpc-java.1.66.0_exe",
     srcs = select({
-        # Apply older versions of protoc binary to ensure compatibility with arm macOS CI machines
-        # TODO(b/402775012) Update protoc binary after updating arm macOS CI machines
-        "//tools/base/bazel/platforms:macos-arm64": ["repository/io/grpc/protoc-gen-grpc-java/1.57.0/protoc-gen-grpc-java-1.57.0-osx-aarch_64.exe"],
+        "//tools/base/bazel/platforms:macos-arm64": ["repository/io/grpc/protoc-gen-grpc-java/1.66.0/protoc-gen-grpc-java-1.66.0-osx-aarch_64.exe"],
         "//tools/base/bazel/platforms:macos-x86_64": ["repository/io/grpc/protoc-gen-grpc-java/1.66.0/protoc-gen-grpc-java-1.66.0-osx-x86_64.exe"],
         "@platforms//os:windows": ["repository/io/grpc/protoc-gen-grpc-java/1.66.0/protoc-gen-grpc-java-1.66.0-windows-x86_64.exe"],
         "@platforms//os:linux": ["repository/io/grpc/protoc-gen-grpc-java/1.66.0/protoc-gen-grpc-java-1.66.0-linux-x86_64.exe"],
@@ -509,15 +507,15 @@ jvm_import(
         # This list can be computed by querying the deps of
         # @maven//:org.jetbrains.kotlin.kotlin-compiler_<VERSION>
         # then resolving any duplicate versions to the highest version present.
-        "repository/org/jetbrains/annotations/13.0/annotations-13.0.jar",
+        "repository/org/jetbrains/annotations/24.0.0/annotations-24.0.0.jar",
         "repository/org/jetbrains/intellij/deps/trove4j/1.0.20200330/trove4j-1.0.20200330.jar",
-        "repository/org/jetbrains/kotlin/kotlin-compiler/2.0.21/kotlin-compiler-2.0.21.jar",
-        "repository/org/jetbrains/kotlin/kotlin-reflect/1.6.10/kotlin-reflect-1.6.10.jar",
-        "repository/org/jetbrains/kotlin/kotlin-script-runtime/2.0.21/kotlin-script-runtime-2.0.21.jar",
-        "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/2.0.21/kotlin-stdlib-jdk7-2.0.21.jar",
-        "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/2.0.21/kotlin-stdlib-jdk8-2.0.21.jar",
-        "repository/org/jetbrains/kotlin/kotlin-stdlib/2.0.21/kotlin-stdlib-2.0.21.jar",
-        "repository/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.6.4/kotlinx-coroutines-core-jvm-1.6.4.jar",
+        "repository/org/jetbrains/kotlin/kotlin-compiler/2.1.10/kotlin-compiler-2.1.10.jar",
+        "repository/org/jetbrains/kotlin/kotlin-reflect/2.1.10/kotlin-reflect-2.1.10.jar",
+        "repository/org/jetbrains/kotlin/kotlin-script-runtime/2.1.10/kotlin-script-runtime-2.1.10.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/2.1.10/kotlin-stdlib-jdk7-2.1.10.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/2.1.10/kotlin-stdlib-jdk8-2.1.10.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib/2.1.10/kotlin-stdlib-2.1.10.jar",
+        "repository/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.8.0/kotlinx-coroutines-core-jvm-1.8.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -525,7 +523,7 @@ jvm_import(
 jvm_import(
     name = "jvm-abi-gen-plugin",
     jars = [
-        "repository/org/jetbrains/kotlin/jvm-abi-gen/2.0.21/jvm-abi-gen-2.0.21.jar",
+        "repository/org/jetbrains/kotlin/jvm-abi-gen/2.1.10/jvm-abi-gen-2.1.10.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -533,7 +531,7 @@ jvm_import(
 jvm_import(
     name = "kotlin-compose-compiler-plugin",
     jars = [
-        "repository/org/jetbrains/kotlin/kotlin-compose-compiler-plugin/2.0.21/kotlin-compose-compiler-plugin-2.0.21.jar",
+        "repository/org/jetbrains/kotlin/kotlin-compose-compiler-plugin/2.1.10/kotlin-compose-compiler-plugin-2.1.10.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -709,6 +707,7 @@ jvm_import(
     jars = [
         "repository/com/google/apis/google-api-services-cloudbilling/v1-rev20240119-2.0.0/google-api-services-cloudbilling-v1-rev20240119-2.0.0.jar",
         "repository/com/google/apis/google-api-services-monitoring/v3-rev20230806-2.0.0/google-api-services-monitoring-v3-rev20230806-2.0.0.jar",
+        "repository/com/google/apis/google-api-services-serviceusage/v1-rev20240220-2.0.0/google-api-services-serviceusage-v1-rev20240220-2.0.0.jar",
         "repository/com/google/apis/google-api-services-storage/v1-rev20230301-2.0.0/google-api-services-storage-v1-rev20230301-2.0.0.jar",
         "repository/com/google/apis/google-api-services-toolresults/v1beta3-rev20230410-2.0.0/google-api-services-toolresults-v1beta3-rev20230410-2.0.0.jar",
         "repository/com/google/apis/google-api-services-testing/v1-rev20240917-2.0.0/google-api-services-testing-v1-rev20240917-2.0.0.jar",
