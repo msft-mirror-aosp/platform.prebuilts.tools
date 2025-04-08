@@ -45,6 +45,8 @@ filegroup {
         "configs/long_trace_binder_config.textproto",
         "configs/trace_config_adservices.textproto",
         "metrics-v2/memory_per_process-avg_rss_and_swap.textproto",
+        "metrics-v2/total_runtime_per_slice_for_systemui_process.textproto",
+        "metrics-v2/total_runtime_per_thread_for_systemui_process.textproto",
     ],
 }
 
@@ -116,4 +118,14 @@ prebuilt_etc {
 prebuilt_etc {
     name: "memory_per_process-avg_rss_and_swap.textproto",
     src: "metrics-v2/memory_per_process-avg_rss_and_swap.textproto",
+}
+
+prebuilt_etc {
+    name: "total_runtime_per_slice_for_systemui_process.textproto",
+    src: "metrics-v2/total_runtime_per_slice_for_systemui_process.textproto",
+}
+
+prebuilt_etc {
+    name: "total_runtime_per_thread_for_systemui_process.textproto",
+    src: "metrics-v2/total_runtime_per_thread_for_systemui_process.textproto",
 }

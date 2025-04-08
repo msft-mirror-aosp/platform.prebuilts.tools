@@ -58,6 +58,18 @@ data_sources {
 
 data_sources {
   config {
+    name: "track_event"
+    track_event_config {
+      disabled_categories:"*"
+      enabled_categories: "cc"
+      enabled_categories: "mq"
+    }
+  }
+  producer_name_regex_filter: "com.android.systemui"
+}
+
+data_sources {
+  config {
     name: "linux.ftrace"
     target_buffer: 0
     ftrace_config {
@@ -217,7 +229,7 @@ data_sources: {
               tracepoint {
                 name: "binder:binder_transaction"
               }
-              period: 100
+              period: 1
               # Don't use PERF_CLOCK_BOOTTIME, tracepoints are not compatible.
             }
             callstack_sampling {
