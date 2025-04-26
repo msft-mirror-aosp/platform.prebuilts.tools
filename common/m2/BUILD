@@ -976,3 +976,10 @@ jvm_import(
     ],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "wire-runtime-jvm-5.3.1",
+    jars = ["repository/com/squareup/wire/wire-runtime-jvm/5.3.1/wire-runtime-jvm-5.3.1.jar"],
+    visibility = ["//visibility:public"],
+)
