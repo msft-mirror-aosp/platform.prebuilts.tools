@@ -964,3 +964,22 @@ jvm_import(
     jars = ["repository/com/google/apis/google-api-services-drive/v3-rev20241027-2.0.0/google-api-services-drive-v3-rev20241027-2.0.0.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "mcp-kotlin-sdk",
+    # do not sort: must match IML order
+    jars = [
+        "repository/io/modelcontextprotocol/kotlin-sdk/0.4.0/kotlin-sdk-0.4.0.jar",
+        "repository/io/github/oshai/kotlin-logging-jvm/7.0.0/kotlin-logging-jvm-7.0.0.jar",
+        "repository/org/jetbrains/kotlinx/kotlinx-serialization-json-jvm/1.7.3/kotlinx-serialization-json-jvm-1.7.3.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "wire-runtime-jvm-5.3.1",
+    jars = ["repository/com/squareup/wire/wire-runtime-jvm/5.3.1/wire-runtime-jvm-5.3.1.jar"],
+    visibility = ["//visibility:public"],
+)
