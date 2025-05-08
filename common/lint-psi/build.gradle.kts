@@ -5,7 +5,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("java")
-    kotlin("jvm") version "2.0.0" // Aim to match the Kotlin version below.
+    kotlin("jvm") version "2.1.0" // Aim to match the Kotlin version below.
 }
 
 val intellijVersion = getEnvOrError("INTELLIJ_VERSION")
@@ -75,7 +75,7 @@ dependencies {
     "kotlin-compiler-content"("org.jetbrains.kotlin:kotlin-compiler-fir-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:kotlin-compiler-ir-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:kotlin-compiler-cli-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
-    "kotlin-compiler-content"("org.jetbrains.kotlin:kotlin-scripting-compiler:$kotlinVersion-for-lint")
+    "kotlin-compiler-content"("org.jetbrains.kotlin:kotlin-scripting-compiler:$kotlinVersion-for-lint") // TODO: non transitive?
     "kotlin-compiler-content"("io.vavr:vavr:0.10.4") // TODO: Somehow read this version directly from the Kotlin compiler build.
 
     "kotlin-compiler-content"("org.jetbrains.kotlin:analysis-api-platform-interface-for-ide:$kotlinVersion-for-lint") { isTransitive = false }

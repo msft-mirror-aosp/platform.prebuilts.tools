@@ -115,3 +115,54 @@ index b9901e77f84..15f48bc5343 100644
      private val fakeFileClsStubs = ConcurrentHashMap<String, Map<VirtualFile, KotlinFileStubImpl>>()
      private val fakeBuiltInsClsStubs = ConcurrentHashMap<VirtualFile, KotlinFileStubImpl?>()
 
+diff --git a/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/java/KotlinStandaloneJavaModuleAccessibilityChecker.kt b/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/java/KotlinStandaloneJavaModuleAccessibilityChecker.kt
+index 0466259fcb79..cd9caf3a03db 100644
+--- a/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/java/KotlinStandaloneJavaModuleAccessibilityChecker.kt
++++ b/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/java/KotlinStandaloneJavaModuleAccessibilityChecker.kt
+@@ -8,15 +8,15 @@ package org.jetbrains.kotlin.analysis.api.standalone.base.java
+ import com.intellij.openapi.vfs.VirtualFile
+ import org.jetbrains.kotlin.analysis.api.platform.java.KotlinJavaModuleAccessibilityError
+ import org.jetbrains.kotlin.analysis.api.platform.java.KotlinJavaModuleAccessibilityChecker
+-import org.jetbrains.kotlin.cli.jvm.modules.CliJavaModuleResolver
+ import org.jetbrains.kotlin.name.FqName
+ import org.jetbrains.kotlin.resolve.jvm.modules.JavaModuleResolver
+
+ /**
+  * Delegates directly to [CliJavaModuleResolver] as we can use it in Standalone.
+  */
+-internal class KotlinStandaloneJavaModuleAccessibilityChecker(
+-    private val javaModuleResolver: CliJavaModuleResolver,
++// Expose to be registered at FE10UastEnvironment
++class KotlinStandaloneJavaModuleAccessibilityChecker(
++    private val javaModuleResolver: JavaModuleResolver,
+ ) : KotlinJavaModuleAccessibilityChecker {
+     override fun checkAccessibility(
+         useSiteFile: VirtualFile?,
+diff --git a/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/java/KotlinStandaloneJavaModuleAnnotationsProvider.kt b/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/java/KotlinStandaloneJavaModuleAnnotationsProvider.kt
+index d1a02cf82721..3ab9f0e61ace 100644
+--- a/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/java/KotlinStandaloneJavaModuleAnnotationsProvider.kt
++++ b/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/java/KotlinStandaloneJavaModuleAnnotationsProvider.kt
+@@ -7,9 +7,9 @@ package org.jetbrains.kotlin.analysis.api.standalone.base.java
+
+ import org.jetbrains.kotlin.analysis.api.KaNonPublicApi
+ import org.jetbrains.kotlin.analysis.api.platform.java.KotlinJavaModuleJavaAnnotationsProvider
+-import org.jetbrains.kotlin.cli.jvm.modules.CliJavaModuleResolver
+ import org.jetbrains.kotlin.load.java.structure.JavaAnnotation
+ import org.jetbrains.kotlin.name.ClassId
++import org.jetbrains.kotlin.resolve.jvm.modules.JavaModuleResolver
+
+ /**
+  * Delegates directly to [CliJavaModuleResolver] as we can use it in Standalone.
+@@ -19,8 +19,9 @@ import org.jetbrains.kotlin.name.ClassId
+  * `KaBaseJavaModuleResolver`).
+  */
+ @OptIn(KaNonPublicApi::class)
+-internal class KotlinStandaloneJavaModuleAnnotationsProvider(
+-    private val javaModuleResolver: CliJavaModuleResolver,
++// Expose to be registered at FE10UastEnvironment
++class KotlinStandaloneJavaModuleAnnotationsProvider(
++    private val javaModuleResolver: JavaModuleResolver,
+ ) : KotlinJavaModuleJavaAnnotationsProvider {
+     override fun getAnnotationsForModuleOwnerOfClass(classId: ClassId): List<JavaAnnotation>? =
+         javaModuleResolver.getAnnotationsForModuleOwnerOfClass(classId)
+
