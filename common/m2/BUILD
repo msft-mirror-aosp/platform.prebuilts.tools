@@ -697,13 +697,6 @@ filegroup(
 
 # managed by go/iml_to_build
 jvm_import(
-    name = "google-api-services-sourcerepo",
-    jars = ["repository/com/google/apis/google-api-services-sourcerepo/v1-rev20230123-2.0.0/google-api-services-sourcerepo-v1-rev20230123-2.0.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
     name = "google_api_services_testing",
     # do not sort: must match IML order
     jars = [
