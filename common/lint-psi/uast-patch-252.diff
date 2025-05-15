@@ -1,0 +1,257 @@
+diff --git a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethodWithFakeLightDelegate.kt b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethodWithFakeLightDelegate.kt
+index 27b66e20829290..aa30dcba885dd9 100644
+--- a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethodWithFakeLightDelegate.kt
++++ b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethodWithFakeLightDelegate.kt
+@@ -3,7 +3,9 @@
+ package org.jetbrains.uast.kotlin
+ 
+ import com.intellij.openapi.util.TextRange
++import com.intellij.psi.PsiAnnotation
+ import com.intellij.psi.PsiClass
++import org.jetbrains.annotations.NonNls
+ import org.jetbrains.kotlin.descriptors.annotations.AnnotationUseSiteTarget
+ import org.jetbrains.kotlin.psi.KtDeclaration
+ import org.jetbrains.kotlin.psi.KtFunction
+@@ -42,6 +44,18 @@ sealed class KotlinUMethodWithFakeLightDelegateBase<T : KtDeclaration>(
+         }
+     }
+ 
++    override fun getAnnotations(): Array<PsiAnnotation> {
++        return javaPsi.annotations
++    }
++
++    override fun getAnnotation(fqn: @NonNls String): PsiAnnotation? {
++        return javaPsi.getAnnotation(fqn)
++    }
++
++    override fun hasAnnotation(fqName: String): Boolean {
++        return javaPsi.hasAnnotation(fqName)
++    }
++
+     override fun getTextRange(): TextRange {
+         return original.textRange
+     }
+diff --git a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethodBase.kt b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethodBase.kt
+index 55b14355ad9ae7..52ffba7377f596 100644
+--- a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethodBase.kt
++++ b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/psi/UastFakeLightMethodBase.kt
+@@ -68,8 +68,12 @@ abstract class UastFakeLightMethodBase(
+         return _annotations
+     }
+ 
++    override fun getAnnotation(fqn: String): PsiAnnotation? {
++        return _annotations.find { it.hasQualifiedName(fqn) }
++    }
++
+     override fun hasAnnotation(fqn: String): Boolean {
+-        return _annotations.find { it.hasQualifiedName(fqn) } != null
++        return getAnnotation(fqn) != null
+     }
+ 
+     override fun isDeprecated(): Boolean {
+diff --git a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/psi/UastFakeSourceLightMethodBase.kt b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/psi/UastFakeSourceLightMethodBase.kt
+index d467acf572cac3..a1ac5f0aa5f32f 100644
+--- a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/psi/UastFakeSourceLightMethodBase.kt
++++ b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/psi/UastFakeSourceLightMethodBase.kt
+@@ -100,7 +100,13 @@ abstract class UastFakeSourceLightMethodBase<T : KtDeclaration>(
+     }
+ 
+     override fun computeAnnotations(annotations: SmartSet<PsiAnnotation>) {
+-        original.annotationEntries.mapTo(annotations) { it.toPsiAnnotation() }
++        original.annotationEntries.mapTo(annotations) { entry ->
++            // Creation of PsiAnnotation may vary between frontends. For example,
++            // SLC doesn't model a declaration with value class in its signature
++            // and K2 UAST will fake it, while K1 doesn't need to.
++            baseResolveProviderService.convertToPsiAnnotation(entry)
++                ?: entry.toPsiAnnotation()
++        }
+     }
+ 
+     protected fun KtAnnotationEntry.toPsiAnnotation(): PsiAnnotation {
+diff --git a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastResolveProviderService.kt b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastResolveProviderService.kt
+index c6adc0b3d2b7c5..5795da77372bbd 100644
+--- a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastResolveProviderService.kt
++++ b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastResolveProviderService.kt
+@@ -25,6 +25,7 @@ import org.jetbrains.kotlin.idea.references.mainReference
+ import org.jetbrains.kotlin.name.SpecialNames
+ import org.jetbrains.kotlin.name.StandardClassIds
+ import org.jetbrains.kotlin.psi.*
++import org.jetbrains.kotlin.psi.psiUtil.getStrictParentOfType
+ import org.jetbrains.kotlin.psi.psiUtil.parents
+ import org.jetbrains.kotlin.utils.exceptions.errorWithAttachment
+ import org.jetbrains.kotlin.utils.exceptions.withPsiEntry
+@@ -32,6 +33,8 @@ import org.jetbrains.kotlin.utils.yieldIfNotNull
+ import org.jetbrains.uast.*
+ import org.jetbrains.uast.analysis.KotlinExtensionConstants.LAMBDA_THIS_PARAMETER_NAME
+ import org.jetbrains.uast.kotlin.internal.*
++import org.jetbrains.uast.kotlin.psi.UastFakeDeserializedSymbolAnnotation
++import org.jetbrains.uast.kotlin.psi.UastFakeLightMethodBase
+ import org.jetbrains.uast.kotlin.psi.UastKotlinPsiParameterBase
+ 
+ interface FirKotlinUastResolveProviderService : BaseKotlinUastResolveProviderService {
+@@ -48,6 +51,22 @@ interface FirKotlinUastResolveProviderService : BaseKotlinUastResolveProviderSer
+     fun isSupportedFile(file: KtFile): Boolean = true
+ 
+     override fun convertToPsiAnnotation(ktElement: KtElement): PsiAnnotation? {
++        val ktDeclaration = ktElement.getStrictParentOfType<KtModifierList>()?.parent as? KtDeclaration
++        // SLC won't model a declaration with value class in its signature.
++        if (ktDeclaration != null && hasTypeForValueClassInSignature(ktDeclaration)) {
++            (ktElement as? KtAnnotationEntry)?.let { entry ->
++                analyzeForUast(ktDeclaration) {
++                    val declaration = ktDeclaration.symbol
++                    declaration.annotations.find { it.psi == entry }?.let { annoApp ->
++                        return UastFakeDeserializedSymbolAnnotation(
++                            declaration.createPointer(),
++                            annoApp.classId,
++                            ktDeclaration
++                        )
++                    }
++                }
++            }
++        }
+         return ktElement.toLightAnnotation()
+     }
+ 
+@@ -229,7 +248,7 @@ interface FirKotlinUastResolveProviderService : BaseKotlinUastResolveProviderSer
+                 val psi = analyzeForUast(ktExpression) {
+                     val candidate = candidatePointer.restoreSymbol() ?: return@forEach
+                     when (candidate) {
+-                        is KaVariableSymbol -> psiForUast(candidate)
++                        is KaVariableSymbol -> psiForUast(candidate, ktExpression)
+                         is KaFunctionSymbol -> toPsiMethod(candidate, ktExpression)
+                     }
+                 }
+@@ -455,10 +474,16 @@ interface FirKotlinUastResolveProviderService : BaseKotlinUastResolveProviderSer
+                         resolvedTargetSymbol.owningProperty.psi
+                     }
+                     else -> {
+-                        psiForUast(resolvedTargetSymbol)
++                        psiForUast(resolvedTargetSymbol, ktExpression)
+                     }
+                 }
+ 
++            // If the resolution result is "fake" PSI, it doesn't belong to any module.
++            // Before falling to the following module lookup, bail out here.
++            if (resolvedTargetElement is UastFakeLightMethodBase) {
++                return resolvedTargetElement
++            }
++
+             // Shortcut: if the resolution target is compiled class/member, package info, or pure Java declarations,
+             //   we can return it early here (to avoid expensive follow-up steps: module retrieval and light element conversion).
+             if (resolvedTargetElement is ClsMemberImpl<*> ||
+diff --git a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/psi/UastFakeDeserializedSymbolAnnotation.kt b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/psi/UastFakeDeserializedSymbolAnnotation.kt
+index 44ebd6336406d1..2b925f1f9b72f5 100644
+--- a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/psi/UastFakeDeserializedSymbolAnnotation.kt
++++ b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/psi/UastFakeDeserializedSymbolAnnotation.kt
+@@ -17,7 +17,7 @@ import com.intellij.util.IncorrectOperationException
+ import org.jetbrains.annotations.NonNls
+ import org.jetbrains.kotlin.analysis.api.annotations.KaAnnotationValue
+ import org.jetbrains.kotlin.analysis.api.annotations.renderAsSourceCode
+-import org.jetbrains.kotlin.analysis.api.symbols.KaNamedFunctionSymbol
++import org.jetbrains.kotlin.analysis.api.symbols.KaDeclarationSymbol
+ import org.jetbrains.kotlin.analysis.api.symbols.pointers.KaSymbolPointer
+ import org.jetbrains.kotlin.asJava.classes.cannotModify
+ import org.jetbrains.kotlin.asJava.elements.KtLightAbstractAnnotation
+@@ -30,7 +30,7 @@ import org.jetbrains.uast.getOrBuild
+ import org.jetbrains.uast.kotlin.internal.analyzeForUast
+ 
+ internal class UastFakeDeserializedSymbolAnnotation(
+-    private val parentOriginal: KaSymbolPointer<KaNamedFunctionSymbol>,
++    private val parentOriginal: KaSymbolPointer<KaDeclarationSymbol>,
+     private val classId: ClassId?,
+     private val parent: KtElement,
+ ) : KtLightAbstractAnnotation(parent) {
+diff --git a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt
+index 1a5127b998ac..4b33309ec236 100644
+--- a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt
++++ b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt
+@@ -88,20 +88,11 @@ internal fun toPsiClass(
+
+ context(KaSession)
+ @OptIn(KaExperimentalApi::class)
+-internal fun toPsiMethod(
++private fun fakePsiMethodForReifiedInline(
+     functionSymbol: KaFunctionSymbol,
+     context: KtElement,
+     kaCallInfo: KaCallInfo? = null,
+ ): PsiMethod? {
+-    // Error handling for a case like KTIJ-23503: Outer.<no name provided>.Inner from broken code
+-    val nameToCheck = if (functionSymbol is KaConstructorSymbol)
+-        functionSymbol.containingClassId?.asSingleFqName()
+-    else
+-        functionSymbol.callableId?.asSingleFqName()
+-    if (nameToCheck?.pathSegments()?.any { it.isSpecial } == true) {
+-        return null
+-    }
+-
+     // `inline` w/ `reified` type param from binary dependency,
+     // which we can't find source PSI, so fake it
+     if (functionSymbol.origin == KaSymbolOrigin.LIBRARY &&
+@@ -122,7 +113,27 @@ internal fun toPsiMethod(
+                 }
+         }
+     }
+-    return when (val psi = psiForUast(functionSymbol)) {
++    return null
++}
++
++context(KaSession)
++internal fun toPsiMethod(
++    functionSymbol: KaFunctionSymbol,
++    context: KtElement,
++    kaCallInfo: KaCallInfo? = null,
++): PsiMethod? {
++    // Error handling for a case like KTIJ-23503: Outer.<no name provided>.Inner from broken code
++    val nameToCheck = if (functionSymbol is KaConstructorSymbol)
++        functionSymbol.containingClassId?.asSingleFqName()
++    else
++        functionSymbol.callableId?.asSingleFqName()
++    if (nameToCheck?.pathSegments()?.any { it.isSpecial } == true) {
++        return null
++    }
++
++    fakePsiMethodForReifiedInline(functionSymbol, context, kaCallInfo)?.let { return it }
++
++    return when (val psi = psiForUast(functionSymbol, context)) {
+         null -> {
+             // Lint/UAST CLI: try `fake` creation for a deserialized declaration
+             toPsiMethodForDeserialized(functionSymbol, context, psi, kaCallInfo)
+@@ -443,19 +454,26 @@ internal fun getKtType(ktCallableDeclaration: KtCallableDeclaration): KaType? {
+ }
+
+ /**
+- * Finds Java stub-based [PsiElement] for symbols that refer to declarations in [KaLibraryModule].
++ * Finds Java stub-based [PsiElement] for symbols that refer to declarations from [KaSymbolOrigin.LIBRARY]
+  */
+ context(KaSession)
+ @OptIn(KaExperimentalApi::class)
+-internal tailrec fun psiForUast(symbol: KaSymbol): PsiElement? {
++internal tailrec fun psiForUast(
++    symbol: KaSymbol,
++    context: KtElement,
++): PsiElement? {
+     if (symbol.origin == KaSymbolOrigin.LIBRARY) {
++        if (symbol is KaFunctionSymbol) {
++            fakePsiMethodForReifiedInline(symbol, context, null)?.let { return it }
++        }
++
+         val psiProvider = FirKotlinUastLibraryPsiProviderService.getInstance()
+         return with(psiProvider) { provide(symbol) }
+     }
+
+     if (symbol is KaConstructorSymbol) {
+         symbol.originalConstructorIfTypeAliased?.let { originalConstructorSymbol ->
+-            return psiForUast(originalConstructorSymbol)
++            return psiForUast(originalConstructorSymbol, context)
+         }
+     }
+
+@@ -463,7 +481,7 @@ internal tailrec fun psiForUast(symbol: KaSymbol): PsiElement? {
+         if (symbol.origin == KaSymbolOrigin.INTERSECTION_OVERRIDE || symbol.origin == KaSymbolOrigin.SUBSTITUTION_OVERRIDE) {
+             val originalSymbol = symbol.fakeOverrideOriginal
+             if (originalSymbol != symbol) {
+-                return psiForUast(originalSymbol)
++                return psiForUast(originalSymbol, context)
+             }
+         }
+     }
