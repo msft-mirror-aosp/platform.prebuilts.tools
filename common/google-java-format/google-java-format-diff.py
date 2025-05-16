@@ -129,7 +129,8 @@ def main():
   if args.binary:
     base_command = [args.binary]
   elif args.google_java_format_jar:
-    base_command = ['java', '-jar', args.google_java_format_jar]
+    base_command = ['java', '-jar', '-Xlog:disable', '-Xlog:all=warning:stderr',
+                    args.google_java_format_jar]
   else:
     binary = which('google-java-format') or '/usr/bin/google-java-format'
     base_command = [binary]
