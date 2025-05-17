@@ -984,3 +984,10 @@ jvm_import(
     jars = ["repository/com/squareup/wire/wire-runtime-jvm/5.3.1/wire-runtime-jvm-5.3.1.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+filegroup(
+    name = "lucene_files",
+    srcs = ["repository/org/apache/lucene/lucene-queryparser/9.12.0/lucene-queryparser-9.12.0.jar"],
+    visibility = ["//visibility:public"],
+)
