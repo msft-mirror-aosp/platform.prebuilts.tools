@@ -273,19 +273,21 @@ java_import {
     name: "mockito4-prebuilt-jar",
     host_supported: true,
     jars: ["repository/org/mockito/mockito-core/4.8.1/mockito-core-4.8.1.jar"],
-    sdk_version: "current",
+    sdk_version: "core_current",
 }
 
 java_import {
     name: "mockito5-prebuilt-jar",
+    host_supported: true,
     jars: ["repository/org/mockito/mockito-core/5.14.2/mockito-core-5.14.2.jar"],
-    sdk_version: "current",
+    sdk_version: "core_current",
 }
 
 java_import {
     name: "inline-mockito4-prebuilt-jar",
+    host_supported: true,
     jars: ["repository/org/mockito/mockito-inline/4.8.1/mockito-inline-4.8.1.jar"],
-    sdk_version: "current",
+    sdk_version: "core_current",
 }
 
 java_import_host {
@@ -349,34 +351,65 @@ java_import_host {
 // Combined libraries.
 
 java_library_static {
-    name: "mockito-robolectric-prebuilt",
+    name: "mockito-hostside-prebuilt",
     host_supported: true,
     static_libs: [
         "byte-buddy-prebuilt-jar",
         "mockito4-prebuilt-jar",
         "objenesis",
     ],
-    sdk_version: "current",
+    sdk_version: "core_current",
 }
 
 java_library_static {
-    name: "inline-mockito-robolectric-prebuilt",
+    name: "inline-mockito-hostside-prebuilt",
+    host_supported: true,
     static_libs: [
         "byte-buddy-prebuilt-jar",
         "inline-mockito4-prebuilt-jar",
         "objenesis",
     ],
-    sdk_version: "current",
+    sdk_version: "core_current",
 }
 
 java_library_static {
-    name: "inline-mockito5-robolectric-prebuilt",
+    name: "mockito5-hostside-prebuilt",
+    host_supported: true,
     static_libs: [
         "byte-buddy-prebuilt-jar",
         "mockito5-prebuilt-jar",
         "objenesis",
     ],
-    sdk_version: "current",
+    sdk_version: "core_current",
+}
+
+// This is just a synonym to *-hostside-*, for compat with existing modules.
+java_library_static {
+    name: "mockito-robolectric-prebuilt",
+    host_supported: true,
+    static_libs: [
+        "mockito-hostside-prebuilt",
+    ],
+    sdk_version: "core_current",
+}
+
+// This is just a synonym to *-hostside-*, for compat with existing modules.
+java_library_static {
+    name: "inline-mockito-robolectric-prebuilt",
+    static_libs: [
+        "inline-mockito-hostside-prebuilt",
+    ],
+    sdk_version: "core_current",
+}
+
+// This is just a synonym to *-hostside-*, for compat with existing modules.
+java_library_static {
+    name: "inline-mockito5-robolectric-prebuilt",
+    host_supported: true,
+    static_libs: [
+        "mockito5-hostside-prebuilt",
+    ],
+    sdk_version: "core_current",
 }
 
 license {
@@ -406,8 +439,8 @@ java_import {
         "repository/javax/xml/bind/jaxb-api/2.2.12-b140109.1041/jaxb-api-2.2.12-b140109.1041.jar",
         "repository/org/codehaus/woodstox/stax2-api/4.2.1/stax2-api-4.2.1.jar",
         "repository/org/jetbrains/trove4j/trove4j/20160824/trove4j-20160824.jar",
-        "repository/org/ow2/asm/asm/6.1.1/asm-6.1.1.jar",
-        "repository/org/ow2/asm/asm-tree/6.1.1/asm-tree-6.1.1.jar",
+        "repository/org/ow2/asm/asm/9.7.1/asm-9.7.1.jar",
+        "repository/org/ow2/asm/asm-tree/9.7.1/asm-tree-9.7.1.jar",
     ],
     static_libs: [
         // Needed for jackson-module-kotlin.
