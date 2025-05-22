@@ -697,13 +697,6 @@ filegroup(
 
 # managed by go/iml_to_build
 jvm_import(
-    name = "google-api-services-sourcerepo",
-    jars = ["repository/com/google/apis/google-api-services-sourcerepo/v1-rev20230123-2.0.0/google-api-services-sourcerepo-v1-rev20230123-2.0.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
     name = "google_api_services_testing",
     # do not sort: must match IML order
     jars = [
@@ -982,5 +975,12 @@ jvm_import(
 jvm_import(
     name = "wire-runtime-jvm-5.3.1",
     jars = ["repository/com/squareup/wire/wire-runtime-jvm/5.3.1/wire-runtime-jvm-5.3.1.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+filegroup(
+    name = "lucene_files",
+    srcs = ["repository/org/apache/lucene/lucene-queryparser/9.12.0/lucene-queryparser-9.12.0.jar"],
     visibility = ["//visibility:public"],
 )
