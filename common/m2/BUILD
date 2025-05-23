@@ -840,16 +840,6 @@ merge_jars(
             "repository/org/jetbrains/jewel/jewel-markdown-ide-laf-bridge-styling-243/0.27.0/jewel-markdown-ide-laf-bridge-styling-243-0.27.0.jar",
             "repository/org/commonmark/commonmark/0.24.0/commonmark-0.24.0.jar",
         ],
-        "@intellij//:intellij_ce_2024_1": [
-            "repository/org/jetbrains/jewel/jewel-foundation-241/0.27.0/jewel-foundation-241-0.27.0.jar",
-            "repository/org/jetbrains/jewel/jewel-ide-laf-bridge-241/0.27.0/jewel-ide-laf-bridge-241-0.27.0.jar",
-            "repository/org/jetbrains/jewel/jewel-ui-241/0.27.0/jewel-ui-241-0.27.0.jar",
-            "repository/org/jetbrains/jewel/jewel-markdown-core-241/0.27.0/jewel-markdown-core-241-0.27.0.jar",
-            "repository/org/jetbrains/jewel/jewel-markdown-extension-autolink-241/0.27.0/jewel-markdown-extension-autolink-241-0.27.0.jar",
-            "repository/org/jetbrains/jewel/jewel-markdown-extension-gfm-alerts-241/0.27.0/jewel-markdown-extension-gfm-alerts-241-0.27.0.jar",
-            "repository/org/jetbrains/jewel/jewel-markdown-ide-laf-bridge-styling-241/0.27.0/jewel-markdown-ide-laf-bridge-styling-241-0.27.0.jar",
-            "repository/org/commonmark/commonmark/0.24.0/commonmark-0.24.0.jar",
-        ],
         "@intellij//:intellij_ce_2024_2": [
             "repository/org/jetbrains/jewel/jewel-foundation-242/0.27.0/jewel-foundation-242-0.27.0.jar",
             "repository/org/jetbrains/jewel/jewel-ide-laf-bridge-242/0.27.0/jewel-ide-laf-bridge-242-0.27.0.jar",
