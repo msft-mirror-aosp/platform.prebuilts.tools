@@ -655,8 +655,8 @@ jvm_import(
     jars = [
         "repository/com/google/apis/google-api-services-oauth2/v2-rev20200213-2.0.0/google-api-services-oauth2-v2-rev20200213-2.0.0.jar",
         "repository/com/google/auth/google-auth-library-oauth2-http/1.24.0/google-auth-library-oauth2-http-1.24.0.jar",
-        "repository/com/google/oauth-client/google-oauth-client/1.34.1/google-oauth-client-1.34.1.jar",
-        "repository/com/google/oauth-client/google-oauth-client-java6/1.34.1/google-oauth-client-java6-1.34.1.jar",
+        "repository/com/google/oauth-client/google-oauth-client/1.35.0/google-oauth-client-1.35.0.jar",
+        "repository/com/google/oauth-client/google-oauth-client-java6/1.35.0/google-oauth-client-java6-1.35.0.jar",
         "repository/com/google/auth/google-auth-library-credentials/1.24.0/google-auth-library-credentials-1.24.0.jar",
     ],
     visibility = ["//visibility:public"],
@@ -690,7 +690,7 @@ filegroup(
         "repository/com/google/http-client/google-http-client/1.42.3/google-http-client-1.42.3.jar",
         "repository/io/opencensus/opencensus-api/0.31.1/opencensus-api-0.31.1.jar",
         "repository/io/opencensus/opencensus-contrib-http-util/0.31.1/opencensus-contrib-http-util-0.31.1.jar",
-        "repository/com/google/oauth-client/google-oauth-client/1.34.1/google-oauth-client-1.34.1.jar",
+        "repository/com/google/oauth-client/google-oauth-client/1.35.0/google-oauth-client-1.35.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -722,14 +722,10 @@ jvm_import(
     visibility = ["//visibility:public"],
 )
 
-# managed by go/iml_to_build
 jvm_import(
-    name = "libgoogle_auth_transitive_deps",
-    # do not sort: must match IML order
+    name = "cloudcode-auth-libs",
     jars = [
-        "repository/androidx/annotation/annotation-jvm/1.7.1/annotation-jvm-1.7.1.jar",
         "repository/com/google/api-client/google-api-client/2.2.0/google-api-client-2.2.0.jar",
-        "repository/com/google/apis/google-api-services-cloudresourcemanager/v1beta1-rev20240128-2.0.0/google-api-services-cloudresourcemanager-v1beta1-rev20240128-2.0.0.jar",
         "repository/com/google/apis/google-api-services-oauth2/v2-rev20200213-2.0.0/google-api-services-oauth2-v2-rev20200213-2.0.0.jar",
         "repository/com/google/http-client/google-http-client-apache-v2/1.42.0/google-http-client-apache-v2-1.42.0.jar",
         "repository/com/google/http-client/google-http-client-gson/1.43.3/google-http-client-gson-1.43.3.jar",
@@ -741,6 +737,17 @@ jvm_import(
         "repository/io/grpc/grpc-context/1.27.2/grpc-context-1.27.2.jar",
         "repository/io/opencensus/opencensus-api/0.31.1/opencensus-api-0.31.1.jar",
         "repository/io/opencensus/opencensus-contrib-http-util/0.31.1/opencensus-contrib-http-util-0.31.1.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "libgoogle_auth_transitive_deps",
+    # do not sort: must match IML order
+    jars = [
+        "repository/androidx/annotation/annotation-jvm/1.7.1/annotation-jvm-1.7.1.jar",
+        "repository/com/google/apis/google-api-services-cloudresourcemanager/v1beta1-rev20240128-2.0.0/google-api-services-cloudresourcemanager-v1beta1-rev20240128-2.0.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -831,16 +838,6 @@ merge_jars(
             "repository/org/jetbrains/jewel/jewel-markdown-extension-autolink-243/0.27.0/jewel-markdown-extension-autolink-243-0.27.0.jar",
             "repository/org/jetbrains/jewel/jewel-markdown-extension-gfm-alerts-243/0.27.0/jewel-markdown-extension-gfm-alerts-243-0.27.0.jar",
             "repository/org/jetbrains/jewel/jewel-markdown-ide-laf-bridge-styling-243/0.27.0/jewel-markdown-ide-laf-bridge-styling-243-0.27.0.jar",
-            "repository/org/commonmark/commonmark/0.24.0/commonmark-0.24.0.jar",
-        ],
-        "@intellij//:intellij_ce_2024_1": [
-            "repository/org/jetbrains/jewel/jewel-foundation-241/0.27.0/jewel-foundation-241-0.27.0.jar",
-            "repository/org/jetbrains/jewel/jewel-ide-laf-bridge-241/0.27.0/jewel-ide-laf-bridge-241-0.27.0.jar",
-            "repository/org/jetbrains/jewel/jewel-ui-241/0.27.0/jewel-ui-241-0.27.0.jar",
-            "repository/org/jetbrains/jewel/jewel-markdown-core-241/0.27.0/jewel-markdown-core-241-0.27.0.jar",
-            "repository/org/jetbrains/jewel/jewel-markdown-extension-autolink-241/0.27.0/jewel-markdown-extension-autolink-241-0.27.0.jar",
-            "repository/org/jetbrains/jewel/jewel-markdown-extension-gfm-alerts-241/0.27.0/jewel-markdown-extension-gfm-alerts-241-0.27.0.jar",
-            "repository/org/jetbrains/jewel/jewel-markdown-ide-laf-bridge-styling-241/0.27.0/jewel-markdown-ide-laf-bridge-styling-241-0.27.0.jar",
             "repository/org/commonmark/commonmark/0.24.0/commonmark-0.24.0.jar",
         ],
         "@intellij//:intellij_ce_2024_2": [
