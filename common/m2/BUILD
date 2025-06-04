@@ -990,3 +990,10 @@ filegroup(
     ],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "sqlite-jdbc-3.43.0.0",
+    jars = ["repository/org/xerial/sqlite-jdbc/3.43.0.0/sqlite-jdbc-3.43.0.0.jar"],
+    visibility = ["//visibility:public"],
+)
