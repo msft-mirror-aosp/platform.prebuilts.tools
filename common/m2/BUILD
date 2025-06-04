@@ -513,8 +513,9 @@ studio_data(
 # It is declared here manually in order to avoid affecting version resolution
 # for the main maven repo---because for various reasons our compiler version
 # might not match the version of the kotlin-stdlib we want on the classpath.
-# Note, the versions of 'jvm-abi-gen-plugin' and 'kotlin-compose-compiler-plugin'
-# must be consistent with the Kotlin compiler version.
+# Note, the versions of 'jvm-abi-gen-plugin', 'kotlin-compose-compiler-plugin'
+# and 'kotlin-serialization-compiler-plugin' must be consistent with the
+# Kotlin compiler version.
 jvm_import(
     name = "kotlin-compiler",
     jars = [
@@ -546,6 +547,14 @@ jvm_import(
     name = "kotlin-compose-compiler-plugin",
     jars = [
         "repository/org/jetbrains/kotlin/kotlin-compose-compiler-plugin/2.1.10/kotlin-compose-compiler-plugin-2.1.10.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+jvm_import(
+    name = "kotlin-serialization-compiler-plugin",
+    jars = [
+        "repository/org/jetbrains/kotlin/kotlin-serialization-compiler-plugin/2.1.10/kotlin-serialization-compiler-plugin-2.1.10.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -985,7 +994,6 @@ filegroup(
     # do not sort: must match IML order
     srcs = [
         "repository/io/github/oshai/kotlin-logging-jvm/7.0.0/kotlin-logging-jvm-7.0.0.jar",
-        "repository/org/jetbrains/kotlinx/kotlinx-serialization-json-jvm/1.7.3/kotlinx-serialization-json-jvm-1.7.3.jar",
         "repository/io/modelcontextprotocol/kotlin-sdk/0.5.0/kotlin-sdk-0.5.0.jar",
     ],
     visibility = ["//visibility:public"],
@@ -995,5 +1003,16 @@ filegroup(
 jvm_import(
     name = "sqlite-jdbc-3.43.0.0",
     jars = ["repository/org/xerial/sqlite-jdbc/3.43.0.0/sqlite-jdbc-3.43.0.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+filegroup(
+    name = "kotlinx-serialization_files",
+    # do not sort: must match IML order
+    srcs = [
+        "repository/org/jetbrains/kotlinx/kotlinx-serialization-core-jvm/1.7.3/kotlinx-serialization-core-jvm-1.7.3.jar",
+        "repository/org/jetbrains/kotlinx/kotlinx-serialization-json-jvm/1.7.3/kotlinx-serialization-json-jvm-1.7.3.jar",
+    ],
     visibility = ["//visibility:public"],
 )
