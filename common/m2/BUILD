@@ -955,16 +955,13 @@ jvm_import(
     visibility = ["//visibility:public"],
 )
 
-# managed by go/iml_to_build
-jvm_import(
-    name = "mcp-kotlin-sdk",
-    # do not sort: must match IML order
-    jars = [
-        "repository/io/github/oshai/kotlin-logging-jvm/7.0.0/kotlin-logging-jvm-7.0.0.jar",
-        "repository/org/jetbrains/kotlinx/kotlinx-serialization-json-jvm/1.7.3/kotlinx-serialization-json-jvm-1.7.3.jar",
-        "repository/io/modelcontextprotocol/kotlin-sdk/0.5.0/kotlin-sdk-0.5.0.jar",
-        "repository/org/jetbrains/kotlin/kotlin-stdlib/2.1.20/kotlin-stdlib-2.1.20.jar",
-    ],
+# Temporary rule extracting the atomics package from kotlin-stdlib 2.1.20, to prevent linkage errors with the platform's older version
+genrule(
+    name = "filtered_kotlin_stdlib_atomics",
+    srcs = ["repository/org/jetbrains/kotlin/kotlin-stdlib/2.1.20/kotlin-stdlib-2.1.20.jar"],
+    outs = ["filtered_kotlin_stdlib_atomics.jar"],
+    cmd = "$(location //tools/base/bazel:jar_filter) $(location repository/org/jetbrains/kotlin/kotlin-stdlib/2.1.20/kotlin-stdlib-2.1.20.jar) $(location filtered_kotlin_stdlib_atomics.jar) kotlin.concurrent.atomics kotlin.concurrent.internal",
+    tools = ["//tools/base/bazel:jar_filter"],
     visibility = ["//visibility:public"],
 )
 
@@ -979,5 +976,17 @@ jvm_import(
 filegroup(
     name = "lucene_files",
     srcs = ["repository/org/apache/lucene/lucene-queryparser/9.12.0/lucene-queryparser-9.12.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+filegroup(
+    name = "mcp-kotlin-sdk_files",
+    # do not sort: must match IML order
+    srcs = [
+        "repository/io/github/oshai/kotlin-logging-jvm/7.0.0/kotlin-logging-jvm-7.0.0.jar",
+        "repository/org/jetbrains/kotlinx/kotlinx-serialization-json-jvm/1.7.3/kotlinx-serialization-json-jvm-1.7.3.jar",
+        "repository/io/modelcontextprotocol/kotlin-sdk/0.5.0/kotlin-sdk-0.5.0.jar",
+    ],
     visibility = ["//visibility:public"],
 )
