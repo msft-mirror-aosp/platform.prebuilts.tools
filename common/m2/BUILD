@@ -988,14 +988,31 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
-# managed by go/iml_to_build
-filegroup(
-    name = "mcp-kotlin-sdk_files",
-    # do not sort: must match IML order
-    srcs = [
-        "repository/io/github/oshai/kotlin-logging-jvm/7.0.0/kotlin-logging-jvm-7.0.0.jar",
-        "repository/io/modelcontextprotocol/kotlin-sdk/0.5.0/kotlin-sdk-0.5.0.jar",
-    ],
+# The MCP Kotlin SDK depends on a few libraries not bundled until 251.
+merge_jars(
+    name = "mcp-kotlin-sdk",
+    out = "mcp-kotlin-sdk.jar",
+    jars = select({
+        "//conditions:default": [
+            ":filtered_kotlin_stdlib_atomics.jar",
+            "repository/io/github/oshai/kotlin-logging-jvm/7.0.0/kotlin-logging-jvm-7.0.0.jar",
+            "repository/io/modelcontextprotocol/kotlin-sdk/0.5.0/kotlin-sdk-0.5.0.jar",
+        ],
+        "@intellij//:intellij_ce_2024_2": [
+            ":filtered_kotlin_stdlib_atomics.jar",
+            "repository/io/github/oshai/kotlin-logging-jvm/7.0.0/kotlin-logging-jvm-7.0.0.jar",
+            "repository/io/modelcontextprotocol/kotlin-sdk/0.5.0/kotlin-sdk-0.5.0.jar",
+            "repository/org/jetbrains/kotlinx/kotlinx-io-bytestring-jvm/0.6.0/kotlinx-io-bytestring-jvm-0.6.0.jar",
+            "repository/org/jetbrains/kotlinx/kotlinx-io-core-jvm/0.6.0/kotlinx-io-core-jvm-0.6.0.jar",
+        ],
+        "@intellij//:intellij_ce_2024_3": [
+            ":filtered_kotlin_stdlib_atomics.jar",
+            "repository/io/github/oshai/kotlin-logging-jvm/7.0.0/kotlin-logging-jvm-7.0.0.jar",
+            "repository/io/modelcontextprotocol/kotlin-sdk/0.5.0/kotlin-sdk-0.5.0.jar",
+            "repository/org/jetbrains/kotlinx/kotlinx-io-bytestring-jvm/0.6.0/kotlinx-io-bytestring-jvm-0.6.0.jar",
+            "repository/org/jetbrains/kotlinx/kotlinx-io-core-jvm/0.6.0/kotlinx-io-core-jvm-0.6.0.jar",
+        ],
+    }),
     visibility = ["//visibility:public"],
 )
 
