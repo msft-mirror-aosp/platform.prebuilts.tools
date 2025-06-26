@@ -585,6 +585,7 @@ filegroup(
     testonly = True,
     srcs = glob(["**/*"]),
     visibility = [
+        "//tools/adt/idea/aswb:__subpackages__",
         "//tools/base/bazel:__pkg__",
         "//tools/vendor/google3/aswb:__subpackages__",
     ],
