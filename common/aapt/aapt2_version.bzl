@@ -1,3 +1,3 @@
 #### Generated file, do not edit manually ####
 #See README.md.
-AAPT2_VERSION = "12782657"
+AAPT2_VERSION = "13700139"
