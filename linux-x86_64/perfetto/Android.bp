@@ -44,9 +44,9 @@ filegroup {
         "configs/long_trace_config.textproto",
         "configs/long_trace_binder_config.textproto",
         "configs/trace_config_adservices.textproto",
-        "metrics-v2/memory_per_process-avg_rss_and_swap.textproto",
-        "metrics-v2/total_runtime_per_slice_for_systemui_process.textproto",
-        "metrics-v2/total_runtime_per_thread_for_systemui_process.textproto",
+        "metrics_v2/memory_per_process-avg_rss_and_swap.textproto",
+        "metrics_v2/total_runtime_per_slice_for_systemui_process.textproto",
+        "metrics_v2/total_runtime_per_thread_for_systemui_process.textproto",
     ],
 }
 
@@ -117,15 +117,48 @@ prebuilt_etc {
 
 prebuilt_etc {
     name: "memory_per_process-avg_rss_and_swap.textproto",
-    src: "metrics-v2/memory_per_process-avg_rss_and_swap.textproto",
+    src: "metrics_v2/memory_per_process-avg_rss_and_swap.textproto",
 }
 
 prebuilt_etc {
     name: "total_runtime_per_slice_for_systemui_process.textproto",
-    src: "metrics-v2/total_runtime_per_slice_for_systemui_process.textproto",
+    src: "metrics_v2/total_runtime_per_slice_for_systemui_process.textproto",
 }
 
 prebuilt_etc {
     name: "total_runtime_per_thread_for_systemui_process.textproto",
-    src: "metrics-v2/total_runtime_per_thread_for_systemui_process.textproto",
+    src: "metrics_v2/total_runtime_per_thread_for_systemui_process.textproto",
+}
+
+python_library_host {
+    name: "metrics-tests-utils",
+    srcs: ["metrics_v2/tests/utils/*.py"],
+    pkg_path: "perfetto",
+}
+
+python_test_host {
+    name: "MetricsV2Test",
+    team: "trendy_team_system_ui_performance",
+    main: "metrics_v2/tests/metrics_v2_test.py",
+    srcs: ["metrics_v2/tests/metrics_v2_test.py"],
+    libs: [
+        "perfetto-trace-processor-python",
+        "perfetto-trace-proto-python",
+        "metrics-tests-utils",
+    ],
+    data: [
+        "trace_processor_shell",
+        "metrics_v2/android_bitmap_metric.textproto",
+        "metrics_v2/tests/data/android_bitmap_metric_output.txt",
+    ],
+    test_options: {
+        unit_test: true,
+    },
+    version: {
+        py3: {
+            enabled: true,
+            // The test needs to use the host python interpreter to be able import the perfetto modules.
+            embedded_launcher: false,
+        },
+    },
 }
