@@ -233,7 +233,11 @@ filegroup(
 # managed by go/iml_to_build
 filegroup(
     name = "equalsverifier_files",
-    srcs = ["repository/nl/jqno/equalsverifier/equalsverifier/3.15.6/equalsverifier-3.15.6.jar"],
+    # do not sort: must match IML order
+    srcs = [
+        "repository/nl/jqno/equalsverifier/equalsverifier/3.15.6/equalsverifier-3.15.6.jar",
+        "repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar",
+    ],
     visibility = ["//visibility:public"],
 )
 

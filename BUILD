@@ -64,6 +64,7 @@ studio_data(
         ["common/lldb/**"],
         exclude = [
             "common/lldb/lldb.spdx.json",
+            "common/lldb/lldb-armeabi.spdx.json",
             "common/lldb/android/riscv64/lldb-server",
         ],
     ),
