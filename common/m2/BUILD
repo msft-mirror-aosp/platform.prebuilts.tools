@@ -1092,3 +1092,10 @@ jvm_import(
     ],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+filegroup(
+    name = "protobuf-kotlin_files",
+    srcs = ["repository/com/google/protobuf/protobuf-kotlin/3.24.4/protobuf-kotlin-3.24.4.jar"],
+    visibility = ["//visibility:public"],
+)
