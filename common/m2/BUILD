@@ -640,7 +640,7 @@ jvm_import(
 # managed by go/iml_to_build
 filegroup(
     name = "google-dexlib2_files",
-    srcs = ["repository/com/android/tools/smali/smali-dexlib2/3.0.3/smali-dexlib2-3.0.3.jar"],
+    srcs = ["repository/com/android/tools/smali/smali-dexlib2/3.0.9/smali-dexlib2-3.0.9.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -649,8 +649,8 @@ filegroup(
     name = "google-baksmali_files",
     # do not sort: must match IML order
     srcs = [
-        "repository/com/android/tools/smali/smali-baksmali/3.0.3/smali-baksmali-3.0.3.jar",
-        "repository/com/android/tools/smali/smali-util/3.0.3/smali-util-3.0.3.jar",
+        "repository/com/android/tools/smali/smali-baksmali/3.0.9/smali-baksmali-3.0.9.jar",
+        "repository/com/android/tools/smali/smali-util/3.0.9/smali-util-3.0.9.jar",
     ],
     visibility = ["//visibility:public"],
 )
