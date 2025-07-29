@@ -1067,6 +1067,26 @@ jvm_import(
     jars = [
         "repository/com/openai/openai-java-core/2.19.1/openai-java-core-2.19.1.jar",
         "repository/com/openai/openai-java-client-okhttp/2.19.1/openai-java-client-okhttp-2.19.1.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "anthropic-java-sdk",
+    # do not sort: must match IML order
+    jars = [
+        "repository/com/anthropic/anthropic-java-client-okhttp/2.2.0/anthropic-java-client-okhttp-2.2.0.jar",
+        "repository/com/anthropic/anthropic-java-core/2.2.0/anthropic-java-core-2.2.0.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "anthropic-openai-common-deps",
+    # do not sort: must match IML order
+    jars = [
         "repository/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.18.2/jackson-datatype-jdk8-2.18.2.jar",
         "repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.18.2/jackson-datatype-jsr310-2.18.2.jar",
     ],
