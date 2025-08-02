@@ -47,6 +47,7 @@ filegroup {
         "metrics_v2/memory_per_process-avg_rss_and_swap.textproto",
         "metrics_v2/total_runtime_per_slice_for_systemui_process.textproto",
         "metrics_v2/total_runtime_per_thread_for_systemui_process.textproto",
+        "metrics_v2/android_bitmap_metric.textproto",
     ],
 }
 
@@ -128,6 +129,11 @@ prebuilt_etc {
 prebuilt_etc {
     name: "total_runtime_per_thread_for_systemui_process.textproto",
     src: "metrics_v2/total_runtime_per_thread_for_systemui_process.textproto",
+}
+
+prebuilt_etc {
+    name: "android_bitmap_metric.textproto",
+    src: "metrics_v2/android_bitmap_metric.textproto",
 }
 
 python_library_host {
