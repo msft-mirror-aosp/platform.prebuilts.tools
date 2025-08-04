@@ -1047,19 +1047,6 @@ jvm_import(
 
 # managed by go/iml_to_build
 jvm_import(
-    name = "compose-desktop-test",
-    # do not sort: must match IML order
-    jars = [
-        "repository/org/jetbrains/compose/ui/ui-test-junit4-desktop/1.8.0-alpha04/ui-test-junit4-desktop-1.8.0-alpha04.jar",
-        "repository/org/jetbrains/compose/ui/ui-test-desktop/1.8.0-alpha04/ui-test-desktop-1.8.0-alpha04.jar",
-        "repository/org/jetbrains/jewel/jewel-int-ui-standalone/0.28.0-251.26137/jewel-int-ui-standalone-0.28.0-251.26137.jar",
-        "repository/org/jetbrains/jewel/jewel-markdown-int-ui-standalone-styling/0.28.0-251.26137/jewel-markdown-int-ui-standalone-styling-0.28.0-251.26137.jar",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
     name = "openai-java-sdk",
     # do not sort: must match IML order
     jars = [
