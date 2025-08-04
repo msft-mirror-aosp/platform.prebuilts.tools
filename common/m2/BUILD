@@ -854,8 +854,6 @@ merge_jars(
         "repository/org/jetbrains/jewel/jewel-markdown-extensions-gfm-alerts/0.28.0-243.27100/jewel-markdown-extensions-gfm-alerts-0.28.0-243.27100.jar",
         "repository/org/jetbrains/jewel/jewel-markdown-ide-laf-bridge-styling/0.28.0-243.27100/jewel-markdown-ide-laf-bridge-styling-0.28.0-243.27100.jar",
         "repository/org/commonmark/commonmark/0.24.0/commonmark-0.24.0.jar",
-        "repository/org/jetbrains/jewel/jewel-int-ui-standalone/0.28.0-243.27100/jewel-int-ui-standalone-0.28.0-243.27100.jar",
-        "repository/org/jetbrains/jewel/jewel-markdown-int-ui-standalone-styling/0.28.0-243.27100/jewel-markdown-int-ui-standalone-styling-0.28.0-243.27100.jar",
     ],
     visibility = ["//visibility:public"],
 )
