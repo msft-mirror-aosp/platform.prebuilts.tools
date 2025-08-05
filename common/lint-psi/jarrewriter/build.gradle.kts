@@ -48,12 +48,12 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "17" // Or your desired JVM target
 }
 
-tasks.register<JavaExec>("rewriteJar") {
+tasks.register<JavaExec>("wipeMethod") {
     group = "custom"
     description = "Rewrites a specific method in a JAR to have an empty body."
 
     classpath = sourceSets.main.get().runtimeClasspath
-    mainClass.set("jarrewriter.JarModifierKt")
+    mainClass.set("intellijrewriter.JarModifierKt")
 
     // Arguments for the main method, now using the correctly defined Kotlin properties
     args(
@@ -82,7 +82,7 @@ tasks.register<JavaExec>("passthroughJar") {
     description = "Reads an input JAR and writes it to output JAR as-is (no modification)."
 
     classpath = sourceSets.main.get().runtimeClasspath
-    mainClass.set("jarrewriter.JarModifierKt")
+    mainClass.set("intellijrewriter.JarModifierKt")
 
     args(
         inputJarPath, // Uses the resolved inputJarPath

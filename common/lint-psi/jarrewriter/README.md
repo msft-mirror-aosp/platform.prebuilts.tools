@@ -6,7 +6,7 @@ to remove a certain method in the given binary jar
 Usage
 ---
 ```
-$ ../dependency-source-checkouts/kotlin/gradlew rewriteJar \
+$ ../dependency-source-checkouts/kotlin/gradlew wipeMethod \
   -PinputJarPath=../intellij-core/intellij-core.jar \
   -PoutputJarPath=output/intellij-core.jar \
   -PtargetClass=com/intellij/mock/MockApplication \
