@@ -1125,3 +1125,19 @@ jvm_import(
     jars = ["repository/io/github/oshai/kotlin-logging-jvm/7.0.0/kotlin-logging-jvm-7.0.0.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "openai-sdk-test-deps",
+    # do not sort: must match IML order
+    jars = [
+        "repository/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.18.2/jackson-datatype-jdk8-2.18.2.jar",
+        "repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.18.2/jackson-datatype-jsr310-2.18.2.jar",
+        "repository/com/github/victools/jsonschema-generator/4.38.0/jsonschema-generator-4.38.0.jar",
+        "repository/com/github/victools/jsonschema-module-jackson/4.38.0/jsonschema-module-jackson-4.38.0.jar",
+        "repository/com/github/victools/jsonschema-module-swagger-2/4.38.0/jsonschema-module-swagger-2-4.38.0.jar",
+        "repository/io/swagger/core/v3/swagger-annotations/2.2.31/swagger-annotations-2.2.31.jar",
+        "repository/com/fasterxml/classmate/1.7.0/classmate-1.7.0.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
