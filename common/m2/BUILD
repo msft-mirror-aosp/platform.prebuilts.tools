@@ -528,12 +528,12 @@ jvm_import(
         # then resolving any duplicate versions to the highest version present.
         "repository/org/jetbrains/annotations/24.0.0/annotations-24.0.0.jar",
         "repository/org/jetbrains/intellij/deps/trove4j/1.0.20200330/trove4j-1.0.20200330.jar",
-        "repository/org/jetbrains/kotlin/kotlin-compiler/2.1.10/kotlin-compiler-2.1.10.jar",
-        "repository/org/jetbrains/kotlin/kotlin-reflect/2.1.10/kotlin-reflect-2.1.10.jar",
-        "repository/org/jetbrains/kotlin/kotlin-script-runtime/2.1.10/kotlin-script-runtime-2.1.10.jar",
-        "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/2.1.10/kotlin-stdlib-jdk7-2.1.10.jar",
-        "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/2.1.10/kotlin-stdlib-jdk8-2.1.10.jar",
-        "repository/org/jetbrains/kotlin/kotlin-stdlib/2.1.10/kotlin-stdlib-2.1.10.jar",
+        "repository/org/jetbrains/kotlin/kotlin-compiler/2.2.0/kotlin-compiler-2.2.0.jar",
+        "repository/org/jetbrains/kotlin/kotlin-reflect/2.2.0/kotlin-reflect-2.2.0.jar",
+        "repository/org/jetbrains/kotlin/kotlin-script-runtime/2.2.0/kotlin-script-runtime-2.2.0.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/2.2.0/kotlin-stdlib-jdk7-2.2.0.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/2.2.0/kotlin-stdlib-jdk8-2.2.0.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib/2.2.0/kotlin-stdlib-2.2.0.jar",
         "repository/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.8.0/kotlinx-coroutines-core-jvm-1.8.0.jar",
     ],
     visibility = ["//visibility:public"],
@@ -542,7 +542,7 @@ jvm_import(
 jvm_import(
     name = "jvm-abi-gen-plugin",
     jars = [
-        "repository/org/jetbrains/kotlin/jvm-abi-gen/2.1.10/jvm-abi-gen-2.1.10.jar",
+        "repository/org/jetbrains/kotlin/jvm-abi-gen/2.2.0/jvm-abi-gen-2.2.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -550,7 +550,7 @@ jvm_import(
 jvm_import(
     name = "kotlin-compose-compiler-plugin",
     jars = [
-        "repository/org/jetbrains/kotlin/kotlin-compose-compiler-plugin/2.1.10/kotlin-compose-compiler-plugin-2.1.10.jar",
+        "repository/org/jetbrains/kotlin/kotlin-compose-compiler-plugin/2.2.0/kotlin-compose-compiler-plugin-2.2.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -558,7 +558,7 @@ jvm_import(
 jvm_import(
     name = "kotlin-serialization-compiler-plugin",
     jars = [
-        "repository/org/jetbrains/kotlin/kotlin-serialization-compiler-plugin/2.1.10/kotlin-serialization-compiler-plugin-2.1.10.jar",
+        "repository/org/jetbrains/kotlin/kotlin-serialization-compiler-plugin/2.2.0/kotlin-serialization-compiler-plugin-2.2.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -841,22 +841,34 @@ filegroup(
 
 # Up until 251, Jewel libraries depend on IDE version and merged here to be included depending on an IDE version.
 # This should only be used when targetting the 243 platform.
+# And for 251, only used for IntelliJ Gemini Code Assist plugin to bundle the jar. As different IDE
+# 2025.1 minor version are using incompatible jewel libraries.
 merge_jars(
     name = "jewel-ide",
     out = "jewel-ide.jar",
     allow_duplicates = True,  # needed for JetBrains' __index__ file collisions
-    jars = [
-        "repository/org/jetbrains/jewel/jewel-foundation/0.28.0-243.27100/jewel-foundation-0.28.0-243.27100.jar",
-        "repository/org/jetbrains/jewel/jewel-ide-laf-bridge/0.28.0-243.27100/jewel-ide-laf-bridge-0.28.0-243.27100.jar",
-        "repository/org/jetbrains/jewel/jewel-ui/0.28.0-243.27100/jewel-ui-0.28.0-243.27100.jar",
-        "repository/org/jetbrains/jewel/jewel-markdown-core/0.28.0-243.27100/jewel-markdown-core-0.28.0-243.27100.jar",
-        "repository/org/jetbrains/jewel/jewel-markdown-extensions-autolink/0.28.0-243.27100/jewel-markdown-extensions-autolink-0.28.0-243.27100.jar",
-        "repository/org/jetbrains/jewel/jewel-markdown-extensions-gfm-alerts/0.28.0-243.27100/jewel-markdown-extensions-gfm-alerts-0.28.0-243.27100.jar",
-        "repository/org/jetbrains/jewel/jewel-markdown-ide-laf-bridge-styling/0.28.0-243.27100/jewel-markdown-ide-laf-bridge-styling-0.28.0-243.27100.jar",
-        "repository/org/commonmark/commonmark/0.24.0/commonmark-0.24.0.jar",
-        "repository/org/jetbrains/jewel/jewel-int-ui-standalone/0.28.0-243.27100/jewel-int-ui-standalone-0.28.0-243.27100.jar",
-        "repository/org/jetbrains/jewel/jewel-markdown-int-ui-standalone-styling/0.28.0-243.27100/jewel-markdown-int-ui-standalone-styling-0.28.0-243.27100.jar",
-    ],
+    jars = select({
+        "//conditions:default": [
+            "repository/org/jetbrains/jewel/jewel-foundation/0.28.0-243.27100/jewel-foundation-0.28.0-243.27100.jar",
+            "repository/org/jetbrains/jewel/jewel-ide-laf-bridge/0.28.0-243.27100/jewel-ide-laf-bridge-0.28.0-243.27100.jar",
+            "repository/org/jetbrains/jewel/jewel-ui/0.28.0-243.27100/jewel-ui-0.28.0-243.27100.jar",
+            "repository/org/jetbrains/jewel/jewel-markdown-core/0.28.0-243.27100/jewel-markdown-core-0.28.0-243.27100.jar",
+            "repository/org/jetbrains/jewel/jewel-markdown-extensions-autolink/0.28.0-243.27100/jewel-markdown-extensions-autolink-0.28.0-243.27100.jar",
+            "repository/org/jetbrains/jewel/jewel-markdown-extensions-gfm-alerts/0.28.0-243.27100/jewel-markdown-extensions-gfm-alerts-0.28.0-243.27100.jar",
+            "repository/org/jetbrains/jewel/jewel-markdown-ide-laf-bridge-styling/0.28.0-243.27100/jewel-markdown-ide-laf-bridge-styling-0.28.0-243.27100.jar",
+            "repository/org/commonmark/commonmark/0.24.0/commonmark-0.24.0.jar",
+        ],
+        "@intellij//:intellij_ce_2025_1": [
+            "repository/org/jetbrains/jewel/jewel-foundation/0.28.0-251.25410.109/jewel-foundation-0.28.0-251.25410.109.jar",
+            "repository/org/jetbrains/jewel/jewel-ide-laf-bridge/0.28.0-251.25410.109/jewel-ide-laf-bridge-0.28.0-251.25410.109.jar",
+            "repository/org/jetbrains/jewel/jewel-ui/0.28.0-251.25410.109/jewel-ui-0.28.0-251.25410.109.jar",
+            "repository/org/jetbrains/jewel/jewel-markdown-core/0.28.0-251.25410.109/jewel-markdown-core-0.28.0-251.25410.109.jar",
+            "repository/org/jetbrains/jewel/jewel-markdown-ide-laf-bridge-styling/0.28.0-251.25410.109/jewel-markdown-ide-laf-bridge-styling-0.28.0-251.25410.109.jar",
+            "repository/org/jetbrains/jewel/jewel-int-ui-standalone/0.28.0-251.25410.109/jewel-int-ui-standalone-0.28.0-251.25410.109.jar",
+            "repository/org/jetbrains/jewel/jewel-markdown-int-ui-standalone-styling/0.28.0-251.25410.109/jewel-markdown-int-ui-standalone-styling-0.28.0-251.25410.109.jar",
+            "repository/org/commonmark/commonmark/0.24.0/commonmark-0.24.0.jar",
+        ],
+    }),
     visibility = ["//visibility:public"],
 )
 
@@ -1049,19 +1061,6 @@ jvm_import(
 
 # managed by go/iml_to_build
 jvm_import(
-    name = "compose-desktop-test",
-    # do not sort: must match IML order
-    jars = [
-        "repository/org/jetbrains/compose/ui/ui-test-junit4-desktop/1.8.0-alpha04/ui-test-junit4-desktop-1.8.0-alpha04.jar",
-        "repository/org/jetbrains/compose/ui/ui-test-desktop/1.8.0-alpha04/ui-test-desktop-1.8.0-alpha04.jar",
-        "repository/org/jetbrains/jewel/jewel-int-ui-standalone/0.28.0-251.26137/jewel-int-ui-standalone-0.28.0-251.26137.jar",
-        "repository/org/jetbrains/jewel/jewel-markdown-int-ui-standalone-styling/0.28.0-251.26137/jewel-markdown-int-ui-standalone-styling-0.28.0-251.26137.jar",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
     name = "openai-java-sdk",
     # do not sort: must match IML order
     jars = [
@@ -1097,5 +1096,48 @@ jvm_import(
 filegroup(
     name = "protobuf-kotlin_files",
     srcs = ["repository/com/google/protobuf/protobuf-kotlin/3.24.4/protobuf-kotlin-3.24.4.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "ktor-server-all",
+    # do not sort: must match IML order
+    jars = [
+        "repository/io/ktor/ktor-server-cio-jvm/3.1.3/ktor-server-cio-jvm-3.1.3.jar",
+        "repository/io/ktor/ktor-server-core-jvm/3.1.3/ktor-server-core-jvm-3.1.3.jar",
+        "repository/io/ktor/ktor-server-sse-jvm/3.1.3/ktor-server-sse-jvm-3.1.3.jar",
+        "repository/io/ktor/ktor-server-websockets-jvm/3.1.3/ktor-server-websockets-jvm-3.1.3.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "kotlinx-atomicfu",
+    jars = ["repository/org/jetbrains/kotlinx/atomicfu-jvm/0.29.0/atomicfu-jvm-0.29.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "kotlin-logging-jvm-7.0.0",
+    jars = ["repository/io/github/oshai/kotlin-logging-jvm/7.0.0/kotlin-logging-jvm-7.0.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "openai-sdk-test-deps",
+    # do not sort: must match IML order
+    jars = [
+        "repository/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.18.2/jackson-datatype-jdk8-2.18.2.jar",
+        "repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.18.2/jackson-datatype-jsr310-2.18.2.jar",
+        "repository/com/github/victools/jsonschema-generator/4.38.0/jsonschema-generator-4.38.0.jar",
+        "repository/com/github/victools/jsonschema-module-jackson/4.38.0/jsonschema-module-jackson-4.38.0.jar",
+        "repository/com/github/victools/jsonschema-module-swagger-2/4.38.0/jsonschema-module-swagger-2-4.38.0.jar",
+        "repository/io/swagger/core/v3/swagger-annotations/2.2.31/swagger-annotations-2.2.31.jar",
+        "repository/com/fasterxml/classmate/1.7.0/classmate-1.7.0.jar",
+    ],
     visibility = ["//visibility:public"],
 )
