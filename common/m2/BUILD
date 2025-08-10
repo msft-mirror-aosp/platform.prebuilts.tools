@@ -1131,8 +1131,6 @@ jvm_import(
     name = "openai-sdk-test-deps",
     # do not sort: must match IML order
     jars = [
-        "repository/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.18.2/jackson-datatype-jdk8-2.18.2.jar",
-        "repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.18.2/jackson-datatype-jsr310-2.18.2.jar",
         "repository/com/github/victools/jsonschema-generator/4.38.0/jsonschema-generator-4.38.0.jar",
         "repository/com/github/victools/jsonschema-module-jackson/4.38.0/jsonschema-module-jackson-4.38.0.jar",
         "repository/com/github/victools/jsonschema-module-swagger-2/4.38.0/jsonschema-module-swagger-2-4.38.0.jar",
