@@ -110,6 +110,18 @@ aar_import(
 )
 
 aar_import(
+    name = "androidx-test-runner-1.4.0",
+    aar = "repository/androidx/test/runner/1.4.0/runner-1.4.0.aar",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@maven//:androidx.annotation.annotation",
+        "@maven//:androidx.test.monitor",
+        "@maven//:androidx.test.services.storage",
+        "@maven//:junit.junit",
+    ],
+)
+
+aar_import(
     name = "androidx.inspection.inspection.1.0.0",
     aar = "repository/androidx/inspection/inspection/1.0.0/inspection-1.0.0.aar",
     visibility = ["//visibility:public"],
@@ -283,7 +295,7 @@ jvm_import(
 # managed by go/iml_to_build
 jvm_import(
     name = "javapoet",
-    jars = ["repository/com/squareup/javapoet/1.10.0/javapoet-1.10.0.jar"],
+    jars = ["repository/com/squareup/javapoet/1.13.0/javapoet-1.13.0.jar"],
     visibility = ["//visibility:public"],
 )
 
