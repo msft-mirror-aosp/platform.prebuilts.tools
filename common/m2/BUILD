@@ -1122,3 +1122,10 @@ jvm_import(
     ],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "ktor-io-jvm-3.1.3",
+    jars = ["repository/io/ktor/ktor-io-jvm/3.1.3/ktor-io-jvm-3.1.3.jar"],
+    visibility = ["//visibility:public"],
+)
