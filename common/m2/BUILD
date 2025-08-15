@@ -1085,8 +1085,8 @@ jvm_import(
     name = "anthropic-java-sdk",
     # do not sort: must match IML order
     jars = [
-        "repository/com/anthropic/anthropic-java-client-okhttp/2.2.0/anthropic-java-client-okhttp-2.2.0.jar",
-        "repository/com/anthropic/anthropic-java-core/2.2.0/anthropic-java-core-2.2.0.jar",
+        "repository/com/anthropic/anthropic-java-core/2.5.1/anthropic-java-core-2.5.1.jar",
+        "repository/com/anthropic/anthropic-java-client-okhttp/2.5.1/anthropic-java-client-okhttp-2.5.1.jar",
     ],
     visibility = ["//visibility:public"],
 )
