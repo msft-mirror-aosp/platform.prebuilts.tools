@@ -48,6 +48,32 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "17" // Or your desired JVM target
 }
 
+tasks.register<JavaExec>("rewriteType") {
+    group = "custom"
+    description = "Rewrites specific types in a JAR to new ones."
+
+    classpath = sourceSets.main.get().runtimeClasspath
+    mainClass.set("kotlincrewriter.JavaTypeRewriterKt")
+
+    // Arguments for the main method, now using the correctly defined Kotlin properties
+    args(
+        inputJarPath,
+        outputJarPath,
+    )
+
+    doFirst {
+        val outputDir = project.file(outputJarPath).parentFile
+        if (!outputDir.exists()) {
+            println("Creating output directory: $outputDir")
+            outputDir.mkdirs()
+        }
+        val inputFile = project.file(inputJarPath)
+        if (!inputFile.exists()) {
+            throw GradleException("Input JAR not found: ${inputFile.absolutePath}")
+        }
+    }
+}
+
 tasks.register<JavaExec>("wipeMethod") {
     group = "custom"
     description = "Rewrites a specific method in a JAR to have an empty body."
