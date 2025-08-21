@@ -1085,8 +1085,8 @@ jvm_import(
     name = "anthropic-java-sdk",
     # do not sort: must match IML order
     jars = [
-        "repository/com/anthropic/anthropic-java-client-okhttp/2.2.0/anthropic-java-client-okhttp-2.2.0.jar",
-        "repository/com/anthropic/anthropic-java-core/2.2.0/anthropic-java-core-2.2.0.jar",
+        "repository/com/anthropic/anthropic-java-core/2.5.1/anthropic-java-core-2.5.1.jar",
+        "repository/com/anthropic/anthropic-java-client-okhttp/2.5.1/anthropic-java-client-okhttp-2.5.1.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -1120,5 +1120,12 @@ jvm_import(
         "repository/io/swagger/core/v3/swagger-annotations/2.2.31/swagger-annotations-2.2.31.jar",
         "repository/com/fasterxml/classmate/1.7.0/classmate-1.7.0.jar",
     ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "ktor-io-jvm-3.1.3",
+    jars = ["repository/io/ktor/ktor-io-jvm/3.1.3/ktor-io-jvm-3.1.3.jar"],
     visibility = ["//visibility:public"],
 )
