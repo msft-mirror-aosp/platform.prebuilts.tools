@@ -1,0 +1,162 @@
+diff --git a/analysis/analysis-api-fir/resources/META-INF/analysis-api/analysis-api-fir.xml b/analysis/analysis-api-fir/resources/META-INF/analysis-api/analysis-api-fir.xml
+index 340c93009572..13c8ffa12bbc 100644
+--- a/analysis/analysis-api-fir/resources/META-INF/analysis-api/analysis-api-fir.xml
++++ b/analysis/analysis-api-fir/resources/META-INF/analysis-api/analysis-api-fir.xml
+@@ -36,6 +36,11 @@
+         serviceImplementation="org.jetbrains.kotlin.analysis.api.fir.statistics.KaFirStatisticsService"
+     />
+ 
++    <projectService
++        serviceInterface="org.jetbrains.kotlin.analysis.api.fir.utils.KaFirCacheCleaner"
++        serviceImplementation="org.jetbrains.kotlin.analysis.api.fir.utils.KaFirStopWorldCacheCleaner"
++    />
++
+     <registryKey
+         defaultValue="true"
+         description="Perform cache clean-up when running out of RAM"
+diff --git a/analysis/analysis-api-fir/src/org/jetbrains/kotlin/analysis/api/fir/KaFirSessionProvider.kt b/analysis/analysis-api-fir/src/org/jetbrains/kotlin/analysis/api/fir/KaFirSessionProvider.kt
+index a1e60f922fed..4e0cbb611681 100644
+--- a/analysis/analysis-api-fir/src/org/jetbrains/kotlin/analysis/api/fir/KaFirSessionProvider.kt
++++ b/analysis/analysis-api-fir/src/org/jetbrains/kotlin/analysis/api/fir/KaFirSessionProvider.kt
+@@ -12,12 +12,9 @@ import com.intellij.openapi.application.ApplicationManager
+ import com.intellij.openapi.progress.ProgressManager
+ import com.intellij.openapi.project.Project
+ import com.intellij.openapi.util.LowMemoryWatcher
+-import com.intellij.openapi.util.registry.Registry
+ import com.intellij.util.concurrency.AppExecutorUtil
+ import org.jetbrains.kotlin.analysis.api.KaSession
+ import org.jetbrains.kotlin.analysis.api.fir.utils.KaFirCacheCleaner
+-import org.jetbrains.kotlin.analysis.api.fir.utils.KaFirNoOpCacheCleaner
+-import org.jetbrains.kotlin.analysis.api.fir.utils.KaFirStopWorldCacheCleaner
+ import org.jetbrains.kotlin.analysis.api.impl.base.sessions.KaBaseSessionProvider
+ import org.jetbrains.kotlin.analysis.api.lifetime.KaLifetimeToken
+ import org.jetbrains.kotlin.analysis.api.permissions.KaAnalysisPermissionRegistry
+@@ -60,11 +57,9 @@ internal class KaFirSessionProvider(project: Project) : KaBaseSessionProvider(pr
+ 
+     private val scheduledCacheMaintenance: Future<*>
+ 
++    @KaCachedService
+     private val cacheCleaner: KaFirCacheCleaner by lazy(LazyThreadSafetyMode.PUBLICATION) {
+-        when {
+-            !Registry.`is`("kotlin.analysis.lowMemoryCacheCleanup", true) -> KaFirNoOpCacheCleaner
+-            else -> KaFirStopWorldCacheCleaner(project)
+-        }
++        KaFirCacheCleaner.getInstance(project)
+     }
+ 
+     @KaCachedService
+diff --git a/analysis/analysis-api-fir/src/org/jetbrains/kotlin/analysis/api/fir/utils/KaFirCacheCleaner.kt b/analysis/analysis-api-fir/src/org/jetbrains/kotlin/analysis/api/fir/utils/KaFirCacheCleaner.kt
+index ce1dc6c56d13..3f25a4d08b35 100644
+--- a/analysis/analysis-api-fir/src/org/jetbrains/kotlin/analysis/api/fir/utils/KaFirCacheCleaner.kt
++++ b/analysis/analysis-api-fir/src/org/jetbrains/kotlin/analysis/api/fir/utils/KaFirCacheCleaner.kt
+@@ -5,10 +5,13 @@
+ 
+ package org.jetbrains.kotlin.analysis.api.fir.utils
+ 
++import com.intellij.openapi.components.serviceOrNull
+ import com.intellij.openapi.diagnostic.logger
+ import com.intellij.openapi.diagnostic.trace
+ import com.intellij.openapi.progress.ProgressManager
+ import com.intellij.openapi.project.Project
++import com.intellij.openapi.util.registry.Registry
++import org.jetbrains.kotlin.analysis.api.KaImplementationDetail
+ import org.jetbrains.kotlin.analysis.api.KaSession
+ import org.jetbrains.kotlin.analysis.api.analyze
+ import org.jetbrains.kotlin.analysis.api.platform.KaCachedService
+@@ -24,7 +27,8 @@ import kotlin.system.measureTimeMillis
+ /**
+  * A facility that cleans up all low-level resolution caches per request.
+  */
+-internal interface KaFirCacheCleaner {
++@KaImplementationDetail
++interface KaFirCacheCleaner {
+     /**
+      * This method must be called before the [KaSession] is obtained (to be used later in an [analyze] block).
+      * If the method is called, [exitAnalysis] must also be called from the same thread right after the block finishes executing, or
+@@ -45,13 +49,24 @@ internal interface KaFirCacheCleaner {
+      * Consequent calls to [scheduleCleanup] are permitted (and ignored if a cleanup is already scheduled).
+      */
+     fun scheduleCleanup()
++
++    @KaImplementationDetail
++    companion object {
++        fun getInstance(project: Project): KaFirCacheCleaner {
++            if (!Registry.`is`("kotlin.analysis.lowMemoryCacheCleanup", true)) {
++                return KaFirNoOpCacheCleaner
++            }
++
++            return project.serviceOrNull<KaFirCacheCleaner>() ?: KaFirNoOpCacheCleaner
++        }
++    }
+ }
+ 
+ /**
+  * An empty implementation of a cache cleaner – no additional cleanup is performed.
+  * Can be used as a drop-in substitution for [KaFirStopWorldCacheCleaner] if forceful cache cleanup is disabled.
+  */
+-internal object KaFirNoOpCacheCleaner : KaFirCacheCleaner {
++private object KaFirNoOpCacheCleaner : KaFirCacheCleaner {
+     override fun enterAnalysis() {}
+     override fun exitAnalysis() {}
+     override fun scheduleCleanup() {}
+@@ -65,7 +80,7 @@ internal object KaFirNoOpCacheCleaner : KaFirCacheCleaner {
+  * Once a cleanup is requested, the class also prevents all new analysis blocks from running until it's complete (see the [cleanupLatch]).
+  * If there is no ongoing analysis, though, caches can be cleaned up immediately.
+  */
+-internal class KaFirStopWorldCacheCleaner(private val project: Project) : KaFirCacheCleaner {
++private class KaFirStopWorldCacheCleaner(private val project: Project) : KaFirCacheCleaner {
+     private companion object {
+         private val LOG = logger<KaFirStopWorldCacheCleaner>()
+ 
+diff --git a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/api/standalone/StandaloneAnalysisAPISessionBuilder.kt b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/api/standalone/StandaloneAnalysisAPISessionBuilder.kt
+index 865cded6c29e..4a9bea987701 100644
+--- a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/api/standalone/StandaloneAnalysisAPISessionBuilder.kt
++++ b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/api/standalone/StandaloneAnalysisAPISessionBuilder.kt
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright 2010-2024 JetBrains s.r.o. and Kotlin Programming Language contributors.
++ * Copyright 2010-2025 JetBrains s.r.o. and Kotlin Programming Language contributors.
+  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
+  */
+ 
+@@ -15,6 +15,8 @@ import com.intellij.psi.PsiFile
+ import com.intellij.psi.search.GlobalSearchScope
+ import com.intellij.util.concurrency.AppExecutorUtil
+ import org.jetbrains.kotlin.analysis.api.KaExperimentalApi
++import org.jetbrains.kotlin.analysis.api.KaImplementationDetail
++import org.jetbrains.kotlin.analysis.api.fir.utils.KaFirCacheCleaner
+ import org.jetbrains.kotlin.analysis.api.platform.KotlinPlatformSettings
+ import org.jetbrains.kotlin.analysis.api.platform.declarations.KotlinAnnotationsResolverFactory
+ import org.jetbrains.kotlin.analysis.api.platform.declarations.KotlinDeclarationProviderFactory
+@@ -158,6 +160,11 @@ public class StandaloneAnalysisAPISessionBuilder(
+                 KotlinPackagePartProviderFactory::class.java,
+                 KotlinStaticPackagePartProviderFactory(packagePartProvider)
+             )
++
++            if (!isCacheCleanerEnabled) {
++                @OptIn(KaImplementationDetail::class)
++                project.picoContainer.unregisterComponent(KaFirCacheCleaner::class.java)
++            }
+         }
+     }
+ 
+@@ -173,6 +180,19 @@ public class StandaloneAnalysisAPISessionBuilder(
+         }
+     }
+ 
++    private var isCacheCleanerEnabled = false
++
++    /**
++     * Enables a cache cleaner for the current session. It might attempt to drop internal caches to avoid memory issues.
++     *
++     * The cleaner is mostly designed for long-running workloads where analyze affects so many modules that cache size blows out of proportion.
++     *
++     * See [KT-70489](https://youtrack.jetbrains.com/issue/KT-70489) for more details.
++     */
++    public fun enableCacheCleaner() {
++        isCacheCleanerEnabled = true
++    }
++
+     /**
+      * Registers *optional* services for compiler plugin support.
+      *
