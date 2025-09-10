@@ -1129,3 +1129,17 @@ jvm_import(
     jars = ["repository/io/ktor/ktor-io-jvm/3.1.3/ktor-io-jvm-3.1.3.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "junit-platform-commons-1.9.2",
+    jars = ["repository/org/junit/platform/junit-platform-commons/1.9.2/junit-platform-commons-1.9.2.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "junit-platform-engine-1.9.2",
+    jars = ["repository/org/junit/platform/junit-platform-engine/1.9.2/junit-platform-engine-1.9.2.jar"],
+    visibility = ["//visibility:public"],
+)
