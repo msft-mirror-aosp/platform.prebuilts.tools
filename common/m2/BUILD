@@ -1085,8 +1085,8 @@ jvm_import(
     name = "anthropic-java-sdk",
     # do not sort: must match IML order
     jars = [
-        "repository/com/anthropic/anthropic-java-core/2.5.1/anthropic-java-core-2.5.1.jar",
-        "repository/com/anthropic/anthropic-java-client-okhttp/2.5.1/anthropic-java-client-okhttp-2.5.1.jar",
+        "repository/com/anthropic/anthropic-java-core/2.6.0/anthropic-java-core-2.6.0.jar",
+        "repository/com/anthropic/anthropic-java-client-okhttp/2.6.0/anthropic-java-client-okhttp-2.6.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -1127,5 +1127,19 @@ jvm_import(
 jvm_import(
     name = "ktor-io-jvm-3.1.3",
     jars = ["repository/io/ktor/ktor-io-jvm/3.1.3/ktor-io-jvm-3.1.3.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "junit-platform-commons-1.9.2",
+    jars = ["repository/org/junit/platform/junit-platform-commons/1.9.2/junit-platform-commons-1.9.2.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "junit-platform-engine-1.9.2",
+    jars = ["repository/org/junit/platform/junit-platform-engine/1.9.2/junit-platform-engine-1.9.2.jar"],
     visibility = ["//visibility:public"],
 )
