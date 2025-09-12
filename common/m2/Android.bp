@@ -96,17 +96,6 @@ license {
 }
 
 license {
-    name: "m2_api_grpc_license",
-    visibility: [":__subpackages__"],
-    license_kinds: [
-        "SPDX-license-identifier-Apache-2.0",
-    ],
-    license_text: [
-        "repository/com/google/api/grpc/LICENSE",
-    ],
-}
-
-license {
     name: "m2_joda_time_2.9.1_license",
     visibility: [":__subpackages__"],
     license_kinds: [
@@ -520,17 +509,6 @@ java_import {
     jars: [
         "repository/com/squareup/javawriter/2.1.1/javawriter-2.1.1.jar",
     ],
-}
-
-java_import_host {
-    name: "com.google.api.grpc_proto-google-common-protos-prebuilt-jar",
-    jars: ["repository/com/google/api/grpc/proto-google-common-protos/1.14.0/proto-google-common-protos-1.14.0.jar"],
-    licenses: ["m2_api_grpc_license"],
-    target: {
-        windows: {
-            enabled: true,
-        },
-    },
 }
 
 java_import {
