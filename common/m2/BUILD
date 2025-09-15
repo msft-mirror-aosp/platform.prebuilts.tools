@@ -935,7 +935,6 @@ merge_jars(
     out = "mcp-sdk-libraries.jar",
     jars = select({
         "//conditions:default": [
-            ":filtered_kotlin_stdlib_atomics.jar",  # Remove after 2025.2 merge
             "repository/io/github/oshai/kotlin-logging-jvm/7.0.0/kotlin-logging-jvm-7.0.0.jar",
             "repository/io/ktor/ktor-server-cio-jvm/3.1.3/ktor-server-cio-jvm-3.1.3.jar",
             "repository/io/ktor/ktor-server-core-jvm/3.1.3/ktor-server-core-jvm-3.1.3.jar",
