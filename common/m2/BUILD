@@ -1154,3 +1154,38 @@ jvm_import(
     jars = ["repository/org/junit/platform/junit-platform-engine/1.9.2/junit-platform-engine-1.9.2.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "shark-2.14",
+    jars = ["repository/com/squareup/leakcanary/shark/2.14/shark-2.14.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "shark-android-2.14",
+    jars = ["repository/com/squareup/leakcanary/shark-android/2.14/shark-android-2.14.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "shark-graph-2.14",
+    jars = ["repository/com/squareup/leakcanary/shark-graph/2.14/shark-graph-2.14.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "shark-hprof-2.14",
+    jars = ["repository/com/squareup/leakcanary/shark-hprof/2.14/shark-hprof-2.14.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "shark-log-2.14",
+    jars = ["repository/com/squareup/leakcanary/shark-log/2.14/shark-log-2.14.jar"],
+    visibility = ["//visibility:public"],
+)
