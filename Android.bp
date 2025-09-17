@@ -53,3 +53,12 @@ license {
     ],
     license_text: ["LICENSE"],
 }
+
+prebuilt_build_tool {
+    name: "google-java-format",
+    src: "common/google-java-format/google-java-format",
+    deps: ["common/google-java-format/google-java-format-1.27.0-all-deps.jar"],
+    visibility: [
+        "//packages/modules/Uwb/ranging",
+    ],
+}
