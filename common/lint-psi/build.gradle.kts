@@ -61,8 +61,10 @@ tasks.jar { enabled = false }
 
 // This is where we decide which files go into which jars. See the README for details.
 dependencies {
+    "intellij-core-content"("com.jetbrains.intellij.java:java-indexing-impl:$intellijVersion") { isTransitive = false } // Contains JavaCoreApplicationEnvironment
     "intellij-core-content"("com.jetbrains.intellij.java:java-psi-impl:$intellijVersion")
     "intellij-core-content"("com.jetbrains.intellij.platform:jps-model-impl:$intellijVersion") { isTransitive = false } // Contains JavaSdkUtil.
+    "intellij-core-content"("com.jetbrains.intellij.platform:plugins-parser-impl:$intellijVersion")  { isTransitive = false }
     "intellij-core-content"("com.jetbrains.intellij.platform:project-model:$intellijVersion") // includes transitive for render-resources / previewlib/cli
     //Dcl depends on GeneratedParserUtilBase from analysis-impl. This class imports com.intellij.lang.LanguageBraceMatching that comes from analysis artifact
     "intellij-core-content"("com.jetbrains.intellij.platform:analysis:$intellijVersion")  { isTransitive = false }

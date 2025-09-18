@@ -115,3 +115,33 @@ index b9901e77f84..15f48bc5343 100644
      private val fakeFileClsStubs = ConcurrentHashMap<String, Map<VirtualFile, KotlinFileStubImpl>>()
      private val fakeBuiltInsClsStubs = ConcurrentHashMap<VirtualFile, KotlinFileStubImpl?>()
 
+diff --git a/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/projectStructure/PluginStructureProvider.kt b/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/projectStructure/PluginStructureProvider.kt
+index d85918011a4a..089dc1477cd5 100644
+--- a/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/projectStructure/PluginStructureProvider.kt
++++ b/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/projectStructure/PluginStructureProvider.kt
+@@ -60,15 +60,12 @@ object PluginStructureProvider {
+     private fun getOrCalculatePluginDescriptor(
+         designation: PluginDesignation,
+     ): RawPluginDescriptor = pluginDescriptorsCache.computeIfAbsent(designation) {
+-        val descriptor = RawPluginDescriptor()
+         PluginXmlPathResolver.DEFAULT_PATH_RESOLVER.resolvePath(
+             readContext = ReadContext,
+             dataLoader = ResourceDataLoader(designation.classLoader),
+             relativePath = designation.relativePath,
+-            readInto = descriptor,
+-        )
+-
+-        descriptor
++            readInto = null,
++        ) ?: RawPluginDescriptor()
+     }
+
+     fun registerProjectExtensionPoints(project: MockProject, pluginRelativePath: String) {
+@@ -118,7 +115,6 @@ object PluginStructureProvider {
+
+         val listenersMap = ConcurrentHashMap<String, MutableList<ListenerDescriptor>>()
+         for (listenerDescriptor in listenerDescriptors) {
+-            listenerDescriptor.pluginDescriptor = fakePluginDescriptor
+             listenersMap.computeIfAbsent(listenerDescriptor.topicClassName) { SmartList() }.add(listenerDescriptor)
+         }
+

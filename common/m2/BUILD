@@ -110,6 +110,18 @@ aar_import(
 )
 
 aar_import(
+    name = "androidx-test-runner-1.4.0",
+    aar = "repository/androidx/test/runner/1.4.0/runner-1.4.0.aar",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@maven//:androidx.annotation.annotation",
+        "@maven//:androidx.test.monitor",
+        "@maven//:androidx.test.services.storage",
+        "@maven//:junit.junit",
+    ],
+)
+
+aar_import(
     name = "androidx.inspection.inspection.1.0.0",
     aar = "repository/androidx/inspection/inspection/1.0.0/inspection-1.0.0.aar",
     visibility = ["//visibility:public"],
@@ -283,7 +295,7 @@ jvm_import(
 # managed by go/iml_to_build
 jvm_import(
     name = "javapoet",
-    jars = ["repository/com/squareup/javapoet/1.10.0/javapoet-1.10.0.jar"],
+    jars = ["repository/com/squareup/javapoet/1.13.0/javapoet-1.13.0.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -935,7 +947,6 @@ merge_jars(
     out = "mcp-sdk-libraries.jar",
     jars = select({
         "//conditions:default": [
-            ":filtered_kotlin_stdlib_atomics.jar",  # Remove after 2025.2 merge
             "repository/io/github/oshai/kotlin-logging-jvm/7.0.0/kotlin-logging-jvm-7.0.0.jar",
             "repository/io/ktor/ktor-server-cio-jvm/3.1.3/ktor-server-cio-jvm-3.1.3.jar",
             "repository/io/ktor/ktor-server-core-jvm/3.1.3/ktor-server-core-jvm-3.1.3.jar",
@@ -979,8 +990,8 @@ filegroup(
     name = "kotlinx-serialization_files",
     # do not sort: must match IML order
     srcs = [
-        "repository/org/jetbrains/kotlinx/kotlinx-serialization-core-jvm/1.7.3/kotlinx-serialization-core-jvm-1.7.3.jar",
-        "repository/org/jetbrains/kotlinx/kotlinx-serialization-json-jvm/1.7.3/kotlinx-serialization-json-jvm-1.7.3.jar",
+        "repository/org/jetbrains/kotlinx/kotlinx-serialization-core-jvm/1.8.1/kotlinx-serialization-core-jvm-1.8.1.jar",
+        "repository/org/jetbrains/kotlinx/kotlinx-serialization-json-jvm/1.8.1/kotlinx-serialization-json-jvm-1.8.1.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -1085,8 +1096,8 @@ jvm_import(
     name = "anthropic-java-sdk",
     # do not sort: must match IML order
     jars = [
-        "repository/com/anthropic/anthropic-java-core/2.5.1/anthropic-java-core-2.5.1.jar",
-        "repository/com/anthropic/anthropic-java-client-okhttp/2.5.1/anthropic-java-client-okhttp-2.5.1.jar",
+        "repository/com/anthropic/anthropic-java-core/2.6.0/anthropic-java-core-2.6.0.jar",
+        "repository/com/anthropic/anthropic-java-client-okhttp/2.6.0/anthropic-java-client-okhttp-2.6.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -1127,5 +1138,19 @@ jvm_import(
 jvm_import(
     name = "ktor-io-jvm-3.1.3",
     jars = ["repository/io/ktor/ktor-io-jvm/3.1.3/ktor-io-jvm-3.1.3.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "junit-platform-commons-1.9.2",
+    jars = ["repository/org/junit/platform/junit-platform-commons/1.9.2/junit-platform-commons-1.9.2.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "junit-platform-engine-1.9.2",
+    jars = ["repository/org/junit/platform/junit-platform-engine/1.9.2/junit-platform-engine-1.9.2.jar"],
     visibility = ["//visibility:public"],
 )

@@ -48,12 +48,64 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "17" // Or your desired JVM target
 }
 
-tasks.register<JavaExec>("rewriteJar") {
+tasks.register<JavaExec>("rewriteType") {
+    group = "custom"
+    description = "Rewrites specific types in a JAR to new ones."
+
+    classpath = sourceSets.main.get().runtimeClasspath
+    mainClass.set("kotlincrewriter.JavaTypeRewriterKt")
+
+    // Arguments for the main method, now using the correctly defined Kotlin properties
+    args(
+        inputJarPath,
+        outputJarPath,
+    )
+
+    doFirst {
+        val outputDir = project.file(outputJarPath).parentFile
+        if (!outputDir.exists()) {
+            println("Creating output directory: $outputDir")
+            outputDir.mkdirs()
+        }
+        val inputFile = project.file(inputJarPath)
+        if (!inputFile.exists()) {
+            throw GradleException("Input JAR not found: ${inputFile.absolutePath}")
+        }
+    }
+}
+
+tasks.register<JavaExec>("wipeConstructor") {
+    group = "custom"
+    description = "Rewrites a specific constructor in a JAR to have a simple super call."
+
+    classpath = sourceSets.main.get().runtimeClasspath
+    mainClass.set("intellijrewriter.BinaryFileTypeDecompilersRewriterKt")
+
+    // Arguments for the main method, now using the correctly defined Kotlin properties
+    args(
+        inputJarPath,
+        outputJarPath,
+    )
+
+    doFirst {
+        val outputDir = project.file(outputJarPath).parentFile
+        if (!outputDir.exists()) {
+            println("Creating output directory: $outputDir")
+            outputDir.mkdirs()
+        }
+        val inputFile = project.file(inputJarPath)
+        if (!inputFile.exists()) {
+            throw GradleException("Input JAR not found: ${inputFile.absolutePath}")
+        }
+    }
+}
+
+tasks.register<JavaExec>("wipeMethod") {
     group = "custom"
     description = "Rewrites a specific method in a JAR to have an empty body."
 
     classpath = sourceSets.main.get().runtimeClasspath
-    mainClass.set("jarrewriter.JarModifierKt")
+    mainClass.set("intellijrewriter.JarModifierKt")
 
     // Arguments for the main method, now using the correctly defined Kotlin properties
     args(
@@ -82,7 +134,7 @@ tasks.register<JavaExec>("passthroughJar") {
     description = "Reads an input JAR and writes it to output JAR as-is (no modification)."
 
     classpath = sourceSets.main.get().runtimeClasspath
-    mainClass.set("jarrewriter.JarModifierKt")
+    mainClass.set("intellijrewriter.JarModifierKt")
 
     args(
         inputJarPath, // Uses the resolved inputJarPath
