@@ -575,15 +575,6 @@ jvm_import(
     visibility = ["//visibility:public"],
 )
 
-# Companion target for kotlin-serialization-compiler-plugin.
-jvm_import(
-    name = "kotlinx-serialization-runtime",
-    jars = [
-        "repository/org/jetbrains/kotlinx/kotlinx-serialization-core-jvm/1.7.3/kotlinx-serialization-core-jvm-1.7.3.jar",
-    ],
-    visibility = ["//visibility:public"],
-)
-
 # managed by go/iml_to_build
 jvm_import(
     name = "groovy-3.0.9",
@@ -991,6 +982,17 @@ merge_jars(
 jvm_import(
     name = "sqlite-jdbc-3.43.0.0",
     jars = ["repository/org/xerial/sqlite-jdbc/3.43.0.0/sqlite-jdbc-3.43.0.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+filegroup(
+    name = "kotlinx-serialization_files",
+    # do not sort: must match IML order
+    srcs = [
+        "repository/org/jetbrains/kotlinx/kotlinx-serialization-core-jvm/1.8.1/kotlinx-serialization-core-jvm-1.8.1.jar",
+        "repository/org/jetbrains/kotlinx/kotlinx-serialization-json-jvm/1.8.1/kotlinx-serialization-json-jvm-1.8.1.jar",
+    ],
     visibility = ["//visibility:public"],
 )
 
