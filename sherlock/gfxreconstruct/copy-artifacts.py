@@ -37,14 +37,19 @@ def main():
 
     host = 'linux-x64'
 
+    # We do not copy:
+    #   - build/tools/gfxrecon/gfxrecon.py
+    #   - build/tools/capture/gfxrecon-capture.py
+    #   - build/tools/capture-vulkan/gfxrecon-capture-vulkan.py
+    #
+    # Because we can avoid a runtime dependency on Python by calling the
+    # underlying binaries directly.
+
     copy_actions = [
         ('android/tools/replay/build/outputs/apk/debug/replay-debug.apk', 'common'),
-        ('build/tools/capture/gfxrecon-capture.py', f'{host}/tools/capture'),
-        ('build/tools/capture-vulkan/gfxrecon-capture-vulkan.py', f'{host}/tools/capture-vulkan'),
         ('build/tools/compress/gfxrecon-compress', f'{host}/tools/compress'),
         ('build/tools/convert/gfxrecon-convert', f'{host}/tools/convert'),
         ('build/tools/extract/gfxrecon-extract', f'{host}/tools/extract'),
-        ('build/tools/gfxrecon/gfxrecon.py', f'{host}/tools/gfxrecon'),
         ('build/tools/info/gfxrecon-info', f'{host}/tools/info'),
         ('build/tools/optimize/gfxrecon-optimize', f'{host}/tools/optimize'),
         ('build/tools/replay/gfxrecon-replay', f'{host}/tools/replay'),
