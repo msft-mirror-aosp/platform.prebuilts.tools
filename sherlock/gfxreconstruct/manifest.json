@@ -1,0 +1,18 @@
+{
+    "replayApk": {
+        "commit": "6b0ea8ffb279f6264b33a276d663d760e655c4ee",
+        "jdk": "java-1.17.0-openjdk-amd64",
+        "gradle": "./gradlew assembleDebug",
+        "builder": "linux"
+    },
+    "linux-x64": {
+        "commit": "6b0ea8ffb279f6264b33a276d663d760e655c4ee",
+        "cmake": "cmake . -Bbuild -DCMAKE_BUILD_TYPE=Release",
+        "make": "make -j16"
+    },
+    "darwin-arm64": {
+        "commit": "41e17c1593bd05bed683bbddb5cea106e0f3d433",
+        "cmake": "cmake . -Bbuild -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES=\"arm64\"",
+        "make": "make -j4"
+    }
+}
