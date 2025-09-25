@@ -1,0 +1,8 @@
+load("//tools/adt/idea/studio:studio.bzl", "studio_data")
+
+studio_data(
+    name = "kb_zip",
+    files = ["dac.zip"],
+    mappings = {"prebuilts/tools/common/kb/": "kb_zip/"},
+    visibility = ["//visibility:public"],
+)
