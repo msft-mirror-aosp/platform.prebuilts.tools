@@ -130,17 +130,6 @@ license {
 }
 
 license {
-    name: "m2_grpc_netty_shaded_1.16.1_license",
-    visibility: [":__subpackages__"],
-    license_kinds: [
-        "SPDX-license-identifier-Apache-2.0",
-    ],
-    license_text: [
-        "repository/io/grpc/grpc-netty-shaded/1.16.1/LICENSE",
-    ],
-}
-
-license {
     name: "m2_grpc_netty_shaded_1.56.0_license",
     visibility: [":__subpackages__"],
     license_kinds: [
@@ -292,14 +281,6 @@ java_import {
 java_import_host {
     name: "kotlinpoet",
     jars: ["repository/com/squareup/kotlinpoet/1.8.0/kotlinpoet-1.8.0.jar"],
-}
-
-java_import {
-    name: "grpc-netty-shaded-1.16.1-jar",
-    host_supported: true,
-    jars: ["repository/io/grpc/grpc-netty-shaded/1.16.1/grpc-netty-shaded-1.16.1.jar"],
-    visibility: ["//external/grpc-grpc-java/netty/shaded"],
-    licenses: ["m2_grpc_netty_shaded_1.16.1_license"],
 }
 
 java_import {
