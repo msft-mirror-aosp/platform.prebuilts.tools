@@ -23,11 +23,9 @@ filegroup(
 
 filegroup(
     name = "gfxreconstruct",
-    srcs = select({
-        "@platforms//os:linux": ["gfxreconstruct/linux-x64/replay-debug.apk"],
-        "@platforms//os:macos": ["gfxreconstruct/darwin-arm64/replay-debug.apk"],
-        "//conditions:default": [],
-    }),
+    srcs = [
+        "gfxreconstruct/replay-debug.apk",
+    ],
     visibility = ["//visibility:public"],
 )
 
