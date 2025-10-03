@@ -152,6 +152,17 @@ license {
 }
 
 license {
+    name: "m2_dataflow_errorprone_license",
+    visibility: [":__subpackages__"],
+    license_kinds: [
+        "SPDX-license-identifier-GPL-2.0-with-classpath-exception",
+    ],
+    license_text: [
+        "repository/org/checkerframework/LICENSE",
+    ],
+}
+
+license {
     name: "m2_jna_3.4.0_license",
     visibility: [":__subpackages__"],
     license_kinds: [
@@ -516,6 +527,12 @@ java_import {
     jars: ["repository/org/checkerframework/checker-qual/2.8.1/checker-qual-2.8.1.jar"],
     host_supported: true,
     licenses: ["m2_checker_qual_jar_license"],
+}
+
+java_import_host {
+    name: "checkerframework_dataflow_errorprone_prebuilt_jar",
+    jars: ["repository/org/checkerframework/dataflow-errorprone/3.39.0/dataflow-errorprone-3.39.0.jar"],
+    licenses: ["m2_dataflow_errorprone_license"],
 }
 
 java_import_host {
