@@ -661,3 +661,48 @@ java_import {
     },
     licenses: ["m2_javax_annotation_license"],
 }
+
+// TODO: b/449453610 - remove after source import is complete.
+java_import_host {
+    name: "caffeine-prebuilt",
+    jars: ["repository/com/github/ben-manes/caffeine/caffeine/3.2.2/caffeine-3.2.2.jar"],
+    licenses: ["caffeine-prebuilt-license"],
+    visibility: ["//external/error_prone"],
+}
+
+license {
+    name: "caffeine-prebuilt-license",
+    license_kinds: ["SPDX-license-identifier-Apache-2.0"],
+    license_text: ["repository/com/github/ben-manes/caffeine/caffeine/LICENSE"],
+    visibility: ["//visibility:private"],
+}
+
+// TODO: b/449455162 - remove after source import is complete.
+java_import_host {
+    name: "pcollections-prebuilt",
+    jars: ["repository/org/pcollections/pcollections/5.0.0/pcollections-5.0.0.jar"],
+    licenses: ["pcollections-prebuilt-license"],
+    visibility: ["//external/error_prone"],
+}
+
+license {
+    name: "pcollections-prebuilt-license",
+    license_kinds: ["SPDX-license-identifier-MIT"],
+    license_text: ["repository/org/pcollections/pcollections/LICENSE"],
+    visibility: ["//visibility:private"],
+}
+
+// TODO: b/449456079 - remove after source import is complete.
+java_import_host {
+    name: "java-diff-utils-prebuilt",
+    jars: ["repository/io/github/java-diff-utils/java-diff-utils/4.16/java-diff-utils-4.16.jar"],
+    licenses: ["java-diff-utils-prebuilt-license"],
+    visibility: ["//external/error_prone"],
+}
+
+license {
+    name: "java-diff-utils-prebuilt-license",
+    license_kinds: ["SPDX-license-identifier-Apache-2.0"],
+    license_text: ["repository/io/github/java-diff-utils/java-diff-utils/LICENSE"],
+    visibility: ["//visibility:private"],
+}
