@@ -17,7 +17,6 @@
 import argparse
 import os
 import shutil
-import stat
 
 from pathlib import Path
 
@@ -38,21 +37,26 @@ def main():
 
     host = 'linux-x64'
 
+    # We do not copy:
+    #   - build/tools/gfxrecon/gfxrecon.py
+    #   - build/tools/capture/gfxrecon-capture.py
+    #   - build/tools/capture-vulkan/gfxrecon-capture-vulkan.py
+    #
+    # Because we can avoid a runtime dependency on Python by calling the
+    # underlying binaries directly.
+
     copy_actions = [
-        ('android/tools/replay/build/outputs/apk/debug/replay-debug.apk', 'common', False),
-        ('build/tools/capture/gfxrecon-capture.py', f'{host}/tools/capture', False),
-        ('build/tools/capture-vulkan/gfxrecon-capture-vulkan.py', f'{host}/tools/capture-vulkan', False),
-        ('build/tools/compress/gfxrecon-compress', f'{host}/tools/compress', False),
-        ('build/tools/convert/gfxrecon-convert', f'{host}/tools/convert', True),
-        ('build/tools/extract/gfxrecon-extract', f'{host}/tools/extract', False),
-        ('build/tools/gfxrecon/gfxrecon.py', f'{host}/tools/gfxrecon', False),
-        ('build/tools/info/gfxrecon-info', f'{host}/tools/info', True),
-        ('build/tools/optimize/gfxrecon-optimize', f'{host}/tools/optimize', False),
-        ('build/tools/replay/gfxrecon-replay', f'{host}/tools/replay', False),
-        ('build/tools/tocpp/gfxrecon-tocpp', f'{host}/tools/tocpp', False),
+        ('android/tools/replay/build/outputs/apk/debug/replay-debug.apk', 'common'),
+        ('build/tools/compress/gfxrecon-compress', f'{host}/tools/compress'),
+        ('build/tools/convert/gfxrecon-convert', f'{host}/tools/convert'),
+        ('build/tools/extract/gfxrecon-extract', f'{host}/tools/extract'),
+        ('build/tools/info/gfxrecon-info', f'{host}/tools/info'),
+        ('build/tools/optimize/gfxrecon-optimize', f'{host}/tools/optimize'),
+        ('build/tools/replay/gfxrecon-replay', f'{host}/tools/replay'),
+        ('build/tools/tocpp/gfxrecon-tocpp', f'{host}/tools/tocpp'),
     ]
 
-    for src_file, dest_dir, stat_exec in copy_actions:
+    for src_file, dest_dir in copy_actions:
         src_path = root / src_file
         dest_path = prebuilts / dest_dir / src_path.name
 
@@ -62,11 +66,9 @@ def main():
         if not dest_path.parent.exists():
             dest_path.parent.mkdir(parents=True)
 
-        print(f'Copying file {root} to {dest_path}')
+        print(f'Copying file {src_path} to {dest_path}')
         shutil.copyfile(src_path, dest_path)
-
-        if stat_exec:
-            dest_path.chmod(dest_path.stat() | stat.S_IEXEC)
+        shutil.copymode(src_path, dest_path)
 
 
 if __name__ == '__main__':

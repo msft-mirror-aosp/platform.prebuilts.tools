@@ -1,0 +1,270 @@
+diff --git a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethod.kt b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethod.kt
+index fd2fc2842dfa..3405b3f2a732 100644
+--- a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethod.kt
++++ b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/declarations/KotlinUMethod.kt
+@@ -9,10 +9,10 @@ import org.jetbrains.kotlin.asJava.elements.KtLightElement
+ import org.jetbrains.kotlin.asJava.elements.KtLightMethod
+ import org.jetbrains.kotlin.asJava.elements.isGetter
+ import org.jetbrains.kotlin.asJava.elements.isSetter
++import org.jetbrains.kotlin.name.JvmStandardClassIds.JVM_STATIC_FQ_NAME
+ import org.jetbrains.kotlin.psi.*
+ import org.jetbrains.kotlin.psi.psiUtil.containingClassOrObject
+ import org.jetbrains.kotlin.psi.psiUtil.getParentOfType
+-import org.jetbrains.kotlin.resolve.annotations.JVM_STATIC_ANNOTATION_FQ_NAME
+ import org.jetbrains.kotlin.utils.SmartList
+ import org.jetbrains.kotlin.utils.addIfNotNull
+ import org.jetbrains.uast.*
+@@ -179,6 +179,6 @@ open class KotlinUMethod(
+             }
+         }
+ 
+-        private fun isJvmStatic(it: PsiAnnotation): Boolean = it.hasQualifiedName(JVM_STATIC_ANNOTATION_FQ_NAME.asString())
++        private fun isJvmStatic(it: PsiAnnotation): Boolean = it.hasQualifiedName(JVM_STATIC_FQ_NAME.asString())
+     }
+ }
+diff --git a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/psi/UastFakeSourceLightAccessorBase.kt b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/psi/UastFakeSourceLightAccessorBase.kt
+index ed4f7a8bf480..4f3ea70b8d3a 100644
+--- a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/psi/UastFakeSourceLightAccessorBase.kt
++++ b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/psi/UastFakeSourceLightAccessorBase.kt
+@@ -37,6 +37,8 @@ internal open class UastFakeSourceLightAccessorBase<T: KtDeclaration>(
+         val useSiteTarget = if (isSetter) AnnotationUseSiteTarget.PROPERTY_SETTER else AnnotationUseSiteTarget.PROPERTY_GETTER
+         property.annotationEntries
+             .filter { it.useSiteTarget?.getAnnotationUseSiteTarget() == useSiteTarget }
+-            .mapTo(annotations) { it.toPsiAnnotation() }
++            .mapNotNullTo(annotations) { entry ->
++                baseResolveProviderService.convertToPsiAnnotation(entry)
++            }
+     }
+ }
+\ No newline at end of file
+diff --git a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/psi/UastFakeSourceLightMethodBase.kt b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/psi/UastFakeSourceLightMethodBase.kt
+index a1ac5f0aa5f3..77218ce8699a 100644
+--- a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/psi/UastFakeSourceLightMethodBase.kt
++++ b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/psi/UastFakeSourceLightMethodBase.kt
+@@ -6,10 +6,8 @@ import com.intellij.psi.impl.light.LightModifierList
+ import com.intellij.psi.impl.light.LightParameterListBuilder
+ import org.jetbrains.annotations.ApiStatus
+ import org.jetbrains.kotlin.analysis.api.types.KaTypeNullability
+-import org.jetbrains.kotlin.asJava.elements.KtLightAnnotationForSourceEntry
+ import org.jetbrains.kotlin.descriptors.Modality
+ import org.jetbrains.kotlin.lexer.KtTokens
+-import org.jetbrains.kotlin.psi.KtAnnotationEntry
+ import org.jetbrains.kotlin.psi.KtConstructor
+ import org.jetbrains.kotlin.psi.KtDeclaration
+ import org.jetbrains.kotlin.psi.KtFunction
+@@ -100,24 +98,14 @@ abstract class UastFakeSourceLightMethodBase<T : KtDeclaration>(
+     }
+ 
+     override fun computeAnnotations(annotations: SmartSet<PsiAnnotation>) {
+-        original.annotationEntries.mapTo(annotations) { entry ->
++        original.annotationEntries.mapNotNullTo(annotations) { entry ->
+             // Creation of PsiAnnotation may vary between frontends. For example,
+             // SLC doesn't model a declaration with value class in its signature
+             // and K2 UAST will fake it, while K1 doesn't need to.
+             baseResolveProviderService.convertToPsiAnnotation(entry)
+-                ?: entry.toPsiAnnotation()
+         }
+     }
+ 
+-    protected fun KtAnnotationEntry.toPsiAnnotation(): PsiAnnotation {
+-        return KtLightAnnotationForSourceEntry(
+-            name = shortName?.identifier,
+-            lazyQualifiedName = { baseResolveProviderService.qualifiedAnnotationName(this) },
+-            kotlinOrigin = this,
+-            parent = original,
+-        )
+-    }
+-
+     override fun isConstructor(): Boolean {
+         return original is KtConstructor<*>
+     }
+diff --git a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastResolveProviderService.kt b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastResolveProviderService.kt
+index 7f327062a91c5e..99a3c3a2738be1 100644
+--- a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastResolveProviderService.kt
++++ b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/FirKotlinUastResolveProviderService.kt
+@@ -9,6 +9,7 @@ import com.intellij.util.SmartList
+ import com.intellij.util.containers.addIfNotNull
+ import org.jetbrains.kotlin.analysis.api.KaExperimentalApi
+ import org.jetbrains.kotlin.analysis.api.KaSession
++import org.jetbrains.kotlin.analysis.api.annotations.KaAnnotation
+ import org.jetbrains.kotlin.analysis.api.projectStructure.KaLibraryModule
+ import org.jetbrains.kotlin.analysis.api.projectStructure.KaModuleProvider
+ import org.jetbrains.kotlin.analysis.api.projectStructure.KaSourceModule
+@@ -53,23 +54,45 @@ interface FirKotlinUastResolveProviderService : BaseKotlinUastResolveProviderSer
+     fun isSupportedFile(file: KtFile): Boolean = true
+ 
+     override fun convertToPsiAnnotation(ktElement: KtElement): PsiAnnotation? {
++        ktElement.toLightAnnotation()?.let { return it }
+         val ktDeclaration = ktElement.getStrictParentOfType<KtModifierList>()?.parent as? KtDeclaration
+-        // SLC won't model a declaration with value class in its signature.
+-        if (ktDeclaration != null && hasTypeForValueClassInSignature(ktDeclaration)) {
++        return if (ktDeclaration != null) {
+             (ktElement as? KtAnnotationEntry)?.let { entry ->
+                 analyzeForUast(ktDeclaration) {
+-                    val declaration = ktDeclaration.symbol
+-                    declaration.annotations.find { it.psi == entry }?.let { annoApp ->
+-                        return UastFakeDeserializedSymbolAnnotation(
++                    var declaration: KaDeclarationSymbol
++                    var annoApp: KaAnnotation?
++                    do { // Not a loop; just to provide a go-to point at the end
++                        // Regular declaration, default use-site, etc.
++                        declaration = ktDeclaration.symbol
++                        annoApp  = declaration.annotations.find { it.psi == entry }
++                        if (annoApp != null) break
++
++                        // Maybe property accessors
++                        if (entry.useSiteTarget == null) break
++                        if (declaration !is KaPropertySymbol) break
++                        val propertySymbol = declaration
++                        propertySymbol.getter?.annotations?.find { it.psi == entry }?.let {
++                            declaration = propertySymbol.getter!!
++                            annoApp = it
++                        }
++                        if (annoApp != null) break
++                        propertySymbol.setter?.annotations?.find { it.psi == entry }?.let {
++                            declaration = propertySymbol.setter!!
++                            annoApp = it
++                        }
++                    } while (false)
++
++                    annoApp?.let { annoApp ->
++                        UastFakeDeserializedSymbolAnnotation(
+                             declaration.createPointer(),
+                             annoApp.classId,
+-                            ktDeclaration
++                            ktDeclaration,
++                            entry,
+                         )
+                     }
+                 }
+             }
+-        }
+-        return ktElement.toLightAnnotation()
++        } else null
+     }
+ 
+     override fun convertValueArguments(ktCallElement: KtCallElement, parent: UElement): List<UNamedExpression>? {
+diff --git a/plugins/kotlin/uast/uast-kotlin-idea/src/org/jetbrains/uast/kotlin/internal/IdeaKotlinUastResolveProviderService.kt b/plugins/kotlin/uast/uast-kotlin-idea/src/org/jetbrains/uast/kotlin/internal/IdeaKotlinUastResolveProviderService.kt
+index cf5a6f6ee070..4a34a66edade 100644
+--- a/plugins/kotlin/uast/uast-kotlin-idea/src/org/jetbrains/uast/kotlin/internal/IdeaKotlinUastResolveProviderService.kt
++++ b/plugins/kotlin/uast/uast-kotlin-idea/src/org/jetbrains/uast/kotlin/internal/IdeaKotlinUastResolveProviderService.kt
+@@ -5,7 +5,6 @@ package org.jetbrains.uast.kotlin.internal
+ import com.intellij.psi.PsiAnnotation
+ import com.intellij.psi.PsiElement
+ import com.intellij.psi.PsiModifierListOwner
+-import org.jetbrains.kotlin.asJava.toLightAnnotation
+ import org.jetbrains.kotlin.config.LanguageVersionSettings
+ import org.jetbrains.kotlin.idea.base.projectStructure.languageVersionSettings
+ import org.jetbrains.kotlin.idea.caches.resolve.analyze
+@@ -57,7 +56,7 @@ private class IdeaKotlinUastResolveProviderService : KotlinUastResolveProviderSe
+     }
+ 
+     override fun convertToPsiAnnotation(ktElement: KtElement): PsiAnnotation? {
+-        return ktElement.actionUnderSafeAnalyzeBlock({ ktElement.toLightAnnotation() }, { null })
++        return ktElement.actionUnderSafeAnalyzeBlock({ super.convertToPsiAnnotation(ktElement) }, { null })
+     }
+ 
+     override fun getPsiAnnotations(psiElement: PsiModifierListOwner): Array<PsiAnnotation> {
+diff --git a/plugins/kotlin/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinUastResolveProviderService.kt b/plugins/kotlin/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinUastResolveProviderService.kt
+index 428c924088f9..7a433f06758b 100644
+--- a/plugins/kotlin/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinUastResolveProviderService.kt
++++ b/plugins/kotlin/uast/uast-kotlin/src/org/jetbrains/uast/kotlin/KotlinUastResolveProviderService.kt
+@@ -4,6 +4,7 @@ package org.jetbrains.uast.kotlin
+ 
+ import com.intellij.psi.*
+ import org.jetbrains.kotlin.analysis.api.types.KaTypeNullability
++import org.jetbrains.kotlin.asJava.elements.KtLightAnnotationForSourceEntry
+ import org.jetbrains.kotlin.asJava.toLightAnnotation
+ import org.jetbrains.kotlin.asJava.toLightElements
+ import org.jetbrains.kotlin.builtins.createFunctionType
+@@ -64,7 +65,15 @@ interface KotlinUastResolveProviderService : BaseKotlinUastResolveProviderServic
+         get() = KotlinConverter
+ 
+     override fun convertToPsiAnnotation(ktElement: KtElement): PsiAnnotation? {
+-        return ktElement.toLightAnnotation()
++        ktElement.toLightAnnotation()?.let { return it }
++        return if (ktElement is KtAnnotationEntry) {
++            KtLightAnnotationForSourceEntry(
++                name = ktElement.shortName?.identifier,
++                lazyQualifiedName = { qualifiedAnnotationName(ktElement) },
++                kotlinOrigin = ktElement,
++                parent = ktElement.parent,
++            )
++        } else null
+     }
+ 
+     private fun getResolvedCall(sourcePsi: KtCallElement): ResolvedCall<*>? {
+diff --git a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt
+index 29af0d231093..a9be98670b8e 100644
+--- a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt
++++ b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt
+@@ -5,6 +5,7 @@ package org.jetbrains.uast.kotlin.internal
+ import com.intellij.psi.*
+ import com.intellij.psi.search.GlobalSearchScope
+ import com.intellij.psi.util.PsiTypesUtil
++import com.intellij.psi.util.parentOfType
+ import org.jetbrains.kotlin.analysis.api.*
+ import org.jetbrains.kotlin.analysis.api.annotations.*
+ import org.jetbrains.kotlin.analysis.api.permissions.KaAllowAnalysisFromWriteAction
+@@ -22,6 +23,7 @@ import org.jetbrains.kotlin.analysis.api.symbols.pointers.KaSymbolPointer
+ import org.jetbrains.kotlin.analysis.api.types.*
+ import org.jetbrains.kotlin.asJava.*
+ import org.jetbrains.kotlin.asJava.classes.lazyPub
++import org.jetbrains.kotlin.asJava.elements.KtLightElement
+ import org.jetbrains.kotlin.descriptors.annotations.AnnotationUseSiteTarget
+ import org.jetbrains.kotlin.descriptors.annotations.AnnotationUseSiteTarget.PROPERTY_GETTER
+ import org.jetbrains.kotlin.descriptors.annotations.AnnotationUseSiteTarget.PROPERTY_SETTER
+@@ -394,7 +396,10 @@ internal fun toPsiType(
+         }
+         if (psiType != null) return psiType
+     }
+-    val psiTypeParent: PsiElement = containingLightDeclaration ?: context
++    val psiTypeParent: PsiElement =
++        containingLightDeclaration.takeIf { !ktType.isLocal || it is KtLightElement<*, *> }
++            ?: context.parentOfType<KtDeclaration>()
++            ?: context
+     return ktType.asPsiType(
+         psiTypeParent,
+         allowErrorTypes = false,
+@@ -436,6 +441,13 @@ internal val KaType.typeForValueClass: Boolean
+         return symbol.isInline
+     }
+ 
++context(KaSession)
++private val KaType.isLocal: Boolean
++    get() {
++        val symbol = expandedSymbol as? KaNamedClassSymbol ?: return false
++        return symbol.isLocal
++    }
++
+ context(KaSession)
+ internal fun isInheritedGenericType(ktType: KaType?): Boolean {
+     if (ktType == null) return false
+diff --git a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/psi/UastFakeDeserializedSymbolAnnotation.kt b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/psi/UastFakeDeserializedSymbolAnnotation.kt
+index 86f810ff9d9cad..7696eace3d7142 100644
+--- a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/psi/UastFakeDeserializedSymbolAnnotation.kt
++++ b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/psi/UastFakeDeserializedSymbolAnnotation.kt
+@@ -26,9 +26,8 @@ internal class UastFakeDeserializedSymbolAnnotation(
+     private val parentOriginal: KaSymbolPointer<KaDeclarationSymbol>,
+     private val classId: ClassId?,
+     private val parent: KtElement,
++    override val kotlinOrigin: KtCallElement?,
+ ) : KtLightAbstractAnnotation(parent) {
+-    override val kotlinOrigin: KtCallElement?
+-        get() = null
+
+     override fun getQualifiedName(): @NlsSafe String? =
+         classId?.asFqNameString()
+diff --git a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/psi/UastFakeDeserializedSymbolLightMethod.kt b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/psi/UastFakeDeserializedSymbolLightMethod.kt
+index dfe90fb7803c44..0be5fc4eb32a06 100644
+--- a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/psi/UastFakeDeserializedSymbolLightMethod.kt
++++ b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/psi/UastFakeDeserializedSymbolLightMethod.kt
+@@ -139,7 +139,7 @@ constructor(
+             val functionSymbol = original.restoreSymbol() ?: return
+             for (annoApp in functionSymbol.annotations) {
+                 annotations.add(
+-                    UastFakeDeserializedSymbolAnnotation(original, annoApp.classId, context)
++                    UastFakeDeserializedSymbolAnnotation(original, annoApp.classId, context, annoApp.psi)
+                 )
+             }
+         }

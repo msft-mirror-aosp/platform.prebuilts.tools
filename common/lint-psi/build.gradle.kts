@@ -42,6 +42,10 @@ for (jarName in allJarNames) {
         // they are used for classloading optimizations, and (2) they lead to duplicate jar entries when
         // we merge the various UAST jars to be packaged into AGP.
         exclude("__index__")
+        // Until the proper fix arrives (https://youtrack.jetbrains.com/issue/KT-74196)
+        if (jarName == "kotlin-compiler") {
+            exclude("com/intellij/util/lang/JavaVersion.class")
+        }
     }
 
     val sourcesJarTask = tasks.register<Jar>("$jarName-sources-jar") {
