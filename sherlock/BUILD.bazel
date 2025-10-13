@@ -1,149 +1,56 @@
+load("//tools/adt/idea/studio:studio.bzl", "studio_data")
+
+package(default_visibility = ["//visibility:public"])
+
 filegroup(
     name = "bin",
     srcs = [
         "sokatoa-apk/sokatoa.apk",
         "//tools/profiler/native/android/sherlocklayersapp:sherlock-layers.apk",
     ],
-    visibility = ["//visibility:public"],
 )
 
-filegroup(
+studio_data(
     name = "lib",
-    srcs = select({
-        "@platforms//os:linux": ["trace-processor-wrapper/linux-x64/main"],
-        "@platforms//os:macos": ["trace-processor-wrapper/darwin-arm64/main"],
-        "@platforms//os:windows": ["trace-processor-wrapper/windows-x64/main.exe"],
-        "//conditions:default": [],
-    }),
-    visibility = ["//visibility:public"],
+    files_linux = ["trace-processor-wrapper/linux-x64/main"],
+    files_mac = ["trace-processor-wrapper/darwin-arm64/main"],
+    files_mac_arm = ["trace-processor-wrapper/darwin-arm64/main"],
+    files_win = ["trace-processor-wrapper/windows-x64/main.exe"],
+    mappings = {
+        "prebuilts/tools/sherlock/trace-processor-wrapper/linux-x64": "",
+        "prebuilts/tools/sherlock/trace-processor-wrapper/darwin-arm64": "",
+        "prebuilts/tools/sherlock/trace-processor-wrapper/windows-x64": "",
+    },
 )
 
 # --- GFXReconstruct File Groups ---
-# Each filegroup here corresponds to a subdirectory we need to preserve.
-
 filegroup(
     name = "gfxreconstruct",
     srcs = [
         "gfxreconstruct/replay-debug.apk",
     ],
-    visibility = ["//visibility:public"],
 )
 
-filegroup(
-    name = "gfxreconstruct_tools_capture",
-    srcs = select({
-        "@platforms//os:linux": ["gfxreconstruct/linux-x64/tools/capture/gfxrecon-capture.py"],
-        "@platforms//os:macos": ["gfxreconstruct/darwin-arm64/tools/capture/gfxrecon-capture.py"],
-        "//conditions:default": [],
-    }),
-    visibility = ["//visibility:public"],
+studio_data(
+    name = "gfxreconstruct_tools",
+    files_linux = glob(["gfxreconstruct/linux-x64/tools/**"]),
+    files_mac = glob(["gfxreconstruct/darwin-arm64/tools/**"]),
+    files_mac_arm = glob(["gfxreconstruct/darwin-arm64/tools/**"]),
+    mappings = {
+        "prebuilts/tools/sherlock/gfxreconstruct/linux-x64/tools": "",
+        "prebuilts/tools/sherlock/gfxreconstruct/darwin-arm64/tools": "",
+    },
 )
 
-filegroup(
-    name = "gfxreconstruct_tools_capture_vulkan",
-    srcs = select({
-        "@platforms//os:linux": ["gfxreconstruct/linux-x64/tools/capture-vulkan/gfxrecon-capture-vulkan.py"],
-        "@platforms//os:macos": ["gfxreconstruct/darwin-arm64/tools/capture-vulkan/gfxrecon-capture-vulkan.py"],
-        "//conditions:default": [],
-    }),
-    visibility = ["//visibility:public"],
-)
-
-filegroup(
-    name = "gfxreconstruct_tools_compress",
-    srcs = select({
-        "@platforms//os:linux": ["gfxreconstruct/linux-x64/tools/compress/gfxrecon-compress"],
-        "@platforms//os:macos": ["gfxreconstruct/darwin-arm64/tools/compress/gfxrecon-compress"],
-        "//conditions:default": [],
-    }),
-    visibility = ["//visibility:public"],
-)
-
-filegroup(
-    name = "gfxreconstruct_tools_convert",
-    srcs = select({
-        "@platforms//os:linux": ["gfxreconstruct/linux-x64/tools/convert/gfxrecon-convert"],
-        "@platforms//os:macos": ["gfxreconstruct/darwin-arm64/tools/convert/gfxrecon-convert"],
-        "//conditions:default": [],
-    }),
-    visibility = ["//visibility:public"],
-)
-
-filegroup(
-    name = "gfxreconstruct_tools_extract",
-    srcs = select({
-        "@platforms//os:linux": ["gfxreconstruct/linux-x64/tools/extract/gfxrecon-extract"],
-        "@platforms//os:macos": ["gfxreconstruct/darwin-arm64/tools/extract/gfxrecon-extract"],
-        "//conditions:default": [],
-    }),
-    visibility = ["//visibility:public"],
-)
-
-filegroup(
-    name = "gfxreconstruct_tools_gfxrecon",
-    srcs = select({
-        "@platforms//os:linux": ["gfxreconstruct/linux-x64/tools/gfxrecon/gfxrecon.py"],
-        "@platforms//os:macos": ["gfxreconstruct/darwin-arm64/tools/gfxrecon/gfxrecon.py"],
-        "//conditions:default": [],
-    }),
-    visibility = ["//visibility:public"],
-)
-
-filegroup(
-    name = "gfxreconstruct_tools_info",
-    srcs = select({
-        "@platforms//os:linux": ["gfxreconstruct/linux-x64/tools/info/gfxrecon-info"],
-        "@platforms//os:macos": ["gfxreconstruct/darwin-arm64/tools/info/gfxrecon-info"],
-        "//conditions:default": [],
-    }),
-    visibility = ["//visibility:public"],
-)
-
-filegroup(
-    name = "gfxreconstruct_tools_optimize",
-    srcs = select({
-        "@platforms//os:linux": ["gfxreconstruct/linux-x64/tools/optimize/gfxrecon-optimize"],
-        "@platforms//os:macos": ["gfxreconstruct/darwin-arm64/tools/optimize/gfxrecon-optimize"],
-        "//conditions:default": [],
-    }),
-    visibility = ["//visibility:public"],
-)
-
-filegroup(
-    name = "gfxreconstruct_tools_replay",
-    srcs = select({
-        "@platforms//os:linux": ["gfxreconstruct/linux-x64/tools/replay/gfxrecon-replay"],
-        "@platforms//os:macos": ["gfxreconstruct/darwin-arm64/tools/replay/gfxrecon-replay"],
-        "//conditions:default": [],
-    }),
-    visibility = ["//visibility:public"],
-)
-
-filegroup(
-    name = "gfxreconstruct_tools_tocpp",
-    srcs = select({
-        "@platforms//os:linux": ["gfxreconstruct/linux-x64/tools/tocpp/gfxrecon-tocpp"],
-        "@platforms//os:macos": ["gfxreconstruct/darwin-arm64/tools/tocpp/gfxrecon-tocpp"],
-        "//conditions:default": [],
-    }),
-    visibility = ["//visibility:public"],
-)
-
-# --- SPIRV File Groups ---
-filegroup(
+# --- OS-specific SPIRV tools ---
+studio_data(
     name = "spirv_tools",
-    srcs = select({
-        "@platforms//os:linux": glob(["SPIRV-Tools/linux-x64/**/*"]),
-        "//conditions:default": [],
-    }),
-    visibility = ["//visibility:public"],
+    files_linux = glob(["SPIRV-Tools/linux-x64/**/*"]),
+    mappings = {"prebuilts/tools/sherlock/SPIRV-Tools/linux-x64": ""},
 )
 
-filegroup(
+studio_data(
     name = "spirv_cross",
-    srcs = select({
-        "@platforms//os:linux": ["SPIRV-Cross/linux-x64/spirv-cross"],
-        "//conditions:default": [],
-    }),
-    visibility = ["//visibility:public"],
+    files_linux = ["SPIRV-Cross/linux-x64/spirv-cross"],
+    mappings = {"prebuilts/tools/sherlock/SPIRV-Cross/linux-x64": ""},
 )
