@@ -96,17 +96,6 @@ license {
 }
 
 license {
-    name: "m2_api_grpc_license",
-    visibility: [":__subpackages__"],
-    license_kinds: [
-        "SPDX-license-identifier-Apache-2.0",
-    ],
-    license_text: [
-        "repository/com/google/api/grpc/LICENSE",
-    ],
-}
-
-license {
     name: "m2_joda_time_2.9.1_license",
     visibility: [":__subpackages__"],
     license_kinds: [
@@ -141,17 +130,6 @@ license {
 }
 
 license {
-    name: "m2_grpc_netty_shaded_1.16.1_license",
-    visibility: [":__subpackages__"],
-    license_kinds: [
-        "SPDX-license-identifier-Apache-2.0",
-    ],
-    license_text: [
-        "repository/io/grpc/grpc-netty-shaded/1.16.1/LICENSE",
-    ],
-}
-
-license {
     name: "m2_grpc_netty_shaded_1.56.0_license",
     visibility: [":__subpackages__"],
     license_kinds: [
@@ -167,6 +145,17 @@ license {
     visibility: [":__subpackages__"],
     license_kinds: [
         "SPDX-license-identifier-MIT",
+    ],
+    license_text: [
+        "repository/org/checkerframework/LICENSE",
+    ],
+}
+
+license {
+    name: "m2_dataflow_errorprone_license",
+    visibility: [":__subpackages__"],
+    license_kinds: [
+        "SPDX-license-identifier-GPL-2.0-with-classpath-exception",
     ],
     license_text: [
         "repository/org/checkerframework/LICENSE",
@@ -290,12 +279,6 @@ java_import {
     sdk_version: "core_current",
 }
 
-java_import_host {
-    name: "truth-1.4.0-prebuilt",
-    jars: ["repository/com/google/truth/truth/1.4.0/truth-1.4.0.jar"],
-    sdk_version: "current",
-}
-
 java_import {
     name: "rxjava",
     jars: [
@@ -309,14 +292,6 @@ java_import {
 java_import_host {
     name: "kotlinpoet",
     jars: ["repository/com/squareup/kotlinpoet/1.8.0/kotlinpoet-1.8.0.jar"],
-}
-
-java_import {
-    name: "grpc-netty-shaded-1.16.1-jar",
-    host_supported: true,
-    jars: ["repository/io/grpc/grpc-netty-shaded/1.16.1/grpc-netty-shaded-1.16.1.jar"],
-    visibility: ["//external/grpc-grpc-java/netty/shaded"],
-    licenses: ["m2_grpc_netty_shaded_1.16.1_license"],
 }
 
 java_import {
@@ -516,62 +491,6 @@ java_import {
 }
 
 java_import {
-    name: "javawriter",
-    jars: [
-        "repository/com/squareup/javawriter/2.1.1/javawriter-2.1.1.jar",
-    ],
-}
-
-java_import_host {
-    name: "com.google.api.grpc_proto-google-common-protos-prebuilt-jar",
-    jars: ["repository/com/google/api/grpc/proto-google-common-protos/1.14.0/proto-google-common-protos-1.14.0.jar"],
-    licenses: ["m2_api_grpc_license"],
-    target: {
-        windows: {
-            enabled: true,
-        },
-    },
-}
-
-java_import {
-    name: "auto-common-1.1.2",
-    jars: ["repository/com/google/auto/auto-common/1.1.2/auto-common-1.1.2.jar"],
-    host_supported: true,
-}
-
-java_import {
-    name: "auto-value-1.9",
-    jars: ["repository/com/google/auto/value/auto-value/1.9/auto-value-1.9.jar"],
-    host_supported: true,
-}
-
-java_plugin {
-    name: "auto_value_plugin_1.9",
-    static_libs: [
-        "auto-value-1.9",
-        "auto-common-1.1.2",
-        "escapevelocity",
-        "guava",
-        "javapoet",
-    ],
-    processor_class: "com.google.auto.value.processor.AutoValueProcessor",
-    visibility: ["//visibility:public"],
-}
-
-java_plugin {
-    name: "auto_value_builder_plugin_1.9",
-    static_libs: [
-        "auto-value-1.9",
-        "auto-common-1.1.2",
-        "escapevelocity",
-        "guava",
-        "javapoet",
-    ],
-    processor_class: "com.google.auto.value.processor.AutoBuilderProcessor",
-    visibility: ["//visibility:public"],
-}
-
-java_import {
     name: "gson-prebuilt-jar-2.9.1",
     jars: ["repository/com/google/code/gson/gson/2.9.1/gson-2.9.1.jar"],
     sdk_version: "current",
@@ -604,17 +523,18 @@ java_import {
 }
 
 java_import_host {
+    name: "checkerframework_dataflow_errorprone_prebuilt_jar",
+    jars: ["repository/org/checkerframework/dataflow-errorprone/3.39.0/dataflow-errorprone-3.39.0.jar"],
+    licenses: ["m2_dataflow_errorprone_license"],
+}
+
+java_import_host {
     name: "javax-annotation-api-prebuilt-host-jar",
     jars: ["repository/javax/annotation/javax.annotation-api/1.2/javax.annotation-api-1.2.jar"],
     licenses: ["m2_javax_annotation_license"],
 }
 
 build = ["robolectric.bp"]
-
-java_import_host {
-    name: "jsoup-1.6.3",
-    jars: ["repository/org/jsoup/jsoup/1.6.3/jsoup-1.6.3.jar"],
-}
 
 java_import {
     name: "symbol-processing-api",
@@ -740,4 +660,34 @@ java_import {
         },
     },
     licenses: ["m2_javax_annotation_license"],
+}
+
+// TODO: b/449453610 - remove after source import is complete.
+java_import_host {
+    name: "caffeine-prebuilt",
+    jars: ["repository/com/github/ben-manes/caffeine/caffeine/3.2.2/caffeine-3.2.2.jar"],
+    licenses: ["caffeine-prebuilt-license"],
+    visibility: ["//external/error_prone"],
+}
+
+license {
+    name: "caffeine-prebuilt-license",
+    license_kinds: ["SPDX-license-identifier-Apache-2.0"],
+    license_text: ["repository/com/github/ben-manes/caffeine/caffeine/LICENSE"],
+    visibility: ["//visibility:private"],
+}
+
+// TODO: b/449455162 - remove after source import is complete.
+java_import_host {
+    name: "pcollections-prebuilt",
+    jars: ["repository/org/pcollections/pcollections/5.0.0/pcollections-5.0.0.jar"],
+    licenses: ["pcollections-prebuilt-license"],
+    visibility: ["//external/error_prone"],
+}
+
+license {
+    name: "pcollections-prebuilt-license",
+    license_kinds: ["SPDX-license-identifier-MIT"],
+    license_text: ["repository/org/pcollections/pcollections/LICENSE"],
+    visibility: ["//visibility:private"],
 }
