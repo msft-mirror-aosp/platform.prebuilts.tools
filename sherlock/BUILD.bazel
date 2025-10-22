@@ -46,11 +46,21 @@ studio_data(
 studio_data(
     name = "spirv_tools",
     files_linux = glob(["SPIRV-Tools/linux-x64/**/*"]),
-    mappings = {"prebuilts/tools/sherlock/SPIRV-Tools/linux-x64": ""},
+    files_mac = glob(["SPIRV-Tools/darwin-arm64/**/*"]),
+    files_mac_arm = glob(["SPIRV-Tools/darwin-arm64/**/*"]),
+    mappings = {
+        "prebuilts/tools/sherlock/SPIRV-Tools/linux-x64": "",
+        "prebuilts/tools/sherlock/SPIRV-Tools/darwin-arm64": "",
+    },
 )
 
 studio_data(
     name = "spirv_cross",
     files_linux = ["SPIRV-Cross/linux-x64/spirv-cross"],
-    mappings = {"prebuilts/tools/sherlock/SPIRV-Cross/linux-x64": ""},
+    files_mac = ["SPIRV-Cross/darwin-arm64/spirv-cross"],
+    files_mac_arm = ["SPIRV-Cross/darwin-arm64/spirv-cross"],
+    mappings = {
+        "prebuilts/tools/sherlock/SPIRV-Cross/linux-x64": "",
+        "prebuilts/tools/sherlock/SPIRV-Cross/darwin-arm64": "",
+    },
 )
