@@ -72,17 +72,6 @@ license {
 }
 
 license {
-    name: "m2_java_diff_license",
-    visibility: [":__subpackages__"],
-    license_kinds: [
-        "SPDX-license-identifier-Apache-2.0",
-    ],
-    license_text: [
-        "repository/com/googlecode/java-diff-utils/diffutils/LICENSE.txt",
-    ],
-}
-
-license {
     name: "m2_javax_annotation_license",
     visibility: [":__subpackages__"],
     license_kinds: [
@@ -197,14 +186,6 @@ java_import {
     ],
     sdk_version: "current",
     host_supported: true,
-}
-
-java_import {
-    name: "diffutils-prebuilt-jar",
-    jars: ["repository/com/googlecode/java-diff-utils/diffutils/1.3.0/diffutils-1.3.0.jar"],
-    sdk_version: "current",
-    host_supported: true,
-    licenses: ["m2_java_diff_license"],
 }
 
 java_import_host {
@@ -674,20 +655,5 @@ license {
     name: "caffeine-prebuilt-license",
     license_kinds: ["SPDX-license-identifier-Apache-2.0"],
     license_text: ["repository/com/github/ben-manes/caffeine/caffeine/LICENSE"],
-    visibility: ["//visibility:private"],
-}
-
-// TODO: b/449455162 - remove after source import is complete.
-java_import_host {
-    name: "pcollections-prebuilt",
-    jars: ["repository/org/pcollections/pcollections/5.0.0/pcollections-5.0.0.jar"],
-    licenses: ["pcollections-prebuilt-license"],
-    visibility: ["//external/error_prone"],
-}
-
-license {
-    name: "pcollections-prebuilt-license",
-    license_kinds: ["SPDX-license-identifier-MIT"],
-    license_text: ["repository/org/pcollections/pcollections/LICENSE"],
     visibility: ["//visibility:private"],
 }
