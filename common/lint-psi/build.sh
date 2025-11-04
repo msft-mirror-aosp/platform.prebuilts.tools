@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 set -eu
 
+export WORKSPACE="$(cd "$(dirname "$0")"/../../../.. && pwd)"
+
+# Check that the WORKSPACE file is actually there.
+test -f "${WORKSPACE}/WORKSPACE"
+
+echo "Found WORKSPACE root: ${WORKSPACE}"
+
 # This file builds and assembles Lint's dependencies (IntelliJ/Kotlin/UAST).
 # Consult the README for details.
 
@@ -15,10 +22,11 @@ export KOTLIN_SHA="14f2ce61526a599b15ae62835655ad2c460a75f3" # Jul 9, 2025, 2.2.
 
 export CLEAN_BUILD="${CLEAN_BUILD:-false}"
 
-export WORKSPACE="$(bazel info workspace)"
-export LINT_PSI_DIR="$WORKSPACE/prebuilts/tools/common/lint-psi"
+export LINT_PSI_DIR="${WORKSPACE}/prebuilts/tools/common/lint-psi"
 export KOTLIN_DIR="${CUSTOM_KOTLIN_DIR:-$LINT_PSI_DIR/dependency-source-checkouts/kotlin}"
 export INTELLIJ_DIR="${CUSTOM_INTELLIJ_DIR:-$LINT_PSI_DIR/dependency-source-checkouts/intellij}"
+
+JAR_REWRITER_DIR="${LINT_PSI_DIR}/jarrewriter"
 
 INTELLIJ_REMOTE="git@github.com:JetBrains/intellij-community.git"
 KOTLIN_REMOTE="git@github.com:JetBrains/kotlin.git"
@@ -35,7 +43,7 @@ fetch_git_repo() {
     git -C "$DIR" clean -fd
 }
 
-cd "$WORKSPACE"
+cd "${WORKSPACE}"
 
 # Forbid clean builds with custom repos, to avoid clobbering user files.
 if [[ "$CLEAN_BUILD" = "true" && ( "${CUSTOM_KOTLIN_DIR:-}" || "${CUSTOM_INTELLIJ_DIR:-}" ) ]]; then
@@ -93,5 +101,15 @@ cp "$LINT_PSI_DIR"/build/libs/intellij-core{,-sources}.jar "$LINT_PSI_DIR/intell
 cp "$LINT_PSI_DIR"/build/libs/kotlin-compiler{,-sources}.jar "$LINT_PSI_DIR/kotlin-compiler/"
 cp "$LINT_PSI_DIR"/build/libs/uast-{common,java,kotlin}{,-sources}.jar "$LINT_PSI_DIR/uast/"
 cp "$LINT_PSI_DIR"/build/versions.txt "$LINT_PSI_DIR/"
+
+phase "Rewriting intellij-core.jar"
+rm -f "${LINT_PSI_DIR}/intellij-core/intellij-core-before-rewrite.jar"
+mv "${LINT_PSI_DIR}/intellij-core/intellij-core.jar" "${LINT_PSI_DIR}/intellij-core/intellij-core-before-rewrite.jar"
+"${KOTLIN_DIR}/gradlew" -p "${JAR_REWRITER_DIR}" wipeConstructor "-PinputJarPath=${LINT_PSI_DIR}/intellij-core/intellij-core-before-rewrite.jar" "-PoutputJarPath=${LINT_PSI_DIR}/intellij-core/intellij-core.jar"
+
+phase "Rewriting kotlin-compiler.jar"
+rm -f "${LINT_PSI_DIR}/kotlin-compiler/kotlin-compiler-before-rewrite.jar"
+mv "${LINT_PSI_DIR}/kotlin-compiler/kotlin-compiler.jar" "${LINT_PSI_DIR}/kotlin-compiler/kotlin-compiler-before-rewrite.jar"
+"${KOTLIN_DIR}/gradlew" -p "${JAR_REWRITER_DIR}" rewriteType "-PinputJarPath=${LINT_PSI_DIR}/kotlin-compiler/kotlin-compiler-before-rewrite.jar" "-PoutputJarPath=${LINT_PSI_DIR}/kotlin-compiler/kotlin-compiler.jar"
 
 phase "Done"
