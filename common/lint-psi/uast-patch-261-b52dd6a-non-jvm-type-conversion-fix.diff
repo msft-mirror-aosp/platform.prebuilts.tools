@@ -1,0 +1,25 @@
+https://github.com/JetBrains/intellij-community/commit/b52dd6a931596a5af2d8813280f2bb50b975cb36
+https://youtrack.jetbrains.com/issue/KTIJ-35938
+Bug: 450505645
+
+K2 UAST: allow non-JVM platforms for type conversion
+^KTIJ-35938 fixed
+
+closes #3271
+
+GitOrigin-RevId: b9b28e419a474e9459031afe344863b216e52981
+
+diff --git a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt
+index cab5f2799db7d..de8f2bf7a2928 100644
+--- a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt
++++ b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt
+@@ -416,7 +416,8 @@ internal fun toPsiType(
+         psiTypeParent,
+         allowErrorTypes = false,
+         config.typeMappingMode,
+-        isAnnotationMethod = false
++        isAnnotationMethod = false,
++        allowNonJvmPlatforms = true,
+     ) ?: UastErrorType
+ }
+ 
