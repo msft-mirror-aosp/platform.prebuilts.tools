@@ -535,17 +535,16 @@ studio_data(
 jvm_import(
     name = "kotlin-compiler",
     jars = [
-        # This list can be computed by querying the deps of
+        # These are the transitive deps of target
         # @maven//:org.jetbrains.kotlin.kotlin-compiler_<VERSION>
-        # then resolving any duplicate versions to the highest version present.
+        # defined in tools/base/bazel/maven/BUILD.maven.
         "repository/org/jetbrains/annotations/24.0.0/annotations-24.0.0.jar",
-        "repository/org/jetbrains/intellij/deps/trove4j/1.0.20200330/trove4j-1.0.20200330.jar",
-        "repository/org/jetbrains/kotlin/kotlin-compiler/2.2.0/kotlin-compiler-2.2.0.jar",
-        "repository/org/jetbrains/kotlin/kotlin-reflect/2.2.0/kotlin-reflect-2.2.0.jar",
-        "repository/org/jetbrains/kotlin/kotlin-script-runtime/2.2.0/kotlin-script-runtime-2.2.0.jar",
-        "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/2.2.0/kotlin-stdlib-jdk7-2.2.0.jar",
-        "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/2.2.0/kotlin-stdlib-jdk8-2.2.0.jar",
-        "repository/org/jetbrains/kotlin/kotlin-stdlib/2.2.0/kotlin-stdlib-2.2.0.jar",
+        "repository/org/jetbrains/kotlin/kotlin-compiler/2.2.20/kotlin-compiler-2.2.20.jar",
+        "repository/org/jetbrains/kotlin/kotlin-reflect/1.6.10/kotlin-reflect-1.6.10.jar",
+        "repository/org/jetbrains/kotlin/kotlin-script-runtime/2.2.20/kotlin-script-runtime-2.2.20.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/2.2.20/kotlin-stdlib-jdk7-2.2.20.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/2.2.20/kotlin-stdlib-jdk8-2.2.20.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib/2.2.20/kotlin-stdlib-2.2.20.jar",
         "repository/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.8.0/kotlinx-coroutines-core-jvm-1.8.0.jar",
     ],
     visibility = ["//visibility:public"],
@@ -554,7 +553,7 @@ jvm_import(
 jvm_import(
     name = "jvm-abi-gen-plugin",
     jars = [
-        "repository/org/jetbrains/kotlin/jvm-abi-gen/2.2.0/jvm-abi-gen-2.2.0.jar",
+        "repository/org/jetbrains/kotlin/jvm-abi-gen/2.2.20/jvm-abi-gen-2.2.20.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -562,7 +561,7 @@ jvm_import(
 jvm_import(
     name = "kotlin-compose-compiler-plugin",
     jars = [
-        "repository/org/jetbrains/kotlin/kotlin-compose-compiler-plugin/2.2.0/kotlin-compose-compiler-plugin-2.2.0.jar",
+        "repository/org/jetbrains/kotlin/kotlin-compose-compiler-plugin/2.2.20/kotlin-compose-compiler-plugin-2.2.20.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -570,7 +569,7 @@ jvm_import(
 jvm_import(
     name = "kotlin-serialization-compiler-plugin",
     jars = [
-        "repository/org/jetbrains/kotlin/kotlin-serialization-compiler-plugin/2.2.0/kotlin-serialization-compiler-plugin-2.2.0.jar",
+        "repository/org/jetbrains/kotlin/kotlin-serialization-compiler-plugin/2.2.20/kotlin-serialization-compiler-plugin-2.2.20.jar",
     ],
     visibility = ["//visibility:public"],
 )
