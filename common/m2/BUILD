@@ -936,7 +936,15 @@ jvm_import(
 # managed by go/iml_to_build
 filegroup(
     name = "lucene_files",
-    srcs = ["repository/org/apache/lucene/lucene-queryparser/9.12.0/lucene-queryparser-9.12.0.jar"],
+    # do not sort: must match IML order
+    srcs = [
+        "repository/org/apache/lucene/lucene-analysis-common/9.12.0/lucene-analysis-common-9.12.0.jar",
+        "repository/org/apache/lucene/lucene-core/9.12.0/lucene-core-9.12.0.jar",
+        "repository/org/apache/lucene/lucene-facet/9.12.0/lucene-facet-9.12.0.jar",
+        "repository/org/apache/lucene/lucene-queries/9.12.0/lucene-queries-9.12.0.jar",
+        "repository/org/apache/lucene/lucene-sandbox/9.12.0/lucene-sandbox-9.12.0.jar",
+        "repository/org/apache/lucene/lucene-queryparser/9.12.0/lucene-queryparser-9.12.0.jar",
+    ],
     visibility = ["//visibility:public"],
 )
 
