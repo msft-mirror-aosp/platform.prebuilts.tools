@@ -850,39 +850,6 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
-# Up until 251, Jewel libraries depend on IDE version and merged here to be included depending on an IDE version.
-# This should only be used when targetting the 243 platform.
-# And for 251, only used for IntelliJ Gemini Code Assist plugin to bundle the jar. As different IDE
-# 2025.1 minor version are using incompatible jewel libraries.
-merge_jars(
-    name = "jewel-ide",
-    out = "jewel-ide.jar",
-    allow_duplicates = True,  # needed for JetBrains' __index__ file collisions
-    jars = select({
-        "//conditions:default": [
-            "repository/org/jetbrains/jewel/jewel-foundation/0.28.0-243.27100/jewel-foundation-0.28.0-243.27100.jar",
-            "repository/org/jetbrains/jewel/jewel-ide-laf-bridge/0.28.0-243.27100/jewel-ide-laf-bridge-0.28.0-243.27100.jar",
-            "repository/org/jetbrains/jewel/jewel-ui/0.28.0-243.27100/jewel-ui-0.28.0-243.27100.jar",
-            "repository/org/jetbrains/jewel/jewel-markdown-core/0.28.0-243.27100/jewel-markdown-core-0.28.0-243.27100.jar",
-            "repository/org/jetbrains/jewel/jewel-markdown-extensions-autolink/0.28.0-243.27100/jewel-markdown-extensions-autolink-0.28.0-243.27100.jar",
-            "repository/org/jetbrains/jewel/jewel-markdown-extensions-gfm-alerts/0.28.0-243.27100/jewel-markdown-extensions-gfm-alerts-0.28.0-243.27100.jar",
-            "repository/org/jetbrains/jewel/jewel-markdown-ide-laf-bridge-styling/0.28.0-243.27100/jewel-markdown-ide-laf-bridge-styling-0.28.0-243.27100.jar",
-            "repository/org/commonmark/commonmark/0.24.0/commonmark-0.24.0.jar",
-        ],
-        "@intellij//:intellij_ce_2025_1": [
-            "repository/org/jetbrains/jewel/jewel-foundation/0.28.0-251.25410.109/jewel-foundation-0.28.0-251.25410.109.jar",
-            "repository/org/jetbrains/jewel/jewel-ide-laf-bridge/0.28.0-251.25410.109/jewel-ide-laf-bridge-0.28.0-251.25410.109.jar",
-            "repository/org/jetbrains/jewel/jewel-ui/0.28.0-251.25410.109/jewel-ui-0.28.0-251.25410.109.jar",
-            "repository/org/jetbrains/jewel/jewel-markdown-core/0.28.0-251.25410.109/jewel-markdown-core-0.28.0-251.25410.109.jar",
-            "repository/org/jetbrains/jewel/jewel-markdown-ide-laf-bridge-styling/0.28.0-251.25410.109/jewel-markdown-ide-laf-bridge-styling-0.28.0-251.25410.109.jar",
-            "repository/org/jetbrains/jewel/jewel-int-ui-standalone/0.28.0-251.25410.109/jewel-int-ui-standalone-0.28.0-251.25410.109.jar",
-            "repository/org/jetbrains/jewel/jewel-markdown-int-ui-standalone-styling/0.28.0-251.25410.109/jewel-markdown-int-ui-standalone-styling-0.28.0-251.25410.109.jar",
-            "repository/org/commonmark/commonmark/0.24.0/commonmark-0.24.0.jar",
-        ],
-    }),
-    visibility = ["//visibility:public"],
-)
-
 # managed by go/iml_to_build
 jvm_import(
     name = "grpc-inprocess-1.69.1",
@@ -1048,42 +1015,6 @@ jvm_import(
 jvm_import(
     name = "duckdb_jdbc-1.3.0.0",
     jars = ["repository/org/duckdb/duckdb_jdbc/1.3.0.0/duckdb_jdbc-1.3.0.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
-jvm_import(
-    name = "compose-desktop",
-    jars = [
-        "repository/org/jetbrains/compose/animation/animation-desktop/1.8.0-alpha04/animation-desktop-1.8.0-alpha04.jar",
-        "repository/org/jetbrains/compose/animation/animation-core-desktop/1.8.0-alpha04/animation-core-desktop-1.8.0-alpha04.jar",
-        "repository/org/jetbrains/compose/components/components-resources/1.8.0-alpha04/components-resources-1.8.0-alpha04.jar",
-        "repository/org/jetbrains/compose/components/components-resources-desktop/1.8.0-alpha04/components-resources-desktop-1.8.0-alpha04.jar",
-        "repository/org/jetbrains/compose/runtime/runtime-saveable-desktop/1.8.0-alpha04/runtime-saveable-desktop-1.8.0-alpha04.jar",
-        "repository/org/jetbrains/compose/runtime/runtime-desktop/1.8.0-alpha04/runtime-desktop-1.8.0-alpha04.jar",
-        "repository/org/jetbrains/compose/foundation/foundation-layout-desktop/1.8.0-alpha04/foundation-layout-desktop-1.8.0-alpha04.jar",
-        "repository/org/jetbrains/compose/foundation/foundation-desktop/1.8.0-alpha04/foundation-desktop-1.8.0-alpha04.jar",
-        "repository/org/jetbrains/compose/ui/ui-unit-desktop/1.8.0-alpha04/ui-unit-desktop-1.8.0-alpha04.jar",
-        "repository/org/jetbrains/compose/ui/ui-text-desktop/1.8.0-alpha04/ui-text-desktop-1.8.0-alpha04.jar",
-        "repository/org/jetbrains/compose/ui/ui-util-desktop/1.8.0-alpha04/ui-util-desktop-1.8.0-alpha04.jar",
-        "repository/org/jetbrains/compose/ui/ui-graphics-desktop/1.8.0-alpha04/ui-graphics-desktop-1.8.0-alpha04.jar",
-        "repository/org/jetbrains/compose/ui/ui-geometry-desktop/1.8.0-alpha04/ui-geometry-desktop-1.8.0-alpha04.jar",
-        "repository/org/jetbrains/compose/ui/ui-desktop/1.8.0-alpha04/ui-desktop-1.8.0-alpha04.jar",
-        "repository/org/jetbrains/compose/ui/ui-backhandler-desktop/1.8.0-alpha04/ui-backhandler-desktop-1.8.0-alpha04.jar",
-        "repository/org/jetbrains/skiko/skiko-awt/0.9.12/skiko-awt-0.9.12.jar",
-        "repository/org/jetbrains/skiko/skiko-awt-runtime-linux-arm64/0.9.12/skiko-awt-runtime-linux-arm64-0.9.12.jar",
-        "repository/org/jetbrains/skiko/skiko-awt-runtime-linux-x64/0.9.12/skiko-awt-runtime-linux-x64-0.9.12.jar",
-        "repository/org/jetbrains/skiko/skiko-awt-runtime-macos-arm64/0.9.12/skiko-awt-runtime-macos-arm64-0.9.12.jar",
-        "repository/org/jetbrains/skiko/skiko-awt-runtime-macos-x64/0.9.12/skiko-awt-runtime-macos-x64-0.9.12.jar",
-        "repository/org/jetbrains/skiko/skiko-awt-runtime-windows-arm64/0.9.12/skiko-awt-runtime-windows-arm64-0.9.12.jar",
-        "repository/org/jetbrains/skiko/skiko-awt-runtime-windows-x64/0.9.12/skiko-awt-runtime-windows-x64-0.9.12.jar",
-        "repository/org/jetbrains/androidx/lifecycle/lifecycle-runtime-compose-desktop/2.9.0-alpha04/lifecycle-runtime-compose-desktop-2.9.0-alpha04.jar",
-        "repository/androidx/collection/collection-jvm/1.5.0-beta01/collection-jvm-1.5.0-beta01.jar",
-        "repository/androidx/arch/core/core-common/2.2.0/core-common-2.2.0.jar",
-        "repository/androidx/lifecycle/lifecycle-common/2.9.0-alpha08/lifecycle-common-2.9.0-alpha08.jar",
-        "repository/androidx/lifecycle/lifecycle-runtime-desktop/2.9.0-alpha08/lifecycle-runtime-desktop-2.9.0-alpha08.jar",
-        "repository/androidx/lifecycle/lifecycle-common-jvm/2.9.0-alpha08/lifecycle-common-jvm-2.9.0-alpha08.jar",
-        "repository/androidx/lifecycle/lifecycle-viewmodel-desktop/2.9.0-alpha08/lifecycle-viewmodel-desktop-2.9.0-alpha08.jar",
-    ],
     visibility = ["//visibility:public"],
 )
 
