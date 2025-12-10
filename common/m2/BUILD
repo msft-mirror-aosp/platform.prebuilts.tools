@@ -1218,3 +1218,22 @@ jvm_import(
     jars = ["repository/org/apache/lucene/lucene-memory/9.12.0/lucene-memory-9.12.0.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "grpc",
+    # do not sort: must match IML order
+    jars = [
+        "repository/io/grpc/grpc-api/1.69.1/grpc-api-1.69.1.jar",
+        "repository/io/grpc/grpc-auth/1.69.1/grpc-auth-1.69.1.jar",
+        "repository/io/grpc/grpc-core/1.69.1/grpc-core-1.69.1.jar",
+        "repository/io/grpc/grpc-kotlin-stub/1.4.1/grpc-kotlin-stub-1.4.1.jar",
+        "repository/io/grpc/grpc-netty/1.69.1/grpc-netty-1.69.1.jar",
+        "repository/io/grpc/grpc-netty-shaded/1.69.1/grpc-netty-shaded-1.69.1.jar",
+        "repository/io/grpc/grpc-protobuf/1.69.1/grpc-protobuf-1.69.1.jar",
+        "repository/io/grpc/grpc-protobuf-lite/1.69.1/grpc-protobuf-lite-1.69.1.jar",
+        "repository/io/grpc/grpc-stub/1.69.1/grpc-stub-1.69.1.jar",
+        "repository/io/grpc/grpc-context/1.69.1/grpc-context-1.69.1.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
