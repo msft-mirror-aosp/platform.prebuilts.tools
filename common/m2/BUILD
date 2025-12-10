@@ -1146,3 +1146,24 @@ jvm_import(
     ],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "error_prone_annotations-2.36.0",
+    jars = ["repository/com/google/errorprone/error_prone_annotations/2.36.0/error_prone_annotations-2.36.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "checker-compat-qual-2.5.5",
+    jars = ["repository/org/checkerframework/checker-compat-qual/2.5.5/checker-compat-qual-2.5.5.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "auto-value-annotations-1.11.0",
+    jars = ["repository/com/google/auto/value/auto-value-annotations/1.11.0/auto-value-annotations-1.11.0.jar"],
+    visibility = ["//visibility:public"],
+)
