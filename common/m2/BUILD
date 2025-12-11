@@ -1189,3 +1189,32 @@ jvm_import(
     jars = ["repository/com/squareup/leakcanary/shark-log/2.14/shark-log-2.14.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "lucene-highlighter-9.12.0",
+    # do not sort: must match IML order
+    jars = ["repository/org/apache/lucene/lucene-highlighter/9.12.0/lucene-highlighter-9.12.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "lucene-queryparser-9.12.0",
+    jars = ["repository/org/apache/lucene/lucene-queryparser/9.12.0/lucene-queryparser-9.12.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "lucene-queries-9.12.0",
+    jars = ["repository/org/apache/lucene/lucene-queries/9.12.0/lucene-queries-9.12.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "lucene-memory-9.12.0",
+    jars = ["repository/org/apache/lucene/lucene-memory/9.12.0/lucene-memory-9.12.0.jar"],
+    visibility = ["//visibility:public"],
+)
