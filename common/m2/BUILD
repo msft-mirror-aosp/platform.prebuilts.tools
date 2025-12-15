@@ -915,40 +915,18 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
-# The MCP Kotlin SDK depends on a different set of libraries based on the target IntelliJ platform.
+# using merge_jars for now for simplicity of packaging jars
 merge_jars(
     name = "mcp-sdk-libraries",
     out = "mcp-sdk-libraries.jar",
-    jars = select({
-        "//conditions:default": [
-            "repository/io/github/oshai/kotlin-logging-jvm/7.0.0/kotlin-logging-jvm-7.0.0.jar",
-            "repository/io/ktor/ktor-server-cio-jvm/3.1.3/ktor-server-cio-jvm-3.1.3.jar",
-            "repository/io/ktor/ktor-server-core-jvm/3.1.3/ktor-server-core-jvm-3.1.3.jar",
-            "repository/io/ktor/ktor-server-sse-jvm/3.1.3/ktor-server-sse-jvm-3.1.3.jar",
-            "repository/io/ktor/ktor-server-websockets-jvm/3.1.3/ktor-server-websockets-jvm-3.1.3.jar",
-            "repository/org/jetbrains/kotlinx/atomicfu-jvm/0.29.0/atomicfu-jvm-0.29.0.jar",
-        ],
-        "@intellij//:intellij_ce_2025_2": [
-            "repository/io/github/oshai/kotlin-logging-jvm/7.0.0/kotlin-logging-jvm-7.0.0.jar",
-            "repository/io/ktor/ktor-server-cio-jvm/3.1.3/ktor-server-cio-jvm-3.1.3.jar",
-            "repository/io/ktor/ktor-server-core-jvm/3.1.3/ktor-server-core-jvm-3.1.3.jar",
-            "repository/io/ktor/ktor-server-sse-jvm/3.1.3/ktor-server-sse-jvm-3.1.3.jar",
-            "repository/io/ktor/ktor-server-websockets-jvm/3.1.3/ktor-server-websockets-jvm-3.1.3.jar",
-            "repository/org/jetbrains/kotlinx/atomicfu-jvm/0.29.0/atomicfu-jvm-0.29.0.jar",
-        ],
-        "@intellij//:intellij_ce_2025_1": [
-            ":filtered_kotlin_stdlib_atomics.jar",
-            "repository/io/github/oshai/kotlin-logging-jvm/7.0.0/kotlin-logging-jvm-7.0.0.jar",
-            "repository/io/modelcontextprotocol/kotlin-sdk/0.5.0/kotlin-sdk-0.5.0.jar",
-        ],
-        "@intellij//:intellij_ce_2024_3": [
-            ":filtered_kotlin_stdlib_atomics.jar",
-            "repository/io/github/oshai/kotlin-logging-jvm/7.0.0/kotlin-logging-jvm-7.0.0.jar",
-            "repository/io/modelcontextprotocol/kotlin-sdk/0.5.0/kotlin-sdk-0.5.0.jar",
-            "repository/org/jetbrains/kotlinx/kotlinx-io-bytestring-jvm/0.6.0/kotlinx-io-bytestring-jvm-0.6.0.jar",
-            "repository/org/jetbrains/kotlinx/kotlinx-io-core-jvm/0.6.0/kotlinx-io-core-jvm-0.6.0.jar",
-        ],
-    }),
+    jars = [
+        "repository/io/github/oshai/kotlin-logging-jvm/7.0.0/kotlin-logging-jvm-7.0.0.jar",
+        "repository/io/ktor/ktor-server-cio-jvm/3.1.3/ktor-server-cio-jvm-3.1.3.jar",
+        "repository/io/ktor/ktor-server-core-jvm/3.1.3/ktor-server-core-jvm-3.1.3.jar",
+        "repository/io/ktor/ktor-server-sse-jvm/3.1.3/ktor-server-sse-jvm-3.1.3.jar",
+        "repository/io/ktor/ktor-server-websockets-jvm/3.1.3/ktor-server-websockets-jvm-3.1.3.jar",
+        "repository/org/jetbrains/kotlinx/atomicfu-jvm/0.29.0/atomicfu-jvm-0.29.0.jar",
+    ],
     visibility = ["//visibility:public"],
 )
 
