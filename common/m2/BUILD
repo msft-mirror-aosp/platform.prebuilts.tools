@@ -900,21 +900,6 @@ jvm_import(
     visibility = ["//visibility:public"],
 )
 
-# managed by go/iml_to_build
-filegroup(
-    name = "lucene_files",
-    # do not sort: must match IML order
-    srcs = [
-        "repository/org/apache/lucene/lucene-analysis-common/9.12.0/lucene-analysis-common-9.12.0.jar",
-        "repository/org/apache/lucene/lucene-core/9.12.0/lucene-core-9.12.0.jar",
-        "repository/org/apache/lucene/lucene-facet/9.12.0/lucene-facet-9.12.0.jar",
-        "repository/org/apache/lucene/lucene-queries/9.12.0/lucene-queries-9.12.0.jar",
-        "repository/org/apache/lucene/lucene-sandbox/9.12.0/lucene-sandbox-9.12.0.jar",
-        "repository/org/apache/lucene/lucene-queryparser/9.12.0/lucene-queryparser-9.12.0.jar",
-    ],
-    visibility = ["//visibility:public"],
-)
-
 # using merge_jars for now for simplicity of packaging jars
 merge_jars(
     name = "mcp-sdk-libraries",
@@ -1101,30 +1086,33 @@ jvm_import(
 
 # managed by go/iml_to_build
 jvm_import(
-    name = "lucene-highlighter-9.12.0",
+    name = "lucene-10.3.0",
     # do not sort: must match IML order
-    jars = ["repository/org/apache/lucene/lucene-highlighter/9.12.0/lucene-highlighter-9.12.0.jar"],
+    jars = [
+        "repository/org/apache/lucene/lucene-backward-codecs/10.3.0/lucene-backward-codecs-10.3.0.jar",
+        "repository/org/apache/lucene/lucene-facet/10.3.0/lucene-facet-10.3.0.jar",
+        "repository/org/apache/lucene/lucene-highlighter/10.3.0/lucene-highlighter-10.3.0.jar",
+        "repository/org/apache/lucene/lucene-memory/10.3.0/lucene-memory-10.3.0.jar",
+        "repository/org/apache/lucene/lucene-queries/10.3.0/lucene-queries-10.3.0.jar",
+        "repository/org/apache/lucene/lucene-queryparser/10.3.0/lucene-queryparser-10.3.0.jar",
+        "repository/org/apache/lucene/lucene-sandbox/10.3.0/lucene-sandbox-10.3.0.jar",
+    ],
     visibility = ["//visibility:public"],
 )
 
 # managed by go/iml_to_build
 jvm_import(
-    name = "lucene-queryparser-9.12.0",
-    jars = ["repository/org/apache/lucene/lucene-queryparser/9.12.0/lucene-queryparser-9.12.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
-    name = "lucene-queries-9.12.0",
-    jars = ["repository/org/apache/lucene/lucene-queries/9.12.0/lucene-queries-9.12.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
-    name = "lucene-memory-9.12.0",
-    jars = ["repository/org/apache/lucene/lucene-memory/9.12.0/lucene-memory-9.12.0.jar"],
+    name = "lucene-9.12.0",
+    # do not sort: must match IML order
+    jars = [
+        "repository/org/apache/lucene/lucene-backward-codecs/9.12.0/lucene-backward-codecs-9.12.0.jar",
+        "repository/org/apache/lucene/lucene-facet/9.12.0/lucene-facet-9.12.0.jar",
+        "repository/org/apache/lucene/lucene-highlighter/9.12.0/lucene-highlighter-9.12.0.jar",
+        "repository/org/apache/lucene/lucene-memory/9.12.0/lucene-memory-9.12.0.jar",
+        "repository/org/apache/lucene/lucene-queries/9.12.0/lucene-queries-9.12.0.jar",
+        "repository/org/apache/lucene/lucene-queryparser/9.12.0/lucene-queryparser-9.12.0.jar",
+        "repository/org/apache/lucene/lucene-sandbox/9.12.0/lucene-sandbox-9.12.0.jar",
+    ],
     visibility = ["//visibility:public"],
 )
 
