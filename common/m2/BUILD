@@ -1155,3 +1155,10 @@ jvm_import(
     jars = ["repository/com/google/auto/value/auto-value-annotations/1.11.0/auto-value-annotations-1.11.0.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "wire-runtime-jvm-5.4.0",
+    jars = ["repository/com/squareup/wire/wire-runtime-jvm/5.4.0/wire-runtime-jvm-5.4.0.jar"],
+    visibility = ["//visibility:public"],
+)
