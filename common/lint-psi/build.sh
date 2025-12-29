@@ -15,10 +15,10 @@ echo "Found WORKSPACE root: ${WORKSPACE}"
 # For the IntelliJ version, see tools/idea/build.txt.
 # For the Kotlin version, see tools/idea/.idea/libraries/kotlinc_*.xml.
 # The git SHAs must also be updated to match the versions specified.
-export INTELLIJ_VERSION="252.23892.409"
-export KOTLIN_VERSION="2.2.20-Beta1"
-export INTELLIJ_SHA="73d2a5cb3bf446179262dc40e47cd20f307a410b" # Aug 1, 2025, 252.23892.409
-export KOTLIN_SHA="14f2ce61526a599b15ae62835655ad2c460a75f3" # Jul 9, 2025, 2.2.20-Beta1
+export INTELLIJ_VERSION="253.30387.90"
+export KOTLIN_VERSION="2.3.20-ij253-87"
+export INTELLIJ_SHA="6f647299f3c4f181870a2bad8fa0ac869363f18b" # IntelliJ 2025.3.2 (tag idea/253.30387.90)
+export KOTLIN_SHA="6ea09ec2739a6213a02d633336796550b9d5b3ca" # From the kt-253 branch for IJ 2025.3.2 (approx. build 2.3.20-ij253-87)
 
 export CLEAN_BUILD="${CLEAN_BUILD:-false}"
 
@@ -69,14 +69,13 @@ if [[ ! "${CUSTOM_KOTLIN_DIR:-}" ]]; then
     git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/kotlin-compiler-patch.diff"
     git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/analysis-api-patch.diff"
     git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/analysis-api-patch-compat.diff"
-    git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/analysis-api-patch-2.3.0.diff"
-    git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/analysis-api-patch-2.3.0-9cb6ad8-class-cast-fix.diff"
+    git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/analysis-api-patch-2.3.21-9e1e6758-fix-receiver-stubs.diff"
 fi
 if [[ ! "${CUSTOM_INTELLIJ_DIR:-}" ]]; then
     git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/intellij-bazel-patch.diff"
     git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/intellij-core-patch.diff"
+    git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/intellij-core-patch-fix-package-annotations.diff"
     git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/uast-patch.diff"
-    git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/uast-patch-253.diff"
     git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/uast-patch-261-6592477-psi-provider-context.diff"
     git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/uast-patch-261-b52dd6a-non-jvm-type-conversion-fix.diff"
     git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/uast-patch-261-3e87a8c19a-fix-PsiNewExpressionImpl-multiResolve.diff"
@@ -91,7 +90,7 @@ phase "Building Kotlin compiler"
 # We use -Pkotlin.build.jar.compression=true to ensure reasonable jar sizes.
 # Additional options to investigate: isTeamcityBuild, kotlin.build.proguard, BuildPropertiesExt.kt, etc.
 "$KOTLIN_DIR/gradlew" -p "$KOTLIN_DIR" \
-    "${GRADLE_CLEAN_FLAGS[@]}" \
+    ${GRADLE_CLEAN_FLAGS[@]+"${GRADLE_CLEAN_FLAGS[@]}"} \
     publishIdeArtifacts \
     -PdeployVersion="$KOTLIN_VERSION-for-lint" \
     -Ppublish.ide.plugin.dependencies=true \
@@ -110,7 +109,7 @@ pushd "$INTELLIJ_DIR"
 popd
 
 phase "Packaging Kotlin compiler jars"
-"$WORKSPACE/tools/gradlew" -p "$LINT_PSI_DIR" "${GRADLE_CLEAN_FLAGS[@]}" assemble
+"$WORKSPACE/tools/gradlew" -p "$LINT_PSI_DIR" ${GRADLE_CLEAN_FLAGS[@]+"${GRADLE_CLEAN_FLAGS[@]}"} assemble
 
 phase "Copying artifacts to prebuilts"
 cp "$INTELLIJ_DIR/out/bazel-bin/android-lint-deps/intellij-core_deploy.jar" "$LINT_PSI_DIR/intellij-core/intellij-core.jar"
