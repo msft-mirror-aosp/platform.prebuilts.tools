@@ -68,8 +68,6 @@ dependencies {
     "intellij-core-content"("com.jetbrains.intellij.java:java-indexing-impl:$intellijVersion") { isTransitive = false } // Contains JavaCoreApplicationEnvironment
     "intellij-core-content"("com.jetbrains.intellij.java:java-psi-impl:$intellijVersion")
     "intellij-core-content"("com.jetbrains.intellij.platform:jps-model-impl:$intellijVersion") { isTransitive = false } // Contains JavaSdkUtil.
-    "intellij-core-content"("com.jetbrains.intellij.platform:plugins-parser-impl:$intellijVersion")  { isTransitive = false }
-    "intellij-core-content"("com.jetbrains.intellij.platform:project-model:$intellijVersion") // includes transitive for render-resources / previewlib/cli
     //Dcl depends on GeneratedParserUtilBase from analysis-impl. This class imports com.intellij.lang.LanguageBraceMatching that comes from analysis artifact
     "intellij-core-content"("com.jetbrains.intellij.platform:analysis:$intellijVersion")  { isTransitive = false }
     "intellij-core-content"("com.jetbrains.intellij.platform:analysis-impl:$intellijVersion")  { isTransitive = false }
@@ -94,6 +92,7 @@ dependencies {
     "kotlin-compiler-content"("org.jetbrains.kotlin:analysis-api-impl-base-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:low-level-api-fir-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:symbol-light-classes-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
+    "kotlin-compiler-content"("com.github.ben-manes.caffeine:caffeine:2.9.3") { isTransitive = false } // Used by the Kotlin compiler.
 
     "uast-common-content"("com.jetbrains.intellij.platform:uast:$intellijVersion") { isTransitive = false }
     "uast-java-content"("com.jetbrains.intellij.java:java-uast:$intellijVersion") { isTransitive = false }
