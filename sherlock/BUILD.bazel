@@ -65,6 +65,19 @@ studio_data(
     },
 )
 
+studio_data(
+    name = "gfxr-to-sqlite3",
+    files_linux = ["gfxr-to-sqlite3/linux-x64/gfxr-to-sqlite3"],
+    files_mac = ["gfxr-to-sqlite3/darwin-arm64/gfxr-to-sqlite3"],
+    files_mac_arm = ["gfxr-to-sqlite3/darwin-arm64/gfxr-to-sqlite3"],
+    files_win = ["gfxr-to-sqlite3/windows-x64/gfxr-to-sqlite3.exe"],
+    mappings = {
+        "prebuilts/tools/sherlock/gfxr-to-sqlite3/linux-x64": "",
+        "prebuilts/tools/sherlock/gfxr-to-sqlite3/darwin-arm64": "",
+        "prebuilts/tools/sherlock/gfxr-to-sqlite3/windows-x64": "",
+    },
+)
+
 filegroup(
     name = "all-prebuilts",
     srcs = glob([
