@@ -84,29 +84,6 @@ license {
 }
 
 license {
-    name: "m2_google_auth_0.13.0_license",
-    visibility: [":__subpackages__"],
-    license_kinds: [
-        "SPDX-license-identifier-BSD-3-Clause",
-    ],
-    license_text: [
-        "repository/com/google/auth/google-auth-library-credentials/0.13.0/LICENSE",
-        "repository/com/google/auth/google-auth-library-oauth2-http/0.13.0/LICENSE",
-    ],
-}
-
-license {
-    name: "m2_google_auth_1.23.0_license",
-    visibility: [":__subpackages__"],
-    license_kinds: [
-        "SPDX-license-identifier-BSD-3-Clause",
-    ],
-    license_text: [
-        "repository/com/google/auth/google-auth-library-oauth2-http/1.23.0/LICENSE",
-    ],
-}
-
-license {
     name: "m2_grpc_netty_shaded_1.56.0_license",
     visibility: [":__subpackages__"],
     license_kinds: [
@@ -174,40 +151,6 @@ java_import {
     ],
     sdk_version: "current",
     host_supported: true,
-}
-
-java_import_host {
-    name: "google-auth-library-credentials-0.13.0",
-    jars: ["repository/com/google/auth/google-auth-library-credentials/0.13.0/google-auth-library-credentials-0.13.0.jar"],
-    licenses: ["m2_google_auth_0.13.0_license"],
-    target: {
-        windows: {
-            enabled: true,
-        },
-    },
-}
-
-java_import_host {
-    name: "google-auth-library-credentials-1.23.0",
-    jars: ["repository/com/google/auth/google-auth-library-credentials/1.23.0/google-auth-library-credentials-1.23.0.jar"],
-    licenses: ["m2_google_auth_1.23.0_license"],
-    target: {
-        windows: {
-            enabled: true,
-        },
-    },
-}
-
-java_import_host {
-    name: "google-auth-library-oauth2-http-0.13.0",
-    jars: ["repository/com/google/auth/google-auth-library-oauth2-http/0.13.0/google-auth-library-oauth2-http-0.13.0.jar"],
-    licenses: ["m2_google_auth_0.13.0_license"],
-}
-
-java_import_host {
-    name: "google-auth-library-oauth2-http-1.23.0",
-    jars: ["repository/com/google/auth/google-auth-library-oauth2-http/1.23.0/google-auth-library-oauth2-http-1.23.0.jar"],
-    licenses: ["m2_google_auth_1.23.0_license"],
 }
 
 java_import_host {
