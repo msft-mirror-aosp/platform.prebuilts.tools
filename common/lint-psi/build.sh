@@ -79,6 +79,7 @@ if [[ ! "${CUSTOM_INTELLIJ_DIR:-}" ]]; then
     git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/uast-patch-253.diff"
     git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/uast-patch-261-6592477-psi-provider-context.diff"
     git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/uast-patch-261-b52dd6a-non-jvm-type-conversion-fix.diff"
+    git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/uast-patch-261-3e87a8c19a-fix-PsiNewExpressionImpl-multiResolve.diff"
 fi
 
 phase "Building Kotlin compiler"
