@@ -13,14 +13,32 @@ filegroup(
 studio_data(
     name = "lib",
     files_linux = ["trace-processor-wrapper/linux-x64/trace-processor"],
-    files_mac = ["trace-processor-wrapper/darwin-arm64/trace-processor"],
+    files_mac = ["trace-processor-wrapper/darwin-x86_64/trace-processor"],
     files_mac_arm = ["trace-processor-wrapper/darwin-arm64/trace-processor"],
     files_win = ["trace-processor-wrapper/windows-x64/trace-processor.exe"],
     mappings = {
         "prebuilts/tools/sherlock/trace-processor-wrapper/linux-x64": "",
         "prebuilts/tools/sherlock/trace-processor-wrapper/darwin-arm64": "",
+        "prebuilts/tools/sherlock/trace-processor-wrapper/darwin-x86_64": "",
         "prebuilts/tools/sherlock/trace-processor-wrapper/windows-x64": "",
     },
+)
+
+# Bundles the trace-processor-wrapper executables into a "trace_processor_server/"
+# directory structure, allowing it to be used as a resource in other projects.
+studio_data(
+    name = "trace-processor-wrapper-bundle",
+    files_linux = ["trace-processor-wrapper/linux-x64/trace-processor"],
+    files_mac = ["trace-processor-wrapper/darwin-x86_64/trace-processor"],
+    files_mac_arm = ["trace-processor-wrapper/darwin-arm64/trace-processor"],
+    files_win = ["trace-processor-wrapper/windows-x64/trace-processor.exe"],
+    mappings = {
+        "prebuilts/tools/sherlock/trace-processor-wrapper/linux-x64/": "trace_processor_server/",
+        "prebuilts/tools/sherlock/trace-processor-wrapper/darwin-arm64/": "trace_processor_server/",
+        "prebuilts/tools/sherlock/trace-processor-wrapper/darwin-x86_64/": "trace_processor_server/",
+        "prebuilts/tools/sherlock/trace-processor-wrapper/windows-x64/": "trace_processor_server/",
+    },
+    visibility = ["//visibility:public"],
 )
 
 # --- GFXReconstruct File Groups ---
