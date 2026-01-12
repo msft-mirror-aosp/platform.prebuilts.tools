@@ -75,6 +75,7 @@ if [[ ! "${CUSTOM_INTELLIJ_DIR:-}" ]]; then
     git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/intellij-bazel-patch.diff"
     git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/intellij-core-patch.diff"
     git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/intellij-core-patch-fix-package-annotations.diff"
+    git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/intellij-patch-target-java-17.diff"
     git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/uast-patch.diff"
     git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/uast-patch-261-6592477-psi-provider-context.diff"
     git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/uast-patch-261-b52dd6a-non-jvm-type-conversion-fix.diff"
