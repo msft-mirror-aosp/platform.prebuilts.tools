@@ -124,6 +124,14 @@ data_sources {
       ftrace_events: "power/cpu_frequency"
       ftrace_events: "power/cpu_idle"
       ftrace_events: "power/gpu_frequency"
+      ftrace_events: "power/gpu_work_period"
+
+      # GPU events
+      ftrace_events: "drm/drm_vblank_event"
+      ftrace_events: "drm/drm_vblank_event_delivered"
+      ftrace_events: "gpu_scheduler/drm_sched_job"
+      ftrace_events: "gpu_scheduler/drm_run_job"
+      ftrace_events: "gpu_scheduler/drm_sched_process_job"
 
       # Old (kernel) LMK
       ftrace_events: "lowmemorykiller/lowmemory_kill"
@@ -152,6 +160,21 @@ data_sources {
       atrace_categories: "network"
       atrace_categories: "cpm"
     }
+  }
+}
+
+data_sources {
+  config {
+    name: "gpu.counters"
+    gpu_counter_config {
+      counter_period_ns: 300000
+    }
+  }
+}
+
+data_sources {
+  config {
+    name: "gpu.renderstages"
   }
 }
 
