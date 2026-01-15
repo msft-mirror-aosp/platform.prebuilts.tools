@@ -73,10 +73,13 @@ if [[ ! "${CUSTOM_KOTLIN_DIR:-}" ]]; then
     git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/analysis-api-patch-2.3.0-9cb6ad8-class-cast-fix.diff"
 fi
 if [[ ! "${CUSTOM_INTELLIJ_DIR:-}" ]]; then
+    git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/intellij-bazel-patch.diff"
+    git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/intellij-core-patch.diff"
     git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/uast-patch.diff"
     git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/uast-patch-253.diff"
     git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/uast-patch-261-6592477-psi-provider-context.diff"
     git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/uast-patch-261-b52dd6a-non-jvm-type-conversion-fix.diff"
+    git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/uast-patch-261-3e87a8c19a-fix-PsiNewExpressionImpl-multiResolve.diff"
 fi
 
 phase "Building Kotlin compiler"
@@ -96,19 +99,26 @@ phase "Building Kotlin compiler"
     -Pkotlin.build.jar.compression=true \
     -Dorg.gradle.dependency.verification=off
 
-phase "Building Lint dependency jars"
+phase "Building IntelliJ modules"
+pushd "$INTELLIJ_DIR"
+# IntelliJ 2025.2 does not have a bazelisk wrapper yet, so we use the one from 2025.3+ instead.
+"$WORKSPACE/tools/idea/bazel.cmd" build \
+	//android-lint-deps:intellij-core_deploy.jar \
+	//android-lint-deps:intellij-core_deploy-src.jar \
+	//android-lint-deps:uast_deploy.jar \
+	//android-lint-deps:uast_deploy-src.jar
+popd
+
+phase "Packaging Kotlin compiler jars"
 "$WORKSPACE/tools/gradlew" -p "$LINT_PSI_DIR" "${GRADLE_CLEAN_FLAGS[@]}" assemble
 
 phase "Copying artifacts to prebuilts"
-cp "$LINT_PSI_DIR"/build/libs/intellij-core{,-sources}.jar "$LINT_PSI_DIR/intellij-core/"
+cp "$INTELLIJ_DIR/out/bazel-bin/android-lint-deps/intellij-core_deploy.jar" "$LINT_PSI_DIR/intellij-core/intellij-core.jar"
+cp "$INTELLIJ_DIR/out/bazel-bin/android-lint-deps/intellij-core_deploy-src.jar" "$LINT_PSI_DIR/intellij-core/intellij-core-sources.jar"
+cp "$INTELLIJ_DIR/out/bazel-bin/android-lint-deps/uast_deploy.jar" "$LINT_PSI_DIR/uast/uast.jar"
+cp "$INTELLIJ_DIR/out/bazel-bin/android-lint-deps/uast_deploy-src.jar" "$LINT_PSI_DIR/uast/uast-sources.jar"
 cp "$LINT_PSI_DIR"/build/libs/kotlin-compiler{,-sources}.jar "$LINT_PSI_DIR/kotlin-compiler/"
-cp "$LINT_PSI_DIR"/build/libs/uast-{common,java,kotlin}{,-sources}.jar "$LINT_PSI_DIR/uast/"
 cp "$LINT_PSI_DIR"/build/versions.txt "$LINT_PSI_DIR/"
-
-phase "Rewriting intellij-core.jar"
-rm -f "${LINT_PSI_DIR}/intellij-core/intellij-core-before-rewrite.jar"
-mv "${LINT_PSI_DIR}/intellij-core/intellij-core.jar" "${LINT_PSI_DIR}/intellij-core/intellij-core-before-rewrite.jar"
-"${KOTLIN_DIR}/gradlew" -p "${JAR_REWRITER_DIR}" wipeConstructor "-PinputJarPath=${LINT_PSI_DIR}/intellij-core/intellij-core-before-rewrite.jar" "-PoutputJarPath=${LINT_PSI_DIR}/intellij-core/intellij-core.jar"
 
 phase "Rewriting kotlin-compiler.jar"
 rm -f "${LINT_PSI_DIR}/kotlin-compiler/kotlin-compiler-before-rewrite.jar"

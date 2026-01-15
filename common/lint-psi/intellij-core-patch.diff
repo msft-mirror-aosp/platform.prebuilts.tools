@@ -1,0 +1,17 @@
+diff --git a/platform/core-api/src/com/intellij/openapi/fileTypes/BinaryFileTypeDecompilers.java b/platform/core-api/src/com/intellij/openapi/fileTypes/BinaryFileTypeDecompilers.java
+index 85c48aa41c60..700d27fc4a99 100644
+--- a/platform/core-api/src/com/intellij/openapi/fileTypes/BinaryFileTypeDecompilers.java
++++ b/platform/core-api/src/com/intellij/openapi/fileTypes/BinaryFileTypeDecompilers.java
+@@ -19,10 +19,12 @@ public final class BinaryFileTypeDecompilers extends FileTypeExtension<BinaryFil
+ 
+   private BinaryFileTypeDecompilers() {
+     super(EP_NAME);
++    /* Android Lint (IJPL-200136): addChangeListener() errors out in the Lint CLI environment.
+     Application app = ApplicationManager.getApplication();
+     if (!app.isUnitTestMode()) {
+       EP_NAME.addChangeListener(() -> notifyDecompilerSetChange(), app);
+     }
++    */
+   }
+ 
+   public void notifyDecompilerSetChange() {

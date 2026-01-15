@@ -1,0 +1,169 @@
+diff --git a/java/java-psi-impl/src/com/intellij/psi/impl/source/PsiParameterImpl.java b/java/java-psi-impl/src/com/intellij/psi/impl/source/PsiParameterImpl.java
+index 8c02a544804b..b3cd57eb2306 100644
+--- a/java/java-psi-impl/src/com/intellij/psi/impl/source/PsiParameterImpl.java
++++ b/java/java-psi-impl/src/com/intellij/psi/impl/source/PsiParameterImpl.java
+@@ -27,6 +27,7 @@ import org.jetbrains.annotations.Nullable;
+ 
+ import javax.swing.*;
+ import java.util.Arrays;
++import java.util.List;
+ 
+ public class PsiParameterImpl extends JavaStubPsiElement<PsiParameterStub> implements PsiParameter {
+   private volatile PsiType myCachedType;
+@@ -51,29 +52,44 @@ public class PsiParameterImpl extends JavaStubPsiElement<PsiParameterStub> imple
+       if (parameterIndex > -1) {
+         PsiLambdaExpression lambdaExpression = PsiTreeUtil.getParentOfType(param, PsiLambdaExpression.class);
+         if (lambdaExpression != null) {
+-          PsiType functionalInterfaceType = MethodCandidateInfo.ourOverloadGuard.doPreventingRecursion(param, false,
+-                                                                                                              () -> LambdaUtil.getFunctionalInterfaceType(lambdaExpression, true));
+-          if (functionalInterfaceType == null) {
+-            Ref<PsiType> typeRef = Ref.create();
+-            // Probably there are several candidates for the functional expression type but all of them have the same parameter type
+-            LambdaUtil.processParentOverloads(lambdaExpression, t -> {
+-              PsiType candidate = getTypeForFunctionalInterfaceType(lambdaExpression, t, parameterIndex);
+-              PsiType prevType = typeRef.get();
+-              if (prevType == null) {
+-                typeRef.set(candidate);
++          PsiType type = MethodCandidateInfo.ourOverloadGuard.doPreventingRecursion(param, false, () -> {
++            PsiElement parent = lambdaExpression.getParent();
++            if (parent instanceof PsiExpressionList) {
++              PsiElement gParent = parent.getParent();
++              if (gParent instanceof PsiAnonymousClass) {
++                gParent = gParent.getParent();
+               }
+-              else {
+-                if (!(prevType instanceof PsiLambdaParameterType) && !prevType.equals(candidate)) {
+-                  typeRef.set(new PsiLambdaParameterType(param));
++              List<?> overloadStack = MethodCandidateInfo.ourOverloadGuard.currentStack();
++              if (gParent instanceof PsiCall &&
++                  (overloadStack.contains(gParent) || overloadStack.contains(lambdaExpression))
++              ) {
++                return null;
++              }
++            }
++
++            PsiType functionalInterfaceType = LambdaUtil.getFunctionalInterfaceType(lambdaExpression, true);
++            if (functionalInterfaceType == null) {
++              Ref<PsiType> typeRef = Ref.create();
++              // Probably there are several candidates for the functional expression type but all of them have the same parameter type
++              LambdaUtil.processParentOverloads(lambdaExpression, t -> {
++                PsiType candidate = getTypeForFunctionalInterfaceType(lambdaExpression, t, parameterIndex);
++                PsiType prevType = typeRef.get();
++                if (prevType == null) {
++                  typeRef.set(candidate);
+                 }
++                else {
++                  if (!(prevType instanceof PsiLambdaParameterType) && !prevType.equals(candidate)) {
++                    typeRef.set(new PsiLambdaParameterType(param));
++                  }
++                }
++              });
++              if (!typeRef.isNull()) {
++                return typeRef.get();
+               }
+-            });
+-            if (!typeRef.isNull()) {
+-              return typeRef.get();
+             }
+-          }
+-          PsiType lambdaParameterFromType = getTypeForFunctionalInterfaceType(lambdaExpression, functionalInterfaceType, parameterIndex);
+-          if (lambdaParameterFromType != null) return lambdaParameterFromType;
++            return getTypeForFunctionalInterfaceType(lambdaExpression, functionalInterfaceType, parameterIndex);
++          });
++          if (type != null) return type;
+         }
+       }
+     }
+diff --git a/java/java-psi-impl/src/com/intellij/psi/impl/source/tree/java/PsiNewExpressionImpl.java b/java/java-psi-impl/src/com/intellij/psi/impl/source/tree/java/PsiNewExpressionImpl.java
+index 348d55b01c3c..12d52c48827a 100644
+--- a/java/java-psi-impl/src/com/intellij/psi/impl/source/tree/java/PsiNewExpressionImpl.java
++++ b/java/java-psi-impl/src/com/intellij/psi/impl/source/tree/java/PsiNewExpressionImpl.java
+@@ -209,7 +209,9 @@ public class PsiNewExpressionImpl extends ExpressionPsiElement implements PsiNew
+ 
+   @Override
+   public JavaResolveResult @NotNull [] multiResolve(boolean incompleteCode) {
+-    return (JavaResolveResult[])getConstructorFakeReference().multiResolve(incompleteCode);
++    ResolveResult[] results = getConstructorFakeReference().multiResolve(incompleteCode);
++    if (results instanceof JavaResolveResult[]) return (JavaResolveResult[])results;
++    return ContainerUtil.map2Array(results, JavaResolveResult.EMPTY_ARRAY, result -> (JavaResolveResult)result);
+   }
+ 
+   @Override
+diff --git a/uast/uast-tests/test/org/jetbrains/uast/test/java/JavaUastApiTest.kt b/uast/uast-tests/test/org/jetbrains/uast/test/java/JavaUastApiTest.kt
+index 8cf36b1d3d26..c0d7b0b1d613 100644
+--- a/uast/uast-tests/test/org/jetbrains/uast/test/java/JavaUastApiTest.kt
++++ b/uast/uast-tests/test/org/jetbrains/uast/test/java/JavaUastApiTest.kt
+@@ -15,6 +15,8 @@
+  */
+ package org.jetbrains.uast.test.java
+ 
++import com.intellij.platform.uast.testFramework.env.findElementByText
++import com.intellij.platform.uast.testFramework.env.findElementByTextFromPsi
+ import com.intellij.psi.*
+ import com.intellij.psi.impl.light.LightRecordCanonicalConstructor
+ import com.intellij.psi.util.PsiTreeUtil
+@@ -22,8 +24,6 @@ import com.intellij.testFramework.UsefulTestCase
+ import junit.framework.TestCase
+ import org.jetbrains.uast.*
+ import org.jetbrains.uast.expressions.UInjectionHost
+-import com.intellij.platform.uast.testFramework.env.findElementByText
+-import com.intellij.platform.uast.testFramework.env.findElementByTextFromPsi
+ import org.jetbrains.uast.util.isConstructorCall
+ import org.jetbrains.uast.visitor.AbstractUastVisitor
+ import org.junit.Assert
+@@ -339,4 +339,55 @@ class JavaUastApiTest : AbstractJavaUastTest() {
+     // IDEA-336319: TYPE_USE should not be applicable to UMethod
+     TestCase.assertEquals(0, count)
+   }
++
++  @Test
++  fun testLambdaFunctionalInterfaceType() {
++    // IDEA-383770
++    val file = myFixture.configureByText(
++      "MyClass.java",
++      """
++        package com.example
++
++        public class Message {
++            public int what;
++        }
++
++        class Looper {}
++
++        class Handler {
++            public interface Callback {
++                boolean handleMessage(Message msg);
++            }
++
++            Handler() {}
++
++            Handler(Callback callback) {}
++
++            Handler(Looper looper) {}
++        }
++
++        final class MyClass {
++            public static void foo() {
++                Handler handler =
++                    new Handler(
++                        msg -> {
++                            if (msg.what == 1) {
++                                return true;
++                            }
++                            return false;
++                        });
++            }
++        }
++      """.trimIndent()
++    )
++    val uFile = file.toUElementOfType<UFile>()!!
++    uFile.accept(
++      object : AbstractUastVisitor() {
++        override fun visitLambdaExpression(node: ULambdaExpression): Boolean {
++          TestCase.assertEquals("com.example.Handler.Callback", node.functionalInterfaceType?.canonicalText)
++          return super.visitLambdaExpression(node)
++        }
++      }
++    )
++  }
+ }

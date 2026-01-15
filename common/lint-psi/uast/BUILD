@@ -1,33 +1,17 @@
+load("//tools/base/bazel:jvm_import.bzl", "jvm_import")
 load("//tools/base/bazel:maven.bzl", "maven_library")
 load("//tools/base/common:version.bzl", "BASE_VERSION")
-load("//tools/base/bazel:jvm_import.bzl", "jvm_import")
 
 jvm_import(
-    name = "uast-common",
-    jars = ["uast-common.jar"],
-    srcjar = "uast-common-sources.jar",
-)
-
-jvm_import(
-    name = "uast-java",
-    jars = ["uast-java.jar"],
-    srcjar = "uast-java-sources.jar",
-)
-
-jvm_import(
-    name = "uast-kotlin",
-    jars = ["uast-kotlin.jar"],
-    srcjar = "uast-kotlin-sources.jar",
+    name = "uast-lib",
+    jars = ["uast.jar"],
+    srcjar = "uast-sources.jar",
 )
 
 maven_library(
     name = "uast",
     srcs = [],
-    bundled_deps = [
-        ":uast-common",
-        ":uast-java",
-        ":uast-kotlin",
-    ],
+    bundled_deps = [":uast-lib"],
     coordinates = "com.android.tools.external.org-jetbrains:uast:" + BASE_VERSION,
     description = "Unified AST",
     notice = "NOTICE",
@@ -38,10 +22,6 @@ maven_library(
 filegroup(
     name = "lint-cli-psi-prebuilts_files",
     # do not sort: must match IML order
-    srcs = [
-        "uast-common.jar",
-        "uast-java.jar",
-        "uast-kotlin.jar",
-    ],
+    srcs = ["uast.jar"],
     visibility = ["//visibility:public"],
 )
