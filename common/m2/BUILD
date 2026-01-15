@@ -1,4 +1,5 @@
 load("@rules_android//rules:rules.bzl", "aar_import")
+load("@rules_java//java:defs.bzl", "java_binary", "java_import")
 load("//tools/adt/idea/studio:studio.bzl", "studio_data")
 load("//tools/base/bazel:jvm_import.bzl", "jvm_import")
 load("//tools/base/bazel:merge_archives.bzl", "merge_jars")
@@ -901,13 +902,6 @@ genrule(
     outs = ["filtered_kotlin_stdlib_atomics.jar"],
     cmd = "$(location //tools/base/bazel:jar_filter) $(location repository/org/jetbrains/kotlin/kotlin-stdlib/2.1.20/kotlin-stdlib-2.1.20.jar) $(location filtered_kotlin_stdlib_atomics.jar) kotlin.concurrent.atomics kotlin.concurrent.internal",
     tools = ["//tools/base/bazel:jar_filter"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
-    name = "wire-runtime-jvm-5.3.1",
-    jars = ["repository/com/squareup/wire/wire-runtime-jvm/5.3.1/wire-runtime-jvm-5.3.1.jar"],
     visibility = ["//visibility:public"],
 )
 
