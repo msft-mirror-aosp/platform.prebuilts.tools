@@ -398,7 +398,7 @@ jvm_import(
 # managed by go/iml_to_build
 filegroup(
     name = "sqlite_files",
-    srcs = ["repository/org/xerial/sqlite-jdbc/3.34.0/sqlite-jdbc-3.34.0.jar"],
+    srcs = ["repository/org/xerial/sqlite-jdbc/3.51.1.0/sqlite-jdbc-3.51.1.0.jar"],
     visibility = ["//visibility:public"],
 )
 
