@@ -8,12 +8,9 @@ plugins {
     kotlin("jvm") version "2.1.0" // Aim to match the Kotlin version below.
 }
 
-val intellijVersion = getEnvOrError("INTELLIJ_VERSION")
 val kotlinVersion = getEnvOrError("KOTLIN_VERSION")
-val intellijDir = getEnvOrError("INTELLIJ_DIR")
 val kotlinDir = getEnvOrError("KOTLIN_DIR")
 
-// We create several jars: intellij-core.jar, kotlin-compiler.jar, uast-common.jar, etc.
 // For each jar "foo.jar" we generate the following:
 //
 //     * A Jar task named "foo-jar" to produce the jar.
@@ -22,11 +19,7 @@ val kotlinDir = getEnvOrError("KOTLIN_DIR")
 //
 // All jar outputs are attached to the "assemble" lifecycle task.
 
-val allJarNames = listOf(
-    "intellij-core", "kotlin-compiler",
-    "uast-common", "uast-java",
-    "uast-kotlin"
-)
+val allJarNames = listOf("kotlin-compiler")
 
 for (jarName in allJarNames) {
     val jarContent = configurations.create("$jarName-content")
@@ -65,16 +58,6 @@ tasks.jar { enabled = false }
 
 // This is where we decide which files go into which jars. See the README for details.
 dependencies {
-    "intellij-core-content"("com.jetbrains.intellij.java:java-indexing-impl:$intellijVersion") { isTransitive = false } // Contains JavaCoreApplicationEnvironment
-    "intellij-core-content"("com.jetbrains.intellij.java:java-psi-impl:$intellijVersion")
-    "intellij-core-content"("com.jetbrains.intellij.platform:jps-model-impl:$intellijVersion") { isTransitive = false } // Contains JavaSdkUtil.
-    "intellij-core-content"("com.jetbrains.intellij.platform:plugins-parser-impl:$intellijVersion")  { isTransitive = false }
-    "intellij-core-content"("com.jetbrains.intellij.platform:project-model:$intellijVersion") // includes transitive for render-resources / previewlib/cli
-    //Dcl depends on GeneratedParserUtilBase from analysis-impl. This class imports com.intellij.lang.LanguageBraceMatching that comes from analysis artifact
-    "intellij-core-content"("com.jetbrains.intellij.platform:analysis:$intellijVersion")  { isTransitive = false }
-    "intellij-core-content"("com.jetbrains.intellij.platform:analysis-impl:$intellijVersion")  { isTransitive = false }
-
-
     "kotlin-compiler-content"("org.jetbrains.kotlin:kotlin-jps-common-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:kotlin-compiler-common-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:kotlin-compiler-fe10-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
@@ -94,9 +77,7 @@ dependencies {
     "kotlin-compiler-content"("org.jetbrains.kotlin:analysis-api-impl-base-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:low-level-api-fir-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:symbol-light-classes-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
-
-    "uast-common-content"("com.jetbrains.intellij.platform:uast:$intellijVersion") { isTransitive = false }
-    "uast-java-content"("com.jetbrains.intellij.java:java-uast:$intellijVersion") { isTransitive = false }
+    "kotlin-compiler-content"("com.github.ben-manes.caffeine:caffeine:2.9.3") { isTransitive = false } // Used by the Kotlin compiler.
 }
 
 // Here we exclude some dependencies that are unnecessary.
@@ -115,60 +96,6 @@ for (jarName in allJarNames) {
         exclude(group = "org.jetbrains.kotlin", module = "kotlin-util-klib")
         exclude(group = "dk.brics", module = "automaton") // Adds a lot of toplevel .aut files we do not need.
     }
-}
-
-// Unfortunately there is no publicly available CLI build for the Kotlin IDE plugin yet.
-// Luckily we only need a small part of the IDE plugin (the UAST modules), so for now
-// we just build the UAST modules ourselves using the following ad hoc build rules.
-// If eventually we remove all our patches from Kotlin UAST, then maybe we can just
-// download it from https://maven.pkg.jetbrains.space/kotlin/p/kotlin/kotlin-ide instead.
-sourceSets {
-    create("kotlinUastBaseSrc") {
-        java.srcDir("$intellijDir/plugins/kotlin/uast/uast-kotlin-base/src")
-    }
-    create("kotlinUastSrc") {
-        compileClasspath += sourceSets["kotlinUastBaseSrc"].output
-        java.srcDir("$intellijDir/plugins/kotlin/uast/uast-kotlin/src")
-        java.srcDir("$intellijDir/plugins/kotlin/uast/uast-kotlin-fir/src")
-    }
-}
-
-tasks.named<Jar>("uast-kotlin-jar") {
-    from(sourceSets["kotlinUastBaseSrc"].output)
-    from(sourceSets["kotlinUastSrc"].output)
-}
-
-tasks.named<Jar>("uast-kotlin-sources-jar") {
-    from(sourceSets["kotlinUastBaseSrc"].allSource)
-    from(sourceSets["kotlinUastSrc"].allSource)
-}
-
-tasks.withType<JavaCompile> {
-    java.toolchain.languageVersion.set(JavaLanguageVersion.of(11))
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        jvmTarget = "11"
-        freeCompilerArgs = listOf(
-            "-Xjvm-default=all",
-            "-Xcontext-receivers",
-            "-opt-in=org.jetbrains.kotlin.analysis.api.permissions.KaAllowProhibitedAnalyzeFromWriteAction",
-            "-opt-in=org.jetbrains.kotlin.analysis.api.KaIdeApi",
-        )
-        suppressWarnings = true
-    }
-}
-
-val kotlinUastAdHocCompileClasspath: Configuration by configurations.creating
-configurations.named("kotlinUastBaseSrcCompileOnly") { extendsFrom(kotlinUastAdHocCompileClasspath) }
-configurations.named("kotlinUastSrcCompileOnly") { extendsFrom(kotlinUastAdHocCompileClasspath) }
-
-dependencies {
-    kotlinUastAdHocCompileClasspath(files(tasks.named("intellij-core-jar")))
-    kotlinUastAdHocCompileClasspath(files(tasks.named("kotlin-compiler-jar")))
-    kotlinUastAdHocCompileClasspath("com.jetbrains.intellij.platform:uast:$intellijVersion") { isTransitive = false }
-    kotlinUastAdHocCompileClasspath("org.jetbrains.intellij.deps:asm-all:9.1")
 }
 
 // This task generates a version.txt file listing the maven coordinates of each
