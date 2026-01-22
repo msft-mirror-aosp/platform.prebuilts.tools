@@ -7,8 +7,8 @@
         "source": "prebuilt"
     },
     "linux-x64": {
-        "commit": "6b0ea8ffb279f6264b33a276d663d760e655c4ee",
-        "cmake": "cmake . -Bbuild -DCMAKE_BUILD_TYPE=Release",
+        "commit": "051ae005d80093f9deac4961104b56a452683312",
+	"cmake": "cmake . -Bbuild -DCMAKE_BUILD_TYPE=Release -DLZ4_LIBRARY=/usr/lib/x86_64-linux-gnu/liblz4.a -DZLIB_LIBRARY=/usr/lib/x86_64-linux-gnu/libz.a -DZSTD_LIBRARY=/usr/lib/x86_64-linux-gnu/libzstd.a",
         "make": "make -j16"
     },
     "darwin-arm64": {
