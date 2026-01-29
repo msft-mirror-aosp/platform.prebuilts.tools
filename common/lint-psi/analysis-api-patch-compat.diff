@@ -1,17 +1,16 @@
 diff --git a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotated.kt b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotated.kt
-index 23d0e41dd9a6..0a66ffeb9f0e 100644
+index b04aa23f5dd5..bf9bf9645caf 100644
 --- a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotated.kt
 +++ b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotated.kt
-@@ -5,6 +5,8 @@
- 
+@@ -6,6 +6,7 @@
  package org.jetbrains.kotlin.analysis.api.annotations
  
+ import org.jetbrains.kotlin.analysis.api.KaImplementationDetail
 +import org.jetbrains.kotlin.name.ClassId
-+
+ 
  /**
   * [KaAnnotated] represents an entity which may have annotations applied to it. All [types][org.jetbrains.kotlin.analysis.api.types.KaType]s
-  * and almost all [symbols][org.jetbrains.kotlin.analysis.api.symbols.KaSymbol] can have annotations.
-@@ -15,3 +17,30 @@ public interface KaAnnotated {
+@@ -18,3 +19,30 @@ public interface KaAnnotated {
       */
      public val annotations: KaAnnotationList
  }
@@ -43,10 +42,10 @@ index 23d0e41dd9a6..0a66ffeb9f0e 100644
 +public val KaAnnotated.annotationClassIds: Collection<ClassId>
 +    get() = annotations.classIds
 diff --git a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotation.kt b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotation.kt
-index 64e57d01bd67..9f1840e65dc2 100644
+index dd0d86f4fbbf..e8709898cb65 100644
 --- a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotation.kt
 +++ b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotation.kt
-@@ -51,6 +51,19 @@ public interface KaAnnotation : KaLifetimeOwner {
+@@ -53,6 +53,19 @@ public interface KaAnnotation : KaLifetimeOwner {
       */
      public val useSiteTarget: AnnotationUseSiteTarget?
  
@@ -67,10 +66,10 @@ index 64e57d01bd67..9f1840e65dc2 100644
       * The list of annotation arguments passed to the [annotation constructor](https://kotlinlang.org/docs/annotations.html#constructors) in
       * the form of [KaNamedAnnotationValue]s.
 diff --git a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/components/KaTypeProvider.kt b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/components/KaTypeProvider.kt
-index a3fbd5f56236..064e85479aa4 100644
+index 952e6722755b..6832f66d3bb1 100644
 --- a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/components/KaTypeProvider.kt
 +++ b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/components/KaTypeProvider.kt
-@@ -122,6 +122,11 @@ public interface KaTypeProvider : KaSessionComponent {
+@@ -210,6 +210,11 @@ public interface KaTypeProvider : KaSessionComponent {
      public val Array<KaType>.commonSupertype: KaType
          get() = asList().commonSupertype
  
@@ -83,10 +82,10 @@ index a3fbd5f56236..064e85479aa4 100644
       * Resolves the given [KtTypeReference] to its corresponding [KaType].
       *
 diff --git a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/symbols/KaSymbolProvider.kt b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/symbols/KaSymbolProvider.kt
-index bd8225a01ba7..0dcdd0f9a1da 100644
+index f47ffadb8081..b2e377a8fc28 100644
 --- a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/symbols/KaSymbolProvider.kt
 +++ b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/symbols/KaSymbolProvider.kt
-@@ -72,6 +72,13 @@ public interface KaSymbolProvider : KaSessionComponent {
+@@ -78,6 +78,13 @@ public interface KaSymbolProvider : KaSessionComponent {
       */
      public val KtEnumEntry.symbol: KaEnumEntrySymbol
  

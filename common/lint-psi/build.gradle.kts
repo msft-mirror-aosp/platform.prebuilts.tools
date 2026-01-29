@@ -1,11 +1,11 @@
 // This file assembles the prebuilt jars for Lint dependencies (IntelliJ/Kotlin/UAST).
 // Consult the README for details.
 
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     id("java")
-    kotlin("jvm") version "2.1.0" // Aim to match the Kotlin version below.
+    kotlin("jvm") version "2.3.0" // Aim to match the Kotlin version below.
 }
 
 val kotlinVersion = getEnvOrError("KOTLIN_VERSION")

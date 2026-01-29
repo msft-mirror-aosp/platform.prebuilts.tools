@@ -44,6 +44,7 @@ project.extra.set("targetMethodDesc", project.findProperty("targetMethodDesc") a
 val targetMethodDesc: String by project.extra
 
 
+java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "17" // Or your desired JVM target
 }
