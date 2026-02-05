@@ -1167,3 +1167,17 @@ jvm_import(
     jars = ["repository/com/squareup/wire/wire-runtime-jvm/5.4.0/wire-runtime-jvm-5.4.0.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "tracing-desktop-2.0.0-alpha01",
+    jars = ["repository/androidx/tracing/tracing-desktop/2.0.0-alpha01/tracing-desktop-2.0.0-alpha01.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "tracing-wire-desktop-2.0.0-alpha01",
+    jars = ["repository/androidx/tracing/tracing-wire-desktop/2.0.0-alpha01/tracing-wire-desktop-2.0.0-alpha01.jar"],
+    visibility = ["//visibility:public"],
+)
