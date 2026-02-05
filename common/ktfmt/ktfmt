@@ -15,5 +15,4 @@ else
     die "Unsupported OS: $OS_NAME or architecture: $ARCH"
 fi
 
-# TODO(476037624): add --enable-editorconfig once all projects have it enabled
-$JAVA_HOME/bin/java -jar `dirname "$0"`/ktfmt-0.61-with-dependencies.jar "$@"
+$JAVA_HOME/bin/java -jar `dirname "$0"`/ktfmt-0.61-with-dependencies.jar --enable-editorconfig "$@"
