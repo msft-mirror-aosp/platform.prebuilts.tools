@@ -23,10 +23,10 @@ sudo apt update && \\
 sudo apt install android-fetch-artifact""")
 
   artifacts = [
-    ("studio-linux", "artifacts/sherlock_trace_processor", "linux-x64/main"),
-    ("studio-win", "sherlock_trace_processor.exe", "windows-x64/main.exe"),
-    ("studio-mac-arm", "sherlock_trace_processor", "darwin-arm64/main"),
-    ("studio-mac", "sherlock_trace_processor", "darwin-x86_64/main"),
+    ("studio-linux", "artifacts/sherlock_trace_processor", "linux-x64/trace-processor"),
+    ("studio-win", "sherlock_trace_processor.exe", "windows-x64/trace-processor.exe"),
+    ("studio-mac-arm", "sherlock_trace_processor", "darwin-arm64/trace-processor"),
+    ("studio-mac", "sherlock_trace_processor", "darwin-x86_64/trace-processor"),
   ]
   for target, artifact, dest_subpath in artifacts:
     destination = os.path.join(dir, dest_subpath)
