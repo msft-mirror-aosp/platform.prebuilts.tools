@@ -1188,3 +1188,10 @@ jvm_import(
     jars = ["repository/androidx/collection/collection-jvm/1.4.5/collection-jvm-1.4.5.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "litertlm-jvm",
+    jars = ["repository/com/google/ai/edge/litertlm/litertlm-jvm/0.9.0-alpha05/litertlm-jvm-0.9.0-alpha05.jar"],
+    visibility = ["//visibility:public"],
+)
