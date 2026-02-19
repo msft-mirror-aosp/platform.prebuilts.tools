@@ -46,15 +46,15 @@ index c701fe69caf7..86238bc50a0f 100644
  
      companion object {
 diff --git a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt
-index a6c7b25d2429..288f369fcafd 100644
+index 3a0f0a9b70ac..cab5f2799db7 100644
 --- a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt
 +++ b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt
-@@ -482,7 +482,7 @@ internal tailrec fun psiForUast(
+@@ -502,7 +502,7 @@ internal tailrec fun psiForUast(
          }
  
          val psiProvider = FirKotlinUastLibraryPsiProviderService.getInstance()
--        return with(psiProvider) { provide(symbol) }
-+        return with(psiProvider) { provide(symbol, context) }
+-        return with(psiProvider) { session.provide(symbol) }
++        return with(psiProvider) { session.provide(symbol, context) }
      }
  
      if (symbol is KaConstructorSymbol) {

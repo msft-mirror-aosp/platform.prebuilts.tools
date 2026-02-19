@@ -60,9 +60,9 @@ index 94f86190f7543..1ac1f4d8ebd9c 100644
 -internal fun KaAnnotatedSymbol.getJvmNameFromAnnotation(): String? {
 +// Expose to use at KotlinStaticPsiDeclarationFromBinaryModuleProvider
 +fun KaAnnotatedSymbol.getJvmNameFromAnnotation(): String? {
-     val annotation = findAnnotation(JvmStandardClassIds.Annotations.JvmName)
-     return annotation?.let {
-         (it.arguments.firstOrNull()?.expression as? KaAnnotationValue.ConstantValue)?.value?.value as? String
+     return stringArgumentFromAnnotation(JvmStandardClassIds.Annotations.JvmName)
+ }
+
 diff --git a/analysis/analysis-api-fe10/src/org/jetbrains/kotlin/references/fe10/base/DummyKtFe10ReferenceResolutionHelper.kt b/analysis/analysis-api-fe10/src/org/jetbrains/kotlin/references/fe10/base/DummyKtFe10ReferenceResolutionHelper.kt
 index 86b2211414366..8ad8da1a3bcbd 100644
 --- a/analysis/analysis-api-fe10/src/org/jetbrains/kotlin/references/fe10/base/DummyKtFe10ReferenceResolutionHelper.kt
@@ -101,42 +101,10 @@ index 1dfbffba1173e..4550e4a81a930 100644
      private val useSiteModule: KaSourceModule? = null
  ) : AnalysisHandlerExtension {
      internal companion object {
-diff --git a/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/declarations/KotlinStandaloneDeclarationProvider.kt b/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/declarations/KotlinStandaloneDeclarationProvider.kt
-index b9901e77f84..15f48bc5343 100644
---- a/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/declarations/KotlinStandaloneDeclarationProvider.kt
-+++ b/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/declarations/KotlinStandaloneDeclarationProvider.kt
-@@ -501,7 +501,8 @@ class KotlinStandaloneDeclarationProviderFactory(
-  *
-  * **Note**: shared stubs **MUST NOT** store psi
-  */
--internal class KotlinFakeClsStubsCache {
-+// Expose to be registered at FE10UastEnvironment
-+class KotlinFakeClsStubsCache {
-     private val fakeFileClsStubs = ConcurrentHashMap<String, Map<VirtualFile, KotlinFileStubImpl>>()
-     private val fakeBuiltInsClsStubs = ConcurrentHashMap<VirtualFile, KotlinFileStubImpl?>()
-
 diff --git a/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/projectStructure/PluginStructureProvider.kt b/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/projectStructure/PluginStructureProvider.kt
 index d85918011a4a..089dc1477cd5 100644
 --- a/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/projectStructure/PluginStructureProvider.kt
 +++ b/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/projectStructure/PluginStructureProvider.kt
-@@ -60,15 +60,12 @@ object PluginStructureProvider {
-     private fun getOrCalculatePluginDescriptor(
-         designation: PluginDesignation,
-     ): RawPluginDescriptor = pluginDescriptorsCache.computeIfAbsent(designation) {
--        val descriptor = RawPluginDescriptor()
-         PluginXmlPathResolver.DEFAULT_PATH_RESOLVER.resolvePath(
-             readContext = ReadContext,
-             dataLoader = ResourceDataLoader(designation.classLoader),
-             relativePath = designation.relativePath,
--            readInto = descriptor,
--        )
--
--        descriptor
-+            readInto = null,
-+        ) ?: RawPluginDescriptor()
-     }
-
-     fun registerProjectExtensionPoints(project: MockProject, pluginRelativePath: String) {
 @@ -118,7 +115,6 @@ object PluginStructureProvider {
 
          val listenersMap = ConcurrentHashMap<String, MutableList<ListenerDescriptor>>()

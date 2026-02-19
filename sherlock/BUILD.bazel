@@ -5,17 +5,17 @@ package(default_visibility = ["//visibility:public"])
 filegroup(
     name = "bin",
     srcs = [
+        "sherlock-apk/sherlock-layers.apk",
         "sokatoa-apk/sokatoa.apk",
-        "//tools/profiler/native/android/sherlocklayersapp:sherlock-layers.apk",
     ],
 )
 
 studio_data(
     name = "lib",
-    files_linux = ["trace-processor-wrapper/linux-x64/main"],
-    files_mac = ["trace-processor-wrapper/darwin-arm64/main"],
-    files_mac_arm = ["trace-processor-wrapper/darwin-arm64/main"],
-    files_win = ["trace-processor-wrapper/windows-x64/main.exe"],
+    files_linux = ["trace-processor-wrapper/linux-x64/trace-processor"],
+    files_mac = ["trace-processor-wrapper/darwin-arm64/trace-processor"],
+    files_mac_arm = ["trace-processor-wrapper/darwin-arm64/trace-processor"],
+    files_win = ["trace-processor-wrapper/windows-x64/trace-processor.exe"],
     mappings = {
         "prebuilts/tools/sherlock/trace-processor-wrapper/linux-x64": "",
         "prebuilts/tools/sherlock/trace-processor-wrapper/darwin-arm64": "",
@@ -62,6 +62,19 @@ studio_data(
     mappings = {
         "prebuilts/tools/sherlock/SPIRV-Cross/linux-x64": "",
         "prebuilts/tools/sherlock/SPIRV-Cross/darwin-arm64": "",
+    },
+)
+
+studio_data(
+    name = "gfxr-to-sqlite3",
+    files_linux = ["gfxr-to-sqlite3/linux-x64/gfxr-to-sqlite3"],
+    files_mac = ["gfxr-to-sqlite3/darwin-arm64/gfxr-to-sqlite3"],
+    files_mac_arm = ["gfxr-to-sqlite3/darwin-arm64/gfxr-to-sqlite3"],
+    files_win = ["gfxr-to-sqlite3/windows-x64/gfxr-to-sqlite3.exe"],
+    mappings = {
+        "prebuilts/tools/sherlock/gfxr-to-sqlite3/linux-x64": "",
+        "prebuilts/tools/sherlock/gfxr-to-sqlite3/darwin-arm64": "",
+        "prebuilts/tools/sherlock/gfxr-to-sqlite3/windows-x64": "",
     },
 )
 

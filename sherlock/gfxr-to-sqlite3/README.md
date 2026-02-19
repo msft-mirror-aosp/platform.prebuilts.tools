@@ -49,8 +49,8 @@ After running these commands, you can use the utility normally.
 
 This executable was generated as an artifact from our automated Continuous Integration (CI) pipeline.
 
-  * **Latest Update Date:** 2025-11-19
-  * **Source Commit:** [`c40e0e4...`](https://github.com/android-graphics/sokatoa/commit/c40e0e441ed10c6fd446df68aa7e8872a1882028) (The commit that triggered this build)
-  * **CI Artifacts (GitHub Actions Run):** [Sokatoa Build Run](https://github.com/android-graphics/sokatoa/actions/runs/19484920900)
+  * **Latest Update Date:** 2025-12-23
+  * **Source Commit:** [`c01160a...`](https://github.com/android-graphics/sokatoa/commit/c01160a08363ed95e06d123d18eeddf42e3b9660) (The commit that triggered this build)
+  * **CI Artifacts (GitHub Actions Run):** [Sokatoa Build Run](https://github.com/android-graphics/sokatoa/actions/runs/20385052775)
 
 <!-- end list -->
