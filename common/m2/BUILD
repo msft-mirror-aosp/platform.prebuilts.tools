@@ -436,13 +436,6 @@ jvm_import(
 
 # managed by go/iml_to_build
 jvm_import(
-    name = "JSch",
-    jars = ["repository/com/jcraft/jsch/0.1.55/jsch-0.1.55.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
     name = "commons-lang3-3.3.2",
     jars = ["repository/org/apache/commons/commons-lang3/3.3.2/commons-lang3-3.3.2.jar"],
     visibility = ["//visibility:public"],
@@ -728,18 +721,6 @@ filegroup(
         "repository/io/opencensus/opencensus-api/0.31.1/opencensus-api-0.31.1.jar",
         "repository/io/opencensus/opencensus-contrib-http-util/0.31.1/opencensus-contrib-http-util-0.31.1.jar",
         "repository/com/google/oauth-client/google-oauth-client/1.35.0/google-oauth-client-1.35.0.jar",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
-    name = "google_api_services_testing",
-    # do not sort: must match IML order
-    jars = [
-        "repository/com/google/apis/google-api-services-storage/v1-rev20230301-2.0.0/google-api-services-storage-v1-rev20230301-2.0.0.jar",
-        "repository/com/google/apis/google-api-services-toolresults/v1beta3-rev20230410-2.0.0/google-api-services-toolresults-v1beta3-rev20230410-2.0.0.jar",
-        "repository/com/google/apis/google-api-services-testing/v1-rev20250327-2.0.0/google-api-services-testing-v1-rev20250327-2.0.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -1193,5 +1174,17 @@ jvm_import(
 jvm_import(
     name = "litertlm-jvm",
     jars = ["repository/com/google/ai/edge/litertlm/litertlm-jvm/0.9.0-alpha05/litertlm-jvm-0.9.0-alpha05.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "google_api_services_testing",
+    # do not sort: must match IML order
+    jars = [
+        "repository/com/google/apis/google-api-services-storage/v1-rev20230301-2.0.0/google-api-services-storage-v1-rev20230301-2.0.0.jar",
+        "repository/com/google/apis/google-api-services-toolresults/v1beta3-rev20230410-2.0.0/google-api-services-toolresults-v1beta3-rev20230410-2.0.0.jar",
+        "repository/com/google/apis/google-api-services-testing/v1-rev20250327-2.0.0/google-api-services-testing-v1-rev20250327-2.0.0.jar",
+    ],
     visibility = ["//visibility:public"],
 )
