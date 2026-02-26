@@ -1,8 +1,22 @@
 load("@rules_android//rules:rules.bzl", "aar_import")
 load("@rules_java//java:defs.bzl", "java_binary", "java_import")
+load("@rules_license//rules:license.bzl", "license")
+load("//build/bazel/rules/gathering:prebuilt_package_metadata.bzl", "prebuilt_package_metadata")
 load("//tools/adt/idea/studio:studio.bzl", "studio_data")
 load("//tools/base/bazel:jvm_import.bzl", "jvm_import")
 load("//tools/base/bazel:merge_archives.bzl", "merge_jars")
+
+license(
+    name = "leakcanary_license",
+    license_text = "leakcanary/NOTICE",
+    visibility = ["//visibility:public"],
+)
+
+prebuilt_package_metadata(
+    name = "leakcanary_metadata",
+    third_party_dependencies = "leakcanary/leakcanary.json",
+    visibility = ["//visibility:public"],
+)
 
 java_import(
     name = "org.jetbrains.kotlin.kotlin-gradle-plugin.1.5.21",
@@ -1039,6 +1053,10 @@ jvm_import(
 jvm_import(
     name = "shark-2.14",
     jars = ["repository/com/squareup/leakcanary/shark/2.14/shark-2.14.jar"],
+    package_metadata = [
+        ":leakcanary_license",
+        ":leakcanary_metadata",
+    ],
     visibility = ["//visibility:public"],
 )
 
@@ -1046,6 +1064,10 @@ jvm_import(
 jvm_import(
     name = "shark-android-2.14",
     jars = ["repository/com/squareup/leakcanary/shark-android/2.14/shark-android-2.14.jar"],
+    package_metadata = [
+        ":leakcanary_license",
+        ":leakcanary_metadata",
+    ],
     visibility = ["//visibility:public"],
 )
 
@@ -1053,6 +1075,10 @@ jvm_import(
 jvm_import(
     name = "shark-graph-2.14",
     jars = ["repository/com/squareup/leakcanary/shark-graph/2.14/shark-graph-2.14.jar"],
+    package_metadata = [
+        ":leakcanary_license",
+        ":leakcanary_metadata",
+    ],
     visibility = ["//visibility:public"],
 )
 
@@ -1060,6 +1086,10 @@ jvm_import(
 jvm_import(
     name = "shark-hprof-2.14",
     jars = ["repository/com/squareup/leakcanary/shark-hprof/2.14/shark-hprof-2.14.jar"],
+    package_metadata = [
+        ":leakcanary_license",
+        ":leakcanary_metadata",
+    ],
     visibility = ["//visibility:public"],
 )
 
@@ -1067,6 +1097,10 @@ jvm_import(
 jvm_import(
     name = "shark-log-2.14",
     jars = ["repository/com/squareup/leakcanary/shark-log/2.14/shark-log-2.14.jar"],
+    package_metadata = [
+        ":leakcanary_license",
+        ":leakcanary_metadata",
+    ],
     visibility = ["//visibility:public"],
 )
 
