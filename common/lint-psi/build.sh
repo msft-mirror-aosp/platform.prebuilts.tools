@@ -70,6 +70,7 @@ if [[ ! "${CUSTOM_KOTLIN_DIR:-}" ]]; then
     git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/analysis-api-patch.diff"
     git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/analysis-api-patch-compat.diff"
     git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/analysis-api-patch-2.3.21-9e1e6758-fix-receiver-stubs.diff"
+    git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/analysis-api-patch-ffb121af88-fix-hasDefaultValue.diff"
 fi
 if [[ ! "${CUSTOM_INTELLIJ_DIR:-}" ]]; then
     git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/intellij-bazel-patch.diff"
