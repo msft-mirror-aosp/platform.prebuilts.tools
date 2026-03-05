@@ -1,0 +1,43 @@
+commit 951a376ebfc689881556e9dee8b0de23e78ce40d
+Author: Jinseong Jeon <jsjeon@google.com>
+Date:   Thu Feb 26 18:03:10 2026 +0100
+
+    Do not enforce non-zip64 archive in NonShareableJavaZipFilePool
+    
+    ^IJPL-233516 fixed
+    
+    closes https://github.com/JetBrains/intellij-community/pull/3441
+    
+    GitOrigin-RevId: 2686ccd25efd03d5e57c59c10aca116ca1b74854
+
+diff --git a/platform/core-impl/src/com/intellij/ide/plugins/NonShareableJavaZipFilePool.kt b/platform/core-impl/src/com/intellij/ide/plugins/NonShareableJavaZipFilePool.kt
+index a895f3524b21..8646a81a1340 100644
+--- a/platform/core-impl/src/com/intellij/ide/plugins/NonShareableJavaZipFilePool.kt
++++ b/platform/core-impl/src/com/intellij/ide/plugins/NonShareableJavaZipFilePool.kt
+@@ -1,10 +1,12 @@
+ // Copyright 2000-2025 JetBrains s.r.o. and contributors. Use of this source code is governed by the Apache 2.0 license.
+ package com.intellij.ide.plugins
+ 
++import com.intellij.util.ThreeState
+ import com.intellij.util.io.zip.JBZipFile
+ import com.intellij.util.lang.ZipEntryResolverPool
+ import com.intellij.util.lang.ZipEntryResolverPool.EntryResolver
+ import java.io.InputStream
++import java.nio.charset.StandardCharsets
+ import java.nio.file.Path
+ 
+ /**
+@@ -14,7 +16,12 @@ import java.nio.file.Path
+  */
+ internal class NonShareableJavaZipFilePool : ZipEntryResolverPool {
+   override fun load(file: Path): EntryResolver = object : EntryResolver {
+-    private val zipFile = JBZipFile(file)
++    private val zipFile = JBZipFile(
++      file,
++      /* encoding = */ StandardCharsets.UTF_8,
++      /* readonly = */ true,
++      /* isZip64 = */ ThreeState.UNSURE
++    )
+ 
+     override fun loadZipEntry(path: String): InputStream? =
+       zipFile.getEntry(if (path[0] == '/') path.substring(1) else path)?.inputStream

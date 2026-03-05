@@ -1,8 +1,22 @@
 load("@rules_android//rules:rules.bzl", "aar_import")
 load("@rules_java//java:defs.bzl", "java_binary", "java_import")
+load("@rules_license//rules:license.bzl", "license")
+load("//build/bazel/rules/gathering:prebuilt_package_metadata.bzl", "prebuilt_package_metadata")
 load("//tools/adt/idea/studio:studio.bzl", "studio_data")
 load("//tools/base/bazel:jvm_import.bzl", "jvm_import")
 load("//tools/base/bazel:merge_archives.bzl", "merge_jars")
+
+license(
+    name = "leakcanary_license",
+    license_text = "leakcanary/NOTICE",
+    visibility = ["//visibility:public"],
+)
+
+prebuilt_package_metadata(
+    name = "leakcanary_metadata",
+    third_party_dependencies = "leakcanary/leakcanary.json",
+    visibility = ["//visibility:public"],
+)
 
 java_import(
     name = "org.jetbrains.kotlin.kotlin-gradle-plugin.1.5.21",
@@ -436,13 +450,6 @@ jvm_import(
 
 # managed by go/iml_to_build
 jvm_import(
-    name = "JSch",
-    jars = ["repository/com/jcraft/jsch/0.1.55/jsch-0.1.55.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
     name = "commons-lang3-3.3.2",
     jars = ["repository/org/apache/commons/commons-lang3/3.3.2/commons-lang3-3.3.2.jar"],
     visibility = ["//visibility:public"],
@@ -551,12 +558,12 @@ jvm_import(
         # @maven//:org.jetbrains.kotlin.kotlin-compiler_<VERSION>
         # defined in tools/base/bazel/maven/BUILD.maven.
         "repository/org/jetbrains/annotations/24.0.0/annotations-24.0.0.jar",
-        "repository/org/jetbrains/kotlin/kotlin-compiler/2.2.20/kotlin-compiler-2.2.20.jar",
+        "repository/org/jetbrains/kotlin/kotlin-compiler/2.3.10/kotlin-compiler-2.3.10.jar",
         "repository/org/jetbrains/kotlin/kotlin-reflect/1.6.10/kotlin-reflect-1.6.10.jar",
-        "repository/org/jetbrains/kotlin/kotlin-script-runtime/2.2.20/kotlin-script-runtime-2.2.20.jar",
-        "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/2.2.20/kotlin-stdlib-jdk7-2.2.20.jar",
-        "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/2.2.20/kotlin-stdlib-jdk8-2.2.20.jar",
-        "repository/org/jetbrains/kotlin/kotlin-stdlib/2.2.20/kotlin-stdlib-2.2.20.jar",
+        "repository/org/jetbrains/kotlin/kotlin-script-runtime/2.3.10/kotlin-script-runtime-2.3.10.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/2.3.10/kotlin-stdlib-jdk7-2.3.10.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/2.3.10/kotlin-stdlib-jdk8-2.3.10.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib/2.3.10/kotlin-stdlib-2.3.10.jar",
         "repository/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.8.0/kotlinx-coroutines-core-jvm-1.8.0.jar",
     ],
     visibility = ["//visibility:public"],
@@ -565,7 +572,7 @@ jvm_import(
 jvm_import(
     name = "jvm-abi-gen-plugin",
     jars = [
-        "repository/org/jetbrains/kotlin/jvm-abi-gen/2.2.20/jvm-abi-gen-2.2.20.jar",
+        "repository/org/jetbrains/kotlin/jvm-abi-gen/2.3.10/jvm-abi-gen-2.3.10.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -573,7 +580,7 @@ jvm_import(
 jvm_import(
     name = "kotlin-compose-compiler-plugin",
     jars = [
-        "repository/org/jetbrains/kotlin/kotlin-compose-compiler-plugin/2.2.20/kotlin-compose-compiler-plugin-2.2.20.jar",
+        "repository/org/jetbrains/kotlin/kotlin-compose-compiler-plugin/2.3.10/kotlin-compose-compiler-plugin-2.3.10.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -581,7 +588,7 @@ jvm_import(
 jvm_import(
     name = "kotlin-serialization-compiler-plugin",
     jars = [
-        "repository/org/jetbrains/kotlin/kotlin-serialization-compiler-plugin/2.2.20/kotlin-serialization-compiler-plugin-2.2.20.jar",
+        "repository/org/jetbrains/kotlin/kotlin-serialization-compiler-plugin/2.3.10/kotlin-serialization-compiler-plugin-2.3.10.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -728,18 +735,6 @@ filegroup(
         "repository/io/opencensus/opencensus-api/0.31.1/opencensus-api-0.31.1.jar",
         "repository/io/opencensus/opencensus-contrib-http-util/0.31.1/opencensus-contrib-http-util-0.31.1.jar",
         "repository/com/google/oauth-client/google-oauth-client/1.35.0/google-oauth-client-1.35.0.jar",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
-    name = "google_api_services_testing",
-    # do not sort: must match IML order
-    jars = [
-        "repository/com/google/apis/google-api-services-storage/v1-rev20230301-2.0.0/google-api-services-storage-v1-rev20230301-2.0.0.jar",
-        "repository/com/google/apis/google-api-services-toolresults/v1beta3-rev20230410-2.0.0/google-api-services-toolresults-v1beta3-rev20230410-2.0.0.jar",
-        "repository/com/google/apis/google-api-services-testing/v1-rev20250327-2.0.0/google-api-services-testing-v1-rev20250327-2.0.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -1058,6 +1053,10 @@ jvm_import(
 jvm_import(
     name = "shark-2.14",
     jars = ["repository/com/squareup/leakcanary/shark/2.14/shark-2.14.jar"],
+    package_metadata = [
+        ":leakcanary_license",
+        ":leakcanary_metadata",
+    ],
     visibility = ["//visibility:public"],
 )
 
@@ -1065,6 +1064,10 @@ jvm_import(
 jvm_import(
     name = "shark-android-2.14",
     jars = ["repository/com/squareup/leakcanary/shark-android/2.14/shark-android-2.14.jar"],
+    package_metadata = [
+        ":leakcanary_license",
+        ":leakcanary_metadata",
+    ],
     visibility = ["//visibility:public"],
 )
 
@@ -1072,6 +1075,10 @@ jvm_import(
 jvm_import(
     name = "shark-graph-2.14",
     jars = ["repository/com/squareup/leakcanary/shark-graph/2.14/shark-graph-2.14.jar"],
+    package_metadata = [
+        ":leakcanary_license",
+        ":leakcanary_metadata",
+    ],
     visibility = ["//visibility:public"],
 )
 
@@ -1079,6 +1086,10 @@ jvm_import(
 jvm_import(
     name = "shark-hprof-2.14",
     jars = ["repository/com/squareup/leakcanary/shark-hprof/2.14/shark-hprof-2.14.jar"],
+    package_metadata = [
+        ":leakcanary_license",
+        ":leakcanary_metadata",
+    ],
     visibility = ["//visibility:public"],
 )
 
@@ -1086,6 +1097,10 @@ jvm_import(
 jvm_import(
     name = "shark-log-2.14",
     jars = ["repository/com/squareup/leakcanary/shark-log/2.14/shark-log-2.14.jar"],
+    package_metadata = [
+        ":leakcanary_license",
+        ":leakcanary_metadata",
+    ],
     visibility = ["//visibility:public"],
 )
 
@@ -1193,5 +1208,17 @@ jvm_import(
 jvm_import(
     name = "litertlm-jvm",
     jars = ["repository/com/google/ai/edge/litertlm/litertlm-jvm/0.9.0-alpha05/litertlm-jvm-0.9.0-alpha05.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "google_api_services_testing",
+    # do not sort: must match IML order
+    jars = [
+        "repository/com/google/apis/google-api-services-storage/v1-rev20230301-2.0.0/google-api-services-storage-v1-rev20230301-2.0.0.jar",
+        "repository/com/google/apis/google-api-services-toolresults/v1beta3-rev20230410-2.0.0/google-api-services-toolresults-v1beta3-rev20230410-2.0.0.jar",
+        "repository/com/google/apis/google-api-services-testing/v1-rev20250327-2.0.0/google-api-services-testing-v1-rev20250327-2.0.0.jar",
+    ],
     visibility = ["//visibility:public"],
 )
