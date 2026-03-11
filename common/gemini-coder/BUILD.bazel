@@ -1,0 +1,15 @@
+load("//tools/adt/idea/studio:studio.bzl", "studio_data")
+
+studio_data(
+    name = "gemini_coder_prebuilts",
+    files_linux = glob(["linux_amd64/*"]),
+    files_mac = [],
+    files_mac_arm = glob(["darwin_arm64/*"]),
+    files_win = glob(["windows/*"]),
+    mappings = {
+        "prebuilts/tools/common/gemini-coder/linux_amd64/": "bin/",
+        "prebuilts/tools/common/gemini-coder/darwin_arm64/": "bin/",
+        "prebuilts/tools/common/gemini-coder/windows/": "bin/",
+    },
+    visibility = ["//visibility:public"],
+)
