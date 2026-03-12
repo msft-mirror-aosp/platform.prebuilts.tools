@@ -1157,27 +1157,6 @@ jvm_import(
 
 # managed by go/iml_to_build
 jvm_import(
-    name = "error_prone_annotations-2.36.0",
-    jars = ["repository/com/google/errorprone/error_prone_annotations/2.36.0/error_prone_annotations-2.36.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
-    name = "checker-compat-qual-2.5.5",
-    jars = ["repository/org/checkerframework/checker-compat-qual/2.5.5/checker-compat-qual-2.5.5.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
-    name = "auto-value-annotations-1.11.0",
-    jars = ["repository/com/google/auto/value/auto-value-annotations/1.11.0/auto-value-annotations-1.11.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
     name = "wire-runtime-jvm-5.4.0",
     jars = ["repository/com/squareup/wire/wire-runtime-jvm/5.4.0/wire-runtime-jvm-5.4.0.jar"],
     visibility = ["//visibility:public"],
@@ -1220,5 +1199,23 @@ jvm_import(
         "repository/com/google/apis/google-api-services-toolresults/v1beta3-rev20230410-2.0.0/google-api-services-toolresults-v1beta3-rev20230410-2.0.0.jar",
         "repository/com/google/apis/google-api-services-testing/v1-rev20250327-2.0.0/google-api-services-testing-v1-rev20250327-2.0.0.jar",
     ],
+    visibility = ["//visibility:public"],
+)
+
+java_import(
+    name = "error_prone_annotations-2.36.0",
+    jars = ["repository/com/google/errorprone/error_prone_annotations/2.36.0/error_prone_annotations-2.36.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+java_import(
+    name = "checker-compat-qual-2.5.5",
+    jars = ["repository/org/checkerframework/checker-compat-qual/2.5.5/checker-compat-qual-2.5.5.jar"],
+    visibility = ["//visibility:public"],
+)
+
+java_import(
+    name = "auto-value-annotations-1.11.0",
+    jars = ["repository/com/google/auto/value/auto-value-annotations/1.11.0/auto-value-annotations-1.11.0.jar"],
     visibility = ["//visibility:public"],
 )
