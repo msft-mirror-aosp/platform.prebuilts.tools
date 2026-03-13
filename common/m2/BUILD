@@ -341,13 +341,6 @@ filegroup(
 
 # managed by go/iml_to_build
 jvm_import(
-    name = "commons-lang",
-    jars = ["repository/commons-lang/commons-lang/2.6/commons-lang-2.6.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
     name = "auto-common",
     jars = ["repository/com/google/auto/auto-common/0.10/auto-common-0.10.jar"],
     visibility = ["//visibility:public"],
