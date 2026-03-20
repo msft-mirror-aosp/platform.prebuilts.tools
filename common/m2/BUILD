@@ -771,10 +771,10 @@ jvm_import(
 )
 
 # managed by go/iml_to_build
-jvm_import(
-    name = "mockwebserver",
+filegroup(
+    name = "okhttp.mockwebserver_files",
     # do not sort: must match IML order
-    jars = [
+    srcs = [
         "repository/com/squareup/okhttp3/okhttp/4.12.0/okhttp-4.12.0.jar",
         "repository/com/squareup/okhttp3/mockwebserver/4.12.0/mockwebserver-4.12.0.jar",
         "repository/com/squareup/okio/okio-jvm/3.6.0/okio-jvm-3.6.0.jar",
