@@ -1025,6 +1025,8 @@ jvm_import(
     jars = [
         "repository/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.18.2/jackson-datatype-jdk8-2.18.2.jar",
         "repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.18.2/jackson-datatype-jsr310-2.18.2.jar",
+        "repository/com/squareup/okhttp3/okhttp/4.12.0/okhttp-4.12.0.jar",
+        "repository/com/squareup/okhttp3/logging-interceptor/4.12.0/logging-interceptor-4.12.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
