@@ -1189,3 +1189,24 @@ jvm_import(
     jars = ["repository/androidx/tracing/tracing-wire-desktop/2.0.0-alpha03/tracing-wire-desktop-2.0.0-alpha03.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "snakeyaml-engine-kmp-jvm-3.0.1",
+    jars = ["repository/it/krzeminski/snakeyaml-engine-kmp-jvm/3.0.1/snakeyaml-engine-kmp-jvm-3.0.1.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "urlencoder-lib-jvm-1.5.0",
+    jars = ["repository/net/thauvin/erik/urlencoder/urlencoder-lib-jvm/1.5.0/urlencoder-lib-jvm-1.5.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "kaml",
+    jars = ["repository/com/charleskorn/kaml/kaml-jvm/0.61.0/kaml-jvm-0.61.0.jar"],
+    visibility = ["//visibility:public"],
+)
