@@ -544,12 +544,12 @@ jvm_import(
         # @maven//:org.jetbrains.kotlin.kotlin-compiler_<VERSION>
         # defined in tools/base/bazel/maven/BUILD.maven.
         "repository/org/jetbrains/annotations/24.0.0/annotations-24.0.0.jar",
-        "repository/org/jetbrains/kotlin/kotlin-compiler/2.3.10/kotlin-compiler-2.3.10.jar",
+        "repository/org/jetbrains/kotlin/kotlin-compiler/2.3.20/kotlin-compiler-2.3.20.jar",
         "repository/org/jetbrains/kotlin/kotlin-reflect/1.6.10/kotlin-reflect-1.6.10.jar",
-        "repository/org/jetbrains/kotlin/kotlin-script-runtime/2.3.10/kotlin-script-runtime-2.3.10.jar",
-        "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/2.3.10/kotlin-stdlib-jdk7-2.3.10.jar",
-        "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/2.3.10/kotlin-stdlib-jdk8-2.3.10.jar",
-        "repository/org/jetbrains/kotlin/kotlin-stdlib/2.3.10/kotlin-stdlib-2.3.10.jar",
+        "repository/org/jetbrains/kotlin/kotlin-script-runtime/2.3.20/kotlin-script-runtime-2.3.20.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/2.3.20/kotlin-stdlib-jdk7-2.3.20.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/2.3.20/kotlin-stdlib-jdk8-2.3.20.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib/2.3.20/kotlin-stdlib-2.3.20.jar",
         "repository/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.8.0/kotlinx-coroutines-core-jvm-1.8.0.jar",
     ],
     visibility = ["//visibility:public"],
@@ -558,7 +558,7 @@ jvm_import(
 jvm_import(
     name = "jvm-abi-gen-plugin",
     jars = [
-        "repository/org/jetbrains/kotlin/jvm-abi-gen/2.3.10/jvm-abi-gen-2.3.10.jar",
+        "repository/org/jetbrains/kotlin/jvm-abi-gen/2.3.20/jvm-abi-gen-2.3.20.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -566,7 +566,7 @@ jvm_import(
 jvm_import(
     name = "kotlin-compose-compiler-plugin",
     jars = [
-        "repository/org/jetbrains/kotlin/kotlin-compose-compiler-plugin/2.3.10/kotlin-compose-compiler-plugin-2.3.10.jar",
+        "repository/org/jetbrains/kotlin/kotlin-compose-compiler-plugin/2.3.20/kotlin-compose-compiler-plugin-2.3.20.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -574,7 +574,7 @@ jvm_import(
 jvm_import(
     name = "kotlin-serialization-compiler-plugin",
     jars = [
-        "repository/org/jetbrains/kotlin/kotlin-serialization-compiler-plugin/2.3.10/kotlin-serialization-compiler-plugin-2.3.10.jar",
+        "repository/org/jetbrains/kotlin/kotlin-serialization-compiler-plugin/2.3.20/kotlin-serialization-compiler-plugin-2.3.20.jar",
     ],
     visibility = ["//visibility:public"],
 )
