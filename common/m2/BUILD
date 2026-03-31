@@ -869,6 +869,29 @@ java_import(
     visibility = ["//visibility:public"],
 )
 
+filegroup(
+    name = "com.google.protobuf.protoc.4.33.2_exe",
+    srcs = select({
+        "//tools/base/bazel/platforms:macos-arm64": ["repository/com/google/protobuf/protoc/4.33.2/protoc-4.33.2-osx-aarch_64.exe"],
+        "//tools/base/bazel/platforms:macos-x86_64": ["repository/com/google/protobuf/protoc/4.33.2/protoc-4.33.2-osx-x86_64.exe"],
+        "@platforms//os:windows": ["repository/com/google/protobuf/protoc/4.33.2/protoc-4.33.2-windows-x86_64.exe"],
+        "@platforms//os:linux": ["repository/com/google/protobuf/protoc/4.33.2/protoc-4.33.2-linux-x86_64.exe"],
+    }),
+    visibility = ["//visibility:public"],
+)
+
+java_import(
+    name = "com.google.protobuf.protobuf-java-util.4.33.2",
+    jars = ["repository/com/google/protobuf/protobuf-java-util/4.33.2/protobuf-java-util-4.33.2.jar"],
+    visibility = ["//visibility:public"],
+)
+
+java_import(
+    name = "com.google.protobuf.protobuf-java.4.33.2",
+    jars = ["repository/com/google/protobuf/protobuf-java/4.33.2/protobuf-java-4.33.2.jar"],
+    visibility = ["//visibility:public"],
+)
+
 # managed by go/iml_to_build
 jvm_import(
     name = "google-api-services-drive-v3-rev20241027-2.0.0",
