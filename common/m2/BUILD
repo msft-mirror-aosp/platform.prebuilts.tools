@@ -1165,7 +1165,7 @@ jvm_import(
 # managed by go/iml_to_build
 jvm_import(
     name = "litertlm-jvm",
-    jars = ["repository/com/google/ai/edge/litertlm/litertlm-jvm/0.9.0-alpha05/litertlm-jvm-0.9.0-alpha05.jar"],
+    jars = ["repository/com/google/ai/edge/litertlm/litertlm-jvm/0.10.0/litertlm-jvm-0.10.0.jar"],
     visibility = ["//visibility:public"],
 )
 
