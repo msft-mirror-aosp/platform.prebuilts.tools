@@ -653,6 +653,12 @@ jvm_import(
     visibility = ["//visibility:public"],
 )
 
+jvm_import(
+    name = "okio-jvm-3.9.0",
+    jars = ["repository/com/squareup/okio/okio-jvm/3.9.0/okio-jvm-3.9.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
 # managed by go/iml_to_build
 filegroup(
     name = "google-dexlib2_files",
@@ -1231,5 +1237,35 @@ jvm_import(
 jvm_import(
     name = "kaml",
     jars = ["repository/com/charleskorn/kaml/kaml-jvm/0.61.0/kaml-jvm-0.61.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+jvm_import(
+    name = "coursier",
+    jars = ["repository/io/get-coursier/coursier_2.13/2.1.8/coursier_2.13-2.1.8.jar"],
+    visibility = ["//visibility:public"],
+)
+
+jvm_import(
+    name = "coursier-interface",
+    jars = ["repository/io/get-coursier/interface/1.0.19/interface-1.0.19.jar"],
+    visibility = ["//visibility:public"],
+)
+
+jvm_import(
+    name = "coursier-cache",
+    jars = ["repository/io/get-coursier/coursier-cache_2.13/2.1.8/coursier-cache_2.13-2.1.8.jar"],
+    visibility = ["//visibility:public"],
+)
+
+jvm_import(
+    name = "coursier-core",
+    jars = ["repository/io/get-coursier/coursier-core_2.13/2.1.8/coursier-core_2.13-2.1.8.jar"],
+    visibility = ["//visibility:public"],
+)
+
+jvm_import(
+    name = "coursier-util",
+    jars = ["repository/io/get-coursier/coursier-util_2.13/2.1.8/coursier-util_2.13-2.1.8.jar"],
     visibility = ["//visibility:public"],
 )
