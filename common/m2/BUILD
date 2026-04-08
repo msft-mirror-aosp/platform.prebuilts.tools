@@ -1157,13 +1157,6 @@ jvm_import(
 
 # managed by go/iml_to_build
 jvm_import(
-    name = "wire-runtime-jvm-5.4.0",
-    jars = ["repository/com/squareup/wire/wire-runtime-jvm/5.4.0/wire-runtime-jvm-5.4.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
     name = "collection-jvm-1.4.5",
     jars = ["repository/androidx/collection/collection-jvm/1.4.5/collection-jvm-1.4.5.jar"],
     visibility = ["//visibility:public"],
@@ -1203,20 +1196,6 @@ java_import(
 java_import(
     name = "auto-value-annotations-1.11.0",
     jars = ["repository/com/google/auto/value/auto-value-annotations/1.11.0/auto-value-annotations-1.11.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
-    name = "tracing-desktop-2.0.0-alpha03",
-    jars = ["repository/androidx/tracing/tracing-desktop/2.0.0-alpha03/tracing-desktop-2.0.0-alpha03.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
-    name = "tracing-wire-desktop-2.0.0-alpha03",
-    jars = ["repository/androidx/tracing/tracing-wire-desktop/2.0.0-alpha03/tracing-wire-desktop-2.0.0-alpha03.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -1268,5 +1247,26 @@ jvm_import(
 jvm_import(
     name = "kaml",
     jars = ["repository/com/charleskorn/kaml/kaml-jvm/0.61.0/kaml-jvm-0.61.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "wire-runtime-jvm-6.0.0",
+    jars = ["repository/com/squareup/wire/wire-runtime-jvm/6.0.0/wire-runtime-jvm-6.0.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "tracing-desktop-2.0.0-alpha05",
+    jars = ["repository/androidx/tracing/tracing-desktop/2.0.0-alpha05/tracing-desktop-2.0.0-alpha05.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "tracing-wire-desktop-2.0.0-alpha05",
+    jars = ["repository/androidx/tracing/tracing-wire-desktop/2.0.0-alpha05/tracing-wire-desktop-2.0.0-alpha05.jar"],
     visibility = ["//visibility:public"],
 )
