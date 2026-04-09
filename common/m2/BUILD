@@ -1233,13 +1233,6 @@ jvm_import(
     visibility = ["//visibility:public"],
 )
 
-# managed by go/iml_to_build
-jvm_import(
-    name = "kaml",
-    jars = ["repository/com/charleskorn/kaml/kaml-jvm/0.61.0/kaml-jvm-0.61.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
 jvm_import(
     name = "coursier",
     jars = ["repository/io/get-coursier/coursier_2.13/2.1.8/coursier_2.13-2.1.8.jar"],
@@ -1267,5 +1260,12 @@ jvm_import(
 jvm_import(
     name = "coursier-util",
     jars = ["repository/io/get-coursier/coursier-util_2.13/2.1.8/coursier-util_2.13-2.1.8.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "kaml",
+    jars = ["repository/com/charleskorn/kaml/kaml-jvm/0.61.0/kaml-jvm-0.61.0.jar"],
     visibility = ["//visibility:public"],
 )
