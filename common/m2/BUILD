@@ -653,6 +653,7 @@ jvm_import(
     visibility = ["//visibility:public"],
 )
 
+# managed by go/iml_to_build
 jvm_import(
     name = "okio-jvm-3.9.0",
     jars = ["repository/com/squareup/okio/okio-jvm/3.9.0/okio-jvm-3.9.0.jar"],
@@ -1267,12 +1268,5 @@ jvm_import(
 jvm_import(
     name = "kaml",
     jars = ["repository/com/charleskorn/kaml/kaml-jvm/0.61.0/kaml-jvm-0.61.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
-    name = "okio-jvm-3.9.0",
-    jars = ["repository/com/squareup/okio/okio-jvm/3.9.0/okio-jvm-3.9.0.jar"],
     visibility = ["//visibility:public"],
 )
