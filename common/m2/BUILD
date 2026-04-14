@@ -937,17 +937,6 @@ jvm_import(
 )
 
 # managed by go/iml_to_build
-filegroup(
-    name = "kotlinx-serialization_files",
-    # do not sort: must match IML order
-    srcs = [
-        "repository/org/jetbrains/kotlinx/kotlinx-serialization-core-jvm/1.8.1/kotlinx-serialization-core-jvm-1.8.1.jar",
-        "repository/org/jetbrains/kotlinx/kotlinx-serialization-json-jvm/1.8.1/kotlinx-serialization-json-jvm-1.8.1.jar",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
 jvm_import(
     name = "org.eclipse.lsp4j-0.21.1",
     # do not sort: must match IML order
