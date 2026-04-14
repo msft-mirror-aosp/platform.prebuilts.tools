@@ -97,3 +97,25 @@ studio_data(
     },
     visibility = ["//visibility:public"],
 )
+
+# clangd bundle for C/C++ plugin
+# This works differently from Studio-Cidr integration in that it doesn't need a platform
+# update to take effect. The clangd prebuilts for C/C++ plugin take effect at once when
+# prebuilts are updated.
+studio_data(
+    name = "clangd-bundle",
+    files = glob([
+        "clion/bin/clang/linux/x64/*",
+        "clion/bin/clang/mac/x64/*",
+        "clion/bin/clang/mac/aarch64/*",
+        "clion/bin/clang/win/x64/*",
+    ]),
+    files_linux = glob(["clion/bin/clang/linux/x64/*"]),
+    files_mac = glob(["clion/bin/clang/mac/x64/*"]),
+    files_mac_arm = glob(["clion/bin/clang/mac/aarch64/*"]),
+    files_win = glob(["clion/bin/clang/win/x64/*"]),
+    mappings = {
+        "prebuilts/tools/clion/bin/clang/": "clang/",
+    },
+    visibility = ["//visibility:public"],
+)
