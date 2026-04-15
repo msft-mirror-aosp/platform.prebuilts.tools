@@ -922,6 +922,7 @@ merge_jars(
     out = "mcp-sdk-libraries.jar",
     jars = [
         "repository/io/github/oshai/kotlin-logging-jvm/7.0.0/kotlin-logging-jvm-7.0.0.jar",
+        "repository/io/ktor/ktor-server-content-negotiation-jvm/3.3.2/ktor-server-content-negotiation-jvm-3.3.2.jar",
         "repository/io/ktor/ktor-server-sse-jvm/3.3.2/ktor-server-sse-jvm-3.3.2.jar",
         "repository/io/ktor/ktor-server-websockets-jvm/3.3.2/ktor-server-websockets-jvm-3.3.2.jar",
         "repository/org/jetbrains/kotlinx/atomicfu-jvm/0.29.0/atomicfu-jvm-0.29.0.jar",
