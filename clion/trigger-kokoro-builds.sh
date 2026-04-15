@@ -47,17 +47,6 @@ multi_scm_revision {
 }
 EOF
 
-echo "Triggering Mac (universal) build..."
-stubby call --proto2 blade:kokoro-api KokoroApi.Build <<EOF
-full_job_name: "android-studio/clangd/mac/release"
-multi_scm_revision {
-  git_on_borg_scm_revision {
-    name: "llvm-project"
-    sha1: "${committish}"
-  }
-}
-EOF
-
 echo "Triggering Mac (arm64) build..."
 stubby call --proto2 blade:kokoro-api KokoroApi.Build <<EOF
 full_job_name: "android-studio/clangd/mac_arm64/release"
@@ -92,4 +81,4 @@ multi_scm_revision {
 EOF
 
 echo "To track the progress, use http://go/as-clangd-kokoro. After the build is done. You can download all of them with"
-echo "  download-binaries-from-placer.sh --linux <build#> --mac <build#> --mac_arm64 <build#> --mac_x86_64 <build#> --win <build#>"
+echo "  download-binaries-from-placer.sh --linux <build#> --mac_arm64 <build#> --mac_x86_64 <build#> --win <build#>"

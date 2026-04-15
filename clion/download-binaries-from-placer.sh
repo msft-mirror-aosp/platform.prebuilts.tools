@@ -5,7 +5,7 @@
 #
 # Usage:
 #
-#   download-binaries-from-placer.sh [--nostrip] [--linux <build#>] [--mac <build#>] [--mac_arm64 <build#>] [--mac_x86_64 <build#>] [--win <build#>]
+#   download-binaries-from-placer.sh [--nostrip] [--linux <build#>] [--mac_arm64 <build#>] [--mac_x86_64 <build#>] [--win <build#>]
 #
 # To find the release number, go to http://go/as-clangd-kokoro and find the
 # successful builds that you have triggered.
@@ -19,15 +19,6 @@ while (( "$#" )); do
     --linux)
       if [ -n "$2" ] && [ ${2:0:1} != "-" ]; then
         LINUX_RELEASE="$2"
-        shift 2
-      else
-        echo "Error: Argument for $1 is missing" >&2
-        exit 1
-      fi
-      ;;
-    --mac)
-      if [ -n "$2" ] && [ ${2:0:1} != "-" ]; then
-        MAC_UNIVERSAL_RELEASE="$2"
         shift 2
       else
         echo "Error: Argument for $1 is missing" >&2
@@ -66,7 +57,7 @@ while (( "$#" )); do
         shift 1
       ;;
     -*|--*=)
-      echo "Usage: download-binaries-from-placer.sh [--nostrip] [--linux <build#>] [--mac <build#>] [--mac_arm64 <build#>] [--mac_x86_64 <build#>] [--win <build#>]" >&2
+      echo "Usage: download-binaries-from-placer.sh [--nostrip] [--linux <build#>] [--mac_arm64 <build#>] [--mac_x86_64 <build#>] [--win <build#>]" >&2
       exit 1
       ;;
   esac
@@ -85,16 +76,6 @@ if [[ -n "${LINUX_RELEASE}" ]]; then
   else
     echo "Stripping is disabled"
   fi
-fi
-
-if [[ -n "${MAC_UNIVERSAL_RELEASE}" ]]; then
-  # Do not delete the entire mac/ directory here, as it has aarch64/x64
-  # subdirectories that should be controlled using other switches.
-  rm -rv "${BIN_DIR}/mac/clangd"
-  mkdir -pv "${BIN_DIR}/mac"
-  fileutil cp -R -resume "/placer/prod/home/kokoro-dedicated/build_artifacts/prod/android-studio/clangd/mac/release/${MAC_UNIVERSAL_RELEASE}/*/*" "${BIN_DIR}/mac"
-  rm -v "${BIN_DIR}/mac"/*.intoto.jsonl
-  chmod -v +x "${BIN_DIR}/mac"/clangd
 fi
 
 # Build has name mac_arm64, but the directory is called mac/aarch64.

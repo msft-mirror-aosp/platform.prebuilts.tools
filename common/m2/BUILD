@@ -544,12 +544,12 @@ jvm_import(
         # @maven//:org.jetbrains.kotlin.kotlin-compiler_<VERSION>
         # defined in tools/base/bazel/maven/BUILD.maven.
         "repository/org/jetbrains/annotations/24.0.0/annotations-24.0.0.jar",
-        "repository/org/jetbrains/kotlin/kotlin-compiler/2.3.10/kotlin-compiler-2.3.10.jar",
+        "repository/org/jetbrains/kotlin/kotlin-compiler/2.3.20/kotlin-compiler-2.3.20.jar",
         "repository/org/jetbrains/kotlin/kotlin-reflect/1.6.10/kotlin-reflect-1.6.10.jar",
-        "repository/org/jetbrains/kotlin/kotlin-script-runtime/2.3.10/kotlin-script-runtime-2.3.10.jar",
-        "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/2.3.10/kotlin-stdlib-jdk7-2.3.10.jar",
-        "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/2.3.10/kotlin-stdlib-jdk8-2.3.10.jar",
-        "repository/org/jetbrains/kotlin/kotlin-stdlib/2.3.10/kotlin-stdlib-2.3.10.jar",
+        "repository/org/jetbrains/kotlin/kotlin-script-runtime/2.3.20/kotlin-script-runtime-2.3.20.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/2.3.20/kotlin-stdlib-jdk7-2.3.20.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/2.3.20/kotlin-stdlib-jdk8-2.3.20.jar",
+        "repository/org/jetbrains/kotlin/kotlin-stdlib/2.3.20/kotlin-stdlib-2.3.20.jar",
         "repository/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.8.0/kotlinx-coroutines-core-jvm-1.8.0.jar",
     ],
     visibility = ["//visibility:public"],
@@ -558,7 +558,7 @@ jvm_import(
 jvm_import(
     name = "jvm-abi-gen-plugin",
     jars = [
-        "repository/org/jetbrains/kotlin/jvm-abi-gen/2.3.10/jvm-abi-gen-2.3.10.jar",
+        "repository/org/jetbrains/kotlin/jvm-abi-gen/2.3.20/jvm-abi-gen-2.3.20.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -566,7 +566,7 @@ jvm_import(
 jvm_import(
     name = "kotlin-compose-compiler-plugin",
     jars = [
-        "repository/org/jetbrains/kotlin/kotlin-compose-compiler-plugin/2.3.10/kotlin-compose-compiler-plugin-2.3.10.jar",
+        "repository/org/jetbrains/kotlin/kotlin-compose-compiler-plugin/2.3.20/kotlin-compose-compiler-plugin-2.3.20.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -574,7 +574,7 @@ jvm_import(
 jvm_import(
     name = "kotlin-serialization-compiler-plugin",
     jars = [
-        "repository/org/jetbrains/kotlin/kotlin-serialization-compiler-plugin/2.3.10/kotlin-serialization-compiler-plugin-2.3.10.jar",
+        "repository/org/jetbrains/kotlin/kotlin-serialization-compiler-plugin/2.3.20/kotlin-serialization-compiler-plugin-2.3.20.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -771,10 +771,10 @@ jvm_import(
 )
 
 # managed by go/iml_to_build
-jvm_import(
-    name = "mockwebserver",
+filegroup(
+    name = "okhttp.mockwebserver_files",
     # do not sort: must match IML order
-    jars = [
+    srcs = [
         "repository/com/squareup/okhttp3/okhttp/4.12.0/okhttp-4.12.0.jar",
         "repository/com/squareup/okhttp3/mockwebserver/4.12.0/mockwebserver-4.12.0.jar",
         "repository/com/squareup/okio/okio-jvm/3.6.0/okio-jvm-3.6.0.jar",
@@ -866,6 +866,29 @@ java_import(
 java_import(
     name = "com.google.protobuf.protobuf-java.3.25.5",
     jars = ["repository/com/google/protobuf/protobuf-java/3.25.5/protobuf-java-3.25.5.jar"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "com.google.protobuf.protoc.4.33.2_exe",
+    srcs = select({
+        "//tools/base/bazel/platforms:macos-arm64": ["repository/com/google/protobuf/protoc/4.33.2/protoc-4.33.2-osx-aarch_64.exe"],
+        "//tools/base/bazel/platforms:macos-x86_64": ["repository/com/google/protobuf/protoc/4.33.2/protoc-4.33.2-osx-x86_64.exe"],
+        "@platforms//os:windows": ["repository/com/google/protobuf/protoc/4.33.2/protoc-4.33.2-windows-x86_64.exe"],
+        "@platforms//os:linux": ["repository/com/google/protobuf/protoc/4.33.2/protoc-4.33.2-linux-x86_64.exe"],
+    }),
+    visibility = ["//visibility:public"],
+)
+
+java_import(
+    name = "com.google.protobuf.protobuf-java-util.4.33.2",
+    jars = ["repository/com/google/protobuf/protobuf-java-util/4.33.2/protobuf-java-util-4.33.2.jar"],
+    visibility = ["//visibility:public"],
+)
+
+java_import(
+    name = "com.google.protobuf.protobuf-java.4.33.2",
+    jars = ["repository/com/google/protobuf/protobuf-java/4.33.2/protobuf-java-4.33.2.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -1142,7 +1165,7 @@ jvm_import(
 # managed by go/iml_to_build
 jvm_import(
     name = "litertlm-jvm",
-    jars = ["repository/com/google/ai/edge/litertlm/litertlm-jvm/0.9.0-alpha05/litertlm-jvm-0.9.0-alpha05.jar"],
+    jars = ["repository/com/google/ai/edge/litertlm/litertlm-jvm/0.10.0/litertlm-jvm-0.10.0.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -1187,5 +1210,26 @@ jvm_import(
 jvm_import(
     name = "tracing-wire-desktop-2.0.0-alpha03",
     jars = ["repository/androidx/tracing/tracing-wire-desktop/2.0.0-alpha03/tracing-wire-desktop-2.0.0-alpha03.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "snakeyaml-engine-kmp-jvm-3.0.1",
+    jars = ["repository/it/krzeminski/snakeyaml-engine-kmp-jvm/3.0.1/snakeyaml-engine-kmp-jvm-3.0.1.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "urlencoder-lib-jvm-1.5.0",
+    jars = ["repository/net/thauvin/erik/urlencoder/urlencoder-lib-jvm/1.5.0/urlencoder-lib-jvm-1.5.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "kaml",
+    jars = ["repository/com/charleskorn/kaml/kaml-jvm/0.61.0/kaml-jvm-0.61.0.jar"],
     visibility = ["//visibility:public"],
 )
