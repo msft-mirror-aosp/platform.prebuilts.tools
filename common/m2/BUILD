@@ -990,8 +990,8 @@ jvm_import(
     name = "openai-java-sdk",
     # do not sort: must match IML order
     jars = [
-        "repository/com/openai/openai-java-core/4.21.0/openai-java-core-4.21.0.jar",
-        "repository/com/openai/openai-java-client-okhttp/4.21.0/openai-java-client-okhttp-4.21.0.jar",
+        "repository/com/openai/openai-java-core/4.32.0/openai-java-core-4.32.0.jar",
+        "repository/com/openai/openai-java-client-okhttp/4.32.0/openai-java-client-okhttp-4.32.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -1001,8 +1001,8 @@ jvm_import(
     name = "anthropic-java-sdk",
     # do not sort: must match IML order
     jars = [
-        "repository/com/anthropic/anthropic-java-core/2.14.0/anthropic-java-core-2.14.0.jar",
-        "repository/com/anthropic/anthropic-java-client-okhttp/2.14.0/anthropic-java-client-okhttp-2.14.0.jar",
+        "repository/com/anthropic/anthropic-java-core/2.26.0/anthropic-java-core-2.26.0.jar",
+        "repository/com/anthropic/anthropic-java-client-okhttp/2.26.0/anthropic-java-client-okhttp-2.26.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
