@@ -654,6 +654,13 @@ jvm_import(
 )
 
 # managed by go/iml_to_build
+jvm_import(
+    name = "okio-jvm-3.9.0",
+    jars = ["repository/com/squareup/okio/okio-jvm/3.9.0/okio-jvm-3.9.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
 filegroup(
     name = "google-dexlib2_files",
     srcs = ["repository/com/android/tools/smali/smali-dexlib2/3.0.9/smali-dexlib2-3.0.9.jar"],
@@ -915,10 +922,9 @@ merge_jars(
     out = "mcp-sdk-libraries.jar",
     jars = [
         "repository/io/github/oshai/kotlin-logging-jvm/7.0.0/kotlin-logging-jvm-7.0.0.jar",
-        "repository/io/ktor/ktor-server-cio-jvm/3.1.3/ktor-server-cio-jvm-3.1.3.jar",
-        "repository/io/ktor/ktor-server-core-jvm/3.1.3/ktor-server-core-jvm-3.1.3.jar",
-        "repository/io/ktor/ktor-server-sse-jvm/3.1.3/ktor-server-sse-jvm-3.1.3.jar",
-        "repository/io/ktor/ktor-server-websockets-jvm/3.1.3/ktor-server-websockets-jvm-3.1.3.jar",
+        "repository/io/ktor/ktor-server-content-negotiation-jvm/3.3.2/ktor-server-content-negotiation-jvm-3.3.2.jar",
+        "repository/io/ktor/ktor-server-sse-jvm/3.3.2/ktor-server-sse-jvm-3.3.2.jar",
+        "repository/io/ktor/ktor-server-websockets-jvm/3.3.2/ktor-server-websockets-jvm-3.3.2.jar",
         "repository/org/jetbrains/kotlinx/atomicfu-jvm/0.29.0/atomicfu-jvm-0.29.0.jar",
     ],
     visibility = ["//visibility:public"],
@@ -928,17 +934,6 @@ merge_jars(
 jvm_import(
     name = "sqlite-jdbc-3.43.0.0",
     jars = ["repository/org/xerial/sqlite-jdbc/3.43.0.0/sqlite-jdbc-3.43.0.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-filegroup(
-    name = "kotlinx-serialization_files",
-    # do not sort: must match IML order
-    srcs = [
-        "repository/org/jetbrains/kotlinx/kotlinx-serialization-core-jvm/1.8.1/kotlinx-serialization-core-jvm-1.8.1.jar",
-        "repository/org/jetbrains/kotlinx/kotlinx-serialization-json-jvm/1.8.1/kotlinx-serialization-json-jvm-1.8.1.jar",
-    ],
     visibility = ["//visibility:public"],
 )
 
@@ -1019,6 +1014,8 @@ jvm_import(
     jars = [
         "repository/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.18.2/jackson-datatype-jdk8-2.18.2.jar",
         "repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.18.2/jackson-datatype-jsr310-2.18.2.jar",
+        "repository/com/squareup/okhttp3/okhttp/4.12.0/okhttp-4.12.0.jar",
+        "repository/com/squareup/okhttp3/logging-interceptor/4.12.0/logging-interceptor-4.12.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -1150,13 +1147,6 @@ jvm_import(
 
 # managed by go/iml_to_build
 jvm_import(
-    name = "wire-runtime-jvm-5.4.0",
-    jars = ["repository/com/squareup/wire/wire-runtime-jvm/5.4.0/wire-runtime-jvm-5.4.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
     name = "collection-jvm-1.4.5",
     jars = ["repository/androidx/collection/collection-jvm/1.4.5/collection-jvm-1.4.5.jar"],
     visibility = ["//visibility:public"],
@@ -1201,20 +1191,6 @@ java_import(
 
 # managed by go/iml_to_build
 jvm_import(
-    name = "tracing-desktop-2.0.0-alpha03",
-    jars = ["repository/androidx/tracing/tracing-desktop/2.0.0-alpha03/tracing-desktop-2.0.0-alpha03.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
-    name = "tracing-wire-desktop-2.0.0-alpha03",
-    jars = ["repository/androidx/tracing/tracing-wire-desktop/2.0.0-alpha03/tracing-wire-desktop-2.0.0-alpha03.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
     name = "snakeyaml-engine-kmp-jvm-3.0.1",
     jars = ["repository/it/krzeminski/snakeyaml-engine-kmp-jvm/3.0.1/snakeyaml-engine-kmp-jvm-3.0.1.jar"],
     visibility = ["//visibility:public"],
@@ -1227,9 +1203,60 @@ jvm_import(
     visibility = ["//visibility:public"],
 )
 
+jvm_import(
+    name = "coursier",
+    jars = ["repository/io/get-coursier/coursier_2.13/2.1.8/coursier_2.13-2.1.8.jar"],
+    visibility = ["//visibility:public"],
+)
+
+jvm_import(
+    name = "coursier-interface",
+    jars = ["repository/io/get-coursier/interface/1.0.19/interface-1.0.19.jar"],
+    visibility = ["//visibility:public"],
+)
+
+jvm_import(
+    name = "coursier-cache",
+    jars = ["repository/io/get-coursier/coursier-cache_2.13/2.1.8/coursier-cache_2.13-2.1.8.jar"],
+    visibility = ["//visibility:public"],
+)
+
+jvm_import(
+    name = "coursier-core",
+    jars = ["repository/io/get-coursier/coursier-core_2.13/2.1.8/coursier-core_2.13-2.1.8.jar"],
+    visibility = ["//visibility:public"],
+)
+
+jvm_import(
+    name = "coursier-util",
+    jars = ["repository/io/get-coursier/coursier-util_2.13/2.1.8/coursier-util_2.13-2.1.8.jar"],
+    visibility = ["//visibility:public"],
+)
+
 # managed by go/iml_to_build
 jvm_import(
     name = "kaml",
     jars = ["repository/com/charleskorn/kaml/kaml-jvm/0.61.0/kaml-jvm-0.61.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "wire-runtime-jvm-6.0.0",
+    jars = ["repository/com/squareup/wire/wire-runtime-jvm/6.0.0/wire-runtime-jvm-6.0.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "tracing-desktop-2.0.0-alpha05",
+    jars = ["repository/androidx/tracing/tracing-desktop/2.0.0-alpha05/tracing-desktop-2.0.0-alpha05.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "tracing-wire-desktop-2.0.0-alpha05",
+    jars = ["repository/androidx/tracing/tracing-wire-desktop/2.0.0-alpha05/tracing-wire-desktop-2.0.0-alpha05.jar"],
     visibility = ["//visibility:public"],
 )
