@@ -1,7 +1,7 @@
-From 83647d0b3c8b10e27d47d811d5433b56cbcc7562 Mon Sep 17 00:00:00 2001
+From 073974e6c1017c2780288c6b26615c25fc9fbaaf Mon Sep 17 00:00:00 2001
 From: Paul Thomson <paulthomson@google.com>
-Date: Thu, 16 Apr 2026 15:47:26 +0100
-Subject: [PATCH 3/5] Analysis API compatibility changes
+Date: Fri, 17 Apr 2026 14:32:18 +0100
+Subject: [PATCH 10/12] Analysis API compatibility changes
 
 Re-adds some convenience extensions/members that were removed. This is
 for compatibility.
@@ -18,7 +18,7 @@ Bug: 393478604
  5 files changed, 60 insertions(+)
 
 diff --git a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotated.kt b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotated.kt
-index b04aa23f5dd5..bf9bf9645caf 100644
+index b04aa23f5dd..bf9bf9645ca 100644
 --- a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotated.kt
 +++ b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotated.kt
 @@ -6,6 +6,7 @@
@@ -61,7 +61,7 @@ index b04aa23f5dd5..bf9bf9645caf 100644
 +public val KaAnnotated.annotationClassIds: Collection<ClassId>
 +    get() = annotations.classIds
 diff --git a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotation.kt b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotation.kt
-index dd0d86f4fbbf..e8709898cb65 100644
+index dd0d86f4fbb..e8709898cb6 100644
 --- a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotation.kt
 +++ b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotation.kt
 @@ -53,6 +53,19 @@ public interface KaAnnotation : KaLifetimeOwner {
@@ -85,7 +85,7 @@ index dd0d86f4fbbf..e8709898cb65 100644
       * The list of annotation arguments passed to the [annotation constructor](https://kotlinlang.org/docs/annotations.html#constructors) in
       * the form of [KaNamedAnnotationValue]s.
 diff --git a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/components/KaTypeProvider.kt b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/components/KaTypeProvider.kt
-index 952e6722755b..6832f66d3bb1 100644
+index 952e6722755..6832f66d3bb 100644
 --- a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/components/KaTypeProvider.kt
 +++ b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/components/KaTypeProvider.kt
 @@ -210,6 +210,11 @@ public interface KaTypeProvider : KaSessionComponent {
@@ -101,7 +101,7 @@ index 952e6722755b..6832f66d3bb1 100644
       * Resolves the given [KtTypeReference] to its corresponding [KaType].
       *
 diff --git a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/symbols/KaSymbolProvider.kt b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/symbols/KaSymbolProvider.kt
-index f47ffadb8081..b2e377a8fc28 100644
+index f47ffadb808..b2e377a8fc2 100644
 --- a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/symbols/KaSymbolProvider.kt
 +++ b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/symbols/KaSymbolProvider.kt
 @@ -78,6 +78,13 @@ public interface KaSymbolProvider : KaSessionComponent {
@@ -119,7 +119,7 @@ index f47ffadb8081..b2e377a8fc28 100644
       * A [KaAnonymousFunctionSymbol] for the given [KtFunctionLiteral].
       */
 diff --git a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/types/typeUtils.kt b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/types/typeUtils.kt
-index bc7f38253fd0..36784cddbd47 100644
+index bc7f38253fd..36784cddbd4 100644
 --- a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/types/typeUtils.kt
 +++ b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/types/typeUtils.kt
 @@ -13,6 +13,13 @@ import org.jetbrains.kotlin.analysis.api.symbols.KaClassLikeSymbol

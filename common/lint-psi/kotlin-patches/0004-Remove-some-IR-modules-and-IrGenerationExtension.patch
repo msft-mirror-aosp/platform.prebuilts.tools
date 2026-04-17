@@ -1,43 +1,18 @@
-From b1a69af29eae90a598579ae0d3d3a2ae753eed29 Mon Sep 17 00:00:00 2001
+From 508934af3dbe33fdbdb17b0c8b0eec5f113ff965 Mon Sep 17 00:00:00 2001
 From: Paul Thomson <paulthomson@google.com>
-Date: Thu, 16 Apr 2026 15:37:29 +0100
-Subject: [PATCH 1/5] Various kotlin changes
+Date: Fri, 17 Apr 2026 13:11:52 +0100
+Subject: [PATCH 04/12] Remove some IR modules and IrGenerationExtension
 
-We should probably split these into multiple commits.
+I assume this is not used by Lint and so saves some space.
 ---
- .../jvm/compiler/KotlinCliJavaFileManagerImpl.kt    |  4 +++-
  .../cli/jvm/compiler/KotlinCoreEnvironment.kt       |  1 -
  .../resources/META-INF/extensions/compiler.xml      |  3 ---
- .../scripting/scripting-compiler/build.gradle.kts   |  2 +-
  .../scripting/compiler/plugin/pluginRegisrar.kt     |  3 ---
- .../kotlin-compiler-fe10-for-ide/build.gradle.kts   |  5 ++++-
  .../kotlin-compiler-ir-for-ide/build.gradle.kts     | 13 ++++++++++++-
- 7 files changed, 20 insertions(+), 11 deletions(-)
+ 4 files changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt b/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt
-index 810d4e612694..12a9c3376c5f 100644
---- a/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt
-+++ b/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt
-@@ -46,6 +46,7 @@ import org.jetbrains.kotlin.util.PhaseSideType
- import org.jetbrains.kotlin.util.tryMeasureSideTime
- import org.jetbrains.kotlin.utils.SmartList
- import org.jetbrains.kotlin.utils.addIfNotNull
-+import org.jetbrains.kotlin.utils.getOrPutNullable
- 
- // TODO: do not inherit from CoreJavaFileManager to avoid accidental usage of its methods which do not use caches/indices
- // Currently, the only relevant usage of this class as CoreJavaFileManager is at CoreJavaDirectoryService.getPackage,
-@@ -94,7 +95,8 @@ class KotlinCliJavaFileManagerImpl(private val myPsiManager: PsiManager) : CoreJ
-     private fun findVirtualFileForTopLevelClass(classId: ClassId, searchScope: GlobalSearchScope): VirtualFile? {
-         val relativeClassName = classId.relativeClassName.asString()
-         val outerMostClassFqName = classId.packageFqName.child(classId.relativeClassName.pathSegments().first())
--        return topLevelClassesCache.getOrPut(outerMostClassFqName) {
-+        // KT-35614: getOrPut -> getOrPutNullable
-+        return topLevelClassesCache.getOrPutNullable(outerMostClassFqName) {
-             // Search java sources first. For build tools, it makes sense to build new files passing all the
-             // class files for the previous build on the class path.
-             //
 diff --git a/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt b/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
-index 2511d5bb51c5..af01c8d84b2a 100644
+index 2511d5bb51c..af01c8d84b2 100644
 --- a/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
 +++ b/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
 @@ -764,7 +764,6 @@ class KotlinCoreEnvironment private constructor(
@@ -49,7 +24,7 @@ index 2511d5bb51c5..af01c8d84b2a 100644
              ShellExtension.registerExtensionPoint(project)
              TypeResolutionInterceptor.registerExtensionPoint(project)
 diff --git a/compiler/cli/cli-common/resources/META-INF/extensions/compiler.xml b/compiler/cli/cli-common/resources/META-INF/extensions/compiler.xml
-index ffb075bfe4a0..72cec649c79c 100644
+index ffb075bfe4a..72cec649c79 100644
 --- a/compiler/cli/cli-common/resources/META-INF/extensions/compiler.xml
 +++ b/compiler/cli/cli-common/resources/META-INF/extensions/compiler.xml
 @@ -23,9 +23,6 @@
@@ -62,21 +37,8 @@ index ffb075bfe4a0..72cec649c79c 100644
          <extensionPoint qualifiedName="org.jetbrains.kotlin.simpleNameReferenceExtension"
                          interface="org.jetbrains.kotlin.plugin.references.SimpleNameReferenceExtension"
                          area="IDEA_PROJECT" dynamic="true"/>
-diff --git a/plugins/scripting/scripting-compiler/build.gradle.kts b/plugins/scripting/scripting-compiler/build.gradle.kts
-index 1489a4abb3c5..1d00d335e74e 100644
---- a/plugins/scripting/scripting-compiler/build.gradle.kts
-+++ b/plugins/scripting/scripting-compiler/build.gradle.kts
-@@ -33,7 +33,7 @@ dependencies {
-     api(commonDependency("org.jline", "jline"))
-     compileOnly(intellijCore())
- 
--    implementation(project(":kotlin-power-assert-compiler-plugin")) // TODO: KT-74787
-+    compileOnly(project(":kotlin-power-assert-compiler-plugin")) // TODO: KT-74787
- 
-     testApi(project(":compiler:frontend"))
-     testApi(project(":compiler:plugin-api"))
 diff --git a/plugins/scripting/scripting-compiler/src/org/jetbrains/kotlin/scripting/compiler/plugin/pluginRegisrar.kt b/plugins/scripting/scripting-compiler/src/org/jetbrains/kotlin/scripting/compiler/plugin/pluginRegisrar.kt
-index bba68ac00141..c31e8b56176a 100644
+index bba68ac0014..c31e8b56176 100644
 --- a/plugins/scripting/scripting-compiler/src/org/jetbrains/kotlin/scripting/compiler/plugin/pluginRegisrar.kt
 +++ b/plugins/scripting/scripting-compiler/src/org/jetbrains/kotlin/scripting/compiler/plugin/pluginRegisrar.kt
 @@ -80,9 +80,6 @@ class ScriptingCompilerConfigurationComponentRegistrar : ComponentRegistrar {
@@ -89,24 +51,8 @@ index bba68ac00141..c31e8b56176a 100644
              if (messageCollector != null) {
                  project.registerService(ScriptReportSink::class.java, CliScriptReportSink(messageCollector))
              }
-diff --git a/prepare/ide-plugin-dependencies/kotlin-compiler-fe10-for-ide/build.gradle.kts b/prepare/ide-plugin-dependencies/kotlin-compiler-fe10-for-ide/build.gradle.kts
-index aeef202c737a..268417a8aff9 100644
---- a/prepare/ide-plugin-dependencies/kotlin-compiler-fe10-for-ide/build.gradle.kts
-+++ b/prepare/ide-plugin-dependencies/kotlin-compiler-fe10-for-ide/build.gradle.kts
-@@ -8,7 +8,10 @@ val excludedCompilerModules = listOf(
-     ":compiler:cli",
-     ":compiler:cli-js",
-     ":compiler:javac-wrapper",
--    ":compiler:incremental-compilation-impl"
-+    ":compiler:incremental-compilation-impl",
-+    ":compiler:backend.js",
-+    ":compiler:backend.wasm",
-+    ":js:js.dce",
- )
- 
- val extraCompilerModules = listOf(
 diff --git a/prepare/ide-plugin-dependencies/kotlin-compiler-ir-for-ide/build.gradle.kts b/prepare/ide-plugin-dependencies/kotlin-compiler-ir-for-ide/build.gradle.kts
-index 96b26f748b2d..d926bde840ea 100644
+index 96b26f748b2..d926bde840e 100644
 --- a/prepare/ide-plugin-dependencies/kotlin-compiler-ir-for-ide/build.gradle.kts
 +++ b/prepare/ide-plugin-dependencies/kotlin-compiler-ir-for-ide/build.gradle.kts
 @@ -4,4 +4,15 @@ plugins {

@@ -1,7 +1,7 @@
-From 75a7d1b74813591da43347f44ca75f2aeee63940 Mon Sep 17 00:00:00 2001
+From 8095319709c4bbdd559ada9ba6fab7e93728d9bb Mon Sep 17 00:00:00 2001
 From: Paul Thomson <paulthomson@google.com>
 Date: Thu, 16 Apr 2026 16:01:17 +0100
-Subject: [PATCH 5/5] [AA] KaValueParameterSymbol.hasDefaultValue: account for
+Subject: [PATCH 12/12] KaValueParameterSymbol.hasDefaultValue: account for
  overrides/expects
 
 This patch is a partial backport of two commits:
@@ -15,7 +15,7 @@ Also see b/448273436#comment13
  1 file changed, 27 insertions(+), 8 deletions(-)
 
 diff --git a/analysis/analysis-api-fir/src/org/jetbrains/kotlin/analysis/api/fir/symbols/KaFirValueParameterSymbol.kt b/analysis/analysis-api-fir/src/org/jetbrains/kotlin/analysis/api/fir/symbols/KaFirValueParameterSymbol.kt
-index ddb3628fa7d6..6022a3743e0d 100644
+index ddb3628fa7d..6022a3743e0 100644
 --- a/analysis/analysis-api-fir/src/org/jetbrains/kotlin/analysis/api/fir/symbols/KaFirValueParameterSymbol.kt
 +++ b/analysis/analysis-api-fir/src/org/jetbrains/kotlin/analysis/api/fir/symbols/KaFirValueParameterSymbol.kt
 @@ -15,6 +15,7 @@ import org.jetbrains.kotlin.analysis.api.fir.symbols.pointers.KaFirValueParamete

@@ -1,8 +1,8 @@
-From 78713d83eacc5712df8d5ea79b0fbad57fc6cfd4 Mon Sep 17 00:00:00 2001
+From 48f9452b0317949e6bd69ea11f226c31f5232195 Mon Sep 17 00:00:00 2001
 From: Paul Thomson <paulthomson@google.com>
 Date: Thu, 16 Apr 2026 15:53:07 +0100
-Subject: [PATCH 4/5] [PSI] Fix 'KtDotQualifiedExpression.receiverExpression'
- for stubs
+Subject: [PATCH 11/12] Fix 'KtDotQualifiedExpression.receiverExpression' for
+ stubs
 
 Sometimes, only one part of the 'KtDotQualifiedExpression'
 is serialized to a stub. In cases when the receiver part is omitted,
@@ -34,7 +34,7 @@ Bug: 446964753
  2 files changed, 15 insertions(+), 21 deletions(-)
 
 diff --git a/compiler/psi/psi-api/src/org/jetbrains/kotlin/psi/KtDotQualifiedExpression.kt b/compiler/psi/psi-api/src/org/jetbrains/kotlin/psi/KtDotQualifiedExpression.kt
-index 33c612f8f0ce..d62fc598bf75 100644
+index 33c612f8f0c..d62fc598bf7 100644
 --- a/compiler/psi/psi-api/src/org/jetbrains/kotlin/psi/KtDotQualifiedExpression.kt
 +++ b/compiler/psi/psi-api/src/org/jetbrains/kotlin/psi/KtDotQualifiedExpression.kt
 @@ -9,7 +9,6 @@ import com.intellij.lang.ASTNode
@@ -94,7 +94,7 @@ index 33c612f8f0ce..d62fc598bf75 100644
                  LOG.logErrorWithAttachment("Invalid stub structure. DOT_QUALIFIED_EXPRESSION must have one or two children. Was: ${expressions.size}") {
                      withPsiEntry("file", containingFile)
 diff --git a/compiler/psi/psi-api/src/org/jetbrains/kotlin/psi/stubs/elements/KtTokenSets.java b/compiler/psi/psi-api/src/org/jetbrains/kotlin/psi/stubs/elements/KtTokenSets.java
-index 15aaf68fd641..90c9b2fb6070 100644
+index 15aaf68fd64..90c9b2fb607 100644
 --- a/compiler/psi/psi-api/src/org/jetbrains/kotlin/psi/stubs/elements/KtTokenSets.java
 +++ b/compiler/psi/psi-api/src/org/jetbrains/kotlin/psi/stubs/elements/KtTokenSets.java
 @@ -21,12 +21,6 @@ public interface KtTokenSets {
