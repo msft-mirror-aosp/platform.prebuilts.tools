@@ -8,9 +8,9 @@ Since Lint also runs in Android Studio, the versions of these CLI dependencies s
 generally match the corresponding versions used in Android Studio.
 
 
-Updating
+Building
 ---
-To update these artifacts, edit the dependency versions at the top of `build.sh` and then run:
+To (re)build the artifacts, run:
 ```
 CLEAN_BUILD=true ./build.sh
 ```
@@ -18,23 +18,61 @@ This will:
 * Download a checkout of `JetBrains/kotlin` and `JetBrains/intellij-community`.
 * Apply the patches in `kotlin-patches/` and `intellij-patches/`.
 * Build the Kotlin compiler.
-* Pack everything into jars using the tasks defined in `build.gradle.kts`.
-* Copy the results here.
+* Build IntelliJ jars via Bazel.
+* Pack Kotlin jars using `build.gradle.kts`.
+* Copy the final artifacts into `intellij-core/`, `kotlin-compiler/`, and `uast/`.
+* Patch the bytecode of the Kotlin jar using `jarrewriter/` because the Kotlin repo
+is still building against an old version of IntelliJ. Without this, the standalone
+analysis API code fails at runtime due to IntelliJ API changes for plugin XML reading
+(https://youtrack.jetbrains.com/issue/KT-79870).
 
 Note: the first time you do this it will download 1+ GB to check out
 dependency sources. Subsequent builds will reuse these checkouts from the
 `dependency-source-checkouts` directory---and the working trees will be cleaned
 as needed to match the chosen IntelliJ/Kotlin versions.
 
+Updating
+---
+To update the artifacts, edit the dependency versions at the top of `build.sh`,
+and then build (as above). The patches will most likely fail to apply. Try using
+the following recipe to:
+ * Apply the patches on top of the old SHA (which should always work).
+ * Rebase on top of the new SHA (which may fail, but can be handled like a
+   normal git rebase).
+ * Recreate the patches using the rebased commits.
+
+```bash
+OLD_SHA=?
+NEW_SHA=?
+PATCHES=/path/to/patches
+
+# From dependency-source-checkouts/intellij or dependency-source-checkouts/kotlin:
+
+git branch old_sha $OLD_SHA
+git branch new_sha $NEW_SHA
+
+git branch patches old_sha
+
+git switch patches
+
+git am "$PATCHES"/*.patch
+
+git rebase --onto new_sha old_sha patches
+
+# Once the rebase looks good:
+
+rm "$PATCHES"/*.patch
+git format-patch new_sha -o "$PATCHES"
+```
+
 Both `build.sh` and `build.gradle.kts` may require maintenance when updating
 in order to react to changes in dependency build processes, module layout, etc.
-You may also need to update the patch files if there are merge conflicts.
 
 Tip: while iterating on an update you should omit `CLEAN_BUILD=true`.
 Only use `CLEAN_BUILD=true` at the end when you are ready to upload new artifacts.
 More details below.
 
-Tip: the build scripts generate a versions.txt file that lists the dependencies that
+Tip: `build.gradle.kts` generates a versions.txt file that lists the dependencies that
 are bundled into each jar. This is helpful for diffing and debugging jar contents.
 Additionally, the individual jar entries are listed in the golden files for
 `//tools/base/gmaven:tests`.
@@ -65,16 +103,16 @@ checkouts, the corresponding worktree is left unchanged (no patches are applied)
 and `CUSTOM_INTELLIJ_DIR` should point to a checkout of IntelliJ (JetBrains/intellij-community).
 You should use absolute paths in all cases.
 
-Note: some dependencies are downloaded from maven rather than built from sources,
-thus they are unaffected by custom dependency sources. This currently includes
-IntelliJ Core and IntelliJ UAST.
-
 
 Appendix: notes on the Kotlin compiler prebuilt
 ---
 
-We cannot use the standard Kotlin compiler artifacts, because those bundle
-an outdated version of IntelliJ Core. We used to solve this problem by editing
+We cannot use the standard Kotlin compiler artifacts because those bundle
+an outdated version of IntelliJ Core.
+
+<details>
+<summary>(The old way)</summary>
+We used to solve this problem by editing
 the Kotlin compiler build scripts to use the specific IntelliJ version we wanted
 (and disabling shrinking to ensure we received the full IntelliJ Core dependency).
 For a while this was easy to do because JetBrains maintained
@@ -84,26 +122,28 @@ Kotlin IDE plugin was split off from the compiler project, the bunch files
 no longer exist, and the Kotlinc build only support building against
 a single IntelliJ version that tends to be relatively old. Now, upgrading the
 IntelliJ version ourselves is difficult because it requires nontrival changes
-in the Kotlinc sources and build scripts. So, instead we keep the Kotlin compiler
-build untouched and bundle our own IntelliJ artifact separately afterward.
-This is actually similar to what JetBrains does when bundling Kotlin compiler
-classes in the IDE plugin. For example: they currently build the Kotlin compiler
-against IJ 203 but then bundle those compiler classes in an IDE plugin which
-runs with IJ 213. Binary incompatibilities are unlikely because the Kotlin
-compiler only uses a handful of stable IntelliJ APIs (mainly for Java parsing).
-If there are binary incompatibilities, then JetBrains will hit them before we do.
+in the Kotlinc sources and build scripts.
+</details>
 
-When JetBrains bundles Kotlin compiler classes in the Kotlin IDE plugin, they
-use a special artifact called `org.jetbrains.kotlin:kotlin-compiler-for-ide`
-which is similar to the normal Kotlin compiler artifact except it excludes
-IntelliJ classes. This artifact is pretty close to what we want for Lint too,
-so we just use it directly for now.
+Instead, we keep the Kotlin compiler build untouched and bundle our own IntelliJ
+artifact separately. This is actually similar to what JetBrains does when
+bundling Kotlin compiler classes in the IDE plugin. Binary incompatibilities are
+unlikely because the Kotlin compiler only uses a handful of stable IntelliJ APIs
+(mainly for Java parsing). If there are binary incompatibilities, JetBrains
+should hit them before we do.
 
-One inconvenience is that `kotlin-compiler-for-ide` does not include all the
-library dependencies that the Kotlin compiler needs at runtime. So, we have to
-add them back manually. Luckily there are not too many; the needed libraries
-are listed in the `fatJarContents` configuration in
-`JetBrains/kotlin/prepare/compiler/build.gradle.kts`, and practice we do not
+> Unfortunately, Kotlin is still building against an old version of
+IntelliJ, and there _are_ currently some incompatibilities. These presumably are
+not a problem for the Kotlin IntelliJ Plugin, as they only trigger when using
+the standalone analysis API code. We currently patch the bytecode of the Kotlin
+jar using `jarrewriter/`. Without this, the standalone analysis API code fails
+at runtime due to IntelliJ API changes for plugin XML reading
+(https://youtrack.jetbrains.com/issue/KT-79870).
+
+The Kotlin repo contains a number of modules ending in "-for-ide". We include
+some of these in our `build.gradle.kts` script, along with some dependencies.
+Some dependencies can be found in the `fatJarContents` configuration in
+`JetBrains/kotlin/prepare/compiler/build.gradle.kts`. In practice, we do not
 need all of them. We are leaning on Lint's test coverage here to catch any
 missing dependencies.
 
@@ -121,13 +161,3 @@ Here are some alternative ideas that were considered:
 * We could write a custom Gradle task which reuses the `fatJarContents` configuration in
   `JetBrains/kotlin/prepare/compiler/build.gradle.kts` but filters out IntelliJ dependencies.
 
-* If we want even more control over what goes into our Kotlin compiler prebuilt,
-  we could write a custom Gradle task similar to kotlin-compiler-for-ide,
-  and exclude many of the Kotlin compiler modules that Lint does not need.
-
-
-Appendix: notes on the IntelliJ prebuilt
----
-We previously used com.jetbrains.intellij.idea:intellij-core to populate intellij-core.jar.
-But that artifact is deprecated, and now JetBrains recommends using IntelliJ modules directly.
-For our purposes, the java-psi-impl module pulls in everything we need.
