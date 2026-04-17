@@ -15,8 +15,8 @@ To update these artifacts, edit the dependency versions at the top of `build.sh`
 CLEAN_BUILD=true ./build.sh
 ```
 This will:
-* Download a checkout of JetBrains/intellij-community and JetBrains/kotlin.
-* Apply patches using the .diff files in this directory.
+* Download a checkout of `JetBrains/kotlin` and `JetBrains/intellij-community`.
+* Apply the patches in `kotlin-patches/` and `intellij-patches/`.
 * Build the Kotlin compiler.
 * Pack everything into jars using the tasks defined in `build.gradle.kts`.
 * Copy the results here.

@@ -1,9 +1,9 @@
-Based on commit:
-https://github.com/JetBrains/intellij-community/commit/659247781ed111b132c7254660c72aea19c7563a
-https://youtrack.jetbrains.com/issue/KTIJ-35935
-Bug: 446888066
+From 636071f78dde4b39df47eef7215abddda517c742 Mon Sep 17 00:00:00 2001
+From: Paul Thomson <paulthomson@google.com>
+Date: Fri, 17 Apr 2026 11:11:39 +0100
+Subject: [PATCH 7/9] K2 UAST: FirKotlinUastLibraryPsiProviderService#provide
+ with context
 
-K2 UAST: FirKotlinUastLibraryPsiProviderService#provide with context
 ...so that the lib PSI provider can distinguish ambiguous candidates
 
 ^KTIJ-35935 fixed
@@ -11,6 +11,15 @@ K2 UAST: FirKotlinUastLibraryPsiProviderService#provide with context
 closes #3269
 
 GitOrigin-RevId: 185f7eda6e12680809125061c0c2aacbb6c930a1
+
+Based on commit:
+https://github.com/JetBrains/intellij-community/commit/659247781ed111b132c7254660c72aea19c7563a
+https://youtrack.jetbrains.com/issue/KTIJ-35935
+Bug: 446888066
+---
+ .../FirKotlinUastLibraryPsiProviderService.kt     | 15 +++++++++++++--
+ .../kotlin/internal/firKotlinInternalUastUtils.kt |  2 +-
+ 2 files changed, 14 insertions(+), 3 deletions(-)
 
 diff --git a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/FirKotlinUastLibraryPsiProviderService.kt b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/FirKotlinUastLibraryPsiProviderService.kt
 index c701fe69caf7..86238bc50a0f 100644
@@ -58,3 +67,6 @@ index 3a0f0a9b70ac..cab5f2799db7 100644
      }
  
      if (symbol is KaConstructorSymbol) {
+-- 
+2.54.0.rc1.513.gad8abe7a5a-goog
+

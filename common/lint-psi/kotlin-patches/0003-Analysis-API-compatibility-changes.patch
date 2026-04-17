@@ -1,3 +1,22 @@
+From 83647d0b3c8b10e27d47d811d5433b56cbcc7562 Mon Sep 17 00:00:00 2001
+From: Paul Thomson <paulthomson@google.com>
+Date: Thu, 16 Apr 2026 15:47:26 +0100
+Subject: [PATCH 3/5] Analysis API compatibility changes
+
+Re-adds some convenience extensions/members that were removed. This is
+for compatibility.
+
+See b/393478604#comment4
+
+Bug: 393478604
+---
+ .../analysis/api/annotations/KaAnnotated.kt   | 28 +++++++++++++++++++
+ .../analysis/api/annotations/KaAnnotation.kt  | 13 +++++++++
+ .../analysis/api/components/KaTypeProvider.kt |  5 ++++
+ .../analysis/api/symbols/KaSymbolProvider.kt  |  7 +++++
+ .../kotlin/analysis/api/types/typeUtils.kt    |  7 +++++
+ 5 files changed, 60 insertions(+)
+
 diff --git a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotated.kt b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotated.kt
 index b04aa23f5dd5..bf9bf9645caf 100644
 --- a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotated.kt
@@ -117,3 +136,6 @@ index bc7f38253fd0..36784cddbd47 100644
  /**
   * Returns the [KaType]'s [abbreviated type][KaType.abbreviation], or the type itself if it doesn't have an abbreviated type.
   *
+-- 
+2.54.0.rc1.513.gad8abe7a5a-goog
+

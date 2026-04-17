@@ -1,6 +1,21 @@
+From 66fb0a84682744f90d098e565fbf8149edbe17ca Mon Sep 17 00:00:00 2001
+From: Paul Thomson <paulthomson@google.com>
+Date: Thu, 16 Apr 2026 18:03:23 +0100
+Subject: [PATCH 1/9] Add android-lint-deps/BUILD.bazel
+
+Utilizes the IntelliJ Bazel build to compile IntelliJ modules from
+source instead of downloading them from maven. We define a few custom
+Bazel targets to package the modules we need into jars.
+
+Also see: ag/37811806
+---
+ android-lint-deps/BUILD.bazel | 105 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 105 insertions(+)
+ create mode 100644 android-lint-deps/BUILD.bazel
+
 diff --git a/android-lint-deps/BUILD.bazel b/android-lint-deps/BUILD.bazel
 new file mode 100644
-index 000000000000..8b387ce1bbef
+index 000000000000..df99be09a982
 --- /dev/null
 +++ b/android-lint-deps/BUILD.bazel
 @@ -0,0 +1,105 @@
@@ -109,3 +124,6 @@ index 000000000000..8b387ce1bbef
 +    jars = ["//plugins/kotlin/uast/uast-kotlin-fir:kotlin-uast.jar"],
 +    srcjar = "//plugins/kotlin/uast/uast-kotlin-fir:kotlin-uast-sources.jar",
 +)
+-- 
+2.54.0.rc1.513.gad8abe7a5a-goog
+

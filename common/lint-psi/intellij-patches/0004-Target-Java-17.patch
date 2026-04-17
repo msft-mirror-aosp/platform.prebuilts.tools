@@ -1,3 +1,39 @@
+From 1dfae1d7ab59a5bf4717c636ebde8e8b9e55ac50 Mon Sep 17 00:00:00 2001
+From: Paul Thomson <paulthomson@google.com>
+Date: Fri, 17 Apr 2026 10:43:55 +0100
+Subject: [PATCH 4/9] Target Java 17
+
+For compatibility with Lint CLI running in Gradle.
+
+See: ag/37869648
+See: b/446964753#comment5
+---
+ java/java-indexing-impl/BUILD.bazel           |  1 +
+ platform/analysis-api/BUILD.bazel             |  1 +
+ .../codeInspection/ex/QuickFixWrapper.java    |  3 +-
+ .../com/intellij/modcommand/ModCommand.java   |  8 +-
+ .../modcommand/ModUpdateSystemOptions.java    |  4 +-
+ platform/analysis-impl/BUILD.bazel            |  1 +
+ .../BaseCompletionLookupArranger.java         |  4 +-
+ .../codeInsight/daemon/impl/Divider.java      |  4 +-
+ .../daemon/impl/HighlightInfo.java            | 63 +++++++-------
+ .../ModCommandBatchExecutorImpl.java          | 83 +++++++++++--------
+ .../ProjectInspectionProfileManager.kt        |  8 +-
+ .../PluginDescriptorFromXmlStreamConsumer.kt  |  2 +-
+ 12 files changed, 98 insertions(+), 84 deletions(-)
+
+diff --git a/java/java-indexing-impl/BUILD.bazel b/java/java-indexing-impl/BUILD.bazel
+index 775d2eff9753..27cbc7d71864 100644
+--- a/java/java-indexing-impl/BUILD.bazel
++++ b/java/java-indexing-impl/BUILD.bazel
+@@ -12,6 +12,7 @@ jvm_library(
+   module_name = "intellij.java.indexing.impl",
+   visibility = ["//visibility:public"],
+   srcs = glob(["src/**/*.kt", "src/**/*.java", "src/**/*.form"], allow_empty = True),
++  kotlinc_opts = "@community//:k17",
+   resources = [":indexing-impl_resources"],
+   deps = [
+     "//java/java-psi-api:psi",
 diff --git a/platform/analysis-api/BUILD.bazel b/platform/analysis-api/BUILD.bazel
 index 29e8a18aaefc..5900d69c6d18 100644
 --- a/platform/analysis-api/BUILD.bazel
@@ -25,7 +61,7 @@ index e17e0452dfa7..5c3281bd314d 100644
        PsiElement psiElement = myDescriptor.getPsiElement();
        if (psiElement == null || !psiElement.isValid()) return null;
 diff --git a/platform/analysis-api/src/com/intellij/modcommand/ModCommand.java b/platform/analysis-api/src/com/intellij/modcommand/ModCommand.java
-index 24f43753823a..2e3cd1ff01a3 100644
+index 24f43753823a..6817df1bf045 100644
 --- a/platform/analysis-api/src/com/intellij/modcommand/ModCommand.java
 +++ b/platform/analysis-api/src/com/intellij/modcommand/ModCommand.java
 @@ -67,7 +67,7 @@ public sealed interface ModCommand
@@ -37,33 +73,6 @@ index 24f43753823a..2e3cd1ff01a3 100644
    }
  
    /**
-@@ -149,7 +149,7 @@ public sealed interface ModCommand
-   }
- 
-   /**
--   * @param attributes attributes to use for highlighting 
-+   * @param attributes attributes to use for highlighting
-    * @param elements elements to highlight
-    * @return a command to highlight the elements, assuming that nothing will be changed in the file
-    */
-@@ -206,7 +206,7 @@ public sealed interface ModCommand
-   @ApiStatus.Experimental
-   static @NotNull ModCommand updateOptionList(
-     @NotNull PsiElement context, @NotNull @NonNls String bindId, @NotNull Consumer<@NotNull List<@NotNull String>> listUpdater) {
--    @SuppressWarnings("unchecked") 
-+    @SuppressWarnings("unchecked")
-     List<String> oldValue = (List<String>)Objects.requireNonNull(OptionControllerProvider.getOption(context, bindId));
-     List<String> newValue = new ArrayList<>(oldValue);
-     listUpdater.accept(newValue);
-@@ -339,7 +339,7 @@ public sealed interface ModCommand
-   /**
-    * @param command a command to tune
-    * @param file a file where we want to navigate
--   * @param offset an offset in the file before the command is executed 
-+   * @param offset an offset in the file before the command is executed
-    * @param leanRight if true, lean to the right side when the text was inserted right at the caret position
-    * @return an updated command which tries to navigate inside the specified file, taking into account the modifications inside that file
-    */
 @@ -351,12 +351,12 @@ public sealed interface ModCommand
        if (sub instanceof ModUpdateFileText updateFileText && updateFileText.file().equals(virtualFile)) {
          offset = updateFileText.translateOffset(offset, leanRight);
@@ -80,69 +89,10 @@ index 24f43753823a..2e3cd1ff01a3 100644
        }
        if (!(sub instanceof ModNavigate)) {
          finalCommand = finalCommand.andThen(sub);
-@@ -381,7 +381,7 @@ public sealed interface ModCommand
-   }
- 
-   /**
--   * Creates a command that allows user to select arbitrary number of members (but at least one). 
-+   * Creates a command that allows user to select arbitrary number of members (but at least one).
-    * In batch mode, it's assumed that the default selection is selected.
-    *
-    * @param title user-readable title to display in UI
-@@ -395,9 +395,9 @@ public sealed interface ModCommand
-                                                    @NotNull List<? extends OptMultiSelector.@NotNull OptElement> defaultSelection,
-                                                    @NotNull Function<@NotNull List<? extends OptMultiSelector.@NotNull OptElement>, ? extends @NotNull ModCommand> nextCommand) {
-     class MemberHolder implements OptionContainer {
--      @SuppressWarnings("FieldMayBeFinal") 
-+      @SuppressWarnings("FieldMayBeFinal")
-       @NotNull List<? extends OptMultiSelector.@NotNull OptElement> myElements = new ArrayList<>(defaultSelection);
--      
-+
-       @Override
-       public @NotNull OptPane getOptionsPane() {
-         return OptPane.pane(
-@@ -438,7 +438,7 @@ public sealed interface ModCommand
-    * In batch mode, the first option is also selected automatically.
-    *
-    * @param title title to display to the user
--   * @param actions actions to select from. If there's only one action, then it could be executed right away without asking the user. 
-+   * @param actions actions to select from. If there's only one action, then it could be executed right away without asking the user.
-    * @see #psiUpdateStep(PsiElement, String, BiConsumer) could be useful as a subsequent step
-    */
-   static @NotNull ModCommand chooseAction(@NotNull @NlsContexts.PopupTitle String title,
-@@ -448,7 +448,7 @@ public sealed interface ModCommand
- 
-   /**
-    * Creates a command to move a file to a specified directory
--   * 
-+   *
-    * @param file file to move
-    * @param target target directory
-    * @return a command that moves the file to a specified directory
 diff --git a/platform/analysis-api/src/com/intellij/modcommand/ModUpdateSystemOptions.java b/platform/analysis-api/src/com/intellij/modcommand/ModUpdateSystemOptions.java
-index 8a6f98ca8660..03ad9a5b1713 100644
+index 8a6f98ca8660..004a29f3830e 100644
 --- a/platform/analysis-api/src/com/intellij/modcommand/ModUpdateSystemOptions.java
 +++ b/platform/analysis-api/src/com/intellij/modcommand/ModUpdateSystemOptions.java
-@@ -10,8 +10,8 @@ import java.util.List;
- 
- /**
-  * A command that updates system options accessible via {@link com.intellij.codeInspection.options.OptionControllerProvider}.
-- * Could be used, for example, to update inspection settings. 
-- * 
-+ * Could be used, for example, to update inspection settings.
-+ *
-  * @param options list of options to update
-  */
- @ApiStatus.Experimental
-@@ -23,7 +23,7 @@ public record ModUpdateSystemOptions(@NotNull List<@NotNull ModifiedOption> opti
- 
-   /**
-    * A modified option record. Supported value types are boolean, int, long, double, String, enum, List&lt;String&gt;
--   * 
-+   *
-    * @param bindId id of the option. Should be accessible via {@link com.intellij.codeInspection.options.OptionControllerProvider}
-    * @param oldValue old value of the option
-    * @param newValue new value of the option
 @@ -32,8 +32,8 @@ public record ModUpdateSystemOptions(@NotNull List<@NotNull ModifiedOption> opti
  
    @Override
@@ -285,30 +235,9 @@ index ed8c3f0b2be5..5c6ac0f078c9 100644
    }
  
 diff --git a/platform/analysis-impl/src/com/intellij/lang/impl/modcommand/ModCommandBatchExecutorImpl.java b/platform/analysis-impl/src/com/intellij/lang/impl/modcommand/ModCommandBatchExecutorImpl.java
-index 67b68391308e..9da860d3f3b2 100644
+index 67b68391308e..8a3e0f511dad 100644
 --- a/platform/analysis-impl/src/com/intellij/lang/impl/modcommand/ModCommandBatchExecutorImpl.java
 +++ b/platform/analysis-impl/src/com/intellij/lang/impl/modcommand/ModCommandBatchExecutorImpl.java
-@@ -42,16 +42,16 @@ import static com.intellij.openapi.util.text.HtmlChunk.tag;
- import static com.intellij.openapi.util.text.HtmlChunk.text;
- 
- /**
-- * An {@link ModCommandExecutor} service implementation that supports batch execution only. 
-- * Interactive execution request executes like in batch. 
-+ * An {@link ModCommandExecutor} service implementation that supports batch execution only.
-+ * Interactive execution request executes like in batch.
-  */
- @ApiStatus.Internal
- public class ModCommandBatchExecutorImpl implements ModCommandExecutor {
-   /**
-    * {@inheritDoc}
--   * 
-+   *
-    * @implNote this implementation executes the action like in batch, without displaying any UI.
--   * 
-+   *
-    * @param context current context
-    * @param command a command to execute
-    * @param editor ignored by this implementation, can be null
 @@ -86,37 +86,40 @@ public class ModCommandBatchExecutorImpl implements ModCommandExecutor {
          command instanceof ModUpdateReferences || command instanceof ModOpenUrl) {
        return Result.INTERACTIVE;
@@ -377,15 +306,6 @@ index 67b68391308e..9da860d3f3b2 100644
    }
  
    private <T extends OptionContainer> BatchExecutionResult bypassEditOptions(@NotNull ModEditOptions<T> options, @NotNull ActionContext context) {
-@@ -175,7 +178,7 @@ public class ModCommandBatchExecutorImpl implements ModCommandExecutor {
-               source.move(this, origParent);
-             }
-             catch (IOException ignored) {
--              // Ignore move exception 
-+              // Ignore move exception
-             }
-           }
-           return AnalysisBundle.message("modcommand.executor.cannot.rename.file",
 @@ -196,14 +199,16 @@ public class ModCommandBatchExecutorImpl implements ModCommandExecutor {
            return null;
          }
@@ -482,18 +402,6 @@ index 7cacd5869f9e..38c806e0745c 100644
  
      StartupManager.getInstance(project).runAfterOpened {
        project.messageBus.syncPublisher(ProfileChangeAdapter.TOPIC).profilesInitialized()
-diff --git a/java/java-indexing-impl/BUILD.bazel b/java/java-indexing-impl/BUILD.bazel
-index 775d2eff9753..27cbc7d71864 100644
---- a/java/java-indexing-impl/BUILD.bazel
-+++ b/java/java-indexing-impl/BUILD.bazel
-@@ -12,6 +12,7 @@ jvm_library(
-   module_name = "intellij.java.indexing.impl",
-   visibility = ["//visibility:public"],
-   srcs = glob(["src/**/*.kt", "src/**/*.java", "src/**/*.form"], allow_empty = True),
-+  kotlinc_opts = "@community//:k17",
-   resources = [":indexing-impl_resources"],
-   deps = [
-     "//java/java-psi-api:psi",
 diff --git a/platform/plugins/parser/impl/src/com/intellij/platform/plugins/parser/impl/PluginDescriptorFromXmlStreamConsumer.kt b/platform/plugins/parser/impl/src/com/intellij/platform/plugins/parser/impl/PluginDescriptorFromXmlStreamConsumer.kt
 index c959d84465e4..9536080969c3 100644
 --- a/platform/plugins/parser/impl/src/com/intellij/platform/plugins/parser/impl/PluginDescriptorFromXmlStreamConsumer.kt
@@ -507,3 +415,6 @@ index c959d84465e4..9536080969c3 100644
    }
  
    companion object {
+-- 
+2.54.0.rc1.513.gad8abe7a5a-goog
+

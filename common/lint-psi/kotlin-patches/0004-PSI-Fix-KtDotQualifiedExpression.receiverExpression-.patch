@@ -1,10 +1,9 @@
-Based on commit below, with some test changes dropped.
+From 78713d83eacc5712df8d5ea79b0fbad57fc6cfd4 Mon Sep 17 00:00:00 2001
+From: Paul Thomson <paulthomson@google.com>
+Date: Thu, 16 Apr 2026 15:53:07 +0100
+Subject: [PATCH 4/5] [PSI] Fix 'KtDotQualifiedExpression.receiverExpression'
+ for stubs
 
-https://github.com/JetBrains/kotlin/commit/9e1e6758f2d61563ded572f054ba4adb3d4c3225
-https://youtrack.jetbrains.com/issue/KT-81928
-Bug: 446964753
-
-[PSI] Fix 'KtDotQualifiedExpression.receiverExpression' for stubs
 Sometimes, only one part of the 'KtDotQualifiedExpression'
 is serialized to a stub. In cases when the receiver part is omitted,
 'receiverExpression' worked incorrectly. In KT-81928 in particular, the
@@ -24,8 +23,18 @@ consistency of tree/stub PSI implementations (see KT-82189).
 
 ^KT-81928 Fixed
 
+(Cherry picked from commit below, with some test changes dropped.)
+
+https://github.com/JetBrains/kotlin/commit/9e1e6758f2d61563ded572f054ba4adb3d4c3225
+https://youtrack.jetbrains.com/issue/KT-81928
+Bug: 446964753
+---
+ .../kotlin/psi/KtDotQualifiedExpression.kt    | 30 +++++++++----------
+ .../psi/stubs/elements/KtTokenSets.java       |  6 ----
+ 2 files changed, 15 insertions(+), 21 deletions(-)
+
 diff --git a/compiler/psi/psi-api/src/org/jetbrains/kotlin/psi/KtDotQualifiedExpression.kt b/compiler/psi/psi-api/src/org/jetbrains/kotlin/psi/KtDotQualifiedExpression.kt
-index 33c612f8f0c..d62fc598bf7 100644
+index 33c612f8f0ce..d62fc598bf75 100644
 --- a/compiler/psi/psi-api/src/org/jetbrains/kotlin/psi/KtDotQualifiedExpression.kt
 +++ b/compiler/psi/psi-api/src/org/jetbrains/kotlin/psi/KtDotQualifiedExpression.kt
 @@ -9,7 +9,6 @@ import com.intellij.lang.ASTNode
@@ -85,7 +94,7 @@ index 33c612f8f0c..d62fc598bf7 100644
                  LOG.logErrorWithAttachment("Invalid stub structure. DOT_QUALIFIED_EXPRESSION must have one or two children. Was: ${expressions.size}") {
                      withPsiEntry("file", containingFile)
 diff --git a/compiler/psi/psi-api/src/org/jetbrains/kotlin/psi/stubs/elements/KtTokenSets.java b/compiler/psi/psi-api/src/org/jetbrains/kotlin/psi/stubs/elements/KtTokenSets.java
-index 15aaf68fd64..90c9b2fb607 100644
+index 15aaf68fd641..90c9b2fb6070 100644
 --- a/compiler/psi/psi-api/src/org/jetbrains/kotlin/psi/stubs/elements/KtTokenSets.java
 +++ b/compiler/psi/psi-api/src/org/jetbrains/kotlin/psi/stubs/elements/KtTokenSets.java
 @@ -21,12 +21,6 @@ public interface KtTokenSets {
@@ -101,4 +110,6 @@ index 15aaf68fd64..90c9b2fb607 100644
      // typeArguments? valueArguments : typeArguments : arrayAccess
      TokenSet POSTFIX_OPERATIONS = TokenSet.create(KtTokens.PLUSPLUS, KtTokens.MINUSMINUS, KtTokens.EXCLEXCL, KtTokens.DOT, KtTokens.SAFE_ACCESS);
  
- 
+-- 
+2.54.0.rc1.513.gad8abe7a5a-goog
+

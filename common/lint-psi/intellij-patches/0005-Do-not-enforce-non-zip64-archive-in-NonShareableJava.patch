@@ -1,14 +1,18 @@
-commit 951a376ebfc689881556e9dee8b0de23e78ce40d
-Author: Jinseong Jeon <jsjeon@google.com>
-Date:   Thu Feb 26 18:03:10 2026 +0100
+From 0d96a319df29363c651bd8c338a824733e02e352 Mon Sep 17 00:00:00 2001
+From: Paul Thomson <paulthomson@google.com>
+Date: Fri, 17 Apr 2026 10:48:37 +0100
+Subject: [PATCH 5/9] Do not enforce non-zip64 archive in
+ NonShareableJavaZipFilePool
 
-    Do not enforce non-zip64 archive in NonShareableJavaZipFilePool
-    
-    ^IJPL-233516 fixed
-    
-    closes https://github.com/JetBrains/intellij-community/pull/3441
-    
-    GitOrigin-RevId: 2686ccd25efd03d5e57c59c10aca116ca1b74854
+Upstream commit:
+https://github.com/JetBrains/intellij-community/commit/2513e84ce18f52ebbd8031fdd492d5646fe66a9e
+
+Bug: 481354197
+Bug: 486036120
+Bug: https://youtrack.jetbrains.com/issue/IJPL-233516
+---
+ .../intellij/ide/plugins/NonShareableJavaZipFilePool.kt  | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/platform/core-impl/src/com/intellij/ide/plugins/NonShareableJavaZipFilePool.kt b/platform/core-impl/src/com/intellij/ide/plugins/NonShareableJavaZipFilePool.kt
 index a895f3524b21..8646a81a1340 100644
@@ -41,3 +45,6 @@ index a895f3524b21..8646a81a1340 100644
  
      override fun loadZipEntry(path: String): InputStream? =
        zipFile.getEntry(if (path[0] == '/') path.substring(1) else path)?.inputStream
+-- 
+2.54.0.rc1.513.gad8abe7a5a-goog
+

@@ -1,0 +1,52 @@
+From 902ec0e2bbaeb9a5cf90d3189e9086cf42b42f05 Mon Sep 17 00:00:00 2001
+From: Paul Thomson <paulthomson@google.com>
+Date: Fri, 17 Apr 2026 09:55:28 +0100
+Subject: [PATCH 2/9] Remove calls to addChangeListener()
+
+Remove unwanted app disposal connection
+
+https://youtrack.jetbrains.com/issue/IJPL-200136
+
+Bug: 418240065
+---
+ .../src/com/intellij/psi/compiled/ClassFileDecompilers.java     | 2 ++
+ .../intellij/openapi/fileTypes/BinaryFileTypeDecompilers.java   | 2 ++
+ 2 files changed, 4 insertions(+)
+
+diff --git a/java/java-frontback-psi-api/src/com/intellij/psi/compiled/ClassFileDecompilers.java b/java/java-frontback-psi-api/src/com/intellij/psi/compiled/ClassFileDecompilers.java
+index e951ac2e7a2f..df14f2939608 100644
+--- a/java/java-frontback-psi-api/src/com/intellij/psi/compiled/ClassFileDecompilers.java
++++ b/java/java-frontback-psi-api/src/com/intellij/psi/compiled/ClassFileDecompilers.java
+@@ -79,10 +79,12 @@ public final class ClassFileDecompilers {
+ 
+   private ClassFileDecompilers() {
+     Application app = ApplicationManager.getApplication();
++    /* Android Lint (IJPL-200136): addChangeListener() errors out in the Lint CLI environment.
+     if (!app.isUnitTestMode()) {
+       Runnable runnable = () -> BinaryFileTypeDecompilers.getInstance().notifyDecompilerSetChange();
+       STATIC_EP_NAME.addChangeListener(runnable, null);
+     }
++    */
+   }
+ 
+   @SuppressWarnings("unchecked")
+diff --git a/platform/core-api/src/com/intellij/openapi/fileTypes/BinaryFileTypeDecompilers.java b/platform/core-api/src/com/intellij/openapi/fileTypes/BinaryFileTypeDecompilers.java
+index 85c48aa41c60..700d27fc4a99 100644
+--- a/platform/core-api/src/com/intellij/openapi/fileTypes/BinaryFileTypeDecompilers.java
++++ b/platform/core-api/src/com/intellij/openapi/fileTypes/BinaryFileTypeDecompilers.java
+@@ -19,10 +19,12 @@ public final class BinaryFileTypeDecompilers extends FileTypeExtension<BinaryFil
+ 
+   private BinaryFileTypeDecompilers() {
+     super(EP_NAME);
++    /* Android Lint (IJPL-200136): addChangeListener() errors out in the Lint CLI environment.
+     Application app = ApplicationManager.getApplication();
+     if (!app.isUnitTestMode()) {
+       EP_NAME.addChangeListener(() -> notifyDecompilerSetChange(), app);
+     }
++    */
+   }
+ 
+   public void notifyDecompilerSetChange() {
+-- 
+2.54.0.rc1.513.gad8abe7a5a-goog
+
