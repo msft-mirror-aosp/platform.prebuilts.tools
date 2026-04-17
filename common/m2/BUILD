@@ -1141,6 +1141,7 @@ jvm_import(
         "repository/io/grpc/grpc-protobuf-lite/1.69.1/grpc-protobuf-lite-1.69.1.jar",
         "repository/io/grpc/grpc-stub/1.69.1/grpc-stub-1.69.1.jar",
         "repository/io/grpc/grpc-context/1.69.1/grpc-context-1.69.1.jar",
+        "repository/io/perfmark/perfmark-api/0.26.0/perfmark-api-0.26.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
