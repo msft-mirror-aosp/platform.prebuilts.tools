@@ -1257,20 +1257,6 @@ jvm_import(
     visibility = ["//visibility:public"],
 )
 
-# managed by go/iml_to_build
-jvm_import(
-    name = "tracing-desktop-2.0.0-alpha05",
-    jars = ["repository/androidx/tracing/tracing-desktop/2.0.0-alpha05/tracing-desktop-2.0.0-alpha05.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
-    name = "tracing-wire-desktop-2.0.0-alpha05",
-    jars = ["repository/androidx/tracing/tracing-wire-desktop/2.0.0-alpha05/tracing-wire-desktop-2.0.0-alpha05.jar"],
-    visibility = ["//visibility:public"],
-)
-
 java_import(
     name = "mordant-jvm-2.7.2",
     jars = ["repository/com/github/ajalt/mordant/mordant-jvm/2.7.2/mordant-jvm-2.7.2.jar"],
@@ -1280,5 +1266,19 @@ java_import(
 java_import(
     name = "colormath-jvm-3.5.0",
     jars = ["repository/com/github/ajalt/colormath/colormath-jvm/3.5.0/colormath-jvm-3.5.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "tracing-desktop-2.0.0-alpha06",
+    jars = ["repository/androidx/tracing/tracing-desktop/2.0.0-alpha06/tracing-desktop-2.0.0-alpha06.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "tracing-wire-desktop-2.0.0-alpha06",
+    jars = ["repository/androidx/tracing/tracing-wire-desktop/2.0.0-alpha06/tracing-wire-desktop-2.0.0-alpha06.jar"],
     visibility = ["//visibility:public"],
 )
