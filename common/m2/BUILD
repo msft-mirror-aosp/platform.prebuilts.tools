@@ -65,6 +65,15 @@ exports_files(
     visibility = ["//visibility:public"],
 )
 
+exports_files(
+    [
+        "repository/net/bytebuddy/byte-buddy/1.17.7/byte-buddy-1.17.7.jar",
+        "repository/net/bytebuddy/byte-buddy-agent/1.17.7/byte-buddy-agent-1.17.7.jar",
+        "repository/org/mockito/mockito-core/5.20.0/mockito-core-5.20.0.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
+
 java_import(
     name = "io.grpc.grpc-kotlin-stub.1.4.1",
     jars = ["repository/io/grpc/grpc-kotlin-stub/1.4.1/grpc-kotlin-stub-1.4.1.jar"],
@@ -284,9 +293,9 @@ filegroup(
     name = "mockito_files",
     # do not sort: must match IML order
     srcs = [
-        "repository/org/mockito/mockito-core/5.12.0/mockito-core-5.12.0.jar",
-        "repository/net/bytebuddy/byte-buddy/1.14.15/byte-buddy-1.14.15.jar",
-        "repository/net/bytebuddy/byte-buddy-agent/1.14.15/byte-buddy-agent-1.14.15.jar",
+        "repository/org/mockito/mockito-core/5.20.0/mockito-core-5.20.0.jar",
+        "repository/net/bytebuddy/byte-buddy/1.17.7/byte-buddy-1.17.7.jar",
+        "repository/net/bytebuddy/byte-buddy-agent/1.17.7/byte-buddy-agent-1.17.7.jar",
     ],
     visibility = ["//visibility:public"],
 )
