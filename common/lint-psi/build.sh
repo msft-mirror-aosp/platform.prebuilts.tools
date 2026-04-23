@@ -64,24 +64,13 @@ if [[ "$CLEAN_BUILD" = "true" ]]; then
     GRADLE_CLEAN_FLAGS+=(clean --no-daemon --no-build-cache)
 fi
 
-phase "Applying patches if needed"
+phase "Applying patches"
 if [[ ! "${CUSTOM_KOTLIN_DIR:-}" ]]; then
-    git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/kotlin-compiler-patch.diff"
-    git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/analysis-api-patch.diff"
-    git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/analysis-api-patch-compat.diff"
-    git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/analysis-api-patch-2.3.21-9e1e6758-fix-receiver-stubs.diff"
-    git -C "$KOTLIN_DIR" apply -v "$LINT_PSI_DIR/analysis-api-patch-ffb121af88-fix-hasDefaultValue.diff"
+    git -C "$KOTLIN_DIR" am "$LINT_PSI_DIR"/kotlin-patches/*.patch
 fi
+
 if [[ ! "${CUSTOM_INTELLIJ_DIR:-}" ]]; then
-    git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/intellij-bazel-patch.diff"
-    git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/intellij-core-patch.diff"
-    git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/intellij-core-patch-fix-package-annotations.diff"
-    git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/intellij-patch-target-java-17.diff"
-    git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/intellij-262-patch-2513e84ce1-support-zip64.diff"
-    git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/uast-patch.diff"
-    git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/uast-patch-261-6592477-psi-provider-context.diff"
-    git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/uast-patch-261-b52dd6a-non-jvm-type-conversion-fix.diff"
-    git -C "$INTELLIJ_DIR" apply -v "$LINT_PSI_DIR/uast-patch-261-3e87a8c19a-fix-PsiNewExpressionImpl-multiResolve.diff"
+    git -C "$INTELLIJ_DIR" am "$LINT_PSI_DIR"/intellij-patches/*.patch
 fi
 
 phase "Building Kotlin compiler"

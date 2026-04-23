@@ -1,0 +1,77 @@
+From 508934af3dbe33fdbdb17b0c8b0eec5f113ff965 Mon Sep 17 00:00:00 2001
+From: Paul Thomson <paulthomson@google.com>
+Date: Fri, 17 Apr 2026 13:11:52 +0100
+Subject: [PATCH 04/12] Remove some IR modules and IrGenerationExtension
+
+I assume this is not used by Lint and so saves some space.
+---
+ .../cli/jvm/compiler/KotlinCoreEnvironment.kt       |  1 -
+ .../resources/META-INF/extensions/compiler.xml      |  3 ---
+ .../scripting/compiler/plugin/pluginRegisrar.kt     |  3 ---
+ .../kotlin-compiler-ir-for-ide/build.gradle.kts     | 13 ++++++++++++-
+ 4 files changed, 12 insertions(+), 8 deletions(-)
+
+diff --git a/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt b/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
+index 2511d5bb51c..af01c8d84b2 100644
+--- a/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
++++ b/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
+@@ -764,7 +764,6 @@ class KotlinCoreEnvironment private constructor(
+             CollectAdditionalSourcesExtension.registerExtensionPoint(project)
+             ProcessSourcesBeforeCompilingExtension.registerExtensionPoint(project)
+             ExtraImportsProviderExtension.registerExtensionPoint(project)
+-            IrGenerationExtension.registerExtensionPoint(project)
+             ScriptEvaluationExtension.registerExtensionPoint(project)
+             ShellExtension.registerExtensionPoint(project)
+             TypeResolutionInterceptor.registerExtensionPoint(project)
+diff --git a/compiler/cli/cli-common/resources/META-INF/extensions/compiler.xml b/compiler/cli/cli-common/resources/META-INF/extensions/compiler.xml
+index ffb075bfe4a..72cec649c79 100644
+--- a/compiler/cli/cli-common/resources/META-INF/extensions/compiler.xml
++++ b/compiler/cli/cli-common/resources/META-INF/extensions/compiler.xml
+@@ -23,9 +23,6 @@
+         <extensionPoint qualifiedName="org.jetbrains.kotlin.assignResolutionAltererExtension"
+                         interface="org.jetbrains.kotlin.resolve.extensions.AssignResolutionAltererExtension"
+                         area="IDEA_PROJECT" dynamic="true"/>
+-        <extensionPoint qualifiedName="org.jetbrains.kotlin.irGenerationExtension"
+-                        interface="org.jetbrains.kotlin.backend.common.extensions.IrGenerationExtension"
+-                        area="IDEA_PROJECT" dynamic="true"/>
+         <extensionPoint qualifiedName="org.jetbrains.kotlin.simpleNameReferenceExtension"
+                         interface="org.jetbrains.kotlin.plugin.references.SimpleNameReferenceExtension"
+                         area="IDEA_PROJECT" dynamic="true"/>
+diff --git a/plugins/scripting/scripting-compiler/src/org/jetbrains/kotlin/scripting/compiler/plugin/pluginRegisrar.kt b/plugins/scripting/scripting-compiler/src/org/jetbrains/kotlin/scripting/compiler/plugin/pluginRegisrar.kt
+index bba68ac0014..c31e8b56176 100644
+--- a/plugins/scripting/scripting-compiler/src/org/jetbrains/kotlin/scripting/compiler/plugin/pluginRegisrar.kt
++++ b/plugins/scripting/scripting-compiler/src/org/jetbrains/kotlin/scripting/compiler/plugin/pluginRegisrar.kt
+@@ -80,9 +80,6 @@ class ScriptingCompilerConfigurationComponentRegistrar : ComponentRegistrar {
+             SyntheticResolveExtension.registerExtension(project, ScriptingResolveExtension())
+             ExtraImportsProviderExtension.registerExtension(project, ScriptExtraImportsProviderExtension())
+ 
+-            IrGenerationExtension.registerExtension(project, ScriptLoweringExtension())
+-            IrGenerationExtension.registerExtension(project, ReplLoweringExtension())
+-
+             if (messageCollector != null) {
+                 project.registerService(ScriptReportSink::class.java, CliScriptReportSink(messageCollector))
+             }
+diff --git a/prepare/ide-plugin-dependencies/kotlin-compiler-ir-for-ide/build.gradle.kts b/prepare/ide-plugin-dependencies/kotlin-compiler-ir-for-ide/build.gradle.kts
+index 96b26f748b2..d926bde840e 100644
+--- a/prepare/ide-plugin-dependencies/kotlin-compiler-ir-for-ide/build.gradle.kts
++++ b/prepare/ide-plugin-dependencies/kotlin-compiler-ir-for-ide/build.gradle.kts
+@@ -4,4 +4,15 @@ plugins {
+ 
+ val irCompilerModulesForIDE: Array<String> by rootProject.extra
+ 
+-publishJarsForIde(irCompilerModulesForIDE.asList())
++val excludeModules = listOf(
++    ":compiler:ir.backend.common",
++    ":compiler:ir.interpreter",
++    ":compiler:ir.serialization.js",
++    ":compiler:ir.serialization.jvm",
++    ":compiler:backend.js",
++    ":compiler:backend.jvm",
++    ":compiler:backend.wasm",
++    ":wasm:wasm.ir",
++)
++
++publishJarsForIde(irCompilerModulesForIDE.asList() - excludeModules)
+-- 
+2.54.0.rc1.513.gad8abe7a5a-goog
+

@@ -1,0 +1,72 @@
+From 636071f78dde4b39df47eef7215abddda517c742 Mon Sep 17 00:00:00 2001
+From: Paul Thomson <paulthomson@google.com>
+Date: Fri, 17 Apr 2026 11:11:39 +0100
+Subject: [PATCH 7/9] K2 UAST: FirKotlinUastLibraryPsiProviderService#provide
+ with context
+
+...so that the lib PSI provider can distinguish ambiguous candidates
+
+^KTIJ-35935 fixed
+
+closes #3269
+
+GitOrigin-RevId: 185f7eda6e12680809125061c0c2aacbb6c930a1
+
+Based on commit:
+https://github.com/JetBrains/intellij-community/commit/659247781ed111b132c7254660c72aea19c7563a
+https://youtrack.jetbrains.com/issue/KTIJ-35935
+Bug: 446888066
+---
+ .../FirKotlinUastLibraryPsiProviderService.kt     | 15 +++++++++++++--
+ .../kotlin/internal/firKotlinInternalUastUtils.kt |  2 +-
+ 2 files changed, 14 insertions(+), 3 deletions(-)
+
+diff --git a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/FirKotlinUastLibraryPsiProviderService.kt b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/FirKotlinUastLibraryPsiProviderService.kt
+index c701fe69caf7..86238bc50a0f 100644
+--- a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/FirKotlinUastLibraryPsiProviderService.kt
++++ b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/FirKotlinUastLibraryPsiProviderService.kt
+@@ -6,15 +6,26 @@ import com.intellij.openapi.components.service
+ import com.intellij.psi.PsiElement
+ import org.jetbrains.kotlin.analysis.api.KaSession
+ import org.jetbrains.kotlin.analysis.api.symbols.KaSymbol
++import org.jetbrains.kotlin.psi.KtElement
+ 
+ /**
+  * This service is required to add an ability to provide correct [PsiElement] for libraries in UAST/Lint CLI mode
+  */
+ interface FirKotlinUastLibraryPsiProviderService {
+-    fun KaSession.provide(symbol: KaSymbol): PsiElement?
++    /**
++     * Provide [PsiElement] from libraries that corresponds to the given [symbol].
++     *
++     * If multiple candidates are available, an extra [context] will be used.
++     * For example, for the property symbol and its access, with a context like
++     * LHS or RHS of an assignment, either accessor would be appropriate, not both.
++     */
++    fun KaSession.provide(
++        symbol: KaSymbol,
++        context: KtElement? = null,
++    ): PsiElement?
+ 
+     class Default : FirKotlinUastLibraryPsiProviderService {
+-        override fun KaSession.provide(symbol: KaSymbol): PsiElement? = symbol.psi
++        override fun KaSession.provide(symbol: KaSymbol, context: KtElement?): PsiElement? = symbol.psi
+     }
+ 
+     companion object {
+diff --git a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt
+index 3a0f0a9b70ac..cab5f2799db7 100644
+--- a/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt
++++ b/plugins/kotlin/uast/uast-kotlin-fir/src/org/jetbrains/uast/kotlin/internal/firKotlinInternalUastUtils.kt
+@@ -502,7 +502,7 @@ internal tailrec fun psiForUast(
+         }
+ 
+         val psiProvider = FirKotlinUastLibraryPsiProviderService.getInstance()
+-        return with(psiProvider) { session.provide(symbol) }
++        return with(psiProvider) { session.provide(symbol, context) }
+     }
+ 
+     if (symbol is KaConstructorSymbol) {
+-- 
+2.54.0.rc1.513.gad8abe7a5a-goog
+

@@ -990,8 +990,8 @@ jvm_import(
     name = "openai-java-sdk",
     # do not sort: must match IML order
     jars = [
-        "repository/com/openai/openai-java-core/4.21.0/openai-java-core-4.21.0.jar",
-        "repository/com/openai/openai-java-client-okhttp/4.21.0/openai-java-client-okhttp-4.21.0.jar",
+        "repository/com/openai/openai-java-core/4.32.0/openai-java-core-4.32.0.jar",
+        "repository/com/openai/openai-java-client-okhttp/4.32.0/openai-java-client-okhttp-4.32.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -1001,8 +1001,8 @@ jvm_import(
     name = "anthropic-java-sdk",
     # do not sort: must match IML order
     jars = [
-        "repository/com/anthropic/anthropic-java-core/2.14.0/anthropic-java-core-2.14.0.jar",
-        "repository/com/anthropic/anthropic-java-client-okhttp/2.14.0/anthropic-java-client-okhttp-2.14.0.jar",
+        "repository/com/anthropic/anthropic-java-core/2.26.0/anthropic-java-core-2.26.0.jar",
+        "repository/com/anthropic/anthropic-java-client-okhttp/2.26.0/anthropic-java-client-okhttp-2.26.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -1141,6 +1141,7 @@ jvm_import(
         "repository/io/grpc/grpc-protobuf-lite/1.69.1/grpc-protobuf-lite-1.69.1.jar",
         "repository/io/grpc/grpc-stub/1.69.1/grpc-stub-1.69.1.jar",
         "repository/io/grpc/grpc-context/1.69.1/grpc-context-1.69.1.jar",
+        "repository/io/perfmark/perfmark-api/0.26.0/perfmark-api-0.26.0.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -1258,5 +1259,17 @@ jvm_import(
 jvm_import(
     name = "tracing-wire-desktop-2.0.0-alpha05",
     jars = ["repository/androidx/tracing/tracing-wire-desktop/2.0.0-alpha05/tracing-wire-desktop-2.0.0-alpha05.jar"],
+    visibility = ["//visibility:public"],
+)
+
+java_import(
+    name = "mordant-jvm-2.7.2",
+    jars = ["repository/com/github/ajalt/mordant/mordant-jvm/2.7.2/mordant-jvm-2.7.2.jar"],
+    visibility = ["//visibility:public"],
+)
+
+java_import(
+    name = "colormath-jvm-3.5.0",
+    jars = ["repository/com/github/ajalt/colormath/colormath-jvm/3.5.0/colormath-jvm-3.5.0.jar"],
     visibility = ["//visibility:public"],
 )

@@ -1,0 +1,30 @@
+From 771e936742cfc9fc7270fdf7e6c92903f6a46ac6 Mon Sep 17 00:00:00 2001
+From: Paul Thomson <paulthomson@google.com>
+Date: Fri, 17 Apr 2026 13:03:33 +0100
+Subject: [PATCH 02/12] kotlin-power-assert-compiler-plugin
+
+The implementation dependency `:kotlin-power-assert-compiler-plugin`
+from scripting-compiler is changed to compile-only. Power assert is not
+actually used, by default (the feature is behind a flag).
+
+See: b/414401949#comment3
+---
+ plugins/scripting/scripting-compiler/build.gradle.kts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/plugins/scripting/scripting-compiler/build.gradle.kts b/plugins/scripting/scripting-compiler/build.gradle.kts
+index 1489a4abb3c..1d00d335e74 100644
+--- a/plugins/scripting/scripting-compiler/build.gradle.kts
++++ b/plugins/scripting/scripting-compiler/build.gradle.kts
+@@ -33,7 +33,7 @@ dependencies {
+     api(commonDependency("org.jline", "jline"))
+     compileOnly(intellijCore())
+ 
+-    implementation(project(":kotlin-power-assert-compiler-plugin")) // TODO: KT-74787
++    compileOnly(project(":kotlin-power-assert-compiler-plugin")) // TODO: KT-74787
+ 
+     testApi(project(":compiler:frontend"))
+     testApi(project(":compiler:plugin-api"))
+-- 
+2.54.0.rc1.513.gad8abe7a5a-goog
+

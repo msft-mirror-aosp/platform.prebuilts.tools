@@ -1,0 +1,86 @@
+From 8095319709c4bbdd559ada9ba6fab7e93728d9bb Mon Sep 17 00:00:00 2001
+From: Paul Thomson <paulthomson@google.com>
+Date: Thu, 16 Apr 2026 16:01:17 +0100
+Subject: [PATCH 12/12] KaValueParameterSymbol.hasDefaultValue: account for
+ overrides/expects
+
+This patch is a partial backport of two commits:
+
+1. https://github.com/jetbrains/kotlin/commit/ffb121af88 (the main fix)
+2. https://github.com/jetbrains/kotlin/commit/0549663fbf (resolves semantic merge conflict)
+
+Also see b/448273436#comment13
+---
+ .../fir/symbols/KaFirValueParameterSymbol.kt  | 35 ++++++++++++++-----
+ 1 file changed, 27 insertions(+), 8 deletions(-)
+
+diff --git a/analysis/analysis-api-fir/src/org/jetbrains/kotlin/analysis/api/fir/symbols/KaFirValueParameterSymbol.kt b/analysis/analysis-api-fir/src/org/jetbrains/kotlin/analysis/api/fir/symbols/KaFirValueParameterSymbol.kt
+index ddb3628fa7d..6022a3743e0 100644
+--- a/analysis/analysis-api-fir/src/org/jetbrains/kotlin/analysis/api/fir/symbols/KaFirValueParameterSymbol.kt
++++ b/analysis/analysis-api-fir/src/org/jetbrains/kotlin/analysis/api/fir/symbols/KaFirValueParameterSymbol.kt
+@@ -15,6 +15,7 @@ import org.jetbrains.kotlin.analysis.api.fir.symbols.pointers.KaFirValueParamete
+ import org.jetbrains.kotlin.analysis.api.fir.symbols.pointers.createOwnerPointer
+ import org.jetbrains.kotlin.analysis.api.fir.utils.firSymbol
+ import org.jetbrains.kotlin.analysis.api.lifetime.withValidityAssertion
++import org.jetbrains.kotlin.analysis.api.symbols.KaDeclarationSymbol
+ import org.jetbrains.kotlin.analysis.api.symbols.KaFunctionSymbol
+ import org.jetbrains.kotlin.analysis.api.symbols.KaKotlinPropertySymbol
+ import org.jetbrains.kotlin.analysis.api.symbols.KaValueParameterSymbol
+@@ -86,7 +87,22 @@ internal class KaFirValueParameterSymbol private constructor(
+         }
+ 
+     override val hasDefaultValue: Boolean
+-        get() = withValidityAssertion { backingPsi?.hasDefaultValue() ?: firSymbol.hasDefaultValue }
++        get() = withValidityAssertion {
++            with(analysisSession) {
++                if (backingPsi?.hasDefaultValue() == true || firSymbol.hasDefaultValue) {
++                    return true
++                }
++
++                val parameterIndex = index
++                val ownerFunction = containingDeclaration as? KaFunctionSymbol ?: return false
++
++                fun KaDeclarationSymbol.hasMatchingParameterWithDefaultValue(): Boolean =
++                    (this as? KaFunctionSymbol)?.valueParameters?.getOrNull(parameterIndex)?.hasDefaultValue == true
++
++                ownerFunction.allOverriddenSymbols.any { it.hasMatchingParameterWithDefaultValue() } ||
++                        ownerFunction.isActual && ownerFunction.getExpectsForActual().any { it.hasMatchingParameterWithDefaultValue() }
++            }
++        }
+ 
+     override val annotations: KaAnnotationList
+         get() = withValidityAssertion { psiOrSymbolAnnotationList() }
+@@ -107,20 +123,23 @@ internal class KaFirValueParameterSymbol private constructor(
+ 
+     override fun createPointer(): KaSymbolPointer<KaValueParameterSymbol> = withValidityAssertion {
+         psiBasedSymbolPointerOfTypeIfSource<KaValueParameterSymbol>()?.let { return it }
+-
+-        val ownerSymbol = with(analysisSession) { containingDeclaration }
+-            ?: error("Containing function is expected for a value parameter symbol")
+-
+-        requireIsInstance<KaFunctionSymbol>(ownerSymbol)
+-
+         return KaFirValueParameterSymbolPointer(
+             ownerPointer = analysisSession.createOwnerPointer(this),
+             name = name,
+-            index = (ownerSymbol.firSymbol.fir as FirFunction).valueParameters.indexOf(firSymbol.fir),
++            index = index,
+             originalSymbol = this
+         )
+     }
+ 
++    private val index: Int
++        get() {
++            val ownerSymbol = with(analysisSession) { containingDeclaration }
++                ?: error("Containing function is expected for a value parameter symbol")
++            requireIsInstance<KaFunctionSymbol>(ownerSymbol)
++
++            return (ownerSymbol.firSymbol.fir as FirFunction).valueParameters.indexOf(firSymbol.fir)
++        }
++
+     override fun equals(other: Any?): Boolean {
+         return psiOrSymbolEquals(other)
+     }
+-- 
+2.54.0.rc1.513.gad8abe7a5a-goog
+
