@@ -1,7 +1,7 @@
-From 5ee70d4d0fd496c6946eea577504b90f9bbba56a Mon Sep 17 00:00:00 2001
+From 3f0538f780a54172326d5a1dca110cad19112ae4 Mon Sep 17 00:00:00 2001
 From: Paul Thomson <paulthomson@google.com>
 Date: Fri, 17 Apr 2026 12:50:51 +0100
-Subject: [PATCH 01/12] KT-35614: getOrPut -> getOrPutNullable
+Subject: [PATCH 01/11] KT-35614: getOrPut -> getOrPutNullable
 
 Replace getOrPut -> getOrPutNullable. Without this, we are not caching a
 null result for when a class does not exist, leading to large slowdown
@@ -36,5 +36,5 @@ index 810d4e61269..12a9c3376c5 100644
              // class files for the previous build on the class path.
              //
 -- 
-2.54.0.rc1.513.gad8abe7a5a-goog
+2.54.0.rc2.544.gc7ae2d5bb8-goog
 
