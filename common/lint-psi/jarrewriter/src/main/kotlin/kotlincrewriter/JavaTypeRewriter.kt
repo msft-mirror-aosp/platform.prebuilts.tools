@@ -15,25 +15,24 @@
  */
 package kotlincrewriter
 
-import org.objectweb.asm.*
-import org.objectweb.asm.commons.ClassRemapper
-import org.objectweb.asm.commons.SimpleRemapper
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
-import java.util.jar.JarFile
 import java.util.jar.JarEntry
+import java.util.jar.JarFile
 import java.util.jar.JarOutputStream
+import org.objectweb.asm.*
+import org.objectweb.asm.commons.ClassRemapper
+import org.objectweb.asm.commons.SimpleRemapper
 
 // --- Configuration for the transformation ---
 
 // == Part 1: Type Name Mapping ==
-val typeMappings = mapOf(
-    "com/intellij/ide/plugins/RawPluginDescriptor" to
-    "com/intellij/platform/pluginSystem/parser/impl/RawPluginDescriptor",
-    "com/intellij/ide/plugins/ReadModuleContext" to
-    "com/intellij/platform/pluginSystem/parser/impl/PluginDescriptorReaderContext",
-)
+val typeMappings =
+  mapOf(
+    "com/intellij/ide/plugins/RawPluginDescriptor" to "com/intellij/platform/pluginSystem/parser/impl/RawPluginDescriptor",
+    "com/intellij/ide/plugins/ReadModuleContext" to "com/intellij/platform/pluginSystem/parser/impl/PluginDescriptorReaderContext",
+  )
 
 // == Part 2: Constructor to Builder Replacement ==
 // These constants must use the NEW type names, as they run after the remapper.
@@ -61,8 +60,10 @@ private const val BUILD_METHOD_DESCRIPTOR = "()L$TARGET_CLASS_INTERNAL_NAME;"
 // which drops the last parameter of RawPluginDescriptor type
 private const val PATH_RESOLVER = "com/intellij/ide/plugins/PathResolver"
 private const val RESOLVE_PATH_NAME = "resolvePath"
-private const val RESOLVE_PATH_DESCRIPTOR_OLD = "(Lcom/intellij/platform/pluginSystem/parser/impl/PluginDescriptorReaderContext;Lcom/intellij/ide/plugins/DataLoader;Ljava/lang/String;L$TARGET_CLASS_INTERNAL_NAME;)L$TARGET_CLASS_INTERNAL_NAME;"
-private const val RESOLVE_PATH_DESCRIPTOR_NEW = "(Lcom/intellij/platform/pluginSystem/parser/impl/PluginDescriptorReaderContext;Lcom/intellij/ide/plugins/DataLoader;Ljava/lang/String;)L$BUILDER_CLASS_INTERNAL_NAME;"
+private const val RESOLVE_PATH_DESCRIPTOR_OLD =
+  "(Lcom/intellij/platform/pluginSystem/parser/impl/PluginDescriptorReaderContext;Lcom/intellij/ide/plugins/DataLoader;Ljava/lang/String;L$TARGET_CLASS_INTERNAL_NAME;)L$TARGET_CLASS_INTERNAL_NAME;"
+private const val RESOLVE_PATH_DESCRIPTOR_NEW =
+  "(Lcom/intellij/platform/pluginSystem/parser/impl/PluginDescriptorReaderContext;Lcom/intellij/ide/plugins/DataLoader;Ljava/lang/String;)L$BUILDER_CLASS_INTERNAL_NAME;"
 
 // == Part 4: Field Access to Method Call Replacement ==
 private const val OLD_FIELD_OWNER_INTERNAL_NAME = "com/intellij/ide/plugins/RawPluginDescriptor"
@@ -74,59 +75,58 @@ private const val CONVERSION_FUNCTION_NAME = "convert"
 private const val CONTAINER_DESCRIPTOR_INTERNAL_NAME = "com/intellij/ide/plugins/ContainerDescriptor"
 private const val CONVERSION_FUNCTION_DESCRIPTOR = "(L$NEW_FIELD_TYPE_INTERNAL_NAME;)L$CONTAINER_DESCRIPTOR_INTERNAL_NAME;"
 
-
 fun main(args: Array<String>) {
-    val inputJarPath: Path = Paths.get(args[0])
-    val outputJarPath: Path = Paths.get(args[1])
+  val inputJarPath: Path = Paths.get(args[0])
+  val outputJarPath: Path = Paths.get(args[1])
 
-    rewriteJar(inputJarPath, outputJarPath)
-    println("✅ JAR rewriting with companion object logic complete. Output at: $outputJarPath")
+  rewriteJar(inputJarPath, outputJarPath)
+  println("✅ JAR rewriting with companion object logic complete. Output at: $outputJarPath")
 }
 
 fun rewriteJar(inputJarPath: Path, outputJarPath: Path) {
-    val remapper = SimpleRemapper(typeMappings)
+  val remapper = SimpleRemapper(typeMappings)
 
-    JarFile(inputJarPath.toFile()).use { inputJar ->
-        JarOutputStream(Files.newOutputStream(outputJarPath)).use { outputJar ->
-            for (originalEntry in inputJar.entries().iterator()) {
-                val newEntry = JarEntry(originalEntry.name)
-                outputJar.putNextEntry(newEntry)
+  JarFile(inputJarPath.toFile()).use { inputJar ->
+    JarOutputStream(Files.newOutputStream(outputJarPath)).use { outputJar ->
+      for (originalEntry in inputJar.entries().iterator()) {
+        val newEntry = JarEntry(originalEntry.name)
+        outputJar.putNextEntry(newEntry)
 
-                inputJar.getInputStream(originalEntry).use { inputStream ->
-                  when {
-                    originalEntry.name == "${ResourceDataLoaderRewriterClassVisitor.TARGET_CLASS_NAME}.class" -> {
-                      // ResourceDataLoaderRewriterClassVisitor requires ClassWriter.COMPUTE_FRAMES:
-                      // - This is expensive and unnecessary for the other visitors.
-                      // - If we did this for all rewritten classes, it would trigger a lot of class loading to find
-                      //   common superclasses, etc.
-                      // - The class loading would require us to include additional jars on the classpath (IntelliJ jars, etc.).
-                      // For ResourceDataLoaderRewriterClassVisitor, we don't actually need any additional jars on the classpath,
-                      // so we create a specific visitor chain for this target class, and only use ClassWriter.COMPUTE_FRAMES here.
-                      val classReader = ClassReader(inputStream)
-                      val classWriter = ClassWriter(classReader, ClassWriter.COMPUTE_MAXS or ClassWriter.COMPUTE_FRAMES)
-                      val loaderRewriter = ResourceDataLoaderRewriterClassVisitor(Opcodes.ASM9, classWriter)
-                      classReader.accept(loaderRewriter, ClassReader.SKIP_FRAMES)
-                      outputJar.write(classWriter.toByteArray())
-                    }
-                    originalEntry.name.endsWith(".class") -> {
-                      val classReader = ClassReader(inputStream)
-                      val classWriter = ClassWriter(classReader, ClassWriter.COMPUTE_MAXS)
-
-                      // Build the full visitor chain
-                      val fieldVisitor = FieldAccessRewriterClassVisitor(classWriter)
-                      val constructorVisitor = ConstructorToBuilderClassVisitor(fieldVisitor)
-                      val classRemapper = ClassRemapper(constructorVisitor, remapper)
-
-                      classReader.accept(classRemapper, ClassReader.EXPAND_FRAMES)
-                      outputJar.write(classWriter.toByteArray())
-                    }
-                    else -> inputStream.copyTo(outputJar)
-                  }
-                }
-                outputJar.closeEntry()
+        inputJar.getInputStream(originalEntry).use { inputStream ->
+          when {
+            originalEntry.name == "${ResourceDataLoaderRewriterClassVisitor.TARGET_CLASS_NAME}.class" -> {
+              // ResourceDataLoaderRewriterClassVisitor requires ClassWriter.COMPUTE_FRAMES:
+              // - This is expensive and unnecessary for the other visitors.
+              // - If we did this for all rewritten classes, it would trigger a lot of class loading to find
+              //   common superclasses, etc.
+              // - The class loading would require us to include additional jars on the classpath (IntelliJ jars, etc.).
+              // For ResourceDataLoaderRewriterClassVisitor, we don't actually need any additional jars on the classpath,
+              // so we create a specific visitor chain for this target class, and only use ClassWriter.COMPUTE_FRAMES here.
+              val classReader = ClassReader(inputStream)
+              val classWriter = ClassWriter(classReader, ClassWriter.COMPUTE_MAXS or ClassWriter.COMPUTE_FRAMES)
+              val loaderRewriter = ResourceDataLoaderRewriterClassVisitor(Opcodes.ASM9, classWriter)
+              classReader.accept(loaderRewriter, ClassReader.SKIP_FRAMES)
+              outputJar.write(classWriter.toByteArray())
             }
+            originalEntry.name.endsWith(".class") -> {
+              val classReader = ClassReader(inputStream)
+              val classWriter = ClassWriter(classReader, ClassWriter.COMPUTE_MAXS)
+
+              // Build the full visitor chain
+              val fieldVisitor = FieldAccessRewriterClassVisitor(classWriter)
+              val constructorVisitor = ConstructorToBuilderClassVisitor(fieldVisitor)
+              val classRemapper = ClassRemapper(constructorVisitor, remapper)
+
+              classReader.accept(classRemapper, ClassReader.EXPAND_FRAMES)
+              outputJar.write(classWriter.toByteArray())
+            }
+            else -> inputStream.copyTo(outputJar)
+          }
         }
+        outputJar.closeEntry()
+      }
     }
+  }
 }
 
 /**
@@ -138,6 +138,7 @@ fun rewriteJar(inputJarPath: Path, outputJarPath: Path) {
  *       override fun toString(): String = "resources data loader"
  *   }
  * ```
+ *
  * to:
  * ```
  *   private class ResourceDataLoader(val classLoader: ClassLoader) : DataLoader {
@@ -151,24 +152,16 @@ fun rewriteJar(inputJarPath: Path, outputJarPath: Path) {
  *
  * https://gemini.google.com/share/c6784d178a54
  */
-class ResourceDataLoaderRewriterClassVisitor(
-  api: Int,
-  classVisitor: ClassVisitor
-) : ClassVisitor(api, classVisitor) {
+class ResourceDataLoaderRewriterClassVisitor(api: Int, classVisitor: ClassVisitor) : ClassVisitor(api, classVisitor) {
 
   private var isTargetClass = false
+
   companion object {
-    const val TARGET_CLASS_NAME = "org/jetbrains/kotlin/analysis/api/standalone/base/projectStructure/PluginStructureProvider\$ResourceDataLoader"
+    const val TARGET_CLASS_NAME =
+      "org/jetbrains/kotlin/analysis/api/standalone/base/projectStructure/PluginStructureProvider\$ResourceDataLoader"
   }
 
-  override fun visit(
-    version: Int,
-    access: Int,
-    name: String?,
-    signature: String?,
-    superName: String?,
-    interfaces: Array<out String>?
-  ) {
+  override fun visit(version: Int, access: Int, name: String?, signature: String?, superName: String?, interfaces: Array<out String>?) {
     // Check if the class currently being visited matches our target
     isTargetClass = (name == TARGET_CLASS_NAME)
 
@@ -180,7 +173,7 @@ class ResourceDataLoaderRewriterClassVisitor(
     name: String?,
     descriptor: String?,
     signature: String?,
-    exceptions: Array<out String>?
+    exceptions: Array<out String>?,
   ): MethodVisitor {
     // Only apply the rewrite if we are inside the correct class AND on the correct method.
     if (isTargetClass && name == "load" && descriptor == "(Ljava/lang/String;Z)Ljava/io/InputStream;") {
@@ -202,32 +195,13 @@ class ResourceDataLoaderRewriterClassVisitor(
  *
  * https://gemini.google.com/share/c6784d178a54
  */
-class ResourceDataLoaderRewriterMethodVisitor(
-  api: Int,
-  methodVisitor: MethodVisitor
-) : MethodVisitor(api, methodVisitor) {
+class ResourceDataLoaderRewriterMethodVisitor(api: Int, methodVisitor: MethodVisitor) : MethodVisitor(api, methodVisitor) {
 
-  override fun visitMethodInsn(
-    opcode: Int,
-    owner: String?,
-    name: String?,
-    descriptor: String?,
-    isInterface: Boolean
-  ) {
+  override fun visitMethodInsn(opcode: Int, owner: String?, name: String?, descriptor: String?, isInterface: Boolean) {
     // Target: INVOKEVIRTUAL java/net/URL.openStream ()Ljava/io/InputStream;
-    if (opcode == Opcodes.INVOKEVIRTUAL &&
-      owner == "java/net/URL" &&
-      name == "openStream" &&
-      descriptor == "()Ljava/io/InputStream;"
-    ) {
+    if (opcode == Opcodes.INVOKEVIRTUAL && owner == "java/net/URL" && name == "openStream" && descriptor == "()Ljava/io/InputStream;") {
       // Replace with: INVOKESTATIC kotlin/io/TextStreamsKt.readBytes (Ljava/net/URL;)[B
-      super.visitMethodInsn(
-        Opcodes.INVOKESTATIC,
-        "kotlin/io/TextStreamsKt",
-        "readBytes",
-        "(Ljava/net/URL;)[B",
-        false
-      )
+      super.visitMethodInsn(Opcodes.INVOKESTATIC, "kotlin/io/TextStreamsKt", "readBytes", "(Ljava/net/URL;)[B", false)
     } else {
       // Delegate all other method invocations untouched
       super.visitMethodInsn(opcode, owner, name, descriptor, isInterface)
@@ -237,203 +211,183 @@ class ResourceDataLoaderRewriterMethodVisitor(
 
 // --- Visitor for Field Access Rewriting ---
 class FieldAccessRewriterClassVisitor(classVisitor: ClassVisitor) : ClassVisitor(Opcodes.ASM9, classVisitor) {
-    override fun visitMethod(access: Int, name: String?, descriptor: String?, signature: String?, exceptions: Array<out String>?): MethodVisitor {
-        val downstreamVisitor = super.visitMethod(access, name, descriptor, signature, exceptions)
-        return FieldAccessRewriterMethodVisitor(downstreamVisitor)
-    }
+  override fun visitMethod(
+    access: Int,
+    name: String?,
+    descriptor: String?,
+    signature: String?,
+    exceptions: Array<out String>?,
+  ): MethodVisitor {
+    val downstreamVisitor = super.visitMethod(access, name, descriptor, signature, exceptions)
+    return FieldAccessRewriterMethodVisitor(downstreamVisitor)
+  }
 }
 
 class FieldAccessRewriterMethodVisitor(methodVisitor: MethodVisitor) : MethodVisitor(Opcodes.ASM9, methodVisitor) {
-    override fun visitFieldInsn(opcode: Int, owner: String?, name: String?, descriptor: String?) {
-        // We only care about getting a field's value
-        if (opcode == Opcodes.GETFIELD && (owner == OLD_FIELD_OWNER_INTERNAL_NAME || owner == NEW_FIELD_OWNER_INTERNAL_NAME)) {
-            when (name) {
-                "appContainerDescriptor" -> "getAppElementsContainer"
-                "projectContainerDescriptor" -> "getProjectElementsContainer"
-                else -> null
-            }?.let { newGetterName ->
-                println("Found and replaced access to field: $name")
-                // 1. Call the new getter, e.g., .getAppElementsContainer()
-                // The object instance is already on the stack
-                super.visitMethodInsn(
-                    Opcodes.INVOKEVIRTUAL,
-                    NEW_FIELD_OWNER_INTERNAL_NAME,
-                    newGetterName,
-                    "()L$NEW_FIELD_TYPE_INTERNAL_NAME;",
-                    false
-                )
-                /* private access?
-                // 1. Replace field name
-                // The object instance is already on the stack
-                super.visitFieldInsn(
-                    Opcodes.GETFIELD,
-                    NEW_FIELD_OWNER_INTERNAL_NAME,
-                    newFieldName,
-                    "L$NEW_FIELD_TYPE_INTERNAL_NAME;"
-                )
-                */
-                // 2. Call the static conversion function
-                super.visitMethodInsn(
-                    Opcodes.INVOKESTATIC,
-                    CONVERSION_FUNCTION_OWNER_INTERNAL_NAME,
-                    CONVERSION_FUNCTION_NAME,
-                    CONVERSION_FUNCTION_DESCRIPTOR,
-                    false
-                )
-                return // We have replaced the instruction, so we return.
-            }
+  override fun visitFieldInsn(opcode: Int, owner: String?, name: String?, descriptor: String?) {
+    // We only care about getting a field's value
+    if (opcode == Opcodes.GETFIELD && (owner == OLD_FIELD_OWNER_INTERNAL_NAME || owner == NEW_FIELD_OWNER_INTERNAL_NAME)) {
+      when (name) {
+        "appContainerDescriptor" -> "getAppElementsContainer"
+        "projectContainerDescriptor" -> "getProjectElementsContainer"
+        else -> null
+      }?.let { newGetterName ->
+        println("Found and replaced access to field: $name")
+        // 1. Call the new getter, e.g., .getAppElementsContainer()
+        // The object instance is already on the stack
+        super.visitMethodInsn(
+          Opcodes.INVOKEVIRTUAL,
+          NEW_FIELD_OWNER_INTERNAL_NAME,
+          newGetterName,
+          "()L$NEW_FIELD_TYPE_INTERNAL_NAME;",
+          false,
+        )
+        /* private access?
+        // 1. Replace field name
+        // The object instance is already on the stack
+        super.visitFieldInsn(
+            Opcodes.GETFIELD,
+            NEW_FIELD_OWNER_INTERNAL_NAME,
+            newFieldName,
+            "L$NEW_FIELD_TYPE_INTERNAL_NAME;"
+        )
+        */
+        // 2. Call the static conversion function
+        super.visitMethodInsn(
+          Opcodes.INVOKESTATIC,
+          CONVERSION_FUNCTION_OWNER_INTERNAL_NAME,
+          CONVERSION_FUNCTION_NAME,
+          CONVERSION_FUNCTION_DESCRIPTOR,
+          false,
+        )
+        return // We have replaced the instruction, so we return.
+      }
 
-          // Rewrites:
-          //   pluginDescriptor.epNameToExtensions // field access
-          // to:
-          //   pluginDescriptor.getExtensions().convertExtensionElements()
-          // Needed for Kotlin's: PluginStructureProvider#registerExtensionPointImplementations
-          if (name == "epNameToExtensions") {
-            println("Found and replaced access to field: $name")
-            super.visitMethodInsn(
-              Opcodes.INVOKEVIRTUAL,
-              NEW_FIELD_OWNER_INTERNAL_NAME,
-              "getExtensions",
-              "()Ljava/util/Map;",
-              false
-            )
+      // Rewrites:
+      //   pluginDescriptor.epNameToExtensions // field access
+      // to:
+      //   pluginDescriptor.getExtensions().convertExtensionElements()
+      // Needed for Kotlin's: PluginStructureProvider#registerExtensionPointImplementations
+      if (name == "epNameToExtensions") {
+        println("Found and replaced access to field: $name")
+        super.visitMethodInsn(Opcodes.INVOKEVIRTUAL, NEW_FIELD_OWNER_INTERNAL_NAME, "getExtensions", "()Ljava/util/Map;", false)
 
-            super.visitMethodInsn(
-              Opcodes.INVOKESTATIC,
-              "com/intellij/ide/plugins/ParserElementsConversionKt",
-              "convertExtensionElements",
-              "(Ljava/util/Map;)Ljava/util/Map;",
-              false
-            )
-            return
-          }
-
-        }
-        // For all other field instructions, pass them on as-is.
-        super.visitFieldInsn(opcode, owner, name, descriptor)
+        super.visitMethodInsn(
+          Opcodes.INVOKESTATIC,
+          "com/intellij/ide/plugins/ParserElementsConversionKt",
+          "convertExtensionElements",
+          "(Ljava/util/Map;)Ljava/util/Map;",
+          false,
+        )
+        return
+      }
     }
+    // For all other field instructions, pass them on as-is.
+    super.visitFieldInsn(opcode, owner, name, descriptor)
+  }
 }
-
 
 // --- Visitor for Constructor to Builder Rewriting ---
 class ConstructorToBuilderClassVisitor(classVisitor: ClassVisitor) : ClassVisitor(Opcodes.ASM9, classVisitor) {
-    override fun visitMethod(access: Int, name: String?, descriptor: String?, signature: String?, exceptions: Array<out String>?): MethodVisitor {
-        val methodVisitor = super.visitMethod(access, name, descriptor, signature, exceptions)
-        return ConstructorToBuilderMethodVisitor(methodVisitor)
-    }
+  override fun visitMethod(
+    access: Int,
+    name: String?,
+    descriptor: String?,
+    signature: String?,
+    exceptions: Array<out String>?,
+  ): MethodVisitor {
+    val methodVisitor = super.visitMethod(access, name, descriptor, signature, exceptions)
+    return ConstructorToBuilderMethodVisitor(methodVisitor)
+  }
 }
 
 class ConstructorToBuilderMethodVisitor(methodVisitor: MethodVisitor) : MethodVisitor(Opcodes.ASM9, methodVisitor) {
-    private var foundNewInstruction = false
+  private var foundNewInstruction = false
 
-    override fun visitTypeInsn(opcode: Int, type: String?) {
-        if (opcode == Opcodes.NEW && type == TARGET_CLASS_INTERNAL_NAME) {
-            foundNewInstruction = true
-            return
-        }
-        super.visitTypeInsn(opcode, type)
+  override fun visitTypeInsn(opcode: Int, type: String?) {
+    if (opcode == Opcodes.NEW && type == TARGET_CLASS_INTERNAL_NAME) {
+      foundNewInstruction = true
+      return
     }
+    super.visitTypeInsn(opcode, type)
+  }
 
-    override fun visitInsn(opcode: Int) {
-        if (opcode == Opcodes.DUP && foundNewInstruction) {
-            return
-        }
-        super.visitInsn(opcode)
+  override fun visitInsn(opcode: Int) {
+    if (opcode == Opcodes.DUP && foundNewInstruction) {
+      return
     }
+    super.visitInsn(opcode)
+  }
 
-    override fun visitMethodInsn(
-        opcode: Int, owner: String?, name: String?, descriptor: String?, isInterface: Boolean
+  override fun visitMethodInsn(opcode: Int, owner: String?, name: String?, descriptor: String?, isInterface: Boolean) {
+    // Part 5: @JvmField services
+    if (
+      opcode == Opcodes.INVOKEVIRTUAL &&
+        owner == CONTAINER_DESCRIPTOR_INTERNAL_NAME &&
+        name == "getServices" &&
+        descriptor == "()Ljava/util/List;"
     ) {
-        // Part 5: @JvmField services
-        if (opcode == Opcodes.INVOKEVIRTUAL &&
-            owner == CONTAINER_DESCRIPTOR_INTERNAL_NAME &&
-            name == "getServices" &&
-            descriptor == "()Ljava/util/List;") {
-            println("Found and replaced getServices call in method")
-            super.visitFieldInsn(
-                Opcodes.GETFIELD,
-                owner,
-                "services",
-                "Ljava/util/List;"
-            )
-            return
-        }
-
-        // Part 3: signature change of resolvePath
-        if (opcode == Opcodes.INVOKEINTERFACE &&
-            owner == PATH_RESOLVER &&
-            name == RESOLVE_PATH_NAME &&
-            descriptor == RESOLVE_PATH_DESCRIPTOR_OLD) {
-            println("Found and replaced resolvePath call in method")
-            // 1. We don't need the last argument (of RawPluginDescriptor)
-            super.visitInsn(Opcodes.POP)
-            // 2. signature change (drop the last parameter)
-            super.visitMethodInsn(
-                Opcodes.INVOKEINTERFACE,
-                PATH_RESOLVER,
-                RESOLVE_PATH_NAME,
-                RESOLVE_PATH_DESCRIPTOR_NEW,
-                true
-            )
-            // 3. return type changed, so need to build() it
-            super.visitMethodInsn(
-                Opcodes.INVOKEINTERFACE,
-                BUILDER_CLASS_INTERNAL_NAME,
-                BUILD_METHOD_NAME,
-                BUILD_METHOD_DESCRIPTOR,
-                true
-            )
-            return
-        }
-
-        if (foundNewInstruction &&
-            opcode == Opcodes.INVOKESPECIAL &&
-            owner == TARGET_CLASS_INTERNAL_NAME &&
-            name == "<init>" &&
-            descriptor == TARGET_CONSTRUCTOR_DESCRIPTOR
-        ) {
-            // This is the constructor call we want to replace.
-            println("Found and replaced constructor call in method")
-
-            // ### CORRECTED REPLACEMENT LOGIC ###
-
-            // 1. Get the companion object instance: RawPluginDescriptorBuilder.Companion
-            super.visitFieldInsn(
-                Opcodes.GETSTATIC,
-                BUILDER_CLASS_INTERNAL_NAME, // The outer interface
-                COMPANION_FIELD_NAME,
-                COMPANION_FIELD_DESCRIPTOR
-            )
-
-            // 2. Call the builder method on the companion instance: .builder()
-            super.visitMethodInsn(
-                Opcodes.INVOKEVIRTUAL,
-                COMPANION_OBJECT_CLASS_INTERNAL_NAME,
-                BUILDER_FACTORY_METHOD_NAME,
-                BUILDER_FACTORY_METHOD_DESCRIPTOR,
-                false
-            )
-
-            // 3. Call the final build method on the builder: .build()
-            super.visitMethodInsn(
-                Opcodes.INVOKEINTERFACE,
-                BUILDER_CLASS_INTERNAL_NAME,
-                BUILD_METHOD_NAME,
-                BUILD_METHOD_DESCRIPTOR,
-                true
-            )
-
-            foundNewInstruction = false
-            return
-        }
-
-        if (foundNewInstruction) {
-            super.visitTypeInsn(Opcodes.NEW, TARGET_CLASS_INTERNAL_NAME)
-            super.visitInsn(Opcodes.DUP)
-            foundNewInstruction = false
-        }
-
-        super.visitMethodInsn(opcode, owner, name, descriptor, isInterface)
+      println("Found and replaced getServices call in method")
+      super.visitFieldInsn(Opcodes.GETFIELD, owner, "services", "Ljava/util/List;")
+      return
     }
-}
 
+    // Part 3: signature change of resolvePath
+    if (
+      opcode == Opcodes.INVOKEINTERFACE && owner == PATH_RESOLVER && name == RESOLVE_PATH_NAME && descriptor == RESOLVE_PATH_DESCRIPTOR_OLD
+    ) {
+      println("Found and replaced resolvePath call in method")
+      // 1. We don't need the last argument (of RawPluginDescriptor)
+      super.visitInsn(Opcodes.POP)
+      // 2. signature change (drop the last parameter)
+      super.visitMethodInsn(Opcodes.INVOKEINTERFACE, PATH_RESOLVER, RESOLVE_PATH_NAME, RESOLVE_PATH_DESCRIPTOR_NEW, true)
+      // 3. return type changed, so need to build() it
+      super.visitMethodInsn(Opcodes.INVOKEINTERFACE, BUILDER_CLASS_INTERNAL_NAME, BUILD_METHOD_NAME, BUILD_METHOD_DESCRIPTOR, true)
+      return
+    }
+
+    if (
+      foundNewInstruction &&
+        opcode == Opcodes.INVOKESPECIAL &&
+        owner == TARGET_CLASS_INTERNAL_NAME &&
+        name == "<init>" &&
+        descriptor == TARGET_CONSTRUCTOR_DESCRIPTOR
+    ) {
+      // This is the constructor call we want to replace.
+      println("Found and replaced constructor call in method")
+
+      // ### CORRECTED REPLACEMENT LOGIC ###
+
+      // 1. Get the companion object instance: RawPluginDescriptorBuilder.Companion
+      super.visitFieldInsn(
+        Opcodes.GETSTATIC,
+        BUILDER_CLASS_INTERNAL_NAME, // The outer interface
+        COMPANION_FIELD_NAME,
+        COMPANION_FIELD_DESCRIPTOR,
+      )
+
+      // 2. Call the builder method on the companion instance: .builder()
+      super.visitMethodInsn(
+        Opcodes.INVOKEVIRTUAL,
+        COMPANION_OBJECT_CLASS_INTERNAL_NAME,
+        BUILDER_FACTORY_METHOD_NAME,
+        BUILDER_FACTORY_METHOD_DESCRIPTOR,
+        false,
+      )
+
+      // 3. Call the final build method on the builder: .build()
+      super.visitMethodInsn(Opcodes.INVOKEINTERFACE, BUILDER_CLASS_INTERNAL_NAME, BUILD_METHOD_NAME, BUILD_METHOD_DESCRIPTOR, true)
+
+      foundNewInstruction = false
+      return
+    }
+
+    if (foundNewInstruction) {
+      super.visitTypeInsn(Opcodes.NEW, TARGET_CLASS_INTERNAL_NAME)
+      super.visitInsn(Opcodes.DUP)
+      foundNewInstruction = false
+    }
+
+    super.visitMethodInsn(opcode, owner, name, descriptor, isInterface)
+  }
+}
