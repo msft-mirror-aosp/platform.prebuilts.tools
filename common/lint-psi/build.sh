@@ -88,9 +88,11 @@ phase "Building Kotlin compiler"
 # We use -Dorg.gradle.dependency.verification=off because the build otherwise fails (if outside JetBrains CI environment?)
 # We use -Pkotlin.build.jar.compression=true to ensure reasonable jar sizes.
 # Additional options to investigate: isTeamcityBuild, kotlin.build.proguard, BuildPropertiesExt.kt, etc.
+# We set 'kotlinLanguageVersion' temporarily to maintain compatibility with metalava (b/508725570).
 "$KOTLIN_DIR/gradlew" -p "$KOTLIN_DIR" \
     ${GRADLE_CLEAN_FLAGS[@]+"${GRADLE_CLEAN_FLAGS[@]}"} \
     publishIdeArtifacts \
+    -PkotlinLanguageVersion=2.3 \
     -PdeployVersion="$KOTLIN_VERSION-for-lint" \
     -Ppublish.ide.plugin.dependencies=true \
     -Pkotlin.build.isObsoleteJdkOverrideEnabled=true \
