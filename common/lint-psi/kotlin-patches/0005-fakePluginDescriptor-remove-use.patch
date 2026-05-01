@@ -1,7 +1,7 @@
-From d0f71f063f028f67aafca548d25839db8f9ddb95 Mon Sep 17 00:00:00 2001
+From 1fb0c25df547a8e61acf0c1b8e94e427d8455177 Mon Sep 17 00:00:00 2001
 From: Paul Thomson <paulthomson@google.com>
 Date: Fri, 17 Apr 2026 13:32:46 +0100
-Subject: [PATCH 06/11] fakePluginDescriptor: remove use
+Subject: [PATCH 5/7] fakePluginDescriptor: remove use
 
 This appears to be part of ag/34951833:
 
@@ -17,10 +17,10 @@ Bug: 418240065
  1 file changed, 1 deletion(-)
 
 diff --git a/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/projectStructure/PluginStructureProvider.kt b/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/projectStructure/PluginStructureProvider.kt
-index c4da60b72e0..7d1b98c29ff 100644
+index bfca04b539a..df82ab339cc 100644
 --- a/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/projectStructure/PluginStructureProvider.kt
 +++ b/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/projectStructure/PluginStructureProvider.kt
-@@ -113,7 +113,6 @@ object PluginStructureProvider {
+@@ -125,7 +125,6 @@ object PluginStructureProvider {
  
          val listenersMap = ConcurrentHashMap<String, MutableList<ListenerDescriptor>>()
          for (listenerDescriptor in listenerDescriptors) {
@@ -29,5 +29,5 @@ index c4da60b72e0..7d1b98c29ff 100644
          }
  
 -- 
-2.54.0.rc2.544.gc7ae2d5bb8-goog
+2.54.0.545.g6539524ca2-goog
 

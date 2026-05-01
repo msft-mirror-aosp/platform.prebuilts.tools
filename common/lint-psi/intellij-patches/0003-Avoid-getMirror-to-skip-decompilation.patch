@@ -1,7 +1,7 @@
-From fb5fb406558d6b1b785a46b747b0d8d68d430bae Mon Sep 17 00:00:00 2001
+From ed1f943a989bb855785556222e2570c05e8f6d89 Mon Sep 17 00:00:00 2001
 From: Paul Thomson <paulthomson@google.com>
 Date: Fri, 17 Apr 2026 11:08:44 +0100
-Subject: [PATCH 6/9] Avoid getMirror() to skip decompilation
+Subject: [PATCH 3/5] Avoid getMirror() to skip decompilation
 
 ..which is unavailable from CLI.
 
@@ -12,10 +12,10 @@ change is fairly self-explanatory.
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/internal/baseKotlinInternalUastUtils.kt b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/internal/baseKotlinInternalUastUtils.kt
-index 2616a3d35193..0ae4f09ada65 100644
+index 03f53460f199..11d3f79ab81a 100644
 --- a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/internal/baseKotlinInternalUastUtils.kt
 +++ b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/internal/baseKotlinInternalUastUtils.kt
-@@ -38,7 +38,9 @@ inline fun <reified T : UDeclaration, reified P : PsiElement> unwrap(element: P)
+@@ -80,7 +80,9 @@ inline fun <reified T : UDeclaration, reified P : PsiElement> unwrap(element: P)
  fun unwrapFakeFileForLightClass(file: PsiFile): PsiFile {
      return when (file) {
          is FakeFileForLightClass -> file.ktFile
@@ -27,5 +27,5 @@ index 2616a3d35193..0ae4f09ada65 100644
      }
  }
 -- 
-2.54.0.rc1.513.gad8abe7a5a-goog
+2.54.0.545.g6539524ca2-goog
 

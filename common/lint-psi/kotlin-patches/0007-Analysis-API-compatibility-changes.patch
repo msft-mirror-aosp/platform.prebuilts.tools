@@ -1,7 +1,7 @@
-From a915e1a879cd071f18ce46302f5f4747ecba644d Mon Sep 17 00:00:00 2001
+From e17ee503e2191fc969156b104c6ff7a806a03d20 Mon Sep 17 00:00:00 2001
 From: Paul Thomson <paulthomson@google.com>
 Date: Fri, 17 Apr 2026 14:32:18 +0100
-Subject: [PATCH 09/11] Analysis API compatibility changes
+Subject: [PATCH 7/7] Analysis API compatibility changes
 
 Re-adds some convenience extensions/members that were removed. This is
 for compatibility.
@@ -85,10 +85,10 @@ index dd0d86f4fbb..e8709898cb6 100644
       * The list of annotation arguments passed to the [annotation constructor](https://kotlinlang.org/docs/annotations.html#constructors) in
       * the form of [KaNamedAnnotationValue]s.
 diff --git a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/components/KaTypeProvider.kt b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/components/KaTypeProvider.kt
-index 952e6722755..6832f66d3bb 100644
+index fae263aabcb..990f0b29444 100644
 --- a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/components/KaTypeProvider.kt
 +++ b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/components/KaTypeProvider.kt
-@@ -210,6 +210,11 @@ public interface KaTypeProvider : KaSessionComponent {
+@@ -219,6 +219,11 @@ public interface KaTypeProvider : KaSessionComponent {
      public val Array<KaType>.commonSupertype: KaType
          get() = asList().commonSupertype
  
@@ -101,10 +101,10 @@ index 952e6722755..6832f66d3bb 100644
       * Resolves the given [KtTypeReference] to its corresponding [KaType].
       *
 diff --git a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/symbols/KaSymbolProvider.kt b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/symbols/KaSymbolProvider.kt
-index f47ffadb808..b2e377a8fc2 100644
+index f845f0b525b..daaf3677ca9 100644
 --- a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/symbols/KaSymbolProvider.kt
 +++ b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/symbols/KaSymbolProvider.kt
-@@ -78,6 +78,13 @@ public interface KaSymbolProvider : KaSessionComponent {
+@@ -79,6 +79,13 @@ public interface KaSymbolProvider : KaSessionComponent {
       */
      public val KtEnumEntry.symbol: KaEnumEntrySymbol
  
@@ -137,5 +137,5 @@ index bc7f38253fd..36784cddbd4 100644
   * Returns the [KaType]'s [abbreviated type][KaType.abbreviation], or the type itself if it doesn't have an abbreviated type.
   *
 -- 
-2.54.0.rc2.544.gc7ae2d5bb8-goog
+2.54.0.545.g6539524ca2-goog
 

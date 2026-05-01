@@ -1,7 +1,7 @@
-From 66fb0a84682744f90d098e565fbf8149edbe17ca Mon Sep 17 00:00:00 2001
+From 57bd248299e098df9decab099d22cc76c7d9b2e9 Mon Sep 17 00:00:00 2001
 From: Paul Thomson <paulthomson@google.com>
 Date: Thu, 16 Apr 2026 18:03:23 +0100
-Subject: [PATCH 1/9] Add android-lint-deps/BUILD.bazel
+Subject: [PATCH 1/5] Add android-lint-deps/BUILD.bazel
 
 Utilizes the IntelliJ Bazel build to compile IntelliJ modules from
 source instead of downloading them from maven. We define a few custom
@@ -15,7 +15,7 @@ Also see: ag/37811806
 
 diff --git a/android-lint-deps/BUILD.bazel b/android-lint-deps/BUILD.bazel
 new file mode 100644
-index 000000000000..df99be09a982
+index 000000000000..bc5aea5d1f46
 --- /dev/null
 +++ b/android-lint-deps/BUILD.bazel
 @@ -0,0 +1,105 @@
@@ -62,7 +62,7 @@ index 000000000000..df99be09a982
 +        "@lib//:kotlin-reflect",
 +        "@lib//:kotlin-stdlib",
 +        # The following are not needed at all.
-+        "@lib//:automaton",  # Adds a lot of toplevel .aut files we do not need.
++        "//libraries/automaton:automaton",  # Adds a lot of toplevel .aut files we do not need.
 +    ],
 +)
 +
@@ -109,8 +109,8 @@ index 000000000000..df99be09a982
 +
 +java_import(
 +    name = "uast-kotlin-base-shallow",
-+    jars = ["//plugins/kotlin/uast/uast-kotlin-base:uast-kotlin-base.jar"],
-+    srcjar = "//plugins/kotlin/uast/uast-kotlin-base:uast-kotlin-base-sources.jar",
++    jars = ["//plugins/kotlin/uast/uast-kotlin-base:kotlin-uast-base.jar"],
++    srcjar = "//plugins/kotlin/uast/uast-kotlin-base:kotlin-uast-base-sources.jar",
 +)
 +
 +java_import(
@@ -125,5 +125,5 @@ index 000000000000..df99be09a982
 +    srcjar = "//plugins/kotlin/uast/uast-kotlin-fir:kotlin-uast-sources.jar",
 +)
 -- 
-2.54.0.rc1.513.gad8abe7a5a-goog
+2.54.0.545.g6539524ca2-goog
 

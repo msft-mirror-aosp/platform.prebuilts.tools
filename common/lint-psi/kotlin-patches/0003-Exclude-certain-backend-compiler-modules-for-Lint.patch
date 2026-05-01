@@ -1,24 +1,38 @@
-From faa2c637dda44f1154687bf7623a1ea765b6185e Mon Sep 17 00:00:00 2001
+From dd7c6661bd870f9ac52fce6f7f4f989248c12192 Mon Sep 17 00:00:00 2001
 From: Paul Thomson <paulthomson@google.com>
 Date: Mon, 27 Apr 2026 12:53:07 +0100
-Subject: [PATCH 03/11] Exclude certain backend compiler modules for Lint
+Subject: [PATCH 3/7] Exclude certain backend compiler modules for Lint
 
 I believe this is just to reduce the size of the Kotlin jar (since these
 backends should in theory never be needed). We also need to remove the
 registration of extension points defined in the excluded modules.
 ---
+ .../analysis-api/analysis-api-impl-base.xml   |  4 ----
  build.gradle.kts                              | 22 +++++++++++++++++++
- .../cli/jvm/compiler/KotlinCoreEnvironment.kt |  4 ----
- .../META-INF/extensions/compiler.xml          |  6 -----
- .../compiler/plugin/pluginRegisrar.kt         |  7 ------
- .../src/main/kotlin/repoArtifacts.kt          |  7 ++++++
- 5 files changed, 29 insertions(+), 17 deletions(-)
+ .../compiler/plugin/pluginRegisrar.kt         | 10 ---------
+ .../src/main/kotlin/repoArtifacts.kt          | 12 ++++++++++
+ 4 files changed, 34 insertions(+), 14 deletions(-)
 
+diff --git a/analysis/analysis-api-impl-base/resources/META-INF/analysis-api/analysis-api-impl-base.xml b/analysis/analysis-api-impl-base/resources/META-INF/analysis-api/analysis-api-impl-base.xml
+index 8b77c3752fb..18c3a151a11 100644
+--- a/analysis/analysis-api-impl-base/resources/META-INF/analysis-api/analysis-api-impl-base.xml
++++ b/analysis/analysis-api-impl-base/resources/META-INF/analysis-api/analysis-api-impl-base.xml
+@@ -29,10 +29,6 @@
+         interface="org.jetbrains.kotlin.analysis.api.symbols.KaAdditionalKDocResolutionProvider"
+         dynamic="true"
+     />
+-
+-    <extensionPoint qualifiedName="org.jetbrains.kotlin.irGenerationExtension"
+-                    interface="org.jetbrains.kotlin.backend.common.extensions.IrGenerationExtension"
+-                    area="IDEA_PROJECT" dynamic="true"/>
+   </extensionPoints>
+ 
+   <extensions defaultExtensionNs="com.intellij">
 diff --git a/build.gradle.kts b/build.gradle.kts
-index d0fcfad11e3..0a279d6f13f 100644
+index 82e84c8b73e..9d30f23aa4f 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -293,6 +293,28 @@ extra["compilerModules"] =
+@@ -295,6 +295,28 @@ extra["compilerModules"] =
              commonCompilerModules +
              firAllCompilerModules
  
@@ -47,60 +61,8 @@ index d0fcfad11e3..0a279d6f13f 100644
  /**
   * An array of projects used in the IntelliJ Kotlin Plugin.
   *
-diff --git a/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt b/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
-index 2511d5bb51c..cd8fbfa1a6c 100644
---- a/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
-+++ b/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt
-@@ -46,8 +46,6 @@ import org.jetbrains.kotlin.K1_DEPRECATION_WARNING
- import org.jetbrains.kotlin.asJava.KotlinAsJavaSupport
- import org.jetbrains.kotlin.asJava.LightClassGenerationSupport
- import org.jetbrains.kotlin.asJava.finder.JavaElementFinder
--import org.jetbrains.kotlin.backend.common.extensions.IrGenerationExtension
--import org.jetbrains.kotlin.backend.jvm.extensions.ClassGeneratorExtension
- import org.jetbrains.kotlin.cli.common.CLIConfigurationKeys
- import org.jetbrains.kotlin.cli.common.CliModuleVisibilityManagerImpl
- import org.jetbrains.kotlin.cli.common.CompilerSystemProperties
-@@ -753,7 +751,6 @@ class KotlinCoreEnvironment private constructor(
-             SyntheticJavaResolveExtension.registerExtensionPoint(project)
-             @Suppress("DEPRECATION_ERROR")
-             org.jetbrains.kotlin.codegen.extensions.ClassBuilderInterceptorExtension.registerExtensionPoint(project)
--            ClassGeneratorExtension.registerExtensionPoint(project)
-             ClassFileFactoryFinalizerExtension.registerExtensionPoint(project)
-             AnalysisHandlerExtension.registerExtensionPoint(project)
-             PackageFragmentProviderExtension.registerExtensionPoint(project)
-@@ -764,7 +761,6 @@ class KotlinCoreEnvironment private constructor(
-             CollectAdditionalSourcesExtension.registerExtensionPoint(project)
-             ProcessSourcesBeforeCompilingExtension.registerExtensionPoint(project)
-             ExtraImportsProviderExtension.registerExtensionPoint(project)
--            IrGenerationExtension.registerExtensionPoint(project)
-             ScriptEvaluationExtension.registerExtensionPoint(project)
-             ShellExtension.registerExtensionPoint(project)
-             TypeResolutionInterceptor.registerExtensionPoint(project)
-diff --git a/compiler/cli/cli-common/resources/META-INF/extensions/compiler.xml b/compiler/cli/cli-common/resources/META-INF/extensions/compiler.xml
-index ffb075bfe4a..cca2e14df42 100644
---- a/compiler/cli/cli-common/resources/META-INF/extensions/compiler.xml
-+++ b/compiler/cli/cli-common/resources/META-INF/extensions/compiler.xml
-@@ -23,18 +23,12 @@
-         <extensionPoint qualifiedName="org.jetbrains.kotlin.assignResolutionAltererExtension"
-                         interface="org.jetbrains.kotlin.resolve.extensions.AssignResolutionAltererExtension"
-                         area="IDEA_PROJECT" dynamic="true"/>
--        <extensionPoint qualifiedName="org.jetbrains.kotlin.irGenerationExtension"
--                        interface="org.jetbrains.kotlin.backend.common.extensions.IrGenerationExtension"
--                        area="IDEA_PROJECT" dynamic="true"/>
-         <extensionPoint qualifiedName="org.jetbrains.kotlin.simpleNameReferenceExtension"
-                         interface="org.jetbrains.kotlin.plugin.references.SimpleNameReferenceExtension"
-                         area="IDEA_PROJECT" dynamic="true"/>
-         <extensionPoint qualifiedName="org.jetbrains.kotlin.classBuilderFactoryInterceptorExtension"
-                         interface="org.jetbrains.kotlin.codegen.extensions.ClassBuilderInterceptorExtension"
-                         area="IDEA_PROJECT" dynamic="true"/>
--        <extensionPoint qualifiedName="org.jetbrains.kotlin.classGeneratorExtension"
--                        interface="org.jetbrains.kotlin.backend.jvm.extensions.ClassGeneratorExtension"
--                        area="IDEA_PROJECT" dynamic="true"/>
-         <extensionPoint qualifiedName="org.jetbrains.kotlin.packageFragmentProviderExtension"
-                         interface="org.jetbrains.kotlin.resolve.jvm.extensions.PackageFragmentProviderExtension"
-                         area="IDEA_PROJECT" dynamic="true"/>
 diff --git a/plugins/scripting/scripting-compiler/src/org/jetbrains/kotlin/scripting/compiler/plugin/pluginRegisrar.kt b/plugins/scripting/scripting-compiler/src/org/jetbrains/kotlin/scripting/compiler/plugin/pluginRegisrar.kt
-index bba68ac0014..0d5c73de54b 100644
+index e6482252643..3d7c6b52cc3 100644
 --- a/plugins/scripting/scripting-compiler/src/org/jetbrains/kotlin/scripting/compiler/plugin/pluginRegisrar.kt
 +++ b/plugins/scripting/scripting-compiler/src/org/jetbrains/kotlin/scripting/compiler/plugin/pluginRegisrar.kt
 @@ -8,7 +8,6 @@
@@ -111,38 +73,39 @@ index bba68ac0014..0d5c73de54b 100644
  import org.jetbrains.kotlin.cli.common.extensions.ReplFactoryExtension
  import org.jetbrains.kotlin.cli.common.extensions.ScriptEvaluationExtension
  import org.jetbrains.kotlin.cli.common.extensions.ShellExtension
-@@ -65,9 +64,6 @@ class ScriptingCompilerConfigurationComponentRegistrar : ComponentRegistrar {
-             // TODO: add jdk path and other params if needed
-         }
-         withClassloadingProblemsReporting(messageCollector) {
--            if (configuration.get(ENABLE_SCRIPT_EXPLANATION_OPTION, false)) {
--                IrGenerationExtension.registerExtension(project, ScriptingIrExplainGenerationExtension(project))
--            }
-             CompilerConfigurationExtension.registerExtension(project, ScriptingCompilerConfigurationExtension(project, hostConfiguration))
-             CollectAdditionalSourcesExtension.registerExtension(project, ScriptingCollectAdditionalSourcesExtension(project))
-             ProcessSourcesBeforeCompilingExtension.registerExtension(project, ScriptingProcessSourcesBeforeCompilingExtension(project))
-@@ -80,9 +76,6 @@ class ScriptingCompilerConfigurationComponentRegistrar : ComponentRegistrar {
+@@ -81,15 +80,6 @@ class ScriptingCompilerConfigurationComponentRegistrar : ComponentRegistrar {
              SyntheticResolveExtension.registerExtension(project, ScriptingResolveExtension())
              ExtraImportsProviderExtension.registerExtension(project, ScriptExtraImportsProviderExtension())
  
--            IrGenerationExtension.registerExtension(project, ScriptLoweringExtension())
--            IrGenerationExtension.registerExtension(project, ReplLoweringExtension())
+-            with(configuration.extensionsStorage!!) {
+-                if (configuration.get(ENABLE_SCRIPT_EXPLANATION_OPTION, false)) {
+-                    IrGenerationExtension.registerExtension(ScriptingIrExplainGenerationExtension(project))
+-                }
+-
+-                IrGenerationExtension.registerExtension(ScriptLoweringExtension())
+-                IrGenerationExtension.registerExtension(ReplLoweringExtension())
+-            }
 -
              if (messageCollector != null) {
                  project.registerService(ScriptReportSink::class.java, CliScriptReportSink(messageCollector))
              }
 diff --git a/repo/gradle-build-conventions/buildsrc-compat/src/main/kotlin/repoArtifacts.kt b/repo/gradle-build-conventions/buildsrc-compat/src/main/kotlin/repoArtifacts.kt
-index 73ae350417c..5a1036743d9 100644
+index 7e65bfcf69f..9a2acced4b8 100644
 --- a/repo/gradle-build-conventions/buildsrc-compat/src/main/kotlin/repoArtifacts.kt
 +++ b/repo/gradle-build-conventions/buildsrc-compat/src/main/kotlin/repoArtifacts.kt
-@@ -300,8 +300,15 @@ fun Project.idePluginDependency(block: () -> Unit) {
- }
- 
- fun Project.publishJarsForIde(projects: List<String>, libraryDependencies: List<String> = emptyList()) {
-+    publishJarsForIdeHelper(projects, libraryDependencies)
+@@ -304,8 +304,20 @@ fun Project.publishJarsForIde(
+     libraryDependencies: List<String> = emptyList(),
+     jarTaskConfiguration: Jar.() -> Unit = {},
+ ) {
++    publishJarsForIdeHelper(projects, libraryDependencies, jarTaskConfiguration)
 +}
 +
-+private fun Project.publishJarsForIdeHelper(projectsFull: List<String>, libraryDependencies: List<String> = emptyList()) {
++private fun Project.publishJarsForIdeHelper(
++    projectsFull: List<String>,
++    libraryDependencies: List<String> = emptyList(),
++    jarTaskConfiguration: Jar.() -> Unit = {},
++) {
++
      val projectsUsedInIntelliJKotlinPlugin: Array<String> by rootProject.extra
  
 +    val lintExcludedModules: Array<String> by rootProject.extra
@@ -152,5 +115,5 @@ index 73ae350417c..5a1036743d9 100644
          check(projectName in projectsUsedInIntelliJKotlinPlugin) {
              "`$projectName` is used in IntelliJ Kotlin Plugin, it should be added to `extra[\"projectsUsedInIntelliJKotlinPlugin\"]`"
 -- 
-2.54.0.rc2.544.gc7ae2d5bb8-goog
+2.54.0.545.g6539524ca2-goog
 
