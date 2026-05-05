@@ -1,0 +1,185 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "org.jetbrains.dokka",
+    "module": "dokka-base",
+    "version": "2.2.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.14.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dokka-base-2.2.0.jar",
+          "url": "dokka-base-2.2.0.jar",
+          "size": 1860621,
+          "sha512": "f33da2cb2a693bc95da696143c15775977f8682da14a9a6c4f83ac147ac3fe4dcaa0f5679dbbdecb41781d9d4b341254024744e302a91d6679201f220b4a66fa",
+          "sha256": "721c5a1647dc49d1680d884350b438a039b2426aec65b696baee8e5aeb6442f5",
+          "sha1": "84b0c641ea99d74ba3e251b6a0e33c5ead8d4312",
+          "md5": "6750af86b412f6970e72d9ea84bd646d"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.dokka",
+          "module": "analysis-markdown",
+          "version": {
+            "requires": "2.2.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-reflect"
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.7.3"
+          }
+        },
+        {
+          "group": "org.jsoup",
+          "module": "jsoup",
+          "version": {
+            "requires": "1.16.1"
+          }
+        },
+        {
+          "group": "org.freemarker",
+          "module": "freemarker",
+          "version": {
+            "requires": "2.3.32"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-html-jvm",
+          "version": {
+            "requires": "0.9.1"
+          }
+        },
+        {
+          "group": "com.fasterxml.jackson.module",
+          "module": "jackson-module-kotlin",
+          "version": {
+            "requires": "2.15.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "com.fasterxml.jackson.core",
+          "module": "jackson-databind",
+          "version": {
+            "requires": "2.15.3"
+          },
+          "reason": "CVE-2022-42003"
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-reflect",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dokka-base-2.2.0.jar",
+          "url": "dokka-base-2.2.0.jar",
+          "size": 1860621,
+          "sha512": "f33da2cb2a693bc95da696143c15775977f8682da14a9a6c4f83ac147ac3fe4dcaa0f5679dbbdecb41781d9d4b341254024744e302a91d6679201f220b4a66fa",
+          "sha256": "721c5a1647dc49d1680d884350b438a039b2426aec65b696baee8e5aeb6442f5",
+          "sha1": "84b0c641ea99d74ba3e251b6a0e33c5ead8d4312",
+          "md5": "6750af86b412f6970e72d9ea84bd646d"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "dokka-base-2.2.0-sources.jar",
+          "url": "dokka-base-2.2.0-sources.jar",
+          "size": 660593,
+          "sha512": "d9883963071bd3403cac571d0981ca0b4b39c884c60e212a37de404ad53dd11c1782903976d9ef4c467567a14516104d766329df07196b2b14f5c92c0e4b76e9",
+          "sha256": "b138c34e6a3cf94ee3631d29553c8abf18d96ea1269b1d49ffe61a21edb7987f",
+          "sha1": "e8933d7645033944c8435b60bf67cf69f62e2afb",
+          "md5": "c2ab6e389dda20ccabc7ceba41c36908"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "dokka-base-2.2.0-javadoc.jar",
+          "url": "dokka-base-2.2.0-javadoc.jar",
+          "size": 261,
+          "sha512": "1487e5a20c9e4d74f298e07c42e96a61be11b7a768c3fbc199ee138cd68e1fc2267d1cfe3f11f288acc05df755315344d052cc5f6f751f126ab4fe1caa5125ea",
+          "sha256": "c6deada2fac53b8ea6523dbda77597b128006674616f140f04df23264c6d1aa3",
+          "sha1": "2ad14aed781c4a73ed4dbb421966d408a0a06686",
+          "md5": "f43436d6bec321290f6af228ad602604"
+        }
+      ]
+    }
+  ]
+}
