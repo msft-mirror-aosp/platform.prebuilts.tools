@@ -1,0 +1,27 @@
+load("//tools/adt/idea/studio:studio.bzl", "studio_data")
+
+studio_data(
+    name = "llamacpp_binaries",
+    files_linux = glob(["linux_x86_64/*"]),
+    files_mac = glob(["darwin_x86_64/*"]),
+    files_mac_arm = glob(["darwin_aarch64/*"]),
+    files_win = glob(["windows_x86_64/*"]),
+    mappings = {
+        "prebuilts/tools/common/llamacpp/linux_x86_64/": "llamacpp/",
+        "prebuilts/tools/common/llamacpp/darwin_x86_64/": "llamacpp/",
+        "prebuilts/tools/common/llamacpp/darwin_aarch64/": "llamacpp/",
+        "prebuilts/tools/common/llamacpp/windows_x86_64/": "llamacpp/",
+    },
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "llamacpp_files",
+    srcs = glob([
+        "linux_x86_64/*",
+        "darwin_x86_64/*",
+        "darwin_aarch64/*",
+        "windows_x86_64/*",
+    ]),
+    visibility = ["//visibility:public"],
+)
