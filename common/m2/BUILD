@@ -65,6 +65,15 @@ exports_files(
     visibility = ["//visibility:public"],
 )
 
+exports_files(
+    [
+        "repository/net/bytebuddy/byte-buddy/1.17.7/byte-buddy-1.17.7.jar",
+        "repository/net/bytebuddy/byte-buddy-agent/1.17.7/byte-buddy-agent-1.17.7.jar",
+        "repository/org/mockito/mockito-core/5.20.0/mockito-core-5.20.0.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
+
 java_import(
     name = "io.grpc.grpc-kotlin-stub.1.4.1",
     jars = ["repository/io/grpc/grpc-kotlin-stub/1.4.1/grpc-kotlin-stub-1.4.1.jar"],
@@ -284,9 +293,9 @@ filegroup(
     name = "mockito_files",
     # do not sort: must match IML order
     srcs = [
-        "repository/org/mockito/mockito-core/5.12.0/mockito-core-5.12.0.jar",
-        "repository/net/bytebuddy/byte-buddy/1.14.15/byte-buddy-1.14.15.jar",
-        "repository/net/bytebuddy/byte-buddy-agent/1.14.15/byte-buddy-agent-1.14.15.jar",
+        "repository/org/mockito/mockito-core/5.20.0/mockito-core-5.20.0.jar",
+        "repository/net/bytebuddy/byte-buddy/1.17.7/byte-buddy-1.17.7.jar",
+        "repository/net/bytebuddy/byte-buddy-agent/1.17.7/byte-buddy-agent-1.17.7.jar",
     ],
     visibility = ["//visibility:public"],
 )
@@ -1248,20 +1257,6 @@ jvm_import(
     visibility = ["//visibility:public"],
 )
 
-# managed by go/iml_to_build
-jvm_import(
-    name = "tracing-desktop-2.0.0-alpha05",
-    jars = ["repository/androidx/tracing/tracing-desktop/2.0.0-alpha05/tracing-desktop-2.0.0-alpha05.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
-    name = "tracing-wire-desktop-2.0.0-alpha05",
-    jars = ["repository/androidx/tracing/tracing-wire-desktop/2.0.0-alpha05/tracing-wire-desktop-2.0.0-alpha05.jar"],
-    visibility = ["//visibility:public"],
-)
-
 java_import(
     name = "mordant-jvm-2.7.2",
     jars = ["repository/com/github/ajalt/mordant/mordant-jvm/2.7.2/mordant-jvm-2.7.2.jar"],
@@ -1271,5 +1266,19 @@ java_import(
 java_import(
     name = "colormath-jvm-3.5.0",
     jars = ["repository/com/github/ajalt/colormath/colormath-jvm/3.5.0/colormath-jvm-3.5.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "tracing-desktop-2.0.0-alpha06",
+    jars = ["repository/androidx/tracing/tracing-desktop/2.0.0-alpha06/tracing-desktop-2.0.0-alpha06.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "tracing-wire-desktop-2.0.0-alpha06",
+    jars = ["repository/androidx/tracing/tracing-wire-desktop/2.0.0-alpha06/tracing-wire-desktop-2.0.0-alpha06.jar"],
     visibility = ["//visibility:public"],
 )

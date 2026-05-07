@@ -1,7 +1,7 @@
-From 771e936742cfc9fc7270fdf7e6c92903f6a46ac6 Mon Sep 17 00:00:00 2001
+From 55e1321af58909a423846d0551c7c40c58cee2c9 Mon Sep 17 00:00:00 2001
 From: Paul Thomson <paulthomson@google.com>
 Date: Fri, 17 Apr 2026 13:03:33 +0100
-Subject: [PATCH 02/12] kotlin-power-assert-compiler-plugin
+Subject: [PATCH 2/7] kotlin-power-assert-compiler-plugin
 
 The implementation dependency `:kotlin-power-assert-compiler-plugin`
 from scripting-compiler is changed to compile-only. Power assert is not
@@ -13,18 +13,18 @@ See: b/414401949#comment3
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/plugins/scripting/scripting-compiler/build.gradle.kts b/plugins/scripting/scripting-compiler/build.gradle.kts
-index 1489a4abb3c..1d00d335e74 100644
+index a0365dae353..32976e469a8 100644
 --- a/plugins/scripting/scripting-compiler/build.gradle.kts
 +++ b/plugins/scripting/scripting-compiler/build.gradle.kts
-@@ -33,7 +33,7 @@ dependencies {
+@@ -35,7 +35,7 @@ dependencies {
      api(commonDependency("org.jline", "jline"))
      compileOnly(intellijCore())
  
 -    implementation(project(":kotlin-power-assert-compiler-plugin")) // TODO: KT-74787
 +    compileOnly(project(":kotlin-power-assert-compiler-plugin")) // TODO: KT-74787
+     implementation(commonDependency("org.jetbrains.kotlin:kotlin-reflect")) { isTransitive = false }
  
-     testApi(project(":compiler:frontend"))
-     testApi(project(":compiler:plugin-api"))
+     testImplementation(project(":compiler:frontend"))
 -- 
-2.54.0.rc1.513.gad8abe7a5a-goog
+2.54.0.545.g6539524ca2-goog
 

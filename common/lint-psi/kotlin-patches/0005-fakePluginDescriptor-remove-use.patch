@@ -1,0 +1,33 @@
+From 1fb0c25df547a8e61acf0c1b8e94e427d8455177 Mon Sep 17 00:00:00 2001
+From: Paul Thomson <paulthomson@google.com>
+Date: Fri, 17 Apr 2026 13:32:46 +0100
+Subject: [PATCH 5/7] fakePluginDescriptor: remove use
+
+This appears to be part of ag/34951833:
+
+(The latest PluginStructureProvider from IntelliJ codebase became
+incompatible with the latest Kotlin codebase.)
+
+Rewrite PluginStructureProvider to adapt to IJ 2025.2
+
+https://youtrack.jetbrains.com/issue/KT-79870
+Bug: 418240065
+---
+ .../standalone/base/projectStructure/PluginStructureProvider.kt  | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/projectStructure/PluginStructureProvider.kt b/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/projectStructure/PluginStructureProvider.kt
+index bfca04b539a..df82ab339cc 100644
+--- a/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/projectStructure/PluginStructureProvider.kt
++++ b/analysis/analysis-api-standalone/analysis-api-standalone-base/src/org/jetbrains/kotlin/analysis/api/standalone/base/projectStructure/PluginStructureProvider.kt
+@@ -125,7 +125,6 @@ object PluginStructureProvider {
+ 
+         val listenersMap = ConcurrentHashMap<String, MutableList<ListenerDescriptor>>()
+         for (listenerDescriptor in listenerDescriptors) {
+-            listenerDescriptor.pluginDescriptor = fakePluginDescriptor
+             listenersMap.computeIfAbsent(listenerDescriptor.topicClassName) { SmartList() }.add(listenerDescriptor)
+         }
+ 
+-- 
+2.54.0.545.g6539524ca2-goog
+

@@ -1,0 +1,61 @@
+From f39698b8aab70c709b3d07dd7f80c1f513aad76e Mon Sep 17 00:00:00 2001
+From: Paul Thomson <paulthomson@google.com>
+Date: Fri, 17 Apr 2026 13:49:03 +0100
+Subject: [PATCH 6/7] Add compilerConfiguration parameter to
+ buildStandaloneAnalysisAPISession
+
+...so that Lint's FirUastEnvironment can provide a compiler
+configuration.
+
+We could probably upstream this.
+---
+ .../api/standalone/StandaloneAnalysisAPISessionBuilder.kt    | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/api/standalone/StandaloneAnalysisAPISessionBuilder.kt b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/api/standalone/StandaloneAnalysisAPISessionBuilder.kt
+index 8fb51299dbb..99c7ff6a2f2 100644
+--- a/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/api/standalone/StandaloneAnalysisAPISessionBuilder.kt
++++ b/analysis/analysis-api-standalone/src/org/jetbrains/kotlin/analysis/api/standalone/StandaloneAnalysisAPISessionBuilder.kt
+@@ -50,6 +50,7 @@ import org.jetbrains.kotlin.analysis.project.structure.builder.buildProjectStruc
+ import org.jetbrains.kotlin.analysis.project.structure.impl.buildKtModuleProviderByCompilerConfiguration
+ import org.jetbrains.kotlin.analysis.project.structure.impl.getPsiFilesFromPaths
+ import org.jetbrains.kotlin.analysis.project.structure.impl.getSourceFilePaths
++import org.jetbrains.kotlin.cli.create
+ import org.jetbrains.kotlin.cli.jvm.compiler.KotlinCoreApplicationEnvironmentMode
+ import org.jetbrains.kotlin.cli.jvm.compiler.KotlinCoreProjectEnvironment
+ import org.jetbrains.kotlin.cli.jvm.compiler.setupIdeaStandaloneExecution
+@@ -64,6 +65,7 @@ import kotlin.contracts.contract
+ public class StandaloneAnalysisAPISessionBuilder(
+     projectDisposable: Disposable,
+     unitTestMode: Boolean,
++    compilerConfiguration: CompilerConfiguration = CompilerConfiguration.create(),
+ ) {
+     init {
+         // We depend on swing (indirectly through PSI or something), so we want to declare headless mode,
+@@ -78,6 +80,7 @@ public class StandaloneAnalysisAPISessionBuilder(
+         StandaloneProjectFactory.createProjectEnvironment(
+             projectDisposable,
+             KotlinCoreApplicationEnvironmentMode.fromUnitTestModeFlag(unitTestMode),
++            compilerConfiguration,
+         )
+ 
+     private val serviceRegistrars = listOf(FirStandaloneServiceRegistrar, StandaloneSessionServiceRegistrar)
+@@ -270,6 +273,7 @@ internal object StandaloneSessionServiceRegistrar : AnalysisApiSimpleServiceRegi
+ public inline fun buildStandaloneAnalysisAPISession(
+     projectDisposable: Disposable = Disposer.newDisposable("StandaloneAnalysisAPISession.project"),
+     unitTestMode: Boolean = false,
++    compilerConfiguration: CompilerConfiguration = CompilerConfiguration.create(),
+     init: StandaloneAnalysisAPISessionBuilder.() -> Unit,
+ ): StandaloneAnalysisAPISession {
+     contract {
+@@ -278,6 +282,7 @@ public inline fun buildStandaloneAnalysisAPISession(
+     return StandaloneAnalysisAPISessionBuilder(
+         projectDisposable,
+         unitTestMode,
++        compilerConfiguration,
+     ).apply(init).build()
+ }
+ 
+-- 
+2.54.0.545.g6539524ca2-goog
+

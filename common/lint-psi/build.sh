@@ -12,13 +12,20 @@ echo "Found WORKSPACE root: ${WORKSPACE}"
 # Consult the README for details.
 
 # These versions should generally be updated to match what we use in Android Studio.
-# For the IntelliJ version, see tools/idea/build.txt.
-# For the Kotlin version, see tools/idea/.idea/libraries/kotlinc_*.xml.
 # The git SHAs must also be updated to match the versions specified.
-export INTELLIJ_VERSION="253.30387.90"
-export KOTLIN_VERSION="2.3.20-ij253-87"
-export INTELLIJ_SHA="6f647299f3c4f181870a2bad8fa0ac869363f18b" # IntelliJ 2025.3.2 (tag idea/253.30387.90)
-export KOTLIN_SHA="6ea09ec2739a6213a02d633336796550b9d5b3ca" # From the kt-253 branch for IJ 2025.3.2 (approx. build 2.3.20-ij253-87)
+
+# IntelliJ: See [tools/idea/build.txt](file://./../../../../tools/idea/build.txt)
+# IntelliJ 2026.1
+# https://github.com/JetBrains/intellij-community/tree/idea/261.22158.277
+# https://github.com/JetBrains/intellij-community/commit/088fc74da710f5a4dc177b4ca539e11b669959f7
+export INTELLIJ_VERSION="261.22158.277"
+export INTELLIJ_SHA="088fc74da710f5a4dc177b4ca539e11b669959f7"
+
+# Kotlin: see [tools/idea/.idea/libraries/kotlinc_*.xml](file://./../../../../tools/idea/.idea/libraries/kotlinc_analysis_api.xml).
+# https://github.com/JetBrains/kotlin/tree/build-2.4.0-dev-2631
+# https://github.com/JetBrains/kotlin/commit/a43a9ee67b63df8d52989824d119b6fe9bad42dd
+export KOTLIN_VERSION="2.4.0-dev-2631"
+export KOTLIN_SHA="a43a9ee67b63df8d52989824d119b6fe9bad42dd"
 
 export CLEAN_BUILD="${CLEAN_BUILD:-false}"
 
@@ -81,9 +88,11 @@ phase "Building Kotlin compiler"
 # We use -Dorg.gradle.dependency.verification=off because the build otherwise fails (if outside JetBrains CI environment?)
 # We use -Pkotlin.build.jar.compression=true to ensure reasonable jar sizes.
 # Additional options to investigate: isTeamcityBuild, kotlin.build.proguard, BuildPropertiesExt.kt, etc.
+# We set 'kotlinLanguageVersion' temporarily to maintain compatibility with metalava (b/508725570).
 "$KOTLIN_DIR/gradlew" -p "$KOTLIN_DIR" \
     ${GRADLE_CLEAN_FLAGS[@]+"${GRADLE_CLEAN_FLAGS[@]}"} \
     publishIdeArtifacts \
+    -PkotlinLanguageVersion=2.3 \
     -PdeployVersion="$KOTLIN_VERSION-for-lint" \
     -Ppublish.ide.plugin.dependencies=true \
     -Pkotlin.build.isObsoleteJdkOverrideEnabled=true \
@@ -92,8 +101,7 @@ phase "Building Kotlin compiler"
 
 phase "Building IntelliJ modules"
 pushd "$INTELLIJ_DIR"
-# IntelliJ 2025.2 does not have a bazelisk wrapper yet, so we use the one from 2025.3+ instead.
-"$WORKSPACE/tools/idea/bazel.cmd" build \
+./bazel.cmd build \
 	//android-lint-deps:intellij-core_deploy.jar \
 	//android-lint-deps:intellij-core_deploy-src.jar \
 	//android-lint-deps:uast_deploy.jar \

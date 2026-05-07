@@ -1,0 +1,53 @@
+From 30a76e94d7bb2070b9799a55896746f4a6ad7eb8 Mon Sep 17 00:00:00 2001
+From: Paul Thomson <paulthomson@google.com>
+Date: Thu, 30 Apr 2026 16:40:50 +0100
+Subject: [PATCH 5/5] Add convertExtensionElements function
+
+This is for compatibility with the Plugin Descriptor parsing changes.
+Our jarrewriter will rewrite the Kotlin jar to call this function.
+
+https://youtrack.jetbrains.com/issue/KT-79870
+---
+ .../ide/plugins/parserElementsConversion.kt      | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+
+diff --git a/platform/core-impl/src/com/intellij/ide/plugins/parserElementsConversion.kt b/platform/core-impl/src/com/intellij/ide/plugins/parserElementsConversion.kt
+index d38fff27ef44..6ff610f2a73d 100644
+--- a/platform/core-impl/src/com/intellij/ide/plugins/parserElementsConversion.kt
++++ b/platform/core-impl/src/com/intellij/ide/plugins/parserElementsConversion.kt
+@@ -7,9 +7,11 @@ import com.intellij.openapi.components.ComponentConfig
+ import com.intellij.openapi.components.ServiceDescriptor
+ import com.intellij.openapi.extensions.ExtensionDescriptor
+ import com.intellij.openapi.extensions.ExtensionPointDescriptor
++import com.intellij.openapi.extensions.LoadingOrder
+ import com.intellij.platform.pluginSystem.parser.impl.ScopedElementsContainer
+ import com.intellij.platform.pluginSystem.parser.impl.elements.ClientKindValue
+ import com.intellij.platform.pluginSystem.parser.impl.elements.ComponentElement
++import com.intellij.platform.pluginSystem.parser.impl.elements.ExtensionElement
+ import com.intellij.platform.pluginSystem.parser.impl.elements.ExtensionPointElement
+ import com.intellij.platform.pluginSystem.parser.impl.elements.ListenerElement
+ import com.intellij.platform.pluginSystem.parser.impl.elements.ModuleLoadingRuleValue
+@@ -57,6 +59,20 @@ fun ComponentElement.convert(): ComponentConfig = ComponentConfig(
+   options.takeIf { it.isNotEmpty() }
+ )
+ 
++fun Map<String, List<ExtensionElement>>.convertExtensionElements(): Map<String, List<ExtensionDescriptor>> =
++  mapValues { (_, extensions) ->
++    extensions.map { extension ->
++      ExtensionDescriptor(
++        implementation = extension.implementation,
++        os = extension.os?.convert(),
++        orderId = extension.orderId,
++        order = LoadingOrder.ANY, // We are ignoring the real value here.
++        element = extension.element,
++        hasExtraAttributes = extension.hasExtraAttributes,
++      )
++    }
++  }
++
+ fun ExtensionPointElement.convert(): ExtensionPointDescriptor = ExtensionPointDescriptor(
+   name = qualifiedName ?: name!!,
+   isNameQualified = qualifiedName != null,
+-- 
+2.54.0.545.g6539524ca2-goog
+

@@ -1,0 +1,141 @@
+From e17ee503e2191fc969156b104c6ff7a806a03d20 Mon Sep 17 00:00:00 2001
+From: Paul Thomson <paulthomson@google.com>
+Date: Fri, 17 Apr 2026 14:32:18 +0100
+Subject: [PATCH 7/7] Analysis API compatibility changes
+
+Re-adds some convenience extensions/members that were removed. This is
+for compatibility.
+
+See b/393478604#comment4
+
+Bug: 393478604
+---
+ .../analysis/api/annotations/KaAnnotated.kt   | 28 +++++++++++++++++++
+ .../analysis/api/annotations/KaAnnotation.kt  | 13 +++++++++
+ .../analysis/api/components/KaTypeProvider.kt |  5 ++++
+ .../analysis/api/symbols/KaSymbolProvider.kt  |  7 +++++
+ .../kotlin/analysis/api/types/typeUtils.kt    |  7 +++++
+ 5 files changed, 60 insertions(+)
+
+diff --git a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotated.kt b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotated.kt
+index b04aa23f5dd..bf9bf9645ca 100644
+--- a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotated.kt
++++ b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotated.kt
+@@ -6,6 +6,7 @@
+ package org.jetbrains.kotlin.analysis.api.annotations
+ 
+ import org.jetbrains.kotlin.analysis.api.KaImplementationDetail
++import org.jetbrains.kotlin.name.ClassId
+ 
+ /**
+  * [KaAnnotated] represents an entity which may have annotations applied to it. All [types][org.jetbrains.kotlin.analysis.api.types.KaType]s
+@@ -18,3 +19,30 @@ public interface KaAnnotated {
+      */
+     public val annotations: KaAnnotationList
+ }
++
++/**
++ * Checks if entity has annotation with specified [classId].
++ *
++ * @see [KaAnnotationList.contains]
++ */
++@Deprecated("Use 'annotations' instead.", replaceWith = ReplaceWith("classId in annotations"))
++public fun KaAnnotated.hasAnnotation(classId: ClassId): Boolean {
++    return annotations.contains(classId)
++}
++/**
++ * A list of annotations applied with specified [classId].
++ *
++ * @see [KaAnnotationList.classIds]
++ */
++@Deprecated("Use 'annotations' instead.", replaceWith = ReplaceWith("annotations[classId]"))
++public fun KaAnnotated.annotationsByClassId(classId: ClassId): List<KaAnnotation> {
++    return annotations[classId]
++}
++/**
++ * A list of annotations applied.
++ *
++ * @see [KaAnnotationList.classIds]
++ */
++@Deprecated("Use 'annotations' instead.", replaceWith = ReplaceWith("annotations.classIds"))
++public val KaAnnotated.annotationClassIds: Collection<ClassId>
++    get() = annotations.classIds
+diff --git a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotation.kt b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotation.kt
+index dd0d86f4fbb..e8709898cb6 100644
+--- a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotation.kt
++++ b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/annotations/KaAnnotation.kt
+@@ -53,6 +53,19 @@ public interface KaAnnotation : KaLifetimeOwner {
+      */
+     public val useSiteTarget: AnnotationUseSiteTarget?
+ 
++   /**
++     * This property can be used to optimize some argument processing logic.
++     * For example, if you have [KaAnnotationApplicationInfo] from [KaAnnotated.annotationInfos] and [hasArguments] is **false**,
++     * then you can avoid [KaAnnotated.annotationsByClassId] call,
++     * because effectively you already have all necessary information in [KaAnnotationApplicationInfo]
++     */
++    @Deprecated("Use 'arguments.isNotEmpty()' instead.", replaceWith = ReplaceWith("arguments.isNotEmpty()"))
++    public val hasArguments: Boolean
++        get() = arguments.isNotEmpty()
++    @Deprecated("Use 'arguments.isNotEmpty()' instead.", replaceWith = ReplaceWith("arguments.isNotEmpty()"))
++    public val isCallWithArguments: Boolean
++        get() = arguments.isNotEmpty()
++
+     /**
+      * The list of annotation arguments passed to the [annotation constructor](https://kotlinlang.org/docs/annotations.html#constructors) in
+      * the form of [KaNamedAnnotationValue]s.
+diff --git a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/components/KaTypeProvider.kt b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/components/KaTypeProvider.kt
+index fae263aabcb..990f0b29444 100644
+--- a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/components/KaTypeProvider.kt
++++ b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/components/KaTypeProvider.kt
+@@ -219,6 +219,11 @@ public interface KaTypeProvider : KaSessionComponent {
+     public val Array<KaType>.commonSupertype: KaType
+         get() = asList().commonSupertype
+ 
++    @Deprecated("Use 'commonSupertype' instead.", replaceWith = ReplaceWith("types.commonSupertype"))
++    public fun commonSuperType(types: Collection<KaType>): KaType? {
++        return if (types.isEmpty()) null else types.commonSupertype
++    }
++
+     /**
+      * Resolves the given [KtTypeReference] to its corresponding [KaType].
+      *
+diff --git a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/symbols/KaSymbolProvider.kt b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/symbols/KaSymbolProvider.kt
+index f845f0b525b..daaf3677ca9 100644
+--- a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/symbols/KaSymbolProvider.kt
++++ b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/symbols/KaSymbolProvider.kt
+@@ -79,6 +79,13 @@ public interface KaSymbolProvider : KaSessionComponent {
+      */
+     public val KtEnumEntry.symbol: KaEnumEntrySymbol
+ 
++    @Deprecated("This API is unsafe. Use 'symbol' instead", replaceWith = ReplaceWith("symbol as KaAnonymousFunctionSymbol"))
++    public val KtNamedFunction.anonymousSymbol: KaAnonymousFunctionSymbol
++        get() = symbol as KaAnonymousFunctionSymbol
++
++    @Deprecated("Use 'symbol' instead", replaceWith = ReplaceWith("symbol as KaAnonymousFunctionSymbol"))
++    public fun KtNamedFunction.getAnonymousFunctionSymbol(): KaAnonymousFunctionSymbol = symbol as KaAnonymousFunctionSymbol
++
+     /**
+      * A [KaAnonymousFunctionSymbol] for the given [KtFunctionLiteral].
+      */
+diff --git a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/types/typeUtils.kt b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/types/typeUtils.kt
+index bc7f38253fd..36784cddbd4 100644
+--- a/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/types/typeUtils.kt
++++ b/analysis/analysis-api/src/org/jetbrains/kotlin/analysis/api/types/typeUtils.kt
+@@ -13,6 +13,13 @@ import org.jetbrains.kotlin.analysis.api.symbols.KaClassLikeSymbol
+ public val KaType.symbol: KaClassLikeSymbol?
+     get() = (this as? KaClassType)?.symbol
+ 
++/**
++ * Returns a [KaClassLikeSymbol] for this [KtType] if the type represents a uniquely resolvable class/object/type alias.
++ */
++@Deprecated("Use 'symbol' instead.", ReplaceWith("this.symbol"))
++public val KaType.classSymbol: KaClassLikeSymbol?
++    get() = symbol
++
+ /**
+  * Returns the [KaType]'s [abbreviated type][KaType.abbreviation], or the type itself if it doesn't have an abbreviated type.
+  *
+-- 
+2.54.0.545.g6539524ca2-goog
+

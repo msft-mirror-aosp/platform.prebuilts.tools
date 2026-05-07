@@ -1,0 +1,26 @@
+From 5d314d68c0dbd7e6f631fab3ac8f1bc2c2735bc6 Mon Sep 17 00:00:00 2001
+From: Paul Thomson <paulthomson@google.com>
+Date: Fri, 17 Apr 2026 13:20:50 +0100
+Subject: [PATCH 4/7] AA: expose getJvmNameFromAnnotation for Lint
+
+---
+ .../light/classes/symbol/annotations/symbolAnnotationsUtils.kt | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/annotations/symbolAnnotationsUtils.kt b/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/annotations/symbolAnnotationsUtils.kt
+index 58da395cea2..37c57510f44 100644
+--- a/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/annotations/symbolAnnotationsUtils.kt
++++ b/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/annotations/symbolAnnotationsUtils.kt
+@@ -36,7 +36,8 @@ internal fun KaAnnotatedSymbol.hasJvmSyntheticAnnotation(): Boolean {
+     return JVM_SYNTHETIC_ANNOTATION_CLASS_ID in annotations
+ }
+ 
+-internal fun KaAnnotatedSymbol.getJvmNameFromAnnotation(): String? {
++// Expose to use at KotlinStaticPsiDeclarationFromBinaryModuleProvider
++fun KaAnnotatedSymbol.getJvmNameFromAnnotation(): String? {
+     return stringArgumentFromAnnotation(JvmStandardClassIds.Annotations.JvmName)
+ }
+ 
+-- 
+2.54.0.545.g6539524ca2-goog
+
