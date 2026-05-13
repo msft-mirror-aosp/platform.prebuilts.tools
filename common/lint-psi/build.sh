@@ -124,4 +124,7 @@ rm -f "${LINT_PSI_DIR}/kotlin-compiler/kotlin-compiler-before-rewrite.jar"
 mv "${LINT_PSI_DIR}/kotlin-compiler/kotlin-compiler.jar" "${LINT_PSI_DIR}/kotlin-compiler/kotlin-compiler-before-rewrite.jar"
 "${KOTLIN_DIR}/gradlew" -p "${JAR_REWRITER_DIR}" rewriteType "-PinputJarPath=${LINT_PSI_DIR}/kotlin-compiler/kotlin-compiler-before-rewrite.jar" "-PoutputJarPath=${LINT_PSI_DIR}/kotlin-compiler/kotlin-compiler.jar"
 
+phase "Checking for duplicate classes in jars"
+"$WORKSPACE/tools/gradlew" -p "$LINT_PSI_DIR" checkDuplicateClasses
+
 phase "Done"

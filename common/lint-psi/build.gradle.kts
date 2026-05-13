@@ -1,7 +1,7 @@
 // This file assembles the prebuilt jars for Lint dependencies (IntelliJ/Kotlin/UAST).
 // Consult the README for details.
 
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.jar.JarFile
 
 plugins {
     id("java")
@@ -35,9 +35,19 @@ for (jarName in allJarNames) {
         // they are used for classloading optimizations, and (2) they lead to duplicate jar entries when
         // we merge the various UAST jars to be packaged into AGP.
         exclude("__index__")
-        // Until the proper fix arrives (https://youtrack.jetbrains.com/issue/KT-74196)
+        // kotlin-compiler added a duplicate copy of CoreProgressManager
+        // (https://youtrack.jetbrains.com/issue/KT-81457). And there are several other duplicates.
+        // Lint never really encounters these duplicates because intellij-core is always listed
+        // before kotlin-compiler. But metalava depends on these jars (in a different order), which
+        // led to failures: b/508731335#comment4
         if (jarName == "kotlin-compiler") {
-            exclude("com/intellij/util/lang/JavaVersion.class")
+            exclude("com/intellij/openapi/util/ObjectNode.class")
+            exclude("com/intellij/openapi/util/ObjectNode$*.class")
+            exclude("org/jetbrains/annotations/Nls.class")
+            exclude("org/jetbrains/annotations/Nls$*.class")
+            exclude("com/intellij/openapi/fileTypes/BinaryFileTypeDecompilers.class")
+            exclude("com/intellij/openapi/progress/impl/CoreProgressManager.class")
+            exclude("com/intellij/openapi/progress/impl/CoreProgressManager$*.class")
         }
     }
 
@@ -70,7 +80,6 @@ dependencies {
 
     "kotlin-compiler-content"("org.jetbrains.kotlin:analysis-api-platform-interface-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:analysis-api-standalone-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
-    "kotlin-compiler-content"("org.jetbrains.kotlinx:kotlinx-collections-immutable-jvm:0.3.4")
     "kotlin-compiler-content"("org.jetbrains.kotlin:analysis-api-fe10-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:analysis-api-k2-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
     "kotlin-compiler-content"("org.jetbrains.kotlin:analysis-api-for-ide:$kotlinVersion-for-lint") { isTransitive = false }
@@ -159,6 +168,62 @@ fun collectSourcesFromTransitiveDependencies(configuration: Configuration): Coll
 
 fun getEnvOrError(name: String): String {
     return System.getenv(name) ?: error("Missing environment variable: $name")
+}
+
+// This task must be invoked explicitly; the "assemble" task does not depend on this.
+tasks.register("checkDuplicateClasses") {
+    group = "Verification"
+    description = "Checks for duplicate .class files across specified jars."
+
+    val jarsToCheck = files(
+        "intellij-core/intellij-core.jar",
+        "kotlin-compiler/kotlin-compiler.jar",
+        "uast/uast.jar",
+    )
+
+    inputs.files(jarsToCheck)
+
+    doLast {
+        val files = jarsToCheck.files
+        if (files.size < 2) {
+            throw GradleException("CheckDuplicateClassesTask requires at least 2 jars to compare.")
+        }
+
+        // Maps a class file path to a list of jar names containing it.
+        val classToJars = mutableMapOf<String, MutableList<String>>()
+
+        files.forEach { file ->
+            JarFile(file).use { jar ->
+                jar.entries().asSequence()
+                    .filter { !it.isDirectory && it.name.endsWith(".class") }
+                    .filter { !it.name.endsWith("module-info.class") }
+                    .forEach { entry ->
+                        classToJars.getOrPut(entry.name) { mutableListOf() }.add(file.name)
+                    }
+            }
+        }
+
+        // Find entries that exist in more than one jar.
+        val duplicates = classToJars.filterValues { it.size > 1 }
+
+        if (duplicates.isNotEmpty()) {
+            val errorMessage = buildString {
+                appendLine("ERROR: Duplicate classes found across jars:\n")
+                duplicates.forEach { (className, jars) ->
+                    appendLine("Class: $className")
+                    appendLine("Jars:  ${jars.joinToString(", ")}\n")
+                }
+                appendLine("To exclude, add the following to build.gradle.kts:")
+                duplicates.forEach { (className, _) ->
+                    appendLine("exclude(\"${className.replace("$", "\\$")}\")")
+                }
+            }
+
+            throw GradleException(errorMessage)
+        }
+
+        println("Success: No duplicate classes found across ${files.size} jars.")
+    }
 }
 
 // See https://plugins.jetbrains.com/docs/intellij/intellij-artifacts.html and
