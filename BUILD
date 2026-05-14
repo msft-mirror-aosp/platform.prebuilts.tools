@@ -25,6 +25,12 @@ filegroup(
 )
 
 filegroup(
+    name = "lldb-extras",
+    srcs = glob(["*/lldb-extras/**"]),
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
     name = "clion",
     srcs = glob(["clion/**"]),
     visibility = ["//visibility:public"],
@@ -94,6 +100,25 @@ studio_data(
         "prebuilts/python/windows-x86/x64/DLLs/": "dlls/",
         "prebuilts/python/linux-x86/lib/python3.11/": "lib/python3.11/",
         "prebuilts/python/darwin-x86/lib/python3.11/": "lib/python3.11/",
+    },
+    visibility = ["//visibility:public"],
+)
+
+studio_data(
+    name = "lldb-extras-bundle",
+    files_linux = glob(
+        ["linux-x86_64/lldb-extras/**"],
+    ),
+    files_mac_arm = glob(
+        ["darwin-arm64/lldb-extras/**"],
+    ),
+    files_win = glob(
+        ["windows-x86_64/lldb-extras/**"],
+    ),
+    mappings = {
+        "prebuilts/tools/linux-x86_64/lldb-extras/": "",
+        "prebuilts/tools/darwin-arm64/lldb-extras/": "",
+        "prebuilts/tools/windows-x86_64/lldb-extras/": "",
     },
     visibility = ["//visibility:public"],
 )

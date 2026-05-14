@@ -1282,3 +1282,16 @@ jvm_import(
     jars = ["repository/androidx/tracing/tracing-wire-desktop/2.0.0-alpha06/tracing-wire-desktop-2.0.0-alpha06.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "libktor-client-mock",
+    jars = ["repository/io/ktor/ktor-client-mock-jvm/3.3.2/ktor-client-mock-jvm-3.3.2.jar"],
+    visibility = ["//visibility:public"],
+)
+
+java_import(
+    name = "slf4j-nop-2.0.9",
+    jars = ["repository/org/slf4j/slf4j-nop/2.0.9/slf4j-nop-2.0.9.jar"],
+    visibility = ["//visibility:public"],
+)
