@@ -1289,3 +1289,10 @@ jvm_import(
     jars = ["repository/io/ktor/ktor-client-mock-jvm/3.3.2/ktor-client-mock-jvm-3.3.2.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "json-schema-validator",
+    jars = ["repository/com/networknt/json-schema-validator/1.4.3/json-schema-validator-1.4.3.jar"],
+    visibility = ["//visibility:public"],
+)
