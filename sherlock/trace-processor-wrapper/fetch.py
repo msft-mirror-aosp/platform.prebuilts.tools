@@ -33,6 +33,8 @@ sudo apt install android-fetch-artifact""")
     print(f"Fetching {artifact} from {target} to {destination}")
     cmd = [fetch_artifact, *auth_flags, "--bid", bid, "--target", target, artifact, destination]
     subprocess.check_call(cmd)
+    if "win" not in target:
+      subprocess.check_call(["chmod", "+x", destination])
 
   build_txt = os.path.join(dir, "build.txt")
   print(f"Updating {build_txt}")
