@@ -1,0 +1,13 @@
+package(default_visibility = ["//visibility:public"])
+
+# Auto-selecting target based on host platform
+filegroup(
+    name = "lume-0.0.10-alpha01",
+    srcs = select({
+        "@platforms//os:linux": ["0.0.10-alpha01/lume-daemon-linux_x64-15462315.zip"],
+        "@platforms//os:windows": ["0.0.10-alpha01/lume-daemon-windows_x64-15462315.zip"],
+        "//tools/base/bazel/platforms:macos-arm64": ["0.0.10-alpha01/lume-daemon-darwin_aarch64-15462315.zip"],
+        "//tools/base/bazel/platforms:macos-x86_64": ["0.0.10-alpha01/lume-daemon-darwin_x64-15462315.zip"],
+        "//conditions:default": [],
+    }),
+)
