@@ -1,0 +1,99 @@
+diff --git a/lume/lume-core/src/main/kotlin/org/lume/core/task/GradleExportTask.kt b/lume/lume-core/src/main/kotlin/org/lume/core/task/GradleExportTask.kt
+index 1c6812bae3..d99b203265 100644
+--- a/lume/lume-core/src/main/kotlin/org/lume/core/task/GradleExportTask.kt
++++ b/lume/lume-core/src/main/kotlin/org/lume/core/task/GradleExportTask.kt
+@@ -115,8 +115,20 @@ open class GradleExportTask : DefaultTask(), Runnable {
+ 
+     // 4. Write properties files
+     val gradlePropertiesFile = File(outputDir, "gradle.properties")
++    var localJdkPath: String? = null
++    if (rootProject != null) {
++      val localProperties = File(rootProject.projectDir, "local.properties")
++      if (localProperties.exists()) {
++        val props = Properties()
++        localProperties.inputStream().use { props.load(it) }
++        localJdkPath = props.getProperty("jdk.dir")
++      }
++    }
++
+     val customJdkPath =
+-      if (gradleParameters.jdkPath != null) {
++      if (!localJdkPath.isNullOrEmpty()) {
++        "org.gradle.java.installations.paths=$localJdkPath"
++      } else if (gradleParameters.jdkPath != null) {
+         "org.gradle.java.installations.paths=${gradleParameters.jdkPath!!.absolutePath}"
+       } else ""
+     val gradlePropertiesContent =
+diff --git a/lume/lume-daemon/src/main/kotlin/org/lume/daemon/DaemonMain.kt b/lume/lume-daemon/src/main/kotlin/org/lume/daemon/DaemonMain.kt
+index 1f937c8db4..d8cea25c25 100644
+--- a/lume/lume-daemon/src/main/kotlin/org/lume/daemon/DaemonMain.kt
++++ b/lume/lume-daemon/src/main/kotlin/org/lume/daemon/DaemonMain.kt
+@@ -74,6 +74,19 @@ object DaemonMain {
+     val loggingPropArg = args.find { it.startsWith("--logging-properties=") }
+     val loggingPropsPath = loggingPropArg?.substringAfter("=")
+ 
++    val gradleUserHomeDir = args.find { it.startsWith("--gradle-user-home=") }?.substringAfter("=")?.let { File(it) }
++    val distributionFile = args.find { it.startsWith("--gradle-distribution=") }?.substringAfter("=")?.let { File(it) }
++    val offlineRepos = args.find { it.startsWith("--offline-repos=") }?.substringAfter("=")?.split(",")?.map { File(it) } ?: emptyList()
++
++    val gradleParameters =
++      GradleParameters(
++        gradleUserHomeDir = gradleUserHomeDir,
++        distributionFile = distributionFile,
++        offlineRepos = offlineRepos,
++        debugJvm = debugJvm,
++        invokedFromIde = invokedFromIde,
++      )
++
+     if (loggingPropsPath != null && File(loggingPropsPath).exists()) {
+       try {
+         java.io.FileInputStream(loggingPropsPath).use { java.util.logging.LogManager.getLogManager().readConfiguration(it) }
+@@ -89,7 +102,10 @@ object DaemonMain {
+             it != "--daemon" &&
+             it != "--debug-jvm" &&
+             !it.startsWith("--caller_id=") &&
+-            !it.startsWith("--logging-properties=")
++            !it.startsWith("--logging-properties=") &&
++            !it.startsWith("--gradle-user-home=") &&
++            !it.startsWith("--gradle-distribution=") &&
++            !it.startsWith("--offline-repos=")
+         }
+         .toTypedArray()
+ 
+@@ -114,7 +130,7 @@ object DaemonMain {
+     }
+ 
+     if (isDaemon) {
+-      runDaemonServer(projectDir)
++      runDaemonServer(projectDir, gradleParameters)
+     } else {
+       val buildStartNanos = System.nanoTime()
+ 
+@@ -147,8 +163,7 @@ object DaemonMain {
+       val tasks = if (taskArgs.size > 1) taskArgs.drop(1) else listOf(":help")
+ 
+       try {
+-        val params = GradleParameters(debugJvm = debugJvm, invokedFromIde = invokedFromIde)
+-        lifecycle.execute(tasks, buildStartNanos, internalParameters = params)
++        lifecycle.execute(tasks, buildStartNanos, internalParameters = gradleParameters)
+         if (reporter.hasErrors) {
+           exitProcess(1)
+         }
+@@ -167,7 +182,7 @@ object DaemonMain {
+     }
+   }
+ 
+-  private fun runDaemonServer(projectDir: File) {
++  private fun runDaemonServer(projectDir: File, gradleParameters: GradleParameters) {
+     val serverSocket = ServerSocket(0, 50, InetAddress.getByName("127.0.0.1"))
+     val port = serverSocket.localPort
+     val token = UUID.randomUUID().toString()
+@@ -308,7 +323,7 @@ object DaemonMain {
+               }
+             }
+ 
+-            lifecycle!!.execute(tasks, reqStartNanos)
++            lifecycle!!.execute(tasks, reqStartNanos, internalParameters = gradleParameters)
+             failed = false
+           } catch (e: Exception) {
+             if (
