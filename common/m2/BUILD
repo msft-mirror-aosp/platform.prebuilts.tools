@@ -616,6 +616,7 @@ filegroup(
     visibility = [
         "//tools/adt/idea/aswb:__subpackages__",
         "//tools/base/bazel:__pkg__",
+        "//tools/vendor/google/optional-plugins/project-system-lume:__pkg__",
         "//tools/vendor/google3/aswb:__subpackages__",
     ],
 )
