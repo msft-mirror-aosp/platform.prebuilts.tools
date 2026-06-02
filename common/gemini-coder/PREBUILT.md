@@ -1,6 +1,14 @@
-# Gemini Coder Language Server Prebuilts
+# Gemini Coder Prebuilts
 
-These are the commands that are used to build the binaries from google3. The commands were taken from https://source.corp.google.com/h/neural-gui-internal/Exafunction/+/maina:kokoro/rbe/3p-ls.cfg
+This directory contains prebuilt binaries for Gemini Coder components.
+
+---
+
+## 1. Gemini Coder Language Server
+
+> **Note:** We should get rid of these language server prebuilts once we land all the support required for Q2 internal teamfooding. They will be superseded by LocalHarness binaries.
+
+These are the commands that are used to build the language server binaries from google3. The commands were taken from https://source.corp.google.com/h/neural-gui-internal/Exafunction/+/maina:kokoro/rbe/3p-ls.cfg
 
 ## Linux x86_64
 
@@ -52,4 +60,29 @@ blaze build //third_party/jetski/cmd/language_server:language_server.external \
   --macos_minimum_os=12.0 \
   --//tools/build_defs/go/internal:default_go_rpc_library_do_not_use_without_permission=//third_party/golang/grpc:grpc \
   --//tools/build_defs/go/internal:default_go_proto_toolchain_do_not_use_without_permission=//tools/proto/toolchains:go_grpc
+```
+
+---
+
+## 2. Jetski Local Harness
+
+These are the commands used to build the local harness binaries from google3.
+Derived from `third_party/jetski_prod/sdk/py/.kokoro/internal/build_release_wheel.sh`.
+
+### Linux x86_64 (Intel)
+```bash
+blaze build //third_party/jetski_prod/localharness:localharness_external \
+  --config=gce \
+  --go_tag=external \
+  --target_environment=//buildenv/target:non_prod \
+  -c opt
+```
+
+### Mac arm64 (Apple Silicon)
+```bash
+blaze build //third_party/jetski_prod/localharness:localharness_external \
+  --config=darwin_arm64 \
+  --go_tag=external \
+  --target_environment=//buildenv/target:non_prod \
+  -c opt
 ```
