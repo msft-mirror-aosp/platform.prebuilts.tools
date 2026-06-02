@@ -1304,3 +1304,14 @@ filegroup(
     srcs = ["repository/com/google/api/grpc/grpc-google-common-protos/2.51.0/grpc-google-common-protos-2.51.0.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "pdfbox",
+    # do not sort: must match IML order
+    jars = [
+        "repository/org/apache/pdfbox/pdfbox/2.0.31/pdfbox-2.0.31.jar",
+        "repository/org/apache/pdfbox/fontbox/2.0.31/fontbox-2.0.31.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
