@@ -1297,3 +1297,10 @@ jvm_import(
     jars = ["repository/com/networknt/json-schema-validator/1.4.3/json-schema-validator-1.4.3.jar"],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+filegroup(
+    name = "grpc-google-common-protos_files",
+    srcs = ["repository/com/google/api/grpc/grpc-google-common-protos/2.51.0/grpc-google-common-protos-2.51.0.jar"],
+    visibility = ["//visibility:public"],
+)
