@@ -5,10 +5,18 @@ In order to keep sizes small, please build the release target
 which will still use debug signing keys, but drastically shrinks
 the size of the APK.
 
-Build instructions:
+Build commands:
+```
+cd $SRC/tools/adt/idea/streaming/streaming-benchmarker
+./gradlew :app:assembleRelease
+cp app/build/outputs/apk/release/app-release.apk ../../../../../prebuilts/tools/common/streaming-benchmarker/streaming-benchmarker.apk
+```
+or
+
 1. Open the project in Android Studio
 2. Select the release build as the active build
    (Build > Select Build Variant...)
 3. Build the APK (Build > Build Bundle(s)/APK(s) > Build APK(s)
 4. Copy the file from app/build/outputs/apk/release/app-release.apk to
    prebuilts/tools/common/streaming-benchmarker/streaming-benchmarker.apk
+
