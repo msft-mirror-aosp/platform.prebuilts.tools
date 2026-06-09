@@ -1,7 +1,7 @@
-From 7730372003312b6671d1a21d198c894d713251d4 Mon Sep 17 00:00:00 2001
+From 9b9398567258fed12dfb22d0bc352545f33d54a0 Mon Sep 17 00:00:00 2001
 From: Paul Thomson <paulthomson@google.com>
 Date: Fri, 17 Apr 2026 12:50:51 +0100
-Subject: [PATCH 1/7] KT-35614: getOrPut -> getOrPutNullable
+Subject: [PATCH 1/8] KT-35614: getOrPut -> getOrPutNullable
 
 Replace getOrPut -> getOrPutNullable. Without this, we are not caching a
 null result for when a class does not exist, leading to large slowdown
@@ -14,7 +14,7 @@ https://youtrack.jetbrains.com/issue/KT-35614
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt b/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt
-index 810d4e61269..12a9c3376c5 100644
+index 810d4e612694..12a9c3376c5f 100644
 --- a/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt
 +++ b/compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCliJavaFileManagerImpl.kt
 @@ -46,6 +46,7 @@ import org.jetbrains.kotlin.util.PhaseSideType
@@ -36,5 +36,5 @@ index 810d4e61269..12a9c3376c5 100644
              // class files for the previous build on the class path.
              //
 -- 
-2.54.0.545.g6539524ca2-goog
+2.54.0.1064.gd145956f57-goog
 

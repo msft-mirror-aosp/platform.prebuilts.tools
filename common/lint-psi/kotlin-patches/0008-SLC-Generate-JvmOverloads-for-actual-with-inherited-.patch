@@ -1,0 +1,155 @@
+From a803086f29fa679cc1af81306bbd7d420ae51768 Mon Sep 17 00:00:00 2001
+From: Alexey Belkov <alexey.belkov@jetbrains.com>
+Date: Mon, 1 Jun 2026 14:47:40 +0400
+Subject: [PATCH 8/8] [SLC] Generate @JvmOverloads for actual with inherited
+ defaults
+
+`createMethodsJvmOverloadsAware` and the synthetic no-arg constructor logic
+decide whether a value parameter is optional via
+`KaValueParameterSymbol.hasDeclaredDefaultValue`. That property is `false` for
+an `actual` declaration whose default values are declared on the `expect`
+(they cannot be repeated on the `actual`), so no @JvmOverloads variants and no
+synthetic no-arg constructor were produced for such declarations, diverging
+from the compiler's bytecode.
+
+A plain switch to `hasDefaultValue` would be wrong: that property is also
+`true` for parameters whose default is inherited from an *overridden*
+function, but @JvmOverloads has no effect on an override (the overloads belong
+to the base declaration, the compiler even reports
+OVERLOADS_WITHOUT_DEFAULT_ARGUMENTS). Besides, `hasDefaultValue` does not
+propagate `expect` defaults for *constructor* parameters.
+
+Introduce `defaultParameterValueMask`:
+a parameter counts as having a default if it is declared on the parameter
+itself, or - for an `actual` declaration - on the matched `expect` parameter.
+Overrides are intentionally excluded. The helper is used by both the
+function/constructor overload generation and the synthetic no-arg constructor
+helpers.
+
+^KT-57537 Fixed
+
+(Cherry picked from commit below, with test changes dropped.)
+
+https://github.com/jetbrains/kotlin/commit/c1f293f0544eb85515a0d89c77ae33b7f3770eec
+https://youtrack.jetbrains.com/issue/KT-57537
+Bug: 517190322
+---
+ .../symbol/classes/symbolLightClassUtils.kt   | 43 ++++++++++++++++++-
+ .../symbol/methods/SymbolLightConstructor.kt  | 14 ++++--
+ 2 files changed, 52 insertions(+), 5 deletions(-)
+
+diff --git a/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/classes/symbolLightClassUtils.kt b/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/classes/symbolLightClassUtils.kt
+index 32145dcf69bb..752ed8dd8580 100644
+--- a/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/classes/symbolLightClassUtils.kt
++++ b/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/classes/symbolLightClassUtils.kt
+@@ -8,7 +8,9 @@ package org.jetbrains.kotlin.light.classes.symbol.classes
+ import com.intellij.openapi.progress.ProgressManager
+ import com.intellij.openapi.util.ModificationTracker
+ import com.intellij.psi.*
++import org.jetbrains.kotlin.analysis.api.KaContextParameterApi
+ import org.jetbrains.kotlin.analysis.api.KaSession
++import org.jetbrains.kotlin.analysis.api.components.getExpectsForActual
+ import org.jetbrains.kotlin.analysis.api.getModule
+ import org.jetbrains.kotlin.analysis.api.projectStructure.KaModule
+ import org.jetbrains.kotlin.analysis.api.projectStructure.KaSourceModule
+@@ -228,9 +230,9 @@ internal fun <T : KaFunctionSymbol> KaSession.createMethodsJvmOverloadsAware(
+ 
+     val parameterMaskFilter = valueParameterMaskFilter(valueParameters, parameterCount)
+ 
++    val defaultValueMask = defaultParameterValueMask(declaration)
+     for (index in parameterCount - 1 downTo 0) {
+-        val valueParameter = valueParameters[index]
+-        if (!valueParameter.hasDeclaredDefaultValue || !pickMask[index]) continue
++        if (!defaultValueMask[index] || !pickMask[index]) continue
+         pickMask.clear(index)
+ 
+         if (parameterMaskFilter.accepts(pickMask)) {
+@@ -243,6 +245,43 @@ internal fun <T : KaFunctionSymbol> KaSession.createMethodsJvmOverloadsAware(
+     }
+ }
+ 
++/**
++ * For each value parameter of the [declaration] (a function or a constructor), tells whether it has a default value
++ * that the compiler takes into account when generating `@JvmOverloads` variants (or the synthetic no-arg constructor)
++ * *on this very declaration*.
++ *
++ * - A default value declared on the parameter itself always counts;
++ * - For an `actual` declaration, a default value declared on the corresponding `expect` parameter counts, because the
++ *   overloads are emitted on the `actual` declaration (the `expect` one has no body);
++ * - A default value inherited from an *overridden* function is intentionally ignored: `@JvmOverloads` has no effect on
++ *   an override, the overloads belong to the base declaration.
++ */
++@OptIn(KaContextParameterApi::class)
++context(_: KaSession)
++internal fun defaultParameterValueMask(declaration: KaFunctionSymbol): BitSet {
++    val valueParameters = declaration.valueParameters
++    val mask = BitSet(valueParameters.size)
++
++    valueParameters.forEachIndexed { index, valueParameter ->
++        if (valueParameter.hasDeclaredDefaultValue) {
++            mask.set(index)
++        }
++    }
++
++    if (declaration.isActual) {
++        for (expectSymbol in declaration.getExpectsForActual()) {
++            val expectParameters = (expectSymbol as? KaFunctionSymbol)?.valueParameters ?: continue
++            for (index in valueParameters.indices) {
++                if (!mask[index] && expectParameters.getOrNull(index)?.hasDeclaredDefaultValue == true) {
++                    mask.set(index)
++                }
++            }
++        }
++    }
++
++    return mask
++}
++
+ private sealed class ValueParameterMaskFilter {
+     abstract fun accepts(pickMask: BitSet): Boolean
+ 
+diff --git a/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/methods/SymbolLightConstructor.kt b/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/methods/SymbolLightConstructor.kt
+index 518102a6649f..93675d42828b 100644
+--- a/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/methods/SymbolLightConstructor.kt
++++ b/analysis/symbol-light-classes/src/org/jetbrains/kotlin/light/classes/symbol/methods/SymbolLightConstructor.kt
+@@ -160,16 +160,19 @@ internal class SymbolLightConstructor private constructor(
+             }
+         }
+ 
++        context(_: KaSession)
+         private fun shouldGenerateNoArgOverload(
+             lightClass: SymbolLightClassBase,
+             primaryConstructor: KaConstructorSymbol,
+             constructors: Iterable<KaConstructorSymbol>,
+         ): Boolean {
+             val classOrObject = lightClass.kotlinOrigin ?: return false
++            val valueParameters = primaryConstructor.valueParameters
++            val defaultValueMask = defaultParameterValueMask(primaryConstructor)
+             return !classOrObject.hasModifier(INNER_KEYWORD) &&
+                     !classOrObject.hasModifier(SEALED_KEYWORD) &&
+                     !lightClass.isEnum &&
+-                    primaryConstructor.valueParameters.all { it.hasDeclaredDefaultValue && !it.hasIntroducedAtAnnotation() } &&
++                    valueParameters.indices.all { defaultValueMask[it] && !valueParameters[it].hasIntroducedAtAnnotation() } &&
+                     constructors.none { it.isEffectivelyParameterless } &&
+                     primaryConstructor.visibility != KaSymbolVisibility.PRIVATE
+         }
+@@ -177,9 +180,14 @@ internal class SymbolLightConstructor private constructor(
+         /**
+          * Whether the constructor either has no arguments or has [JvmOverloads] which would result in a method with no arguments.
+          * */
++        context(_: KaSession)
+         private val KaConstructorSymbol.isEffectivelyParameterless: Boolean
+-            get() = valueParameters.isEmpty() ||
+-                    valueParameters.all(KaValueParameterSymbol::hasDeclaredDefaultValue) && hasJvmOverloadsAnnotation()
++            get() {
++                val valueParameters = valueParameters
++                return valueParameters.isEmpty() ||
++                        hasJvmOverloadsAnnotation() &&
++                        defaultParameterValueMask(this).nextClearBit(0) >= valueParameters.size
++            }
+ 
+         private fun SymbolLightClassBase.defaultConstructor(): KtLightMethod {
+             val classOrObject = kotlinOrigin
+-- 
+2.54.0.1064.gd145956f57-goog
+
