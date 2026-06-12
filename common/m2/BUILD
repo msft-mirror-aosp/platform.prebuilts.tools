@@ -1315,3 +1315,16 @@ jvm_import(
     ],
     visibility = ["//visibility:public"],
 )
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "androidx-tracing-desktop",
+    # do not sort: must match IML order
+    jars = [
+        "repository/androidx/tracing/tracing-desktop/2.0.0-alpha06/tracing-desktop-2.0.0-alpha06.jar",
+        "repository/androidx/tracing/tracing-wire-desktop/2.0.0-alpha06/tracing-wire-desktop-2.0.0-alpha06.jar",
+        "repository/com/squareup/wire/wire-runtime-jvm/6.0.0/wire-runtime-jvm-6.0.0.jar",
+        "repository/com/squareup/okio/okio-jvm/3.9.0/okio-jvm-3.9.0.jar",
+    ],
+    visibility = ["//visibility:public"],
+)
