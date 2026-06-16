@@ -296,6 +296,7 @@ filegroup(
         "repository/org/mockito/mockito-core/5.20.0/mockito-core-5.20.0.jar",
         "repository/net/bytebuddy/byte-buddy/1.17.7/byte-buddy-1.17.7.jar",
         "repository/net/bytebuddy/byte-buddy-agent/1.17.7/byte-buddy-agent-1.17.7.jar",
+        "repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar",
     ],
     visibility = ["//visibility:public"],
 )
