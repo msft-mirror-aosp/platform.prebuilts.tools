@@ -1,0 +1,36 @@
+From 50b0c148813a64d243f6f6e6e7de174d3bc2a042 Mon Jun 15 15:44:03 2026
+From: Pavel Kirpichenkov <pavel.kirpichenkov@jetbrains.com>
+Date: Mon, Jun 15 15:44:03 2026 +0300
+Subject: [PATCH 6/6] UField type for typed property with anonymous object initializer
+
+KTIJ-39039 [kotlin][uast] Fix UField type for typed property with anonymous object initializer
+
+Anonymous object type should be used only for properties with
+implicitly inferred type.
+
+GitOrigin-RevId: 505d151826c6dfaabfe665a7bb4dc7d52e305d7b
+
+diff --git a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/declarations/KotlinUField.kt b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/declarations/KotlinUField.kt
+index 51fbfba979fd..be7edd5bcb0d 100644
+--- a/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/declarations/KotlinUField.kt
++++ b/plugins/kotlin/uast/uast-kotlin-base/src/org/jetbrains/uast/kotlin/declarations/KotlinUField.kt
+@@ -13,6 +13,7 @@ import com.intellij.psi.PsiType
+ import com.intellij.psi.util.PsiTypesUtil
+ import org.jetbrains.annotations.ApiStatus
+ import org.jetbrains.kotlin.psi.KtAnnotationEntry
++import org.jetbrains.kotlin.psi.KtCallableDeclaration
+ import org.jetbrains.kotlin.psi.KtElement
+ import org.jetbrains.kotlin.psi.KtParameter
+ import org.jetbrains.kotlin.psi.KtProperty
+@@ -42,8 +43,10 @@ open class KotlinUField(
+         val type = delegateExpression?.getExpressionType()
+         if (type != null) return type
+ 
++        // anonymous type for object expression
+         val initializer = uastInitializer
+-        if (initializer != null && initializer is UObjectLiteralExpression) { // anonymous type for object expression
++        val sourceTypeReference = (sourcePsi as? KtCallableDeclaration)?.typeReference
++        if (sourceTypeReference == null && initializer != null && initializer is UObjectLiteralExpression) {
+             return PsiTypesUtil.getClassType(initializer.declaration.javaPsi)
+         }
+ 
