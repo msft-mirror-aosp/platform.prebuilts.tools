@@ -636,6 +636,13 @@ jvm_import(
     visibility = ["//visibility:public"],
 )
 
+# Added manually since the target requiring this is not an iml module.
+jvm_import(
+    name = "jspecify-0.2.0",
+    jars = ["repository/org/jspecify/jspecify/0.2.0/jspecify-0.2.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
 # managed by go/iml_to_build
 jvm_import(
     name = "javax-servlet",
@@ -661,13 +668,6 @@ jvm_import(
 jvm_import(
     name = "okio-2.8.0",
     jars = ["repository/com/squareup/okio/okio/2.8.0/okio-2.8.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
-    name = "okio-jvm-3.9.0",
-    jars = ["repository/com/squareup/okio/okio-jvm/3.9.0/okio-jvm-3.9.0.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -1157,13 +1157,6 @@ jvm_import(
 
 # managed by go/iml_to_build
 jvm_import(
-    name = "collection-jvm-1.4.5",
-    jars = ["repository/androidx/collection/collection-jvm/1.4.5/collection-jvm-1.4.5.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
     name = "litertlm-jvm",
     jars = ["repository/com/google/ai/edge/litertlm/litertlm-jvm/0.10.0/litertlm-jvm-0.10.0.jar"],
     visibility = ["//visibility:public"],
@@ -1250,13 +1243,6 @@ jvm_import(
     visibility = ["//visibility:public"],
 )
 
-# managed by go/iml_to_build
-jvm_import(
-    name = "wire-runtime-jvm-6.0.0",
-    jars = ["repository/com/squareup/wire/wire-runtime-jvm/6.0.0/wire-runtime-jvm-6.0.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
 java_import(
     name = "mordant-jvm-2.7.2",
     jars = ["repository/com/github/ajalt/mordant/mordant-jvm/2.7.2/mordant-jvm-2.7.2.jar"],
@@ -1266,20 +1252,6 @@ java_import(
 java_import(
     name = "colormath-jvm-3.5.0",
     jars = ["repository/com/github/ajalt/colormath/colormath-jvm/3.5.0/colormath-jvm-3.5.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
-    name = "tracing-desktop-2.0.0-alpha06",
-    jars = ["repository/androidx/tracing/tracing-desktop/2.0.0-alpha06/tracing-desktop-2.0.0-alpha06.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
-    name = "tracing-wire-desktop-2.0.0-alpha06",
-    jars = ["repository/androidx/tracing/tracing-wire-desktop/2.0.0-alpha06/tracing-wire-desktop-2.0.0-alpha06.jar"],
     visibility = ["//visibility:public"],
 )
 
@@ -1312,5 +1284,40 @@ jvm_import(
         "repository/org/apache/pdfbox/pdfbox/2.0.31/pdfbox-2.0.31.jar",
         "repository/org/apache/pdfbox/fontbox/2.0.31/fontbox-2.0.31.jar",
     ],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "tracing-wire-desktop-2.0.0-alpha09",
+    jars = ["repository/androidx/tracing/tracing-wire-desktop/2.0.0-alpha09/tracing-wire-desktop-2.0.0-alpha09.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "tracing-desktop-2.0.0-alpha09",
+    jars = ["repository/androidx/tracing/tracing-desktop/2.0.0-alpha09/tracing-desktop-2.0.0-alpha09.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "wire-runtime-jvm-6.4.0",
+    jars = ["repository/com/squareup/wire/wire-runtime-jvm/6.4.0/wire-runtime-jvm-6.4.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "okio-jvm-3.17.0",
+    jars = ["repository/com/squareup/okio/okio-jvm/3.17.0/okio-jvm-3.17.0.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+jvm_import(
+    name = "collection-jvm-1.4.5",
+    jars = ["repository/androidx/collection/collection-jvm/1.4.5/collection-jvm-1.4.5.jar"],
     visibility = ["//visibility:public"],
 )
