@@ -950,11 +950,11 @@ jvm_import(
 
 # managed by go/iml_to_build
 jvm_import(
-    name = "org.eclipse.lsp4j-0.24.0",
+    name = "org.eclipse.lsp4j-0.21.1",
     # do not sort: must match IML order
     jars = [
-        "repository/org/eclipse/lsp4j/org.eclipse.lsp4j/0.24.0/org.eclipse.lsp4j-0.24.0.jar",
-        "repository/org/eclipse/lsp4j/org.eclipse.lsp4j.debug/0.24.0/org.eclipse.lsp4j.debug-0.24.0.jar",
+        "repository/org/eclipse/lsp4j/org.eclipse.lsp4j/0.21.1/org.eclipse.lsp4j-0.21.1.jar",
+        "repository/org/eclipse/lsp4j/org.eclipse.lsp4j.debug/0.21.1/org.eclipse.lsp4j.debug-0.21.1.jar",
     ],
     visibility = ["//visibility:public"],
 )
