@@ -69,14 +69,16 @@ blaze build //third_party/jetski/cmd/language_server:language_server.external \
 These are the commands used to build the local harness binaries from google3.
 Derived from `third_party/jetski_prod/sdk/py/.kokoro/internal/build_release_wheel.sh`.
 
-### Linux x86_64 (Intel)
+### Linux x86_64
 ```bash
 blaze build //third_party/jetski_prod/localharness:localharness_external \
   --config=gce \
   --go_tag=external \
   --target_environment=//buildenv/target:non_prod \
-  -c opt
+  -c opt \
+  --features=-enable_relr
 ```
+
 
 ### Mac arm64 (Apple Silicon)
 ```bash
