@@ -743,19 +743,6 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
-# managed by go/iml_to_build
-jvm_import(
-    name = "google-api-services",
-    # do not sort: must match IML order
-    jars = [
-        "repository/com/google/apis/google-api-services-serviceusage/v1-rev20240220-2.0.0/google-api-services-serviceusage-v1-rev20240220-2.0.0.jar",
-        "repository/com/google/apis/google-api-services-storage/v1-rev20230301-2.0.0/google-api-services-storage-v1-rev20230301-2.0.0.jar",
-        "repository/com/google/apis/google-api-services-toolresults/v1beta3-rev20230410-2.0.0/google-api-services-toolresults-v1beta3-rev20230410-2.0.0.jar",
-        "repository/com/google/apis/google-api-services-testing/v1-rev20250327-2.0.0/google-api-services-testing-v1-rev20250327-2.0.0.jar",
-    ],
-    visibility = ["//visibility:public"],
-)
-
 jvm_import(
     name = "cloudcode-auth-libs",
     jars = [
