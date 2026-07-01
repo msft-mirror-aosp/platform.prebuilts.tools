@@ -953,6 +953,8 @@ jvm_import(
     jars = [
         "repository/org/eclipse/lsp4j/org.eclipse.lsp4j/0.21.1/org.eclipse.lsp4j-0.21.1.jar",
         "repository/org/eclipse/lsp4j/org.eclipse.lsp4j.debug/0.21.1/org.eclipse.lsp4j.debug-0.21.1.jar",
+        "repository/org/eclipse/lsp4j/org.eclipse.lsp4j.jsonrpc/0.21.1/org.eclipse.lsp4j.jsonrpc-0.21.1.jar",
+        "repository/org/eclipse/lsp4j/org.eclipse.lsp4j.jsonrpc.debug/0.21.1/org.eclipse.lsp4j.jsonrpc.debug-0.21.1.jar",
     ],
     visibility = ["//visibility:public"],
 )
