@@ -69,7 +69,7 @@ blaze build //third_party/jetski/cmd/language_server:language_server.external \
 These are the commands used to build the local harness binaries from google3.
 Derived from `third_party/jetski_prod/sdk/py/.kokoro/internal/build_release_wheel.sh`.
 
-> **Note:** The latest prebuilts added are from google3 synced to change [cl/941136886](cl/941136886).
+> **Note:** The latest prebuilts added are from google3 synced to change [cl/942053677](cl/942053677).
 
 ### Linux x86_64
 ```bash
