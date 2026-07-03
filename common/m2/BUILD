@@ -1278,35 +1278,20 @@ jvm_import(
 
 # managed by go/iml_to_build
 jvm_import(
-    name = "tracing-wire-desktop-2.0.0-alpha09",
-    jars = ["repository/androidx/tracing/tracing-wire-desktop/2.0.0-alpha09/tracing-wire-desktop-2.0.0-alpha09.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
-    name = "tracing-desktop-2.0.0-alpha09",
-    jars = ["repository/androidx/tracing/tracing-desktop/2.0.0-alpha09/tracing-desktop-2.0.0-alpha09.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
-    name = "wire-runtime-jvm-6.4.0",
-    jars = ["repository/com/squareup/wire/wire-runtime-jvm/6.4.0/wire-runtime-jvm-6.4.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
-    name = "okio-jvm-3.17.0",
-    jars = ["repository/com/squareup/okio/okio-jvm/3.17.0/okio-jvm-3.17.0.jar"],
-    visibility = ["//visibility:public"],
-)
-
-# managed by go/iml_to_build
-jvm_import(
     name = "collection-jvm-1.4.5",
     jars = ["repository/androidx/collection/collection-jvm/1.4.5/collection-jvm-1.4.5.jar"],
+    visibility = ["//visibility:public"],
+)
+
+# managed by go/iml_to_build
+filegroup(
+    name = "androidx-tracing_files",
+    # do not sort: must match IML order
+    srcs = [
+        "repository/androidx/tracing/tracing-desktop/2.0.0-alpha09/tracing-desktop-2.0.0-alpha09.jar",
+        "repository/androidx/tracing/tracing-wire-desktop/2.0.0-alpha09/tracing-wire-desktop-2.0.0-alpha09.jar",
+        "repository/com/squareup/wire/wire-runtime-jvm/6.4.0/wire-runtime-jvm-6.4.0.jar",
+        "repository/com/squareup/okio/okio-jvm/3.17.0/okio-jvm-3.17.0.jar",
+    ],
     visibility = ["//visibility:public"],
 )
