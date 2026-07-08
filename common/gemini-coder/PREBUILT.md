@@ -66,8 +66,9 @@ blaze build //third_party/jetski/cmd/language_server:language_server.external \
 
 ## 2. Jetski Local Harness
 
-These are the commands used to build the local harness binaries from google3.
-Derived from `third_party/jetski_prod/sdk/py/.kokoro/internal/build_release_wheel.sh`.
+These are the commands used to build the local harness release binaries from google3.
+The base compilation architecture flags are derived from `third_party/jetski_prod/sdk/py/third_party.jetski_prod.sdk.py.blueprint`.
+However, because these commands are run manually outside of the Rapid production pipeline, we explicitly append `-c opt` to enforce production optimizations and `--target_environment=//buildenv/target:non_prod` to safely satisfy external IP/security constraints.
 
 > **Note:** The latest prebuilts added are from google3 synced to change [cl/942053677](cl/942053677).
 
@@ -81,6 +82,16 @@ blaze build //third_party/jetski_prod/localharness:localharness_external \
   --features=-enable_relr
 ```
 
+### Linux arm64
+```bash
+blaze build //third_party/jetski_prod/localharness:localharness_external \
+  --config=gce \
+  --cpu=arm \
+  --go_tag=external \
+  --target_environment=//buildenv/target:non_prod \
+  -c opt \
+  --features=-enable_relr
+```
 
 ### Mac arm64 (Apple Silicon)
 ```bash
@@ -89,4 +100,23 @@ blaze build //third_party/jetski_prod/localharness:localharness_external \
   --go_tag=external \
   --target_environment=//buildenv/target:non_prod \
   -c opt
+```
+
+### Windows x86_64
+```bash
+blaze build //third_party/jetski_prod/localharness:localharness_external \
+  --go_tag=external \
+  --target_environment=//buildenv/target:non_prod \
+  -c opt \
+  --config=windows
+```
+
+### Windows arm64
+```bash
+blaze build //third_party/jetski_prod/localharness:localharness_external \
+  --go_tag=external \
+  --target_environment=//buildenv/target:non_prod \
+  -c opt \
+  --platforms=//buildenv/platforms/windows:windows_arm64 \
+  --copt=-DNO_PREFETCH
 ```
